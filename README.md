@@ -4,7 +4,6 @@ Sistemas Distribuídos na Prática
 Este é o protótipo de um livro de Sistemas Distribuídos para cursos introdutórios ao tema, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL.
 
 # Índice
-[Há capítulos anteriores a este na documentação em LaTeX]
 
 ## Parte 1 - Fundamentals
 
