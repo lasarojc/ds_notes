@@ -5,6 +5,10 @@ Este é o protótipo de um livro de Sistemas Distribuídos para cursos introdut�
 
 # Índice
 
+## Parte 0 - Introdução
+
+* [Motivação](./intro/motivacao.md)
+
 ## Parte 1 - Fundamentals
 
 * [Cliente Servidor](./basics/socket.md)
