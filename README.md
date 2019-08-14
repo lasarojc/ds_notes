@@ -1,7 +1,7 @@
 Sistemas Distribuídos na Prática
 ======
 
-Este é o protótipo de um livro de Sistemas Distribuídos para cursos introdutórios ao tema, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL.
+Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL como motivação. A versão publicada destas notas está disponível [aqui](https://lasarojc.github.io/ds_notes/).
 
 # Índice
 
