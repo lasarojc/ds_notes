@@ -21,6 +21,7 @@ Quanto aos canais de comunicação, estes podem ter diversas formas:
   * Colisões
   * Menor custo
   * Roteamento mais complicado
+
 ---
 
 Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura Ethernet, que trata da comunicação nós usando um barramento compartilhado.
@@ -148,15 +149,15 @@ O seguinte arquivo pode ser nomeado, por exemplo, `server.py`, mas não pode, de
 import socket                                   # Import socket module
 
 s = socket.socket()                             # Create a socket object
-host = ' '  #socket.gethostname()               # Get local machine name
+host = socket.gethostname()	               # Get local machine name
 port = 12345                                    # Reserve a port for your service.
 s.bind((host, port))                            # Bind to the port
 
 s.listen(5)                                     # Now wait for client connections.
 while True:
    c, addr = s.accept()                         # Establish connection with client.
-   print 'Got connection from', addr
-   c.send('Thank you for connecting')
+   print('Got connection from', addr)
+   c.send('Thank you for connecting'.encode())
    c.close()                                    # Close the connection
 ```
 
@@ -164,6 +165,9 @@ Para executá-lo, faça
 
 ```bash
 python server.py
+```
+em um terminal e em outro faça
+```bash
 telnet localhost 12345
 # ou
 netcat localhost 12345
@@ -184,12 +188,12 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 import socket                                   # Import socket module
 
 s = socket.socket()                             # Create a socket object
-host = '' # socket.gethostname()                # Get local machine name
+host = socket.gethostname()                # Get local machine name
 port = 12345                                    # Reserve a port for your service.
 
 s.connect((host, port))
 data = s.recv(1024)
-print data
+print(data.decode())
 s.close()                                         # Close the socket when done
 ```
 
@@ -230,7 +234,7 @@ Digite mensagem: SAIR
 Desconectando.
 ```
 
-Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, enquanto que em Python 3 seria `x = input()`.
+Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, enquanto que em Python 3 seria `x = input()`. Além disso, em Python, você deve remover as invocações para `encode` e `decode`.
 
 ### UDP 
 
