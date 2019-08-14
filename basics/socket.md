@@ -190,7 +190,7 @@ port = 12345                                    # Reserve a port for your servic
 s.connect((host, port))
 data = s.recv(1024)
 print data
-s.close                                         # Close the socket when done
+s.close()                                         # Close the socket when done
 ```
 
 E para se executar o cliente, faça:
