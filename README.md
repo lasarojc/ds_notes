@@ -8,6 +8,8 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 ## Parte 0 - Introdução
 
 * [Motivação](./intro/motivacao.md)
+* [Dificuldades](./intro/dificuldades)
+* [Definição](./intro/definicao.md)
 
 ## Parte 1 - Fundamentals
 
