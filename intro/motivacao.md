@@ -7,7 +7,7 @@ Acontece que sem a computação distribuída, nenhuma desenvolvimento sério des
 
 Esta necessidade de escalabilidade vai além destas áreas *mainstream*. 
 De fato, há quem diga que [somos todos desenvolvedores de sistemas distribuídos agora](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/)
-Praticamente qualquer sistema de informação que deseje atingir um público considerável, necessitará aplicar técnias de computação distribuída para conseguir **escalar**, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta.
+Praticamente qualquer sistema de informação que deseje atingir um público considerável, necessitará aplicar técnicas de computação distribuída para conseguir **escalar**, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta.
 
 Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade que um sistema tem de se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas. 
 Tolerância a falhas implica em redundância, em cópias; redundância implica praticamente sempre em distribuição e distribuição implica em, bem, em **distribuição**, como em **Sistemas Distribuídos**.

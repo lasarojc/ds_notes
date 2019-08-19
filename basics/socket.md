@@ -34,7 +34,7 @@ Sobre este meio, são usados protocolos para, por exemplo,
 
 ---
 
-As redes Ethernet, contudo, cobrem pequenas áreas, e para se ter conversas "mais interessantes", é necessáio se conecte diversas destas redes.
+As redes Ethernet, contudo, cobrem pequenas áreas, e para se ter conversas "mais interessantes", é necessário se conecte diversas destas redes.
 A conversa então é feita por meio de intermediários, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
 Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão Packet Switching x Circuit Switching:
 

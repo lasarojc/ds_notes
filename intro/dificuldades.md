@@ -12,7 +12,7 @@ Bastava importar a biblioteca correta e invocar suas funções.
 ---
 
 Sistemas maiores, contudo, aumentam consideravelmente a complexidade.
-Mesmo que haja diferentes bibliotecas a serem usadas, com desenvolvedores e estilos diferentes, bem ou mal testadas, seus encaixes aidna fazem sentido.
+Mesmo que haja diferentes bibliotecas a serem usadas, com desenvolvedores e estilos diferentes, bem ou mal testadas, seus encaixes ainda fazem sentido.
 
 ---
 ##### A realidade
@@ -22,7 +22,7 @@ Mesmo que haja diferentes bibliotecas a serem usadas, com desenvolvedores e esti
 
 Quando partimos para os sistemas distribuídos, a dificuldade aumenta ainda mais.
 Agora temos peças que nunca foram pensadas para serem encaixadas e um pouco de *crazy glue* é necessária para encaixá-las.
-Além disso, às vezes times diferentes montam partes diferentes do sistema, tendo visões diferentes do que deve fazer e de como as partes se comunicão.
+Além disso, às vezes times diferentes montam partes diferentes do sistema, tendo visões diferentes do que deve fazer e de como as partes se comunicam.
 
 ---
 ##### O que vocês encontrarão aqui.
@@ -51,7 +51,7 @@ O fato é que computadores individuais tem capacidade limitada de processamento 
 
 ---
 
-Assim, precisamos crescer nosso poder computacionao, mas aumentar a capacidade de um dispositivo mesmo de forma linear tem custo exponencial.
+Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo mesmo de forma linear tem custo exponencial.
 
 ---
 ##### Custo de se "incrementar" seu computador.
@@ -71,7 +71,7 @@ Computadores [falham](https://www.statista.com/statistics/430769/annual-failure-
 
 Nós precisamos então entender este ambiente,
 * qual a probabilidade de um nó falhar
-* como os computadores, ou melhor, como os processos se comunicam? mensagems podem ser perdidas, atrasadas, corrompidas?
+* como os computadores, ou melhor, como os processos se comunicam? mensagens podem ser perdidas, atrasadas, corrompidas?
 * os relógios dos computadores são sincronizados?
 * quais os padrões de acesso ao serviços? Aumenta à noite? Diminui no verão?
 * há agentes maliciosos que possam querer perturbar o sistema?
