@@ -8,13 +8,13 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 ## Parte 0 - Introdução
 
 * [Motivação](./intro/motivacao.md)
-* [Dificuldades](./intro/dificuldades)
+* [Dificuldades](./intro/dificuldades.md)
 * [Definição](./intro/definicao.md)
 
 ## Parte 1 - Fundamentals
 
 * [Cliente Servidor](./basics/socket.md)
-* [Multiprocessing e *Multithreading*](./basics/multiprogramming.md)
+* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
 * [Invocação Remota de Procedimentos]()
 * [Estudo de Caso: gRPC]()
 * [Projeto](./projeto/client_server)
