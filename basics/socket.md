@@ -254,8 +254,8 @@ Modifique o código do exercício anterior para usar UDP em vez de TCP na comuni
 
 ### Referências
 
-* pymotw.com/2/socket/udp.html
-* www.tutorialspoint.com/python/python_networking.htm
+* [PyMotw](pymotw.com/2/socket/udp.html)
+* [Tutorials Point](www.tutorialspoint.com/python/python_networking.htm)
 
 
 ### IP-Multicast
