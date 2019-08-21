@@ -244,7 +244,7 @@ Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente exe
 * `data` é o conteúdo recebido e  
 * `addr` o endereço de quem enviou o datagrama.
 
-Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `sent = sock.sendto(data, addr)`. 
+Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
 
 Além deste detalhe, outros são importantes:
 * falta de ordem
@@ -279,6 +279,7 @@ Imagine enviar os mesmos dados para múltiplos destinatários.
 * UDP
 * Mensagem entregue a todos que se juntaram ao grupo.
 * Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)
+
 [![](images/ipmulticast2.png)](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
 
 ---
