@@ -113,7 +113,7 @@ Internet Protocol
 * Sockets
   * Pontos finais da comunicação
   * Porta: 16 bits
-    * [IANA](www.iana.org) (Internet Assigned Numbers Authority)
+    * [IANA](http://www.iana.org) (Internet Assigned Numbers Authority)
       * Bem conhecidas -- 0-1023
       * Proprietárias -- 49151
 	    * Dinâmicas -- 65535
@@ -121,22 +121,7 @@ Internet Protocol
   * Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
   * Utilizado como um arquivo
   * Protocolo: por sua conta
-
-
----
-##### Sockets
-
-* Pontos finais da comunicação
-* Porta: 16 bits
-  * IANA [Internet Assigned Numbers Authority](www.iana.org)
-	* Bem conhecidas -- 0-1023
-	* Proprietárias -- 49151
-	* Dinâmicas -- 65535
-* Domínio: AF\_INET (Internet), PF\_UNIX, PF\_X25..., PF\_INET (Internet),
-* Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
-* Utilizado como um arquivo
-* Protocolo: por sua conta
-
+  
 ---
 
 
@@ -275,8 +260,8 @@ Modifique o código do exercício anterior para usar UDP em vez de TCP na comuni
 
 ### Referências
 
-* [UDP em Python](pymotw.com/2/socket/udp.html)
-* [UDP em Python](www.tutorialspoint.com/python/python_networking.htm)
+* [UDP em Python](http://pymotw.com/2/socket/udp.html)
+* [UDP em Python](http://www.tutorialspoint.com/python/python_networking.htm)
 
 
 ### IP-Multicast
