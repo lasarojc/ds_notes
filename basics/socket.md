@@ -67,7 +67,7 @@ Nas redes atuais, a conversa em componentes será feita, em algum nível, por me
 
 # A Internet
 	
-![network](images/network.png)
+![A Internet](images/network.png)
 
 ![image](images/04-01.png)
 
@@ -83,19 +83,18 @@ Cada camada conversa com a equivalente do outro lado. Na prática, a comunicaç�
 * Headers das camadas superiores são dados nas camadas inferiores
 
 
-![image](images/osi-ip)
+---
+###### OSI x Internet
 	
-[Fonte](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
-
+[![OSI x IP](images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
 ---
-##### IP
 
-* Camadas 1,2,3 e 4 -- equivalentes
-* Camadas 5, 6 e 7 -- aplicação
+
+Internet Protocol
 * Bibliotecas/middleware provêm o restante das funcionalidades
   * (De)Serialização
-  * Nomeamento
+	* Nomeamento
 	* Criptografia
 	* Replicação
 	* Invocação remota de procedimentos
@@ -106,14 +105,22 @@ Cada camada conversa com a equivalente do outro lado. Na prática, a comunicaç�
 
 ## Sockets
 
----
-##### Hosts
+* Hosts
+  * Cada interface tem um endereço MAC \pause -- Somente comunicação direta
+  * Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits
+  * Como falar com uma aplicação?
 
-* Cada interface tem um endereço MAC \pause -- Somente comunicação direta
-* Cada interface tem um endereço IPv4/IPv6 -- 32 x 128 bits
-* Como falar com uma aplicação?
-
----
+* Sockets
+  * Pontos finais da comunicação
+  * Porta: 16 bits
+    * [IANA](www.iana.org) (Internet Assigned Numbers Authority)
+      * Bem conhecidas -- 0-1023
+      * Proprietárias -- 49151
+	    * Dinâmicas -- 65535
+  * Domínio: AF\_INET (Internet), PF\_UNIX, PF\_X25..., PF\_INET (Internet)
+  * Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
+  * Utilizado como um arquivo
+  * Protocolo: por sua conta
 
 
 ---
@@ -135,7 +142,7 @@ Cada camada conversa com a equivalente do outro lado. Na prática, a comunicaç�
 
 ---
 
-![image](images/04-15)
+![image](images/04-15.png)
 
 ---
 
@@ -212,7 +219,7 @@ Socket s = new Socket(hostname,port);
 ```
 Observe que o `socket.close()` encerra a conexão do lado de quem invoca. Na contraparte, invocações a `socket.recv()` retornam com 0 bytes lidos.
 
-#### Exercício: Ping-Pong
+### Exercício: Ping-Pong
 
 Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
@@ -263,54 +270,45 @@ Além deste detalhe, outros são importantes:
 Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
 
 
-#### Exercício - UDP
+### Exercício - UDP
 Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.
 
-## Referências
+### Referências
 
 * [UDP em Python](pymotw.com/2/socket/udp.html)
 * [UDP em Python](www.tutorialspoint.com/python/python_networking.htm)
 
 
-
-
 ### IP-Multicast
 
----
-
-![image](images/ipmulticast)
-
----
-
+Imagine enviar os mesmos dados para múltiplos destinatários.
+* Como lidar com retransmissões?
+* Muito estado nos servidores
+* Sobre uso da rede.
 
 ---
-###### IP-Multicast
+##### IP-Multicast
+
+![IP Multicast](images/ipmulticast.jpg)
 
 * UDP
 * Mensagem entregue a todos que se juntaram ao grupo.
 * Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)
-
-![image](images/ipmulticast2)
-
----
-
-
-[Fonte](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
-
+[![](images/ipmulticast2.png)](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
 
 ---
-###### Servidor
+
+---
+##### Servidor Servidor
 
 * Criar Socket UDP
 * Uní-lo a um grupo
-* Receber pacotes
+* Receber pacotes.
 
 ---
-
 
 ---
 ##### MReceiver.java
-
 ```Java
 import java.io.*;
 import java.net.*;
@@ -365,20 +363,12 @@ public class MSender {
 }
 ```
 
----
-##### Referências
+[Multicast em Java](lycog.com/programming/multicast-programming-java/)
 
-[lycog](lycog.com/programming/multicast-programming-java/)
 
----
-
-## Exercício
-
-Modifique o código que desenvolveu em Python para que, em vez de usar ``localhost'' como endereço, use o endereço multicast 224.2.2.4.
-
+### Multicast IPv6
 
 ---
-###### IPv6
 
 > In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
 
@@ -387,6 +377,10 @@ Modifique o código que desenvolveu em Python para que, em vez de usar ``localho
 [Fonte](http://www.baeldung.com/java-broadcast-multicast)
 
 ---
+
+
+### Exercício 
+Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.1.1.1.
 
 
 ---
@@ -429,8 +423,8 @@ MCAST_PORT = 5007
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
+```
 
 [Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)
-```
 
 ---

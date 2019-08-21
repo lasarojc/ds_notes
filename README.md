@@ -8,9 +8,13 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 ## Parte 0 - Introdução
 
 * [Motivação](./intro/motivacao.md)
+<<<<<<< HEAD
 * [Definição, Dificuldades, *Middleware*](./intro/dificuldades.md)
+=======
+* [Dificuldades](./intro/dificuldades.md)
+>>>>>>> 829070152634f3b31e8bc9fa14840c548f2aa769
 
-## Parte 1 - Fundamentals
+## Parte 1 - Comunicação
 
 * [Cliente Servidor](./basics/socket.md)
 * [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
