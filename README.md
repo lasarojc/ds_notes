@@ -8,7 +8,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 ## Parte 0 - Introdução
 
 * [Motivação](./intro/motivacao.md)
-* [Definição, Dificuldades, *Middleware*](./intro/dificuldades.md)
+* [Definição, Dificuldades, *Middleware*](./intro/definicao.md)
 
 ## Parte 1 - Comunicação
 
