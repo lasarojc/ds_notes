@@ -9,7 +9,6 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 
 * [Motivação](./intro/motivacao.md)
 * [Dificuldades](./intro/dificuldades.md)
-* [Definição](./intro/definicao.md)
 
 ## Parte 1 - Comunicação
 
