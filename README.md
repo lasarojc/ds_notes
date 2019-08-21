@@ -8,8 +8,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 ## Parte 0 - Introdução
 
 * [Motivação](./intro/motivacao.md)
-* [Dificuldades](./intro/dificuldades.md)
-* [Definição](./intro/definicao.md)
+* [Definição, Dificuldades, *Middleware*](./intro/dificuldades.md)
 
 ## Parte 1 - Fundamentals
 
@@ -43,7 +42,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Estudo de Caso: Atomix](./ft/atomix.md)
 * [Projeto](./projeto/replicated.md)
 
-## Parte 5 - Avançado?
+## Parte 5 - Tecnologias "Quentes"
 
 * [Arquitetura Reativa](./reactive.md)
 * [Map & Reduce](./mapreduce.md)
