@@ -124,7 +124,7 @@ Internet Protocolo
 ---
 ##### Sockets
 
-![Sockets](images/04-15.pdf)
+![Sockets](images/04-15.png)
 
 ---
 
