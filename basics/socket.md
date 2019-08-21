@@ -67,7 +67,7 @@ Nas redes atuais, a conversa em componentes será feita, em algum nível, por me
 
 # A Internet
 	
-\includegraphics[width=.6\textwidth]{images/network}
+![A Internet](images/network.png)
 
 \includegraphics[width=.5\textwidth]{images/04-01}
 
@@ -83,60 +83,51 @@ Cada camada conversa com a equivalente do outro lado. Na prática, a comunicaç�
 * Headers das camadas superiores são dados nas camadas inferiores
 
 
-\includegraphics[width=.6\textwidth]{images/osi-ip}	
+---
+###### OSI x Internet
 	
-[Fonte](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+[![OSI x IP](images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+
+---
 
 
-\begin{frame}{IP}
-	\begin{itemize}
-	\item Camadas 1,2,3 e 4 -- equivalentes
-	\item Camadas 5, 6 e 7 -- aplicação
-	\item Bibliotecas/middleware provêm o restante das funcionalidades
-	\begin{itemize}
-		\item (De)Serialização
-		\item Nomeamento
-		\item Criptografia
-		\item Replicação
-		\item Invocação remota de procedimentos
-		\item ...
-	\end{itemize}
-	\end{itemize}
-\end{frame}
+Internet Protocolo
+* Bibliotecas/middleware provêm o restante das funcionalidades
+  * (De)Serialização
+	* Nomeamento
+	* Criptografia
+	* Replicação
+	* Invocação remota de procedimentos
+	* ...
 
 
 ## Sockets
-\begin{frame}{Hosts}
-\begin{itemize}
-\item Cada interface tem um endereço MAC \pause -- Somente comunicação direta
-\item Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits
-\pause
-\item Como falar com uma aplicação?
-\end{itemize}
+
+* Hosts
+  * Cada interface tem um endereço MAC \pause -- Somente comunicação direta
+  * Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits
+  * Como falar com uma aplicação?
+
+* Sockets
+  * Pontos finais da comunicação
+  * Porta: 16 bits
+    * [IANA](www.iana.org) (Internet Assigned Numbers Authority)
+      * Bem conhecidas -- 0-1023
+      * Proprietárias -- 49151
+	    * Dinâmicas -- 65535
+  * Domínio: AF\_INET (Internet), PF\_UNIX, PF\_X25..., PF\_INET (Internet)
+  * Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
+  * Utilizado como um arquivo
+  * Protocolo: por sua conta
 
 
+---
+##### Sockets
 
-\begin{frame}{Sockets}
-\begin{itemize}
-\item Pontos finais da comunicação
-\item Porta: 16 bits
-\begin{itemize}
-	\item IANA \href{www.iana.org}{ Internet Assigned Numbers Authority }
-	\item Bem conhecidas -- 0-1023
-	\item Proprietárias -- 49151
-	\item Dinâmicas -- 65535
-\end{itemize}
-\item Domínio: AF\_INET (Internet), PF\_UNIX, PF\_X25..., PF\_INET (Internet),
-\item Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
-\item Utilizado como um arquivo
-\item Protocolo: por sua conta
-\end{itemize}
-\end{frame}
+![Sockets](images/04-15.pdf)
 
-\begin{frame}{Sockets}
-	\centering
-	\includegraphics[width=1\textwidth]{images/04-15}
-\end{frame}
+---
+
 
 ### Exemplo - TCP
 
@@ -209,7 +200,7 @@ Socket s = new Socket(hostname,port);
 ```
 Observe que o `socket.close()` encerra a conexão do lado de quem invoca. Na contraparte, invocações a `socket.recv()` retornam com 0 bytes lidos.
 
-#### Exercício: Ping-Pong
+### Exercício: Ping-Pong
 
 Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
@@ -258,46 +249,45 @@ Além deste detalhe, outros são importantes:
 Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
 
 
-#### Exercício - UDP
+### Exercício - UDP
 Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.
 
-## Referências
+### Referências
 
 * pymotw.com/2/socket/udp.html
 * www.tutorialspoint.com/python/python_networking.htm
 
 
+### IP-Multicast
 
+Imagine enviar os mesmos dados para múltiplos destinatários.
+* Como lidar com retransmissões?
+* Muito estado nos servidores
+* Sobre uso da rede.
 
+---
+##### IP-Multicast
 
-\subsection{IP-Multicast}
+![IP Multicast](images/ipmulticast.jpg)
 
-\begin{frame}{IP-Multicast}
-\includegraphics[width=\textwidth]{images/ipmulticast}
-\end{frame}
+* UDP
+* Mensagem entregue a todos que se juntaram ao grupo.
+* Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)
+[![](images/ipmulticast2.png)](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
 
-\begin{frame}{IP-Multicast}
-	\begin{itemize}
-		\item UDP
-		\item Mensagem entregue a todos que se juntaram ao grupo.
-		\item Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)
-	\end{itemize}
-	
-\includegraphics[width=\textwidth]{images/ipmulticast2}	
+---
 
-\href{http://www.dasblinkenlichten.com/understanding-ip-multicast/}{Fonte}
-\end{frame}
+---
+##### Servidor Servidor
 
-\begin{frame}{Servidor}
-\begin{itemize}
-	\item Criar Socket UDP
-	\item Uni-lo a um grupo
-	\item Receber pacotes.
-\end{itemize}
-\end{frame}
+* Criar Socket UDP
+* Uní-lo a um grupo
+* Receber pacotes.
 
-\begin{frame}[fragile,allowframebreaks]{IP-Multicast}{MReceiver.java}
-\begin{lstlisting}[language=Java]
+---
+
+MReceiver.java
+```Java
 import java.io.*;
 import java.net.*;
 
@@ -319,11 +309,10 @@ public class MReceiver {
     }
   }
 }
-\end{lstlisting}
-\end{frame}
+```
 
-\begin{frame}[fragile]{IP-Multicast}{MSender.java}
-\begin{lstlisting}[language=Java]
+MSender.java
+```Java
 import java.io.*;
 import java.net.*;
 public class MSender {
@@ -346,30 +335,25 @@ public class MSender {
   } catch (IOException ioe) { System.out.println(ioe); }
  }
 }
-\end{lstlisting}
-\end{frame}
+```
 
-\begin{frame}{Referências}
-\url{lycog.com/programming/multicast-programming-java/}
-\end{frame}
-
-\begin{frame}{Exercício}
-Modifique o código que desenvolveu em Python para que, em vez de usar ``localhost'' como endereço, use o endereço multicast 224.2.2.4.
-\end{frame}
-
-\begin{frame}{IPv6}
-``In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
-
-In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
-
-\href{http://www.baeldung.com/java-broadcast-multicast}{Fonte}
-\end{frame}
+(lycog.com/programming/multicast-programming-java/)
 
 
+### Multicast IPv6
+> In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
+
+> In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
+
+[Fonte](http://www.baeldung.com/java-broadcast-multicast)
 
 
-\begin{frame}[fragile]{Multicast Server -- Em Python (3)}
-\begin{lstlisting}[language=Python]
+### Exercício 
+Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.2.2.4.
+
+
+Multicast Server -- Em Python (3)
+```Python
 import socket
 import struct
 
@@ -386,12 +370,12 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 while True:
     print(sock.recv(10240).decode())
-\end{lstlisting}
-\href{https://stackoverflow.com/questions/603852/multicast-in-python}{Fonte}
-\end{frame}
+```
 
-\begin{frame}[fragile]{Multicast Client -- Em Python (3)}
-\begin{lstlisting}[language=Python]
+[Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)
+
+Multicast Client -- Em Python (3)
+```Python
 import socket
 
 MCAST_GRP = '224.1.1.1'
@@ -400,8 +384,6 @@ MCAST_PORT = 5007
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
-\end{lstlisting}
-\href{https://stackoverflow.com/questions/603852/multicast-in-python}{Fonte}
-\end{frame}
+```
 
-\frame{Fim da aula 5}
+[Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)

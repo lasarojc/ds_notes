@@ -11,7 +11,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Dificuldades](./intro/dificuldades.md)
 * [Definição](./intro/definicao.md)
 
-## Parte 1 - Fundamentals
+## Parte 1 - Comunicação
 
 * [Cliente Servidor](./basics/socket.md)
 * [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
