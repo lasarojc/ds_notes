@@ -9,7 +9,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 
 * [Motivação](./intro/motivacao.md)
 * [O quê e por quê?](./intro/definicao.md)
-* [Como distribuir?](./intro/definicao.md)
+* [Como distribuir?](./intro/middleware.md)
 
 ## Parte 1 - Comunicação
 

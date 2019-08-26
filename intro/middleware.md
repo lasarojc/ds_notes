@@ -71,9 +71,9 @@ Vejamos cada uma destas separadamente.
 * Acesso
 * Localização
 * Relocação
-* Migração: Objeto não percebe se for movimentado. 
-* Replicação: Objeto é replicado (tem várias cópias).
-* Concorrência: Objeto é acessado por múltiplos clientes (sem interferência).
+* Migração
+* Replicação
+* Concorrência
 * Falha: Falha e recuperação não são percebidas (usando-se cópias)
 
 ---
@@ -148,18 +148,23 @@ Para se manter o serviço executando a despeito de falhas, é necessário replic
 
 ---
 
----
-##### Transparência Concorrência
 
-* controle de concorrência adequado.
-* mecanismos para alcançar *escalabilidade* (particionamento/*sharding*)
-
----
 
 ---
 ##### Transparência a Falhas
 
 * mecanismos de tolerância a falhas (replicação)
+
+---
+
+
+Objeto é acessado por múltiplos clientes (sem interferência).
+
+---
+##### Transparência Concorrência
+
+* controle de concorrência adequado.
+* mecanismos para alcançar *escalabilidade* (particionamento/*sharding*)
 
 ---
 
