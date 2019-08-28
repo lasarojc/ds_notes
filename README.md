@@ -10,11 +10,12 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Motivação](./intro/motivacao.md)
 * [O quê e por quê?](./intro/definicao.md)
 * [Como distribuir?](./intro/middleware.md)
+* [Tipos e Arquiteturas](./intro/tipos.md)
 
 ## Parte 1 - Comunicação
 
 * [Cliente Servidor](./basics/socket.md)
-* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
+* [*Multiprocessing* e *Multithreading*](./basics/concorrência.md)
 * [Invocação Remota de Procedimentos]()
 * [Estudo de Caso: gRPC]()
 * [Projeto](./projeto/client_server)
