@@ -24,50 +24,46 @@ Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de proj
 
 ### Sistemas de Informação
 
+Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos permitem a são encontrados em diversas formas (de fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.).
 
 
+O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira camada faz interface com o usuário, a segunda camada contém a lógica do negócio, e a terceira camada mantem os dados.
 
+[![3 Tier](images/3tier.png)](https://en.wikipedia.org/wiki/Multitier_architecture)
 
+Peça fundamental desta abordagem, os bancos de dados na terceira camada são, muito frequentemente, transacionais.
+Isto é, eles provêem as seguintes garantias na execução de transações, as famosas propriedades ACID:
 
+---
 
-\begin{frame}[allowframebreaks,fragile]{Bancos de dados}{Sistemas de Informação Distribuído}
-\includegraphics[width=.6\textwidth]{images/3tier}	
-
-\href{https://en.wikipedia.org/wiki/Multitier_architecture}{Fonte}
-
-
-\framebreak
-
-\begin{block}{ACID}
-\begin{itemize}
-	\item Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.
-	\item Consistência: transações levam banco de um estado consistente a outro\\
+* Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.
+*  Consistência: transações levam banco de um estado consistente a outro<br>
 	E.g., x == 2*y
-	\item Isolamento: transações não vêem dados não comitados umas das outras.
-	\item Os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.
-\end{itemize}
-\end{block}
+* Isolamento: transações não vêem dados não comitados umas das outras.
+* Durabilidade: os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.
 
-\framebreak
+---
 
-\begin{block}{Transação}
-\begin{verbatim}
+Para relembrar o que querem dizer as propridades, considere a seguinte sequência de operações:
+
+```
 1: a = SELECT X
 2: c = a * 2
 3: b = c + 10
 4: SET X=c
 5: SET Y=b
-\end{verbatim}
-\end{block}
-Transações $T1$ e $T2$, intercaladas.
+````
+Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações escalonadas da seguinte forma, onde $T_x^y$ é a y-ésima operação de $T_x$.
 
-$T1_1, T1_2, T1_3, T1_4, T2_1, T2_2, T2_3, T2_4, T2_5, T1_5$
+$T_1^1, T_1^2, T_1^3, T_1^4, T_2^1, T_2^2, T_2^3, T_2^4, T_2^5, T_1^5$
 
-\framebreak
+Ao final da execução, X terá o valor atribuído por $T_2$, mas $Y$ terá o valor de $T_1$. 
+Este escalonamento violou a consistência do banco de dados por quê as operações não foram executadas isoladamente.
 
-\includegraphics[width=.6\textwidth]{images/01-10}	
 
-\framebreak
+![01-10](images/01-10.pdf)
+
+
 
 \includegraphics[width=.6\textwidth]{images/nosql}
 \href{https://www.algoworks.com/blog/nosql-database/}{Fonte}

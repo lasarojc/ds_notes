@@ -14,14 +14,14 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 
 ## Parte 1 - Comunicação
 
-* [Cliente Servidor](./basics/socket.md)
-* [*Multiprocessing* e *Multithreading*](./basics/concorrência.md)
-* [Invocação Remota de Procedimentos]()
+* [Sockets](./basics/socket.md)
+* [Invocação Remota de Procedimentos](./basics/rpc.md)
 * [Estudo de Caso: gRPC]()
 * [Projeto](./projeto/client_server)
 
 ## Parte 2 - Coordenação
 
+* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
 * [Concorrência](./concorrencia/concorrencia.md)
 * [Coordenação](./coordenacao/coordenacao.md)
 * [Tempo Físico](./tempo/fisico.md)
