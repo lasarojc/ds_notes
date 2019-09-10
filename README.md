@@ -16,7 +16,9 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 
 * [Sockets](./basics/socket.md)
 * [Invocação Remota de Procedimentos](./basics/rpc.md)
-* [Estudo de Caso: gRPC]()
+* [Estudo de Caso: gRPC](./basics/grpc.md)
+* [Estudo de Caso: Thrift](./TODO.md)
+* [Estudo de Caso: RMI](./TODO.md)
 * [Projeto](./projeto/client_server)
 
 ## Parte 2 - Coordenação
