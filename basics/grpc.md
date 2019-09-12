@@ -22,7 +22,7 @@ Para usar os exemplos, você precisa clonar o repositório com o tutorial, usand
 
 
 ```bash
-git clone -b v1.19.0 https://github.com/grpc/grpc-java|
+git clone -b v1.19.0 https://github.com/grpc/grpc-java
 ```
 
 Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.
@@ -236,44 +236,6 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
        return;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
