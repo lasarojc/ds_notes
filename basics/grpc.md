@@ -209,10 +209,9 @@ Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemo
 Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.
 
 * *Streams*
+  - Do lado do servidor
 
-  Do lado do servidor
-
-```Java
+  ```java
    List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
 
    @Override
@@ -224,10 +223,10 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
    }
    responseObserver.onCompleted();
    }
-```
-  Do lado do cliente
+  ```
+  - Do lado do cliente
   
-```java
+  ```java
    OlaRequest request = OlaRequest.newBuilder().setName(name).build();
    try {
        Iterator<OlaReply> it = blockingStub.digaOlas(request);
@@ -239,7 +238,7 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
        return;
     }
-```
+  ```
 
 
 
