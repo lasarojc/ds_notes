@@ -158,7 +158,7 @@ private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 
 Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em `src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java`, novamente se baseando no código existente e não se preocupando com "detalhes".
 
-```Java
+```java
 public void greet(String name) {
   logger.info("Will try to greet " + name + " ...");
 ...
