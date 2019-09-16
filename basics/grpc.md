@@ -115,7 +115,7 @@ message OlaReply {       // <<<<<====
 
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc DigaOla (OlaRequest) returns (OlaReply) {}
+  rpc DigaOla (OlaRequest) returns (OlaReply) {}// <<<<<====
 }
 ...
 ```
@@ -236,6 +236,7 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
        return;
     }
+    ```
 
 
 
@@ -266,7 +267,7 @@ Modifique o servidor
 ```Python
 def DigaOla(self, request, context):
 	return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
-````
+```
 
 Modifique o cliente
 

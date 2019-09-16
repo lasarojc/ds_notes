@@ -131,8 +131,7 @@ Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar 
 * Thrift
 
 ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
-Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputStreams`, como neste [exemplo](https://www.tutorialspoint.com/java/java_serialization.htm), embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM.
-Além disso, 
+Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputStreams`, como neste [exemplo](https://www.tutorialspoint.com/java/java_serialization.htm), embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.
 
 
 
