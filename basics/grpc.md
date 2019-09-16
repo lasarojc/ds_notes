@@ -210,7 +210,8 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
 
 * *Streams*
   - Do lado do servidor
-  ```Java
+
+  ```java
    List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
 
    @Override
@@ -224,7 +225,8 @@ Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é envia
    }
   ```
   - Do lado do cliente
-  ```Java
+  
+  ```java
    OlaRequest request = OlaRequest.newBuilder().setName(name).build();
    try {
        Iterator<OlaReply> it = blockingStub.digaOlas(request);
