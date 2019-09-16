@@ -136,7 +136,7 @@ Para confirmar, procure por `sayHello`para encontrar a implementação de `SayHe
 Para que sua versão estendida do serviço `Greeter` funcione, defina um método correspondendo à `DigaOla`, sem consultar o código exemplo abaixo, mas usando o código de `sayHello` como base; não se importe por enquanto com os métodos sendo invocados.
 Note que os `...` indicam que parte do código, que não sofreu modificações, foi omitido.
 
-```Java
+```java
 ...
 private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 ...
