@@ -103,7 +103,7 @@ Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o qu
 Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.
 
 
-[JSON](http://json.org/) é o acrônimco de *Javascript Object Notation*, isto é, o formato para representação de objetos da linguagem Javascript.
+[JSON](http://json.org/) é o acrônimo de *Javascript Object Notation*, isto é, o formato para representação de objetos da linguagem Javascript.
 Devido à sua simplicidade e versatilidade, entretanto, foi adotado como forma de representação de dados em sistemas desenvolvidos nas mais diferentes linguagens.
 O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:
 
@@ -133,36 +133,17 @@ Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar 
 ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
 Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputStreams`, como neste [exemplo](https://www.tutorialspoint.com/java/java_serialization.htm), embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.
 
+Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.
 
+### ProtoBuffers
 
+Nas palavras dos [criadores](https://developers.google.com/protocol-buffers/),
+> Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
-\note{Serialization é a conversão em uma sequência de bytes. Marshalling usa serialization para combinar parâmetros e informações sobre funções a serem executadas em uma invocação RPC.}
+Por meio de protobuffers, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
+Observe a presença de campos de preenchimento opcional (**optional**), de enumerações (**enum**), e de coleções (**repeated**).
 
-
-\begin{frame}{XML/JSON}
-	\begin{itemize}
-		\item Verborrágico
-		\item Amigável a humanos
-		\item Auto descritivo
-		\item Fácil de fazer parsing
-		\item Largamente suportado
-		\item Questão de opinião
-		\item JSON é XML sem a gordura.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[allowframebreaks,fragile]{Google Protocol Buffers}
-	\begin{itemize}
-		\item Dados come estrutura pré-definida
-		\item Eficiente e rápido
-		\item Agnóstico à linguagem
-		\item Mensagens são nomes e tipos
-		\item Compilação de mensagens para linguagens específicas gera código para manipular dados
-		\item Largamente utilizado dentro e fora do Google.
-	\end{itemize}
-	\framebreak
-	
-\begin{lstlisting}
+```protobuf
 message Person {
 	required string name = 1;
 	required int32 id = 2;
@@ -178,57 +159,47 @@ message Person {
 	}
 	repeated PhoneNumber phone = 4;
 }
-\end{lstlisting}
-	
-	\framebreak
-	
-\begin{lstlisting}[language=C++]
+```
+
+Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...
+
+```c++
 Person person;
 person.set_name("John Doe");
 person.set_id(1234);
 person.set_email("jdoe@example.com");
 fstream output("myfile", ios::out | ios::binary);
 person.SerializeToOstream(&output);
-\end{lstlisting}
-	
-	\framebreak
-	
-\begin{lstlisting}[language=C++]
+```
+
+e lê do arquivo e desserializa para hidratar um novo objeto.
+
+```c++
 fstream input("myfile", ios::in | ios::binary);
 Person person;
 person.ParseFromIstream(&input);
 cout << "Name: " << person.name() << endl;
 cout << "E-mail: " << person.email() << endl;
-\end{lstlisting}
-	
-\framebreak
-	
-\end{lstlisting}
-	``When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.''
-	
-	Fonte: Dev guide
-\end{frame}
+```
+
+De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.
+
+> When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
+
+### Thrift
+
+TODO
+
+## RPC
+
+Apesar dos mecanismos de serialização de dados disponíveis, apenas discutidos, a complexidade de se programar usando sockets por ainda se muito grande. 
+Um das razões para isto, é que desenvolvedores estão acostumados a pensar em termos de funções, métodos e procedimentos, mas a comunicação por meio de sockets impõe um paradigma de **troca de mensagens**.
+Isto é, em vez de pensar em termos de uma função sendo invocada, recebendo parâmetros e retornando resultados, com o uso de sockets é preciso "escrever em um arquivo" qual operação executar e quais os seus parâmetros de entrada, usando apenas o equivalente a funções de leitura e escrita.
+Sem dúvidas, seria mais fácil continuar pensando em termos de funções, mas que são executadas em processos possivelmente remotos.
+É exatamente aí que entra a Invocação Remota de procedimentos, ou RPC, do inglês *Remote Procedure Call*.
 
 
 
-
-
-
-
-
-
-
-\begin{frame}{Comunicação Baseada em Sockets}
-	\begin{itemize}
-		\item read/write
-		\item programadores gostam de funções
-		\pause
-		\item funções em sistemas distribuídos?
-	\end{itemize}
-\end{frame}
-\note{A interface read/write não é simples de usar. Programadores preferem uma interface funcional.
-	Mas como fazemos funções em sistemas distribuídos?
-}
 
 
 \subsection{RPC}

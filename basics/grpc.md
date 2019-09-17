@@ -186,9 +186,18 @@ Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemo
 
 #### Stub do servidor
 
+* Como criar o servidor
+* Como definir o serviço
+* Como "startar" o servidor.
+
 #### Stub do cliente
 
+* Stub bloqueante
+* Stub não bloqueante
+
 #### IDL gRPC
+
+Outras características da IDL do gRPC
 
 * Tipos básicos
   * bool: boolean (true/false)
