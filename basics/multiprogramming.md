@@ -32,56 +32,57 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 
 ## Threads em SD
 
-\subsection{Threads e Processos em SD}
-\begin{frame}{Cliente multithreaded}
+### Cliente multithreaded
+
 Vantagens similares a usar em sistemas centralizado.
 
-\begin{itemize}
-\item Lida com várias tarefas concorrentemente.
-\item Esconde latência.
-\item Separa código em blocos/módulos.
-\end{itemize}
-\end{frame}
+* Lida com várias tarefas concorrentemente.
+* Esconde latência.
+* Separa código em blocos/módulos.
 
-\begin{frame}[allowframebreaks]{Servidor multithreaded}
+
+---
+
+### Servidor multithreaded
+
+Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.
+
 \includegraphics[width=.5\textwidth]{images/singlethreadedserver}
 
-\framebreak
+---
 
-Atende múltiplas requisições em paralelo.
+Outra opção é criar um novo tthread para cada nova requisição e atende múltiplas requisições concorrentemente.
 
 \includegraphics[width=.5\textwidth]{images/multithreadedserver}
 
-\begin{itemize}
-\item Permite tratar requisições enquanto faz IO.
-\item Número de threads é limitado. %Pelo framework em uso.
-\item Número de threads deve ser limitado. %Para não saturar o servidor.
-\item Criação e destruição de threads é cara.
-\end{itemize}
 
-\framebreak
+* Permite tratar requisições enquanto faz IO.
+* Número de threads é limitado. %Pelo framework em uso.
+* Número de threads deve ser limitado. %Para não saturar o servidor.
+* Criação e destruição de threads é cara.
+
+Assim, temos uma outra oção que também usa múltiplos threads.
 
 \includegraphics[width=.6\textwidth]{images/poolthreadedserver}
 
 \href{https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html}{Fonte}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{Staged Event-Driven Architecture}
+
 \includegraphics[width=.98\textwidth]{images/seda1}
 
 %\href{http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png}{Fonte}
 
 E se quebrarmos o processamento em vários pools?
-\framebreak
+
+Esta abordagem é conhecida como **Staged Event-Driven Architecture**
 
 \includegraphics[width=.6\textwidth]{images/seda2}
 
-Lembra arquitetura de micro-serviços.
+Que lembra arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html)
 
-\href{http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html}{Fonte}
+Se você quiser ler mais sobre SEDA, vá [aqui](http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf).
 
-\href{http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf}{Mais}
-\end{frame}
 
 
 \begin{frame}
@@ -158,190 +159,173 @@ Mantém informação dos clientes entre requisições.
 
 
 
+## Multithread na prática
 
+### PThreads
 
-\subsection{Exercício}
+#### Função de entrada
 
-
-\begin{frame}[fragile,allowframebreaks]{PThreads}{teste.c}
-\begin{block}{Função de Entrada}
-	\begin{lstlisting}[language=C]
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <pthread.h>
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
 	
-	int thread_count;
-	
-	void* hello(void* rank) {
+int thread_count;
+
+void* hello(void* rank) {
 	long my_rank = (long) rank;
 	printf("Hello from thread %ld of %d\n", my_rank, thread_count);
 	return NULL;
-	}
-	\end{lstlisting}
-\end{block}
+}
+```
 
-\framebreak
+#### Criação
 
-\begin{block}{Criação}
-	\begin{lstlisting}[language=C]   
-	int main(int argc, char* argv[]) {
+```c
+int main(int argc, char* argv[]) {
 	long thread;
 	pthread_t* thread_handles;
 	
 	if(argc < 2) {
-	printf("usage: %s <number of threads>", argv[0]); 
-	return 1;
+		printf("usage: %s <number of threads>", argv[0]); 
+		return 1;
 	}
 	
 	thread_count = strtol(argv[1], NULL, 10);
 	thread_handles = malloc(thread_count*sizeof(pthread_t));
 	
 	for (thread = 0; thread < thread_count; thread++)
-	pthread_create(&thread_handles[thread], NULL, hello, (void*) thread);
+		pthread_create(&thread_handles[thread], NULL, hello, (void*) thread);
 	
 	printf("Hello from the main thread\n");
-	
-	\end{lstlisting}
-\end{block}
+```	
 
-\framebreak
+#### Destruição
 
-\begin{block}{Destruição}
-	\begin{lstlisting}[language=C]   
+```c
 	for (thread = 0; thread < thread_count; thread++)
-	pthread_join(thread_handles[thread], NULL);
+		pthread_join(thread_handles[thread], NULL);
 	
 	free(thread_handles);
-	return 0;
-	}
-	\end{lstlisting}
-\end{block}
+```
 
+#### Execução
 
-\begin{block}{Execução}
-	Compile com\\
-	\lstinline|gcc -lpthread teste.c -o teste|
+Compile com
+```bash
+gcc -pthread teste.c -o teste
+````
+
+e execute com 
+```bash
+./teste 5
+```
+
+Observe que a saída das threads é *ordenada*. Agora experimente
+```bash
+./teste 200
+```
+
+Isto acontece porquê a execução das threads independe da ordem de criação. De fato, usando PThreads, temos pouco controle sobre os threads que criamos. Mas isto não quer dizer que estamos "órfãos" de API.
+
+* `pthread_create` - cria novo thread
+   * passagem de parâmetros
+   * opções
+* `pthread_join` - espera thread terminar
+   * recebe resultado da thread
+* `pthread_tryjoin` - espera thread terminar
+* `pthread_exit` - termina a thread e retorna resultado 
+   > An implicit call to \lstinline|pthread_exit()| is made when a thread other than the thread in which \lstinline|main()| was first invoked returns from the start routine that was used to create it. The function's return value serves as the thread's exit status. (manual do \lstinline|pthread_exit|)}
 	
-	Execute com\\
-	\lstinline|./teste 5|
-\end{block}
-\end{frame}
+* pthread_attr_setaffinity_np* - ajusta afinidade dos threads.
 
+#### Threads Java
 
-\begin{frame}{API}
-\begin{small}
-\begin{itemize}
-	\item \lstinline!pthread_create!: cria novo thread\\
-	passagem de parâmetros\\
-	opções\\
-	
-	\item \lstinline!pthread_join!: espera thread terminar\\
-	recebe resultado da thread
-	\item \lstinline!pthread_tryjoin!: espera thread terminar
-	
-	\item \lstinline!pthread_exit!: termina a thread e retorna resultado\footnote{An implicit call to \lstinline|pthread_exit()| is made when a thread other than the thread in which \lstinline|main()| was first invoked returns from the start routine that was used to create it. The function's return value serves as the thread's exit status. (manual do \lstinline|pthread_exit|)}
-	
-	\item \lstinline!pthread_attr_setaffinity_np!: ajusta afinidade dos threads.
-\end{itemize}
-\end{small}
-\end{frame}
-
-
-\begin{frame}[fragile,allowframebreaks]{Threads Java}
-\begin{block}{Estender Thread}
-\begin{lstlisting}[language=Java]
+##### Estender Thread
+```java
 public class HelloThread extends Thread {
-public void run() {
-System.out.println("Hello from a thread!");
-}
+   public void run() {
+      System.out.println("Hello from a thread!");
+   }
 
-public static void main(String args[]) {
-Thread t = new HelloThread();
-t.start()
-t.join()
+   public static void main(String args[]) {
+      Thread t = new HelloThread();
+      t.start()
+      t.join()
+   }
 }
-}
-\end{lstlisting}
-\end{block}
+```
 
-\framebreak
+##### Implementar Runnable
 
-\begin{block}{Implementar Runnable}
-\begin{lstlisting}[language=Java]
+```java
 public class HelloRunnable implements Runnable {
-public void run() {
-System.out.println("Hello from a thread!");
-}
+   public void run() {
+      System.out.println("Hello from a thread!");
+   }
 
-public static void main(String args[]) {
-Thread t = new Thread(new HelloRunnable());
-t.start();
-t.join();
-}
+   public static void main(String args[]) {
+      Thread t = new Thread(new HelloRunnable());
+      t.start();
+      t.join();
+   }
 }	
-\end{lstlisting}
-\end{block}
+```
 
-\framebreak
+##### Executors
 
-\begin{block}{Executors}
-\begin{lstlisting}[language=java]
+```java
 ExecutorService executor = Executors.newSingleThreadExecutor();
 executor.submit(() -> {
-String threadName = Thread.currentThread().getName();
-System.out.println("Hello " + threadName);
-}
-);
-\end{lstlisting}
-\end{block}
-\url{http://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html}
-\end{frame}
+   String threadName = Thread.currentThread().getName();
+   System.out.println("Hello " + threadName);
+});
+```
 
-\note{Algumas funções não são óbvias. É preciso estudar suas especificações. Veja o seguinte exemplo.}
+Você pode aprender mais sobre executores [aqui](http://docs.oracle.com/javase/tutorial/essential/concurrency/executors.html).
 
-\begin{frame}[fragile]{Sleep}
-\begin{lstlisting}[language=Java]
+Algumas funções não são óbvias. É preciso estudar suas especificações. Veja o seguinte exemplo, onde o `sleep` não é garantido dormir pelo tempo especificado, 4000ms.
+
+```java
 try {
-Thread.sleep(4000);
+   Thread.sleep(4000);
 } catch (InterruptedException e) {
-return;
-}	
-\end{lstlisting}
+   return;
+}
+```
 
-Sleep não é garantido.
+Isso ocorre porquê seria complicado implementar um timer perfeito. Algo semelhante acontece quando se faz um `lock.await()`
 
-\end{frame}
 
-\note{Isso ocorre porquê seria complicado implementar um timer perfeito. Algo semelhante acontece quando se faz um \lstinline|lock.await()|}
+#### Threads em Python
 
-\begin{frame}[fragile]{Python}
-\begin{lstlisting}[language=Python]
+```python
 #!/usr/bin/python
 import thread
 import time
 
 # Define a function for the thread
 def print_time( threadName, delay):
-count = 0
-while count < 5:
-time.sleep(delay)
-count += 1
-print "%s: %s" % ( threadName, time.ctime(time.time()) )
+   count = 0
+   while count < 5:
+      time.sleep(delay)
+      count += 1
+      print "%s: %s" % ( threadName, time.ctime(time.time()) )
 
 # Create two threads as follows
 try:
-thread.start_new_thread( print_time, ("Thread-1", 2, ) )
-thread.start_new_thread( print_time, ("Thread-2", 4, ) )
+   thread.start_new_thread( print_time, ("Thread-1", 2, ) )
+   thread.start_new_thread( print_time, ("Thread-2", 4, ) )
 except:
-print "Error: unable to start thread"
+   print "Error: unable to start thread"
 
 while True:
-pass
-\end{lstlisting}
-\end{frame}
+   pass
+```
 
-\begin{frame}[fragile,allowframebreaks]{Python}
-\begin{lstlisting}[language=Python]
+Ou
+
+```python
 #!/usr/bin/python
 
 import threading
@@ -350,23 +334,23 @@ import time
 exitFlag = 0
 
 class myThread (threading.Thread):
-def __init__(self, threadID, name, counter):
-threading.Thread.__init__(self)
-self.threadID = threadID
-self.name = name
-self.counter = counter
-def run(self):
-print "Starting " + self.name
-print_time(self.name, self.counter, 5)
-print "Exiting " + self.name
+   def __init__(self, threadID, name, counter):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.counter = counter
+   def run(self):
+      print "Starting " + self.name
+      print_time(self.name, self.counter, 5)
+      print "Exiting " + self.name
 
-def print_time(threadName, counter, delay):
-while counter:
-if exitFlag:
-threadName.exit()
-time.sleep(delay)
-print "%s: %s" % (threadName, time.ctime(time.time()))
-counter -= 1
+   def print_time(threadName, counter, delay):
+      while counter:
+         if exitFlag:
+            threadName.exit()
+         time.sleep(delay)
+         print "%s: %s" % (threadName, time.ctime(time.time()))
+         counter -= 1
 
 # Create new threads
 thread1 = myThread(1, "Thread-1", 1)
@@ -377,61 +361,52 @@ thread1.start()
 thread2.start()
 
 print "Exiting Main Thread"
-\end{lstlisting}
-\end{frame}
+```
 
+Um tipo interessante em linguagens como Java e C++ é o ThreadLocal. Veja um exemplo em Java.
 
-\begin{frame}[fragile]{ThreadLocal}
-\begin{lstlisting}[language=Java]
+```java
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ThreadId {
-// Atomic integer containing the next thread ID to be assigned
-private static final AtomicInteger nextId = new AtomicInteger(0);
+   // Atomic integer containing the next thread ID to be assigned
+   private static final AtomicInteger nextId = new AtomicInteger(0);
 
-// Thread local variable containing each thread's ID
-private static final ThreadLocal<Integer> threadId = 
-new ThreadLocal<Integer>() {
-@Override protected Integer initialValue() {
-return nextId.getAndIncrement();
+   // Thread local variable containing each thread's ID
+   private static final ThreadLocal<Integer> threadId = new ThreadLocal<Integer>() {
+      @Override 
+	  protected Integer initialValue() {
+         return nextId.getAndIncrement();
+      }
+   };
+
+   // Returns the current thread's unique ID, assigning it if necessary
+   public static int get() {
+      return threadId.get();
+   }
 }
-};
+```
 
-// Returns the current thread's unique ID, assigning it if necessary
-public static int get() {
-return threadId.get();
-}
-}
-\end{lstlisting}
-\href{https://docs.oracle.com/javase/7/docs/api/java/lang/ThreadLocal.html}{Fonte}
-\end{frame}
+Uma boa explicação se encontra [aqui](
+https://docs.oracle.com/javase/7/docs/api/java/lang/ThreadLocal.html)
+
+### Exercício - Anel Multithread
+
+* Usando uma linguagem de alto-nível como C/C++/Java, escrever um programa que crie 30 threads e faça com que uma mensagem circule entre os mesmos. 
+* A mensagem é uma string aleatória de pelo menos 80 caracteres. 
+* A cada vez que um thread recebe a mensagem ele a imprime, modifica o primeiro caractere minúsculo para maiúsculo, caso exista, dorme por 1 segundo, e repassa a mensagem. 
+* Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. 
+* Antes de terminar, o processo deve imprimir a mensagem resultante.
 
 
+Aqui vão alguns ponteiros para ler mais
 
-\begin{frame}{Para ler}
+[Concorrência em Java](http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html)
 
-\href{http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html}{Concorrência em Java}
+[Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
 
-\href{http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/}{Futures e Promises}
+[Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
 
-\href{http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/}{Locks}
+[Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
 
-\href{http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/}{Tipos Atômicos}
-
-\href{https://www.tutorialspoint.com/python/python_multithreading.htm}{Threads em Python}
-\end{frame}
-
-\subsection{Exercício}
-
-\begin{frame}{Exercício}
-Anel Multithread
-\begin{itemize}
-\item Usando uma linguagem de alto-nível como C/C++/Java, escrever um programa que crie 30 threads e faça com que uma mensagem circule entre os mesmos. 
-\item A mensagem é uma string aleatória de pelo menos 80 caracteres. 
-\item A cada vez que um thread recebe a mensagem ele a imprime, modifica o primeiro caractere minúsculo para maiúsculo, caso exista, dorme por 1 segundo, e repassa a mensagem. 
-\item Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. \item Antes de terminar, o processo deve imprimir a mensagem resultante.
-\end{itemize}
-%Entrega na próxima Terça feira.
-
-\end{frame}
-
+[Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
