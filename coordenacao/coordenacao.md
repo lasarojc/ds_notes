@@ -65,7 +65,7 @@ Nesta abordagem, o seguinte protocolo é implementado:
 ---
 ##### Centralizado
 
-![Tanembaum 6.14](images/06-14.png)
+![Tanembaum 6.14](./images/06-14.png)
 
 ---
 
@@ -105,7 +105,7 @@ Nesta abordagem, os processos se organizam em um anel lógico, com um processo a
 ---
 ##### Anel
 
-![Anel](images/06-16.png)
+![Anel](./images/06-16.png)
 
 ---
 
@@ -138,7 +138,7 @@ Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algorit
 * Em ambos os algoritmos, se o processo acessando o recurso falha, a permissão é perdida e os demais processos sofrerão inanição.
 * No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido o anel não conseguirá circular.
 
-Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me ofereção alguma baseada em *timeouts*. Por exemplo, se o processo não devolver a permissão de acesso antes de um *timeout*, então assuma que o mesmo está falho e gere nova permissão, a ser passada a outros requisitantes.
+Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me oferecerão alguma baseada em *timeouts*. Por exemplo, se o processo não devolver a permissão de acesso antes de um *timeout*, então assuma que o mesmo está falho e gere nova permissão, a ser passada a outros requisitantes.
 
 O problema desta e outras "soluções" baseadas em *timeouts" está no **assumir que o processo está falho**, pois caso isso não seja verdade, teremos agora dois *tokens*  no sistema, podendo levar à violação da propriedade de exclusão mútua. Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, o mesmo pode sempre estar errado. De fato, temos que
 
@@ -357,7 +357,7 @@ Como isso pode ser feito, na prática?
 ---
 ##### Identidade
 
-* PID -- Process Identier
+* PID -- Process Identifier
 * IP -- Internet Protocol Address
 * Socket -- IP + Port
 
@@ -378,7 +378,7 @@ Como isso pode ser feito, na prática?
 * Ao assumir como líder, o processo notifica a todos os outros
 * Se um processo falho se recupera, inicia uma eleição.
 
-[![Bully](images/bully.png)](https://my.oschina.net/juliashine/blog/88173)
+[![Bully](./images/bully.png)](https://my.oschina.net/juliashine/blog/88173)
 
 ### Algoritmo do Anel
 
