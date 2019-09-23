@@ -47,114 +47,94 @@ Vantagens similares a usar em sistemas centralizado.
 
 Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.
 
-\includegraphics[width=.5\textwidth]{images/singlethreadedserver}
+![Single Threaded](./images/singlethreadedserver.gif)
 
 ---
 
 Outra opção é criar um novo tthread para cada nova requisição e atende múltiplas requisições concorrentemente.
 
-\includegraphics[width=.5\textwidth]{images/multithreadedserver}
-
+![Multi Threaded](./images/multithreadedserver.gif)
 
 * Permite tratar requisições enquanto faz IO.
 * Número de threads é limitado. %Pelo framework em uso.
 * Número de threads deve ser limitado. %Para não saturar o servidor.
 * Criação e destruição de threads é cara.
 
-Assim, temos uma outra oção que também usa múltiplos threads.
+Assim, temos uma outra opção que também usa múltiplos threads, que usa *pools*  de threads para lidar com as requições.
 
-\includegraphics[width=.6\textwidth]{images/poolthreadedserver}
-
-\href{https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html}{Fonte}
-\end{frame}
+[![Pool Threaded](./images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
 
 
-\includegraphics[width=.98\textwidth]{images/seda1}
+E se quebrarmos o processamento em vários pools, no que é conhecido como SEDA - **Staged Event-Driven Architecture**.
 
-%\href{http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png}{Fonte}
+[![Seda](images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
-E se quebrarmos o processamento em vários pools?
+Assim, cada estágio pode ter seu próprio *pool*, que se escala individualmente.
 
-Esta abordagem é conhecida como **Staged Event-Driven Architecture**
+[![Seda](images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
-\includegraphics[width=.6\textwidth]{images/seda2}
+
 
 Que lembra arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html)
 
 Se você quiser ler mais sobre SEDA, vá [aqui](http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf).
 
 
+### Problemas com multithreading
 
-\begin{frame}
-\includegraphics[width=\textwidth]{images/multithreaded}
-\end{frame}
+Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
+E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.
 
+![Multithreaded](images/multithread2.png)
 
-\begin{frame}
-\includegraphics[width=\textwidth]{images/multithread2}
-\end{frame}
+A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos.
 
+![Multithreaded](./images/multithreaded.jpg)
 
-\begin{frame}{Problemas}
+Memes bonitinhos à parte, precisamos enfrentar condições de corrida de forma a não levar **inconsistências**.
 
-\includegraphics[width=\textwidth]{images/multithread3}
-\href{https://www.youtube.com/watch?v=JRaDkV0itbM}{Fonte}
+![Multithreaded](images/multithread3.png)
 
+Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
+Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros pontos importantes.
 
-\begin{itemize}
-	\item Inconsistências
-	\item  Deadlock
-	\item Inanição
-\end{itemize}
-\end{frame}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-\subsection{Estado em Servidores}
+### Estado em Servidores
 
-\begin{frame}{Stateless Servers} 
+
+#### Stateless Servers
+
 Não mantém informação após terminar de tratar requisições.
-\begin{itemize}
-	\item Fecha todos os arquivos abertos
-	\item Não faz promessas de atualização ao cliente
-	\item Clientes e servidores são independentes
-	
-	\item Pouca ou nenhuma inconsistência causada por falhas
-	\item Perda de desempenho (e.g., abertura do mesmo arquivo a cada requisição.)
-\end{itemize}
-\end{frame}
 
-\begin{frame}{Stateful Servers} 
+* Fecha todos os arquivos abertos
+* Não faz promessas de atualização ao cliente
+* Clientes e servidores são independentes
+	
+* Pouca ou nenhuma inconsistência causada por falhas
+* Perda de desempenho (e.g., abertura do mesmo arquivo a cada requisição.)
+
+
+#### Stateful Servers
+
 Mantém informação dos clientes entre requisições.
-\begin{itemize}
-	\item Mantem arquivos abertos
-	\item Sabe quais dados o cliente tem em cache
-	
-	\item Possíveis inconsistência causada por falhas (cliente se conecta a servidor diferente)
-	\item Melhor desempenho
-	
-	\item Maior consumo de recursos
-\end{itemize}
-\end{frame}
 
-\begin{frame}{Impacto na Concorrência}
-\begin{small}
-	\begin{multicols}{2}
-		\begin{block}{Stateless}
-		\begin{itemize}
-		\item Resultado depende da entrada
-		\item Qualquer servidor pode atender
-		\end{itemize}
-		\end{block}
-		\begin{block}{Stateful}
-			\begin{itemize}
-				\item Depende do histórico de entradas		
-				\item Mesmo servidor deve atender
-				\end{itemize}
-				\end{block}
-	\end{multicols}
-\end{small}
-\end{frame}
+* Mantem arquivos abertos
+* Sabe quais dados o cliente tem em cache
+	
+* Possíveis inconsistência causada por falhas (cliente se conecta a servidor diferente)
+* Melhor desempenho
+	
+* Maior consumo de recursos
 
+
+#### Impacto na Concorrência
+
+| Stateless | Stateful |
+|-----------|----------|
+| Resultado depende da entrada| Depende do histórico de entradas |
+| Qualquer servidor pode atender | Mesmo servidor deve atender |
 
 
 
