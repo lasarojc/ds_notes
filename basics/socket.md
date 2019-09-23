@@ -398,7 +398,7 @@ while True:
 
 
 ---
-##### Multicast Client -- Em Python (3)
+##### Multicast Client - Em Python (3)
 
 ```Python
 import socket

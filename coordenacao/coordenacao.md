@@ -105,7 +105,7 @@ Nesta abordagem, os processos se organizam em um anel lógico, com um processo a
 ---
 ##### Anel
 
-![Anel](images/06-16.png}
+![Anel](images/06-16.png)
 
 ---
 
@@ -340,7 +340,7 @@ O problema da escolha de um processo centralizador pode ser posto informamente c
 Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que precisamos?
 
 ---
-##### Eleição de representate de sala
+##### Eleição de representante de sala
 
 * Votação?
   * Identidade
@@ -349,183 +349,128 @@ Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que p
 
 ---
 
-PARA SER TERMINADO
-==================
 
-
-\begin{frame}{Identidade}
 Antes de qualquer coisa, é preciso ser possível identificar um processo.
 
 Como isso pode ser feito, na prática?
 
-\pause
+---
+##### Identidade
 
-\begin{itemize}
-	\item PID -- Process Identier
-	\item IP -- Internet Protocol Address
-	\item Socket -- IP + Port
-\end{itemize}
-\end{frame}
+* PID -- Process Identier
+* IP -- Internet Protocol Address
+* Socket -- IP + Port
 
-
-\begin{frame}{Algoritmo do Brigão/Bully}
-\begin{itemize}
-	\item Selecione o processo ``vivo'' com o maior identificador!
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem ``eleição,$p$'' para todos os processo com identificador maior
-		\item Se ninguém responde, $p$ assume como líder
-		\item Se algum responde, aguarda notificação.
-	\end{itemize}
-	\item Quando $q$ recebe ``eleição,$p$''
-	\begin{itemize}
-		\item Envia ``ok'' para $p$
-		\item Fica ciente de que o coordenador atual está morto
-	\end{itemize}
-\pause
-	\item Ao assumir como líder, o processo notifica a todos os outros
-	\item Se um processo falho se recupera, inicia uma eleição.
-	
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Algoritmo do Brigão/Bully}
-	\includegraphics[width=.75\textwidth]{images/bully}
-	
-	\href{https://my.oschina.net/juliashine/blog/88173}{Fonte}
-\end{frame}
-
-\begin{frame}{Algoritmo do Anel}
-\begin{itemize}
-	\item Organize os nós em um anel lógico
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem \{$p$\} para ``a direita'' no anel.
-		\item Se processo à direita está falho, salte-o, e assim por diante.
-	\end{itemize}
-	\pause
-	\item Quando $q$ recebe \{$p$\}
-	\begin{itemize}
-		\item Envia  \{$p,q$\} para a direita.
-	\end{itemize}
-	\pause
-	\item Quando $p$ recebe $S$ tal que $q \in S$
-	\begin{itemize}
-		\item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Chang \& Robert's}
-\begin{itemize}
-	\item Organize os nós em um anel lógico
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
-		\item Liga flag ``participante''
-	\end{itemize}
-	\pause
-	\item Quando $q$ recebe $p$
-	\begin{itemize}
-		\item Se $p > q$, repassa $p$ para a direita.
-		\item Senão, envia  $q$ para a direita.
-		\item Liga flag ``participante''		
-	\end{itemize}
-	\pause
-	\item Quando $p$ recebe $q$ da esquerda 
-	\begin{itemize}
-		\item Se ``participante'' está ligado, identifica $q$ como líder.
-		\item Desliga ``participante''
-		\item Se $p \neq q$, repassa $q$ à direita
-	\end{itemize}
-\end{itemize}
-\end{frame}
+---
 
 
-\begin{frame}[allowframebreaks]{Yo-Yo}
-\begin{itemize}
-	\item Grafos incompletos
-	\item Duas fases
-\end{itemize}
+### Algoritmo do Brigão (Bully)
 
-	\framebreak
+* Selecione o processo ``vivo'' com o maior identificador!
+* Quando $p$ acha que o líder está morto:
+  * Envia mensagem ``eleição,$p$'' para todos os processo com identificador maior
+  * Se ninguém responde, $p$ assume como líder
+  * Se algum responde, aguarda notificação.
+* Quando $q$ recebe ``eleição,$p$''
+  * Envia ``ok'' para $p$
+  * Fica ciente de que o coordenador atual está morto
 
-	\begin{block}{Fase 1}
-	\begin{itemize}
-		\item $p$ envia seu identificador para seus vizinhos.
-		\item Quando $q$ recebe $p$
-		\begin{itemize}
-			\item Se $p>q$, adiciona aresta $q\rightarrow p$
-			\item Senão, adiciona aresta $q\leftarrow p$
-			\item Fonte (source)
-			\item Vertedouro (sink)
-			\item Interno
-		\end{itemize}
-	\end{itemize}
-	\end{block}
+* Ao assumir como líder, o processo notifica a todos os outros
+* Se um processo falho se recupera, inicia uma eleição.
 
-\framebreak
+[![Bully](images/bully.png)](https://my.oschina.net/juliashine/blog/88173)
 
-	\begin{block}{Fase 2: Yo-\alert{Yo}}
-	\begin{itemize}
-	\item Fontes enviam seus identificadores para seus vizinhos.
-	\item Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
-	\item Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
-	\end{itemize}
-	\end{block}
+### Algoritmo do Anel
 
-\framebreak
+* Organize os nós em um anel lógico
+* Quando $p$ acha que o líder está morto:
+  * Envia mensagem \{$p$\} para ``a direita'' no anel.
+  * Se processo à direita está falho, salte-o, e assim por diante.
+* Quando $q$ recebe \{$p$\}
+  * Envia  \{$p,q$\} para a direita.
+* Quando $p$ recebe $S$ tal que $q \in S$
+  * Escolhe menor id em $S$, por exemplo, e anuncia como líder.
 
-	\begin{block}{Fase 2: \alert{Yo}-Yo}
-	\begin{itemize}
-	\item Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
-	\item Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
-	\item Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
-	\item N inverte a direção das arestas em que trafega.
-	\item Possível otimizar para eliminar nós e arestas irrelevantes.
-	\end{itemize}
-	\end{block}
-\framebreak
 
-	\includegraphics[width=.8\textwidth]{images/yoyo}*
-	
-\begin{small}
-a) The network, b) Oriented network after setup phase, c) YO- phase in which source values are passed, d)-YO phase sending responses from sinks, e) updated structure after -YO phase. **
+### Chang & Robert's
 
-*\href{https://commons.wikimedia.org/w/index.php?curid=36757409}{Fonte: Hemis62 - Own work, CC BY-SA 4.0, }
+* Organize os nós em um anel lógico
+* Quando $p$ acha que o líder está morto:
+  * Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
+  * Liga flag ``participante''
+* Quando $q$ recebe $p$
+  * Se $p > q$, repassa $p$ para a direita.
+  * Senão, envia  $q$ para a direita.
+  * Liga flag ``participante''		
+* Quando $p$ recebe $q$ da esquerda 
+  * Se ``participante'' está ligado, identifica $q$ como líder.
+  * Desliga ``participante''
+  * Se $p \neq q$, repassa $q$ à direita
 
-**\href{https://en.wikipedia.org/wiki/Leader_election}{Fonte}
-\end{small}
-\end{frame}
+### Yo-Yo
 
-\begin{frame}{Problemas?}
+* Grafos incompletos
+* Duas fases
+
+#### Fase 1
+* $p$ envia seu identificador para seus vizinhos.
+* Quando $q$ recebe $p$
+  * Se $p>q$, adiciona aresta $q\rightarrow p$
+  * Senão, adiciona aresta $q\leftarrow p$
+  * Fonte (source)
+  * Vertedouro (sink)
+  * Interno
+
+#### Fase 2
+
+* Fontes enviam seus identificadores para seus vizinhos.
+* Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
+* Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
+
+#### Fase 2
+
+* Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
+* Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
+* Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
+* N inverte a direção das arestas em que trafega.
+* Possível otimizar para eliminar nós e arestas irrelevantes.
+
+
+
+![YoYo](images/yoyo.png)
+
+* a) The network
+* b) Oriented network after setup phase
+* c) YO- phase in which source values are passed
+* d) -YO phase sending responses from sinks
+* e) updated structure after -YO phase.
+
+[Fonte YoYo: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)
+
+[Fonte Leader Election](https://en.wikipedia.org/wiki/Leader_election)
+
+
+### Problemas?
+
 O que acontece se a rede é particionada?
-\end{frame}
 
-\begin{frame}{Split Brain}
-\begin{itemize}
-	\item Network Partitioning: rede dividida em duas partes incomunicáveis.
-	\item Múltiplas eleições podem acontecer em paralelo.
-	\item Múltiplos líderes em paralelo.
-	\item Como lidar com este problema?	
-	\pause
-	\begin{itemize}
-		\item Use primeiro algoritmo e só eleja líder após maioria de votos.
-		\item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
-	\end{itemize}
-\end{itemize}
-\end{frame}
+#### Split Brain
 
-\begin{frame}{Detecção de Falhas}
+* Network Partitioning: rede dividida em duas partes incomunicáveis.
+* Múltiplas eleições podem acontecer em paralelo.
+* Múltiplos líderes em paralelo.
+* Como lidar com este problema?	
+  * Use primeiro algoritmo e só eleja líder após maioria de votos.
+  * Rede redundante, disco compartilhado,... 
+  * centralização... volta ao primeiro caso.
+
+#### Detecção de Falhas
+
 Eleição de líderes perfeita é impossível em cenários realísticos.
-\begin{itemize}
-	\item Detecção de falhas perfeita é impossível...
-	\item em sistemas distribuídos assíncronos (Internet)
-	\item sujeitos à partições (Internet)
-	\item com requisitos de disponibilidade total.
-	\pause
-	\item Falemos mais sobre este problema depois.
-\end{itemize}
-\end{frame}
 
-#Fim da aula 12
+Detecção de falhas perfeita é impossível...<br>
+em sistemas distribuídos assíncronos (Internet) <br>
+sujeitos à partições (Internet) <br>
+com requisitos de disponibilidade total.
+
+Falemos mais sobre este problema depois.

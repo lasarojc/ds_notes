@@ -12,19 +12,22 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Como distribuir?](./intro/middleware.md)
 * [Tipos e Arquiteturas](./intro/tipos.md)
 
-## Comunicação
+## Cliente e Servidor (Básico)
 
 * [Sockets](./basics/socket.md)
 * [Invocação Remota de Procedimentos](./basics/rpc.md)
 * [Estudo de Caso: gRPC](./basics/grpc.md)
 * [Estudo de Caso: Thrift](./TODO.md)
 * [Estudo de Caso: RMI](./TODO.md)
+* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
 * [Projeto](./projeto/client_server.md)
+
+## Publish/Subscribe
+
 * [*Publish/Subscribe*](./TODO.md)
 
 ## Concorrência
 
-* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
 * [Concorrência](./concorrencia/concorrencia.md)
 
 ## Peer-2-Peer
