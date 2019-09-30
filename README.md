@@ -3,16 +3,18 @@ Sistemas Distribuídos na Prática
 
 Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL como motivação. A versão publicada destas notas está disponível [aqui](https://lasarojc.github.io/ds_notes/).
 
-# Índice
+A estrutura intendida no final deste primeiro semestre em que as notas estão sendo estruturadas em MD é a seguinte.
+Os links abaixo podem estar quebrados. Para ver a versão atual, use o índice à esquerda.
 
-## Introdução
+
+# Introdução
 
 * [Motivação](./intro/motivacao.md)
 * [O quê e por quê?](./intro/definicao.md)
 * [Como distribuir?](./intro/middleware.md)
 * [Tipos e Arquiteturas](./intro/tipos.md)
 
-## Comunicação
+# Comunicação
 
 * [Sockets](./basics/socket.md)
 * [Invocação Remota de Procedimentos](./basics/rpc.md)
@@ -22,21 +24,21 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Projeto](./projeto/client_server.md)
 * [*Publish/Subscribe*](./TODO.md)
 
-## Concorrência
+# Concorrência
 
 * [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
 * [Concorrência](./concorrencia/concorrencia.md)
 
-## Peer-2-Peer
+# Peer-2-Peer
 
 * [Tabelas de Espalhamento Distribuídas](./p2p/dht.md)
 * [Estruturas de Dados para P2P e outros SD](./p2p/ed_sd.md)
 * [DynamoDB Deep Dive](./p2p/dynamo.md)
 * [Projeto](./projeto/p2p.md)
 
-## Micro-serviços
+# Micro-serviços
 
-## Coordenação
+# Coordenação
 
 * [Coordenação](./coordenacao/coordenacao.md)
 * [Tempo Físico](./tempo/fisico.md)
@@ -44,7 +46,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 
 
 
-## Tolerância a Falhas
+# Tolerância a Falhas
 * [Dependabilidade](./ft/dependabilidade.md)
 * [Modelos](./ft/modelos.md)
 * [Comunicação em Grupo](./ft/comunicao_grupo.md)
@@ -54,7 +56,7 @@ Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório
 * [Estudo de Caso: Atomix](./ft/atomix.md)
 * [Projeto](./projeto/replicated.md)
 
-## Tecnologias "Quentes"
+# Tecnologias "Quentes"
 
 * [Arquitetura Reativa](./reactive.md)
 * [Map & Reduce](./mapreduce.md)
