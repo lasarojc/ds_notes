@@ -24,6 +24,7 @@ github_username: lasarojc
 
 # Build settings
 markdown: kramdown
+mathjax: true
 theme: just-the-docs
 plugins:
   - jekyll-feed
