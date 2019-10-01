@@ -2,6 +2,7 @@
 layout: default
 title: Estudo de Caso - gRPC
 parent: RPC
+grand_parent: Revisão
 nav_order: 1
 ---
 
