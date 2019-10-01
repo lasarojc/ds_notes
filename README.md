@@ -1,65 +1,39 @@
-Sistemas Distribuídos na Prática
-======
+## Welcome to GitHub Pages
 
-Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL como motivação. A versão publicada destas notas está disponível [aqui](https://lasarojc.github.io/ds_notes/).
+🚀 🐼
 
-A estrutura intendida no final deste primeiro semestre em que as notas estão sendo estruturadas em MD é a seguinte.
-Os links abaixo podem estar quebrados. Para ver a versão atual, use o índice à esquerda.
+You can use the [editor on GitHub](https://github.com/pmarsceill/test-jtd/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
+Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-# Introdução
+### Markdown
 
-* [Motivação](./intro/motivacao.md)
-* [O quê e por quê?](./intro/definicao.md)
-* [Como distribuir?](./intro/middleware.md)
-* [Tipos e Arquiteturas](./intro/tipos.md)
+Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-# Comunicação
+```markdown
+Syntax highlighted code block
 
-* [Sockets](./basics/socket.md)
-* [Invocação Remota de Procedimentos](./basics/rpc.md)
-* [Estudo de Caso: gRPC](./basics/grpc.md)
-* [Estudo de Caso: Thrift](./TODO.md)
-* [Estudo de Caso: RMI](./TODO.md)
-* [*Multiprocessing* e *Multithreading*](./basics/multiprogramming.md)
-* [Projeto](./projeto/client_server.md)
+# Header 1
+## Header 2
+### Header 3
 
-## Publish/Subscribe
+- Bulleted
+- List
 
-* [*Publish/Subscribe*](./TODO.md)
+1. Numbered
+2. List
 
-# Concorrência
+**Bold** and _Italic_ and `Code` text
 
-* [Concorrência](./concorrencia/concorrencia.md)
+[Link](url) and ![Image](src)
+```
 
-# Peer-2-Peer
+For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-* [Tabelas de Espalhamento Distribuídas](./p2p/dht.md)
-* [Estruturas de Dados para P2P e outros SD](./p2p/ed_sd.md)
-* [DynamoDB Deep Dive](./p2p/dynamo.md)
-* [Projeto](./projeto/p2p.md)
+### Jekyll Themes
 
-# Micro-serviços
+Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pmarsceill/test-jtd/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-# Coordenação
+### Support or Contact
 
-* [Coordenação](./coordenacao/coordenacao.md)
-* [Tempo Físico](./tempo/fisico.md)
-* [Tempo Lógico](./tempo/logico.md)
-
-
-
-# Tolerância a Falhas
-* [Dependabilidade](./ft/dependabilidade.md)
-* [Modelos](./ft/modelos.md)
-* [Comunicação em Grupo](./ft/comunicao_grupo.md)
-* [Replicação de Máquinas de Estados](./ft/smr.md)
-* [Estudo de Caso: Raft](./fr/raft.md)
-* [Estudo de Caso: Zookeeper](./ft/zookeeper.md)
-* [Estudo de Caso: Atomix](./ft/atomix.md)
-* [Projeto](./projeto/replicated.md)
-
-# Tecnologias "Quentes"
-
-* [Arquitetura Reativa](./reactive.md)
-* [Map & Reduce](./mapreduce.md)
+Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
