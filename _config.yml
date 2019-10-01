@@ -1,4 +1,4 @@
-title: "Notas aula: Sistemas Distribuídos"
+title: "Notas de aula: Sistemas Distribuídos"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: "dark"
 search_enabled: false
@@ -6,3 +6,10 @@ github_username: lasarojc
 
 #Build settings
 markdown: kramdown
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - unused
+
+search_tokenizer_separator: /[\s/]+/
