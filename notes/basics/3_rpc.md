@@ -2,6 +2,7 @@
 layout: default
 title: RPC
 parent: Revisão
+has_children: true
 nav_order: 3
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Estudo de Caso - gRPC
-parent: Revisão
-nav_order: 4
+parent: RPC
+nav_order: 1
 ---
 
 # Estudo de Caso RPC: gRPC

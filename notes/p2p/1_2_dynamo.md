@@ -1,7 +1,7 @@
 ---
 layout: default
 title: DynamoDB
-parent: P2P
+parent: DHT
 nav_order: 2
 ---
 

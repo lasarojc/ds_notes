@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Dependabilidade
+title: Modelos 
 parent: Tolerância a Falhas
-nav_order: 1
+nav_order: 2
 ---
 
