@@ -1,16 +1,19 @@
 ---
 layout: home
-title: Índice
+title: Prólogo
 nav_order: 0
 ---
 
 Sistemas Distribuídos na Prática
 ======
 
-Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL como motivação. A versão publicada destas notas está disponível [aqui](https://lasarojc.github.io/ds_notes/).
+Este é um conjunto de notas de um curso de Sistemas Distribuídos introdutório, usando uma abordagem prática orientada a um projeto de sistemas de banco de dados NOSQL como motivação. 
 
 A estrutura intendida no final deste primeiro semestre em que as notas estão sendo estruturadas em MD é a seguinte.
 Os links abaixo podem estar quebrados. Para ver a versão atual, use o índice à esquerda.
+
+Estas notas são fortemente baseadas no livro de Steen e Tanembaum, [segunda edição](https://www.amazon.com.br/Distributed-Systems-Principles-Andrew-Tanenbaum/dp/153028175X). Em tempo, passaremos a usar a terceira edição.
+Além disso, há diversas referências a outros materiais disponíveis na Web.
 
 
 # Introdução
