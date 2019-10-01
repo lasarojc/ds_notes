@@ -1,7 +1,7 @@
 title: "Notas de aula: Sistemas Distribuídos"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: "dark"
-search_enabled: false
+search_enabled: true
 github_username: lasarojc
 
 #Build settings
@@ -13,3 +13,5 @@ exclude:
   - unused
 
 search_tokenizer_separator: /[\s/]+/
+
+mathjax: true
