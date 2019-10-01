@@ -482,7 +482,7 @@ O seguinte protocolo resolve este problema:
 ---
 ##### Lease
 
-* $$\Delta$$ - dessincronização máxima.
+* $\Delta$ - dessincronização máxima.
 * Ao receber um *lease* para a janela de tempo $t_1$ a $t_2$
     * espera até $t_1 + \Delta$
     * usa o recurso até $t_2$.
