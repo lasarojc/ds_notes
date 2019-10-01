@@ -1,4 +1,8 @@
-title: "Remote theme example"
+title: "Notas aula: Sistemas Distribuídos"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: "dark"
 search_enabled: false
+github_username: lasarojc
+
+#Build settings
+markdown: kramdown
