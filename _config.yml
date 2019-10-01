@@ -24,7 +24,8 @@ github_username: lasarojc
 
 # Build settings
 markdown: kramdown
-remote_theme: pmarsceill/just-the-docs
+#remote_theme: pmarsceill/just-the-docs
+theme: just-the-docs
 plugins:
   - jekyll-feed
 
@@ -32,14 +33,14 @@ plugins:
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
 exclude:
-   - Gemfile
-   - Gemfile.lock
+  - Gemfile
+  - Gemfile.lock
+  - unused
 #   - node_modules
 #   - vendor/bundle/
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-    - unused
 
 search_enabled: true
 search_tokenizer_separator: /[\s/]+/
