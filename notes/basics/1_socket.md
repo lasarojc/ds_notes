@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Sockets
-parent: Revisão
+parent: Básico
 nav_order: 1
 ---
 

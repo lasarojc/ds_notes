@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Estudo de Caso - Thrift
+title: Estudo de Caso - RMI
 parent: RPC
 grand_parent: Básico
 nav_order: 2

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Revisão
+title: Básico
 nav_order: 2
 has_children: true
 ---

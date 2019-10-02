@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Multiprogramação
-parent: Revisão
+parent: Básico
 nav_order: 2
 ---
 
@@ -776,7 +776,7 @@ print "Exiting Main Thread"
 ```
 
 
-[Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)# Concorrência
+[Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
 
 
 ### Exercício - Anel Multithread
