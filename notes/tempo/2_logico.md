@@ -65,8 +65,7 @@ Observe com atenção os eventos $f$ e $k$. Para estes, a regra não é respeita
 Para que seja, precisamos garantir que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.
 Com este ajuste, temos os Relógios de Lamport.
 
----
-###### Lamport Clock
+## Lamport Clock
 
 * Seja $c_p$ um contador em $p$ com valor inicialmente igual a 0.
 * Se o evento $e$ é uma operação local, $C(e) = ++c$ no momento em que $e$ ocorreu.
@@ -75,7 +74,6 @@ Com este ajuste, temos os Relógios de Lamport.
 
 !(LC - Primeira tentativa)(imagess/lc_lamport.png)
 
----
 
 Neste caso, temos que para quaisquer eventos $a,b$,  se $a \rightarrow b$ então $C(a) < C(b)$.
 
@@ -83,86 +81,40 @@ Neste caso, temos que para quaisquer eventos $a,b$,  se $a \rightarrow b$ então
 TODO: Exemplo em que não é bom o suficiente.
 
 
-Se $a \rightarrow b$ então $C(a) < C(b)$? Ok!
+Se $a \rightarrow b$ então $C(a) < C(b)$. Contudo, a volta não é verdade, isto é, se $C(a) < C(b)$ então $a \rightarrow b$.
+Esta propriedade é interessante na ordenação de eventos, pois evita que eventos concorrentes sejam ordenados.
+Entram os relógios vetoriais.
 
-Se $C(a) < C(b)$ então $a \rightarrow b$?
-
-\end{frame}
-
-\begin{frame}{Relógio vetorial}
+## Relógio vetorial
 Sejam $n$ processos. No processo $p$
-\begin{itemize}
-	\item Seja $c_p[i], 1 \leq i \leq n$ um contador, inicialmente igual a 0.
-	\item Se o evento $e$ é uma operação local, $c_p[p]++$ e $C(e) = c_p$ no momento em que $e$ ocorreu.
-	\item Se o evento $e$ é o envio de uma mensagem, então $C(e)$ é enviado com a mensagem como seu timestamp.
-	\item Se o evento $e$ é a recepção de uma mensagem com timestamp $ts$ de $q$, então
-	\begin{itemize}
-		\item $c_p[i] = max(c_p[i], ts[i]), i \neq p$
-		\item $c_p[p]++$
-		\item $C(e) = c_p$
-	\end{itemize}
-\end{itemize}
+* Seja $c_p[i], 1 \leq i \leq n$ um contador, inicialmente igual a 0.
+* Se o evento $e$ é uma operação local, $c_p[p]++$ e $C(e) = c_p$ no momento em que $e$ ocorreu.
+* Se o evento $e$ é o envio de uma mensagem, então $C(e)$ é enviado com a mensagem como seu timestamp.
+* Se o evento $e$ é a recepção de uma mensagem com timestamp $ts$ de $q$, então
+  * $c_p[i] = max(c_p[i], ts[i]), i \neq p$
+  * $c_p[p]++$
+  * $C(e) = c_p$
 
-\includegraphics[width=.7\textwidth]{images/lc_vc}
+!(Relógio Vetorial)[images/lc_vc.png]
 
-Se $a \rightarrow b$ então $C(a) < C(b)$?
-
-\pause
-Como comparar dois Vector Clocks?
-
-\end{frame}
-
-%\begin{frame}{Relógio vetorial}
-%Se $a \rightarrow b$ então $C(a) < C(b)$?
-%
-%\begin{itemize}
-%	\item $C(a) \leq C(b)$ se e somente se $\forall i, C(a)[i] \leq C(b)[i]$.
-%	\item $C(a) < C(b)$ se e somente $C(a) \leq C(b) \land C(a) \neq C(b)$
-%\end{itemize}
-%
-%\includegraphics[width=.7\textwidth]{images/lc_vc}
-%\end{frame}
-
-\begin{frame}{Pergunta}
-Que quer dizer $c_p[q] = k$?
-
-\pause
-
-Quer dizer que $p$ sabe que $q$ enviou $k$ mensagens.
-\end{frame}
-
-
-\begin{frame}{Comparação de Vector Clocks}
-\begin{itemize}
-\item $V = V' \iff V[i] = V'[i], 1 \leq i \leq n$
-\item $V \leq V' \iff V[i] \leq V'[i], 1 \leq i \leq n$
-\end{itemize}
+Como dito, este relógio lógico tem a seguinte propriedade: se $a \rightarrow b \RightLeftArrow C(a) < C(b)$.
+Mas como é defido $ < $ para vetores?
+* $V = V' \iff V[i] = V'[i], 1 \leq i \leq n$
+* $V \leq V' \iff V[i] \leq V'[i], 1 \leq i \leq n$
 
 Sejam dois eventos $e$ e $e'$
-\begin{itemize}
-\item Se $e \rightarrow e' \iff V(e) < V(e')$
-\item Se $V(e) \not\leq V(e')$ e $V(e') \not\leq V(e)$, são concorrentes.
-\end{itemize}
+* Se $e \rightarrow e' \iff V(e) < V(e')$
+* Se $V(e) \not\leq V(e')$ e $V(e') \not\leq V(e)$, são concorrentes.
 
-\includegraphics[width=.7\textwidth]{images/lc_vc}
-
-\end{frame}
-
-
-\begin{frame}{E daí?}
+Mas o que quer dizer $c_p[q] = k$?
+Quer dizer que $p$ sabe que $q$ enviou $k$ mensagens.
+E daí? O que pode ser feito com isso?  
 Com estes mecanismos é possível implementar
-\begin{itemize}
-\item Multicast Totalmente Ordenado:
-\begin{itemize}
-\item Totalmente Ordenado: todos os processos entregam as mensagens na mesma ordem
-\end{itemize}
-\item Multicast Causalmente Ordenado:
-\begin{itemize}
-\item Multicast: mensagens são enviadas de 1 para n (comunicação em grupo)
-\item Causalmente Ordenado: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.
-\end{itemize}
-\end{itemize}
-\end{frame}
+* Multicast Totalmente Ordenado:
+  * Multicast: mensagens são enviadas de 1 para n (comunicação em grupo)
+  * Totalmente Ordenado: todos os processos entregam as mensagens na mesma ordem
+* Multicast Causalmente Ordenado:
+  * Causalmente Ordenado: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.
 
 \begin{frame}{E daí?}
 \includegraphics[width=.6\textwidth]{images/06-11}
