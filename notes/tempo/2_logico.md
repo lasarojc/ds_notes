@@ -116,82 +116,71 @@ Com estes mecanismos é possível implementar
 * Multicast Causalmente Ordenado:
   * Causalmente Ordenado: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.
 
-\begin{frame}{E daí?}
-\includegraphics[width=.6\textwidth]{images/06-11}
+Novamente você pergunta, e daí? Bem, com estas abstrações, podemos resolver problemas interessantes como o seguinte.
+Considere um programa qualquer, que se comporte de forma determinística (isto é, dada uma mesma entrada, gera sempre uma mesma saída). Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
+Logo, se tivermos várias cópias deste programa, executando em locais distintos, mas garantirmos que cada cópia verá exatamente a mesma entrada de dados, então garantiremos que todas as cópias transitarão pelos mesmos estados e chegarão ao mesmo estado final.
+Acontece que multicast totalmente ordenado pode garantir exatamente isso, que todas as cópias receberão a mesma entrada.
 
-Se todos recebem na mesma ordem, o resultado final é o mesmo para todos.
+!(State Machine Replication)[images/06-11.png]
 
-\alert{State Machine Replication}
-\end{frame}
+Esta técnica é conhecida como Replicação de Maáquinas de Estados (em inglês, (*State Machine Replication*)[https://en.wikipedia.org/wiki/State_machine_replication]), ou pelo menos o seu princípio.
+
+Mas como podemos implementar estas primitivas de multicast usando relógios lógicos?
+Considere o seguinte algoritmo.
+
+---
+###### Multicast totalmente ordenado
+* Fila com prioridade em cada processo.
+* Mensagens são enviadas a todos os processos e colocadas em uma fila local.
+* Mensagens recebidas são colocadas na fila local e ack é enviado de volta.
+* $p$ só entrega uma mensagem $m$ recebida de $q$, com timestamp $ts$ quando
+  * $m$ está na cabeça da fila de $p$
+  * Para cada processo $q$, há uma mensagem $m'$ de $q$, $ts'$, na fila de $p$ tal $ts < ts'$
+* Canais confiáveis e FIFO.
+
+---
 
 
-\begin{frame}{Como implementar?}
+---
+###### Multicast causalmente ordenado
 
-\includegraphics[width=.6\textwidth]{images/06-10}
-
-Transparente para a aplicação.
-
-\end{frame}
-
-
-\begin{frame}{Multicast Totalmente Ordenado}
-\begin{itemize}
-\item Fila com prioridade em cada processo.
-\item Mensagens são enviadas a todos os processos e colocadas em uma fila local.
-\item Mensagens recebidas são colocadas na fila local e ack é enviado de volta.
-\item $p$ só entrega uma mensagem $m$ recebida de $q$, com timestamp $ts$ quando
-\begin{itemize}
-\item $m$ está na cabeça da fila de $p$
-\item Para cada processo $q$, há uma mensagem $m'$ de $q$, $ts'$, na fila de $p$ tal $ts < ts'$
-\end{itemize}
-\item Canais confiáveis e FIFO.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Multicast Causalmente Ordenado}
-\begin{itemize}
-\item Mensagens são enviadas a todos os processos.
-\item $p$ incrementa $c_p[p]$ somente no envio de mensagens.
-\item $p$ só entrega uma mensagem recebida de $q$, com timestamp $ts$ quando
-\begin{itemize}
-\item $ts[q] = c_p[q]+1$
-\item $ts[k] \leq c_p[k], k \neq q$
-\end{itemize}
-\end{itemize}
+* Mensagens são enviadas a todos os processos.
+* $p$ incrementa $c_p[p]$ somente no envio de mensagens.
+* $p$ só entrega uma mensagem recebida de $q$, com timestamp $ts$ quando
+  * $ts[q] = c_p[q]+1$
+  * $ts[k] \leq c_p[k], k \neq q$
 
 \includegraphics[width=.5\textwidth]{images/06-13}
-\end{frame}
 
-\begin{frame}{Multicast Causalmente Ordenado}
-
-\includegraphics[width=.5\textwidth]{images/06-13}
 
 Considere $c_{P_2}[0,2,2]$ e $ts=[1,3,0]$, de $P_0$. O que $P_2$ está esperando? Como age ao receber mensagem com $ts$?
-\end{frame}
+
+---
+
+## Exclusao Mútua Revisitada
+
+Retorno à exclusão mútua
+
+TODO: (Algoritmos de Excluão mútua baeados em LC)[http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf]
+
+TODO: Algoritmo de Lamport, Ricart e agrawalla
+
+TODO: Algoritmo de (Maekawa)[https://www.coursera.org/learn/cloud-computing-2/lecture/GMHYN/2-4-maekawas-algorithm-and-wrap-up]
 
 
 
-\subsection{Relógios Híbridos}
+## Relógios Híbridos
 
-\begin{frame}{Google TrueTime}
-%\includegraphics[width=.7\textwidth]{images/lc_hybrid}
+TODO: (Google TrueTime)[https://cloud.google.com/spanner/docs/true-time-external-consistency)
 
-\href{https://cloud.google.com/spanner/docs/true-time-external-consistency}{Fonte}
-\end{frame}
+## Hibrid Logical Clocks
 
-\begin{frame}{Hibrido}
-\includegraphics[width=.7\textwidth]{images/lc_hybrid}
+!(Hibrid Logical Clock)[images/lc_hybrid]
 
 Onde se lê 3,13, leia-se 3,10,3.
 
-\href{http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html}{Fonte}
-\end{frame}
+(Fonte)(http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html)
 
 
-%\section{Exclusao Mútua Revisitada}
-
-%\begin{frame}{Exclusão Mútua Revisitada}
-%TODO: retorno da exclusão mútua: Lamport, Ricart e agrawalla, and Maekawa (https://www.coursera.org/learn/cloud-computing-2/lecture/GMHYN/2-4-maekawas-algorithm-and-wrap-up)
-
-%TODO \href{http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf}
-%\end{frame}
+## Interceptadores
+!(Transparente para a aplicação)[images/06-10]
