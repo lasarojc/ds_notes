@@ -16,7 +16,37 @@ Enquanto o assiste, alguns pontos devem ser ressaltados
 
 
 
+Nestes ``bancos de dados'' distribuídos, pode-se optar por uma alta latência ou por um modelo de consistência eventual, no caso bem comportado; no caso de falhas, espera-se que a consistência seja eventualmente alcançada, mas não se pode garanti-la.
+\begin{frame}{Aplicações}
+\begin{itemize}
+\item Replicação + assincronismo = inconsistências
+\item consistência eventual 
+\end{itemize}
+\end{frame}
 
+\subsection{DynamoDB}
 
-TODO: To be Expanded
-====================
+Este modelo é adequado a algumas aplicações, como o carrinho de compras da Amazon.com
+\begin{frame}{Dynamo DB -- Consistência Eventual}
+\begin{itemize}
+\item \emph{Shopping Cart} da Amazon.com
+\item Chave: identificador do usuário
+\item Valor: conteúdo do carrinho de compras
+\item Modificações do carrinho criam novas versões\\  \alert{Consistência eventual}
+\item O que acontece no caso de falhas? Atrasos? \\   \alert{Múltiplas versões!}
+\item E no caso de o carrinho ficar errado?
+\end{itemize}
+
+\url{http://aws.amazon.com/dynamodb/}
+\end{frame}
+
+O modelo de blob do Dynamo impõe algumas restrições de uso para o desenvolvedor.
+
+\begin{frame}{Esquema de Dados}
+\begin{itemize}
+\item Valor no DynamoDB é um \alert{blob}
+\item Serialização e desserialização é um problema menor
+\item Entradas tem um Version Vector como versão
+\item Quais os dados com chave entre X e y?
+\end{itemize}
+\end{frame}
