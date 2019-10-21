@@ -47,12 +47,17 @@ Dependendo em como esta rede é organizada (ou não), a mesma é classificada co
 
 ### Rede Não-Estruturada
 
-Se a rede é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denomida uma rede *não-estruturada*. 
+Se a rede é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede *não-estruturada*. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
 ![[Não-estruturada]({http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)](images/unstructured.png)
 
-Suponha que esta rede 
+Suponha que esta rede seja usada para armazenar e consultar dados.
+Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
+Buscas, contudo, terão que vasculhar a rede usando algoritmos como
+* busca em largura
+* busca em profundidade
+* caminhada aleatória (resposta probabilística)
 
 ### Rede Estruturada
 
@@ -62,6 +67,22 @@ A estrutura geralmente serve ao propósito de associar os nós aos dados de uma 
 Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
 Claramente, a inserção e acesso a dados nesta rede é mais custosa, pois independentemente de onde a requisição é feita, isto é, a partir de qual nó, ela deverá ser atendida por um nó específico. 
 
+Veja o exemplo do Chord, uma rede P2P em que os nós formam um anel lógico, cujos detalhes veremos adiante.
+Cada nó é responsável pela faixa de valores indexados por chaves entre o identificador do nó e o do nó anterior.
+Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente para um determinado nó, e deve ser **roteada** para o mesmo.
+A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.
+
+![](images/05-04.png)
+
+
+Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica, e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.
+
+![](images/02-08.png)
+
+Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.
+
+
+### Resumo
 
  Estruturada                      | Não-Estruturada 
 ----------------------------------|---------------------------
@@ -71,54 +92,30 @@ Claramente, a inserção e acesso a dados nesta rede é mais custosa, pois indep
  Busca por dados é rápida         | Busca por dados lenta
 
 
-\begin{frame}{Estruturadas}
-\includegraphics[width=.45\textwidth]{images/05-04}	
+### De não estruturada a estruturada
 
-\begin{itemize}
-	\item Inserção de nós requer atualização de informações
-	\item Busca usa tabela de roteamento
-\end{itemize}
-\end{frame}
+Em certos cenários, é possível conseguir o melhor de dois mundos.
+Por exemplo, seja uma grade $N \times N$ em que nós se conectam aleatoriamente uns aos outros, e que nós em uma borda da matriz conseguem se conectar aos nós da borda oposta, com distância 1.
+Efetivamente, temos a rede sobreposta à esquerda.
 
-\begin{frame}{Estruturadas}
-\includegraphics[width=.7\textwidth]{images/02-08}	
+![](images/02-11.png)
 
-\begin{itemize}
-	\item Cada nó é responsável por uma área
-	\item A inserção/remoção de um nó causa um split/merge
-\end{itemize}
-\end{frame}
+Se cada nó executar executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada à direita.
+* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+  ![](images/02-10.png)
 
+* O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.
+* O módulo de seleção computa a distância entre o nó e todos os seus vizinhos, e descarta as conexões com maior distância, onde
+  * a = (x,y)$, $b = (x', y')$
+  * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
+  * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
 
+Ao final de múltiplas interações, cada nó conhecerá seus vizinhos à direita, esquerda, acima e abaixo.
+Outra visuzalização desta topologia é apresentada a seguir:
 
+![[Fujitsu and RIKEN, 2009](https://clusterdesign.org/torus/)](images/3d-torus.jpg)
 
+Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, no qual diversos esquemas de roteamento eficientes podem ser usados.
 
-\begin{itemize}
-	\item Inserção afeta apenas nós contactados
-	\item Busca requer varredura (p.e., inundação, random walk), ou índice
-\end{itemize}
-
-
-
-\begin{frame}{De não estruturada a estruturada}
-%\includegraphics[width=.6\textwidth]{images/3d_thorus}	
-%\href{https://clusterdesign.org/torus/}{Fujitsu and RIKEN, 2009}
-
-\includegraphics[width=.6\textwidth]{images/02-11}	
-
-\pause
-
-Seleção de links segundo critério
-
-\includegraphics[width=.6\textwidth]{images/02-10}	
-
-\pause
-Seja uma grade $N \times N$. Mantenha nós mais próximos:
-\begin{itemize}
-	\item $a = (x,y)$, $b = (x', y')$
-	\item $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
-	\item $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
-	
-\end{itemize}
-\end{frame}
+![[By Spiritia](https://commons.wikimedia.org/w/index.php?curid=5071550)](images/hypercube.png)
 
