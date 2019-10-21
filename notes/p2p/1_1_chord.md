@@ -6,30 +6,37 @@ grand_parent: P2P
 nav_order: 1
 ---
 
+# Chord
 
-\begin{frame}{Chord}
-\begin{beamerboxesrounded}{Chord e derivados}
-	\begin{itemize}
-		\item CSAIL (MIT) -- 2001
-		\item Anel lógico
-		\item Identificadores de nós: m-bits
-		\item Identificadores de dados: m-bits
-		\item Dado associado a um nó/identificador
-		\item Dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka sucessor de $k$ ($i = suc(k)$)
-	\end{itemize}
-\end{beamerboxesrounded}
+Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do CSAIL, do MIT, e publicado em 2001. Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 
-\pause
-\includegraphics[width=.45\textwidth]{images/02-07}	
-\end{frame}
+No Chord, cada nó tem um identificador único de **$m$ bits**, gerado aleatoriamente. Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 
-\begin{frame}{Chord }
-\begin{beamerboxesrounded}{Chord e derivados}
-Roteamento?
-\end{beamerboxesrounded}
+O Chord mantém uma rede estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
+A figura a seguir mostra as posições disponíveis no anel de um Chord com 4 bits (sem utilidade prática).
 
-\includegraphics[width=.45\textwidth]{images/02-07}	
-\end{frame}
+![](images/02-07.png)
+
+Dados são também identificados por uma chave de **$m$ bits**. Esta chave é gerada por meio de uma função hash criptográfica a partir de alguma chave que faça sentido para a aplicação, por exemplo um nome, telefone, ou CPF.
+Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída, e para que observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.
+
+Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
+O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka, **sucessor de $k$** ($i = suc(k)$).
+
+Na figura anterior, considere que apenas as posições em cinza estão preenchidas, isto é, que há apenas cinco nós no sistema, com identificadores 1, 4, 7, 12 e 15.
+Neste cenário, o nó 7 é responsável por dados cujas chaves são 5, 6 e 7.
+
+## Roteamento
+
+Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor $v$ associado à chave $k$.
+A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por $k$.
+Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
+Caso contrário, a requisição é repassada ou **roteada** para o nó correto.
+
+Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. Esta solução, correta, tem custo da ordem do número de nós no sistema, $O(n)$.
+
+
+
 
 
 \begin{frame}{Chord}

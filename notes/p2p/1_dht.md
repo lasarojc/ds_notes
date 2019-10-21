@@ -14,7 +14,7 @@ Em essência, são funções, no sentido matemático da palavra, que **mapeiam**
 * $V$: Universo de valores
 * isto é, $f(k) = v, k\in K, v \in V$ ou $v =$ null.
 
-Na prática, são estrutas de dados adaptáveis, com um API muito simples.
+Na prática, são estruturas de dados adaptáveis, com um API muito simples.
 * v' = put(k,v) //Retorna valor já existente
 * v' = update(k,v) //Retorna valor já existente
 * v' = get(k) //Retorna valor já existente
