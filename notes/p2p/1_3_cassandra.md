@@ -2,6 +2,7 @@
 layout: default
 title: Cassandra
 parent: DHT
+grandparent: P2P
 nav_order: 3
 ---
 
