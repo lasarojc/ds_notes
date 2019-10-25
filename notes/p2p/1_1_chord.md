@@ -34,40 +34,50 @@ Caso seja o responsável, a solicitação é executada localmente e uma resposta
 Caso contrário, a requisição é repassada ou **roteada** para o nó correto.
 
 Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. Esta solução, correta, tem custo da ordem do número de nós no sistema, $O(n)$.
+Em uma instância com milhares de nós, **$O(n)$** é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
+Observe que o custo em termos de espaço para se implementar esta solução é **$O(1)$** para cada nó do sistema.
+
+Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
+O custo do roteamento, neste caso, é **$O(1)$**, muito mais rápido que na abordagem anterior. O custo de armazenamento da *tabela de rotas* é, contudo, **$O(n)$**, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (*single-hop* DHT).
+
+Como frequentemente acontece, um solução melhor pode ser nem uma nem outra opção, mas algo intermediário.
+O Chord propõe a criação de uma tabela de rotas também conhecida como *finger-table*, construída da seguinte forma, onde $m$ é a quantidade de bits usados para identificar nós no sistema:
+* seja $F_p$ a *finger-table* do processo $p$;
+* seja $F_p[i]$ a $i$-ésima da tabela; e,
+* $F_p[i] = suc(p+2^{i-1})$.
+
+Observe que nesta tabela, a $i$-ésima entrada aponta para o processo que no que sucede $p$ pelo menos $2^{i-1}$, e que esta distância de sucessão aumenta exponencialmente. Observe também que a maior distância é proporcional a metade do tamanho do anel.
+Isto quer dizer que o último *finger* da tabela proporciona um salto de $1/2$ anel, o penúltimo $1/4$ do anel, o ante-penúltimo $1/8$, e assim sucessivamente.
+Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo **$O(log n)$**.
+
+![](images/fingertable.jpeg)
+
+Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo $p$:
+* seja $k$ a chave para qual estamos procurando o sucessor;
+* itere pela tabela até achar a primeira entrada cujo valor, i.e., o identificador de um nó, é maior que $k$;
+* se a entrada é a primeira da tabela, então encaminhe a requisição para o nó apontado, pois ele é o sucessor de $k$, até onde $p$ consegue determinar;
+* senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.
+
+Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.
+
+![](images/05-04.png)
+
+Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, $31 < 0$. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?
+
+![](images/05-04.png)
+
+A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de $p$ pode ser incompleta para partes distantes do anel.
+Tente identificar exemplos no anel a seguir onde este comportamento seria errado.
+
+A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como **espalhamento consistente**, do inglês, *consistent hashing*.
+
+
+## Churn
+
+Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.
 
 
 
-
-
-\begin{frame}{Chord}
-\begin{beamerboxesrounded}{Roteamento eficiente}
-	\begin{itemize}
-		\item Sucessores
-		\item Finger-table
-	\end{itemize}
-\end{beamerboxesrounded}
-
-\includegraphics[width=.45\textwidth]{images/05-04}	
-\end{frame}
-
-\begin{frame}{Chord}
-\begin{itemize}
-	\item $FT_p[i] = suc(p+2^{i-1})$\\
-	$FT_p[i]$ aponta para primeiro nó que sucede $p$ por pelo menos $ 2^{i-1}$
-	\item Para achar nó responsável por $k$, $p$ encaminha requisição para nó na entrada $j$ tal que $FT_p[j] \leq k < FT_p[j + 1]$
-\end{itemize}
-
-\includegraphics[width=.45\textwidth]{images/05-04}	
-\end{frame}
-
-\begin{frame}{Chord}
-\begin{itemize}
-	\item Menor/Maior?
-	\item 21 procurando 31?
-\end{itemize}
-
-\includegraphics[width=.45\textwidth]{images/05-04}	
-\end{frame}
 
 \begin{frame}{Churn}
 \begin{itemize}
@@ -101,9 +111,6 @@ Reorganização dos nós exige movimentação de dados. Como minimizar o impacto
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Consistent hashing
-\end{frame}
 
 
 
@@ -129,39 +136,5 @@ Pela replicação dos dados, consegue-se minimizar o impacto de falhas no sistem
 
 
 
-
-
-Nestes ``bancos de dados'' distribuídos, pode-se optar por uma alta latência ou por um modelo de consistência eventual, no caso bem comportado; no caso de falhas, espera-se que a consistência seja eventualmente alcançada, mas não se pode garanti-la.
-\begin{frame}{Aplicações}
-\begin{itemize}
-\item Replicação + assincronismo = inconsistências
-\item consistência eventual 
-\end{itemize}
-\end{frame}
-
-\subsection{DynamoDB}
-
-Este modelo é adequado a algumas aplicações, como o carrinho de compras da Amazon.com
-\begin{frame}{Dynamo DB -- Consistência Eventual}
-\begin{itemize}
-\item \emph{Shopping Cart} da Amazon.com
-\item Chave: identificador do usuário
-\item Valor: conteúdo do carrinho de compras
-\item Modificações do carrinho criam novas versões\\  \alert{Consistência eventual}
-\item O que acontece no caso de falhas? Atrasos? \\   \alert{Múltiplas versões!}
-\item E no caso de o carrinho ficar errado?
-\end{itemize}
-
-\url{http://aws.amazon.com/dynamodb/}
-\end{frame}
-
-O modelo de blob do Dynamo impõe algumas restrições de uso para o desenvolvedor.
-
-\begin{frame}{Esquema de Dados}
-\begin{itemize}
-\item Valor no DynamoDB é um \alert{blob}
-\item Serialização e desserialização é um problema menor
-\item Entradas tem um Version Vector como versão
-\item Quais os dados com chave entre X e y?
-\end{itemize}
-\end{frame}
+[Simulador Chord](http://www.dennislambing.com/p2p-chord-simulation/)
+[Boa referência](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
