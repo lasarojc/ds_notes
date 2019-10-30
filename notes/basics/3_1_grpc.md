@@ -2,7 +2,7 @@
 layout: default
 title: Estudo de Caso - gRPC
 parent: RPC
-grand_parent: Básico
+grand_parent: Comunicação
 nav_order: 1
 ---
 

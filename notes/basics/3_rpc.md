@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RPC
-parent: Básico
+parent: Comunicação
 has_children: true
 nav_order: 3
 ---

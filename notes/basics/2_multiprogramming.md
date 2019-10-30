@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Multiprogramação
-parent: Básico
+parent: Comunicação
 nav_order: 2
 ---
 

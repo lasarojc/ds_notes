@@ -1,18 +1,12 @@
 ---
 layout: default
 title: Sockets
-parent: Básico
+parent: Comunicação
 nav_order: 1
 ---
 
 O desenvolvimento de qualquer sistema distribuído requer a capacidade de componentes deste sistema "conversar" uns com os outros.
-Para que a conversa aconteça, são necessários um canal e um protocolo de comunicação.
-
----
-* Canal de comunicação
-* Protocolo de comunicação
-
----
+Para que a conversa aconteça, são necessários um **canal de comunicação** e um **protocolo de comunicação**.
 
 O canal de comunicação é o meio pelo qual os elementos da conversa são transmitidos e o protocolo são as regras codificam tal conversa.
 Por exemplo, quando você fala com uma pessoa, cara a cara, o meio de comunicação é o ar, e o protocolo utilizado é a linguagem escolhida, Português por exemplo, e os sinais usados para indicar quando um ou outro quer ou pode falar.
@@ -31,7 +25,7 @@ Quanto aos canais de comunicação, estes podem ter diversas formas:
 
 ---
 
-Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura Ethernet, que trata da comunicação nós usando um barramento compartilhado.
+Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação nós usando um barramento compartilhado.
 Sobre este meio, são usados protocolos para, por exemplo,
 
 ---

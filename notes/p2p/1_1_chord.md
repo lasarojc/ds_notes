@@ -76,65 +76,58 @@ A organização dos nós em um anel virtual e a distribuição da responsabilida
 
 Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.
 
+Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:
+* Escolher um novo Identificador $I$
+* Identificar o sucessor $S$ de $I$
+* Identificar o antecessor $A$ de $I$
+* Informar $A$ e $S$ de sua entrada, para que ajustem suas tabelas de rota.
+* $A$ e $S$ propagam a informação da entrada de $I$ para seus vizinhos, permitindo que ajustem suas tabelas de rota.
 
+Além disto, a reorganização dos nós exige movimentação de dados, pois parte dos dados armazenados em $S$, com chaves menores que $I$, precisam ser copiadas para $I$, o novo responsável.
+As principais questões a serem respondidas durante a movimentação dos dados são
+* como manter os dados disponíveis para inserção e consulta durante todo o processo, e
+* como minimizar o impacto da reorganização nos nós vizinhos ao novo nó
 
+Quanto à primeira questão, pode-se rotear as requisições para os dois nós responsáveis, o atual e o novo, e combinar as respostas, mantendo os dados mais recentes.
+Quanto à segunda, uma opção é fazer com que cada novo nó assuma diversas posições no anel, com identificadores distintos, passando a "incomodar" múltiplos processos, mas de forma mais suave.
 
-\begin{frame}{Churn}
-\begin{itemize}
-	\item Entrada e saída de nós
-	\begin{itemize}
-		\item Se sou o nó X e quero entrar na rede
-		\item Quem é o sucessor S de X?
-		\item Quem é o antecessor A do sucessor de X?
-		\item Reconfigure S e A
-	\end{itemize}
-\end{itemize}
-\end{frame}
+Embora se possa "facilmente" resolver os problemas da entrada de nós, os da saída são mais complexos, principalmente porquê a saída acontece geralmente bruscamente, por exemplo por falhas no sistema.
+Quanto à reorganização das tabelas de rota, cada nó precisa monitorar os nós que figuram em sua tabela e, caso pareçam indisponíveis, ajustar par apontar para outro nó.
+Contudo, caso a suspeita seja indevida, isto pode levar a dados serem consultados e armazenados nos nós errados.
+Também com relação aos dados, há o problema de não perdê-los quando o nó responsável se torna indisponível.
+O tratamento destes problemas está relacionado e é feito pelo replicação dos dados em múltiplos nós. Isto é feito no Chord, por exemplo, da seguinte forma:
+* para cada dado, com chave $k$, há $r$ cópias;
+* a primeira cópia é mantida no sucessor de $k$;
+* a segunda cópia, no sucessor do sucessor de $k$, e assim por diante;
+* cada escrita é feita na primeira cópia, respondida, e replicada para as demais cópias;
+* cada leitura é feita na cópia com menor identificador.
 
-Reorganização dos nós exige movimentação de dados. Como minimizar o impacto da reorganização? Ou pelo menos balanceá-la?
+No caso de falha de uma cópia, há $r-1$ cópias ainda disponíveis para responder à requisição, mantendo o sistema disponível a despeito de ($r-1$) falhas, no que se chama de **degradação graciosa**.
+Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequência de passos, em um sistema com $r=2$.
+* escrita na cópia 1;
+* resposta ao cliente;
+* replicação para cópia 2;
+* escrita na cópia 1;
+* resposta ao cliente;
+* falha da cópia 1;
+* leitura na cópia 2.
 
-\begin{frame}{Churn}
-\begin{itemize}
-	\item Movimentação de dados
-	\begin{itemize}
-		\item Se sou novo na rede, parte dos ``meus'' dados estão com meu sucessor.
-		\item Copie o dados
-		\item Como satisfazer requisições durante o processo?
-	\end{itemize}
-	\pause
-	\item Sucessor fica sobrecarregado provendo dados
-	\item Nós virtuais
-	\begin{itemize}
-		\item Cada nó físico assume vários identificadores
-		\item Movimentação é distribuída entre nós
-	\end{itemize}
-\end{itemize}
-\end{frame}
+O cliente, ao ler o dado, lê uma versão antiga do mesmo, inconsistente com a visão que tinha do sistema.
+De fato, este tipo de sistema é chamado de eventualmente consistente pois somente na **ausência de falhas e de escritas** as diversas réplicas serão consistentes umas com as outras.
+Continuemos a sequência:
+* escrita na cópia 2;
+* cópia 1 volta a funcionar;
+* leitura na cópia 1.
 
+Neste caso, a cópia "secundária" 2 tem um dado mais atual, que precisa ser repassado para a cópia 1; este movimento de convergência de dados é conhecido como anti-entropia.
+Finalmente, continuemos a sequência:
+* escrita na cópia 1, por outro cliente.
 
+Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um **conflito**.
+Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.
 
+O Dynamo, que veremos a seguir, é um destes sistemas.
 
-Pela replicação dos dados, consegue-se minimizar o impacto de falhas no sistema. 
-\begin{frame}{Falhas}
-\begin{itemize}
-	\item Além do sucessor, conhecer sucessor do sucessor
-	\item Em caso de suspeita de falha, reorganize ponteiros
-	\item Perda de dados
-	\pause
-	\item Replicação para vizinhos
-	\item Degradação graciosa
-\end{itemize}
-\end{frame}
+## Referências
 
-\begin{frame}{Fator de replicação: $r$}
-\begin{itemize}
-	\item Para cada dado, há $r$ cópias
-	\item Conflito: aquele que tem o maior \emph{vector clock} vence
-	\item Versões concorrentes são resolvidas com abordagem genérica: pergunte ao operador.
-\end{itemize}
-\end{frame}
-
-
-
-[Simulador Chord](http://www.dennislambing.com/p2p-chord-simulation/)
-[Boa referência](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
+[https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)

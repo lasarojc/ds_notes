@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Básico
+title: Comunicação
 nav_order: 2
 has_children: true
 ---
 
-Neste capítulo discutimos alguns conceitos e tecnologias básicos para o entendimento e desenvolvimento de sistemas distribuídos.
+A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre processos via um canal de comunicação.

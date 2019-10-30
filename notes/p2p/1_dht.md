@@ -22,95 +22,50 @@ Na prática, são estruturas de dados adaptáveis, com um API muito simples.
 
 Sobre os valores mapeados, dizemos que são ** *blobs* ** de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de resoluções. Além disso, é suas operações são eficientes em termos de tempo, uma vez que todas as operações tem tempo de execução (mais ou menos) constante.
 
+
 ## Distributed Hash Tables.
 
+Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser **tolerante a falhas** e ter **escalabilidade linear**.
+Justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas (inglês *distributed hash tables*), estruturas de dados que mantém **a mesma API** e funcionalidades de tabelas de espalhamento, mas que **agrega capacidades de diversos hosts**.
 
-\begin{frame}[fragile,allowframebreaks]{Distributed Hash Tables}
-Como distribuir um HT de forma que
-\begin{itemize}
-\item mantenha API e funcionalidade
-\item agregue as capacidades de diversos hosts?
-\end{itemize}
+Os desafios na implementação de DHT incluem
+* "O que usar como chave?", uma vez que tal estrutura precisa ser genérica para que possa ser aplicada a diversos problemas;
+* "Como dividir a carga entre hosts?", para garantir um bom balanceamento de carga; e, 
+* "Como rotear requisições para o host correto?", uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade.
 
-Desafios incluem
-\begin{itemize}
-\item O que usar como chave?
-\item Como dividir carga (uniformemente) entre hosts?
-\item Como rotear requisições para o host correto?
-\end{itemize}
-\end{frame}
+### Identificação
 
+A identificação de objetos precisa ser facilmente **determinável pela aplicação** para permitir a recuperação precisa dos dados. 
+Por exemplo, pode-se dividir faixas de nomes entre os processos.
+* A -- C -- Host1
+* CA -- E -- Host2
+* EA -- G -- Host3
+* ...
 
-\begin{frame}{Identificação}
-\begin{itemize}
-	\item Identificação única por objeto
-	\item Identificador atribuído pela aplicação
-	\item Exemplo, CPF da pessoa
-\end{itemize}
-\end{frame}
+Esta distribuição tem três problemas graves. O primeiro, é no fato de nomes não serem **unívocos**.
+Neste caso, uma exemplo melhor seria o uso do CPF.
+* 000.000.000-00 -- 111.111.111-00 -- Host1
+* 111.111.111-01 -- 222.222.222-00 -- Host2
+* 222.222.222-01 -- 333.333.333-00 -- Host3
+* ...
 
-\begin{frame}{Divisão de carga}
-\begin{itemize}
-	\item Cada nó é responsável por uma faixa de valores
-	\item 000.000.000-00 -- 111.111.111-00 -- Host1
-	\item 111.111.111-01 -- 222.222.222-00 -- Host2
-	\item 222.222.222-01 -- 333.333.333-00 -- Host3
-	\item ...
-\end{itemize}
-\end{frame}
+O segundo problema, presente também no uso de CPF, tem a ver com a distribuição da carga de trabalho entre os hosts.
+Nem nomes e nem CPF tem distribuição uniforme, então alguns nós ficariam mais carregados que outros.
 
-\begin{frame}{Divisão de carga}
-\begin{itemize}
-	\item Nomes
-	\item A -- C -- Host1
-	\item CA -- E -- Host2
-	\item EA -- G -- Host3
-	\item ...
-\end{itemize}
-\end{frame}
+O terceiro problema tem a ver com o uso de chaves não genéricas, dependentes da aplicação.
+Para este problema, poderíamos usar um identificador auto-incrementável, por exemplo, mas em muitas situações esta abordagem implicaria em dificuldade para se recuperar os dados: "qual é mesmo o identificador numérico do livro [How Fascism Works](https://ler.amazon.com.br/kp/embed?asin=B0796DNSVZ&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_fAlUDbMBJM4RP)?"
 
-\begin{frame}{Divisão de carga}
-A distribuição não é boa. 
+Para resolver estes três problemas, recorremos a uma abordagem usada na literatura da área, dividindo a identificação em duas camadas:
+* Seja $i$ o identificador do objeto, dado pela aplicação (e.g., CPF, nome, telefone)
+* Seja $h$ uma função criptográfica
+* Seja $k = h(i)$ o identificador do objeto $i$.
 
-Depende da distribuição dos dados.
-\end{frame}
+Se usarmos, por exemplo, MD5, é fato que $k$ tem distribuição uniforme no espaço de 0 a $2^{160}-1$ possíveis valores.
+Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de $k$.
+Alguns exemplos de divisão são:
+* definia *buckets* para cada host e atribua o dado com chave $k$ para bucket $k \% b$, onde $b$ é o número de buckets
+* divida a faixa de valores em $b$ segmentos e atribua a cada host uma faixa
+* dados $2^n$ hosts, atribua ao host $0 < x < 2^n-1$ os dados cujas chaves terminem com o valor $x$.
 
-
-
-\begin{frame}{Identificação}
-\begin{itemize}
-	\item Seja $i$ o identificador do objeto, dado pela aplicação (e.g., CPF, nome)
-	\item Seja $h$ uma função criptográfica
-	\item $k = h(i)$ tem distribuição uniforme
-	\item Por exemplo, MD5 tem $2^{160}$ possíveis valores
-	\item Distribua os valores entre os hosts
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Roteamento}
-\begin{itemize}
-	\item Cada nó é responsável por um \emph{bucket}
-	\item Chave $k$ vai para bucket é $k \% b$, onde $b$ é o número de buckets
-	\item Como associar um bucket a um nó?
-	\item Redes sobrepostas
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Redes Sobrepostas}
-\begin{itemize}
-	\item Uma rede lógica sobre uma rede física
-	\item Conexões consideradas canais de comunicação
-	\item Roteamento no nível da aplicação
-	\item Estruturadas e não-estruturadas	
-\end{itemize}
-
-\pause
-\includegraphics[width=.5\textwidth]{images/overlay}
-
-\href{https://content.iospress.com/media/jhs/2017/23-1/jhs-23-1-jhs558/jhs-23-jhs558-g002.jpg?width=755}{Fonte}
-
-%\includegraphics[width=.5\textwidth]{images/Network_Overlay}
-%Fonte: \href{https://commons.wikimedia.org/w/index.php?curid=10086213}{Ludovic.ferre}
-\end{frame}
-
-
+São várias as formas de se dividir os dados e estão intimamente ligadas à rede sobreposta que se pretende montar.
+Vejamos um caso específico e famoso, o Chord, e de dois outros sistemas que se inspiraram nele.
