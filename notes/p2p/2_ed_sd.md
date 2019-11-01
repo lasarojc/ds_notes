@@ -5,11 +5,17 @@ parent: P2P
 nav_order: 3
 ---
 
-TO BE WRITTEN
-=============
+Qualquer que seja a escolha de algoritmo para fazer o particionamento dos dados entre servidores, sobre ainda a questão de como manipular os dados dentro do servidor.
+Idealmente, toda operação seria executada a partir da memória principal, tendo assim a menor latência possível.
+Contudo, para que se tenha também durabilidade dos dados, para que sobrevivam a reinicializações do servidor, intencionais ou não, é preciso armazenar os dados em **memória estável**, da qual a mais comum é são os **discos rígidos**.
 
-\section[ED para SD]{Estruturas de Dados comuns em P2P}
-\subsection{Log Structured Merge Tree}
+É notório que escritas em disco são muito mais lentas que em memória principal, mas o que exatamente é lento no acesso ao disco?
+Essencialmente, o posicionamento da cabeca de leitura/escrita na trilha correta do disco, pois esta operação é mecânica.
+Por esta razão, acessos aleatórios são mais custosos que acessos sequenciais, pois neste o custo de posicionamento é pago apenas uma vez.
+Por este motivo, muitos bancos de dados, especialmente DHT pois tem seu uso focado em quantidades muito grandes de dados, gerados e acessados com grande velocidade, tentam acessar o disco sempre de forma sequencial.
+Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma *Log Structured Merge Tree*, ou LSMT.
+
+## Log Structured Merge Tree
 
 Agora que você implementou uma DHT totalmente funcional, consideremos os problemas para manipulação dos dados em cada um dos hosts.
 
