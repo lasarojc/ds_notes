@@ -61,15 +61,22 @@ O índice abaixo é apenas um esqueleto com uma proposta em constante mutação 
 
 ## Revendo Cliente Servidor
 
+TODO: Trazer parte da discussão sobre cliente servidor para cá e atualizar.
+
 ## Peer-2-Peer
 
 * [Sistemas Par-a-Par](./notes/0_intro.md)
 * [Tabelas de Espalhamento Distribuídas](./notes/p2p/1_dht.md)
-* [Estruturas de Dados para P2P e outros SD](./p2p/ed_sd.md)
-* [DynamoDB Deep Dive](./p2p/dynamo.md)
+  * [Estudo de Caso: Chord](./notes/p2p/1_1_chord.md)
+  * [Estudo de Caso: Dynamo](./notes/p2p/1_2_dynamo.md)
+  * [Estudo de Caso: Cassandra](./notes/p2p/1_1_cassandra.md)
+* [Estruturas de Dados para P2P e outros SD](./p2p/2_ed_sd.md)
+
+## Projeto
 * [Uma DHT propriamente dita](./projeto/p2p.md)
 
-## Micro-serviços
+## Microsserviços
+* [Visão Geral](./notes/microservices/0_intro.md)
 
 ## Event-sourcing
 
@@ -77,6 +84,7 @@ O índice abaixo é apenas um esqueleto com uma proposta em constante mutação 
 
 
 # Coordenação
+TODO: usar consistência entre réplicas da DHT para motivar a sincronização.
 
 * [Coordenação](./coordenacao/coordenacao.md)
 * [Tempo Físico](./tempo/fisico.md)
