@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Tempo Físico - Sistemas Distribuídos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Tempo F\u00edsico";
+    var mkdocs_page_input_path = "tempo/1_fisico.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../intro/intro/">Introdução</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Sistemas Distribuídos</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Tempo Físico</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="tempo">Tempo</h1>
+<p>Se um mesmo arquivo no Dropbox é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam?</p>
+<hr />
+<h5 id="problema">Problema</h5>
+<p>Se dois arquivos com o mesmo nome são enviadas ao servidor, qual deve ser mantido?</p>
+<hr />
+<p>Uma possibilidade é aceitar o arquivo que chega primeiro e rejeitar o que chega depois. Mas imagine que seu serviço esteja interessado em registrar a anterioridade de ideias anotadas nos arquivos.  Neste caso, o sistema poderia dar anterioridade ao arquivo errado, isto é, o mais recentemente criado. </p>
+<p>Outra abordagem, é manter janelas de aceite de arquivos, e dentro destas janelas, manter os arquivos com horário de <strong>criação</strong> menor. Neste caso, um trapaceiro poderia modificar seu relógico para fazer seu arquivo passar na frente.</p>
+<p>Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em <em>operações de modificação</em>, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas.</p>
+<p>Em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e autmatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox deixa os dois arquivos para que o usuário analize e decida o que fazer, que servidores git permitem a submissão de apenas um conjunto de operações por vez para um mesmo repositório, e o Perforce trabalhe com <em>locks</em>  de arquivos.</p>
+<p>De forma mais genérica, </p>
+<hr />
+<h5 id="problema_1">Problema</h5>
+<p>Se duas operações originadas em clientes são enviadas ao servidor, qual deve ser executada primeiro?</p>
+<hr />
+<p>Alguns sistemas, contudo, tentam resolver automaticamente os conflitos. No caso do CassandraDB, usa-se</p>
+<hr />
+<h5 id="cassandradb">CassandraDB</h5>
+<p><em>"last write wins"</em> ou "latest version wins"</p>
+<hr />
+<p>Onde <em>last</em> é definido pelo relógio do cliente. Acontece que a maior parte dos nossos sistemas não dá garantias de tempo na entrega de mensagens ou processamento de instruções. Assim, temos novo problema:</p>
+<hr />
+<h5 id="problema_2">Problema</h5>
+<p>Como determinar qual foi enviada primeiro, em um sistema assíncrono?</p>
+<hr />
+<p>Assim, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>.
+O desafio começa com o entendimento de relógios físicos.</p>
+<h2 id="relogios-fisicos">Relógios Físicos</h2>
+<hr />
+<h5 id="relogio-de-quartzo">Relógio de Quartzo</h5>
+<ul>
+<li>Diapazão de cristal cortado a laser.</li>
+<li>Efeito Piezoelétrico invertido: corrente elétrica gera oscilção</li>
+<li>Efeito Piezoelétrico: oscilação gera impulsos</li>
+<li>Oscila a $32768 = 2^{15}$Hz </li>
+<li>Contador conta 1 segundo por <em>overflow</em></li>
+<li>Trabalha de 5 a 35 Celcius</li>
+<li>Tem erro de 1/2 segundo/dia</li>
+<li>Frequência muda com idade</li>
+<li>temperatura</li>
+<li>corrente elétrica</li>
+<li>imperfeições</li>
+</ul>
+<p><a href="https://www.explainthatstuff.com/quartzclockwatch.html">Fonte</a></p>
+<hr />
+<p>Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. Felizmente, estes relógios podem ser corrigidos usando outras constantes físicas. </p>
+<hr />
+<h5 id="relogio-atomico">Relógio Atômico</h5>
+<ul>
+<li>relógio de quartzo gera 9.192.631.770 impulsos por segundo</li>
+<li>impulsos mantem cesium-133 excitado</li>
+<li>se número de átomos excitados cai, relógio é corrigido.</li>
+<li><em>drift</em> de 1 segundo em 6.000.000 anos.</li>
+</ul>
+<hr />
+<p>Uma vez que agora temos um relógio com altíssima precisão, como podemos espalhar esta informação para nossos computadores pessoais? A resposta está no UTC, Tempo Universal Coordenado (da sigla em Francês).</p>
+<hr />
+<h5 id="tempo-coordenado-universal-utc-do-nome-em-frances">Tempo Coordenado Universal -- UTC (do nome em Francês)</h5>
+<blockquote>
+<p>Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.</p>
+</blockquote>
+<hr />
+<p>Abrindo um parêntese, o UTC é usado como <strong>base</strong> para os relógios locais, mas fatores políticos também são importantes.</p>
+<hr />
+<h5 id="fuso-horarios">Fuso-horários</h5>
+<p><img alt="Fuso-horários" src="../images/TimeZones.png" /></p>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=42165217">Fonte</a></p>
+<hr />
+<p>Mas como o UTC é definido? Com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
+<hr />
+<h5 id="utc">UTC</h5>
+<ul>
+<li>TAI - Tempo Atômico Internacional -- média de +- 200 relógios atômicos.</li>
+<li>UT0 - Tempo solar, em Greenwich; observações astronômicas</li>
+<li>UT1 - UT0 + correções por movimento polar (terra se inclinou?)</li>
+<li>UT2 - UT1 + variações sazonais na rotação (placas tectônicas se movimentaram)</li>
+<li>UTC - Medido como TAI mas aproximado para UT0 para dar percepção de que "meio dia é meio dia"</li>
+</ul>
+<hr />
+<p>Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais. Nos resta ainda, propagar a referência do UTC para os sistemas. Vejamos como o tempo é mantido em um computador.</p>
+<hr />
+<h5 id="relogios-nos-computadores">Relógios nos Computadores</h5>
+<ul>
+<li>Cada computador mantém uma visão local do tempo.</li>
+<li>Relógio de quartzo mede a passagem de tempo.</li>
+<li>Bateria usada para períodos de desconexão.</li>
+<li>Interrupções programadas: Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz.</li>
+<li>Interrupções incrementam contador:</li>
+<li>1000Hz, 1 interrupção a cada 1ms</li>
+<li>500Hz, 1 interrupção a cada 2ms</li>
+<li>Contador usado como base para relógio em software $C$.</li>
+</ul>
+<hr />
+<p>Este relógio em software, $C$, que usa um relógio de quartzo, impreciso, pode marcar a passagem do tempo com erro para mais ou para menos.
+Embora o erro exato do relógio seja desconhecido, o mesmo pode ser limitado.</p>
+<hr />
+<h5 id="sincronizacao">Sincronização</h5>
+<ul>
+<li>C - clock</li>
+<li>t - tempo, ou melhor aproximação, UTC </li>
+<li>$\rho$ - Clock-drift/Drift rate</li>
+</ul>
+<p><img alt="Drift rate" src="images/tanembaum-06-05.png" /></p>
+<p>$1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho$.</p>
+<hr />
+<p>Logo, dado um mecanismo de sincronização com UTC ou outra fonte confiável, podemos limitar a dessincronização com UTC.</p>
+<hr />
+<h5 id="frequencia-de-sincronizacao">Frequencia de Sincronização</h5>
+<p>Como garantir que dois relógios do sistema não diferirão em mais que $\delta$ unidades de tempo?</p>
+<p>Sincronize pelo menos a cada $\frac{\delta}{2\rho}$ segundos.</p>
+<hr />
+<p>Vejamos um exemplo:</p>
+<ul>
+<li>$\rho = 0,1$</li>
+<li>$\delta$ = 1s</li>
+<li>Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. </li>
+<li>Como cada nó poderia estar errando em "direções"  diferentes, após 5s, um nó poderia se adiantar em 0,5s enquanto o outro se atrasa pela mesma quantidade de tempo, somando 1s de diferença. Logo, eles tem que se sincronizar a cada 5s, i.e, $\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s$</li>
+</ul>
+<p>Mas não se pode apenas ajustar o relógio para corrigir atrasos e adiantamentos. É preciso tomar certos cuidados para se garantir o funcionamento correto do sistema.</p>
+<hr />
+<h5 id="cuidados">Cuidados</h5>
+<ul>
+<li>Nunca voltar no tempo</li>
+<li>Correção gradual: acelere ou desacelere o relógio (em software)<ul>
+<li>Diminua/Aumente frequência de interrupção para atrasar/adiantar relógio</li>
+<li>Diminua/Aumente incremento com cada interrupção</li>
+</ul>
+</li>
+<li>Ajustes periódicos para fazer curvas convergirem.</li>
+<li>Correção após dormir será mais drástica</li>
+</ul>
+<hr />
+<p>Até agora definimos que relógios podem ser sincronizados com UTC, pois é uma boa aproximação do tempo percebido por nossos sentidos, e a frequência com que a sincronização deve acontecer. Contudo, falta ainda definir o protocolo pelo qual a sincronização é feita e exatamente com quem, uma vez que simpleste UTC é muito genérico. Comecemos com "quem". Em um extremo, sincronize com relógios atômicos em satélites GPS</p>
+<hr />
+<h5 id="sincronizar-com-quem-gps">Sincronizar com quem? GPS</h5>
+<ul>
+<li>Coloque um receptor GPS em cada nó.</li>
+<li>Tenha erro de 0,1ns a 1ms do UTC.</li>
+</ul>
+<hr />
+<p>Receptores GPS, com seus relógios sincronizados com os dos satélites, que difundem regularmente sua posição e o instante em que a difusão é feita, determinam sua posição relativa aos satélites, em uma técnica conhecida como trilateração.</p>
+<p>Baseado na informação de um satélite, o receptor determina sua distância ao mesmo e, portanto, determina que está em uma esfera no entorno do satélite.
+Combinando a informação de 2 satélites, a posição do receptor é limitada a uma circunferência, isto é, a interseção de duas esferas. 
+Com um terceiro satélite, a posição é reduzida a dois pontos, a interseção de uma esfera e uma circunferência, sendo um no espaço e que pode ser facilmente descartado. </p>
+<hr />
+<h5 id="trilateracao">Trilateração</h5>
+<p><img alt="Funcionamento de GPS" src="https://gisgeography.com/wp-content/uploads/2016/11/GPS-Trilateration-Feature-678x322.png" /></p>
+<hr />
+<p>Como dito, a trilateração consiste em determinar a distância do receptor em termos dos eixos $x$, $y$ e $z$ em relação a cada um dos satélites. Contudo, para que funcione, relógios precisam estar sincronizados, o que é exatamente o problema que estamos tentando resolver. 
+Para contornar esta restrição, usa-se um quarto satélite, para determinar a distância no "eixo temporal".</p>
+<p>Apesar da queda dos preços dos receptores, colocar um GPS em cada dispositivo pode ser custoso demais. Em vez disso, podemos usar um recurso amplamente disponível, redes de computadores, e sincronizar com outra máquina, que fez o investimento necessário para manter o erro baixo.</p>
+<hr />
+<h5 id="sincronizar-com-quem-outra-maquina">Sincronizar com quem? Outra máquina</h5>
+<ul>
+<li>Pergunte que horas são.</li>
+<li>Use a resposta para ajudar o relógio local.</li>
+<li>Considere o erro introduzido pela latência variável da rede.</li>
+</ul>
+<hr />
+<h4 id="algoritmo-de-cristian">Algoritmo de Cristian</h4>
+<p>Assumindo que o relógio da máquina se sincronizando, $M_1$, é bom o suficiente para medir a passagem de tempo em períodos curtos, mesmo que tenha uma <em>drift</em> rate considerávem em períodos mais longos, execute o seguinte protocolo para se sincronizar com $M_2$.</p>
+<hr />
+<h5 id="algoritmo-de-cristian_1">Algoritmo de Cristian</h5>
+<ul>
+<li>$M_1$ rergunta "que horas são?" - $t_0$</li>
+<li>$M_2$ recebe pergunta - $t_1$</li>
+<li>$M_2$ anota o valor do relógio - $t_s$</li>
+<li>$M_2$ envia resposta - $t_2$</li>
+<li>
+<p>$M_1$ recebe resposta - $t_3$</p>
+</li>
+<li>
+<p>Assuma $t_1 = t_s = t_2$</p>
+</li>
+<li>
+<p>Assuma $\frac{t_3-t_0}{2}$ como o tempo de transmissão da resposta (média da ida e da volta)</p>
+</li>
+<li>$M_1$ ajusta relógio para $t_c = t_s + \frac{t_3-t_0}{2}$</li>
+</ul>
+<hr />
+<p>Mas e a aproximação $\frac{t_3-t_0}{2}$, é boa?
+Podemos estimar o erro que ela introduz na sincronização, caso as mensagens tenham tempos de ida e volta assimétricos. Apesar das diferenças no tempo de ida e volta, existe um tempo mínimo para o tráfego em cada um dos sentidos, $T_{min}$.</p>
+<hr />
+<h5 id="erro-maximo">Erro máximo?</h5>
+<p>Tempo mínimo de transmissão: $T_{min}$</p>
+<p><img alt="Erro do algoritmo de Christian" src="../images/cristianerror.png" /></p>
+<p><a href="https://www.cs.rutgers.edu/~pxk/417/notes/content/05-clock-synchronization-slides.pdf">Fonte</a></p>
+<hr />
+<p>Há dois casos extremos de erro na estimativa.
+No primeiro caso, dado um tempo de ida + volta igual a $T_1 - T_0$, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa $\frac{t_3-t_0}{2}$ é menor que o tempo de volta real.
+No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando $\frac{t_3-t_0}{2}$ a ser maior que tempo de transmissão real da mensagem.
+O erro, contudo, está limitado à faixa amarela no desenho, que tem duração $T_1 - T_0 - 2T_{min}$. O erro então varia de mais ou menos metade deste valor. </p>
+<h4 id="algoritmo-de-berkeley">Algoritmo de Berkeley</h4>
+<p>Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo funciona assim:</p>
+<hr />
+<h5 id="algoritmo-de-berkeley_1">Algoritmo de Berkeley</h5>
+<ul>
+<li>
+<p>Premissas</p>
+<ul>
+<li>Não há fonte da verdade</li>
+<li>Sintonização em vez de sincronização (sincronização interna x externa)</li>
+<li>Todos convergem para média</li>
+<li>Todos executam ``time d\ae mon''</li>
+<li>Mestre e escravos</li>
+</ul>
+</li>
+<li>
+<p>Algoritmo</p>
+<ul>
+<li>Mestre requisita relógio de cada escravo</li>
+<li>Relógios ajustados com algoritmo de Cristian</li>
+<li>Computa média</li>
+<li>Envia ajuste para cada escravo</li>
+</ul>
+<p><img alt="Exemplo do algoritmo de Berkeley" src="http://www.myassignmenthelp.net/images/berkeley-algorithm-example-3.jpg" /></p>
+</li>
+<li>
+<p>Importante</p>
+<ul>
+<li>Ignora \emph{outliers}</li>
+<li>Mestre pode ser substituído facilmente</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>Embora interessantes, estes algoritmos não são normalmente usados, pelo menos não em sua forma "pura", em sistemas computacionais. Em vez deles, usamos o Network Time Protocol (NTP).</p>
+<hr />
+<h5 id="network-time-protocol">Network Time Protocol</h5>
+<ul>
+<li>1991/1992: RFC 1305</li>
+<li>2010: RFC 5905-5908 -- IPv6, 10s ms de acurácia</li>
+<li>Uso na Internet</li>
+<li>Sincronização com UTC</li>
+<li>Estatística permite minimizar erros</li>
+<li>Tolerante a falhas: caminhos redundantes; servidores redundantes</li>
+<li>Escalável: modelo hierárquico</li>
+<li>Seguro: usa autenticação</li>
+</ul>
+<hr />
+<p>Os diversos componentes do NTP são organizados em camadas, ou estrata, de forma que a informação do tempo flui da camada 0 (stratum 0) até a camada 15 (stratum 15).
+Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se um algoritmo de árvore geradora mínima.</p>
+<hr />
+<h5 id="network-time-protocol_1">Network Time Protocol</h5>
+<p><img alt="Network Time Protocol" src="../images/ntp.png" /></p>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=2815097">Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick</a></p>
+<ul>
+<li>Stratum 0: relógios atômicos/receptores GPS</li>
+<li>Stratum 1: ms to stratum 0</li>
+<li>Stratum 2: contata múltiplos stratum 1 e pares</li>
+<li>Strata 3...15</li>
+<li>Stratum 16: dessincronizado</li>
+<li>Bellman-Ford: árvore geradora mínima para stratum 1</li>
+</ul>
+<hr />
+<p>O sítio do Comitê Gestor da Internet, CGI, tem uma entrada muito boa sobre o NTP, <a href="https://ntp.br/ntp.php">NTP.br</a>.
+De forma resumida, o NTP trabalha em diferentes modos, que permitem aos nós receberem informações de fontes de tempo das camadas superiores ou de pares, filtrar estas informações para escolher as mais confiáveis, e ajustar o relógio local de acordo com a filtragem.</p>
+<hr />
+<h5 id="modos-de-trabalho-do-ntp">Modos de trabalho do NTP</h5>
+<ul>
+<li>Modo multicast: propaga tempo em rede local</li>
+<li>RPC: algoritmo de Cristian</li>
+<li>Simétrico: parecido com Berkeley</li>
+</ul>
+<hr />
+<p>Na prática, boa parte dos dispositivos usa uma versão simplificada do NTP, adequada aos nós nas folhas da hierarquia. O SNTP é essencialmente o algoritmo de Cristian.</p>
+<hr />
+<h5 id="simple-ntp">Simple NTP</h5>
+<ul>
+<li>Versão simplificada do NTP</li>
+<li>Recomendado para folhas da árvore</li>
+<li>$\delta = (t_4-t_1)-(t_2-t_3)$</li>
+<li>$t = \frac{(t_2-t_1)+(t3-t_4)}{2}$</li>
+<li>$t_c = t_4+t$</li>
+</ul>
+<hr />
+<p>Veja um exemplo do ajuste de um relógio usando SNTP.</p>
+<hr />
+<h5 id="exemplo-do-sntp">Exemplo do SNTP</h5>
+<ul>
+<li>$t_1 = 1100, t_2 = 800, t_3=850, t_4=1200$</li>
+<li>$t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325$</li>
+<li>$t_c = 1200-325 = 875$</li>
+</ul>
+<hr />
+<p>Mais recentemente foi proposta um novo protocolo de sincronização de relógios com melhor qualidade de servço,  Precision Time Protocol, PTP.</p>
+<hr />
+<h5 id="ptp-precision-time-protocol">PTP - Precision Time Protocol</h5>
+<ul>
+<li>IEEE 1588</li>
+<li>LAN</li>
+<li>
+<p>sub $\mu s$ (versus ordem de $ms$ no NTP)</p>
+</li>
+<li>
+<p>Escolha mestre</p>
+<ul>
+<li>Administrador</li>
+<li>Classe do relógio</li>
+<li>Acurácia do relógio</li>
+<li>Variância do relógio</li>
+<li>Identificador</li>
+</ul>
+</li>
+<li>Como algoritmo de Cristian, mas quem ajusta não é quem inicia.</li>
+</ul>
+<hr />
+<p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Há uma série de problemas interessantes que podem ser resolvidos.</p>
+<hr />
+<h5 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h5>
+<ul>
+<li>autenticação</li>
+<li>terminação de transações </li>
+<li>alocação de ``leases''.</li>
+<li>outros exemplos, <a href="http://rdcu.be/s4iy">Liskov, B. Distrib Comput (1993) 6: 211. doi:10.1007/BF02242709</a></li>
+</ul>
+<hr />
+<p>Um exemplo interessante é a ordenação de eventos em um banco de dados.
+Para entender este problema, considere o seguinte cenário.</p>
+<hr />
+<h5 id="sistema-bancario">Sistema Bancário</h5>
+<p><img alt="Sistema Bancário Replicado" src="../images/tanenbaum-06-11.png" /></p>
+<p>Se os comandos chegam primeiro para a replica mais próxima e são executados na ordem em que chegam, temos inconsistências entre as réplicas (p.e., assuma que update 1 é "atualize para 10" e 2 é "atualize para 20")</p>
+<hr />
+<p>Assim, precisamos ordenar os comandos!
+Nos foquemos em apenas uma réplica.
+Assuma que relógios estão <strong>perfeitamente</strong> sincronizados, que o tempo de propagação máximo de uma mensagem é $\tau$, e que toda mensagem/update carrega o <em>timestamp</em> de quando foi enviada consigo.
+Considere o seguinte proposta:
+Réplicas processam mensagens na ordem que foram enviadas, o que pode ser identificado pelos seus timestamps.
+Em outras palavras, ao receber uma mensagem com timestamp $t$, uma réplica espera até ter certeza de que </p>
+<hr />
+<h5 id="ordenacao-de-requisicoes">Ordenação de Requisições</h5>
+<ul>
+<li>Relógios <strong>perfeitamente</strong> sincronizados</li>
+<li>$\tau$.</li>
+<li>Cliente 1 envia mensagem Update1 no instante $t$.</li>
+<li>
+<p>Ao receber Update1 com timestamp $t$, a réplica deve esperar para executar o update?</p>
+<p><img alt="Ordenação" src="../images/ordenacao1.png" /></p>
+<p>O último instante em que qualquer mensagem com timestamp $t' &lt; t$ pode ser recebido pela réplica é $t+\tau$, pois qualquer mensagem recebida em $t''&gt; t+\tau'$, precisa ter sido enviada após $t$, e portanto terá timestamp $&gt; t$. </p>
+</li>
+</ul>
+<hr />
+<p>Implementar este protocolo é muito simples:</p>
+<ul>
+<li>Toda mensagem recebida é colocada em uma fila ordenada por <em>timestamp</em>.</li>
+<li>Quando o relógio marcar um tempo maior que $t + \tau$, onde $t$ é o timestamp da mensagem na cabeça da fila, execute tal mensagem e a retire da fila.</li>
+</ul>
+<p>Entretanto, este protocolo não leva em consideração a dessincronização inerente dos relógios em um sistema distribuído. Como fazê-lo, supondo uma divergência máxima de $\Delta$ entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada $\frac{\Delta}{2*\rho}$.</p>
+<p>Se $\Delta$ é a diferença máxima entre relógios, então após o uma mensagem ser enviada com timestamp $t$, até $\Delta$ depois, outro processo, atrasado em relação ao primeiro, poderá enviar uma mensagem com timestamp $t' &lt; t$. Tal mensagem pode demorar até $\tau$ para ser entregue à réplica, ou seja, no instante $t + \tau + \Delta$, do ponto de vista do primeiro cliente.</p>
+<p>Se a réplica estiver sincronizada com cliente, então se esperar até $t + \tau + \Delta$ para executar o comando, o fará de forma segura. Se estiver atrasada em relação ao primeiro cliente, então acabará por esperar além do necessário, mas sem violar a corretude do sistema.</p>
+<p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará $t + \tau + \Delta$ antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp $t' &lt; t$ é o instante em que o relógio da réplica marcar $t + \Delta$, e portanto deverá também ser recebido até que o mesmo relógio marque $t + \tau + \Delta$. </p>
+<hr />
+<h5 id="ordenacao-de-requisicoes_1">Ordenação de Requisições</h5>
+<ul>
+<li>Relógios <strong>dessincronizados</strong></li>
+<li>$\tau$.</li>
+<li>$\Delta$</li>
+</ul>
+<p><img alt="Ordenação" src="../images/ordenacao2.png" /></p>
+<p>O último instante em que qualquer mensagem com timestamp $t' &lt; t$ pode ser recebido pela réplica é $t+\tau + \Delta$, pois qualquer mensagem recebida em $t''&gt; t+\tau + \Delta'$, precisa ter sido enviada após $t+\Delta$, e portanto terá timestamp $&gt; t$. </p>
+<hr />
+<p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e $\Delta$ é o máximo de dessincronismo entre os relógios. 
+O seguinte protocolo resolve este problema:</p>
+<hr />
+<h5 id="lease">Lease</h5>
+<ul>
+<li>$\Delta$ - dessincronização máxima.</li>
+<li>
+<p>Ao receber um <em>lease</em> para a janela de tempo $t_1$ a $t_2$</p>
+<ul>
+<li>espera até $t_1 + \Delta$</li>
+<li>usa o recurso até $t_2$.</li>
+</ul>
+</li>
+<li>
+<p>Se relógio estiver adiantado em relação ao cliente anterior, vai achar que é $t_1+\Delta$ enquanto o anterior acha que é $t_1$; exclusão mútua garantida.</p>
+</li>
+<li>Se relógio estiver atrasado em relação ao cliente anterior, vai achar que é $t_1 - \Delta$, e continua esperando, enquanto ele acha que já é $t_1$ e para de usar; exclusão mútua garantida.</li>
+<li>Recurso fica ocioso por $\Delta$, em média, a cada lease. </li>
+</ul>
+<hr />
+<p>Devido ao alto custo de se manter o recurso não utilizado, $\Delta$ deve ser feito tão pequeno quanto possível. Leia <a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google True Time e Spanner</a> para como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

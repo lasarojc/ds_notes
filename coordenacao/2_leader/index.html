@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Eleição de Líderes - Sistemas Distribuídos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Elei\u00e7\u00e3o de L\u00edderes";
+    var mkdocs_page_input_path = "coordenacao/2_leader.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../intro/intro/">Introdução</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Sistemas Distribuídos</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Eleição de Líderes</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
+Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
+Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
+<h2 id="eleicao-de-lideres">Eleição de Líderes</h2>
+<p>O problema da escolha de um processo centralizador pode ser posto informamente como:</p>
+<hr />
+<h5 id="eleicao-de-lideres_1">Eleição de Líderes</h5>
+<ul>
+<li>Procedimento pelo qual um processo é escolhido dentre os demais processos.</li>
+<li>Todos os processos identificam o mesmo processo como eleito.</li>
+<li>Uma nova eleição deve acontecer sempre que o líder corrente se tornar indisponível.</li>
+</ul>
+<hr />
+<p>Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que precisamos?</p>
+<hr />
+<h5 id="eleicao-de-representate-de-sala">Eleição de representate de sala</h5>
+<ul>
+<li>Votação?</li>
+<li>Identidade</li>
+<li>Teste de força?</li>
+<li>Estabilidade?</li>
+</ul>
+<hr />
+<h1 id="para-ser-terminado">PARA SER TERMINADO</h1>
+<p>\begin{frame}{Identidade}
+Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
+<p>Como isso pode ser feito, na prática?</p>
+<p>\pause</p>
+<p>\begin{itemize}
+    \item PID -- Process Identier
+    \item IP -- Internet Protocol Address
+    \item Socket -- IP + Port
+\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Algoritmo do Brigão/Bully}
+\begin{itemize}
+    \item Selecione o processo <code>vivo'' com o maior identificador!
+    \item Quando $p$ acha que o líder está morto:
+    \begin{itemize}
+        \item Envia mensagem</code>eleição,$p$'' para todos os processo com identificador maior
+        \item Se ninguém responde, $p$ assume como líder
+        \item Se algum responde, aguarda notificação.
+    \end{itemize}
+    \item Quando $q$ recebe <code>eleição,$p$''
+    \begin{itemize}
+        \item Envia</code>ok'' para $p$
+        \item Fica ciente de que o coordenador atual está morto
+    \end{itemize}
+\pause
+    \item Ao assumir como líder, o processo notifica a todos os outros
+    \item Se um processo falho se recupera, inicia uma eleição.</p>
+<p>\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Algoritmo do Brigão/Bully}
+    \includegraphics[width=.75\textwidth]{images/bully}</p>
+<pre><code>\href{https://my.oschina.net/juliashine/blog/88173}{Fonte}
+</code></pre>
+<p>\end{frame}</p>
+<p>\begin{frame}{Algoritmo do Anel}
+\begin{itemize}
+    \item Organize os nós em um anel lógico
+    \item Quando $p$ acha que o líder está morto:
+    \begin{itemize}
+        \item Envia mensagem {$p$} para ``a direita'' no anel.
+        \item Se processo à direita está falho, salte-o, e assim por diante.
+    \end{itemize}
+    \pause
+    \item Quando $q$ recebe {$p$}
+    \begin{itemize}
+        \item Envia  {$p,q$} para a direita.
+    \end{itemize}
+    \pause
+    \item Quando $p$ recebe $S$ tal que $q \in S$
+    \begin{itemize}
+        \item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
+    \end{itemize}
+\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Chang \&amp; Robert's}
+\begin{itemize}
+    \item Organize os nós em um anel lógico
+    \item Quando $p$ acha que o líder está morto:
+    \begin{itemize}
+        \item Envia mensagem $p$ para <code>a direita'' no anel, saltando falhos.
+        \item Liga flag</code>participante''
+    \end{itemize}
+    \pause
+    \item Quando $q$ recebe $p$
+    \begin{itemize}
+        \item Se $p &gt; q$, repassa $p$ para a direita.
+        \item Senão, envia  $q$ para a direita.
+        \item Liga flag <code>participante''        
+    \end{itemize}
+    \pause
+    \item Quando $p$ recebe $q$ da esquerda 
+    \begin{itemize}
+        \item Se</code>participante'' está ligado, identifica $q$ como líder.
+        \item Desliga ``participante''
+        \item Se $p \neq q$, repassa $q$ à direita
+    \end{itemize}
+\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}[allowframebreaks]{Yo-Yo}
+\begin{itemize}
+    \item Grafos incompletos
+    \item Duas fases
+\end{itemize}</p>
+<pre><code>\framebreak
+
+\begin{block}{Fase 1}
+\begin{itemize}
+    \item $p$ envia seu identificador para seus vizinhos.
+    \item Quando $q$ recebe $p$
+    \begin{itemize}
+        \item Se $p&gt;q$, adiciona aresta $q\rightarrow p$
+        \item Senão, adiciona aresta $q\leftarrow p$
+        \item Fonte (source)
+        \item Vertedouro (sink)
+        \item Interno
+    \end{itemize}
+\end{itemize}
+\end{block}
+</code></pre>
+<p>\framebreak</p>
+<pre><code>\begin{block}{Fase 2: Yo-\alert{Yo}}
+\begin{itemize}
+\item Fontes enviam seus identificadores para seus vizinhos.
+\item Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
+\item Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
+\end{itemize}
+\end{block}
+</code></pre>
+<p>\framebreak</p>
+<pre><code>\begin{block}{Fase 2: \alert{Yo}-Yo}
+\begin{itemize}
+\item Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
+\item Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
+\item Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
+\item N inverte a direção das arestas em que trafega.
+\item Possível otimizar para eliminar nós e arestas irrelevantes.
+\end{itemize}
+\end{block}
+</code></pre>
+<p>\framebreak</p>
+<pre><code>\includegraphics[width=.8\textwidth]{images/yoyo}*
+</code></pre>
+<p>\begin{small}
+a) The network, b) Oriented network after setup phase, c) YO- phase in which source values are passed, d)-YO phase sending responses from sinks, e) updated structure after -YO phase. **</p>
+<p>*\href{https://commons.wikimedia.org/w/index.php?curid=36757409}{Fonte: Hemis62 - Own work, CC BY-SA 4.0, }</p>
+<p>**\href{https://en.wikipedia.org/wiki/Leader_election}{Fonte}
+\end{small}
+\end{frame}</p>
+<p>\begin{frame}{Problemas?}
+O que acontece se a rede é particionada?
+\end{frame}</p>
+<p>\begin{frame}{Split Brain}
+\begin{itemize}
+    \item Network Partitioning: rede dividida em duas partes incomunicáveis.
+    \item Múltiplas eleições podem acontecer em paralelo.
+    \item Múltiplos líderes em paralelo.
+    \item Como lidar com este problema? 
+    \pause
+    \begin{itemize}
+        \item Use primeiro algoritmo e só eleja líder após maioria de votos.
+        \item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
+    \end{itemize}
+\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Detecção de Falhas}
+Eleição de líderes perfeita é impossível em cenários realísticos.
+\begin{itemize}
+    \item Detecção de falhas perfeita é impossível...
+    \item em sistemas distribuídos assíncronos (Internet)
+    \item sujeitos à partições (Internet)
+    \item com requisitos de disponibilidade total.
+    \pause
+    \item Falemos mais sobre este problema depois.
+\end{itemize}
+\end{frame}</p>
+<h1 id="fim-da-aula-12">Fim da aula 12</h1>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
