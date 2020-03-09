@@ -9,7 +9,7 @@ Mas acontece que sem a computação distribuída, nenhum desenvolvimento sério 
 
 Se estiver convencido de que esta é uma área importante, ótimo! 
  Neste curso apesentaremos uma visão geral do que são sistemas distribuídos, por quês técnicos para os desenvolvemos, e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
-Caso contrário, bem, você não tem muita escolha, certo? Então tente aproveitar esta visão geral para praticar um pouco de programação neuro-liguística e repita o seguinte mantra: heeeeeeeuuuuummmmmm amo computação distribuída.
+Caso contrário, bem, você não tem muita escolha, certo? Então tente aproveitar esta visão geral para praticar um pouco de [programação neuro-liguística](https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_neurolingu%C3%ADstica) e repita o seguinte mantra: heeeeeeeuuuuummmmmm amo computação distribuída.
 
 Brincadeiras a parte, você desenvolverá um projeto em várias etapas que lhe permitirá exercitar os conceitos vistos aqui e que te levará a:
 
@@ -85,10 +85,10 @@ Assim, uma possível definição de Sistema Distribuído, que me agrada, é a se
     Coleção de sistemas computacionais (software ou hardware), independentes mas com alguma forma de comunicação, que colaboram na execução de alguma tarefa.
 
 
-Uma definição talvez mais realista talvez seja a de Leslie Lamport, que certa vez disse:
+Uma definição mais cínica mas definitivamente realista é a de [Leslie Lamport](https://en.wikipedia.org/wiki/Leslie_Lamport), que certa vez disse:
 > A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable.
  
-Mas esta é a realidade da programação distribuída, por quê fazê-lo?
+Mas se esta é a realidade da programação distribuída, por quê fazê-lo?
 
 
 ## Por quê?
@@ -96,7 +96,7 @@ Mas esta é a realidade da programação distribuída, por quê fazê-lo?
 Todos estamos a par de que aplicações importantes nos dias de hoje são aplicações distribuídas rodando em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc).
 Alguns exemplos óbvios são
 
-* [Amazon](https://www.amazon.com),
+* [Amazon.com](https://www.amazon.com),
 * [Facebook](https://www.facebook.com), e
 * [GMail](https://www.gmail.com).
 
@@ -111,37 +111,38 @@ O fato é que computadores individuais tem capacidade limitada de processamento 
 
 ![Data Growth](images/datagrowth.jpg)
 
-Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo mesmo de forma linear tem custo exponencial.
+Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (**scale up**) mesmo de forma linear tem custo exponencial.
 
 ![Custo de melhoria](images/exponential.jpg)
 
-O que nos resta então é agregar o poder computacional de diversos computadores "baratos" para satisfazer nossas necessidades.
+O que nos resta então é agregar o poder computacional de diversos computadores "baratos" (**scale out**) para satisfazer nossas necessidades.
 
 ![Custo de melhoria](images/scaleupout.jpg)
 
-O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhe, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
+O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhem, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
 E estejam certos, **computadores [falham](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/) o tempo todo!**
 
-Nós precisamos então entender este ambiente
+Nós precisamos então entender este ambiente e determinar
 
-* qual a probabilidade de um nó falhar,
-* como os computadores, ou melhor, como os processos se comunicam? mensagens podem ser perdidas, atrasadas, corrompidas?
-* os relógios dos computadores são sincronizados?
-* quais os padrões de acesso ao serviços? Aumenta à noite? Diminui no verão?
-* há agentes maliciosos que possam querer perturbar o sistema?
+* qual a probabilidade de um nó falhar;
+* como os computadores, ou melhor, como os processos se comunicam; 
+* se mensagens podem ser perdidas, atrasadas, corrompidas;
+* se os relógios dos computadores são sincronizados;
+* se há agentes maliciosos que possam querer perturbar o sistema;
+* quais os padrões de acesso ao serviços, isto é, se aumentam à noite, diminuem no verão, etc.
 
-Assim, definimos modelos computacionais, que nos permitem desenvolver algoritmos adequados aos diversos problemas que enfrentamos.
+Assim, definimos **modelos computacionais**, que nos permitem desenvolver **algoritmos adequados** aos diversos problemas que enfrentamos.
 Modelos clássicos englobam três variáveis:
 
-* Comunicação
-* Sincronismo
-* Falhas
+* Comunicação;
+* Sincronismo; e,
+* Falhas.
 
 Definido o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas. Para isto, precisamos entender 
 
-* como falhas (bugs, por exemplo) afetam a execução de forma a 
-* evitar que a falha de algum componente possa levar o sistema a parar como um todo,
-* e a garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.
+* como falhas (bugs, por exemplo) afetam a execução; 
+* como evitar que a falha de algum componente possa levar o sistema a parar como um todo; e
+* garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.
 
 Vejamos algumas exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.
 
@@ -152,7 +153,6 @@ Vejamos algumas exemplos de tarefas executadas por sistemas distribuídos, que v
 * Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda
 * Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
 * Leia o valor do sensor de temperatura S e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
-
 
 Um sistema distribuído implica em algum tipo de colaboração entre componentes, para permitir que recursos de um sejam usados por outro. 
 Por exemplo, 
