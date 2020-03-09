@@ -10,14 +10,7 @@ As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência 
 Ter conhecimentos específicos da subárea de desenvolvimento de sistemas distribuídos e pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
 "Como assim?", você pergunta, já que nunca ouviu falar em sistemas distribuídos até ter que se matricular nesta disciplina.
 Bem, o desenvolvimento da teoria da computação distribuída, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, pode não ser tão falado como outras áreas quentes como inteligência artificial e ciência de dados.
-Acontece que sem a computação distribuída, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais. Veja por exemplo a seguinte descrição para se trabalha como cientista de dados: [Data science/engineer](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist)
-
-Em conclusão, estudar sistemas distribuídos pode te levar a uma carreira promissora. 
-Veja este vídeo sobre uma das carreiras do [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/), ligadas aos sistemas distribuídos, e alguns exemplos
-de vagas na indústria de software:
-* [Data science/engineer](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist)
-* [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/)
-* [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/)
+Acontece que sem a computação distribuída, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais. Veja por exemplo a seguinte descrição dos *skills* necessários para atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
 
 Convencido ou não, neste capítulo apesentaremos uma visão geral do que são sistemas distribuídos, por quês técnicos para os desenvolvemos, e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
 
