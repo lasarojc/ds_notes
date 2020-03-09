@@ -1,8 +1,8 @@
 site_name: Sistemas Distribuídos
 nav:
-    - index.md
-    - intro/index.md
+        - Prólogo: index.md
+        - Introdução: intro/index.md
 theme: readthedocs
 markdown_extensions:
-    - admonition
+        - admonition
 
