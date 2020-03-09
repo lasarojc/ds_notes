@@ -152,16 +152,16 @@ Assim, uma possível definição de Sistema Distribuído, que me agrada, é a se
 <p class="admonition-title">Sistema Distribuído</p>
 <p>Coleção de sistemas computacionais (software ou hardware), independentes mas com alguma forma de comunicação, que colaboram na execução de alguma tarefa.</p>
 </div>
-<p>Uma definição talvez mais realista talvez seja a de Leslie Lamport, que certa vez disse:</p>
+<p>Uma definição mais cínica mas definitivamente realista é a de <a href="https://en.wikipedia.org/wiki/Leslie_Lamport">Leslie Lamport</a>, que certa vez disse:</p>
 <blockquote>
 <p>A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable.</p>
 </blockquote>
-<p>Mas esta é a realidade da programação distribuída, por quê fazê-lo?</p>
+<p>Mas se esta é a realidade da programação distribuída, por quê fazê-lo?</p>
 <h2 id="por-que">Por quê?</h2>
 <p>Todos estamos a par de que aplicações importantes nos dias de hoje são aplicações distribuídas rodando em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>.
 Alguns exemplos óbvios são</p>
 <ul>
-<li><a href="https://www.amazon.com">Amazon</a>,</li>
+<li><a href="https://www.amazon.com">Amazon.com</a>,</li>
 <li><a href="https://www.facebook.com">Facebook</a>, e</li>
 <li><a href="https://www.gmail.com">GMail</a>.</li>
 </ul>
@@ -172,32 +172,33 @@ Tolerância a falhas implica em redundância, em cópias, o que fatidicamente im
 <p>Há quem diga que <a href="https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/">somos todos desenvolvedores de sistemas distribuídos agora</a>.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.</p>
 <p><img alt="Data Growth" src="images/datagrowth.jpg" /></p>
-<p>Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo mesmo de forma linear tem custo exponencial.</p>
+<p>Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (<strong>scale up</strong>) mesmo de forma linear tem custo exponencial.</p>
 <p><img alt="Custo de melhoria" src="images/exponential.jpg" /></p>
-<p>O que nos resta então é agregar o poder computacional de diversos computadores "baratos" para satisfazer nossas necessidades.</p>
+<p>O que nos resta então é agregar o poder computacional de diversos computadores "baratos" (<strong>scale out</strong>) para satisfazer nossas necessidades.</p>
 <p><img alt="Custo de melhoria" src="images/scaleupout.jpg" /></p>
-<p>O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhe, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
+<p>O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhem, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
 E estejam certos, <strong>computadores <a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">falham</a> o tempo todo!</strong></p>
-<p>Nós precisamos então entender este ambiente</p>
+<p>Nós precisamos então entender este ambiente e determinar</p>
 <ul>
-<li>qual a probabilidade de um nó falhar,</li>
-<li>como os computadores, ou melhor, como os processos se comunicam? mensagens podem ser perdidas, atrasadas, corrompidas?</li>
-<li>os relógios dos computadores são sincronizados?</li>
-<li>quais os padrões de acesso ao serviços? Aumenta à noite? Diminui no verão?</li>
-<li>há agentes maliciosos que possam querer perturbar o sistema?</li>
+<li>qual a probabilidade de um nó falhar;</li>
+<li>como os computadores, ou melhor, como os processos se comunicam; </li>
+<li>se mensagens podem ser perdidas, atrasadas, corrompidas;</li>
+<li>se os relógios dos computadores são sincronizados;</li>
+<li>se há agentes maliciosos que possam querer perturbar o sistema;</li>
+<li>quais os padrões de acesso ao serviços, isto é, se aumentam à noite, diminuem no verão, etc.</li>
 </ul>
-<p>Assim, definimos modelos computacionais, que nos permitem desenvolver algoritmos adequados aos diversos problemas que enfrentamos.
+<p>Assim, definimos <strong>modelos computacionais</strong>, que nos permitem desenvolver <strong>algoritmos adequados</strong> aos diversos problemas que enfrentamos.
 Modelos clássicos englobam três variáveis:</p>
 <ul>
-<li>Comunicação</li>
-<li>Sincronismo</li>
-<li>Falhas</li>
+<li>Comunicação;</li>
+<li>Sincronismo; e,</li>
+<li>Falhas.</li>
 </ul>
 <p>Definido o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas. Para isto, precisamos entender </p>
 <ul>
-<li>como falhas (bugs, por exemplo) afetam a execução de forma a </li>
-<li>evitar que a falha de algum componente possa levar o sistema a parar como um todo,</li>
-<li>e a garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.</li>
+<li>como falhas (bugs, por exemplo) afetam a execução; </li>
+<li>como evitar que a falha de algum componente possa levar o sistema a parar como um todo; e</li>
+<li>garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.</li>
 </ul>
 <p>Vejamos algumas exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.</p>
 <ul>
