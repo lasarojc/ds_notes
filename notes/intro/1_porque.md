@@ -21,6 +21,9 @@ Tolerância a falhas implica em redundância, em cópias, o que fatidicamente im
 De fato, há quem diga que [somos todos desenvolvedores de sistemas distribuídos agora](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/)
 
 
-> Em conclusão, as principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
-> * escalabilidade e
-> * tolerância a falhas.
+---
+ Em conclusão, as principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
+ * escalabilidade e
+ * tolerância a falhas.
+ 
+ ---
