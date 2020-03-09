@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Dependabilidade - Sistemas Distribuídos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Dependabilidade";
+    var mkdocs_page_input_path = "ft/1_dependabilidade.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../intro/intro/">Introdução</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Sistemas Distribuídos</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Dependabilidade</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="dependabilidade">Dependabilidade</h1>
+<p>Ao escrevermos nossos softwares, queremos que sejam usados para resolver problemas, mesmo que importância do problema esteja em um espectro bem vasto, indo, por exemplo, da execução de um cirurgia ocular remota, ao controle de uma usina hidrelétrica, à jogar truco contra um computador. Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
+Desta situação, surge a ideia de dependabilidade, isto é, de um sistema ter a propriedade de que podemos depender do mesmo.</p>
+<p>Em computação distribuída, componentes dependem uns dos outros para a realização de tarefas. Assim, componentes que quer ser "dependáveis" (do inglês, <em>dependable</em>), pois se não o forem, os demais componentes não poderão executar suas tarefas, rendendo o sistema como um todo inútil.</p>
+<hr />
+<h5 id="definicao">Definição</h5>
+<p>Assim, dizemos que</p>
+<pre><code>um componente $C$ depende de um componente $C'$ se a corretude do comportamento de $C$ depende da corretude do componente $C'$.
+</code></pre>
+<p>e que</p>
+<pre><code>um componente é ``dependável'' (\emph{dependable}) na medida que outros podem depender dele.
+</code></pre>
+<hr />
+<p>De acordo com <a href="https://ieeexplore.ieee.org/document/1335465?arnumber=1335465">Laprie et al</a>, tem-se dependabilidade quando os seguintes atributos estão presentes.</p>
+<hr />
+<h5 id="atributos">Atributos</h5>
+<ul>
+<li>Disponibilidade (<em>Availability</em>) - Prontidão para uso.</li>
+<li>Confiabilidade/Fiabilidade (*Reliability) - Continuidade do serviço.</li>
+<li>Manutenabilidade (<em>Maintainability</em>) - Facilidade de reparo.</li>
+<li>Segurança (<em>Safety</em>) - Tolerância a catástrofes.</li>
+<li>Integridade (<em>Integrity</em>) - Tolerância a modificações.</li>
+<li>Confidencialidade (*Confidentiality) - Informação somente a quem devido.</li>
+</ul>
+<p>A combinção das três últimas propriedades é também chamadas de Segurança (<em>Security</em>).</p>
+<hr />
+<p>Como obstáculos para se conseguir estes atributos estão os seguintes obstáculos, ou ameaças:</p>
+<hr />
+<h5 id="ameacas">Ameaças</h5>
+<ul>
+<li>Fault - Falha (Falta): bug -- \lstinline|&lt;=| em vez de \lstinline|&lt;| (pode nunca afetar a execução).</li>
+<li>Error - Erro  (Erro): manifestação do bug -- iteração passa do ponto. (Pode não ser observável pelo usuário.)</li>
+<li>Failure - Defeito (Falha): problema visível -- tela azul</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

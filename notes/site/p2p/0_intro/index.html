@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>P2P - Sistemas Distribuídos</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "P2P";
+    var mkdocs_page_input_path = "p2p/0_intro.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../intro/intro/">Introdução</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Sistemas Distribuídos</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>P2P</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>Neste capítulo falaremos sobre os sistemas P2P, do inglês, <em>peer-to-peer</em>, e mostraremos como as DHT, o mais proeminente exemplo de P2P, evoluiram do Chord, essencialmente de uso acadêmico, aos bancos de dados NOSQL, com representantes como Cassandra e o DynamoDB, muito difundidos na indústria.</p>
+<h2 id="arquitetura-p2p">Arquitetura P2P</h2>
+<p>Uma forma de ver a arquitetura P2P é como uma substituição dos papéis de clientes e servidores, onde há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão, isto é, executam as mesmas funções.
+Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.</p>
+<p>Na prática, muitos sistemas mantém os papéis de clientes e servidores, mas distribuem as tarefas dos servidores entre pares para aquela função; são sistemas híbridos. É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. </p>
+<p>Como principais características destes sistemas P2P, podemos destacar as seguintes:
+* arquitetura decentralizada;
+* não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
+* pode haver entrada e saída de nós do sistema com alta frequência; 
+* nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas.</p>
+<p>Os principais objetivos do uso arquitetura P2P são comuns a todas as arquiteturas distribuídas, isto é:
+* agregar poder computacional de múltiplos nós e
+* tolerar falhas de componentes sem paralizar o serviço, isto é, alta-disponibilidade.</p>
+<p>Devido à forma como são construídos, sistemas P2P também podem visar
+* escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
+* auto-administração, pois seria praticamente impossível centralizar a administração de tantos nós, com tantas configurações distintas e  em tantas localizações diferentes.</p>
+<p>TODO: Exemplos de sistemas P2P</p>
+<h2 id="rede-sobreposta">Rede Sobreposta</h2>
+<p>Como já mencionado, em sistemas P2P, os nós ou componentes do sistema se organizam em uma rede <em>sobreposta</em> à rede física. Esta rede lógica é constituída pelos processos atuando como nós e pelos canais de comunicação estabelecidos entre os nós, tipicamente na forma de conexões TCP/IP.</p>
+<p>Nestas redes sobrepostas são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
+Uma vez que as conexões na rede sobreposta não correspondem a conexões físicas, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Isto também implica que a otimização da rota lógica não necessariamente leva à otimização da rota física.</p>
+<p><img alt="Por Gustavo Lacerda - UFRJ, Domínio público" src="../images/overlay.jpg" /></p>
+<p>Dependendo em como esta rede é organizada (ou não), a mesma é classificada como <em>estruturada</em> ou <em>não-estruturada</em>.</p>
+<h3 id="rede-nao-estruturada">Rede Não-Estruturada</h3>
+<p>Se a rede é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede <em>não-estruturada</em>. 
+A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.</p>
+<p><img alt="Não-estruturada" src="../images/unstructured.png" /></p>
+<p>Suponha que esta rede seja usada para armazenar e consultar dados.
+Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
+Buscas, contudo, terão que vasculhar a rede usando algoritmos como
+* busca em largura
+* busca em profundidade
+* caminhada aleatória (resposta probabilística)</p>
+<h3 id="rede-estruturada">Rede Estruturada</h3>
+<p>Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de estruturada.
+Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
+A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
+Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
+Claramente, a inserção e acesso a dados nesta rede é mais custosa, pois independentemente de onde a requisição é feita, isto é, a partir de qual nó, ela deverá ser atendida por um nó específico. </p>
+<p>Veja o exemplo do Chord, uma rede P2P em que os nós formam um anel lógico, cujos detalhes veremos adiante.
+Cada nó é responsável pela faixa de valores indexados por chaves entre o identificador do nó e o do nó anterior.
+Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente para um determinado nó, e deve ser <strong>roteada</strong> para o mesmo.
+A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.</p>
+<p><img alt="" src="../images/05-04.png" /></p>
+<p>Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica, e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.</p>
+<p><img alt="" src="../images/02-08.png" /></p>
+<p>Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.</p>
+<h3 id="resumo">Resumo</h3>
+<table>
+<thead>
+<tr>
+<th>Estruturada</th>
+<th>Não-Estruturada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estrutura bem definida</td>
+<td>Estrutura aleatória</td>
+</tr>
+<tr>
+<td>Adição de dados é lenta</td>
+<td>Adição de dados é rápida</td>
+</tr>
+<tr>
+<td>Adição de nós é lenta</td>
+<td>Adição de nós é rápida</td>
+</tr>
+<tr>
+<td>Busca por dados é rápida</td>
+<td>Busca por dados lenta</td>
+</tr>
+</tbody>
+</table>
+<h3 id="de-nao-estruturada-a-estruturada">De não estruturada a estruturada</h3>
+<p>Em certos cenários, é possível conseguir o melhor de dois mundos.
+Por exemplo, seja uma grade $N \times N$ em que nós se conectam aleatoriamente uns aos outros, e que nós em uma borda da matriz conseguem se conectar aos nós da borda oposta, com distância 1.
+Efetivamente, temos a rede sobreposta à esquerda.</p>
+<p><img alt="" src="../images/02-11.png" /></p>
+<p>Se cada nó executar executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada à direita.
+* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+  <img alt="" src="../images/02-10.png" /></p>
+<ul>
+<li>O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.</li>
+<li>O módulo de seleção computa a distância entre o nó e todos os seus vizinhos, e descarta as conexões com maior distância, onde</li>
+<li>a = (x,y)$, $b = (x', y')$</li>
+<li>$dx_{a,b} = min(|x - x'|, N - |x - x'|)$</li>
+<li>$dy_{a,b} = min(|y - y'|, N - |y - y'|)$</li>
+</ul>
+<p>Ao final de múltiplas interações, cada nó conhecerá seus vizinhos à direita, esquerda, acima e abaixo.
+Outra visuzalização desta topologia é apresentada a seguir:</p>
+<p><img alt="Fujitsu and RIKEN, 2009" src="../images/3d-torus.jpg" /></p>
+<p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, no qual diversos esquemas de roteamento eficientes podem ser usados.</p>
+<p><img alt="By Spiritia" src="../images/hypercube.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

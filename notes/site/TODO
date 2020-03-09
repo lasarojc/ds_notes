@@ -1,0 +1,87 @@
+---
+nav_exclude: true
+---
+
+# TODO[]
+
+# Introdução
+* Motivação
+* O quê é e por quê distribuir?
+* Como distribuir? A mágica do *middleware*
+* Tipos e Arquiteturas
+
+
+# Comunicação
+
+## Socket
+* [No princípio, era o Socket](./notes/basics/1_socket.md)
+* [*Multiprocessing* e *Multithreading* em Sistemas Distribuídos](./notes/basics/2_multiprogramming.md)
+
+## Invocação Remota de Procedimentos
+* [Abaixo os Sockets](./notes/basics/3_rpc.md)
+  * [Estudo de Caso: gRPC](./notes/basics/3_1_grpc.md)
+  * [Estudo de Caso: Thrift](./notes/basics/3_2_thrift.md)
+  * [Estudo de Caso: RMI](./TODO.md)
+
+## Projeto
+* [Uma HT cliente/servidor](./notes/projeto/projeto.md)
+
+
+## MOM
+* [MOM](./TODO.md)
+
+## Publish/Subscribe
+* [*Publish/Subscribe*](./TODO.md)
+
+
+# Arquiteturas
+
+## Revendo Cliente Servidor
+
+TODO: Trazer parte da discussão sobre cliente servidor para cá e atualizar.
+
+## Peer-2-Peer
+
+* [Sistemas Par-a-Par](./notes/0_intro.md)
+* [Tabelas de Espalhamento Distribuídas](./notes/p2p/1_dht.md)
+  * [Estudo de Caso: Chord](./notes/p2p/1_1_chord.md)
+  * [Estudo de Caso: Dynamo](./notes/p2p/1_2_dynamo.md)
+  * [Estudo de Caso: Cassandra](./notes/p2p/1_1_cassandra.md)
+* [Estruturas de Dados para P2P e outros SD](./p2p/2_ed_sd.md)
+
+## Projeto
+* [Uma DHT propriamente dita](./projeto/p2p.md)
+
+## Microsserviços
+* [Visão Geral](./notes/microservices/0_intro.md)
+
+## Event-sourcing
+
+
+
+
+# Coordenação
+TODO: usar consistência entre réplicas da DHT para motivar a sincronização.
+
+* [Coordenação](./coordenacao/coordenacao.md)
+* [Tempo Físico](./tempo/fisico.md)
+* [Tempo Lógico](./tempo/logico.md)
+
+
+
+# Tolerância a Falhas
+
+* [Dependabilidade](./ft/dependabilidade.md)
+* [Modelos](./ft/modelos.md)
+* [Comunicação em Grupo](./ft/comunicao_grupo.md)
+  * [Replicação de Máquinas de Estados](./ft/smr.md)
+  * [Estudo de Caso: Raft](./fr/raft.md)
+  * [Estudo de Caso: Zookeeper](./ft/zookeeper.md)
+  * [Estudo de Caso: Atomix](./ft/atomix.md)
+* [Uma DHT tolerante a falhas ](./projeto/replicated.md)
+
+
+# Tecnologias
+
+* [Arquitetura Reativa](./reactive.md)
+* [Map & Reduce](./mapreduce.md)
