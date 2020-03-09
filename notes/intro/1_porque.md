@@ -11,6 +11,7 @@ Alguns exemplos óbvios são
 * [Aamazon](https://www.amazon.com), 
 * [Facebook](https://www.facebook.com), e 
 * [GMail](https://www.gmail.com).
+
 Mas as razões que levam a este cenário são válidas para diversas outras aplicações.
 De fato, praticamente qualquer sistema de informação que precisa atingir um público considerável, necessitará aplicar técnicas de computação distribuída para conseguir **escalar**, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta, mesmo que não cheguem a estas escalas. 
 
@@ -20,11 +21,6 @@ Tolerância a falhas implica em redundância, em cópias, o que fatidicamente im
 De fato, há quem diga que [somos todos desenvolvedores de sistemas distribuídos agora](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/)
 
 
----
----
-Em conclusão, as principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
-* escalabilidade e
-* tolerância a falhas.
-
----
----
+> Em conclusão, as principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
+> * escalabilidade e
+> * tolerância a falhas.
