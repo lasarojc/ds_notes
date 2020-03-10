@@ -1,149 +1,146 @@
----
-layout: default
-title: Comunicação
-nav_order: 2
-has_children: true
----
+# Fundamentos
 
-A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre processos via um canal de comunicação.
----
-layout: default
-title: Sockets
-parent: Comunicação
-nav_order: 1
----
+A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+No mundo de hoje, isto quer dizer que os *hosts* dos componentes devem possuir interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
+Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 
-O desenvolvimento de qualquer sistema distribuído requer a capacidade de componentes deste sistema "conversar" uns com os outros.
-Para que a conversa aconteça, são necessários um **canal de comunicação** e um **protocolo de comunicação**.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo.
+Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
 
-O canal de comunicação é o meio pelo qual os elementos da conversa são transmitidos e o protocolo são as regras codificam tal conversa.
-Por exemplo, quando você fala com uma pessoa, cara a cara, o meio de comunicação é o ar, e o protocolo utilizado é a linguagem escolhida, Português por exemplo, e os sinais usados para indicar quando um ou outro quer ou pode falar.
+Neste capítulo, revisaremos de forma rápida tanto conceitos de redes de computadores quanto de concorrência e paralelismo.
 
-Quanto aos canais de comunicação, estes podem ter diversas formas:
 
----
+## Canais e Protocolos de Comunicação
+
+Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras codificam tal conversa.
+Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
+Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:
+
 * Ponto-a-ponto
-  * Eficiente
-  * Caro para muitos nós
-  * Roteamento trivial
+	* Eficiente
+	* Caro para muitos nós
+	* Roteamento trivial
 * Compartilhado
-  * Colisões
-  * Menor custo
-  * Roteamento mais complicado
+  	* Colisões
+  	* Menor custo
+  	* Roteamento mais complicado
 
----
-
-Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação nós usando um barramento compartilhado.
+Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação nós usando um **barramento compartilhado**.
 Sobre este meio, são usados protocolos para, por exemplo,
 
----
-* Acesso ao meio 
+* Controle de acesso ao meio 
 * Transmissão de mensagens
-* Se evitar e tratar colisões
+* Evitar e tratar colisões
 
----
+As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, ** *gateways* ** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
+Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de **comutação de pacotes** (*packet switching*) ou de **circuitos** (*circuit switching*).
 
-As redes Ethernet, contudo, cobrem pequenas áreas, e para se ter conversas "mais interessantes", é necessário se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
-Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão Packet Switching x Circuit Switching:
-
----
-* Packet Switching
-  * Dados divididos em pacotes
-  * Cada pacote viaja independentemente
-  * Pacotes são perdidos
-  * Latência variável
+* Comutaçao de pacotes 
+	* Dados divididos em pacotes
+	* Cada pacote viaja independentemente
+	* Pacotes são perdidos
+	* Latência variável
 * Circuit switching
-  * Caminho dedicado
-  * Recursos reservados
-  * Pacotes de tamanho fixo
-  * Latência constante
+	* Caminho dedicado
+	* Recursos reservados
+	* Pacotes de tamanho fixo
+	* Latência constante
 
----
+Outra questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
 
-Outra questão é quanto à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que uma algo "dito" por um interlocutor deve garantidamente ser "ouvido"  pelo outro, ou se a mensagem pode ser perdida no meio.
-
-Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor (**você**) dos sistemas distribuídos, lhe cabendo apenas a decisão de qual protocolo utilizar. 
+Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, **você**, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
 
----
-* Internetworking Protocol
-* Redes subjacentes são abstraídas
-* Melhor esforço
-* Roteadores conectam as redes.
 
----
+## A Internet
 
-# A Internet
-	
+A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o *internetworking protocol*, ou IP.
+Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
+Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
+
 ![A Internet](images/network.png)
+
+Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
+Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima.
+Cada camada tem um **cabeçalho** (*header*) e uma **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
 
 ![image](images/04-01.png)
 
-Cada camada conversa com a equivalente do outro lado. Na prática, a comunicação desce e sobe a pilha. Cada camada é responsável por:
 
-* Bits
+1. Bits
 * Frames/quadros; controle de fluxo; acesso ao meio.
 * Datagramas/pacotes; roteamento
 * Controle de fluxo; fim a fim; confiabilidade; tcp e udp
 * Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl
 * Objetos; json, xml; criptografia
 * Aplicações; http, pop, ftp
-* Headers das camadas superiores são dados nas camadas inferiores
 
-
----
-###### OSI x Internet
-	
 [![OSI x IP](images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
----
+Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
+Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
+Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de **transporte**.
+
+Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
+Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
+Alguns exemplos de tais funcionalidades são
+
+* (De)Serialização
+* Nomeamento
+* Criptografia
+* Replicação
+* Invocação remota de procedimentos
+
+A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
+Este característica é conhecida como o [argumento fim-a-fim no projeto de sistemas](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf); uma análise recente deste argumento foi feita [aqui](https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/).
 
 
-Internet Protocol
-* Bibliotecas/middleware provêm o restante das funcionalidades
-  * (De)Serialização
-	* Nomeamento
-	* Criptografia
-	* Replicação
-	* Invocação remota de procedimentos
-	* ...
+## No princípio, era o Socket
 
----
+Na prática, para implementarmos a comunicação entre processos, usamos **sockets**.
+Para se definir um socket a partir de um **host** é necessário identificar o outro fim da comunicação, isto é, o outro *host*, ou melhor, uma de suas interfaces de rede.
+Os sockets são então a abstração dos canais de comunicação, mas como dito antes, é necessário definir também os protocolos usados por estes sockets.
+O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos usar, na camada 3.
+No caso da pilha IP, usa-se o protocolo AF\_INET ou PF\_INET.
+Escolhido o protocolo, 
 
+* cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e 
+* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet [^obs]. 
 
-## Sockets
+[^obs]: Endereços IP não públicos não server como identificadores únicos na Internet.
 
-* Hosts
-  * Cada interface tem um endereço MAC \pause -- Somente comunicação direta
-  * Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits
-  * Como falar com uma aplicação?
+Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
+Isto é feito pela definição uma porta:
 
-* Sockets
-  * Pontos finais da comunicação
-  * Porta: 16 bits
-    * [IANA](http://www.iana.org) (Internet Assigned Numbers Authority)
-      * Bem conhecidas -- 0-1023
-      * Proprietárias -- 49151
-	    * Dinâmicas -- 65535
-  * Domínio: AF\_INET (Internet), PF\_UNIX, PF\_X25..., PF\_INET (Internet)
-  * Tipo: SOCK\_STREAM x SOCK\_DGRAM (TCP x UDP)
-  * Utilizado como um arquivo
-  * Protocolo: por sua conta
-  
----
+* Porta: 16 bits
+     * [IANA](http://www.iana.org) (Internet Assigned Numbers Authority)
+     * Bem conhecidas -- 0-1023
+     * Proprietárias -- 49151
+     * Dinâmicas -- 65535
 
+Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
+Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UPD (**SOCK\_DGRAM**).
 
----
+A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma.
+
+* criar socket
+* bind
+* listen
+* accept
+* connect
+
+Estabelecido o socket, o mesmo pode ser usado como **arquivo**, isto é, lendo-se e escrevendo-se bytes.
 
 ![image](images/04-15.png)
 
----
-
+O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
 
 
 ### Exemplo - TCP
 
+Vejamos um exemplo do uso de sockets, em Python.
 O seguinte arquivo pode ser nomeado, por exemplo, `server.py`, mas não pode, de forma alguma, ser nomeado `socket.py`.
 
 ```Python
@@ -165,24 +162,32 @@ while True:
    c.close()                                    # Close the connection
 ```
 
-Para executá-lo, faça
+Para executá-lo, execute o seguinte comando em um terminal. 
 
 ```bash
 python server.py
 ```
-em um terminal e em outro faça
+
+Em outro terminal, execute **um dos** dois comandos a seguir[^nc]: 
+[^nc]: Se o segundo comando não funcionar, tente `nc` em vez de `netcat`.
+
 ```bash
 telnet localhost 12345
-# ou
+```
+
+```bash
 netcat localhost 12345
 ```
 
-Em Java, a criação do socket seria muito mais simples, consistindo apenas em: 
-```Java
-...
-Socket s = new ServerSocket(port);
-...
-```
+O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
+Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
+Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
+Simples, não é mesmo?
+
+Em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
+
+
+Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
 Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.
 ```Python
 #client.py
@@ -205,20 +210,31 @@ E para se executar o cliente, faça:
 ```bash
 python client.py
 ```
+
+Observe que o `socket.close()` encerra a conexão do lado de quem invoca. Na contraparte, invocações a `socket.recv()` retornam com 0 bytes lidos.
+
+A título de comparação, em Java, a criação do socket do lado do servidor seria muito mais simples, consistindo apenas em: 
+```Java
+Socket s = new ServerSocket(port);
+```
+
 O cliente em Java também é simplificado.
 ```Java
-...
 Socket s = new Socket(hostname,port);
-...
 ```
-Observe que o `socket.close()` encerra a conexão do lado de quem invoca. Na contraparte, invocações a `socket.recv()` retornam com 0 bytes lidos.
+
 
 ### Exercício: Ping-Pong
 
 Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
+<table>
+<tr>
+<td> Terminal 1</td> <td> Terminal 2</td>
+</tr>
+<tr>
+<td> 
 ```bash
-#Terminal 1
 python server.py
 Esperando conexão.
 Esperando mensagem.
@@ -227,8 +243,10 @@ Digite resposta: lelele
 Resposta enviada.
 Conexão encerrada.
 Esperando conexão.
-
-#Terminal 2
+```
+</td>
+<td>
+```bash
 python client.py
 Digite mensagem: lalala
 Mensagem enviada.
@@ -237,8 +255,11 @@ Resposta recebida: lelele
 Digite mensagem: SAIR
 Desconectando.
 ```
+</td>
+</tr>
+</table>
 
-Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, enquanto que em Python 3 seria `x = input()`. Além disso, em Python, você deve remover as invocações para `encode` e `decode`.
+Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, enquanto que em Python 3 seria `x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
 
 
 
@@ -246,20 +267,18 @@ Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, e
 
 No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.
 
-A criação do socket é feita explicitando-se o uso de **datagramas**
-* `s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)`
+A criação do socket é feita explicitando-se o uso de **datagramas**: `s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)`
 
-Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `data, addr = sock.recvfrom(4096)` para receber o datagrama, onde
-* `data` é o conteúdo recebido e  
-* `addr` o endereço de quem enviou o datagrama.
+Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `data, addr = sock.recvfrom(4096)` para receber o datagrama, onde `data` é o conteúdo recebido e  `addr` o endereço de quem enviou o datagrama.
 
 Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
 
-Além deste detalhe, outros são importantes:
+Além deste detalhe, é importante manter em mente outras características do UDP:
+
 * falta de ordem
 * falta de confiabilidade
 * menos dados lidos que enviados.
-* mais dados lidos que enviados (pode acontecer no TCP)
+* mais dados lidos que enviados (pode acontecer também no TCP)
 
 Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
 
@@ -423,14 +442,14 @@ sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 [Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)
 
 ---
----
-layout: default
-title: Multiprogramação
-parent: Comunicação
-nav_order: 2
----
 
-# Multiprogramação e *Multithreading* em Sistemas Distribuídos
+
+------------------------
+TODO
+========================
+-----------------------
+
+## Multiprogramação e *Multithreading* em Sistemas Distribuídos
 
 É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
@@ -447,7 +466,7 @@ Dada que processos interagem com a rede usando sockets, cuja operação de leitu
 Há duas razões claras para estudarmos multi-threading. A primeira, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
 A segunda é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 
-## Threads x Processos
+### Threads x Processos
 
 | Processo | Thread |
 |----------|--------|
@@ -461,9 +480,9 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 | | Posix, C++, Java, ...|
 
 
-## Threads em SD
+### Threads em SD
 
-### Cliente multithreaded
+#### Cliente multithreaded
 
 Vantagens similares a usar em sistemas centralizado.
 
@@ -474,7 +493,7 @@ Vantagens similares a usar em sistemas centralizado.
 
 ---
 
-### Servidor multithreaded
+#### Servidor multithreaded
 
 Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.
 
@@ -511,7 +530,7 @@ Que lembra arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/
 Se você quiser ler mais sobre SEDA, vá [aqui](http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf).
 
 
-### Problemas com multithreading
+#### Problemas com multithreading
 
 Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
 E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.
@@ -532,10 +551,10 @@ Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-### Estado em Servidores
+#### Estado em Servidores
 
 
-#### Stateless Servers
+##### Stateless Servers
 
 Não mantém informação após terminar de tratar requisições.
 
@@ -547,7 +566,7 @@ Não mantém informação após terminar de tratar requisições.
 * Perda de desempenho (e.g., abertura do mesmo arquivo a cada requisição.)
 
 
-#### Stateful Servers
+##### Stateful Servers
 
 Mantém informação dos clientes entre requisições.
 
@@ -560,7 +579,7 @@ Mantém informação dos clientes entre requisições.
 * Maior consumo de recursos
 
 
-#### Impacto na Concorrência
+##### Impacto na Concorrência
 
 | Stateless | Stateful |
 |-----------|----------|
@@ -570,11 +589,11 @@ Mantém informação dos clientes entre requisições.
 
 
 
-## Multithread na prática
+### Multithread na prática
 
-### PThreads
+#### PThreads
 
-#### Função de entrada
+##### Função de entrada
 
 ```c
 #include <stdio.h>
@@ -590,7 +609,7 @@ void* hello(void* rank) {
 }
 ```
 
-#### Criação
+##### Criação
 
 ```c
 int main(int argc, char* argv[]) {
@@ -611,7 +630,7 @@ int main(int argc, char* argv[]) {
 	printf("Hello from the main thread\n");
 ```	
 
-#### Destruição
+##### Destruição
 
 ```c
 	for (thread = 0; thread < thread_count; thread++)
@@ -620,7 +639,7 @@ int main(int argc, char* argv[]) {
 	free(thread_handles);
 ```
 
-#### Execução
+##### Execução
 
 Compile com
 ```bash
@@ -648,9 +667,9 @@ Isto acontece porquê a execução das threads independe da ordem de criação. 
 * `pthread_exit` - termina a thread e retorna resultado 
    > An implicit call to \lstinline|pthread_exit()| is made when a thread other than the thread in which \lstinline|main()| was first invoked returns from the start routine that was used to create it. The function's return value serves as the thread's exit status. (manual do \lstinline|pthread_exit|)}
 	
-* pthread_attr_setaffinity_np* - ajusta afinidade dos threads.
+* pthread_attr_setaffinity_np\* - ajusta afinidade dos threads.
 
-#### Threads Java
+##### Threads Java
 
 Neste tutorial, baseado neste [outro](https://docs.oracle.com/javase/tutorial/essential/concurrency/), exploraremos formas de se obter concorrência em Java. Isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
 
@@ -664,12 +683,12 @@ Em Java, há essencialmente duas formas de se conseguir concorrência. A primeir
 Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote `java.util.concurrent`.
 
 
-### *Threads*
+#### *Threads*
 Há duas formas básicas de se usar a classe `Thread`: extensão ou delegação de um objeto implementando `Runnable`.
 
 
 ---
-##### Estender Thread
+###### Estender Thread
 ```Java
 public class HelloThread extends Thread {
     public void run() {
@@ -686,7 +705,7 @@ public class HelloThread extends Thread {
 
 
 ---
-##### Implementar Runnable
+###### Implementar Runnable
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -711,7 +730,7 @@ Por exemplo, o método de classe (`static`) `Thread.sleep()` permite bloquear um
 
 
 ---
-##### Thread.sleep()
+###### Thread.sleep()
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -737,7 +756,7 @@ public class HelloRunnable implements Runnable {
 Observe que a chamada a `sleep()` está dentro de um bloco `try/catch`. Isto é necessário pois é permitido à JVM acordar o *thread* em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o *thread*, ao acordar, verifique se já dormiu o suficiente.
 
 ---
-##### InterruptedException
+###### InterruptedException
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -772,7 +791,7 @@ do servidor não receber sua resposta. Um *thread* indica a intenção de espera
 
 
 ---
-##### Thread.join()
+###### Thread.join()
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
