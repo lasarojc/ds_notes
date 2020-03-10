@@ -8,23 +8,23 @@
   
   
   
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Multiprogramação - Sistemas Distribuídos</title>
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Comunicação - Sistemas Distribuídos</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Multiprograma\u00e7\u00e3o";
-    var mkdocs_page_input_path = "basics/2_multiprogramming.md";
+    var mkdocs_page_name = "Comunica\u00e7\u00e3o";
+    var mkdocs_page_input_path = "basics/index.md";
     var mkdocs_page_url = null;
   </script>
   
-  <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
@@ -38,9 +38,9 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
+        <a href=".." class="icon icon-home"> Sistemas Distribuídos</a>
         <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
@@ -48,15 +48,17 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
                     </li>
                 </ul>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../intro/">Introdução</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../intro/">Introdução</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../">Comunicação</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Comunicação</a>
+    <ul class="current">
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -68,7 +70,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">Sistemas Distribuídos</a>
+        <a href="..">Sistemas Distribuídos</a>
       </nav>
 
       
@@ -76,11 +78,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
+    <li><a href="..">Docs</a> &raquo;</li>
     
       
     
-    <li>Multiprogramação</li>
+    <li>Comunicação</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -91,12 +93,364 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h1>
+                <h2 id="a-pedra-fundamental-da-construcao-de-sistemas-distribuidos-e-a-capacidade-de-comunicacao-entre-processos-via-um-canal-de-comunicacao">A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre processos via um canal de comunicação.</h2>
+<p>layout: default
+title: Sockets
+parent: Comunicação
+nav_order: 1</p>
+<hr />
+<p>O desenvolvimento de qualquer sistema distribuído requer a capacidade de componentes deste sistema "conversar" uns com os outros.
+Para que a conversa aconteça, são necessários um <strong>canal de comunicação</strong> e um <strong>protocolo de comunicação</strong>.</p>
+<p>O canal de comunicação é o meio pelo qual os elementos da conversa são transmitidos e o protocolo são as regras codificam tal conversa.
+Por exemplo, quando você fala com uma pessoa, cara a cara, o meio de comunicação é o ar, e o protocolo utilizado é a linguagem escolhida, Português por exemplo, e os sinais usados para indicar quando um ou outro quer ou pode falar.</p>
+<p>Quanto aos canais de comunicação, estes podem ter diversas formas:</p>
+<hr />
+<ul>
+<li>Ponto-a-ponto</li>
+<li>Eficiente</li>
+<li>Caro para muitos nós</li>
+<li>Roteamento trivial</li>
+<li>Compartilhado</li>
+<li>Colisões</li>
+<li>Menor custo</li>
+<li>Roteamento mais complicado</li>
+</ul>
+<hr />
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um barramento compartilhado.
+Sobre este meio, são usados protocolos para, por exemplo,</p>
+<hr />
+<ul>
+<li>Acesso ao meio </li>
+<li>Transmissão de mensagens</li>
+<li>Se evitar e tratar colisões</li>
+</ul>
+<hr />
+<p>As redes Ethernet, contudo, cobrem pequenas áreas, e para se ter conversas "mais interessantes", é necessário se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.
+Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão Packet Switching x Circuit Switching:</p>
+<hr />
+<ul>
+<li>Packet Switching</li>
+<li>Dados divididos em pacotes</li>
+<li>Cada pacote viaja independentemente</li>
+<li>Pacotes são perdidos</li>
+<li>Latência variável</li>
+<li>Circuit switching</li>
+<li>Caminho dedicado</li>
+<li>Recursos reservados</li>
+<li>Pacotes de tamanho fixo</li>
+<li>Latência constante</li>
+</ul>
+<hr />
+<p>Outra questão é quanto à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que uma algo "dito" por um interlocutor deve garantidamente ser "ouvido"  pelo outro, ou se a mensagem pode ser perdida no meio.</p>
+<p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor (<strong>você</strong>) dos sistemas distribuídos, lhe cabendo apenas a decisão de qual protocolo utilizar. 
+Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
+<hr />
+<ul>
+<li>Internetworking Protocol</li>
+<li>Redes subjacentes são abstraídas</li>
+<li>Melhor esforço</li>
+<li>Roteadores conectam as redes.</li>
+</ul>
+<hr />
+<h1 id="a-internet">A Internet</h1>
+<p><img alt="A Internet" src="images/network.png" /></p>
+<p><img alt="image" src="images/04-01.png" /></p>
+<p>Cada camada conversa com a equivalente do outro lado. Na prática, a comunicação desce e sobe a pilha. Cada camada é responsável por:</p>
+<ul>
+<li>Bits</li>
+<li>Frames/quadros; controle de fluxo; acesso ao meio.</li>
+<li>Datagramas/pacotes; roteamento</li>
+<li>Controle de fluxo; fim a fim; confiabilidade; tcp e udp</li>
+<li>Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
+<li>Objetos; json, xml; criptografia</li>
+<li>Aplicações; http, pop, ftp</li>
+<li>Headers das camadas superiores são dados nas camadas inferiores</li>
+</ul>
+<hr />
+<h6 id="osi-x-internet">OSI x Internet</h6>
+<p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
+<hr />
+<p>Internet Protocol
+* Bibliotecas/middleware provêm o restante das funcionalidades
+  * (De)Serialização
+    * Nomeamento
+    * Criptografia
+    * Replicação
+    * Invocação remota de procedimentos
+    * ...</p>
+<hr />
+<h2 id="sockets">Sockets</h2>
+<ul>
+<li>Hosts</li>
+<li>Cada interface tem um endereço MAC \pause -- Somente comunicação direta</li>
+<li>Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits</li>
+<li>
+<p>Como falar com uma aplicação?</p>
+</li>
+<li>
+<p>Sockets</p>
+</li>
+<li>Pontos finais da comunicação</li>
+<li>Porta: 16 bits<ul>
+<li><a href="http://www.iana.org">IANA</a> (Internet Assigned Numbers Authority)</li>
+<li>Bem conhecidas -- 0-1023</li>
+<li>Proprietárias -- 49151<ul>
+<li>Dinâmicas -- 65535</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Domínio: AF_INET (Internet), PF_UNIX, PF_X25..., PF_INET (Internet)</li>
+<li>Tipo: SOCK_STREAM x SOCK_DGRAM (TCP x UDP)</li>
+<li>Utilizado como um arquivo</li>
+<li>Protocolo: por sua conta</li>
+</ul>
+<hr />
+<hr />
+<p><img alt="image" src="images/04-15.png" /></p>
+<hr />
+<h3 id="exemplo-tcp">Exemplo - TCP</h3>
+<p>O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas não pode, de forma alguma, ser nomeado <code>socket.py</code>.</p>
+<pre><code class="Python">#server.py
+#!/usr/bin/python                               # This is server.py file
+
+import socket                                   # Import socket module
+
+s = socket.socket()                             # Create a socket object
+host = socket.gethostname()                # Get local machine name
+port = 12345                                    # Reserve a port for your service.
+s.bind((host, port))                            # Bind to the port
+
+s.listen(5)                                     # Now wait for client connections.
+while True:
+   c, addr = s.accept()                         # Establish connection with client.
+   print('Got connection from', addr)
+   c.send('Thank you for connecting'.encode())
+   c.close()                                    # Close the connection
+</code></pre>
+
+<p>Para executá-lo, faça</p>
+<pre><code class="bash">python server.py
+</code></pre>
+
+<p>em um terminal e em outro faça</p>
+<pre><code class="bash">telnet localhost 12345
+# ou
+netcat localhost 12345
+</code></pre>
+
+<p>Em Java, a criação do socket seria muito mais simples, consistindo apenas em: </p>
+<pre><code class="Java">...
+Socket s = new ServerSocket(port);
+...
+</code></pre>
+
+<p>Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.</p>
+<pre><code class="Python">#client.py
+
+#!/usr/bin/python                               # This is client.py file
+
+import socket                                   # Import socket module
+
+s = socket.socket()                             # Create a socket object
+host = socket.gethostname()                # Get local machine name
+port = 12345                                    # Reserve a port for your service.
+
+s.connect((host, port))
+data = s.recv(1024)
+print(data.decode())
+s.close()                                         # Close the socket when done
+</code></pre>
+
+<p>E para se executar o cliente, faça:</p>
+<pre><code class="bash">python client.py
+</code></pre>
+
+<p>O cliente em Java também é simplificado.</p>
+<pre><code class="Java">...
+Socket s = new Socket(hostname,port);
+...
+</code></pre>
+
+<p>Observe que o <code>socket.close()</code> encerra a conexão do lado de quem invoca. Na contraparte, invocações a <code>socket.recv()</code> retornam com 0 bytes lidos.</p>
+<h3 id="exercicio-ping-pong">Exercício: Ping-Pong</h3>
+<p>Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.</p>
+<pre><code class="bash">#Terminal 1
+python server.py
+Esperando conexão.
+Esperando mensagem.
+Mensagem recebida: lalala
+Digite resposta: lelele
+Resposta enviada.
+Conexão encerrada.
+Esperando conexão.
+
+#Terminal 2
+python client.py
+Digite mensagem: lalala
+Mensagem enviada.
+Esperando resposta.
+Resposta recebida: lelele
+Digite mensagem: SAIR
+Desconectando.
+</code></pre>
+
+<p>Observe que para ler do teclado em Python 2 você deve usar <code>x = raw_input()</code>, enquanto que em Python 3 seria <code>x = input()</code>. Além disso, em Python, você deve remover as invocações para <code>encode</code> e <code>decode</code>.</p>
+<h3 id="udp">UDP</h3>
+<p>No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.</p>
+<p>A criação do socket é feita explicitando-se o uso de <strong>datagramas</strong>
+* <code>s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)</code></p>
+<p>Um servidor UDP não executa <code>listen</code> ou <code>accept</code> e, em Python, simplesmente executa <code>data, addr = sock.recvfrom(4096)</code> para receber o datagrama, onde
+* <code>data</code> é o conteúdo recebido e<br />
+* <code>addr</code> o endereço de quem enviou o datagrama.</p>
+<p>Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, <code>addr</code> é usado: <code>sent = sock.sendto(data, addr)</code>, onde <code>sent</code> é a quantidade de bytes enviados.</p>
+<p>Além deste detalhe, outros são importantes:
+* falta de ordem
+* falta de confiabilidade
+* menos dados lidos que enviados.
+* mais dados lidos que enviados (pode acontecer no TCP)</p>
+<p>Com tantas dificuldades para se usar o UDP, fica a questão: <strong>para que serve UDP?</strong></p>
+<h3 id="exercicio-udp">Exercício - UDP</h3>
+<p>Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.</p>
+<h3 id="referencias">Referências</h3>
+<ul>
+<li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
+<li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
+</ul>
+<h3 id="ip-multicast">IP-Multicast</h3>
+<p>Imagine enviar os mesmos dados para múltiplos destinatários.
+* Como lidar com retransmissões?
+* Muito estado nos servidores
+* Sobre uso da rede.</p>
+<hr />
+<h5 id="ip-multicast_1">IP-Multicast</h5>
+<p><img alt="IP Multicast" src="images/ipmulticast.jpg" /></p>
+<ul>
+<li>UDP</li>
+<li>Mensagem entregue a todos que se juntaram ao grupo.</li>
+<li>Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)</li>
+</ul>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/"><img alt="" src="images/ipmulticast2.png" /></a></p>
+<hr />
+<hr />
+<h5 id="servidor-servidor">Servidor Servidor</h5>
+<ul>
+<li>Criar Socket UDP</li>
+<li>Uní-lo a um grupo</li>
+<li>Receber pacotes.</li>
+</ul>
+<hr />
+<hr />
+<h5 id="mreceiverjava">MReceiver.java</h5>
+<pre><code class="Java">import java.io.*;
+import java.net.*;
+
+public class MReceiver {
+  public static void main(String[] args) {
+    byte[] inBuf = new byte[256];
+    try {
+      MulticastSocket socket = new MulticastSocket(8888);
+      InetAddress address = InetAddress.getByName(&quot;224.2.2.3&quot;);
+      socket.joinGroup(address);
+      while (true) {
+        DatagramPacket inPacket = new DatagramPacket(inBuf, inBuf.length);
+        socket.receive(inPacket);
+        String msg = new String(inBuf, 0, inPacket.getLength());
+        System.out.println(&quot;From &quot; + inPacket.getAddress() + &quot; Msg : &quot; + msg);
+      }
+    }catch (IOException ioe) {
+      System.out.println(ioe);
+    }
+  }
+}
+</code></pre>
+
+<hr />
+<hr />
+<h5 id="msenderjava">MSender.java</h5>
+<pre><code class="Java">import java.io.*;
+import java.net.*;
+public class MSender {
+ public static void main(String[] args) {
+  byte[] outBuf;
+  final int PORT = 8888;
+  try {
+   DatagramSocket socket = new DatagramSocket();
+   long counter = 0;
+   while (true) {
+    counter++;
+    outBuf = (&quot;Multicast numero &quot; + counter).getBytes();
+    InetAddress address = InetAddress.getByName(&quot;224.2.2.3&quot;);
+    DatagramPacket outPacket = 
+         new DatagramPacket(outBuf, outBuf.length, address, PORT);
+    socket.send(outPacket);
+    System.out.println(&quot;Server sends : &quot; + msg);
+    try { Thread.sleep(500); }catch (InterruptedException ie) {}
+   }
+  } catch (IOException ioe) { System.out.println(ioe); }
+ }
+}
+</code></pre>
+
+<p><a href="lycog.com/programming/multicast-programming-java/">Multicast em Java</a></p>
+<h3 id="multicast-ipv6">Multicast IPv6</h3>
+<hr />
+<blockquote>
+<p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
+<p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
+</blockquote>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">Fonte</a></p>
+<hr />
+<h3 id="exercicio">Exercício</h3>
+<p>Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.1.1.1.</p>
+<hr />
+<h5 id="multicast-server-em-python-3">Multicast Server -- Em Python (3)</h5>
+<pre><code class="Python">import socket
+import struct
+
+MCAST_GRP = '224.1.1.1'
+MCAST_PORT = 5007
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.bind((MCAST_GRP, MCAST_PORT))
+mreq = struct.pack(&quot;=4sl&quot;, socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
+#4 bytes (4s) seguidos de um long (l), usando ordem nativa (=)
+
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+
+while True:
+    print(sock.recv(10240).decode())
+</code></pre>
+
+<p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
+<hr />
+<hr />
+<h5 id="multicast-client-em-python-3">Multicast Client -- Em Python (3)</h5>
+<pre><code class="Python">import socket
+
+MCAST_GRP = '224.1.1.1'
+MCAST_PORT = 5007
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
+</code></pre>
+
+<p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
+<h2 id="-">---</h2>
+<p>layout: default
+title: Multiprogramação
+parent: Comunicação
+nav_order: 2</p>
+<hr />
+<h1 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h1>
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
 Assim, apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.</p>
-<p><img alt="Request/Response" src="../images/02-03.png" /></p>
+<p><img alt="Request/Response" src="images/02-03.png" /></p>
 <p>Para usarmos melhor os recursos disponíveis, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo quanto haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
 Além disso, sempre que possível, um componente não deve ficar exclusivamente esperando por eventos, aproveitando a chance executar outras tarefas até que eventos sejam recebidos.
@@ -157,10 +511,10 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 <hr />
 <h3 id="servidor-multithreaded">Servidor multithreaded</h3>
 <p>Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.</p>
-<p><img alt="Single Threaded" src="../images/singlethreadedserver.gif" /></p>
+<p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
 <hr />
 <p>Outra opção é criar um novo tthread para cada nova requisição e atende múltiplas requisições concorrentemente.</p>
-<p><img alt="Multi Threaded" src="../images/multithreadedserver.gif" /></p>
+<p><img alt="Multi Threaded" src="images/multithreadedserver.gif" /></p>
 <ul>
 <li>Permite tratar requisições enquanto faz IO.</li>
 <li>Número de threads é limitado. %Pelo framework em uso.</li>
@@ -168,21 +522,21 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 <li>Criação e destruição de threads é cara.</li>
 </ul>
 <p>Assim, temos uma outra opção que também usa múltiplos threads, que usa <em>pools</em>  de threads para lidar com as requições.</p>
-<p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="../images/poolthreadedserver.gif" /></a></p>
+<p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="images/poolthreadedserver.gif" /></a></p>
 <p>E se quebrarmos o processamento em vários pools, no que é conhecido como SEDA - <strong>Staged Event-Driven Architecture</strong>.</p>
-<p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="../images/seda1.png" /></a></p>
+<p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda1.png" /></a></p>
 <p>Assim, cada estágio pode ter seu próprio <em>pool</em>, que se escala individualmente.</p>
-<p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="../images/seda2.png" /></a></p>
+<p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
 <p>Que lembra arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a></p>
 <p>Se você quiser ler mais sobre SEDA, vá <a href="http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf">aqui</a>.</p>
 <h3 id="problemas-com-multithreading">Problemas com multithreading</h3>
 <p>Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
 E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.</p>
-<p><img alt="Multithreaded" src="../images/multithread2.png" /></p>
+<p><img alt="Multithreaded" src="images/multithread2.png" /></p>
 <p>A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos.</p>
-<p><img alt="Multithreaded" src="../images/multithreaded.jpg" /></p>
+<p><img alt="Multithreaded" src="images/multithreaded.jpg" /></p>
 <p>Memes bonitinhos à parte, precisamos enfrentar condições de corrida de forma a não levar <strong>inconsistências</strong>.</p>
-<p><img alt="Multithreaded" src="../images/multithread3.png" /></p>
+<p><img alt="Multithreaded" src="images/multithread3.png" /></p>
 <p>Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como <strong>deadlocks</strong> e <strong>inanição</strong>.
 Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros pontos importantes.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -458,7 +812,7 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
 Caso a espera termine por causa de um <em>timeout</em>, é possível testar o estado atual do thread com <code>Thread.isAlive()</code>.</p>
 <p>Outro método interessante, <code>Thread.setDaemon()</code>, especifica que o <em>thread</em> pode ser terminado quando a <em>thread</em> principal terminar. Descomente a invocação e teste o efeito.</p>
-<h5 id="exercicio">Exercício</h5>
+<h5 id="exercicio_1">Exercício</h5>
 <p>Vejamos um exemplo simples do uso de <em>threads</em>.</p>
 <ul>
 <li>Instancie um programa que gere 10 <em>threads</em>. </li>
@@ -516,7 +870,7 @@ Observe a classe a seguir, que modifica o contador do exercício anterior.</p>
 <p>Caso dois <em>threads</em> invoquem os métodos <code>increment</code> e <code>decrement</code> ao mesmo tempo, por exemplo, a JVM fará com que um dos <em>threads</em> pare sua execução até que o outro tenha completado a invocação.
 Isto não quer dizer que executar o exercício anterior com esta versão do contador não levará a saídas com incrementos completamente sequenciais, pois um <em>thread</em>  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método <code>increment</code>, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
 O que quer dizer é que, mesmo que saídas estranhas existam, cada operação foi executada integralmente antes da operação seguinte.</p>
-<h5 id="exercicio_1">Exercício</h5>
+<h5 id="exercicio_2">Exercício</h5>
 <p>Modifique o código do exercício anterior para usar a versão <code>synchronized</code> do contador. Depois de executá-lo, adicione um <code>println("Dentro: " + c)</code> <strong>dentro</strong> do método de incremento para verificar que estas saídas acontecem ordenadamente.</p>
 <h4 id="blocos-synchronized">Blocos <code>synchronized</code></h4>
 <p><code>synchronized</code> funciona porquê limita a concorrência, e é problemático exatamente pela mesma razão. 
@@ -538,7 +892,7 @@ Por isso, é essencial que o <code>synchronized</code> seja o mais limitado poss
 </code></pre>
 
 <p>Neste caso, blocos sincronizados <strong>no mesmo objeto</strong>, não são executados concorrentemente, mas outros blocos sim.</p>
-<h5 id="exercicio_2">Exercício</h5>
+<h5 id="exercicio_3">Exercício</h5>
 <p>Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois <em>threads</em>  tal que:
 * executem um loop 1000 vezes em que
 * o primeiro <em>thread</em> primeiro invoca <code>inc1</code> e depois <code>inc2</code>
@@ -814,6 +1168,13 @@ print &quot;Exiting Main Thread&quot;
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../intro/" class="btn btn-neutral" title="Introdução"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
@@ -836,12 +1197,14 @@ print &quot;Exiting Main Thread&quot;
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href="../intro/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
       
     </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="../../search/main.js" defer></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);

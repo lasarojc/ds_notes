@@ -62,17 +62,7 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#middleware">Middleware</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#middleware_1">Middleware</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencias">Transparências</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-acesso">Transparência de Acesso</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#ieee-fp">IEEE FP</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-acesso_1">Transparência de acesso</a>
-    </li>
-        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-localizacao">Transparência de Localização</a>
         <ul>
@@ -120,7 +110,49 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tipos-e-arquiteturas">Tipos e Arquiteturas</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tipos">Tipos</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#sistemas-de-computacao-high-performance-computing">Sistemas de Computação - High Performance Computing</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#sistemas-de-informacao">Sistemas de Informação</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#integracao-de-aplicacoes">Integração de Aplicações</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#redes-de-sensores-e-internet-das-coisas">Redes de Sensores e Internet das Coisas</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#computacao-utilitaria">Computação Utilitária</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arquiteturas">Arquiteturas</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#componentes-e-conectores">Componentes e Conectores</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clienteservidor">Cliente/Servidor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#par-a-par-p2p">Par-a-Par (P2P)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hibridos">Híbridos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sistemas-multi-camadas">Sistemas multi-camadas</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#micro-servicos">Micro-serviços</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#para-aprender-mais">Para aprender mais</a>
+    </li>
     </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../basics/">Comunicação</a>
                     </li>
                 </ul>
       </div>
@@ -275,96 +307,59 @@ Por exemplo, </p>
 </ul>
 </div>
 <h2 id="como">Como?</h2>
-<p>Apenas para reforçar, então, distribuir é</p>
-<ul>
-<li>dividir a computação/armazenamento em diversos componentes</li>
-<li>possivelmente geograficamente distribuídos</li>
-<li>coordenar suas ações para que resolvam a tarefa em questão de forma correta.</li>
-</ul>
-<p>Com a distribuição objetiva-se</p>
-<ul>
-<li>usar recursos disponíveis nos hosts onde os componentes são executados</li>
-<li>e usar de redundância para garantir que o serviço sofra degradação graciosa em caso de falhas.</li>
-</ul>
-<p>Para colaborar, as as diversas partes do sistema distribuído devem se comunicar.
-Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo:</p>
-<ul>
-<li>troca de mensagens,</li>
-<li>streams de dados,</li>
-<li>invocação remota de procedimentos</li>
-<li>...</li>
-</ul>
-<p>Implementar estas abstrações, para então desenvolver os sistemas distribuídos é complicado por quê os sistemas precisam ser coordenados em mínimos detalhes, a despeito das seguintes características:</p>
-<ul>
-<li>Falhas independentes</li>
-<li>Relógios dessincronizados</li>
-<li>Linguagens de desenvolvimento diferentes</li>
-<li>Sistemas operacionais diferentes</li>
-<li>Arquiteturas diferentes</li>
-<li>Desenvolvedores diferentes</li>
-</ul>
-<p>Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só. Se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas (cheias de camadas), que nos fazem chorar quando precisamos descascá-las.</p>
+<p>Reforçando, distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>geograficamente distribuídos</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.</p>
+<p>Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, isto é, que o serviço continue funcionando, mesmo que de forma limitada, seja no número de requisições que atendem por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.</p>
+<p>Para colaborar, as as diversas partes do sistema distribuído devem se comunicar. 
+Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, <strong>troca de mensagens</strong>, <strong> <em>streams</em> de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
+Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
+<p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. </p>
 <p><img alt="" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /></p>
-<p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já tenha atacado o problema e disponibilizado uma solução, de forma comercial ou não.
-Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <em>middleware</em>.</p>
-<hr />
-<h5 id="middleware">Middleware</h5>
-<p>O <em>middleware</em>  é a camada <em>ware</em> que fica no <em>middle</em>, entre, o <em>software</em> e o <em>hardware</em>. 
-Software, no caso, é a aplicação distribuída, e hardware é a <strong>abstração</strong> do <em>host</em>  em que executam os componentes, provida pelo sistema operacional.
-Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração hardware, por exemplo, um máquina virtual.</p>
-<hr />
-<h5 id="middleware_1">Middleware</h5>
-<p><img alt="Middleware" src="images/01-01.png" /></p>
-<blockquote>
+<p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
+Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong> <em>middleware</em> </strong>.</p>
+<h3 id="middleware">Middleware</h3>
+<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>,</p>
+<div class="admonition note">
+<p class="admonition-title">Middleware</p>
 <p>The software layer that lies between the operating system and applications on each side of a distributed computing system in a network.</p>
-</blockquote>
-<hr />
-<p>Segundo, <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a>, as principais funções do middleware são:</p>
+</div>
+<p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, isto é, entre, o <em>software</em> e o <em>hardware</em>. 
+Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
+Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração de hardware, por exemplo, uma máquina virtual.</p>
+<p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">1</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
+<p><img alt="Middleware" src="images/01-01.png" /></p>
+<p>E Segundo, <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a>, as principais funções do <em>middleware</em> são:</p>
 <ul>
 <li>esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,</li>
 <li>esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação</li>
 <li>prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.</li>
 </ul>
-<p>Assim, os middleware facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
-Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o middleware antes de desenvolver o sistema em si.</p>
-<p>Idealmente, com o middleware se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como <strong>um sistema único</strong>. 
-Pense no browser e na WWW: quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?</p>
-<p>Podemos quebrar esta "transparência total" em várias transparências mais simples.
+<p>Assim, os <em>middleware</em> facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
+Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o <em>middleware</em> antes de desenvolver o sistema em si.</p>
+<p>Idealmente, com o <em>middleware</em> se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como <strong>um sistema único</strong>, centralizado.
+Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?</p>
+<p>Podemos quebrar esta "transparência total" em várias transparências mais simples: <strong>Acesso</strong>, <strong>Localização</strong>, <strong>Relocação</strong>,
+<strong>Migração</strong>, <strong>Replicação</strong>, e <strong>Falha</strong>.
 Vejamos cada uma destas separadamente.</p>
-<hr />
-<h5 id="transparencias">Transparências</h5>
-<ul>
-<li>Acesso</li>
-<li>Localização</li>
-<li>Relocação</li>
-<li>Migração</li>
-<li>Replicação</li>
-<li>Falha</li>
-</ul>
-<hr />
 <h3 id="transparencia-de-acesso">Transparência de Acesso</h3>
 <p>A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem um arquitetura e uma forma de representar, por exemplo, números, e se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?</p>
-<hr />
-<h5 id="ieee-fp">IEEE FP</h5>
-<p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
+Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE.</p>
+<p><img alt="IEEE Floating Point2" src="images/float_point.jpg" /></p>
 <ul>
 <li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
 <li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
 <li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
 <li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
 </ul>
-<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">Fonte</a></p>
+<p>E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
+É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo <em>middleware</em>.
+A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.</p>
+<div class="admonition note">
+<p class="admonition-title">Transparência de Acesso</p>
+<p>Para se tentar obter transaparência de acesso, é importante que se use <strong>padrões</strong> implementados em múltiplas arquiteturas, <strong>abertos</strong>  e bem conhecidos, com <strong>interfaces bem definidas</strong>.</p>
+</div>
 <hr />
-<p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
-Assim, para se tentar obter transaparência de acesso, é importante que se use padrões implementados em múltiplas arquiteturas.</p>
 <hr />
-<h5 id="transparencia-de-acesso_1">Transparência de acesso</h5>
-<p>Usar padrões abertos e interfaces bem definidas.
-* Sistemas bem comportados e previsíveis (RPC/ASN.1)
-* Que interajam bem com outros via interfaces bem definidas (REST)
-* Suportem aplicações diferentes do mesmo jeito (API)</p>
 <hr />
 <h3 id="transparencia-de-localizacao">Transparência de Localização</h3>
 <p>A transparência de localização diz respeito a onde está o objeto: pouco importa ao usuário, se o serviço está dentro da mesma máquina em que acessa o serviço, se na sala do lado, ou na nuvem, do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
@@ -498,17 +493,11 @@ Embora seja um uso válido, há outros tipos de escalabilidade.</p>
 <li>Administrativa: Número de domínios administrativos.</li>
 <li>Há várias possibilidades: seja específico e exija especificidade.</li>
 </ul>
-<hr />
-<p>layout: default
-title: Tipos
-parent: Introdução
-nav_order: 4</p>
-<hr />
-<h1 id="tipos-e-arquiteturas">Tipos e Arquiteturas</h1>
+<h2 id="tipos-e-arquiteturas">Tipos e Arquiteturas</h2>
 <p>Diversos são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
 Classificar os tipos e arquiteturas nos ajuda a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. </p>
-<h2 id="tipos">Tipos</h2>
-<h3 id="sistemas-de-computacao-high-performance-computing">Sistemas de Computação - High Performance Computing</h3>
+<h3 id="tipos">Tipos</h3>
+<h4 id="sistemas-de-computacao-high-performance-computing">Sistemas de Computação - High Performance Computing</h4>
 <p>A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
 Clusters como o da imagem a seguir são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.</p>
 <p><img alt="Cluster para HPC no High Performance Computing Center de Stuttgart" src="https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg" /></p>
@@ -519,7 +508,7 @@ Clusters como o da imagem a seguir são compartilhados por pesquisadores resolve
 <img alt="CFD" src="images/cfd_car.jpg" />
 * ou uma vaca <br>
 <img alt="CFD" src="images/CFD_Cow.jpg" /></p>
-<h3 id="sistemas-de-informacao">Sistemas de Informação</h3>
+<h4 id="sistemas-de-informacao">Sistemas de Informação</h4>
 <p>Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos permitem a são encontrados em diversas formas (de fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.).</p>
 <p>O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira camada faz interface com o usuário, a segunda camada contém a lógica do negócio, e a terceira camada mantem os dados.</p>
 <p><a href="https://en.wikipedia.org/wiki/Multitier_architecture"><img alt="3 Tier" src="images/3tier.png" /></a></p>
@@ -558,7 +547,7 @@ Este escalonamento violou a consistência do banco de dados por quê as operaç�
 <p>Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos de um empresa conversando via troca de mensagens. Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los. Eles apenas publicam a mensagem para quem puder tratar. Da mesma forma, a resposta vem na forma de uma mensagem.</p>
 <p><img alt="https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite" src="images/mq.png" /></p>
 <p>Siga este <a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">link</a> para ler mais sobre este tipo de sistema.</p>
-<h3 id="sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</h3>
+<h4 id="sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</h4>
 <p>Segundo Weiser, 1993</p>
 <blockquote>
 <p>Ubiquitous computing is the method of enhancing computer use by making many computers available throughout the physical environment, but making them effectively invisible to the user".</p>
@@ -566,13 +555,13 @@ Este escalonamento violou a consistência do banco de dados por quê as operaç�
 <p>O que é importante aqui é o foco na tarefa em vez de na ferramenta. Assim, sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
 Para que seja realizada, a computação pervasiva requer que dispositivos <strong>detectem o contexto*<em> em que estão inseridos, *<em>combinem-se de forma </em>ad-hod</em></strong> e <strong>compartilhem informações</strong>.</p>
 <p>Alguns exemplos interessantes de computação pervasiva.</p>
-<h4 id="smart-life">Smart Life</h4>
+<h5 id="smart-life">Smart Life</h5>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<h4 id="amazon-go">Amazon Go</h4>
+<h5 id="amazon-go">Amazon Go</h5>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<h4 id="minority-report">Minority Report</h4>
+<h5 id="minority-report">Minority Report</h5>
 <p>E, para quem já viu Minority Report, aqui vai um reality check.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -595,7 +584,7 @@ Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, a
 <li>Abalos sísmicos e predição de avalanches</li>
 <li><a href="https://beebom.com/examples-of-internet-of-things-technology/">link</a></li>
 </ul>
-<h4 id="uma-nota-sobre-privacidade-nos-sistemas-pervasivos">Uma nota sobre privacidade nos sistemas pervasivos</h4>
+<h5 id="uma-nota-sobre-privacidade-nos-sistemas-pervasivos">Uma nota sobre privacidade nos sistemas pervasivos</h5>
 <p>À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.</p>
 <h1> TODO Exemplos de problemas de privacidade. </h1>
@@ -687,12 +676,26 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
 <p>Para aprender mais sobre arquiteturas, consulte a seguinte referência: <a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</p>
 <p>Para aprender um pouco sobre como funcionam as redes de um datacenter, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:0101">
+<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:IEEEFP">
+<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../basics/" class="btn btn-neutral float-right" title="Comunicação">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Prólogo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -723,6 +726,8 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../basics/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
