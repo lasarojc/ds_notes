@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Comunicação - Sistemas Distribuídos</title>
+  <title>Fundamentos - Sistemas Distribuídos</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Comunica\u00e7\u00e3o";
+    var mkdocs_page_name = "Fundamentos";
     var mkdocs_page_input_path = "basics/index.md";
     var mkdocs_page_url = null;
   </script>
@@ -56,8 +56,48 @@
                     </li>
                 </ul>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Comunicação</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Fundamentos</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#a-internet">A Internet</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#no-principio-era-o-socket">No princípio, era o Socket</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exemplo-tcp">Exemplo - TCP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-ping-pong">Exercício: Ping-Pong</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#udp">UDP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-udp">Exercício - UDP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#referencias">Referências</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip-multicast">IP-Multicast</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#ip-multicast_1">IP-Multicast</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#servidor-servidor">Servidor Servidor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mreceiverjava">MReceiver.java</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#msenderjava">MSender.java</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multicast-ipv6">Multicast IPv6</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio">Exercício</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#multicast-server-em-python-3">Multicast Server -- Em Python (3)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#multicast-client-em-python-3">Multicast Client -- Em Python (3)</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -82,7 +122,7 @@
     
       
     
-    <li>Comunicação</li>
+    <li>Fundamentos</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -93,71 +133,71 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="a-pedra-fundamental-da-construcao-de-sistemas-distribuidos-e-a-capacidade-de-comunicacao-entre-processos-via-um-canal-de-comunicacao">A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre processos via um canal de comunicação.</h2>
-<p>layout: default
-title: Sockets
-parent: Comunicação
-nav_order: 1</p>
-<hr />
-<p>O desenvolvimento de qualquer sistema distribuído requer a capacidade de componentes deste sistema "conversar" uns com os outros.
-Para que a conversa aconteça, são necessários um <strong>canal de comunicação</strong> e um <strong>protocolo de comunicação</strong>.</p>
-<p>O canal de comunicação é o meio pelo qual os elementos da conversa são transmitidos e o protocolo são as regras codificam tal conversa.
-Por exemplo, quando você fala com uma pessoa, cara a cara, o meio de comunicação é o ar, e o protocolo utilizado é a linguagem escolhida, Português por exemplo, e os sinais usados para indicar quando um ou outro quer ou pode falar.</p>
-<p>Quanto aos canais de comunicação, estes podem ter diversas formas:</p>
-<hr />
+                <h1 id="fundamentos">Fundamentos</h1>
+<p>A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+No mundo de hoje, isto quer dizer que os <em>hosts</em> dos componentes devem possuir interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
+Além do canal, é também necessário que se estabeleça um <strong>protocolo de comunicação</strong>, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.</p>
+<p>Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo.
+Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
+<p>Neste capítulo, revisaremos de forma rápida tanto conceitos de redes de computadores quanto de concorrência e paralelismo.</p>
+<h2 id="canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</h2>
+<p>Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras codificam tal conversa.
+Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
+Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:</p>
 <ul>
-<li>Ponto-a-ponto</li>
+<li>Ponto-a-ponto<ul>
 <li>Eficiente</li>
 <li>Caro para muitos nós</li>
 <li>Roteamento trivial</li>
-<li>Compartilhado</li>
+</ul>
+</li>
+<li>Compartilhado<ul>
 <li>Colisões</li>
 <li>Menor custo</li>
 <li>Roteamento mais complicado</li>
 </ul>
-<hr />
-<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um barramento compartilhado.
-Sobre este meio, são usados protocolos para, por exemplo,</p>
-<hr />
-<ul>
-<li>Acesso ao meio </li>
-<li>Transmissão de mensagens</li>
-<li>Se evitar e tratar colisões</li>
+</li>
 </ul>
-<hr />
-<p>As redes Ethernet, contudo, cobrem pequenas áreas, e para se ter conversas "mais interessantes", é necessário se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.
-Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão Packet Switching x Circuit Switching:</p>
-<hr />
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um <strong>barramento compartilhado</strong>.
+Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
-<li>Packet Switching</li>
+<li>Controle de acesso ao meio </li>
+<li>Transmissão de mensagens</li>
+<li>Evitar e tratar colisões</li>
+</ul>
+<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, <strong> <em>gateways</em> </strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.
+Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
+<ul>
+<li>Comutaçao de pacotes <ul>
 <li>Dados divididos em pacotes</li>
 <li>Cada pacote viaja independentemente</li>
 <li>Pacotes são perdidos</li>
 <li>Latência variável</li>
-<li>Circuit switching</li>
+</ul>
+</li>
+<li>Circuit switching<ul>
 <li>Caminho dedicado</li>
 <li>Recursos reservados</li>
 <li>Pacotes de tamanho fixo</li>
 <li>Latência constante</li>
 </ul>
-<hr />
-<p>Outra questão é quanto à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que uma algo "dito" por um interlocutor deve garantidamente ser "ouvido"  pelo outro, ou se a mensagem pode ser perdida no meio.</p>
-<p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor (<strong>você</strong>) dos sistemas distribuídos, lhe cabendo apenas a decisão de qual protocolo utilizar. 
-Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
-<hr />
-<ul>
-<li>Internetworking Protocol</li>
-<li>Redes subjacentes são abstraídas</li>
-<li>Melhor esforço</li>
-<li>Roteadores conectam as redes.</li>
+</li>
 </ul>
-<hr />
-<h1 id="a-internet">A Internet</h1>
+<p>Outra questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
+<p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, <strong>você</strong>, lhe cabendo apenas a decisão de qual protocolo utilizar.
+Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
+<h2 id="a-internet">A Internet</h2>
+<p>A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o <em>internetworking protocol</em>, ou IP.
+Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
+Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="images/network.png" /></p>
+<p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
+Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima.
+Cada camada tem um <strong>cabeçalho</strong> (<em>header</em>) e uma <strong>carga</strong> (<em>payload</em>) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. </p>
 <p><img alt="image" src="images/04-01.png" /></p>
-<p>Cada camada conversa com a equivalente do outro lado. Na prática, a comunicação desce e sobe a pilha. Cada camada é responsável por:</p>
-<ul>
+<ol>
 <li>Bits</li>
 <li>Frames/quadros; controle de fluxo; acesso ao meio.</li>
 <li>Datagramas/pacotes; roteamento</li>
@@ -165,53 +205,61 @@ Nas redes atuais, a conversa em componentes será feita, em algum nível, por me
 <li>Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
 <li>Objetos; json, xml; criptografia</li>
 <li>Aplicações; http, pop, ftp</li>
-<li>Headers das camadas superiores são dados nas camadas inferiores</li>
-</ul>
-<hr />
-<h6 id="osi-x-internet">OSI x Internet</h6>
+</ol>
 <p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
-<hr />
-<p>Internet Protocol
-* Bibliotecas/middleware provêm o restante das funcionalidades
-  * (De)Serialização
-    * Nomeamento
-    * Criptografia
-    * Replicação
-    * Invocação remota de procedimentos
-    * ...</p>
-<hr />
-<h2 id="sockets">Sockets</h2>
+<p>Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
+Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
+Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
+<p>Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
+Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
+Alguns exemplos de tais funcionalidades são</p>
 <ul>
-<li>Hosts</li>
-<li>Cada interface tem um endereço MAC \pause -- Somente comunicação direta</li>
-<li>Cada interface tem um endereço IPv4/IPv6 \pause -- 32 x 128 bits</li>
-<li>
-<p>Como falar com uma aplicação?</p>
-</li>
-<li>
-<p>Sockets</p>
-</li>
-<li>Pontos finais da comunicação</li>
+<li>(De)Serialização</li>
+<li>Nomeamento</li>
+<li>Criptografia</li>
+<li>Replicação</li>
+<li>Invocação remota de procedimentos</li>
+</ul>
+<p>A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
+Este característica é conhecida como o <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">argumento fim-a-fim no projeto de sistemas</a>; uma análise recente deste argumento foi feita <a href="https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/">aqui</a>.</p>
+<h2 id="no-principio-era-o-socket">No princípio, era o Socket</h2>
+<p>Na prática, para implementarmos a comunicação entre processos, usamos <strong>sockets</strong>.
+Para se definir um socket a partir de um <strong>host</strong> é necessário identificar o outro fim da comunicação, isto é, o outro <em>host</em>, ou melhor, uma de suas interfaces de rede.
+Os sockets são então a abstração dos canais de comunicação, mas como dito antes, é necessário definir também os protocolos usados por estes sockets.
+O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos usar, na camada 3.
+No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
+Escolhido o protocolo, </p>
+<ul>
+<li>cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e </li>
+<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet <sup id="fnref:obs"><a class="footnote-ref" href="#fn:obs">1</a></sup>. </li>
+</ul>
+<p>Mas dentro de um <em>host</em>, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
+Isto é feito pela definição uma porta:</p>
+<ul>
 <li>Porta: 16 bits<ul>
 <li><a href="http://www.iana.org">IANA</a> (Internet Assigned Numbers Authority)</li>
 <li>Bem conhecidas -- 0-1023</li>
-<li>Proprietárias -- 49151<ul>
+<li>Proprietárias -- 49151</li>
 <li>Dinâmicas -- 65535</li>
 </ul>
 </li>
 </ul>
-</li>
-<li>Domínio: AF_INET (Internet), PF_UNIX, PF_X25..., PF_INET (Internet)</li>
-<li>Tipo: SOCK_STREAM x SOCK_DGRAM (TCP x UDP)</li>
-<li>Utilizado como um arquivo</li>
-<li>Protocolo: por sua conta</li>
+<p>Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
+Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) ou UPD (<strong>SOCK_DGRAM</strong>).</p>
+<p>A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma.</p>
+<ul>
+<li>criar socket</li>
+<li>bind</li>
+<li>listen</li>
+<li>accept</li>
+<li>connect</li>
 </ul>
-<hr />
-<hr />
+<p>Estabelecido o socket, o mesmo pode ser usado como <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.</p>
 <p><img alt="image" src="images/04-15.png" /></p>
-<hr />
+<p>O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, <strong>sua responsabilidade</strong>.</p>
 <h3 id="exemplo-tcp">Exemplo - TCP</h3>
-<p>O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas não pode, de forma alguma, ser nomeado <code>socket.py</code>.</p>
+<p>Vejamos um exemplo do uso de sockets, em Python.
+O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas não pode, de forma alguma, ser nomeado <code>socket.py</code>.</p>
 <pre><code class="Python">#server.py
 #!/usr/bin/python                               # This is server.py file
 
@@ -230,23 +278,24 @@ while True:
    c.close()                                    # Close the connection
 </code></pre>
 
-<p>Para executá-lo, faça</p>
+<p>Para executá-lo, execute o seguinte comando em um terminal. </p>
 <pre><code class="bash">python server.py
 </code></pre>
 
-<p>em um terminal e em outro faça</p>
+<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir<sup id="fnref:nc"><a class="footnote-ref" href="#fn:nc">2</a></sup>: </p>
 <pre><code class="bash">telnet localhost 12345
-# ou
-netcat localhost 12345
 </code></pre>
 
-<p>Em Java, a criação do socket seria muito mais simples, consistindo apenas em: </p>
-<pre><code class="Java">...
-Socket s = new ServerSocket(port);
-...
+<pre><code class="bash">netcat localhost 12345
 </code></pre>
 
-<p>Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.</p>
+<p>O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
+Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
+Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
+Simples, não é mesmo?</p>
+<p>Em geral, denominamos o processo que fica aguardando a conexão de <strong>servidor</strong> e o processo que se conecta de <strong>cliente</strong>. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.</p>
+<p>Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
+Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.</p>
 <pre><code class="Python">#client.py
 
 #!/usr/bin/python                               # This is client.py file
@@ -267,17 +316,25 @@ s.close()                                         # Close the socket when done
 <pre><code class="bash">python client.py
 </code></pre>
 
-<p>O cliente em Java também é simplificado.</p>
-<pre><code class="Java">...
-Socket s = new Socket(hostname,port);
-...
+<p>Observe que o <code>socket.close()</code> encerra a conexão do lado de quem invoca. Na contraparte, invocações a <code>socket.recv()</code> retornam com 0 bytes lidos.</p>
+<p>A título de comparação, em Java, a criação do socket do lado do servidor seria muito mais simples, consistindo apenas em: </p>
+<pre><code class="Java">Socket s = new ServerSocket(port);
 </code></pre>
 
-<p>Observe que o <code>socket.close()</code> encerra a conexão do lado de quem invoca. Na contraparte, invocações a <code>socket.recv()</code> retornam com 0 bytes lidos.</p>
+<p>O cliente em Java também é simplificado.</p>
+<pre><code class="Java">Socket s = new Socket(hostname,port);
+</code></pre>
+
 <h3 id="exercicio-ping-pong">Exercício: Ping-Pong</h3>
 <p>Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.</p>
-<pre><code class="bash">#Terminal 1
-python server.py
+<table>
+<tr>
+<td> Terminal 1</td> <td> Terminal 2</td>
+</tr>
+<tr>
+<td>
+
+<pre><code class="bash">python server.py
 Esperando conexão.
 Esperando mensagem.
 Mensagem recebida: lalala
@@ -285,9 +342,12 @@ Digite resposta: lelele
 Resposta enviada.
 Conexão encerrada.
 Esperando conexão.
+</code></pre>
 
-#Terminal 2
-python client.py
+</td>
+<td>
+
+<pre><code class="bash">python client.py
 Digite mensagem: lalala
 Mensagem enviada.
 Esperando resposta.
@@ -296,20 +356,23 @@ Digite mensagem: SAIR
 Desconectando.
 </code></pre>
 
-<p>Observe que para ler do teclado em Python 2 você deve usar <code>x = raw_input()</code>, enquanto que em Python 3 seria <code>x = input()</code>. Além disso, em Python, você deve remover as invocações para <code>encode</code> e <code>decode</code>.</p>
+</td>
+</tr>
+</table>
+
+<p>Observe que para ler do teclado em Python 2 você deve usar <code>x = raw_input()</code>, enquanto que em Python 3 seria <code>x = input()</code>. Além disso, em Python 2, você deve remover as invocações para <code>encode</code> e <code>decode</code>.</p>
 <h3 id="udp">UDP</h3>
 <p>No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.</p>
-<p>A criação do socket é feita explicitando-se o uso de <strong>datagramas</strong>
-* <code>s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)</code></p>
-<p>Um servidor UDP não executa <code>listen</code> ou <code>accept</code> e, em Python, simplesmente executa <code>data, addr = sock.recvfrom(4096)</code> para receber o datagrama, onde
-* <code>data</code> é o conteúdo recebido e<br />
-* <code>addr</code> o endereço de quem enviou o datagrama.</p>
+<p>A criação do socket é feita explicitando-se o uso de <strong>datagramas</strong>: <code>s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)</code></p>
+<p>Um servidor UDP não executa <code>listen</code> ou <code>accept</code> e, em Python, simplesmente executa <code>data, addr = sock.recvfrom(4096)</code> para receber o datagrama, onde <code>data</code> é o conteúdo recebido e  <code>addr</code> o endereço de quem enviou o datagrama.</p>
 <p>Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, <code>addr</code> é usado: <code>sent = sock.sendto(data, addr)</code>, onde <code>sent</code> é a quantidade de bytes enviados.</p>
-<p>Além deste detalhe, outros são importantes:
-* falta de ordem
-* falta de confiabilidade
-* menos dados lidos que enviados.
-* mais dados lidos que enviados (pode acontecer no TCP)</p>
+<p>Além deste detalhe, é importante manter em mente outras características do UDP:</p>
+<ul>
+<li>falta de ordem</li>
+<li>falta de confiabilidade</li>
+<li>menos dados lidos que enviados.</li>
+<li>mais dados lidos que enviados (pode acontecer também no TCP)</li>
+</ul>
 <p>Com tantas dificuldades para se usar o UDP, fica a questão: <strong>para que serve UDP?</strong></p>
 <h3 id="exercicio-udp">Exercício - UDP</h3>
 <p>Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.</p>
@@ -439,13 +502,11 @@ sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 </code></pre>
 
 <p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
-<h2 id="-">---</h2>
-<p>layout: default
-title: Multiprogramação
-parent: Comunicação
-nav_order: 2</p>
 <hr />
-<h1 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h1>
+<hr />
+<h1 id="todo">TODO</h1>
+<hr />
+<h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
@@ -457,7 +518,7 @@ Além disso, sempre que possível, um componente não deve ficar exclusivamente 
 Dada que processos interagem com a rede usando sockets, cuja operação de leitura é bloqueante, para aumentar a concorrência em um processo, precisamos falar de multi-threading.</p>
 <p>Há duas razões claras para estudarmos multi-threading. A primeira, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
 A segunda é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.</p>
-<h2 id="threads-x-processos">Threads x Processos</h2>
+<h3 id="threads-x-processos">Threads x Processos</h3>
 <table>
 <thead>
 <tr>
@@ -500,8 +561,8 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 </tr>
 </tbody>
 </table>
-<h2 id="threads-em-sd">Threads em SD</h2>
-<h3 id="cliente-multithreaded">Cliente multithreaded</h3>
+<h3 id="threads-em-sd">Threads em SD</h3>
+<h4 id="cliente-multithreaded">Cliente multithreaded</h4>
 <p>Vantagens similares a usar em sistemas centralizado.</p>
 <ul>
 <li>Lida com várias tarefas concorrentemente.</li>
@@ -509,7 +570,7 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 <li>Separa código em blocos/módulos.</li>
 </ul>
 <hr />
-<h3 id="servidor-multithreaded">Servidor multithreaded</h3>
+<h4 id="servidor-multithreaded">Servidor multithreaded</h4>
 <p>Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.</p>
 <p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
 <hr />
@@ -529,7 +590,7 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
 <p>Que lembra arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a></p>
 <p>Se você quiser ler mais sobre SEDA, vá <a href="http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf">aqui</a>.</p>
-<h3 id="problemas-com-multithreading">Problemas com multithreading</h3>
+<h4 id="problemas-com-multithreading">Problemas com multithreading</h4>
 <p>Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
 E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.</p>
 <p><img alt="Multithreaded" src="images/multithread2.png" /></p>
@@ -541,8 +602,8 @@ E se não houvesse compartilhamento e dado um número adequado de processadores,
 Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros pontos importantes.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<h3 id="estado-em-servidores">Estado em Servidores</h3>
-<h4 id="stateless-servers">Stateless Servers</h4>
+<h4 id="estado-em-servidores">Estado em Servidores</h4>
+<h5 id="stateless-servers">Stateless Servers</h5>
 <p>Não mantém informação após terminar de tratar requisições.</p>
 <ul>
 <li>Fecha todos os arquivos abertos</li>
@@ -555,7 +616,7 @@ Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros
 </li>
 <li>Perda de desempenho (e.g., abertura do mesmo arquivo a cada requisição.)</li>
 </ul>
-<h4 id="stateful-servers">Stateful Servers</h4>
+<h5 id="stateful-servers">Stateful Servers</h5>
 <p>Mantém informação dos clientes entre requisições.</p>
 <ul>
 <li>Mantem arquivos abertos</li>
@@ -572,7 +633,7 @@ Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros
 <p>Maior consumo de recursos</p>
 </li>
 </ul>
-<h4 id="impacto-na-concorrencia">Impacto na Concorrência</h4>
+<h5 id="impacto-na-concorrencia">Impacto na Concorrência</h5>
 <table>
 <thead>
 <tr>
@@ -591,9 +652,9 @@ Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros
 </tr>
 </tbody>
 </table>
-<h2 id="multithread-na-pratica">Multithread na prática</h2>
-<h3 id="pthreads">PThreads</h3>
-<h4 id="funcao-de-entrada">Função de entrada</h4>
+<h3 id="multithread-na-pratica">Multithread na prática</h3>
+<h4 id="pthreads">PThreads</h4>
+<h5 id="funcao-de-entrada">Função de entrada</h5>
 <pre><code class="c">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;pthread.h&gt;
@@ -607,7 +668,7 @@ void* hello(void* rank) {
 }
 </code></pre>
 
-<h4 id="criacao">Criação</h4>
+<h5 id="criacao">Criação</h5>
 <pre><code class="c">int main(int argc, char* argv[]) {
     long thread;
     pthread_t* thread_handles;
@@ -626,14 +687,14 @@ void* hello(void* rank) {
     printf(&quot;Hello from the main thread\n&quot;);
 </code></pre>
 
-<h4 id="destruicao">Destruição</h4>
+<h5 id="destruicao">Destruição</h5>
 <pre><code class="c">    for (thread = 0; thread &lt; thread_count; thread++)
         pthread_join(thread_handles[thread], NULL);
 
     free(thread_handles);
 </code></pre>
 
-<h4 id="execucao">Execução</h4>
+<h5 id="execucao">Execução</h5>
 <p>Compile com</p>
 <pre><code class="bash">gcc -pthread teste.c -o teste
 ````
@@ -665,7 +726,7 @@ e execute com
 <p>pthread_attr_setaffinity_np* - ajusta afinidade dos threads.</p>
 </li>
 </ul>
-<h4 id="threads-java">Threads Java</h4>
+<h5 id="threads-java">Threads Java</h5>
 <p>Neste tutorial, baseado neste <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/">outro</a>, exploraremos formas de se obter concorrência em Java. Isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.</p>
 <p>Em Java, há essencialmente duas formas de se conseguir concorrência. A primeira é via instâncias explícitas da classe <code>Thread</code>, e a segunda é via abstrações de mais alto nível, os <code>Executors</code>.</p>
 <hr />
@@ -675,10 +736,10 @@ e execute com
 </ul>
 <hr />
 <p>Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote <code>java.util.concurrent</code>.</p>
-<h3 id="threads"><em>Threads</em></h3>
+<h4 id="threads"><em>Threads</em></h4>
 <p>Há duas formas básicas de se usar a classe <code>Thread</code>: extensão ou delegação de um objeto implementando <code>Runnable</code>.</p>
 <hr />
-<h5 id="estender-thread">Estender Thread</h5>
+<h6 id="estender-thread">Estender Thread</h6>
 <pre><code class="Java">public class HelloThread extends Thread {
     public void run() {
         System.out.println(&quot;Hello from a thread!&quot;);
@@ -693,7 +754,7 @@ e execute com
 
 <hr />
 <hr />
-<h5 id="implementar-runnable">Implementar Runnable</h5>
+<h6 id="implementar-runnable">Implementar Runnable</h6>
 <pre><code class="Java">public class HelloRunnable implements Runnable {
     public void run() {
         System.out.println(&quot;Hello from a thread!&quot;);
@@ -714,7 +775,7 @@ Isto acontece dentro do <code>start()</code>, que em algum ponto de sua execuç�
 <p>A classe <code>Thread</code> também provê uma série de métodos que permitem gerenciar a vida do <em>thread</em> criado. 
 Por exemplo, o método de classe (<code>static</code>) <code>Thread.sleep()</code> permite bloquear um <em>thread</em>  por um determinado período.</p>
 <hr />
-<h5 id="threadsleep">Thread.sleep()</h5>
+<h6 id="threadsleep">Thread.sleep()</h6>
 <pre><code class="Java">public class HelloRunnable implements Runnable {
     public void run() {
         for (int i = 0; i &lt; 10; i ++)
@@ -738,7 +799,7 @@ Por exemplo, o método de classe (<code>static</code>) <code>Thread.sleep()</cod
 <hr />
 <p>Observe que a chamada a <code>sleep()</code> está dentro de um bloco <code>try/catch</code>. Isto é necessário pois é permitido à JVM acordar o <em>thread</em> em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o <em>thread</em>, ao acordar, verifique se já dormiu o suficiente.</p>
 <hr />
-<h5 id="interruptedexception">InterruptedException</h5>
+<h6 id="interruptedexception">InterruptedException</h6>
 <pre><code class="Java">public class HelloRunnable implements Runnable {
     public void run() {
         for (int i = 0; i &lt; 10; i ++)
@@ -769,7 +830,7 @@ Por exemplo, o método de classe (<code>static</code>) <code>Thread.sleep()</cod
 Web, o <em>thread</em> que faz a renderização da página não pode começar a trabalhar enquanto o <em>thread</em>  que solicitou o HTML
 do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de esperar por outro usando o método <code>join()</code>.</p>
 <hr />
-<h5 id="threadjoin">Thread.join()</h5>
+<h6 id="threadjoin">Thread.join()</h6>
 <pre><code class="Java">public class HelloRunnable implements Runnable {
     public void run() {
         Random rand = new Random();
@@ -1163,6 +1224,17 @@ print &quot;Exiting Main Thread&quot;
 <li>Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. </li>
 <li>Antes de terminar, o processo deve imprimir a mensagem resultante.</li>
 </ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:obs">
+<p>Endereços IP não públicos não server como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:obs" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:nc">
+<p>Se o segundo comando não funcionar, tente <code>nc</code> em vez de <code>netcat</code>.&#160;<a class="footnote-backref" href="#fnref:nc" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
               
             </div>
           </div>
