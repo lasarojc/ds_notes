@@ -27,29 +27,6 @@ Brincadeiras a parte, você desenvolverá um projeto em várias etapas que lhe p
 
 ## O quê?
 
-Todos estamos a par de que aplicações importantes nos dias de hoje são aplicações distribuídas rodando em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc).
-Alguns exemplos óbvios são 
-
-* [Amazon](https://www.amazon.com), 
-* [Facebook](https://www.facebook.com), e 
-* [GMail](https://www.gmail.com).
-
-Mas as razões que levam a este cenário são válidas para diversas outras aplicações.
-De fato, praticamente qualquer sistema de informação que precise atingir um público considerável, necessitará aplicar técnicas de computação distribuída para conseguir **escalar**, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta, mesmo que não cheguem a estas escalas. 
-
-Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas. 
-Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em **Sistemas Distribuídos**.
-
-De fato, há quem diga que [somos todos desenvolvedores de sistemas distribuídos agora](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/)
-
-
-!!! note "Por quê distribuir?"
-    As principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
-
-    * escalabilidade e
-    * tolerância a falhas.
- 
-
 Mas afinal, o quê é um sistema distribuído? Talvez seja mais fácil começarmos por sistemas não distribuídos, ou como normalmente os denominamos, sistemas centralizados.
 Pense na maioria das aplicações que desenvolveu no curso até agora. Elas provavelmente executam integralmente em um único processo, executando em uma única máquina.
 Mesmo que use diferentes bibliotecas e *frameworks*, toda lógica de negócio, armazenamento e interface com usuário está contida em um mesmo lugar, e por isso são chamadas centralizadas.
