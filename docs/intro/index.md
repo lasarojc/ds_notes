@@ -148,120 +148,83 @@ Por exemplo,
 
 ## Como?
 
-Apenas para reforçar, então, distribuir é
+Reforçando, distribuir é **dividir** a computação/armazenamento em diversos componentes, **geograficamente distribuídos**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
 
-* dividir a computação/armazenamento em diversos componentes
-* possivelmente geograficamente distribuídos
-* coordenar suas ações para que resolvam a tarefa em questão de forma correta.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, isto é, que o serviço continue funcionando, mesmo que de forma limitada, seja no número de requisições que atendem por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.
 
-Com a distribuição objetiva-se
+Para colaborar, as as diversas partes do sistema distribuído devem se comunicar. 
+Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, **troca de mensagens**, ** *streams* de dados**, ou **invocação remota de procedimentos**.
+Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
-* usar recursos disponíveis nos hosts onde os componentes são executados
-* e usar de redundância para garantir que o serviço sofra degradação graciosa em caso de falhas.
-
-Para colaborar, as as diversas partes do sistema distribuído devem se comunicar.
-Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo:
-
-* troca de mensagens,
-* streams de dados,
-* invocação remota de procedimentos
-* ...
-
-Implementar estas abstrações, para então desenvolver os sistemas distribuídos é complicado por quê os sistemas precisam ser coordenados em mínimos detalhes, a despeito das seguintes características:
-
-* Falhas independentes
-* Relógios dessincronizados
-* Linguagens de desenvolvimento diferentes
-* Sistemas operacionais diferentes
-* Arquiteturas diferentes
-* Desenvolvedores diferentes
-
-Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só. Se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas (cheias de camadas), que nos fazem chorar quando precisamos descascá-las.
+Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. 
 
 ![](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif)
 
-Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já tenha atacado o problema e disponibilizado uma solução, de forma comercial ou não.
-Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um *middleware*.
+Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
+Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um ** *middleware* **.
 
----
-##### Middleware
+### Middleware
 
-O *middleware*  é a camada *ware* que fica no *middle*, entre, o *software* e o *hardware*. 
-Software, no caso, é a aplicação distribuída, e hardware é a **abstração** do *host*  em que executam os componentes, provida pelo sistema operacional.
-Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração hardware, por exemplo, um máquina virtual.
+De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=),
 
----
-##### Middleware
+!!! note "Middleware"
+    The software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
+
+Isto é, o *middleware* é a camada *ware* que fica no *middle*, isto é, entre, o *software* e o *hardware*. 
+Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a **abstração** do *host* em que se executam os componentes, provida pelo sistema operacional.
+Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração de hardware, por exemplo, uma máquina virtual.
+
+A figura seguinte [^0101]  mostra um exemplo com três aplicações executando sobre um *middleware*, que por sua vez é executado sobre diferentes sistemas operacionais, em *hosts*  conectados por uma rede de comunicação. 
+
+[^0101]: Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms
 
 ![Middleware](images/01-01.png)
 
-
-
-> The software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
-
----
-
-Segundo, [Sacha Krakowiak](https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/), as principais funções do middleware são:
+E Segundo, [Sacha Krakowiak](https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/), as principais funções do *middleware* são:
 
 * esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,
 * esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação
 * prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.
 
 
-Assim, os middleware facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
-Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o middleware antes de desenvolver o sistema em si.
+Assim, os *middleware* facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
+Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
-Idealmente, com o middleware se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**. 
-Pense no browser e na WWW: quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?
+Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, centralizado.
+Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?
 
-Podemos quebrar esta "transparência total" em várias transparências mais simples.
+Podemos quebrar esta "transparência total" em várias transparências mais simples: **Acesso**, **Localização**, **Relocação**,
+**Migração**, **Replicação**, e **Falha**.
 Vejamos cada uma destas separadamente.
-
----
-##### Transparências
-
-* Acesso
-* Localização
-* Relocação
-* Migração
-* Replicação
-* Falha
-
----
 
 ### Transparência de Acesso
 
 A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem um arquitetura e uma forma de representar, por exemplo, números, e se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
+Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE.
 
-
----
-##### IEEE FP
-
-![IEEE Floating Point](images/float_point.jpg)
+![IEEE Floating Point[^IEEEFP]](images/float_point.jpg)
 
 * Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa
 * Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa
 * Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa
 * Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa
 
-[Fonte](https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations)
+[^IEEEFP]: [IEEE Floating Point](https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations)
 
----
-
+E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
+É preciso que usem um padrão conhecido por ambos os *hosts*, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo *middleware*.
 A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
-Assim, para se tentar obter transaparência de acesso, é importante que se use padrões implementados em múltiplas arquiteturas.
 
----
-##### Transparência de acesso
+!!! note "Transparência de Acesso"
+    Para se tentar obter transaparência de acesso, é importante que se use **padrões** implementados em múltiplas arquiteturas, **abertos**  e bem conhecidos, com **interfaces bem definidas**.
 
-Usar padrões abertos e interfaces bem definidas.
-* Sistemas bem comportados e previsíveis (RPC/ASN.1)
-* Que interajam bem com outros via interfaces bem definidas (REST)
-* Suportem aplicações diferentes do mesmo jeito (API)
 
----
+----
+
+----
+
+----
 
 ### Transparência de Localização
 
@@ -437,21 +400,15 @@ Embora seja um uso válido, há outros tipos de escalabilidade.
   * Administrativa: Número de domínios administrativos.
 * Há várias possibilidades: seja específico e exija especificidade.
 
----
-layout: default
-title: Tipos
-parent: Introdução
-nav_order: 4
----
 
-# Tipos e Arquiteturas
+## Tipos e Arquiteturas
 
 Diversos são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
 Classificar os tipos e arquiteturas nos ajuda a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
 
-## Tipos
+### Tipos
 
-### Sistemas de Computação - High Performance Computing
+#### Sistemas de Computação - High Performance Computing
 
 A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
 Clusters como o da imagem a seguir são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.
@@ -468,7 +425,7 @@ Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de proj
 
 
 
-### Sistemas de Informação
+#### Sistemas de Informação
 
 Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos permitem a são encontrados em diversas formas (de fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.).
 
@@ -533,7 +490,7 @@ Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos
 
 Siga este [link](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying) para ler mais sobre este tipo de sistema.
 
-### Sistemas Pervasivos/Ubíquos
+#### Sistemas Pervasivos/Ubíquos
 
 Segundo Weiser, 1993
 > Ubiquitous computing is the method of enhancing computer use by making many computers available throughout the physical environment, but making them effectively invisible to the user".
@@ -543,15 +500,15 @@ Para que seja realizada, a computação pervasiva requer que dispositivos **dete
 
 Alguns exemplos interessantes de computação pervasiva.
 
-#### Smart Life
+##### Smart Life
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Amazon Go
+##### Amazon Go
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Minority Report
+##### Minority Report
 
 E, para quem já viu Minority Report, aqui vai um reality check.
 
@@ -581,7 +538,7 @@ Para ler mais sobre IoT, veja este [link](https://publications.europa.eu/en/publ
 * [link](https://beebom.com/examples-of-internet-of-things-technology/)
 
 
-#### Uma nota sobre privacidade nos sistemas pervasivos
+##### Uma nota sobre privacidade nos sistemas pervasivos
 
 À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.
