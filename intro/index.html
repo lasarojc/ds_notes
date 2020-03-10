@@ -178,26 +178,6 @@ Caso contrário, bem, você não tem muita escolha, certo? Então tente aproveit
 <li>conhecer várias técnicas que controle de concorrência controlar o acesso a um recurso compartilhado;</li>
 </ul>
 <h2 id="o-que">O quê?</h2>
-<p>Todos estamos a par de que aplicações importantes nos dias de hoje são aplicações distribuídas rodando em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>.
-Alguns exemplos óbvios são </p>
-<ul>
-<li><a href="https://www.amazon.com">Amazon</a>, </li>
-<li><a href="https://www.facebook.com">Facebook</a>, e </li>
-<li><a href="https://www.gmail.com">GMail</a>.</li>
-</ul>
-<p>Mas as razões que levam a este cenário são válidas para diversas outras aplicações.
-De fato, praticamente qualquer sistema de informação que precise atingir um público considerável, necessitará aplicar técnicas de computação distribuída para conseguir <strong>escalar</strong>, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta, mesmo que não cheguem a estas escalas. </p>
-<p>Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas. 
-Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em <strong>distribuição</strong> e em <strong>Sistemas Distribuídos</strong>.</p>
-<p>De fato, há quem diga que <a href="https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/">somos todos desenvolvedores de sistemas distribuídos agora</a></p>
-<div class="admonition note">
-<p class="admonition-title">Por quê distribuir?</p>
-<p>As principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da <strong>agregação</strong> (correta) do poder computacional de múltiplas máquinas:</p>
-<ul>
-<li>escalabilidade e</li>
-<li>tolerância a falhas.</li>
-</ul>
-</div>
 <p>Mas afinal, o quê é um sistema distribuído? Talvez seja mais fácil começarmos por sistemas não distribuídos, ou como normalmente os denominamos, sistemas centralizados.
 Pense na maioria das aplicações que desenvolveu no curso até agora. Elas provavelmente executam integralmente em um único processo, executando em uma única máquina.
 Mesmo que use diferentes bibliotecas e <em>frameworks</em>, toda lógica de negócio, armazenamento e interface com usuário está contida em um mesmo lugar, e por isso são chamadas centralizadas.
