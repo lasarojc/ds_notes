@@ -74,28 +74,6 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#referencias">Referências</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#ip-multicast">IP-Multicast</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#ip-multicast_1">IP-Multicast</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#servidor-servidor">Servidor Servidor</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#mreceiverjava">MReceiver.java</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#msenderjava">MSender.java</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#multicast-ipv6">Multicast IPv6</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#exercicio">Exercício</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#multicast-server-em-python-3">Multicast Server -- Em Python (3)</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#multicast-client-em-python-3">Multicast Client -- Em Python (3)</a>
-    </li>
-        </ul>
-    </li>
         </ul>
     </li>
     </ul>
@@ -141,8 +119,8 @@ Além do canal, é também necessário que se estabeleça um <strong>protocolo d
 Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
 <p>Neste capítulo, revisaremos de forma rápida tanto conceitos de redes de computadores quanto de concorrência e paralelismo.</p>
 <h2 id="canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</h2>
-<p>Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras codificam tal conversa.
-Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
+<p>Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras que codificam tal conversa.
+Por exemplo, quando você fala cara-a-cara com uma pessoa, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
 Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:</p>
 <ul>
 <li>Ponto-a-ponto<ul>
@@ -158,18 +136,18 @@ Na prática, canais de comunicação podem ter diversas formas e característica
 </ul>
 </li>
 </ul>
-<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um <strong>barramento compartilhado</strong>.
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>.
 Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
-<li>Controle de acesso ao meio </li>
-<li>Transmissão de mensagens</li>
-<li>Evitar e tratar colisões</li>
+<li>controle de acesso ao meio,</li>
+<li>transmissão de mensagens, e,</li>
+<li>evitar e tratar colisões.</li>
 </ul>
-<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+<p>As redes Ethernet, contudo, cobrem pequenas áreas e, para que se tenha conversas "mais interessantes", é necessário que se conecte diversas destas redes.
 A conversa então é feita por meio de intermediários, <strong> <em>gateways</em> </strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.
 Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
 <ul>
-<li>Comutaçao de pacotes <ul>
+<li>Comutação de pacotes <ul>
 <li>Dados divididos em pacotes</li>
 <li>Cada pacote viaja independentemente</li>
 <li>Pacotes são perdidos</li>
@@ -188,8 +166,8 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 <p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, <strong>você</strong>, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 <h2 id="a-internet">A Internet</h2>
-<p>A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o <em>internetworking protocol</em>, ou IP.
-Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
+<p>A Internet tem este nome por usar o protocolo de interconexão de redes independentes, o <em>internetworking protocol</em>, ou IP.
+Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="images/network.png" /></p>
 <p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
@@ -201,17 +179,17 @@ Assim, embora tenha-se a impressão de que cada camada conversa com a equivalent
 <li>Bits</li>
 <li>Frames/quadros; controle de fluxo; acesso ao meio.</li>
 <li>Datagramas/pacotes; roteamento</li>
-<li>Controle de fluxo; fim a fim; confiabilidade; tcp e udp</li>
-<li>Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
-<li>Objetos; json, xml; criptografia</li>
-<li>Aplicações; http, pop, ftp</li>
+<li>Controle de fluxo; fim a fim; confiabilidade; TCP e UDP </li>
+<li>Streams/fluxos; conexões lógicas; restart; checkpoint; HTTP, SSL </li>
+<li>Objetos; JSON, XML; criptografia</li>
+<li>Aplicações; HTTP, POP, FTP </li>
 </ol>
 <p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
 <p>Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
 Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
 <p>Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
-Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
+Contudo, não tema! Estas funcionalidades podem ser normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
 Alguns exemplos de tais funcionalidades são</p>
 <ul>
 <li>(De)Serialização</li>
@@ -266,7 +244,8 @@ O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas n�
 import socket                                   # Import socket module
 
 s = socket.socket()                             # Create a socket object
-host = socket.gethostname()                # Get local machine name
+host = socket.gethostname()                     # Get local machine name
+print(host)
 port = 12345                                    # Reserve a port for your service.
 s.bind((host, port))                            # Bind to the port
 
@@ -381,13 +360,13 @@ Desconectando.
 <li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
 <li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
 </ul>
-<h3 id="ip-multicast">IP-Multicast</h3>
+<h1 id="todo">TODO</h1>
+<hr />
+<h2 id="ip-multicast">IP-Multicast</h2>
 <p>Imagine enviar os mesmos dados para múltiplos destinatários.
 * Como lidar com retransmissões?
 * Muito estado nos servidores
 * Sobre uso da rede.</p>
-<hr />
-<h5 id="ip-multicast_1">IP-Multicast</h5>
 <p><img alt="IP Multicast" src="images/ipmulticast.jpg" /></p>
 <ul>
 <li>UDP</li>
@@ -395,9 +374,7 @@ Desconectando.
 <li>Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)</li>
 </ul>
 <p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/"><img alt="" src="images/ipmulticast2.png" /></a></p>
-<hr />
-<hr />
-<h5 id="servidor-servidor">Servidor Servidor</h5>
+<h3 id="servidor-servidor">Servidor Servidor</h3>
 <ul>
 <li>Criar Socket UDP</li>
 <li>Uní-lo a um grupo</li>
@@ -405,7 +382,7 @@ Desconectando.
 </ul>
 <hr />
 <hr />
-<h5 id="mreceiverjava">MReceiver.java</h5>
+<h3 id="mreceiverjava">MReceiver.java</h3>
 <pre><code class="Java">import java.io.*;
 import java.net.*;
 
@@ -429,9 +406,7 @@ public class MReceiver {
 }
 </code></pre>
 
-<hr />
-<hr />
-<h5 id="msenderjava">MSender.java</h5>
+<h3 id="msenderjava">MSender.java</h3>
 <pre><code class="Java">import java.io.*;
 import java.net.*;
 public class MSender {
@@ -464,11 +439,9 @@ public class MSender {
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </blockquote>
 <p><a href="http://www.baeldung.com/java-broadcast-multicast">Fonte</a></p>
-<hr />
 <h3 id="exercicio">Exercício</h3>
 <p>Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.1.1.1.</p>
-<hr />
-<h5 id="multicast-server-em-python-3">Multicast Server -- Em Python (3)</h5>
+<h3 id="multicast-server-em-python-3">Multicast Server -- Em Python (3)</h3>
 <pre><code class="Python">import socket
 import struct
 
@@ -488,9 +461,7 @@ while True:
 </code></pre>
 
 <p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
-<hr />
-<hr />
-<h5 id="multicast-client-em-python-3">Multicast Client -- Em Python (3)</h5>
+<h3 id="multicast-client-em-python-3">Multicast Client -- Em Python (3)</h3>
 <pre><code class="Python">import socket
 
 MCAST_GRP = '224.1.1.1'
@@ -502,10 +473,6 @@ sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 </code></pre>
 
 <p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
-<hr />
-<hr />
-<h1 id="todo">TODO</h1>
-<hr />
 <h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
