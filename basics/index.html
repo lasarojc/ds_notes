@@ -64,17 +64,31 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#no-principio-era-o-socket">No princípio, era o Socket</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#exemplo-tcp">Exemplo - TCP</a>
+    <li class="toctree-l3"><a class="reference internal" href="#tcp">TCP</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exercicio-multiplos-pacotes">Exercício: Múltiplos Pacotes</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#exercicio-ping-pong">Exercício: Ping-Pong</a>
+    <li class="toctree-l4"><a class="reference internal" href="#exercicio-ping-pong">Exercício: Ping-Pong</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#udp">UDP</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exercicio-ping-pong-udp">Exercício: Ping-Pong UDP</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#exercicio-udp">Exercício - UDP</a>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip-multicast">IP-Multicast</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#exercicio-ip-multicast">Exercício: IP-Multicast</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#referencias">Referências</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e Multithreading em Sistemas Distribuídos</a>
     </li>
     </ul>
                     </li>
@@ -119,8 +133,8 @@ Além do canal, é também necessário que se estabeleça um <strong>protocolo d
 Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
 <p>Neste capítulo, revisaremos de forma rápida tanto conceitos de redes de computadores quanto de concorrência e paralelismo.</p>
 <h2 id="canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</h2>
-<p>Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras que codificam tal conversa.
-Por exemplo, quando você fala cara-a-cara com uma pessoa, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
+<p>Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras codificam tal conversa.
+Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
 Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:</p>
 <ul>
 <li>Ponto-a-ponto<ul>
@@ -136,18 +150,18 @@ Na prática, canais de comunicação podem ter diversas formas e característica
 </ul>
 </li>
 </ul>
-<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>.
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um <strong>barramento compartilhado</strong>.
 Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
-<li>controle de acesso ao meio,</li>
-<li>transmissão de mensagens, e,</li>
-<li>evitar e tratar colisões.</li>
+<li>Controle de acesso ao meio </li>
+<li>Transmissão de mensagens</li>
+<li>Evitar e tratar colisões</li>
 </ul>
-<p>As redes Ethernet, contudo, cobrem pequenas áreas e, para que se tenha conversas "mais interessantes", é necessário que se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, <strong> <em>gateways</em> </strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.
-Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
+<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, <strong> <em>gateways</em> </strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.</p>
+<p>Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
 <ul>
-<li>Comutação de pacotes <ul>
+<li>Comutaçao de pacotes <ul>
 <li>Dados divididos em pacotes</li>
 <li>Cada pacote viaja independentemente</li>
 <li>Pacotes são perdidos</li>
@@ -162,12 +176,13 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 </ul>
 </li>
 </ul>
-<p>Outra questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
+<p>Outro fator importante é o MTU, o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
+<p>Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
 <p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, <strong>você</strong>, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 <h2 id="a-internet">A Internet</h2>
-<p>A Internet tem este nome por usar o protocolo de interconexão de redes independentes, o <em>internetworking protocol</em>, ou IP.
-Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
+<p>A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o <em>internetworking protocol</em>, ou IP.
+Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="images/network.png" /></p>
 <p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
@@ -179,17 +194,17 @@ Assim, embora tenha-se a impressão de que cada camada conversa com a equivalent
 <li>Bits</li>
 <li>Frames/quadros; controle de fluxo; acesso ao meio.</li>
 <li>Datagramas/pacotes; roteamento</li>
-<li>Controle de fluxo; fim a fim; confiabilidade; TCP e UDP </li>
-<li>Streams/fluxos; conexões lógicas; restart; checkpoint; HTTP, SSL </li>
-<li>Objetos; JSON, XML; criptografia</li>
-<li>Aplicações; HTTP, POP, FTP </li>
+<li>Controle de fluxo; fim a fim; confiabilidade; tcp e udp</li>
+<li>Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
+<li>Objetos; json, xml; criptografia</li>
+<li>Aplicações; http, pop, ftp</li>
 </ol>
 <p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
 <p>Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
 Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
 <p>Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
-Contudo, não tema! Estas funcionalidades podem ser normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
+Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
 Alguns exemplos de tais funcionalidades são</p>
 <ul>
 <li>(De)Serialização</li>
@@ -224,7 +239,10 @@ Isto é feito pela definição uma porta:</p>
 </ul>
 <p>Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
 Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) ou UPD (<strong>SOCK_DGRAM</strong>).</p>
-<p>A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma.</p>
+<p>A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.</p>
+<h3 id="tcp">TCP</h3>
+<p>O fluxograma da criação de um socket TCP é apresentado na seguinte figura:</p>
+<p><img alt="image" src="images/04-15.png" /></p>
 <ul>
 <li>criar socket</li>
 <li>bind</li>
@@ -232,10 +250,8 @@ Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) 
 <li>accept</li>
 <li>connect</li>
 </ul>
-<p>Estabelecido o socket, o mesmo pode ser usado como <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.</p>
-<p><img alt="image" src="images/04-15.png" /></p>
-<p>O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, <strong>sua responsabilidade</strong>.</p>
-<h3 id="exemplo-tcp">Exemplo - TCP</h3>
+<p>Estabelecido o socket, o mesmo pode ser usado como <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.
+O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, <strong>sua responsabilidade</strong>.</p>
 <p>Vejamos um exemplo do uso de sockets, em Python.
 O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas não pode, de forma alguma, ser nomeado <code>socket.py</code>.</p>
 <pre><code class="Python">#server.py
@@ -244,8 +260,7 @@ O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas n�
 import socket                                   # Import socket module
 
 s = socket.socket()                             # Create a socket object
-host = socket.gethostname()                     # Get local machine name
-print(host)
+host = socket.gethostname()                # Get local machine name
 port = 12345                                    # Reserve a port for your service.
 s.bind((host, port))                            # Bind to the port
 
@@ -304,7 +319,28 @@ s.close()                                         # Close the socket when done
 <pre><code class="Java">Socket s = new Socket(hostname,port);
 </code></pre>
 
-<h3 id="exercicio-ping-pong">Exercício: Ping-Pong</h3>
+<h4 id="exercicio-multiplos-pacotes">Exercício: Múltiplos Pacotes</h4>
+<p>Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim</p>
+<pre><code class="Python">...
+   c.send('Thank you for connecting'.encode())
+   c.send('Come back often'.encode())
+...
+</code></pre>
+
+<p>Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?</p>
+<p>Modifiquemos o cliente agora, para que tenha dois <code>recv</code>, assim.</p>
+<pre><code class="Python">...
+print(&quot;1&quot;)
+data = s.recv(1024)
+print(data.decode())
+print(&quot;2&quot;)
+data = s.recv(1024)
+print(data.decode())
+...
+</code></pre>
+
+<p>E agora, o que acontece? A saída é como esperava? Como explica este fenômeno e como poderia corrigí-lo?</p>
+<h4 id="exercicio-ping-pong">Exercício: Ping-Pong</h4>
 <p>Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.</p>
 <table>
 <tr>
@@ -353,37 +389,32 @@ Desconectando.
 <li>mais dados lidos que enviados (pode acontecer também no TCP)</li>
 </ul>
 <p>Com tantas dificuldades para se usar o UDP, fica a questão: <strong>para que serve UDP?</strong></p>
-<h3 id="exercicio-udp">Exercício - UDP</h3>
-<p>Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.</p>
-<h3 id="referencias">Referências</h3>
-<ul>
-<li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
-<li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
-</ul>
-<h1 id="todo">TODO</h1>
-<hr />
-<h2 id="ip-multicast">IP-Multicast</h2>
-<p>Imagine enviar os mesmos dados para múltiplos destinatários.
-* Como lidar com retransmissões?
-* Muito estado nos servidores
-* Sobre uso da rede.</p>
-<p><img alt="IP Multicast" src="images/ipmulticast.jpg" /></p>
-<ul>
-<li>UDP</li>
-<li>Mensagem entregue a todos que se juntaram ao grupo.</li>
-<li>Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)</li>
-</ul>
+<h4 id="exercicio-ping-pong-udp">Exercício: Ping-Pong UDP</h4>
+<p>Modifique o código do exercício Ping-Pong para usar UDP em vez de TCP na comunicação entre nós.
+Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. </p>
+<h3 id="ip-multicast">IP-Multicast</h3>
+<p>Imagine que você tenha que enviar um <em>stream</em> de vídeo para um destinatário, mostrando como você está jogando o mais novo jogo da velha no mercado.
+Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
+Como você já sabe, o TCP envia confirmações de pacotes recebidos e usa uma janela deslizante para determinar quais pacotes reenviar, o que pode causar interrupções na execução do vídeo.
+Além do mais, as pessoas provavelmente preferirão perder alguns quadros que perder a sincronia com sua excitante partida.
+Parece que uma opção melhor seria então usar UDP, correto?</p>
+<p>Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
+Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!</p>
+<p>Para terminar, lhe darei uma razão final: IP-Multicast!
+Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. </p>
+<p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
+<p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
+Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.</p>
 <p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/"><img alt="" src="images/ipmulticast2.png" /></a></p>
-<h3 id="servidor-servidor">Servidor Servidor</h3>
-<ul>
-<li>Criar Socket UDP</li>
-<li>Uní-lo a um grupo</li>
-<li>Receber pacotes.</li>
-</ul>
-<hr />
-<hr />
-<h3 id="mreceiverjava">MReceiver.java</h3>
-<pre><code class="Java">import java.io.*;
+<p>Quando um pacote é enviado para o endereço do grupo, <strong>todos</strong> os membros do grupo recebem tal mensagem.
+Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos falando de UDP, <strong>é possível que alguns não recebam</strong>.
+Além disso, <strong>não há garantia qualquer sobre a ordem de recepção das mensagens</strong>.</p>
+<p>Apenas reforçando, IP-Multicast só funciona com UDP, pois lidar com retransmissões em um grupo grande levaria a um estado imenso sendo mantido na origem dos dados.
+Outro ponto importante é que pelo podencial desestabilizador do IP-Multicast, ele é normalemente limitado à pequenas seções das redes.</p>
+<p>Mas experimentemos com esta tecnologia na prática.
+Criemos um programa que <strong>criar Socket UDP</strong>, <strong>associa-o a um grupo</strong>, e <strong>recebe pacotes</strong> destinados ao grupo.</p>
+<pre><code class="Java">// MReceiver.java
+import java.io.*;
 import java.net.*;
 
 public class MReceiver {
@@ -406,8 +437,10 @@ public class MReceiver {
 }
 </code></pre>
 
-<h3 id="msenderjava">MSender.java</h3>
-<pre><code class="Java">import java.io.*;
+<p>Instancie múltiplos processos deste, na mesma máquina e em máquinas distintas.
+Agora criemos um programa que envia pacotes para o dito grupo.</p>
+<pre><code class="Java">// MSender.java
+import java.io.*;
 import java.net.*;
 public class MSender {
  public static void main(String[] args) {
@@ -416,14 +449,12 @@ public class MSender {
   try {
    DatagramSocket socket = new DatagramSocket();
    long counter = 0;
+   InetAddress address = InetAddress.getByName(&quot;224.2.2.3&quot;);
    while (true) {
     counter++;
-    outBuf = (&quot;Multicast numero &quot; + counter).getBytes();
-    InetAddress address = InetAddress.getByName(&quot;224.2.2.3&quot;);
-    DatagramPacket outPacket = 
-         new DatagramPacket(outBuf, outBuf.length, address, PORT);
+    outBuf = (&quot;Multicast numero &quot; + counter + &quot; &quot; + address).getBytes();
+    DatagramPacket outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
     socket.send(outPacket);
-    System.out.println(&quot;Server sends : &quot; + msg);
     try { Thread.sleep(500); }catch (InterruptedException ie) {}
    }
   } catch (IOException ioe) { System.out.println(ioe); }
@@ -431,17 +462,15 @@ public class MSender {
 }
 </code></pre>
 
-<p><a href="lycog.com/programming/multicast-programming-java/">Multicast em Java</a></p>
-<h3 id="multicast-ipv6">Multicast IPv6</h3>
-<hr />
-<blockquote>
+<p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
+<p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
+<div class="admonition note">
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">3</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
-</blockquote>
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">Fonte</a></p>
-<h3 id="exercicio">Exercício</h3>
-<p>Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.1.1.1.</p>
-<h3 id="multicast-server-em-python-3">Multicast Server -- Em Python (3)</h3>
+</div>
+<h4 id="exercicio-ip-multicast">Exercício: IP-Multicast</h4>
+<p>Implemente e teste o seguinte sevidor.</p>
 <pre><code class="Python">import socket
 import struct
 
@@ -460,8 +489,7 @@ while True:
     print(sock.recv(10240).decode())
 </code></pre>
 
-<p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
-<h3 id="multicast-client-em-python-3">Multicast Client -- Em Python (3)</h3>
+<p>Implemente e teste o seguinte cliente.</p>
 <pre><code class="Python">import socket
 
 MCAST_GRP = '224.1.1.1'
@@ -472,8 +500,18 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 </code></pre>
 
-<p><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Fonte</a></p>
+<hr />
+<h3 id="referencias">Referências</h3>
+<ul>
+<li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
+<li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
+<li><a href="lycog.com/programming/multicast-programming-java/">Multicast em Java</a></li>
+<li><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Multicast em Python</a></li>
+</ul>
 <h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
+<hr />
+<h1 id="todo">TODO</h1>
+<hr />
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
@@ -840,7 +878,7 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
 Caso a espera termine por causa de um <em>timeout</em>, é possível testar o estado atual do thread com <code>Thread.isAlive()</code>.</p>
 <p>Outro método interessante, <code>Thread.setDaemon()</code>, especifica que o <em>thread</em> pode ser terminado quando a <em>thread</em> principal terminar. Descomente a invocação e teste o efeito.</p>
-<h5 id="exercicio_1">Exercício</h5>
+<h5 id="exercicio">Exercício</h5>
 <p>Vejamos um exemplo simples do uso de <em>threads</em>.</p>
 <ul>
 <li>Instancie um programa que gere 10 <em>threads</em>. </li>
@@ -898,7 +936,7 @@ Observe a classe a seguir, que modifica o contador do exercício anterior.</p>
 <p>Caso dois <em>threads</em> invoquem os métodos <code>increment</code> e <code>decrement</code> ao mesmo tempo, por exemplo, a JVM fará com que um dos <em>threads</em> pare sua execução até que o outro tenha completado a invocação.
 Isto não quer dizer que executar o exercício anterior com esta versão do contador não levará a saídas com incrementos completamente sequenciais, pois um <em>thread</em>  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método <code>increment</code>, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
 O que quer dizer é que, mesmo que saídas estranhas existam, cada operação foi executada integralmente antes da operação seguinte.</p>
-<h5 id="exercicio_2">Exercício</h5>
+<h5 id="exercicio_1">Exercício</h5>
 <p>Modifique o código do exercício anterior para usar a versão <code>synchronized</code> do contador. Depois de executá-lo, adicione um <code>println("Dentro: " + c)</code> <strong>dentro</strong> do método de incremento para verificar que estas saídas acontecem ordenadamente.</p>
 <h4 id="blocos-synchronized">Blocos <code>synchronized</code></h4>
 <p><code>synchronized</code> funciona porquê limita a concorrência, e é problemático exatamente pela mesma razão. 
@@ -920,7 +958,7 @@ Por isso, é essencial que o <code>synchronized</code> seja o mais limitado poss
 </code></pre>
 
 <p>Neste caso, blocos sincronizados <strong>no mesmo objeto</strong>, não são executados concorrentemente, mas outros blocos sim.</p>
-<h5 id="exercicio_3">Exercício</h5>
+<h5 id="exercicio_2">Exercício</h5>
 <p>Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois <em>threads</em>  tal que:
 * executem um loop 1000 vezes em que
 * o primeiro <em>thread</em> primeiro invoca <code>inc1</code> e depois <code>inc2</code>
@@ -1199,6 +1237,9 @@ print &quot;Exiting Main Thread&quot;
 </li>
 <li id="fn:nc">
 <p>Se o segundo comando não funcionar, tente <code>nc</code> em vez de <code>netcat</code>.&#160;<a class="footnote-backref" href="#fnref:nc" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:ipv6multi">
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
