@@ -34,6 +34,7 @@ Sobre este meio, são usados protocolos para, por exemplo,
 
 As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
 A conversa então é feita por meio de intermediários, ** *gateways* ** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
+
 Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de **comutação de pacotes** (*packet switching*) ou de **circuitos** (*circuit switching*).
 
 * Comutaçao de pacotes 
@@ -47,7 +48,9 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 	* Pacotes de tamanho fixo
 	* Latência constante
 
-Outra questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
+Outro fator importante é o MTU, o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
+
+Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
 
 Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, **você**, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
@@ -123,7 +126,13 @@ Isto é feito pela definição uma porta:
 Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
 Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UPD (**SOCK\_DGRAM**).
 
-A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma.
+A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.
+
+### TCP
+
+O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
+
+![image](images/04-15.png)
 
 * criar socket
 * bind
@@ -132,13 +141,7 @@ A API usada para estabelecer a conversa via socket tem várias chamadas, que dev
 * connect
 
 Estabelecido o socket, o mesmo pode ser usado como **arquivo**, isto é, lendo-se e escrevendo-se bytes.
-
-![image](images/04-15.png)
-
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
-
-
-### Exemplo - TCP
 
 Vejamos um exemplo do uso de sockets, em Python.
 O seguinte arquivo pode ser nomeado, por exemplo, `server.py`, mas não pode, de forma alguma, ser nomeado `socket.py`.
@@ -223,8 +226,34 @@ O cliente em Java também é simplificado.
 Socket s = new Socket(hostname,port);
 ```
 
+#### Exercício: Múltiplos Pacotes
 
-### Exercício: Ping-Pong
+Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim
+
+```Python
+...
+   c.send('Thank you for connecting'.encode())
+   c.send('Come back often'.encode())
+...
+```
+
+Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
+
+Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
+```Python
+...
+print("1")
+data = s.recv(1024)
+print(data.decode())
+print("2")
+data = s.recv(1024)
+print(data.decode())
+...
+```
+
+E agora, o que acontece? A saída é como esperava? Como explica este fenômeno e como poderia corrigí-lo?
+
+####  Exercício: Ping-Pong
 
 Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
@@ -283,47 +312,44 @@ Além deste detalhe, é importante manter em mente outras características do UD
 Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
 
 
-### Exercício - UDP
-Modifique o código do exercício anterior para usar UDP em vez de TCP na comunicação entre nós.
-
-### Referências
-
-* [UDP em Python](http://pymotw.com/2/socket/udp.html)
-* [UDP em Python](http://www.tutorialspoint.com/python/python_networking.htm)
+#### Exercício: Ping-Pong UDP
+Modifique o código do exercício Ping-Pong para usar UDP em vez de TCP na comunicação entre nós.
+Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. 
 
 
 ### IP-Multicast
 
-Imagine enviar os mesmos dados para múltiplos destinatários.
-* Como lidar com retransmissões?
-* Muito estado nos servidores
-* Sobre uso da rede.
+Imagine que você tenha que enviar um *stream* de vídeo para um destinatário, mostrando como você está jogando o mais novo jogo da velha no mercado.
+Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
+Como você já sabe, o TCP envia confirmações de pacotes recebidos e usa uma janela deslizante para determinar quais pacotes reenviar, o que pode causar interrupções na execução do vídeo.
+Além do mais, as pessoas provavelmente preferirão perder alguns quadros que perder a sincronia com sua excitante partida.
+Parece que uma opção melhor seria então usar UDP, correto?
 
----
-##### IP-Multicast
+Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
+Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!
 
-![IP Multicast](images/ipmulticast.jpg)
+Para terminar, lhe darei uma razão final: IP-Multicast!
+Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
 
-* UDP
-* Mensagem entregue a todos que se juntaram ao grupo.
-* Grupo identificado por IP Classe D (224.0.0.0-239.255.255.255)
+![Multicast](images/ipmulticast.jpg)
+
+IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
+Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
 
 [![](images/ipmulticast2.png)](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
 
----
+Quando um pacote é enviado para o endereço do grupo, **todos** os membros do grupo recebem tal mensagem.
+Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos falando de UDP, **é possível que alguns não recebam**.
+Além disso, **não há garantia qualquer sobre a ordem de recepção das mensagens**.
 
----
-##### Servidor Servidor
+Apenas reforçando, IP-Multicast só funciona com UDP, pois lidar com retransmissões em um grupo grande levaria a um estado imenso sendo mantido na origem dos dados.
+Outro ponto importante é que pelo podencial desestabilizador do IP-Multicast, ele é normalemente limitado à pequenas seções das redes.
 
-* Criar Socket UDP
-* Uní-lo a um grupo
-* Receber pacotes.
+Mas experimentemos com esta tecnologia na prática.
+Criemos um programa que **criar Socket UDP**, **associa-o a um grupo**, e **recebe pacotes** destinados ao grupo.
 
----
-
----
-##### MReceiver.java
 ```Java
+// MReceiver.java
 import java.io.*;
 import java.net.*;
 
@@ -347,12 +373,11 @@ public class MReceiver {
 }
 ```
 
----
+Instancie múltiplos processos deste, na mesma máquina e em máquinas distintas.
+Agora criemos um programa que envia pacotes para o dito grupo.
 
-
----
-##### MSender.java
 ```Java 
+// MSender.java
 import java.io.*;
 import java.net.*;
 public class MSender {
@@ -362,14 +387,12 @@ public class MSender {
   try {
    DatagramSocket socket = new DatagramSocket();
    long counter = 0;
+   InetAddress address = InetAddress.getByName("224.2.2.3");
    while (true) {
     counter++;
-    outBuf = ("Multicast numero " + counter).getBytes();
-    InetAddress address = InetAddress.getByName("224.2.2.3");
-    DatagramPacket outPacket = 
-         new DatagramPacket(outBuf, outBuf.length, address, PORT);
+    outBuf = ("Multicast numero " + counter + " " + address).getBytes();
+    DatagramPacket outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
     socket.send(outPacket);
-    System.out.println("Server sends : " + msg);
     try { Thread.sleep(500); }catch (InterruptedException ie) {}
    }
   } catch (IOException ioe) { System.out.println(ioe); }
@@ -377,28 +400,21 @@ public class MSender {
 }
 ```
 
-[Multicast em Java](lycog.com/programming/multicast-programming-java/)
+Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.
+
+A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças 
+
+!!! note "IP-Multicast em IPv6[^ipv6multi]"
+    In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
+
+    In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
+
+[^ipv6multi]: [IP-Multicast em IPv6](http://www.baeldung.com/java-broadcast-multicast)
 
 
-### Multicast IPv6
+#### Exercício: IP-Multicast
 
----
-
-> In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
-
-> In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
-
-[Fonte](http://www.baeldung.com/java-broadcast-multicast)
-
----
-
-
-### Exercício 
-Modifique o código que desenvolveu em Python para que, em vez de usar "localhost' como endereço, use o endereço multicast 224.1.1.1.
-
-
----
-##### Multicast Server -- Em Python (3)
+Implemente e teste o seguinte sevidor.
 
 ```Python
 import socket
@@ -420,13 +436,7 @@ while True:
 ```
 
 
-[Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)
-
----
-
-
----
-##### Multicast Client -- Em Python (3)
+Implemente e teste o seguinte cliente.
 
 ```Python
 import socket
@@ -439,17 +449,23 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 ```
 
-[Fonte](https://stackoverflow.com/questions/603852/multicast-in-python)
-
 ---
 
+### Referências
+
+* [UDP em Python](http://pymotw.com/2/socket/udp.html)
+* [UDP em Python](http://www.tutorialspoint.com/python/python_networking.htm)
+* [Multicast em Java](lycog.com/programming/multicast-programming-java/)
+* [Multicast em Python](https://stackoverflow.com/questions/603852/multicast-in-python)
+
+
+
+## Multiprogramação e *Multithreading* em Sistemas Distribuídos
 
 ------------------------
 TODO
 ========================
 -----------------------
-
-## Multiprogramação e *Multithreading* em Sistemas Distribuídos
 
 É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
