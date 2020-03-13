@@ -119,21 +119,22 @@ Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema co
 Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
 <p>Como isso pode ser feito, na prática?</p>
 <p>\pause</p>
-<p>\begin{itemize}
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
     \item PID -- Process Identier
     \item IP -- Internet Protocol Address
     \item Socket -- IP + Port
-\end{itemize}
+\end{itemize}</script>
 \end{frame}</p>
 <p>\begin{frame}{Algoritmo do Brigão/Bully}
-\begin{itemize}
+<script type="math/tex; mode=display">\begin{itemize}
     \item Selecione o processo <code>vivo'' com o maior identificador!
     \item Quando $p$ acha que o líder está morto:
     \begin{itemize}
         \item Envia mensagem</code>eleição,$p$'' para todos os processo com identificador maior
         \item Se ninguém responde, $p$ assume como líder
         \item Se algum responde, aguarda notificação.
-    \end{itemize}
+    \end{itemize}</script>
     \item Quando $q$ recebe <code>eleição,$p$''
     \begin{itemize}
         \item Envia</code>ok'' para $p$
@@ -149,18 +150,19 @@ Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
 <pre><code>\href{https://my.oschina.net/juliashine/blog/88173}{Fonte}
 </code></pre>
 <p>\end{frame}</p>
-<p>\begin{frame}{Algoritmo do Anel}
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Algoritmo do Anel}
 \begin{itemize}
     \item Organize os nós em um anel lógico
     \item Quando $p$ acha que o líder está morto:
     \begin{itemize}
-        \item Envia mensagem {$p$} para ``a direita'' no anel.
+        \item Envia mensagem \{$p$\} para ``a direita'' no anel.
         \item Se processo à direita está falho, salte-o, e assim por diante.
     \end{itemize}
     \pause
-    \item Quando $q$ recebe {$p$}
+    \item Quando $q$ recebe \{$p$\}
     \begin{itemize}
-        \item Envia  {$p,q$} para a direita.
+        \item Envia  \{$p,q$\} para a direita.
     \end{itemize}
     \pause
     \item Quando $p$ recebe $S$ tal que $q \in S$
@@ -168,8 +170,10 @@ Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
         \item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
     \end{itemize}
 \end{itemize}
-\end{frame}</p>
-<p>\begin{frame}{Chang \&amp; Robert's}
+\end{frame}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Chang \& Robert's}
 \begin{itemize}
     \item Organize os nós em um anel lógico
     \item Quando $p$ acha que o líder está morto:
@@ -192,12 +196,14 @@ Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
         \item Se $p \neq q$, repassa $q$ à direita
     \end{itemize}
 \end{itemize}
-\end{frame}</p>
+\end{frame}</script>
+</p>
 <p>\begin{frame}[allowframebreaks]{Yo-Yo}
-\begin{itemize}
+<script type="math/tex; mode=display">\begin{itemize}
     \item Grafos incompletos
     \item Duas fases
-\end{itemize}</p>
+\end{itemize}</script>
+</p>
 <pre><code>\framebreak
 
 \begin{block}{Fase 1}
@@ -243,10 +249,13 @@ a) The network, b) Oriented network after setup phase, c) YO- phase in which sou
 <p>**\href{https://en.wikipedia.org/wiki/Leader_election}{Fonte}
 \end{small}
 \end{frame}</p>
-<p>\begin{frame}{Problemas?}
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Problemas?}
 O que acontece se a rede é particionada?
-\end{frame}</p>
-<p>\begin{frame}{Split Brain}
+\end{frame}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Split Brain}
 \begin{itemize}
     \item Network Partitioning: rede dividida em duas partes incomunicáveis.
     \item Múltiplas eleições podem acontecer em paralelo.
@@ -258,8 +267,10 @@ O que acontece se a rede é particionada?
         \item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
     \end{itemize}
 \end{itemize}
-\end{frame}</p>
-<p>\begin{frame}{Detecção de Falhas}
+\end{frame}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Detecção de Falhas}
 Eleição de líderes perfeita é impossível em cenários realísticos.
 \begin{itemize}
     \item Detecção de falhas perfeita é impossível...
@@ -269,7 +280,8 @@ Eleição de líderes perfeita é impossível em cenários realísticos.
     \pause
     \item Falemos mais sobre este problema depois.
 \end{itemize}
-\end{frame}</p>
+\end{frame}</script>
+</p>
 <h1 id="fim-da-aula-12">Fim da aula 12</h1>
               
             </div>
@@ -303,6 +315,8 @@ Eleição de líderes perfeita é impossível em cenários realísticos.
 </div>
     <script>var base_url = '../..';</script>
     <script src="../../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+      <script src="../../mathjaxhelper.js" defer></script>
       <script src="../../search/main.js" defer></script>
     <script defer>
         window.onload = function () {

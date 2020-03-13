@@ -62,51 +62,25 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#middleware">Middleware</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-acesso">Transparência de Acesso</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-localizacao">Transparência de Localização</a>
+    <li class="toctree-l3"><a class="reference internal" href="#transparencia">Transparência</a>
         <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#escondendo-a-latencia">Escondendo a Latência</a>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-acesso">Transparência de Acesso</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#escondendo-a-latencia_1">Escondendo a latência</a>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-localizacao">Transparência de Localização</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-relocacao">Transparência de Relocação</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-migracao">Transparência de Migração</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-replicacao">Transparência de Replicação</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-concorrencia">Transparência de Concorrência</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#desafios-para-se-obter-transparencia">Desafios para se obter transparência</a>
     </li>
         </ul>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-relocacao">Transparência de Relocação</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-localizacao-e-relocacao">Transparência Localização e Relocação</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-migracao">Transparência de Migração</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-migracao_1">Transparência de Migração</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-replicacao">Transparência de Replicação</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#maquina-de-estados">Máquina de Estados</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#replicacao-x-inconsistencias">Replicação x Inconsistências</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia-de-concorrencia">Transparência de Concorrência</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#multi-tenancy">Multi-tenancy</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-concorrencia">Transparência Concorrência</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#desafios-para-se-obter-transparencia">Desafios para se obter transparência</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#armadilhas-da-rede">Armadilhas da rede</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#escalabilidade">Escalabilidade</a>
-    </li>
-        </ul>
+    <li class="toctree-l3"><a class="reference internal" href="#escalabilidade">Escalabilidade</a>
     </li>
         </ul>
     </li>
@@ -307,50 +281,85 @@ Por exemplo, </p>
 </ul>
 </div>
 <h2 id="como">Como?</h2>
-<p>Reforçando, distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>geograficamente distribuídos</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.</p>
-<p>Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, isto é, que o serviço continue funcionando, mesmo que de forma limitada, seja no número de requisições que atendem por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.</p>
-<p>Para colaborar, as as diversas partes do sistema distribuído devem se comunicar. 
+<p>Reforçando, distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.</p>
+<p>Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que de forma limitada no número de requisições que atende por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.</p>
+<p>Para colaborar, as diversas partes do sistema distribuído devem se comunicar. 
 Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, <strong>troca de mensagens</strong>, <strong> <em>streams</em> de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. </p>
+Mas, como vocês sabem, sistemas computacionais são como ogros, frequentemente excêntricos e mal-cheirosos. Estes por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. </p>
 <p><img alt="" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /></p>
 <p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong> <em>middleware</em> </strong>.</p>
 <h3 id="middleware">Middleware</h3>
-<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>,</p>
-<div class="admonition note">
-<p class="admonition-title">Middleware</p>
-<p>The software layer that lies between the operating system and applications on each side of a distributed computing system in a network.</p>
-</div>
-<p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, isto é, entre, o <em>software</em> e o <em>hardware</em>. 
+<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>,<em>middleware</em> é </p>
+<blockquote>
+<p>... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.</p>
+</blockquote>
+<p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, entre, o <em>software</em> e o <em>hardware</em>. 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
-Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração de hardware, por exemplo, uma máquina virtual.</p>
+Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular <em>hardware</em> real, mas também pode encapsular outra abstração de <em>hardware</em>, por exemplo, uma máquina virtual ou contêiner.</p>
 <p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">1</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
 <p><img alt="Middleware" src="images/01-01.png" /></p>
-<p>E Segundo, <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a>, as principais funções do <em>middleware</em> são:</p>
+<p>Com este cenário em mente, é importante entender o que diz <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a> quando afirma que as principais funções do <em>middleware</em> são:</p>
 <ul>
 <li>esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,</li>
 <li>esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação</li>
 <li>prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.</li>
 </ul>
-<p>Assim, os <em>middleware</em> facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
+<p>Assim, os <em>middleware</em> facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que <code>send(byte[])</code> e <code>recv(): byte[]</code>, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o <em>middleware</em> antes de desenvolver o sistema em si.</p>
 <p>Idealmente, com o <em>middleware</em> se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como <strong>um sistema único</strong>, centralizado.
 Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?</p>
+<h3 id="transparencia">Transparência</h3>
 <p>Podemos quebrar esta "transparência total" em várias transparências mais simples: <strong>Acesso</strong>, <strong>Localização</strong>, <strong>Relocação</strong>,
 <strong>Migração</strong>, <strong>Replicação</strong>, e <strong>Falha</strong>.
 Vejamos cada uma destas separadamente.</p>
-<h3 id="transparencia-de-acesso">Transparência de Acesso</h3>
+<h4 id="transparencia-de-acesso">Transparência de Acesso</h4>
 <p>A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE.</p>
-<p><img alt="IEEE Floating Point2" src="images/float_point.jpg" /></p>
-<ul>
-<li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
-<li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
-<li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
-<li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
-</ul>
+Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">2</a></sup>.</p>
+<p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
+<table>
+<thead>
+<tr>
+<th align="center">Precisão</th>
+<th align="center">Tamanho total (bits)</th>
+<th align="center">Sinal (bits)</th>
+<th align="center">Expoente (bits)</th>
+<th align="center">Mantissa (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Half</td>
+<td align="center">16</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">Single</td>
+<td align="center">32</td>
+<td align="center">1</td>
+<td align="center">8</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">Double</td>
+<td align="center">64</td>
+<td align="center">1</td>
+<td align="center">11</td>
+<td align="center">523</td>
+</tr>
+<tr>
+<td align="center">Quadruple</td>
+<td align="center">128</td>
+<td align="center">1</td>
+<td align="center">15</td>
+<td align="center">112</td>
+</tr>
+</tbody>
+</table>
 <p>E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
 É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo <em>middleware</em>.
 A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.</p>
@@ -358,66 +367,67 @@ A mesma questão é válida para representações de strings e classes, e difere
 <p class="admonition-title">Transparência de Acesso</p>
 <p>Para se tentar obter transaparência de acesso, é importante que se use <strong>padrões</strong> implementados em múltiplas arquiteturas, <strong>abertos</strong>  e bem conhecidos, com <strong>interfaces bem definidas</strong>.</p>
 </div>
-<hr />
-<hr />
-<hr />
-<h3 id="transparencia-de-localizacao">Transparência de Localização</h3>
+<h4 id="transparencia-de-localizacao">Transparência de Localização</h4>
 <p>A transparência de localização diz respeito a onde está o objeto: pouco importa ao usuário, se o serviço está dentro da mesma máquina em que acessa o serviço, se na sala do lado, ou na nuvem, do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
 A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.</p>
-<hr />
 <h5 id="escondendo-a-latencia">Escondendo a Latência</h5>
+<p>Para se esconder a latência, várias táticas são utilizáveis:</p>
 <ul>
-<li><em>Caching</em> de dados <br>
-  Em vez de sempre buscar os dados no servidor, mantenha cópias locais dos dados que mudam menos (e.g., o CSS do stackoverflow).</li>
-<li>Use de comunicação assíncrona e paralelismo</li>
-<li>Em vez de validar formulário após preenchimento de cada campo, valide em paralelo enquanto usuário preenche o campo seguinte.</li>
-<li>Use um callbacks para indicar campos com problemas a serem corrigidos.</li>
-<li>Nem todo problema é paralelizável, por exemplo, autenticação</li>
+<li><em>Caching</em> de dados<ul>
+<li>Em vez de sempre buscar os dados no servidor, mantenha cópias locais dos dados que mudam menos (e.g., o CSS do stackoverflow).</li>
 </ul>
-<hr />
+</li>
+<li>Use paralelismo<ul>
+<li>Em vez de validar formulário após preenchimento de cada campo, valide em paralelo enquanto usuário preenche o campo seguinte.</li>
+<li>Use <em>callbacks</em> para indicar campos com problemas a serem corrigidos.</li>
+<li>Saiba que nem todo problema é paralelizável, por exemplo, autenticação</li>
+</ul>
+</li>
+<li>Use programação assíncrona<ul>
+<li>AsyncIO</li>
+<li>C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/async">await/async</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Futures e Promises</a></li>
+</ul>
+</li>
+</ul>
 <p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
 Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado na casa do usuário, de jogos online.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
-<hr />
-<h5 id="escondendo-a-latencia_1">Escondendo a latência</h5>
+<p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
 <ul>
 <li>Distribua tarefas</li>
-<li>Delegue computação aos clientes<br>
-    E.g., JavaScript e Applets Java.</li>
-<li>Particione dados entre servidores<br>
-    E.g., Domain Name Service e World Wide Web.</li>
+<li>Delegue computação aos clientes (e.g., JavaScript e Applets Java)</li>
+<li>Particione dados entre servidores (e.g., Domain Name Service e World Wide Web) para dividir a carga e aumentar a vazão</li>
 <li>Aproxime dados dos clientes</li>
 <li>Mantenha cópias de dados em múltiplos lugares.</li>
-<li>Atualize dados de acordo com necessidade.<br>
-    E.g., cache do navegador.</li>
+<li>Atualize dados de acordo com necessidade (e.g., cache do navegador, com código do google.com sendo atualizado a cada 4 dias)</li>
 </ul>
-<h3 id="transparencia-de-relocacao">Transparência de Relocação</h3>
-<p>As vezes os objetos precisam ser movimentados de uma localização à outra.
+<h4 id="transparencia-de-relocacao">Transparência de Relocação</h4>
+<p>As vezes componentes do sistema distribuído precisam ser movimentados de uma localização à outra, por exemplo porquê um novo <em>host</em> foi contratado.
 Se implementadas corretamente, as técnicas que entregam transparência de localização não deixam que o cliente perceba a movimentação, no que chamamos transparência de Relocação.</p>
-<hr />
-<h5 id="transparencia-localizacao-e-relocacao">Transparência Localização e Relocação</h5>
 <ul>
 <li>Rede de baixa latência</li>
-<li>Distribuição inteligente</li>
+<li>Distribuição inteligente<ul>
 <li>E.g: Serviços de nome</li>
-<li>Múltiplas cópias</li>
+</ul>
+</li>
+<li>Múltiplas cópias<ul>
 <li>Cópias temporárias</li>
 </ul>
-<hr />
-<h3 id="transparencia-de-migracao">Transparência de Migração</h3>
+</li>
+</ul>
+<h4 id="transparencia-de-migracao">Transparência de Migração</h4>
 <p>Do ponto de vista do próprio serviço, não perceber que se está sendo movimentado é chamado transparência de Migração.
 Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando a mudança acontece.
-Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.</p>
-<hr />
-<h5 id="transparencia-de-migracao_1">Transparência de Migração</h5>
+Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
+Veja o exemplo do VMotion da VMware</p>
 <p><img alt="http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg" src="images/vmotion.jpg" /></p>
-<hr />
 <p>Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.</p>
-<h3 id="transparencia-de-replicacao">Transparência de Replicação</h3>
+<h4 id="transparencia-de-replicacao">Transparência de Replicação</h4>
 <p>A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
 Isto porquê para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.</p>
-<p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode varia muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atroso</strong> entre elas de $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
+<p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atraso</strong> entre elas de no máximo $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
 <p>Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da <a href="https://www.allthingsdistributed.com/2008/12/eventually_consistent.html">Amazon.com</a>, que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.</p>
 <p>Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de frameworks de comunicação em grupo, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
@@ -440,7 +450,7 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
 <li>Baixa latência.</li>
 </ul>
 <hr />
-<h3 id="transparencia-de-concorrencia">Transparência de Concorrência</h3>
+<h4 id="transparencia-de-concorrencia">Transparência de Concorrência</h4>
 <p>Outra transparência almejável é de concorrência. 
 Isto é, quem acessa um serviço deveria ser indiferente ao fato de que o mesmo pode estar sendo acessado por outros.
 Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto tem termos de desempenho.
@@ -461,14 +471,13 @@ Para se tornar viável, contudo, uma mesma instância deve servir múltiplos cli
 <li>mecanismos para alcançar <em>escalabilidade</em> (particionamento/<em>sharding</em>)</li>
 </ul>
 <hr />
-<h3 id="desafios-para-se-obter-transparencia">Desafios para se obter transparência</h3>
+<h4 id="desafios-para-se-obter-transparencia">Desafios para se obter transparência</h4>
 <p>Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
 Isto porquê, do <strong>ponto de vista de usuários</strong> espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.</p>
 <p>Do <strong>ponto de vista do desenvolvedor</strong>, é preciso tomar decisões baseado em premissas ligadas à realidade da rede. Por exemplo, se uma requisição não foi respondida, quanto tempo um cliente deve esperar antes de reenviá-la, possivelmente para outro servidor, sem incorrer em risco significativo da requisição ser processada duas vezes? A resposta para esta pergunta é muito mais complicada do que pode parecer.</p>
 <p><strong>De forma geral</strong>, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de link dedicado ou de host em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).</p>
 <p>Provavelmente os maiores obstáculos para se alcançar os diversos tipos de  transparência são impostos pela parte da infraestrutura que torna o sistema distribuído possível, a rede.
 Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade.</p>
-<hr />
 <h5 id="armadilhas-da-rede">Armadilhas da rede</h5>
 <ul>
 <li>A latência é zero.</li>
@@ -480,12 +489,10 @@ Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a
 <li>A rede tem acesso grátis.</li>
 <li>A rede é administrada por você ou alguém acessível.</li>
 </ul>
-<hr />
+<h3 id="escalabilidade">Escalabilidade</h3>
 <p>Para terminar, deixem-me apenas retomar um termo usado acima, <strong>escalabilidade</strong>.
 O termo está muito em voga e é usado, normalmente, para descrever a capacidade de um sistema de se adequar a variações de carga de trabalho.
 Embora seja um uso válido, há outros tipos de escalabilidade.</p>
-<hr />
-<h5 id="escalabilidade">Escalabilidade</h5>
 <ul>
 <li>Escalabilidade</li>
 <li>Tamanho: Número de usuários que suporta.</li>
@@ -733,6 +740,8 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
 </div>
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
+      <script src="../mathjaxhelper.js" defer></script>
       <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {
