@@ -148,16 +148,16 @@ Por exemplo,
 
 ## Como?
 
-Reforçando, distribuir é **dividir** a computação/armazenamento em diversos componentes, **geograficamente distribuídos**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
+Reforçando, distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
 
-Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, isto é, que o serviço continue funcionando, mesmo que de forma limitada, seja no número de requisições que atendem por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que de forma limitada no número de requisições que atende por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.
 
-Para colaborar, as as diversas partes do sistema distribuído devem se comunicar. 
+Para colaborar, as diversas partes do sistema distribuído devem se comunicar. 
 Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, **troca de mensagens**, ** *streams* de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
 Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros (muito feios, às vezes), que por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. 
+Mas, como vocês sabem, sistemas computacionais são como ogros, frequentemente excêntricos e mal-cheirosos. Estes por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. 
 
 ![](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif)
 
@@ -166,14 +166,12 @@ Com sistemas distribuídos, não é diferente, e no caso da comunicação entre 
 
 ### Middleware
 
-De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=),
+De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=),*middleware* é 
+> ... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
 
-!!! note "Middleware"
-    The software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
-
-Isto é, o *middleware* é a camada *ware* que fica no *middle*, isto é, entre, o *software* e o *hardware*. 
+Isto é, o *middleware* é a camada *ware* que fica no *middle*, entre, o *software* e o *hardware*. 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a **abstração** do *host* em que se executam os componentes, provida pelo sistema operacional.
-Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular o hardware, mas também pode encapsular outra abstração de hardware, por exemplo, uma máquina virtual.
+Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular *hardware* real, mas também pode encapsular outra abstração de *hardware*, por exemplo, uma máquina virtual ou contêiner.
 
 A figura seguinte [^0101]  mostra um exemplo com três aplicações executando sobre um *middleware*, que por sua vez é executado sobre diferentes sistemas operacionais, em *hosts*  conectados por uma rede de comunicação. 
 
@@ -181,34 +179,38 @@ A figura seguinte [^0101]  mostra um exemplo com três aplicações executando s
 
 ![Middleware](images/01-01.png)
 
-E Segundo, [Sacha Krakowiak](https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/), as principais funções do *middleware* são:
+Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/) quando afirma que as principais funções do *middleware* são:
 
 * esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,
 * esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação
 * prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.
 
 
-Assim, os *middleware* facilitam a conexão entre nós e permitem o uso de protocolos mais abstratos que "mandar um monte de bytes" para lá e para cá, escondendo a complexidade da coordenação de sistemas independentes.
+Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que `send(byte[])` e `recv(): byte[]`, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
 Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, centralizado.
 Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?
 
+### Transparência
+
 Podemos quebrar esta "transparência total" em várias transparências mais simples: **Acesso**, **Localização**, **Relocação**,
 **Migração**, **Replicação**, e **Falha**.
 Vejamos cada uma destas separadamente.
 
-### Transparência de Acesso
+#### Transparência de Acesso
 
 A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE.
+Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE[^IEEEFP].
 
-![IEEE Floating Point[^IEEEFP]](images/float_point.jpg)
+![IEEE Floating Point](images/float_point.jpg)
 
-* Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa
-* Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa
-* Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa
-* Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa
+ Precisão | Tamanho total (bits) | Sinal (bits) | Expoente (bits) | Mantissa (bits)
+:--------:|:--------------------:|:------------:|:---------------:|:--------------:
+ Half | 16 | 1 | 5 | 10 
+ Single | 32 | 1 | 8 | 2
+ Double | 64 | 1 | 11 | 523
+ Quadruple | 128 | 1 | 15 | 112
 
 [^IEEEFP]: [IEEE Floating Point](https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations)
 
@@ -220,86 +222,70 @@ A mesma questão é válida para representações de strings e classes, e difere
     Para se tentar obter transaparência de acesso, é importante que se use **padrões** implementados em múltiplas arquiteturas, **abertos**  e bem conhecidos, com **interfaces bem definidas**.
 
 
-----
-
-----
-
-----
-
-### Transparência de Localização
+#### Transparência de Localização
 
 A transparência de localização diz respeito a onde está o objeto: pouco importa ao usuário, se o serviço está dentro da mesma máquina em que acessa o serviço, se na sala do lado, ou na nuvem, do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
 A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.
 
----
 ##### Escondendo a Latência
 
-* *Caching* de dados <br>
-  Em vez de sempre buscar os dados no servidor, mantenha cópias locais dos dados que mudam menos (e.g., o CSS do stackoverflow).
-* Use de comunicação assíncrona e paralelismo
-  * Em vez de validar formulário após preenchimento de cada campo, valide em paralelo enquanto usuário preenche o campo seguinte.
-  * Use um callbacks para indicar campos com problemas a serem corrigidos.
-* Nem todo problema é paralelizável, por exemplo, autenticação
+Para se esconder a latência, várias táticas são utilizáveis:
 
----
+* *Caching* de dados
+    * Em vez de sempre buscar os dados no servidor, mantenha cópias locais dos dados que mudam menos (e.g., o CSS do stackoverflow).
+* Use paralelismo
+    * Em vez de validar formulário após preenchimento de cada campo, valide em paralelo enquanto usuário preenche o campo seguinte.
+    * Use *callbacks* para indicar campos com problemas a serem corrigidos.
+    * Saiba que nem todo problema é paralelizável, por exemplo, autenticação
+* Use programação assíncrona
+    * AsyncIO
+    * C# [await/async](https://docs.microsoft.com/en-us/dotnet/csharp/async)
+    * [Futures e Promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
 Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
 Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado na casa do usuário, de jogos online.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.
 
-
----
-##### Escondendo a latência
+De forma geral, pense em esconder latência pelos seguintes passos:
 
 * Distribua tarefas
-  * Delegue computação aos clientes<br>
-    E.g., JavaScript e Applets Java.
-  * Particione dados entre servidores<br>
-    E.g., Domain Name Service e World Wide Web.
+  * Delegue computação aos clientes (e.g., JavaScript e Applets Java)
+  * Particione dados entre servidores (e.g., Domain Name Service e World Wide Web) para dividir a carga e aumentar a vazão
 * Aproxime dados dos clientes
   * Mantenha cópias de dados em múltiplos lugares.
-  * Atualize dados de acordo com necessidade.<br>
-	E.g., cache do navegador.
+  * Atualize dados de acordo com necessidade (e.g., cache do navegador, com código do google.com sendo atualizado a cada 4 dias)
 
 
-### Transparência de Relocação
+#### Transparência de Relocação
 
-As vezes os objetos precisam ser movimentados de uma localização à outra.
+As vezes componentes do sistema distribuído precisam ser movimentados de uma localização à outra, por exemplo porquê um novo *host* foi contratado.
 Se implementadas corretamente, as técnicas que entregam transparência de localização não deixam que o cliente perceba a movimentação, no que chamamos transparência de Relocação.
-
----
-##### Transparência Localização e Relocação
 
 * Rede de baixa latência
 * Distribuição inteligente
-  * E.g: Serviços de nome
+    * E.g: Serviços de nome
 * Múltiplas cópias
-  * Cópias temporárias
+    * Cópias temporárias
 
----
 
-### Transparência de Migração
+#### Transparência de Migração
 
 Do ponto de vista do próprio serviço, não perceber que se está sendo movimentado é chamado transparência de Migração.
 Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando a mudança acontece.
 Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
-
----
-##### Transparência de Migração
+Veja o exemplo do VMotion da VMware
 
 ![http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg](images/vmotion.jpg)
 
----
-
 Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.
 
-### Transparência de Replicação
+#### Transparência de Replicação
 
 A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
 Isto porquê para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.
 
-Dependendo das garantias desejadas na manutenção da **consistência** entre as cópias, o custo pode varia muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um **atroso** entre elas de $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.
+Dependendo das garantias desejadas na manutenção da **consistência** entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um **atraso** entre elas de no máximo $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.
 
 Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da [Amazon.com](https://www.allthingsdistributed.com/2008/12/eventually_consistent.html), que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.
 
@@ -329,7 +315,7 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
 ---
 
 
-### Transparência de Concorrência
+#### Transparência de Concorrência
 
 Outra transparência almejável é de concorrência. 
 Isto é, quem acessa um serviço deveria ser indiferente ao fato de que o mesmo pode estar sendo acessado por outros.
@@ -356,7 +342,7 @@ Esta propriedade está fundamentalmente ligada à escalabilidade, isto é, à ad
 
 ---
 
-### Desafios para se obter transparência
+#### Desafios para se obter transparência
 
 Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
 Isto porquê, do **ponto de vista de usuários** espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.
@@ -368,7 +354,6 @@ Do **ponto de vista do desenvolvedor**, é preciso tomar decisões baseado em pr
 Provavelmente os maiores obstáculos para se alcançar os diversos tipos de  transparência são impostos pela parte da infraestrutura que torna o sistema distribuído possível, a rede.
 Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade.
 
----
 ##### Armadilhas da rede
 
 * A latência é zero.
@@ -380,19 +365,16 @@ Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a
 * A rede tem acesso grátis.
 * A rede é administrada por você ou alguém acessível.
 
----
 
 
 
 
 
+### Escalabilidade
 
 Para terminar, deixem-me apenas retomar um termo usado acima, **escalabilidade**.
 O termo está muito em voga e é usado, normalmente, para descrever a capacidade de um sistema de se adequar a variações de carga de trabalho.
 Embora seja um uso válido, há outros tipos de escalabilidade.
-
----
-##### Escalabilidade
 
 * Escalabilidade
   * Tamanho: Número de usuários que suporta.
