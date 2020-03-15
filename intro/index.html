@@ -282,17 +282,20 @@ Por exemplo, </p>
 </div>
 <h2 id="como">Como?</h2>
 <p>Reforçando, distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.</p>
-<p>Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que de forma limitada no número de requisições que atende por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.</p>
+<p>Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão</strong> reduzida, <strong>latência</strong> aumentada, com limitação no quantidade de <strong>conexões paralelas</strong> suportadas, ou nas <strong>funcionalidades</strong> que mantem disponível.</p>
 <p>Para colaborar, as diversas partes do sistema distribuído devem se comunicar. 
 Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, <strong>troca de mensagens</strong>, <strong> <em>streams</em> de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros, frequentemente excêntricos e mal-cheirosos. Estes por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. </p>
-<p><img alt="" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /></p>
+Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
+Mas lembrem-se, também que</p>
+<p><img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /></p>
+<p>e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. </p>
 <p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong> <em>middleware</em> </strong>.</p>
 <h3 id="middleware">Middleware</h3>
-<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>,<em>middleware</em> é </p>
+<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>, <em>middleware</em> é </p>
 <blockquote>
 <p>... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.</p>
 </blockquote>
@@ -307,7 +310,7 @@ Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode
 <li>esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação</li>
 <li>prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.</li>
 </ul>
-<p>Assim, os <em>middleware</em> facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que <code>send(byte[])</code> e <code>recv(): byte[]</code>, escondendo a complexidade da coordenação de sistemas independentes.
+<p>Assim, os <em>middleware</em> facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  <code>write(byte[])</code> e <code>read(): byte[]</code> dos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o <em>middleware</em> antes de desenvolver o sistema em si.</p>
 <p>Idealmente, com o <em>middleware</em> se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como <strong>um sistema único</strong>, centralizado.
 Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?</p>
@@ -361,8 +364,13 @@ Cada computador tem uma arquitetura e uma forma de representar, por exemplo, nú
 </tbody>
 </table>
 <p>E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
-É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo <em>middleware</em>.
-A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.</p>
+É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo <em>middleware</em>.</p>
+<p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
+No caso específico das strings, pense em um programa escrito em linguagem C; uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>.
+Já em um programa escrito em Java, uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">3</a></sup>.
+Como transferir strings entre duas plataforms?
+Não fazê-lo? Simplificar a string Java?
+Estender a string C?</p>
 <div class="admonition note">
 <p class="admonition-title">Transparência de Acesso</p>
 <p>Para se tentar obter transaparência de acesso, é importante que se use <strong>padrões</strong> implementados em múltiplas arquiteturas, <strong>abertos</strong>  e bem conhecidos, com <strong>interfaces bem definidas</strong>.</p>
@@ -392,7 +400,7 @@ A esta transparência é essencial uma boa distribuição do serviço, sobre uma
 </ul>
 <p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
-Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado na casa do usuário, de jogos online.
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">4</a></sup>.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
 <p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
 <ul>
@@ -430,55 +438,35 @@ Isto porquê para se manter um serviço funcional a despeito de falhas, é preci
 <p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atraso</strong> entre elas de no máximo $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
 <p>Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da <a href="https://www.allthingsdistributed.com/2008/12/eventually_consistent.html">Amazon.com</a>, que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.</p>
 <p>Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
-Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de frameworks de comunicação em grupo, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
-Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo.</p>
-<hr />
-<h5 id="maquina-de-estados">Máquina de Estados</h5>
+Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de <strong> <em>frameworks</em> de comunicação em grupo</strong>, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
+Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada <a href="https://en.wikipedia.org/wiki/State_machine_replication">**replicação de máquinas de estado</a>.</p>
 <ul>
-<li>Comunicação em grupo</li>
 <li><img alt="https://i.stack.imgur.com/YHIVL.gif" src="images/state_machine.gif" /></li>
-<li>Máquina de Estados Replicada</li>
 </ul>
-<hr />
-<hr />
-<h5 id="replicacao-x-inconsistencias">Replicação x Inconsistências</h5>
-<ul>
-<li>Múltiplas cópias <img alt="" src="images/rightarrow.png" /> em sincronização <img alt="" src="images/rightarrow.png" /> custos</li>
-<li>Dado precisa ser consistente entre réplicas (mesmo valor em todo lugar) </li>
-<li>Protocolos de invalidação de cache.</li>
-<li>Muita largura de banda.</li>
-<li>Baixa latência.</li>
-</ul>
-<hr />
+<p>TODO: Figura com state machine replication</p>
+<p>Novamente é preciso chamar à atenção a questão dos custos desta técnica.
+Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema ondo inconsistências são absolutamente caras demais para sere permitidas.
+Isto porquê manter múltiplas cópias $\Rightarrow$ sincronização $\Rightarrow$ custos. 
+Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
+Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.</p>
 <h4 id="transparencia-de-concorrencia">Transparência de Concorrência</h4>
 <p>Outra transparência almejável é de concorrência. 
 Isto é, quem acessa um serviço deveria ser indiferente ao fato de que o mesmo pode estar sendo acessado por outros.
 Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto tem termos de desempenho.
-Novamente, nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.</p>
+Nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.</p>
 <p>Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um <em>wrapper</em> ao redor do SGBD que se comprava e instalava <em>in-house</em> anteriormente.
 Para se tornar viável, contudo, uma mesma instância deve servir múltiplos clientes, os <em>tenants</em>, sem que a carga de trabalho introduzida por um, interfira no desempenho do outro. No meio, chamamos esta propriedade de <em>multi-tenancy</em>, mas é apenas um exemplo de transparência de concorrência.</p>
-<hr />
-<h5 id="multi-tenancy">Multi-tenancy</h5>
 <ul>
 <li><img alt="https://cdn.jjude.com/mt-models.png" src="images/multitenancy_models.png" /></li>
 </ul>
-<hr />
-<p>Esta propriedade está fundamentalmente ligada à escalabilidade, isto é, à adequação dos pool de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores e separe as cargas; se menos clientes estão presentes, então desligue algumas máquinas e economize recursos.</p>
-<hr />
-<h5 id="transparencia-concorrencia">Transparência Concorrência</h5>
-<ul>
-<li>controle de concorrência adequado.</li>
-<li>mecanismos para alcançar <em>escalabilidade</em> (particionamento/<em>sharding</em>)</li>
-</ul>
-<hr />
+<p>Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos <em>pool</em> de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (<em>scale up</em>) e separe as cargas (<em>sharding</em>); se menos clientes estão presentes, então desligue algumas máquinas (<em>scale down</em>) e consolide recursos.</p>
 <h4 id="desafios-para-se-obter-transparencia">Desafios para se obter transparência</h4>
 <p>Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
 Isto porquê, do <strong>ponto de vista de usuários</strong> espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.</p>
 <p>Do <strong>ponto de vista do desenvolvedor</strong>, é preciso tomar decisões baseado em premissas ligadas à realidade da rede. Por exemplo, se uma requisição não foi respondida, quanto tempo um cliente deve esperar antes de reenviá-la, possivelmente para outro servidor, sem incorrer em risco significativo da requisição ser processada duas vezes? A resposta para esta pergunta é muito mais complicada do que pode parecer.</p>
-<p><strong>De forma geral</strong>, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de link dedicado ou de host em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).</p>
+<p><strong>De forma geral</strong>, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de enlace dedicado ou de <em>host</em> em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).</p>
 <p>Provavelmente os maiores obstáculos para se alcançar os diversos tipos de  transparência são impostos pela parte da infraestrutura que torna o sistema distribuído possível, a rede.
-Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade.</p>
-<h5 id="armadilhas-da-rede">Armadilhas da rede</h5>
+Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade:</p>
 <ul>
 <li>A latência é zero.</li>
 <li>A largura de banda é infinita.</li>
@@ -692,6 +680,12 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
 </li>
 <li id="fn:IEEEFP">
 <p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:stringjava">
+<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:stadia">
+<p><a href="https://stadia.google.com/">Google stadia</a> vai na contramão desta ideia, levando todo o processamento para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
