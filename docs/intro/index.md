@@ -150,23 +150,28 @@ Por exemplo,
 
 Reforçando, distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
 
-Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que de forma limitada no número de requisições que atende por segundo, no quantidade de conexões paralelas suportadas, ou nas funcionalidades que mantem disponível.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão** reduzida, **latência** aumentada, com limitação no quantidade de **conexões paralelas** suportadas, ou nas **funcionalidades** que mantem disponível.
 
 Para colaborar, as diversas partes do sistema distribuído devem se comunicar. 
 Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, **troca de mensagens**, ** *streams* de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
 Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês sabem, sistemas computacionais são como ogros, frequentemente excêntricos e mal-cheirosos. Estes por sua vez, são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las. 
+Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
+Mas lembrem-se, também que
 
-![](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif)
+![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif)
+
+e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. 
+
 
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um ** *middleware* **.
 
 ### Middleware
 
-De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=),*middleware* é 
+De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=), *middleware* é 
 > ... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
 
 Isto é, o *middleware* é a camada *ware* que fica no *middle*, entre, o *software* e o *hardware*. 
@@ -186,7 +191,7 @@ Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](h
 * prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.
 
 
-Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que `send(byte[])` e `recv(): byte[]`, escondendo a complexidade da coordenação de sistemas independentes.
+Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  `write(byte[])` e `read(): byte[]` dos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
 Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, centralizado.
@@ -201,22 +206,40 @@ Vejamos cada uma destas separadamente.
 #### Transparência de Acesso
 
 A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE[^IEEEFP].
+Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.
 
 ![IEEE Floating Point](images/float_point.jpg)
 
- Precisão | Tamanho total (bits) | Sinal (bits) | Expoente (bits) | Mantissa (bits)
-:--------:|:--------------------:|:------------:|:---------------:|:--------------:
- Half | 16 | 1 | 5 | 10 
- Single | 32 | 1 | 8 | 2
- Double | 64 | 1 | 11 | 523
- Quadruple | 128 | 1 | 15 | 112
+!!! note "IEEE[^IEEEFP]"
+     Precisão | Tamanho total (bits) | Sinal (bits) | Expoente (bits) | Mantissa (bits)
+    :--------:|:--------------------:|:------------:|:---------------:|:--------------:
+     Half | 16 | 1 | 5 | 10 
+     Single | 32 | 1 | 8 | 23
+     Double | 64 | 1 | 11 | 52
+     Quadruple | 128 | 1 | 15 | 112
+
+!!! note "IBM[^IBMFP]"
+
+     Precisão | Tamanho total (bits) | Sinal (bits) | Expoente (bits) | Mantissa (bits)
+    :--------:|:--------------------:|:------------:|:---------------:|:--------------:
+     Single | 32 | 1 | 7 | 24
+     Double | 64 | 1 | 7 | 56
+     Quadruple | 128 | 1 | 7 | 112 (8b ignorados)
 
 [^IEEEFP]: [IEEE Floating Point](https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations)
+[^IBMFP]: [IBM Floating Point](https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit)
 
 E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
 É preciso que usem um padrão conhecido por ambos os *hosts*, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo *middleware*.
+
 A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
+No caso específico das strings, pense em um programa escrito em linguagem C; uma string é uma sequência de bytes imprimíveis terminadas por um `\0`.
+Já em um programa escrito em Java, uma string é uma classe que encapsula uma sequência de chars, sendo que cada [char é um código 16 bits](https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html) representativo de um código Unicode[^stringjava].
+Como transferir strings entre duas plataforms?
+Não fazê-lo? Simplificar a string Java?
+Estender a string C?
+
+[^stringjava]: Simplificações são possíveis, mas introduzem outras complexidades.
 
 !!! note "Transparência de Acesso"
     Para se tentar obter transaparência de acesso, é importante que se use **padrões** implementados em múltiplas arquiteturas, **abertos**  e bem conhecidos, com **interfaces bem definidas**.
@@ -244,8 +267,10 @@ Para se esconder a latência, várias táticas são utilizáveis:
 
 Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
-Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado na casa do usuário, de jogos online.
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário[^stadia].
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.
+
+[^stadia]: [Google stadia](https://stadia.google.com/) vai na contramão desta ideia, levando todo o processamento para a nuvem.
 
 De forma geral, pense em esconder latência pelos seguintes passos:
 
@@ -290,29 +315,18 @@ Dependendo das garantias desejadas na manutenção da **consistência** entre as
 Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da [Amazon.com](https://www.allthingsdistributed.com/2008/12/eventually_consistent.html), que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.
 
 Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
-Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de frameworks de comunicação em grupo, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
-Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo.
+Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de ** *frameworks* de comunicação em grupo**, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
+Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada [**replicação de máquinas de estado](https://en.wikipedia.org/wiki/State_machine_replication).
 
----
-##### Máquina de Estados
-
-* Comunicação em grupo
 * ![https://i.stack.imgur.com/YHIVL.gif](images/state_machine.gif)
-* Máquina de Estados Replicada
 
----
+TODO: Figura com state machine replication
 
-
----
-##### Replicação x Inconsistências
-
-* Múltiplas cópias ![](images/rightarrow.png) em sincronização ![](images/rightarrow.png) custos
-* Dado precisa ser consistente entre réplicas (mesmo valor em todo lugar) 
-* Protocolos de invalidação de cache.
-* Muita largura de banda.
-* Baixa latência.
-
----
+Novamente é preciso chamar à atenção a questão dos custos desta técnica.
+Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema ondo inconsistências são absolutamente caras demais para sere permitidas.
+Isto porquê manter múltiplas cópias $\Rightarrow$ sincronização $\Rightarrow$ custos. 
+Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
+Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.
 
 
 #### Transparência de Concorrência
@@ -320,27 +334,15 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
 Outra transparência almejável é de concorrência. 
 Isto é, quem acessa um serviço deveria ser indiferente ao fato de que o mesmo pode estar sendo acessado por outros.
 Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto tem termos de desempenho.
-Novamente, nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.
+Nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.
 
 Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um *wrapper* ao redor do SGBD que se comprava e instalava *in-house* anteriormente.
 Para se tornar viável, contudo, uma mesma instância deve servir múltiplos clientes, os *tenants*, sem que a carga de trabalho introduzida por um, interfira no desempenho do outro. No meio, chamamos esta propriedade de *multi-tenancy*, mas é apenas um exemplo de transparência de concorrência.
 
----
-##### Multi-tenancy
-
 * ![https://cdn.jjude.com/mt-models.png](images/multitenancy_models.png)
 
----
 
-Esta propriedade está fundamentalmente ligada à escalabilidade, isto é, à adequação dos pool de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores e separe as cargas; se menos clientes estão presentes, então desligue algumas máquinas e economize recursos.
-
----
-##### Transparência Concorrência
-
-* controle de concorrência adequado.
-* mecanismos para alcançar *escalabilidade* (particionamento/*sharding*)
-
----
+Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos *pool* de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (*scale up*) e separe as cargas (*sharding*); se menos clientes estão presentes, então desligue algumas máquinas (*scale down*) e consolide recursos.
 
 #### Desafios para se obter transparência
 
@@ -349,12 +351,10 @@ Isto porquê, do **ponto de vista de usuários** espalhados pelo globo, atrás d
 
 Do **ponto de vista do desenvolvedor**, é preciso tomar decisões baseado em premissas ligadas à realidade da rede. Por exemplo, se uma requisição não foi respondida, quanto tempo um cliente deve esperar antes de reenviá-la, possivelmente para outro servidor, sem incorrer em risco significativo da requisição ser processada duas vezes? A resposta para esta pergunta é muito mais complicada do que pode parecer.
 
-**De forma geral**, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de link dedicado ou de host em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).
+**De forma geral**, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de enlace dedicado ou de *host* em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).
 
 Provavelmente os maiores obstáculos para se alcançar os diversos tipos de  transparência são impostos pela parte da infraestrutura que torna o sistema distribuído possível, a rede.
-Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade.
-
-##### Armadilhas da rede
+Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade:
 
 * A latência é zero.
 * A largura de banda é infinita.
@@ -364,9 +364,6 @@ Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a
 * A rede é estática.
 * A rede tem acesso grátis.
 * A rede é administrada por você ou alguém acessível.
-
-
-
 
 
 
@@ -381,6 +378,9 @@ Embora seja um uso válido, há outros tipos de escalabilidade.
   * Geográfica: Região que cobre.
   * Administrativa: Número de domínios administrativos.
 * Há várias possibilidades: seja específico e exija especificidade.
+
+
+
 
 
 ## Tipos e Arquiteturas
