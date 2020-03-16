@@ -320,8 +320,10 @@ Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem partici
 Vejamos cada uma destas separadamente.</p>
 <h4 id="transparencia-de-acesso">Transparência de Acesso</h4>
 <p>A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
-Cada computador tem uma arquitetura e uma forma de representar, por exemplo, números em ponto flutuatnte, por exemplo, o padrão IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">2</a></sup>.</p>
+Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.</p>
 <p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
+<div class="admonition note">
+<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">2</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -345,14 +347,14 @@ Cada computador tem uma arquitetura e uma forma de representar, por exemplo, nú
 <td align="center">32</td>
 <td align="center">1</td>
 <td align="center">8</td>
-<td align="center">2</td>
+<td align="center">23</td>
 </tr>
 <tr>
 <td align="center">Double</td>
 <td align="center">64</td>
 <td align="center">1</td>
 <td align="center">11</td>
-<td align="center">523</td>
+<td align="center">52</td>
 </tr>
 <tr>
 <td align="center">Quadruple</td>
@@ -363,11 +365,49 @@ Cada computador tem uma arquitetura e uma forma de representar, por exemplo, nú
 </tr>
 </tbody>
 </table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">3</a></sup></p>
+<table>
+<thead>
+<tr>
+<th align="center">Precisão</th>
+<th align="center">Tamanho total (bits)</th>
+<th align="center">Sinal (bits)</th>
+<th align="center">Expoente (bits)</th>
+<th align="center">Mantissa (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Single</td>
+<td align="center">32</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">24</td>
+</tr>
+<tr>
+<td align="center">Double</td>
+<td align="center">64</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">56</td>
+</tr>
+<tr>
+<td align="center">Quadruple</td>
+<td align="center">128</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">112 (8b ignorados)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
 É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo <em>middleware</em>.</p>
 <p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
 No caso específico das strings, pense em um programa escrito em linguagem C; uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>.
-Já em um programa escrito em Java, uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">3</a></sup>.
+Já em um programa escrito em Java, uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">4</a></sup>.
 Como transferir strings entre duas plataforms?
 Não fazê-lo? Simplificar a string Java?
 Estender a string C?</p>
@@ -400,7 +440,7 @@ A esta transparência é essencial uma boa distribuição do serviço, sobre uma
 </ul>
 <p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
-Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">4</a></sup>.
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">5</a></sup>.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
 <p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
 <ul>
@@ -681,11 +721,14 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
 <li id="fn:IEEEFP">
 <p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
+<li id="fn:IBMFP">
+<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
 <li id="fn:stringjava">
-<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:stadia">
-<p><a href="https://stadia.google.com/">Google stadia</a> vai na contramão desta ideia, levando todo o processamento para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://stadia.google.com/">Google stadia</a> vai na contramão desta ideia, levando todo o processamento para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
