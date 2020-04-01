@@ -270,7 +270,7 @@ Isto é comumente feito com a interface com usuário,  mas pode ser usado també
 Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário[^stadia].
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.
 
-[^stadia]: [Google stadia](https://stadia.google.com/) vai na contramão desta ideia, levando todo o processamento para a nuvem.
+[^stadia]: O [Google stadia](https://stadia.google.com/) é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.
 
 De forma geral, pense em esconder latência pelos seguintes passos:
 
@@ -383,21 +383,20 @@ Embora seja um uso válido, há outros tipos de escalabilidade.
 
 
 
-## Tipos e Arquiteturas
+## Tipos
 
-Diversos são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
-Classificar os tipos e arquiteturas nos ajuda a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
+Diversas são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
+Classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
 
-### Tipos
-
-#### Sistemas de Computação - High Performance Computing
+### Computação de Alto Desempelho - High Performance Computing
 
 A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
-Clusters como o da imagem a seguir são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.
+Clusters como o da imagem a seguir, do Hight Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.
 
 ![Cluster para HPC no High Performance Computing Center de Stuttgart](https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg)
 
 Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de projetos sem construir protótipos, seja
+
 * de uma turbina <br>
 ![CFD](images/turbine.jpeg)
 * um carro <br>
@@ -405,31 +404,41 @@ Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de proj
 * ou uma vaca <br>
 ![CFD](images/CFD_Cow.jpg)
 
+Os **nós** de um cluster são normalmente divididos em três categorias: administraçao, computação e armazenamento.
+Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
+O [Oscar](https://github.com/oscar-cluster/oscar), por exemplo, é uma é conjunto de softwares para gerenciamento de clusters.
+Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que sejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
+Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distrinta é normalmente responsável por resolver uma parte do problema.
+
+![CFD](images/cfd_domain.png)
+
+Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
 
 
-#### Sistemas de Informação
+![CFD](images/mpi.jpeg)
 
-Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos permitem a são encontrados em diversas formas (de fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.).
+Este tipo de sistemas distribuídos são o que chamamos de fortemente acoplados pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
+Do ponto de vista deste curso, estamos mais interessados em sistemas fracamente acoplados.
 
 
-O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira camada faz interface com o usuário, a segunda camada contém a lógica do negócio, e a terceira camada mantem os dados.
+### Sistemas de Informação
+
+Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos são encontrados em diversas formas. De fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.
+O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira implementa a interface com o usuário, a segunda contém a lógica do negócio, e a terceira mantem os dados.
 
 [![3 Tier](images/3tier.png)](https://en.wikipedia.org/wiki/Multitier_architecture)
 
-Peça fundamental desta abordagem, os bancos de dados na terceira camada são, muito frequentemente, transacionais.
-Isto é, eles provêem as seguintes garantias na execução de transações, as famosas propriedades ACID:
+Peça fundamental desta abordagem, os bancos de dados na terceira camada são frequentemente transacionais.
+Isto é, eles provêem as garantias na execução de transações conhecidas como propriedades ACID.
 
----
+!!!note "ACID"
+    * Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.
+    * Consistência: transações levam banco de um estado consistente a outro. E.g., `x == 2*y`
+    * Isolamento: transações não vêem dados não comitados umas das outras.
+    * Durabilidade: os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.
 
-* Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.
-*  Consistência: transações levam banco de um estado consistente a outro<br>
-	E.g., x == 2*y
-* Isolamento: transações não vêem dados não comitados umas das outras.
-* Durabilidade: os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.
 
----
-
-Para relembrar o que querem dizer as propridades, considere a seguinte sequência de operações:
+Para relembrar no que implica ACID, considere a seguinte sequência de operações, onde X e Y são valores guardados pelo banco de dados, a, b e c são variáveis definidas no programa, e SELECT e SET são comandos para ler e modificar o banco de dados.
 
 ```
 1: a = SELECT X
@@ -437,79 +446,98 @@ Para relembrar o que querem dizer as propridades, considere a seguinte sequênci
 3: b = c + 10
 4: SET X=c
 5: SET Y=b
-````
-Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações escalonadas da seguinte forma, onde $T_x^y$ é a y-ésima operação de $T_x$.
+```
+Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações escalonadas da seguinte forma.
 
-$T_1^1, T_1^2, T_1^3, T_1^4, T_2^1, T_2^2, T_2^3, T_2^4, T_2^5, T_1^5$
+```
+   T1                T2
+1: a = SELECT X
+2: c = a * 2
+3: b = c + 10
+4: SET X=c
+5:                    a = SELECT X
+6:                    c = a * 2
+7:                    b = c + 10
+8:                    SET X=c
+9:                    SET Y=b
+10:SET Y=b
+```
 
 Ao final da execução, X terá o valor atribuído por $T_2$, mas $Y$ terá o valor de $T_1$. 
-Este escalonamento violou a consistência do banco de dados por quê as operações não foram executadas isoladamente.
+Este escalonamento violou a **consistência** do banco de dados por quê as operações não foram executadas **isoladamente**.
 
-
-Tente imaginar a dificuldade de se implementar um banco de dados distribuído. Isto é, um banco em que vários nós mantem os dados, participam de transações e, portanto, precisam coordenar-se para manter os dados consistentes. A figura abaixo mostra um cenário com três bancos. Imagine que em um deles está uma relação com os dados dos clientes. Em outro, os dados do estoque. Finalmente, no terceiro nó, temos ordens de compra. Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio.
+Tente imaginar a dificuldade de se implementar um banco de dados distribuído. 
+Isto é, um banco em que vários nós mantem os dados, participam de transações e, portanto, precisam coordenar-se para manter os dados consistentes. 
+A figura a seguir mostra um cenário com três bancos. 
+Imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e no terceiro as ordens de compra. 
+Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
+Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.
 
 ![01-10](images/01-10.png)
 
-Como implementar ACID neste banco de dados? Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL).
+Como implementar ACID neste banco de dados? 
+Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
+Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
+Tambem discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.
 
 ![https://www.algoworks.com/blog/nosql-database/](images/nosql.jpeg)
 
-Em tempo, discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.
 
+### Integração de Aplicações
 
-#### Integração de Aplicações
-
-Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, pode ser possível integrar diversos sistemas usando um *middleware* que os encapsule.
+Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, é possível integrar diversos sistemas usando um *middleware* que os encapsule.
 
 ![01-11](images/01-11.png)
 
 O *middleware* pode, por exemplo, se expor via interface REST para os clientes, mas consultar o sistema legado em um padrão antigo.
 
-Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos de um empresa conversando via troca de mensagens. Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los. Eles apenas publicam a mensagem para quem puder tratar. Da mesma forma, a resposta vem na forma de uma mensagem.
+Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos de uma empresa conversando via troca de mensagens. 
+Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los. 
+Eles apenas publicam a mensagem para quem puder tratar. 
+Da mesma forma, a resposta vem na forma de uma mensagem.
 
 
 ![https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite](images/mq.png)
 
+Este é um exemplo de sistema **fracamente acoplado**, pois nenhum componente tem que saber da existência do outro ou se torna indisponível caso os outros falhem.
+
+
 Siga este [link](https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying) para ler mais sobre este tipo de sistema.
 
-#### Sistemas Pervasivos/Ubíquos
+### Sistemas Pervasivos/Ubíquos
 
 Segundo Weiser, 1993
-> Ubiquitous computing is the method of enhancing computer use by making many computers available throughout the physical environment, but making them effectively invisible to the user".
+> Ubiquitous computing is the method of enhancing computer use by making many computers available throughout the physical environment, but making them effectively invisible to the user.
 
-O que é importante aqui é o foco na tarefa em vez de na ferramenta. Assim, sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
-Para que seja realizada, a computação pervasiva requer que dispositivos **detectem o contexto** em que estão inseridos, **combinem-se de forma *ad-hod*** e **compartilhem informações**.
+O que é importante aqui é o foco na tarefa em vez de na ferramenta. 
+Assim, sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
+Para que seja realizada, a computação pervasiva requer que dispositivos **detectem o contexto** em que estão inseridos, **combinem-se de forma *ad-hod* ** e **compartilhem informações**.
+Veja alguns exemplos interessantes, fictícios e reais.
 
-Alguns exemplos interessantes de computação pervasiva.
-
-##### Smart Life
-
+*  Smart Life: Esta é uma visão futurística da Microsoft para a integração de tecnologias.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-##### Amazon Go
-
+* Amazon Go: Este mercado automatiza o pagamento dos itens escolhidos pelo consumidor, utilizando técnicas de processamento digital de imagens, aprendizado de máquina e sensores.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-##### Minority Report
-
-E, para quem já viu Minority Report, aqui vai um reality check.
-
+* Reality Check: Para quem viu o filme [Minority Report](https://www.imdb.com/title/tt0181689/) e sonhou com as UI do futuro, aqui vai um *reality check*. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Redes de Sensores e Internet das Coisas
 
 Eu vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subsessão de Sistemas Pervasivos.
 Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "leêm" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
-A Internet das Coisas (IoT, do inglês *Internet of Things) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
+A Internet das Coisas (IoT, do inglês *Internet of Things*) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.
 
 ![https://www.edureka.co/blog/iot-applications/](images/iot1.png)
 
-Para ler mais sobre IoT, veja este [link](https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc) que descreve diversos projetos europeus na área.
+Para aprender mais sobre IoT, veja este [link](https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc) que descreve diversos projetos europeus na área.
 
 
-<h1> TODO Alguns exemplos de IoT e redes de sensores</h1>
+<h1> TODO </h1>
+Alguns exemplos de IoT e redes de sensores:
 
 * Smart grid e lavadora que escolhe horário
 * Termostatos que percebem movimento
@@ -520,12 +548,13 @@ Para ler mais sobre IoT, veja este [link](https://publications.europa.eu/en/publ
 * [link](https://beebom.com/examples-of-internet-of-things-technology/)
 
 
-##### Uma nota sobre privacidade nos sistemas pervasivos
+#### Uma nota sobre privacidade nos sistemas pervasivos
 
 À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.
 
-<h1> TODO Exemplos de problemas de privacidade. </h1>
+<h1> TODO </h1>
+Exemplos de problemas de privacidade.
 
 * [Roomba mapeando sua casa](https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html).
 * Ghost in the shell
@@ -534,7 +563,7 @@ Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos preci
 ### Computação Utilitária
 
 Um tipo importante de sistema distribuído mais recente são as nuvens computacionais, usadas no provimento de computação utilitária.
-Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas e por aí vai.
+Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.
 
 O seguinte vídeo mostra, em 360 graus, um dos datacenters do Google, para que você tenha ideia da escala em que estes sistemas são construídos.
 
@@ -557,21 +586,22 @@ Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamen
 ![Componentes e Conectores](images/components.png)
 
 Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
-Quando houver forte dependência, diremos que os componentes estão **fortemente conectados** (*tightly coupled*). Caso contrário, diremos que estão **fracamente conectados** (*loosely coupled*).
+Quando houver forte dependência, diremos que os componentes estão **fortemente acoplados** (*tightly coupled*). Caso contrário, diremos que estão **fracamente acoplados** (*loosely coupled*).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.
 
-Certos *middleware* permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estarem ativos no mesmo momento.
+Certos *middleware* permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.
 
 ![Desacoplamento](images/component2.png)
 
-Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes, e com isso minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
+Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
 
 ![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](images/loosetight.png)
 
 
 ### Cliente/Servidor
 
-A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
+A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. 
+Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
 Neste sentido, provavelmente a arquitetura de computação distribuída mais famosa é a **Cliente/Servidor**.
 
 Na arquitetura Cliente/Servidor, como implicado pelo nome, há um processo que serve a pedidos realizados por outros processos. 
@@ -596,16 +626,16 @@ Veja o caso de um banco de dados transacional, por exemplo, como discutido acima
 
 Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muitas aplicações modernas, múltiplos servidores atenderão ao conjunto de clientes.
 Pense por exemplo no serviço de email do Google, o Gmail. Com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço.
-Provavelmente estes diversos servidores ficam atrás do que chamamos de um balanceador de cargas, que roteia as requisições seguindo diferentes políticas, por exemplo, *round robin*.
+Provavelmente estes diversos servidores ficam atrás do que chamamos de um balanceador de carga, que roteia as requisições seguindo diferentes políticas, por exemplo, *round robin*.
 
 ![http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/](images/lb.jpg)
 
 ### Par-a-Par (P2P)
 
-Diferentemente de sistemas cliente/servidor, em que um nó serve o outro, em sistemas par-a-par, nos nós são parceiros e tem igual responsabilidade (e daí o nome) na execução das tarefas.
+Diferentemente de sistemas cliente/servidor, em que um nó serve o outro, em sistemas par-a-par, os nós são parceiros e tem igual responsabilidade (e daí o nome) na execução das tarefas.
 
 Diversos sistemas P2P existem, sendo, provavelmente, os mais famosos, os sistemas de compartilhamento de arquivos.
-Nesta linha, embora diversos tenham existido, hoje o mais famoso é o Bittorrent, embora, como veremos adiante, o mesmo não seja exatamente P2P.
+Nesta linha, embora diversos tenham existido, hoje o mais famoso é o Bittorrent, mesmo que, como veremos adiante, não seja P2P puro.
 
 Outro exemplo importante por ter inspirado diversos outros sistemas é o Chord. 
 Neste sistema, nós organizam-se em um anel lógico e cada um se torna responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
@@ -618,7 +648,9 @@ Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos *
 ### Híbridos
 
 Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade consideradas híbridos.
-Considere um sistema de email, por exemplo. Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. Neste sentido, o sistema é um híbrido P2P e cliente/servidor.
+Considere um sistema de email, por exemplo. 
+Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. 
+Neste sentido, o sistema é um híbrido P2P e cliente/servidor.
 
 Outros exemplos abundam.
 
@@ -626,7 +658,8 @@ Outros exemplos abundam.
 * Jogos multiplayer (pense no [particionamento dos mapas](http://pages.cs.wisc.edu/~vshree/cs740/Voronoi.pdf))
 * Compartilhamento de arquivos: Bittorrent
 
-Considere este último exemplo, do Bittorrent. Observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse.
+Voltemos ao exemplo do Bittorrent; observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
+Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.
 
 ![Bittorrent](images/bittorrent.png)
 
@@ -653,15 +686,23 @@ Por outro lado, cada camada pode ser subdividida em mais componentes, resultando
 
 ![Multi-tier](images/02-04.png)
 
-### Micro-serviços
+### Outras arquiteturas
 
-Finalmente, chegamos aos sistemas micro-serviços, em que os sistemas existem independentemente, cada um com suas camadas e cada um resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior.
+Diversas outras arquiteturas podem e foram propostas para o desenvolvimento de Sistemas Distribuídos.
+A moda da vez é a chamada arquitetura de micro serviços, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemnte.
+Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.
 
 ![Microserviços](images/microservice_sample.png)
 
-Nós discutiremos micro-serviços mais adiante. Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, [os micro-serviços não são uma panacéia](http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/).
+Nós discutiremos micro-serviços mais adiante. 
+Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, [os micro-serviços não são uma panacéia](http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/).
 
-## Para aprender mais
+
+<h1>TODO</h1>
+[Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
+
+
+### Para aprender mais
 
 Para aprender mais sobre arquiteturas, consulte a seguinte referência: [Distributed System Architectures and Architectural Styles](https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles).
 
