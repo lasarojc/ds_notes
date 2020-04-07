@@ -89,6 +89,66 @@
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e Multithreading em Sistemas Distribuídos</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#cliente-multithreaded">Cliente multithreaded</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#servidor-multithreaded">Servidor multithreaded</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#single-threaded">Single-threaded</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#thread-per-request">Thread per request</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#thread-pool">Thread pool</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#problemas-com-multithreading">Problemas com multithreading</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#estado-em-servidores">Estado em Servidores</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multithread-na-pratica">Multithread na prática</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#pthreads">PThreads</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#threads">Threads</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synchronized">synchronized</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#blocos-synchronized">Blocos synchronized</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#deadlock">Deadlock</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#sinalizacao">Sinalização</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#locks">Locks</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#executor">Executor</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#executor_1">Executor</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#threadpool">ThreadPool</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#forkjoin">Fork/Join</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#estrutura-para-coordenacao-de-threads">Estrutura para Coordenação de Threads</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#alguns-tipos-interessantes">Alguns tipos interessantes</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#tipos-atomicos">Tipos Atômicos</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#threadlocal">ThreadLocal</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#threads-em-python">Threads em Python</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-anel-multithread">Exercício - Anel Multithread</a>
+    </li>
+        </ul>
     </li>
     </ul>
                     </li>
@@ -509,21 +569,19 @@ sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 <li><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Multicast em Python</a></li>
 </ul>
 <h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
-<hr />
-<h1 id="todo">TODO</h1>
-<hr />
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
+Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. 
+O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
 Assim, apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.</p>
 <p><img alt="Request/Response" src="images/02-03.png" /></p>
-<p>Para usarmos melhor os recursos disponíveis, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo quanto haja recursos para fazê-lo. 
+<p>Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
 Além disso, sempre que possível, um componente não deve ficar exclusivamente esperando por eventos, aproveitando a chance executar outras tarefas até que eventos sejam recebidos.
 Dada que processos interagem com a rede usando sockets, cuja operação de leitura é bloqueante, para aumentar a concorrência em um processo, precisamos falar de multi-threading.</p>
-<p>Há duas razões claras para estudarmos multi-threading. A primeira, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
-A segunda é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.</p>
-<h3 id="threads-x-processos">Threads x Processos</h3>
+<p>Há duas razões claras para estudarmos multi-threading. A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
+A segunda, didática, é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
+Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas a abstração é essencialmente a mesma:</p>
 <table>
 <thead>
 <tr>
@@ -566,35 +624,50 @@ A segunda é o fato que muitos dos problemas que aparecem em programação multi
 </tr>
 </tbody>
 </table>
-<h3 id="threads-em-sd">Threads em SD</h3>
-<h4 id="cliente-multithreaded">Cliente multithreaded</h4>
-<p>Vantagens similares a usar em sistemas centralizado.</p>
-<ul>
-<li>Lida com várias tarefas concorrentemente.</li>
-<li>Esconde latência.</li>
-<li>Separa código em blocos/módulos.</li>
-</ul>
+<p>Vejamos como o uso de múltiplos threads podem melhorar o desenvolvimento de sistemas distribuídos na prática.
+Considere os exemplos de clientes e servidores vistos <a href="#tcp">anteriormente</a>.
+Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma página Web.
+Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requição <code>GET arquivo.html</code> será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.</p>
+<h3 id="cliente-multithreaded">Cliente multithreaded</h3>
+<p>Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com <strong>várias tarefas concorrentemente</strong>, por exemplo solicitar CSS, HTML e imagens concorrentemente, <strong>escondendo latência</strong> das várias operações, e permite <strong>organizar código</strong> em blocos/módulos.
+Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página <a href="https://www.google.com">www.google.com</a>; um número muito maior é feito na carga de <a href="https://www.bing.com">www.bing.com</a>.</p>
+<h1> TODO </h1>
+
 <hr />
-<h4 id="servidor-multithreaded">Servidor multithreaded</h4>
-<p>Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora.</p>
+<h3 id="servidor-multithreaded">Servidor multithreaded</h3>
+<h4 id="single-threaded">Single-threaded</h4>
+<p>Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora:</p>
+<ol>
+<li>o cliente envia a requisição para o servidor</li>
+<li>o servidor aceita a conexão em seu único thread</li>
+<li>uma tarefa é gerada para ler o arquivo</li>
+<li>o arquivo é lido, de forma bloqueante, e uma resposta para o cliente é preparada</li>
+<li>a resposta é enviada para o cliente, de forma bloqueante</li>
+<li>a requisição é descartada</li>
+<li>o thread do servidor volta a esperar uma nova requisição</li>
+</ol>
 <p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
-<hr />
-<p>Outra opção é criar um novo tthread para cada nova requisição e atende múltiplas requisições concorrentemente.</p>
+<h4 id="thread-per-request">Thread per request</h4>
+<p>Outra opção é criar um novo thread para cada nova requisição, levando a múltiplos threads atendendo a múltiplas requisições concorrentemente.
+Desta forma, quando um thread é bloqueado para leitura de arquivos do disco, outros clientes podem continuar sendo atendidos.</p>
 <p><img alt="Multi Threaded" src="images/multithreadedserver.gif" /></p>
-<ul>
-<li>Permite tratar requisições enquanto faz IO.</li>
-<li>Número de threads é limitado. %Pelo framework em uso.</li>
-<li>Número de threads deve ser limitado. %Para não saturar o servidor.</li>
-<li>Criação e destruição de threads é cara.</li>
-</ul>
-<p>Assim, temos uma outra opção que também usa múltiplos threads, que usa <em>pools</em>  de threads para lidar com as requições.</p>
+<p>Contudo, o número de threads que se pode criar em um SO é limitado. 
+Além disso, a criação e destruição de threads é cara e por isso devemos evitar este processo.</p>
+<h4 id="thread-pool">Thread pool</h4>
+<p>Assim, temos uma outra opção que também usa múltiplos threads, que usa <em>pools</em>  de threads para lidar com as requições.
+No cerne desta abordagem, junto com um pool de threads, fica uma fila bloquenante <strong>thread-safe</strong>, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas, e que bloqueia os threads que tentam inserir quando a fila está cheia ou remover quando ela está vazia.</p>
 <p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="images/poolthreadedserver.gif" /></a></p>
-<p>E se quebrarmos o processamento em vários pools, no que é conhecido como SEDA - <strong>Staged Event-Driven Architecture</strong>.</p>
+<p>Um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
+Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; se a fila se esvazia, os threads ficam bloqueados esperando novas requisições.</p>
+<p>É possível refinar mais este modelo, quebrando o processamento em vários pools, no que é conhecido como <strong>Staged Event-Driven Architecture</strong>, SEDA.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda1.png" /></a></p>
-<p>Assim, cada estágio pode ter seu próprio <em>pool</em>, que se escala individualmente.</p>
+<p>Nesta abordagem, cada <strong>estágio</strong>,  por ter seu próprio <em>pool</em>, pode ser escalado individualmente de acordo com a demanda do estágio.
+Esta abordagem também é útil quando múltiplas partes da tarefa consistem em E/S.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
-<p>Que lembra arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a></p>
-<p>Se você quiser ler mais sobre SEDA, vá <a href="http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf">aqui</a>.</p>
+<p>Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a>.</p>
+<p>Para aprender mais sobre SEDA, vá <a href="http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf">aqui</a>.  </p>
+<h1> TODO </h1>
+
 <h4 id="problemas-com-multithreading">Problemas com multithreading</h4>
 <p>Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
 E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.</p>
@@ -1229,6 +1302,611 @@ print &quot;Exiting Main Thread&quot;
 <li>Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. </li>
 <li>Antes de terminar, o processo deve imprimir a mensagem resultante.</li>
 </ul>
+<hr />
+<p>layout: default
+title: RPC
+parent: Comunicação
+has_children: true
+nav_order: 3</p>
+<hr />
+<h1 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h1>
+<h2 id="abaixo-os-sockets">Abaixo os Sockets!</h2>
+<p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
+Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
+Suas desvantagens, entretanto, são várias:
+* interface de "arquivo" para se ler e escrever bytes;
+* controle de fluxo de "objetos" é por conta da aplicação, isto é, a aplicação precisa sinalizar quantos bytes serão escritos de um lado, para que o outro saiba quanto ler para obter um "objeto" correto;
+* logo, a serialização e desserialização de objetos é também por conta da aplicação;
+* tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação, e nem a tão famosa confiabilidade do TCP ajuda.</p>
+<h2 id="representacao-de-dados">Representação de dados</h2>
+<p>Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">fim-a-fim</a>, é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
+Uma delas é a serialização de dados complexos.
+Imagine-se usando um tipo abstrato de daados com diversos campos, incluindo valores numéricos de diversos tipos, strings, aninhamentos, tudo somando vários KB.
+Você terá que se preocupar com diversos fatores na hora de colocar esta estrutura <em>no fio</em>:
+* tipos com definição imprecisa
+  * Inteiro: 16, 32, 64 ... bits?
+* ordem dos bytes
+  * little endian?
+    * Intel x64, 
+    * IA-32
+  * big endian?
+    * IP
+    * SPARC (&lt; V9), 
+    * Motorola, 
+    * PowerPC
+  * bi-endian
+    * ARM, 
+    * MIPS, 
+    * IA-64
+* Representação de ponto flutuante
+* Conjunto de caracteres
+* Alinhamento de bytes
+* Linguagem mais adequada ao problema e não à API socket
+  * Classe x Estrutura
+* Sistema operacional
+  * crlf (DOS) x lf (Unix)
+* fragmentação <br>
+  <a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png" /></a></p>
+<p>Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
+Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.</p>
+<pre><code class="HTML">telnet www.google.com 80
+Trying 187.72.192.217...
+Connected to www.google.com.
+Escape character is '^]'.
+GET / HTTP/1.1
+host: www.google.com
+
+</code></pre>
+
+<p>As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio <a href="https://www.google.com">www.google.com</a>.
+A linha 7, vazia, indica ao servidor que a requisição está terminada.</p>
+<p>Em resposta a esta requisição, o servidor envia o seguinte, em que as primeiras linhas trazem metadados da página requisitada e, após a linha em branco, vem a resposta em HTML à requisição.</p>
+<pre><code class="HTML">HTTP/1.1 302 Found
+Location: http://www.google.com.br/?gws_rd=cr&amp;ei=HTDqWJ3BDYe-wATs_a3ACA
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+P3P: CP=&quot;This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info.&quot;
+Date: Sun, 09 Apr 2017 12:59:09 GMT
+Server: gws
+Content-Length: 262
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: NID=100=NB_AruuFWL0hXk2-h7VDduHO_UkjAr6RaqgG7VbccTsfLzFfhxEKx21Xpa2EH7IgshgczE9vU4W1TyKsa07wQeuZosl5DbyZluR1ViDRf0C-5lRpd9cCpCD5JXXjy-UE; expires=Mon, 09-Oct-2017 12:59:09 GMT; path=/; domain=.google.com; HttpOnly
+
+&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8&quot;&gt;
+&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;302 Moved&lt;/H1&gt;
+The document has moved
+&lt;A HREF=&quot;http://www.google.com.br/?gws_rd=cr&amp;amp;ei=HTDqWJ3BDYe-wATs_a3ACA&quot;&gt;here&lt;/A&gt;.
+&lt;/BODY&gt;&lt;/HTML&gt;
+</code></pre>
+
+<p>Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
+Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
+Dois padrões bem conhecidas são XML e JSON.</p>
+<p><a href="https://xml.org">XML</a> é o acrônimo para <em>Extensible Markup Language</em>, ou seja, uma linguagem marcação que pode ser estendida para representar diferentes tipos de informação.
+A HTML, por exemplo, é uma instância de XML destinada à representação de hipertexto (A bem da verdade, XML foi uma generalização de HTML).</p>
+<p>Por exemplo, para representarmos os dados relativos à uma pessoa, podemos ter uma instância XML assim:</p>
+<pre><code class="xml">&lt;person&gt;
+    &lt;name&gt;John Doe&lt;/name&gt;
+    &lt;id&gt;112234556&lt;/id&gt;
+    &lt;email&gt;jdoe@example.com&lt;/email&gt;
+    &lt;telephones&gt;
+       &lt;telephone type=&quot;mobile&quot;&gt;123 321 123&lt;/telephone&gt;
+       &lt;telephone type=&quot;home&quot;&gt;321 123 321&lt;/telephone&gt;
+    &lt;/telephones&gt;
+&lt;/person&gt;
+</code></pre>
+
+<p>Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o que pode ou não estar em um arquivo para um certo domínio utilizando um <a href="https://docs.microsoft.com/pt-br/dotnet/standard/data/xml/xml-document-object-model-dom">XML <em>Domain Object Model</em></a>. Há, por exemplo, modelos para representação de documentos de texto, governos eletrônicos, representação de conhecimento, <a href="http://www.xml.org/">etc</a>.
+Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.</p>
+<p><a href="http://json.org/">JSON</a> é o acrônimo de <em>Javascript Object Notation</em>, isto é, o formato para representação de objetos da linguagem Javascript.
+Devido à sua simplicidade e versatilidade, entretanto, foi adotado como forma de representação de dados em sistemas desenvolvidos nas mais diferentes linguagens.
+O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:</p>
+<pre><code class="json">{
+    &quot;name&quot;: &quot;John Doe&quot;,
+    &quot;id&quot;: 112234556,
+    &quot;email&quot;: &quot;jdoe@example.com&quot;,
+    &quot;telephones&quot;: [
+        { &quot;type&quot;: &quot;mobile&quot;, &quot;number&quot;: &quot;123 321 123&quot;},
+        { &quot;type&quot;: &quot;home&quot;, &quot;number&quot;: &quot;321 123 321&quot;},
+    ]
+}
+</code></pre>
+
+<p>Em Python, por exemplo, JSON são gerados e interpretados nativamente, sem a necessidade de <em>frameworks</em> externos, facilitando seu uso.
+Mas de fato, a opção final por XML ou JSON é questão de preferência, uma vez que os dois formatos são, de fato, equivalentes na questão da representação de informação.</p>
+<p>Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar e transmitir dados, e por isso são frequentemente usados como forma de <em>serialização</em> de dados em sistemas distribuídos, isto é, na transformação de TAD para sequências de bytes que seguirão "no fio".</p>
+<ul>
+<li>ASN.1 (Abstract Syntax Notation), pela ISO</li>
+<li>XDR (eXternal Data Representation)</li>
+<li>Java serialization</li>
+<li>Google Protocol Buffers</li>
+<li>Thrift</li>
+</ul>
+<p>ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
+Quanto à serialização feita nativamente pelo Java, por meio de <code>ObjectOutputStreams</code>, como neste <a href="https://www.tutorialspoint.com/java/java_serialization.htm">exemplo</a>, embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.</p>
+<p>Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.</p>
+<h3 id="protobuffers">ProtoBuffers</h3>
+<p>Nas palavras dos <a href="https://developers.google.com/protocol-buffers/">criadores</a>,</p>
+<blockquote>
+<p>Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.</p>
+</blockquote>
+<p>Por meio de protobuffers, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
+Observe a presença de campos de preenchimento opcional (<strong>optional</strong>), de enumerações (<strong>enum</strong>), e de coleções (<strong>repeated</strong>).</p>
+<pre><code class="protobuf">message Person {
+    required string name = 1;
+    required int32 id = 2;
+    optional string email = 3;
+    enum PhoneType {
+        MOBILE = 0;
+        HOME = 1;
+        WORK = 2;
+    }
+    message PhoneNumber {
+        required string number = 1;
+        optional PhoneType type = 2 [default = HOME];
+    }
+    repeated PhoneNumber phone = 4;
+}
+</code></pre>
+
+<p>Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...</p>
+<pre><code class="c++">Person person;
+person.set_name(&quot;John Doe&quot;);
+person.set_id(1234);
+person.set_email(&quot;jdoe@example.com&quot;);
+fstream output(&quot;myfile&quot;, ios::out | ios::binary);
+person.SerializeToOstream(&amp;output);
+</code></pre>
+
+<p>e lê do arquivo e desserializa para hidratar um novo objeto.</p>
+<pre><code class="c++">fstream input(&quot;myfile&quot;, ios::in | ios::binary);
+Person person;
+person.ParseFromIstream(&amp;input);
+cout &lt;&lt; &quot;Name: &quot; &lt;&lt; person.name() &lt;&lt; endl;
+cout &lt;&lt; &quot;E-mail: &quot; &lt;&lt; person.email() &lt;&lt; endl;
+</code></pre>
+
+<p>De acordo com <em>benchmarks</em> do próprio <a href="https://developers.google.com/protocol-buffers/docs/overview">projeto</a>, a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.</p>
+<blockquote>
+<p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
+</blockquote>
+<hr />
+<p>layout: default
+title: Estudo de Caso - gRPC
+parent: RPC
+grand_parent: Comunicação
+nav_order: 1</p>
+<hr />
+<h1 id="estudo-de-caso-rpc-grpc">Estudo de Caso RPC: gRPC</h1>
+<p>gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
+Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.</p>
+<p>O sítio <a href="https://grpc.io">https://grpc.io</a> documenta muito bem o gRPC, inclusive os <a href="https://grpc.io/blog/principles/">princípios</a> que nortearam seu projeto.</p>
+<p>O seu uso segue, em linhas gerais, o modelo discutido nas seções anteriores, isto é, inicia-se pela definição de estruturas de dados e serviços, "compila-se" a definição para gerar stubs na linguagem desejada, e compila-se os stubs juntamente com os códigos cliente e servidor para gerar os binários correspondentes.
+Vejamos a seguir um tutorial passo a passo, em Java, baseado no <a href="https://grpc.io/docs/quickstart/java.html">quickstart guide</a>.</p>
+<h2 id="instalacao">Instalação</h2>
+<p>Os procedimentos de instalação dependem da linguagem em que pretende usar o gRPC, tanto para cliente quanto para servidor.
+No caso do <strong>Java</strong>, <strong>não há instalação propriamente dita</strong>.</p>
+<h2 id="exemplo-java">Exemplo Java</h2>
+<p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
+<h3 id="pegando-o-codigo">Pegando o código</h3>
+<p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
+<pre><code class="bash">git clone -b v1.19.0 https://github.com/grpc/grpc-java
+</code></pre>
+
+<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.</p>
+<pre><code class="bash">cd grpc-java\examples
+git checkout v1.19.0
+</code></pre>
+
+<h3 id="compilando-e-executando">Compilando e executando</h3>
+<p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
+<pre><code class="bash">./gradlew installDist
+</code></pre>
+
+<p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
+<pre><code class="bash">./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
+</code></pre>
+
+<p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
+<pre><code class="bash">./build/install/examples/bin/hello-world-server
+</code></pre>
+
+<p>Agora, em <strong>um terminal distinto</strong> e a partir da mesma localização, execute o cliente, quantas vezes quiser.</p>
+<pre><code class="bash">./build/install/examples/bin/hello-world-client
+</code></pre>
+
+<h3 id="o-servico">O serviço</h3>
+<p>O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
+O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <code>./src/main/proto/helloworld.proto</code>.</p>
+<pre><code class="protobuf">message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+
+// The greeting service definition.
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+</code></pre>
+
+<p>No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.</p>
+<p>A mensagem <code>HelloRequest</code> tem apenas um campo denominado <code>name</code>, do tipo <code>string</code>. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.</p>
+<p>A mensagem <code>HelloReply</code> também tem um campo do tipo <code>string</code>, denominado <code>message</code>, que conterá a resposta do servidor.</p>
+<p>O serviço disponível é definido pela palavra chave <code>service</code>e de nome <code>Greeter</code>; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.</p>
+<p>O serviço possui apenas uma operação, <code>SayHello</code>, que recebe como entrada uma mensagem <code>HelloRequest</code> e gera como resposta uma mensagem <code>HelloReply</code>.
+Caso a operação precisasse de mais do que o conteúdo de <code>name</code> para executar, a mensagem <code>HelloRequest</code> deveria ser estendida, pois não há passar mais de uma mensagem para a operação.
+Por outro lado, embora seja possível passar zero mensagens, esta não é uma prática recomendada.
+Isto porquê caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
+Assim, caso não haja a necessidade de se passar qualquer informação para a operação, recomenda-se que seja usada uma mensagem de entrada vazia, que poderia ser estendida no futuro.
+O mesmo se aplica ao resultado da operação.</p>
+<p>Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
+Por exemplo, para definir uma versão em português da operação <code>SayHello</code>, podemos fazer da seguinte forma.</p>
+<pre><code class="protobuf">message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+message OlaRequest {     // &lt;&lt;&lt;&lt;&lt;====
+  string name = 1;
+}
+
+message OlaReply {       // &lt;&lt;&lt;&lt;&lt;====
+  string message = 1;
+}
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc DigaOla (OlaRequest) returns (OlaReply) {}// &lt;&lt;&lt;&lt;&lt;====
+}
+...
+</code></pre>
+
+<p>Observe que a nova operação recebe como entrada  mensagens <code>OlaRequest</code> e <code>OlaReply</code>, que tem definições exatamente iguais a <code>HellorRequest</code> e <code>HelloReply</code>.
+Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
+Apenas reforçando, é boa prática definir <em>requests</em> e <em>responses</em> para cada método, a não ser que não haja dúvida de que serão para sempre iguais.</p>
+<h3 id="implementando-um-servico">Implementando um serviço</h3>
+<p>Agora modifique o arquivo <code>.proto</code> como acima, para incluir a operação <code>DigaOla</code>, recompile e reexecute o serviço.
+Não dá certo, não é mesmo? Isto porquê você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
+Façamos então a modificação do código, começando por <code>./src/main/java/io/grpc/examples/helloworld/HelloWorldServer.java</code>.
+Este arquivo define a classe que <strong>implementa</strong> o serviço <code>Greeter</code>, <code>GreeterImpl</code>, com um método para cada uma das operações definidas. 
+Para confirmar, procure por <code>sayHello</code>para encontrar a implementação de <code>SayHello</code>; observe que a diferença do <code>casing</code> vem das boas práticas de Java, de definir métodos e variáveis em <em>Camel casing</em>.</p>
+<p>Para que sua versão estendida do serviço <code>Greeter</code> funcione, defina um método correspondendo à <code>DigaOla</code>, sem consultar o código exemplo abaixo, mas usando o código de <code>sayHello</code> como base; não se importe por enquanto com os métodos sendo invocados.
+Note que os <code>...</code> indicam que parte do código, que não sofreu modificações, foi omitido.</p>
+<pre><code class="java">...
+private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
+...
+
+  @Override
+  public void sayHello(HelloRequest req, StreamObserver&lt;HelloReply&gt; responseObserver) {
+      ...
+  }
+
+  @Override
+  public void digaOla(OlaRequest req, StreamObserver&lt;OlaReply&gt; responseObserver) {
+    OlaReply reply = 
+      OlaReply.newBuilder().setMessage(&quot;Ola &quot; + req.getName()).build();
+    responseObserver.onNext(reply);
+    responseObserver.onCompleted();
+  }
+}
+</code></pre>
+
+<p>Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em <code>src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java</code>, novamente se baseando no código existente e não se preocupando com "detalhes".</p>
+<pre><code class="java">public void greet(String name) {
+  logger.info(&quot;Will try to greet &quot; + name + &quot; ...&quot;);
+...
+  OlaRequest request2 = OlaRequest.newBuilder().setName(name).build();
+  OlaReply response2;
+  try {
+    response2 = blockingStub.digaOla(request2);
+  } catch (StatusRuntimeException e) {
+    logger.log(Level.WARNING, &quot;RPC failed: {0}&quot;, e.getStatus());
+   return;
+  }
+  logger.info(&quot;Greeting: &quot; + response2.getMessage());
+}
+</code></pre>
+
+<p>Agora sim, você pode reexecutar cliente e servidor.</p>
+<pre><code class="bash">./gradlew installDist
+./build/install/examples/bin/hello-world-server &amp;
+./build/install/examples/bin/hello-world-client
+</code></pre>
+
+<p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.</p>
+<h4 id="stub-do-servidor">Stub do servidor</h4>
+<ul>
+<li>Como criar o servidor</li>
+<li>Como definir o serviço</li>
+<li>Como "startar" o servidor.</li>
+</ul>
+<h4 id="stub-do-cliente">Stub do cliente</h4>
+<ul>
+<li>Stub bloqueante</li>
+<li>Stub não bloqueante</li>
+</ul>
+<h4 id="idl-grpc">IDL gRPC</h4>
+<p>Outras características da IDL do gRPC</p>
+<ul>
+<li>Tipos básicos</li>
+<li>bool: boolean (true/false)</li>
+<li>double: 64-bit; ponto-flutuante </li>
+<li>float: 32-bit; ponto-flutuante </li>
+<li>i32: 32-bit; inteiro sinalizado </li>
+<li>i64: 64-bit; inteiro sinalizado</li>
+<li>siXX: signed</li>
+<li>uiXX: unsigned</li>
+<li>sfixedXX: codificação de tamanho fixo</li>
+<li>bytes: 8-bit; inteiro sinalizado</li>
+<li>string: string UTF-8 ou ASCII 7-bit</li>
+<li>
+<p>Any: tipo indefinido</p>
+</li>
+<li>
+<p><a href="https://developers.google.com/protocol-buffers/docs/proto3">Diferentes traduções</a></p>
+</li>
+<li>
+<p>Coleções
+Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.</p>
+</li>
+<li>
+<p><em>Streams</em></p>
+</li>
+<li>Do lado do servidor</li>
+</ul>
+<p>```java
+   List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");</p>
+<p>@Override
+   public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
+   for (String hi: listOfHi)
+   {
+     OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
+     responseObserver.onNext(reply);
+   }
+   responseObserver.onCompleted();
+   }
+  ```
+  - Do lado do cliente</p>
+<p><code>java
+   OlaRequest request = OlaRequest.newBuilder().setName(name).build();
+   try {
+       Iterator&lt;OlaReply&gt; it = blockingStub.digaOlas(request);
+       while (it.hasNext()){
+         OlaReply response = it.next();
+         logger.info("Greeting: " + response.getMessage());
+       }
+    } catch (StatusRuntimeException e) {
+       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+       return;
+    }</code></p>
+<h2 id="exemplo-python">Exemplo Python</h2>
+<pre><code class="bash">apt-get install python3
+apt-get install python3-pip
+python3 -m pip install --upgrade pip
+python3 -m pip install grpcio
+python3 -m pip install grpcio-tools
+
+git clone -b v1.10.x https://github.com/grpc/grpc
+cd grpc/examples/python/helloworld
+python3 greeter\_server.py
+python3 greeter\_client.py
+</code></pre>
+
+<p>Para recompilar os stubs, faça</p>
+<pre><code class="bash">python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
+</code></pre>
+
+<p>Modifique o servidor</p>
+<pre><code class="Python">def DigaOla(self, request, context):
+    return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
+</code></pre>
+
+<p>Modifique o cliente</p>
+<pre><code class="Python">response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
+print(&quot;Greeter client received: &quot; + response.message)
+</code></pre>
+
+<hr />
+<p>layout: default
+title: Estudo de Caso - Thrift
+parent: RPC
+grand_parent: Comunicação
+nav_order: 2</p>
+<hr />
+<h1 id="estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</h1>
+<p><a href="https://thrift.apache.org/">Thrift</a></p>
+<h2 id="instalacao_1">Instalação</h2>
+<ul>
+<li><a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.10.0/thrift-0.10.0.tar.gz">Baixe</a> e compile o thrift</li>
+<li>ou instale-o usando apt-get, por exemplo. <code>apt-get install thrift-compiler</code></li>
+<li>execute "thrift" na linha de comando.</li>
+<li>Para thrift com Java, também precisarão dos seguintes arquivos</li>
+<li><a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21">slf4j</a></li>
+<li><a href="https://sites.google.com/site/lasaro/sistemasdistribuidos">libthrift0.9.3.jar</a></li>
+<li>coloque-os na pasta <code>jars</code></li>
+</ul>
+<h2 id="idl-thrift">IDL Thrift</h2>
+<ul>
+<li>
+<p>Tipos básicos</p>
+<ul>
+<li>bool: boolean (true/false)</li>
+<li>byte: 8-bit; inteiro sinalizado</li>
+<li>i16: 16-bit; inteiro sinalizado</li>
+<li>i32: 32-bit; inteiro sinalizado</li>
+<li>i64: 64-bit; inteiro sinalizado</li>
+<li>double: 64-bit; ponto-flutuante </li>
+<li>string: string UTF-8</li>
+<li>binary: sequência de bytes</li>
+</ul>
+</li>
+<li>
+<p>Estruturas
+ ```
+struct Example {
+    1:i32 number,
+    2:i64 bigNumber,
+    3:double decimals,
+    4:string name="thrifty"
+}</p>
+</li>
+</ul>
+<pre><code>
+* Serviços
+</code></pre>
+
+<p>service ChaveValor {
+    void set(1:i32 key, 2:string value),
+    string get(1:i32 key) throws (1:KeyNotFound knf),
+    void delete(1:i32 key)
+}</p>
+<pre><code>* **Não se pode retornar NULL!!!**
+* Exceções
+</code></pre>
+
+<p>exception KeyNotFound {
+   1:i64 hora r,
+   2:string chaveProcurada="thrifty"
+}</p>
+<pre><code>*  Containers
+    * List
+    * Map
+    * Set
+
+
+Exemplo: chavevalor.thrift
+
+```Thrift
+namespace java chavevalor
+namespace py chavevalor
+
+
+exception KeyNotFound
+{
+}
+
+
+service ChaveValor
+{
+    string getKV(1:i32 key) throws (1:KeyNotFound knf),
+    bool setKV(1:i32 key, 2:string value),
+    void delKV(1:i32 key)
+}  
+</code></pre>
+
+<p>Compilação</p>
+<p><code>thrift --gen java chavevalor.thrift</code></p>
+<p><code>thrift --gen py chavevalor.thrift</code></p>
+<p>ChaveValorHandler.java</p>
+<pre><code class="Java">namespace java chavevalor
+namespace py chavevalor
+
+
+exception KeyNotFound
+{
+}
+
+
+service ChaveValor
+{
+    string getKV(1:i32 key) throws (1:KeyNotFound knf),
+    bool setKV(1:i32 key, 2:string value),
+    void delKV(1:i32 key)
+}  
+
+package chavevalor;
+
+import org.apache.thrift.TException;
+import java.util.HashMap;
+import chavevalor.*;
+
+public class ChaveValorHandler implements ChaveValor.Iface {
+   private HashMap&lt;Integer,String&gt; kv = new HashMap&lt;&gt;();
+   @Override
+   public String getKV(int key) throws TException {
+       if(kv.containsKey(key))
+          return kv.get(key);
+       else
+          throw new KeyNotFound();
+   }
+   @Override
+   public boolean setKV(int key, String valor) throws TException {
+       kv.put(key,valor);
+       return true;
+   }
+   @Override
+   public void delKV(int key) throws TException {
+       kv.remove(key);
+   }    
+}
+</code></pre>
+
+<h2 id="arquitetura">Arquitetura</h2>
+<ul>
+<li>Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas</li>
+<li>Protocol -- responsável pela serializaçãoo dos dados<ul>
+<li>TBinaryProtocol</li>
+<li>TJSONProtocol</li>
+<li>TDebugProtocol</li>
+<li>...</li>
+</ul>
+</li>
+<li>Transport -- I/O no ``fio''<ul>
+<li>TSocket</li>
+<li>TFramedTransport (non-blocking server)</li>
+<li>TFileTransport</li>
+<li>TMemoryTransport</li>
+</ul>
+</li>
+<li>
+<p>Processor -- Conecta protocolos de entrada e saída com o \emph{handler}</p>
+</li>
+<li>
+<p>Handler -- Implementação das operações oferecidas</p>
+</li>
+<li>Server -- Escuta portas e repassa dados (protocolo) para o processors<ul>
+<li>TSimpleServer</li>
+<li>TThreadPool</li>
+<li>TNonBlockingChannel</li>
+</ul>
+</li>
+</ul>
+<p>\subsubsection{Exemplo}
+<script type="math/tex; mode=display">\begin{frame}[fragile,allowframebreaks]{ChaveValorServer.java}
+    \lstinputlisting[language=Java]{../lab/thrift/ChaveValorServer.java}
+\end{frame}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{frame}[fragile,allowframebreaks]{ChaveValorClient.java}
+    \lstinputlisting[language=Java]{../lab/thrift/ChaveValorClient.java}
+\end{frame}</script>
+</p>
+<h2 id="classpath">Classpath</h2>
+<pre><code class="bash">javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
+
+java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
+
+java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient 
+</code></pre>
+
+<h2 id="referencias_1">Referências</h2>
+<h2 id="tutorial"><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></h2>
+<p>layout: default
+title: Estudo de Caso - RMI
+parent: RPC
+grand_parent: Comunicação
+nav_order: 2</p>
+<hr />
+<h1 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h1>
 <div class="footnote">
 <hr />
 <ol>
