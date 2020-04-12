@@ -558,68 +558,105 @@ Para aprender mais sobre SEDA, vá [aqui](http://courses.cs.vt.edu/cs5204/fall05
 
 #### Problemas com multithreading
 
-Idealmente, os threads que compartilham variáveis seriam colocados nos mesmos processadores.
-E se não houvesse compartilhamento e dado um número adequado de processadores, teríamos paralelismo perfeito.
+Embora a ideia de usar múltiplos threads seja resolver problemas, fazê-lo efetivamente não trivial.
+Vejamos, por exemplo, o problema de definir afinidade entre threads, isto é, de definir quais threads compartilham o mesmo estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
+Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.
 
 ![Multithreaded](images/multithread2.png)
 
-A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos.
+A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos, e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
 
 ![Multithreaded](./images/multithreaded.jpg)
 
-Memes bonitinhos à parte, precisamos enfrentar condições de corrida de forma a não levar **inconsistências**.
-
-![Multithreaded](images/multithread3.png)
-
+Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
-Veja o seguinte vídeo para uma análise detalhada do cenário anterior e outros pontos importantes.
+Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 #### Estado em Servidores
 
+A questão das regiões críticas no servidor está intimamente relacionada à questão da manutenção de estado nos servidores.
+Quanto a este respeito, podemos classificar servidores como **stateful** e **stateless**, dois termos que ouvirão frequentemente enquanto trabalhando com SD.
 
-##### Stateless Servers
+O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
+Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
+Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe $n$ novas linhas para processar e, quando estiver pronto, requisite $n$ novas linhas.
+Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:
 
-Não mantém informação após terminar de tratar requisições.
+1. receba requisição informando a última linha lida
+2. **re**calcule todas as respostas para consulta
+3. salte até a linha informada pelo cliente
+4. retorne as próximas $n$ linhas para o cliente
+5. feche o resultado da consulta.
 
-* Fecha todos os arquivos abertos
-* Não faz promessas de atualização ao cliente
-* Clientes e servidores são independentes
-	
-* Pouca ou nenhuma inconsistência causada por falhas
-* Perda de desempenho (e.g., abertura do mesmo arquivo a cada requisição.)
+Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma *visão*  dos resultados; a cada nova requisição, basta o servidor preparar rapidamente uma nova resposta.
+Em contrapartida, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?
+Também a complexidade do servidor aumenta, uma vez que ele precisa manter as respostas a novas requisições consistentes com as respostas anteriores e portanto, caso o serviço seja implementado por múltiplos servidores acessíveis ao cliente,  o estado deve ser compartilhado por tais servidores.
+Além disso, imagine que o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava: por quanto tempo o servidor deve manter a visão aberta?
 
+Você já deve ter adivinhado que no primeiro exemplo temos um servidor *stateless* e no segundo um *stateful*, e percebido que cada um tem suas vantagens e desvantagens.
+Vejamos mais algumas.
 
-##### Stateful Servers
+##### Informação sobre Sessão
 
-Mantém informação dos clientes entre requisições.
+Essencialmente, o servidor *stateless* não mantem informação sobre a sessão do cliente e requer que a cada nova requisição, quaisquer informações necessárias para realizar a tarefa requisitada sejam novamente fornecidas ao servidor.
+No caso *stateful*, o servidor pode se lembrar, como no exemplo anterior, até onde o trabalho já foi executado, quais arquivos o cliente manipulou (e mantê-los abertos), qual o endereço o cliente e enviar-lhe notificações importantes (e.g., "Novo dado inserido!").
 
-* Mantem arquivos abertos
-* Sabe quais dados o cliente tem em cache
-	
-* Possíveis inconsistência causada por falhas (cliente se conecta a servidor diferente)
-* Melhor desempenho
-	
-* Maior consumo de recursos
+##### Tratamento de falhas
 
+Enquanto servidores *stateful* obviamente levam a melhor desempenho no *happy path* (contanto que recursos suficientes sejam providos), no caso de falhas, serviços *stateless* tendem a voltar ao ar mais rapidamente, uma vez que não há estado que precise ser recuperado.
+Pela mesma razão, clientes que percebem que um servidor falhou, podem rapidamente se dirigirem a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.
 
-##### Impacto na Concorrência
+Lidar com falhas também introduz outro requisito aos servidores: memória estável.
+Para que possa o recuperar o estado anterior à falha, o servidor precisa colocar o estado em algum lugar que independa do processo para se manter, por exemplo,
+[nvRAM](https://en.wikipedia.org/wiki/Non-volatile_random-access_memory), [SSD](https://en.wikipedia.org/wiki/Solid-state_drive) ou [spindles](https://en.wikipedia.org/wiki/Hard_disk_drive#Spindle).
+A perda deste estado implicaria na incapacidade de prover o serviço corretamente.
+Um projeto *stateless* não depende deste estado e por isso pode ser mais rapidamente recuperado, replicado ou substituído.
+
+##### Qual é melhor?
+
+Não surpreendentemente, a resposta para "qual abordagem é melhor, *stateful* ou *stateless*?" é **depende**.
+Ambos as opções tem suas vantagens e desvantagens e para algums serviços apenas uma opção será viável.
+Se seu serviço precisa manter estado (um SGBD, por exemplo), ele terá que manter estado, mesmo que não sobre clientes.
+Veja um pequeno comparativo das características das duas abordagens.
+
 
 | Stateless | Stateful |
 |-----------|----------|
 | Resultado depende da entrada| Depende do histórico de entradas |
 | Qualquer servidor pode atender | Mesmo servidor deve atender |
+| Não promete notificar o cliente | Assina contrato com o cliente |
+| Repete operações | Aproveita resultados anteriores |
+| Não fica inconsistente com relação ao cliente | Pode ficar inconsistente se perder estado ou conexão feita com outro servidor |
+| re-autenticação (mesmo que simplficada) a cada requisição | Autentica no começo da sessão |
 
+
+##### Leia mais
+
+Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
+Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
+A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
 
 
 
 ### Multithread na prática
 
+
+
 #### PThreads
 
+[POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição aberta de como *threads* devem funcionar em sistemas operacionais.
+Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, compatíveis com especifições POSIX, mas também para Windows, via subsistemas.
+Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação *multi-threaded*.
+
+
 ##### Função de entrada
+
+Para se definir um *thread*, é necessário definir uma função de entrada, que será para o *thread* como a função `main` é para o processo em si.
+No exemplo a seguir a função foi definida com retorno `void *` e com único parâmetro tambem `void *`; esta é uma obrigatoriedade para funções de entrata PThread.
+Observe contudo que `void *` pode ser tratado como um blob para mascarar outros tipos de dado, por exemplo um vetor, um enumeração ou uma `struct`.
 
 ```c
 #include <stdio.h>
@@ -636,6 +673,9 @@ void* hello(void* rank) {
 ```
 
 ##### Criação
+
+Um *thread*  é criado pela função `pthread_create`, que coloca em um `pthread_t` um *handle* para o *thread*.
+A função recebe como parâmetros opções para configuração, a função de entrada, e o parâmetro do tipo `void *`.
 
 ```c
 int main(int argc, char* argv[]) {
@@ -654,9 +694,12 @@ int main(int argc, char* argv[]) {
 		pthread_create(&thread_handles[thread], NULL, hello, (void*) thread);
 	
 	printf("Hello from the main thread\n");
-```	
+```
 
 ##### Destruição
+
+O *handle* do *thread* deve ser alocado previamente à função de criação e liberado após o fim da execução do *thread*.
+É possível esperar pelo fim da execução usando o `pthread_join`, que recebe como parâmetro o *handle* do *thread* e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo `void **`.
 
 ```c
 	for (thread = 0; thread < thread_count; thread++)
@@ -667,39 +710,37 @@ int main(int argc, char* argv[]) {
 
 ##### Execução
 
-Compile com
+Para executar um programa PThread, compile com
 ```bash
 gcc -pthread teste.c -o teste
-````
-
-e execute com 
+```
+e execute com
 ```bash
 ./teste 5
 ```
+e observe que a saída das threads é *ordenada*. 
 
-Observe que a saída das threads é *ordenada*. Agora experimente
+Agora experimente
 ```bash
 ./teste 200
 ```
+Observe que a saída é desordenada (pode ser necessário executar múltiplas vezes ou aumentar de 200 para, digamos, 1000 para observar a desordem.
+Isto acontece porquê a execução das threads independe da ordem de criação.
+De fato, usando PThreads, temos pouco controle sobre os threads que criamos. 
+Mas isto não quer dizer que estamos "órfãos" de API; várias outras operações podem ser executadas, e podem ser encontradas a partir do [manual de `pthread_create`](http://man7.org/linux/man-pages/man3/pthread_create.3.html). Alguns exemplos interessantes:
 
-Isto acontece porquê a execução das threads independe da ordem de criação. De fato, usando PThreads, temos pouco controle sobre os threads que criamos. Mas isto não quer dizer que estamos "órfãos" de API.
-
-* `pthread_create` - cria novo thread
-   * passagem de parâmetros
-   * opções
-* `pthread_join` - espera thread terminar
-   * recebe resultado da thread
 * `pthread_tryjoin` - espera thread terminar
 * `pthread_exit` - termina a thread e retorna resultado 
-   > An implicit call to \lstinline|pthread_exit()| is made when a thread other than the thread in which \lstinline|main()| was first invoked returns from the start routine that was used to create it. The function's return value serves as the thread's exit status. (manual do \lstinline|pthread_exit|)}
+   > An implicit call to `pthread_exit()` is made when a thread other than the thread in which `main()` was first invoked returns from the start routine that was used to create it. The function's return value serves as the thread's exit status. [Manual de `pthread_exit`](http://man7.org/linux/man-pages/man3/pthread_exit.3.html).
 	
-* pthread_attr_setaffinity_np\* - ajusta afinidade dos threads.
+* `pthread_attr_setaffinity_np *` - ajusta afinidade dos threads.
 
-##### Threads Java
+#### Threads Java
 
 Neste tutorial, baseado neste [outro](https://docs.oracle.com/javase/tutorial/essential/concurrency/), exploraremos formas de se obter concorrência em Java. Isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
 
-Em Java, há essencialmente duas formas de se conseguir concorrência. A primeira é via instâncias explícitas da classe `Thread`, e a segunda é via abstrações de mais alto nível, os `Executors`.
+Em Java, há essencialmente duas formas de se conseguir concorrência. 
+A primeira é via instâncias explícitas da classe `Thread`, e a segunda é via abstrações de mais alto nível, os `Executors`.
 
 ---
 * Thread
@@ -709,12 +750,10 @@ Em Java, há essencialmente duas formas de se conseguir concorrência. A primeir
 Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote `java.util.concurrent`.
 
 
-#### *Threads*
-Há duas formas básicas de se usar a classe `Thread`: extensão ou delegação de um objeto implementando `Runnable`.
+##### Criação de *Threads* Java
+Há duas formas básicas de se usar a classe `Thread`, via extensão ou delegação de um objeto implementando `Runnable`.
 
-
----
-###### Estender Thread
+###### Extender `Thread`
 ```Java
 public class HelloThread extends Thread {
     public void run() {
@@ -727,11 +766,9 @@ public class HelloThread extends Thread {
     }
 }
 ```
----
 
 
----
-###### Implementar Runnable
+###### Implementar `Runnable`
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -744,18 +781,17 @@ public class HelloRunnable implements Runnable {
     }
 }
 ```
----
 
 Observe que nos dois exemplos, um método `run()` é implementado com o código a ser executado pelo *thread*. Em nenhum dos exemplos, contudo, o método é invocado diretamente. 
 Em vez disto, o método `start()`, sim, é invocado. Isto ocorre pq antes de executar as instruções definidas pelo pelo programador no método `run()`,
 a máquina virtual precisa executar alguma "mágica" por baixo dos panos como, por exemplo, solicitar ao sistema operacional a criação de um *thread* do SO, que servirá de hospedeiro para o *thread* Java. 
-Isto acontece dentro do `start()`, que em algum ponto de sua execução levará a invocação do método `run()`.
+Isto acontece dentro do `start()`, que em algum ponto de sua execução levará à invocação do método `run()`.
 
+
+##### API Thread
 A classe `Thread` também provê uma série de métodos que permitem gerenciar a vida do *thread* criado. 
 Por exemplo, o método de classe (`static`) `Thread.sleep()` permite bloquear um *thread*  por um determinado período.
 
-
----
 ###### Thread.sleep()
 ```Java
 public class HelloRunnable implements Runnable {
@@ -777,11 +813,9 @@ public class HelloRunnable implements Runnable {
     }
 }
 ```
----
 
 Observe que a chamada a `sleep()` está dentro de um bloco `try/catch`. Isto é necessário pois é permitido à JVM acordar o *thread* em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o *thread*, ao acordar, verifique se já dormiu o suficiente.
 
----
 ###### InterruptedException
 ```Java
 public class HelloRunnable implements Runnable {
@@ -808,15 +842,12 @@ public class HelloRunnable implements Runnable {
     }
 }
 ```
----
 
 Quando um *thread* está sendo executado, outros podem ter que esperar até que complete. Por exemplo, no caso de um navegador
 Web, o *thread* que faz a renderização da página não pode começar a trabalhar enquanto o *thread*  que solicitou o HTML
 do servidor não receber sua resposta. Um *thread* indica a intenção de esperar por outro usando o método `join()`.
 
 
-
----
 ###### Thread.join()
 ```Java
 public class HelloRunnable implements Runnable {
@@ -855,7 +886,6 @@ public class HelloRunnable implements Runnable {
     }
 }
 ```
----
 
 Invocar `t.join()` fará com que o *thread* principal espere indefinidamente até que `t` termine de executar.
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
@@ -874,7 +904,6 @@ Vejamos um exemplo simples do uso de *threads*.
 * A *thread*  principal deve esperar todas as outras terminarem antes de terminar (use `Thread.join()`).
 * Analise a saída do programa observando a ordem de execução dos *threads*.
 
----
 ##### Counter.java
 ```Java
 class Counter {
@@ -900,12 +929,10 @@ Como discutido anteriormente, frequentemente *threads* tem que coordenar suas a�
 Em Java, esta coordenação pode ser feita por diversas abstrações: `synchronized`, `Lock`, variáveis atômicas, ...
 
 
-#### `synchronized`
+##### `synchronized`
 Ao definir métodos como `synchronized`, garante-se que os mesmos nunca serão executados concorrentemente. 
 Observe a classe a seguir, que modifica o contador do exercício anterior.
 
----
-##### synchronized
 ```Java
 public class SynchronizedCounter {
     private int c = 0;
@@ -923,7 +950,6 @@ public class SynchronizedCounter {
     }
 }
 ```
----
 
 Caso dois *threads* invoquem os métodos `increment` e `decrement` ao mesmo tempo, por exemplo, a JVM fará com que um dos *threads* pare sua execução até que o outro tenha completado a invocação.
 Isto não quer dizer que executar o exercício anterior com esta versão do contador não levará a saídas com incrementos completamente sequenciais, pois um *thread*  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método `increment`, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
@@ -932,12 +958,10 @@ O que quer dizer é que, mesmo que saídas estranhas existam, cada operação fo
 ##### Exercício
 Modifique o código do exercício anterior para usar a versão `synchronized` do contador. Depois de executá-lo, adicione um `println("Dentro: " + c)` **dentro** do método de incremento para verificar que estas saídas acontecem ordenadamente.
 
-#### Blocos `synchronized`
+##### Blocos `synchronized`
 `synchronized` funciona porquê limita a concorrência, e é problemático exatamente pela mesma razão. 
 Por isso, é essencial que o `synchronized` seja o mais limitado possível em termos de escopo, o que nos leva ao uso de `synchronized` em blocos de código menores que métodos. Por exemplo:
 
----
-##### blocos `synchronized`
 ```Java
 public class Namer {
     String lastName = null;
@@ -962,7 +986,6 @@ Neste exercício, use dois objetos para travar o acesso a dois contadores. Insta
 * o segundo *thread* primeiro invoca `inc2` e depois `inc1`
 * ambos os threads imprimem o valor de `c1` e `c2`
 
----
 ##### synchronized
 ```Java
 public class MsLunch {
@@ -985,30 +1008,28 @@ public class MsLunch {
 }
 ```
 
-#### *Deadlock*
+##### *Deadlock*
 O uso dos "locks" em ordens diferentes pode levar a um deadlock, pois o seguinte grafo de dependência poderá ser gerado:
 
----
 ##### Deadlock
-```plantuml
-digraph Test {
-T1 -> lock1
-lock1 -> T2
-T2 -> lock2
-lock2 -> T1
-}
-```
----
 
-#### Sinalização
+```mermaid
+stateDiagram
+  T1 --> lock1
+  T2 --> lock2
+  lock1 --> T2
+  lock2 --> T1
+```
+
+##### Sinalização
 Usados corretamente, o bloco `synchronized` é executado de forma atômica, isto é, indivisível.
 Algumas operações muito simples são naturalmente atômicas, e não precisam ser "protegidas" pelo `synchronized`.
 Por exemplo, leituras e escritas de tipos básicos como (`int`, `char`, `byte`, mas não `long` ou `double`), ou variáveis declaradas `volatile`.
 
 Usando estas variáveis, é possível coordenar *threads*, por exemplo, assim:
 
----
 ##### Espera ocupada
+
 ```Java
 boolean condicao = false;
 
@@ -1025,15 +1046,14 @@ public void satisfacaCondicao() {
     condicao = true;
 }
 ```
----
 
 
 Embora correto, esta abordagem não é eficiente, pois o primeiro método desperdiça computação. 
-Felizmente, em Java, todos os objetos implementam os métodos `wait` e `notify/notifyAll`, que podem ser usados para sincronizar eficientemente *threds*.
+Felizmente, em Java, todos os objetos implementam os métodos `wait` e `notify/notifyAll`, que podem ser usados para sincronizar eficientemente *threads*.
 
 
----
 ##### Wait/Notify
+
 ```Java
 public class Sync{
    Object synch = new Object();
@@ -1053,16 +1073,13 @@ public class Sync{
    }
 }
 ```
----
 
 
-#### *Locks*
+##### *Locks*
 Outras abstrações para coordenação de *threads* estão disponíveis no pacote `java.util.concurrent`. 
 As mais simples delas são `java.util.concurrent.locks.Lock` e `java.util.concurrent.locks.ReentrantLock`. 
 Veja um exemplo de uso, notando o idioma de uso dentro de block `try/catch`.
 
----
-##### Lock
 ```Java
 Lock l = new ReentrantLock();
   l.lock();
@@ -1072,29 +1089,24 @@ Lock l = new ReentrantLock();
      l.unlock();
   }
 ```
----
 
 
-### Executor
+##### Executor
 Além de *threads*, Java disponibiliza `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
 
----
-##### Executor
 * `Executor`
 * `ExecutorService`
 * `ScheduledExecutorService`
 
-```
+```Java
 Executor e = ...;
 Runnable r = ...;
 e.execute(r);
 ```
----
 
 Executors normalmente implementam *thread pools*, que podem ser de diferentes tipos. 
 O mais simples é o de tamanho fixo em que há um número inicial de *threads* criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.
 
----
 ##### ThreadPool
 `Executor e = java.util.concurrent.Executors.newFixedThreadPool();`
 
@@ -1102,10 +1114,9 @@ O mais simples é o de tamanho fixo em que há um número inicial de *threads* c
 * `newSingleThreadExecutor()` - *single task at a time*
 * e outras versões
 * `ForkJoinPool`
----
 
----
-##### Fork/Join
+###### Fork/Join
+
 ```
 if (my portion of the work is small enough)
   do the work directly
@@ -1113,22 +1124,18 @@ else
   split my work into two pieces
   invoke the two pieces and wait for the results
 ```
----
 
-### Estrutura para Coordenação de *Threads*
+##### Estrutura para Coordenação de *Threads*
+
 Finalmente, Java também disponibiliza estruturas de dados que podem ser acessadas concorrentemente por múltiplos *threads* 
 sem risco de corrupção. 
 
----
-##### Alguns tipos interessantes
 
 * `BlockingQueue` - bloquei *threads*  se não houver elementos na filq.
 * `ConcurrentMap/ConcurrentHashMap` - operações atômicas;
    * `if (!m.containsKey(k)) m.put(k,v);`
    * `vOld = m.putIfAbsent(k,v);`
----
 
----
 ##### Tipos Atômicos
 
 ```java
@@ -1150,10 +1157,8 @@ class AtomicCounter {
     }
 }
 ```
----
 
 
----
 ##### ThreadLocal
 ```java
 private static ThreadLocal<Integer> myId = new ThreadLocal<Integer>() {
@@ -1166,7 +1171,8 @@ public static Integer getMyId() {
     return myId.get();
 }
 ```
----
+
+##### Leia mais
 
 Para aprender mais, muito mais sobre concorrência em Java, ótimas referências são:
 
@@ -1177,9 +1183,11 @@ Para aprender mais, muito mais sobre concorrência em Java, ótimas referências
 * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
 * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
 
----
 
 #### Threads em Python
+
+Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*.
+A seguir são apresentados dois exemplos, usando o pacote `thread` ou `threading`.
 
 ```python
 #!/usr/bin/python
@@ -1245,6 +1253,7 @@ thread2.start()
 print "Exiting Main Thread"
 ```
 
+##### Leia mais
 
 [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
 
@@ -1257,690 +1266,4 @@ print "Exiting Main Thread"
 * Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. 
 * Antes de terminar, o processo deve imprimir a mensagem resultante.
 
----
-layout: default
-title: RPC
-parent: Comunicação
-has_children: true
-nav_order: 3
----
-
-# Invocação Remota de Procedimentos - RPC
-
-## Abaixo os Sockets!
-
-O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
-Sua grande vantagem está no **acesso baixo nível à rede**, e todo o ganho de desempenho que isso pode trazer.
-Suas desvantagens, entretanto, são várias:
-* interface de "arquivo" para se ler e escrever bytes;
-* controle de fluxo de "objetos" é por conta da aplicação, isto é, a aplicação precisa sinalizar quantos bytes serão escritos de um lado, para que o outro saiba quanto ler para obter um "objeto" correto;
-* logo, a serialização e desserialização de objetos é também por conta da aplicação;
-* tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação, e nem a tão famosa confiabilidade do TCP ajuda.
-
-## Representação de dados
-
-Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação [fim-a-fim](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf), é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
-Uma delas é a serialização de dados complexos.
-Imagine-se usando um tipo abstrato de daados com diversos campos, incluindo valores numéricos de diversos tipos, strings, aninhamentos, tudo somando vários KB.
-Você terá que se preocupar com diversos fatores na hora de colocar esta estrutura *no fio*:
-* tipos com definição imprecisa
-  * Inteiro: 16, 32, 64 ... bits?
-* ordem dos bytes
-  * little endian?
-    * Intel x64, 
-    * IA-32
-  * big endian?
-    * IP
-    * SPARC (< V9), 
-    * Motorola, 
-    * PowerPC
-  * bi-endian
-    * ARM, 
-    * MIPS, 
-    * IA-64
-* Representação de ponto flutuante
-* Conjunto de caracteres
-* Alinhamento de bytes
-* Linguagem mais adequada ao problema e não à API socket
-  * Classe x Estrutura
-* Sistema operacional
-  * crlf (DOS) x lf (Unix)
-* fragmentação <br>
-  [![Fragmentação](images/ipfrag.png)](http://www.acsa.net/IP/)
-
-Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
-Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.
-```HTML
-telnet www.google.com 80
-Trying 187.72.192.217...
-Connected to www.google.com.
-Escape character is '^]'.
-GET / HTTP/1.1
-host: www.google.com
-
-```
-As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio [www.google.com](https://www.google.com).
-A linha 7, vazia, indica ao servidor que a requisição está terminada.
-
-Em resposta a esta requisição, o servidor envia o seguinte, em que as primeiras linhas trazem metadados da página requisitada e, após a linha em branco, vem a resposta em HTML à requisição.
-
-```HTML
-HTTP/1.1 302 Found
-Location: http://www.google.com.br/?gws_rd=cr&ei=HTDqWJ3BDYe-wATs_a3ACA
-Cache-Control: private
-Content-Type: text/html; charset=UTF-8
-P3P: CP="This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info."
-Date: Sun, 09 Apr 2017 12:59:09 GMT
-Server: gws
-Content-Length: 262
-X-XSS-Protection: 1; mode=block
-X-Frame-Options: SAMEORIGIN
-Set-Cookie: NID=100=NB_AruuFWL0hXk2-h7VDduHO_UkjAr6RaqgG7VbccTsfLzFfhxEKx21Xpa2EH7IgshgczE9vU4W1TyKsa07wQeuZosl5DbyZluR1ViDRf0C-5lRpd9cCpCD5JXXjy-UE; expires=Mon, 09-Oct-2017 12:59:09 GMT; path=/; domain=.google.com; HttpOnly
-
-<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
-<TITLE>302 Moved</TITLE></HEAD><BODY>
-<H1>302 Moved</H1>
-The document has moved
-<A HREF="http://www.google.com.br/?gws_rd=cr&amp;ei=HTDqWJ3BDYe-wATs_a3ACA">here</A>.
-</BODY></HTML>
-```
-
-Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
-Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
-Dois padrões bem conhecidas são XML e JSON.
-
-[XML](https://xml.org) é o acrônimo para *Extensible Markup Language*, ou seja, uma linguagem marcação que pode ser estendida para representar diferentes tipos de informação.
-A HTML, por exemplo, é uma instância de XML destinada à representação de hipertexto (A bem da verdade, XML foi uma generalização de HTML).
-
-Por exemplo, para representarmos os dados relativos à uma pessoa, podemos ter uma instância XML assim:
-
-```xml
-<person>
-    <name>John Doe</name>
-    <id>112234556</id>
-    <email>jdoe@example.com</email>
-    <telephones>
-       <telephone type="mobile">123 321 123</telephone>
-       <telephone type="home">321 123 321</telephone>
-    </telephones>
-</person>
-```
-
-Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o que pode ou não estar em um arquivo para um certo domínio utilizando um [XML *Domain Object Model*](https://docs.microsoft.com/pt-br/dotnet/standard/data/xml/xml-document-object-model-dom). Há, por exemplo, modelos para representação de documentos de texto, governos eletrônicos, representação de conhecimento, [etc](http://www.xml.org/).
-Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.
-
-
-[JSON](http://json.org/) é o acrônimo de *Javascript Object Notation*, isto é, o formato para representação de objetos da linguagem Javascript.
-Devido à sua simplicidade e versatilidade, entretanto, foi adotado como forma de representação de dados em sistemas desenvolvidos nas mais diferentes linguagens.
-O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:
-
-```json
-{
-    "name": "John Doe",
-    "id": 112234556,
-    "email": "jdoe@example.com",
-    "telephones": [
-        { "type": "mobile", "number": "123 321 123"},
-        { "type": "home", "number": "321 123 321"},
-    ]
-}
-```
-
-Em Python, por exemplo, JSON são gerados e interpretados nativamente, sem a necessidade de *frameworks* externos, facilitando seu uso.
-Mas de fato, a opção final por XML ou JSON é questão de preferência, uma vez que os dois formatos são, de fato, equivalentes na questão da representação de informação.
-
-Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar e transmitir dados, e por isso são frequentemente usados como forma de *serialização* de dados em sistemas distribuídos, isto é, na transformação de TAD para sequências de bytes que seguirão "no fio".
-
-* ASN.1 (Abstract Syntax Notation), pela ISO
-* XDR (eXternal Data Representation)
-* Java serialization
-* Google Protocol Buffers
-* Thrift
-
-ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
-Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputStreams`, como neste [exemplo](https://www.tutorialspoint.com/java/java_serialization.htm), embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.
-
-Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.
-
-### ProtoBuffers
-
-Nas palavras dos [criadores](https://developers.google.com/protocol-buffers/),
-> Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
-
-Por meio de protobuffers, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
-Observe a presença de campos de preenchimento opcional (**optional**), de enumerações (**enum**), e de coleções (**repeated**).
-
-```protobuf
-message Person {
-	required string name = 1;
-	required int32 id = 2;
-	optional string email = 3;
-	enum PhoneType {
-		MOBILE = 0;
-		HOME = 1;
-		WORK = 2;
-	}
-	message PhoneNumber {
-		required string number = 1;
-		optional PhoneType type = 2 [default = HOME];
-	}
-	repeated PhoneNumber phone = 4;
-}
-```
-
-Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...
-
-```c++
-Person person;
-person.set_name("John Doe");
-person.set_id(1234);
-person.set_email("jdoe@example.com");
-fstream output("myfile", ios::out | ios::binary);
-person.SerializeToOstream(&output);
-```
-
-e lê do arquivo e desserializa para hidratar um novo objeto.
-
-```c++
-fstream input("myfile", ios::in | ios::binary);
-Person person;
-person.ParseFromIstream(&input);
-cout << "Name: " << person.name() << endl;
-cout << "E-mail: " << person.email() << endl;
-```
-
-De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.
-
-> When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
-
----
-layout: default
-title: Estudo de Caso - gRPC
-parent: RPC
-grand_parent: Comunicação
-nav_order: 1
----
-
-# Estudo de Caso RPC: gRPC
-
-gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
-Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.
-
-O sítio [https://grpc.io](https://grpc.io) documenta muito bem o gRPC, inclusive os [princípios](https://grpc.io/blog/principles/) que nortearam seu projeto.
-
-O seu uso segue, em linhas gerais, o modelo discutido nas seções anteriores, isto é, inicia-se pela definição de estruturas de dados e serviços, "compila-se" a definição para gerar stubs na linguagem desejada, e compila-se os stubs juntamente com os códigos cliente e servidor para gerar os binários correspondentes.
-Vejamos a seguir um tutorial passo a passo, em Java, baseado no [quickstart guide](https://grpc.io/docs/quickstart/java.html).
-
-## Instalação
-
-Os procedimentos de instalação dependem da linguagem em que pretende usar o gRPC, tanto para cliente quanto para servidor.
-No caso do **Java**, **não há instalação propriamente dita**.
-
-## Exemplo Java
-
-Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.
-
-### Pegando o código
-Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.
-
-
-```bash
-git clone -b v1.19.0 https://github.com/grpc/grpc-java
-```
-
-Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.
-
-```bash
-cd grpc-java\examples
-git checkout v1.19.0
-```
-
-### Compilando e executando
-O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
-
-```bash
-./gradlew installDist
-```
-
-Caso esteja na UFU, coloque também informação sobre o proxy no comando.
-
-```bash
-./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
-```
-
-Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.
-
-```bash
-./build/install/examples/bin/hello-world-server
-```
-
-Agora, em **um terminal distinto** e a partir da mesma localização, execute o cliente, quantas vezes quiser.
-
-```bash
-./build/install/examples/bin/hello-world-client
-```
-
-### O serviço
-
-O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
-O serviço é definido no seguinte arquivo `.proto`, localizado em `./src/main/proto/helloworld.proto`.
-
-```protobuf
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-
-
-// The greeting service definition.
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-}
-```
-
-No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.
-
-A mensagem `HelloRequest` tem apenas um campo denominado `name`, do tipo `string`. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.
-
-A mensagem `HelloReply` também tem um campo do tipo `string`, denominado `message`, que conterá a resposta do servidor.
-
-O serviço disponível é definido pela palavra chave `service`e de nome `Greeter`; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.
-
-O serviço possui apenas uma operação, `SayHello`, que recebe como entrada uma mensagem `HelloRequest` e gera como resposta uma mensagem `HelloReply`.
-Caso a operação precisasse de mais do que o conteúdo de `name` para executar, a mensagem `HelloRequest` deveria ser estendida, pois não há passar mais de uma mensagem para a operação.
-Por outro lado, embora seja possível passar zero mensagens, esta não é uma prática recomendada.
-Isto porquê caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
-Assim, caso não haja a necessidade de se passar qualquer informação para a operação, recomenda-se que seja usada uma mensagem de entrada vazia, que poderia ser estendida no futuro.
-O mesmo se aplica ao resultado da operação.
-
-Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
-Por exemplo, para definir uma versão em português da operação `SayHello`, podemos fazer da seguinte forma.
-
-```protobuf
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-
-message OlaRequest {     // <<<<<====
-  string name = 1;
-}
-
-message OlaReply {       // <<<<<====
-  string message = 1;
-}
-
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc DigaOla (OlaRequest) returns (OlaReply) {}// <<<<<====
-}
-...
-```
-
-Observe que a nova operação recebe como entrada  mensagens `OlaRequest` e `OlaReply`, que tem definições exatamente iguais a `HellorRequest` e `HelloReply`.
-Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
-Apenas reforçando, é boa prática definir *requests* e *responses* para cada método, a não ser que não haja dúvida de que serão para sempre iguais.
-
-
-### Implementando um serviço
-
-Agora modifique o arquivo `.proto` como acima, para incluir a operação `DigaOla`, recompile e reexecute o serviço.
-Não dá certo, não é mesmo? Isto porquê você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
-Façamos então a modificação do código, começando por `./src/main/java/io/grpc/examples/helloworld/HelloWorldServer.java`.
-Este arquivo define a classe que **implementa** o serviço `Greeter`, `GreeterImpl`, com um método para cada uma das operações definidas. 
-Para confirmar, procure por `sayHello`para encontrar a implementação de `SayHello`; observe que a diferença do `casing` vem das boas práticas de Java, de definir métodos e variáveis em *Camel casing*.
-
-Para que sua versão estendida do serviço `Greeter` funcione, defina um método correspondendo à `DigaOla`, sem consultar o código exemplo abaixo, mas usando o código de `sayHello` como base; não se importe por enquanto com os métodos sendo invocados.
-Note que os `...` indicam que parte do código, que não sofreu modificações, foi omitido.
-
-```java
-...
-private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
-...
-
-  @Override
-  public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-      ...
-  }
-
-  @Override
-  public void digaOla(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-    OlaReply reply = 
-      OlaReply.newBuilder().setMessage("Ola " + req.getName()).build();
-    responseObserver.onNext(reply);
-    responseObserver.onCompleted();
-  }
-}
-```
-
-Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em `src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java`, novamente se baseando no código existente e não se preocupando com "detalhes".
-
-```java
-public void greet(String name) {
-  logger.info("Will try to greet " + name + " ...");
-...
-  OlaRequest request2 = OlaRequest.newBuilder().setName(name).build();
-  OlaReply response2;
-  try {
-    response2 = blockingStub.digaOla(request2);
-  } catch (StatusRuntimeException e) {
-    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-   return;
-  }
-  logger.info("Greeting: " + response2.getMessage());
-}
-```
-
-Agora sim, você pode reexecutar cliente e servidor.
-
-```bash
-./gradlew installDist
-./build/install/examples/bin/hello-world-server &
-./build/install/examples/bin/hello-world-client
-```
-
-Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.
-
-#### Stub do servidor
-
-* Como criar o servidor
-* Como definir o serviço
-* Como "startar" o servidor.
-
-#### Stub do cliente
-
-* Stub bloqueante
-* Stub não bloqueante
-
-#### IDL gRPC
-
-Outras características da IDL do gRPC
-
-* Tipos básicos
-  * bool: boolean (true/false)
-  * double: 64-bit; ponto-flutuante 
-  * float: 32-bit; ponto-flutuante 
-  * i32: 32-bit; inteiro sinalizado 
-  * i64: 64-bit; inteiro sinalizado
-  * siXX: signed
-  * uiXX: unsigned
-  * sfixedXX: codificação de tamanho fixo
-  * bytes: 8-bit; inteiro sinalizado
-  * string: string UTF-8 ou ASCII 7-bit
-  * Any: tipo indefinido
-
-* [Diferentes traduções](https://developers.google.com/protocol-buffers/docs/proto3)
-
-* Coleções
-Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.
-
-* *Streams*
-  - Do lado do servidor
-
-  ```java
-   List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
-
-   @Override
-   public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-   for (String hi: listOfHi)
-   {
-     OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
-     responseObserver.onNext(reply);
-   }
-   responseObserver.onCompleted();
-   }
-  ```
-  - Do lado do cliente
-  
-  ```java
-   OlaRequest request = OlaRequest.newBuilder().setName(name).build();
-   try {
-       Iterator<OlaReply> it = blockingStub.digaOlas(request);
-       while (it.hasNext()){
-         OlaReply response = it.next();
-         logger.info("Greeting: " + response.getMessage());
-       }
-    } catch (StatusRuntimeException e) {
-       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-       return;
-    }
-  ```
-
-
-
-
-## Exemplo Python
-
-```bash
-apt-get install python3
-apt-get install python3-pip
-python3 -m pip install --upgrade pip
-python3 -m pip install grpcio
-python3 -m pip install grpcio-tools
-
-git clone -b v1.10.x https://github.com/grpc/grpc
-cd grpc/examples/python/helloworld
-python3 greeter\_server.py
-python3 greeter\_client.py
-```
-
-Para recompilar os stubs, faça
-
-```bash
-python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
-```
-
-Modifique o servidor
-
-```Python
-def DigaOla(self, request, context):
-	return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
-```
-
-Modifique o cliente
-
-```Python
-response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
-print("Greeter client received: " + response.message)
-```
----
-layout: default
-title: Estudo de Caso - Thrift
-parent: RPC
-grand_parent: Comunicação
-nav_order: 2
----
-
-# Estudo de Caso RPC: Thrift
-
-[Thrift](https://thrift.apache.org/)
-
-## Instalação
-
-* [Baixe](http://www.apache.org/dyn/closer.cgi?path=/thrift/0.10.0/thrift-0.10.0.tar.gz) e compile o thrift
-* ou instale-o usando apt-get, por exemplo. `apt-get install thrift-compiler`
-* execute "thrift" na linha de comando.
-* Para thrift com Java, também precisarão dos seguintes arquivos
-  * [slf4j](http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21)
-  * [libthrift0.9.3.jar](https://sites.google.com/site/lasaro/sistemasdistribuidos)
-  * coloque-os na pasta `jars`
-
-
-
-## IDL Thrift
-*  Tipos básicos
-    * bool: boolean (true/false)
-    * byte: 8-bit; inteiro sinalizado
-	* i16: 16-bit; inteiro sinalizado
-	* i32: 32-bit; inteiro sinalizado
-	* i64: 64-bit; inteiro sinalizado
-	* double: 64-bit; ponto-flutuante 
-	* string: string UTF-8
-	* binary: sequência de bytes
-
-* Estruturas
- ```
-struct Example {
-    1:i32 number,
-    2:i64 bigNumber,
-    3:double decimals,
-    4:string name="thrifty"
-}
-```	
-
-* Serviços
-```
-service ChaveValor {
-    void set(1:i32 key, 2:string value),
-    string get(1:i32 key) throws (1:KeyNotFound knf),
-    void delete(1:i32 key)
-}
-```
-* **Não se pode retornar NULL!!!**
-* Exceções
-```
-exception KeyNotFound {
-   1:i64 hora r,
-   2:string chaveProcurada="thrifty"
-}
-```
-*  Containers
-    * List
-	* Map
-	* Set
-
-
-Exemplo: chavevalor.thrift
-
-```Thrift
-namespace java chavevalor
-namespace py chavevalor
-
-
-exception KeyNotFound
-{
-}
-
-
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
-``` 	
-
-Compilação
-
-`thrift --gen java chavevalor.thrift`
-
-`thrift --gen py chavevalor.thrift`
-
-ChaveValorHandler.java
-```Java
-namespace java chavevalor
-namespace py chavevalor
-
-
-exception KeyNotFound
-{
-}
-
-
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
- 	
-package chavevalor;
-
-import org.apache.thrift.TException;
-import java.util.HashMap;
-import chavevalor.*;
-
-public class ChaveValorHandler implements ChaveValor.Iface {
-   private HashMap<Integer,String> kv = new HashMap<>();
-   @Override
-   public String getKV(int key) throws TException {
-       if(kv.containsKey(key))
-          return kv.get(key);
-       else
-          throw new KeyNotFound();
-   }
-   @Override
-   public boolean setKV(int key, String valor) throws TException {
-       kv.put(key,valor);
-       return true;
-   }
-   @Override
-   public void delKV(int key) throws TException {
-       kv.remove(key);
-   }    
-}
-```
-
-## Arquitetura 
-
-* Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas
-* Protocol -- responsável pela serializaçãoo dos dados
-    * TBinaryProtocol
-	* TJSONProtocol
-	* TDebugProtocol
-	* ...
-* Transport -- I/O no ``fio''
-    * TSocket
-	* TFramedTransport (non-blocking server)
-	* TFileTransport
-	* TMemoryTransport
-* Processor -- Conecta protocolos de entrada e saída com o \emph{handler}
-		
-* Handler -- Implementação das operações oferecidas
-* Server -- Escuta portas e repassa dados (protocolo) para o processors
-    * TSimpleServer
-	* TThreadPool
-	* TNonBlockingChannel
-
-
-
-\subsubsection{Exemplo}
-\begin{frame}[fragile,allowframebreaks]{ChaveValorServer.java}
-	\lstinputlisting[language=Java]{../lab/thrift/ChaveValorServer.java}
-\end{frame}
-
-
-\begin{frame}[fragile,allowframebreaks]{ChaveValorClient.java}
-	\lstinputlisting[language=Java]{../lab/thrift/ChaveValorClient.java}
-\end{frame}
-
-
-## Classpath
-
-```bash
-javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
-	
-java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
-	
-java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient	
-```
-
-## Referências
-
-[Tutorial](http://thrift-tutorial.readthedocs.org/en/latest/index.html)
----
-layout: default
-title: Estudo de Caso - RMI
-parent: RPC
-grand_parent: Comunicação
-nav_order: 2
----
-
-# Estudo de Caso RPC: RMI
 

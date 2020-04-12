@@ -1,9 +1,3 @@
----
-layout: home
-title: Prólogo
-nav_order: 0
----
-
 # Prólogo
 
 Escrever "bons" sistemas distribuídos é uma tarefa que esbarra em diversos obstáculos, cujo não menos importante é a definição de "bom", o que é extremamente subjetivo. 

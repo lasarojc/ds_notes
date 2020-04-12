@@ -3,12 +3,16 @@ nav:
         - Prólogo: index.md
         - Introdução: intro/index.md
         - Fundamentos: basics/index.md
+        - Comunicação: comm/index.md
+
 theme: readthedocs
+plugins:
+        - markdownmermaid
 markdown_extensions:
         - mdx_math
         - admonition
         - footnotes
 extra_javascript:
+        - https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js
         - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
         - mathjaxhelper.js
-
