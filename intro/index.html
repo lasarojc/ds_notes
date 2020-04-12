@@ -1,167 +1,144 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Introdução - Sistemas Distribuídos</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<title>Introdução - Sistemas Distribuídos</title>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet"/>
+<link href="../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet"/>
+<script>
     // Current page data
     var mkdocs_page_name = "Introdu\u00e7\u00e3o";
     var mkdocs_page_input_path = "intro/index.md";
     var mkdocs_page_url = null;
   </script>
-  
-  <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
-
+<script defer="" src="../js/jquery-2.1.1.min.js"></script>
+<script defer="" src="../js/modernizr-2.8.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</link></head>
 <body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> Sistemas Distribuídos</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href=".."> Sistemas Distribuídos</a>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
-                    </li>
-                </ul>
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Introdução</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#o-que">O quê?</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#por-que">Por quê?</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#como">Como?</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#middleware">Middleware</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#transparencia">Transparência</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-acesso">Transparência de Acesso</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-localizacao">Transparência de Localização</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-relocacao">Transparência de Relocação</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-migracao">Transparência de Migração</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-replicacao">Transparência de Replicação</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#transparencia-de-concorrencia">Transparência de Concorrência</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#desafios-para-se-obter-transparencia">Desafios para se obter transparência</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#escalabilidade">Escalabilidade</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#tipos">Tipos</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#computacao-de-alto-desempelho-high-performance-computing">Computação de Alto Desempelho - High Performance Computing</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#sistemas-de-informacao">Sistemas de Informação</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#integracao-de-aplicacoes">Integração de Aplicações</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#redes-de-sensores-e-internet-das-coisas">Redes de Sensores e Internet das Coisas</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#uma-nota-sobre-privacidade-nos-sistemas-pervasivos">Uma nota sobre privacidade nos sistemas pervasivos</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#computacao-utilitaria">Computação Utilitária</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#arquiteturas">Arquiteturas</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#componentes-e-conectores">Componentes e Conectores</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#clienteservidor">Cliente/Servidor</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#par-a-par-p2p">Par-a-Par (P2P)</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#hibridos">Híbridos</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#sistemas-multi-camadas">Sistemas multi-camadas</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#outras-arquiteturas">Outras arquiteturas</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#para-aprender-mais">Para aprender mais</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../basics/">Fundamentos</a>
-                    </li>
-                </ul>
-      </div>
-    </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">Sistemas Distribuídos</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Introdução</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  
-  <hr/>
+<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Introdução</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#o-que">O quê?</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#por-que">Por quê?</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#como">Como?</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#middleware">Middleware</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transparencia">Transparência</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-acesso">Transparência de Acesso</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-localizacao">Transparência de Localização</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-relocacao">Transparência de Relocação</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-migracao">Transparência de Migração</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-replicacao">Transparência de Replicação</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#transparencia-de-concorrencia">Transparência de Concorrência</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#desafios-para-se-obter-transparencia">Desafios para se obter transparência</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#escalabilidade">Escalabilidade</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos">Tipos</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#computacao-de-alto-desempelho-high-performance-computing">Computação de Alto Desempelho - High Performance Computing</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sistemas-de-informacao">Sistemas de Informação</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integracao-de-aplicacoes">Integração de Aplicações</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#redes-de-sensores-e-internet-das-coisas">Redes de Sensores e Internet das Coisas</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#uma-nota-sobre-privacidade-nos-sistemas-pervasivos">Uma nota sobre privacidade nos sistemas pervasivos</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#computacao-utilitaria">Computação Utilitária</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#arquiteturas">Arquiteturas</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#componentes-e-conectores">Componentes e Conectores</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#clienteservidor">Cliente/Servidor</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#par-a-par-p2p">Par-a-Par (P2P)</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hibridos">Híbridos</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sistemas-multi-camadas">Sistemas multi-camadas</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#outras-arquiteturas">Outras arquiteturas</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#para-aprender-mais">Para aprender mais</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/">Fundamentos</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../comm/">Comunicação</a>
+</li>
+</ul>
 </div>
-          <div role="main">
-            <div class="section">
-              
-                <h1 id="introducao">Introdução</h1>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="..">Sistemas Distribuídos</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a href="..">Docs</a> »</li>
+<li>Introdução</li>
+<li class="wy-breadcrumbs-aside">
+</li>
+</ul>
+<hr/>
+</div>
+<div role="main">
+<div class="section">
+<h1 id="introducao">Introdução</h1>
 <p>As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e tem atraído mais e mais profissionais, mais ou menos qualificados, tornando este <strong>mercado cada vez mais competitivo</strong>.</p>
 <p>Ter conhecimentos específicos da subárea de desenvolvimento de sistemas distribuídos e pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
 "Como assim?", você pergunta, já que nunca ouviu falar em sistemas distribuídos até ter que se matricular nesta disciplina.
@@ -188,18 +165,18 @@ Caso contrário, bem, você não tem muita escolha, certo? Então tente aproveit
 Pense na maioria das aplicações que desenvolveu no curso até agora. Elas provavelmente executam integralmente em um único processo, executando em uma única máquina.
 Mesmo que use diferentes bibliotecas e <em>frameworks</em>, toda lógica de negócio, armazenamento e interface com usuário está contida em um mesmo lugar, e por isso são chamadas centralizadas.
 Quando começou a programar este tipo de aplicação, o trabalho era basicamente colar blocos Lego, que se encaixavam perfeitamente, bastando importar a biblioteca correta e invocar suas funções.</p>
-<p><img alt="Lego Rainbow" src="images/lego0.jpg" /></p>
+<p><img alt="Lego Rainbow" src="images/lego0.jpg"/></p>
 <p>O cenário deve ter mudado um pouco no decorrer do curso e com o início de sua atividade profissional, quando passou a ter muito mais blocos, de muito mais tipos, para encaixar uns nos outros, aumentando consideravelmente a complexidade do desenvolvimento.
 Mesmo que haja diferentes bibliotecas a serem usadas, com desenvolvedores e estilos diferentes, bem ou mal testadas, seus encaixes ainda fazem sentido.</p>
-<p><img alt="Lego Hell" src="images/lego3.jpg" /></p>
+<p><img alt="Lego Hell" src="images/lego3.jpg"/></p>
 <p>Infelizmente, programar sistemas distribuídos é muito mais complexo que sistemas centralizados.
 Frequentemente temos peças que nunca foram pensadas para trabalharem juntas, e nos resta  usar um pouco de <em>crazy glue</em>,</p>
-<p><img alt="Lego SD" src="images/lego5.jpg" /></p>
+<p><img alt="Lego SD" src="images/lego5.jpg"/></p>
 <p>persuasão,</p>
-<p><img alt="Lego SD" src="images/lego4.jpg" /></p>
+<p><img alt="Lego SD" src="images/lego4.jpg"/></p>
 <p>e muito arame. 
 No caso, o arame é de um tipo especial conhecido como cabo de rede, usado para estabelecer um canal de comunicação entre as diferentes partes do sistema. </p>
-<p><img alt="Lego SD" src="images/cablemess.jpg" /></p>
+<p><img alt="Lego SD" src="images/cablemess.jpg"/></p>
 <p>De fato, a principal característica de um sistema distribuído em relação a um não distribuído, é a separação de suas partes em vários componentes independentes (processos, sensores, atuadores), mas que se coordenam por meio de canais de comunicação para execução de alguma tarefa.
 Assim, uma possível definição de Sistema Distribuído, que me agrada, é a seguinte:</p>
 <div class="admonition note">
@@ -225,11 +202,11 @@ De fato, praticamente qualquer sistema de informação que precise atingir um p�
 Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em <strong>distribuição</strong> e em <strong>Sistemas Distribuídos</strong>.</p>
 <p>Há quem diga que <a href="https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/">somos todos desenvolvedores de sistemas distribuídos agora</a>.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.</p>
-<p><img alt="Data Growth" src="images/datagrowth.jpg" /></p>
+<p><img alt="Data Growth" src="images/datagrowth.jpg"/></p>
 <p>Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (<strong>scale up</strong>) mesmo de forma linear tem custo exponencial.</p>
-<p><img alt="Custo de melhoria" src="images/exponential.jpg" /></p>
+<p><img alt="Custo de melhoria" src="images/exponential.jpg"/></p>
 <p>O que nos resta então é agregar o poder computacional de diversos computadores "baratos" (<strong>scale out</strong>) para satisfazer nossas necessidades.</p>
-<p><img alt="Custo de melhoria" src="images/scaleupout.jpg" /></p>
+<p><img alt="Custo de melhoria" src="images/scaleupout.jpg"/></p>
 <p>O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhem, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
 E estejam certos, <strong>computadores <a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">falham</a> o tempo todo!</strong></p>
 <p>Nós precisamos então entender este ambiente e determinar</p>
@@ -290,7 +267,7 @@ Implementar estas abstrações em si já é uma tarefa complicada, pois é preci
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
 Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
 Mas lembrem-se, também que</p>
-<p><img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /></p>
+<p><img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif"/></p>
 <p>e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. </p>
 <p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong> <em>middleware</em> </strong>.</p>
@@ -303,7 +280,7 @@ Com sistemas distribuídos, não é diferente, e no caso da comunicação entre 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
 Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular <em>hardware</em> real, mas também pode encapsular outra abstração de <em>hardware</em>, por exemplo, uma máquina virtual ou contêiner.</p>
 <p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">1</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
-<p><img alt="Middleware" src="images/01-01.png" /></p>
+<p><img alt="Middleware" src="images/01-01.png"/></p>
 <p>Com este cenário em mente, é importante entender o que diz <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a> quando afirma que as principais funções do <em>middleware</em> são:</p>
 <ul>
 <li>esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,</li>
@@ -321,7 +298,7 @@ Vejamos cada uma destas separadamente.</p>
 <h4 id="transparencia-de-acesso">Transparência de Acesso</h4>
 <p>A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
 Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.</p>
-<p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
+<p><img alt="IEEE Floating Point" src="images/float_point.jpg"/></p>
 <div class="admonition note">
 <p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">2</a></sup></p>
 <table>
@@ -470,7 +447,7 @@ Se implementadas corretamente, as técnicas que entregam transparência de local
 Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando a mudança acontece.
 Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
 Veja o exemplo do VMotion da VMware</p>
-<p><img alt="http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg" src="images/vmotion.jpg" /></p>
+<p><img alt="http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg" src="images/vmotion.jpg"/></p>
 <p>Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.</p>
 <h4 id="transparencia-de-replicacao">Transparência de Replicação</h4>
 <p>A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
@@ -481,7 +458,7 @@ Isto porquê para se manter um serviço funcional a despeito de falhas, é preci
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de <strong> <em>frameworks</em> de comunicação em grupo</strong>, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
 Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada <a href="https://en.wikipedia.org/wiki/State_machine_replication">**replicação de máquinas de estado</a>.</p>
 <ul>
-<li><img alt="https://i.stack.imgur.com/YHIVL.gif" src="images/state_machine.gif" /></li>
+<li><img alt="https://i.stack.imgur.com/YHIVL.gif" src="images/state_machine.gif"/></li>
 </ul>
 <p>TODO: Figura com state machine replication</p>
 <p>Novamente é preciso chamar à atenção a questão dos custos desta técnica.
@@ -497,7 +474,7 @@ Nuvens computacionais são um exemplo de onde este tipo de transparência é ess
 <p>Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um <em>wrapper</em> ao redor do SGBD que se comprava e instalava <em>in-house</em> anteriormente.
 Para se tornar viável, contudo, uma mesma instância deve servir múltiplos clientes, os <em>tenants</em>, sem que a carga de trabalho introduzida por um, interfira no desempenho do outro. No meio, chamamos esta propriedade de <em>multi-tenancy</em>, mas é apenas um exemplo de transparência de concorrência.</p>
 <ul>
-<li><img alt="https://cdn.jjude.com/mt-models.png" src="images/multitenancy_models.png" /></li>
+<li><img alt="https://cdn.jjude.com/mt-models.png" src="images/multitenancy_models.png"/></li>
 </ul>
 <p>Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos <em>pool</em> de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (<em>scale up</em>) e separe as cargas (<em>sharding</em>); se menos clientes estão presentes, então desligue algumas máquinas (<em>scale down</em>) e consolide recursos.</p>
 <h4 id="desafios-para-se-obter-transparencia">Desafios para se obter transparência</h4>
@@ -534,30 +511,30 @@ Classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar solu�
 <h3 id="computacao-de-alto-desempelho-high-performance-computing">Computação de Alto Desempelho - High Performance Computing</h3>
 <p>A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
 Clusters como o da imagem a seguir, do Hight Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.</p>
-<p><img alt="Cluster para HPC no High Performance Computing Center de Stuttgart" src="https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg" /></p>
+<p><img alt="Cluster para HPC no High Performance Computing Center de Stuttgart" src="https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg"/></p>
 <p>Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de projetos sem construir protótipos, seja</p>
 <ul>
-<li>de uma turbina <br>
-<img alt="CFD" src="images/turbine.jpeg" /></li>
-<li>um carro <br>
-<img alt="CFD" src="images/cfd_car.jpg" /></li>
-<li>ou uma vaca <br>
-<img alt="CFD" src="images/CFD_Cow.jpg" /></li>
+<li>de uma turbina <br/>
+<img alt="CFD" src="images/turbine.jpeg"/></li>
+<li>um carro <br/>
+<img alt="CFD" src="images/cfd_car.jpg"/></li>
+<li>ou uma vaca <br/>
+<img alt="CFD" src="images/CFD_Cow.jpg"/></li>
 </ul>
 <p>Os <strong>nós</strong> de um cluster são normalmente divididos em três categorias: administraçao, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
 O <a href="https://github.com/oscar-cluster/oscar">Oscar</a>, por exemplo, é uma é conjunto de softwares para gerenciamento de clusters.
 Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que sejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
 Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distrinta é normalmente responsável por resolver uma parte do problema.</p>
-<p><img alt="CFD" src="images/cfd_domain.png" /></p>
+<p><img alt="CFD" src="images/cfd_domain.png"/></p>
 <p>Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.</p>
-<p><img alt="CFD" src="images/mpi.jpeg" /></p>
+<p><img alt="CFD" src="images/mpi.jpeg"/></p>
 <p>Este tipo de sistemas distribuídos são o que chamamos de fortemente acoplados pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
 Do ponto de vista deste curso, estamos mais interessados em sistemas fracamente acoplados.</p>
 <h3 id="sistemas-de-informacao">Sistemas de Informação</h3>
 <p>Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos são encontrados em diversas formas. De fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.
 O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira implementa a interface com o usuário, a segunda contém a lógica do negócio, e a terceira mantem os dados.</p>
-<p><a href="https://en.wikipedia.org/wiki/Multitier_architecture"><img alt="3 Tier" src="images/3tier.png" /></a></p>
+<p><a href="https://en.wikipedia.org/wiki/Multitier_architecture"><img alt="3 Tier" src="images/3tier.png"/></a></p>
 <p>Peça fundamental desta abordagem, os bancos de dados na terceira camada são frequentemente transacionais.
 Isto é, eles provêem as garantias na execução de transações conhecidas como propriedades ACID.</p>
 <div class="admonition note">
@@ -576,7 +553,6 @@ Isto é, eles provêem as garantias na execução de transações conhecidas com
 4: SET X=c
 5: SET Y=b
 </code></pre>
-
 <p>Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações escalonadas da seguinte forma.</p>
 <pre><code>   T1                T2
 1: a = SELECT X
@@ -590,7 +566,6 @@ Isto é, eles provêem as garantias na execução de transações conhecidas com
 9:                    SET Y=b
 10:SET Y=b
 </code></pre>
-
 <p>Ao final da execução, X terá o valor atribuído por $T_2$, mas $Y$ terá o valor de $T_1$. 
 Este escalonamento violou a <strong>consistência</strong> do banco de dados por quê as operações não foram executadas <strong>isoladamente</strong>.</p>
 <p>Tente imaginar a dificuldade de se implementar um banco de dados distribuído. 
@@ -599,21 +574,21 @@ A figura a seguir mostra um cenário com três bancos.
 Imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e no terceiro as ordens de compra. 
 Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
 Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.</p>
-<p><img alt="01-10" src="images/01-10.png" /></p>
+<p><img alt="01-10" src="images/01-10.png"/></p>
 <p>Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
 Tambem discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.</p>
-<p><img alt="https://www.algoworks.com/blog/nosql-database/" src="images/nosql.jpeg" /></p>
+<p><img alt="https://www.algoworks.com/blog/nosql-database/" src="images/nosql.jpeg"/></p>
 <h3 id="integracao-de-aplicacoes">Integração de Aplicações</h3>
 <p>Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, é possível integrar diversos sistemas usando um <em>middleware</em> que os encapsule.</p>
-<p><img alt="01-11" src="images/01-11.png" /></p>
+<p><img alt="01-11" src="images/01-11.png"/></p>
 <p>O <em>middleware</em> pode, por exemplo, se expor via interface REST para os clientes, mas consultar o sistema legado em um padrão antigo.</p>
 <p>Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos de uma empresa conversando via troca de mensagens. 
 Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los. 
 Eles apenas publicam a mensagem para quem puder tratar. 
 Da mesma forma, a resposta vem na forma de uma mensagem.</p>
-<p><img alt="https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite" src="images/mq.png" /></p>
+<p><img alt="https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite" src="images/mq.png"/></p>
 <p>Este é um exemplo de sistema <strong>fracamente acoplado</strong>, pois nenhum componente tem que saber da existência do outro ou se torna indisponível caso os outros falhem.</p>
 <p>Siga este <a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">link</a> para ler mais sobre este tipo de sistema.</p>
 <h3 id="sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</h3>
@@ -627,16 +602,16 @@ Para que seja realizada, a computação pervasiva requer que dispositivos <stron
 Veja alguns exemplos interessantes, fictícios e reais.</p>
 <ul>
 <li>
-<p>Smart Life: Esta é uma visão futurística da Microsoft para a integração de tecnologias.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Smart Life: Esta é uma visão futurística da Microsoft para a integração de tecnologias.<br/>
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" width="560"></iframe></p>
 </li>
 <li>
-<p>Amazon Go: Este mercado automatiza o pagamento dos itens escolhidos pelo consumidor, utilizando técnicas de processamento digital de imagens, aprendizado de máquina e sensores.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Amazon Go: Este mercado automatiza o pagamento dos itens escolhidos pelo consumidor, utilizando técnicas de processamento digital de imagens, aprendizado de máquina e sensores.<br/>
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" width="560"></iframe></p>
 </li>
 <li>
-<p>Reality Check: Para quem viu o filme <a href="https://www.imdb.com/title/tt0181689/">Minority Report</a> e sonhou com as UI do futuro, aqui vai um <em>reality check</em>. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Reality Check: Para quem viu o filme <a href="https://www.imdb.com/title/tt0181689/">Minority Report</a> e sonhou com as UI do futuro, aqui vai um <em>reality check</em>. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.<br/>
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" width="560"></iframe></p>
 </li>
 </ul>
 <h4 id="redes-de-sensores-e-internet-das-coisas">Redes de Sensores e Internet das Coisas</h4>
@@ -645,10 +620,9 @@ Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para 
 A Internet das Coisas (IoT, do inglês <em>Internet of Things</em>) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.</p>
-<p><img alt="https://www.edureka.co/blog/iot-applications/" src="images/iot1.png" /></p>
+<p><img alt="https://www.edureka.co/blog/iot-applications/" src="images/iot1.png"/></p>
 <p>Para aprender mais sobre IoT, veja este <a href="https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc">link</a> que descreve diversos projetos europeus na área.</p>
 <h1> TODO </h1>
-
 <p>Alguns exemplos de IoT e redes de sensores:</p>
 <ul>
 <li>Smart grid e lavadora que escolhe horário</li>
@@ -663,7 +637,6 @@ Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, a
 <p>À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.</p>
 <h1> TODO </h1>
-
 <p>Exemplos de problemas de privacidade.</p>
 <ul>
 <li><a href="https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html">Roomba mapeando sua casa</a>.</li>
@@ -674,8 +647,7 @@ Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos preci
 <p>Um tipo importante de sistema distribuído mais recente são as nuvens computacionais, usadas no provimento de computação utilitária.
 Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.</p>
 <p>O seguinte vídeo mostra, em 360 graus, um dos datacenters do Google, para que você tenha ideia da escala em que estes sistemas são construídos.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zDAYZU4A3w0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/zDAYZU4A3w0" width="560"></iframe>
 <p>Para uma viagem fotográfica, siga este <a href="https://www.google.com/about/datacenters/gallery/#/all">link</a></p>
 <h2 id="arquiteturas">Arquiteturas</h2>
 <p>De acordo com David Garlan and Mary Shaw, January 1994, CMU-CS-94-166, em <a href="http://www.cs.cmu.edu/afs/cs/project/able/ftp/intro_softarch/intro_softarch.pdf"><em>An Introduction to Software Architecture</em></a></p>
@@ -685,14 +657,14 @@ Este tipo de sistema, embora possa ser pensando como infraestrutura para outros 
 <p>Em outras palavras, um estilo ou padrão arquitetural é o conjunto de princípios que provê uma infraestrutura abstrata para uma família de sistemas, e promove o reuso de projeto ao <a href="https://msdn.microsoft.com/en-us/library/ee658117.aspx">prover soluções para problemas recorrentes e frequentes</a>.</p>
 <h3 id="componentes-e-conectores">Componentes e Conectores</h3>
 <p>Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como componentes se conectam, por meio de conectores, para implementar a solução para um problema.</p>
-<p><img alt="Componentes e Conectores" src="images/components.png" /></p>
+<p><img alt="Componentes e Conectores" src="images/components.png"/></p>
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.</p>
 <p>Certos <em>middleware</em> permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.</p>
-<p><img alt="Desacoplamento" src="images/component2.png" /></p>
+<p><img alt="Desacoplamento" src="images/component2.png"/></p>
 <p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
-<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="images/loosetight.png" /></p>
+<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="images/loosetight.png"/></p>
 <h3 id="clienteservidor">Cliente/Servidor</h3>
 <p>A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. 
 Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
@@ -701,10 +673,10 @@ Neste sentido, provavelmente a arquitetura de computação distribuída mais fam
 Isto é feito quando o <strong>cliente</strong> o contacta o servidor e requer (<em>request</em>) a realização do serviço.
 O <strong>servidor</strong>, por sua vez, pode desempenhar tarefas como fazer cálculos, armazenar dados, ou repassar uma mensagem e, ao final da realização da tarefa, responder (<em>response</em>) ao cliente.</p>
 <p>Um mesmo servidor pode atender a diversos clientes e, geralmente, a comunicação entre os mesmos é feita diretamente por sockets.</p>
-<p><img alt="http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html" src="images/cs.png" /></p>
+<p><img alt="http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html" src="images/cs.png"/></p>
 <p>Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 Assim, geralmente a comunicação entre cliente e servidor segue o seguinte esquema:</p>
-<p><img alt="02-03" src="images/02-03.png" /></p>
+<p><img alt="02-03" src="images/02-03.png"/></p>
 <p>Observe que o cliente fica inativo enquanto espera a resposta e que o servidor fica inativo enquanto espera outras requisições.
 Para minimizar os períodos de inatividade, o cliente pode usar o socket assíncronamente, o que não é exatamente simples, ou usar múltiplos threads, para que continue operando mesmo enquanto um thread estiver bloqueado esperando a resposta do servidor.</p>
 <p>No lado do servidor, o minimização da ociosidade é feita pelo uso de múltiplos clientes, concorrentes, e também pelo uso de múltiplos threads.
@@ -713,7 +685,7 @@ Veja o caso de um banco de dados transacional, por exemplo, como discutido acima
 <p>Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muitas aplicações modernas, múltiplos servidores atenderão ao conjunto de clientes.
 Pense por exemplo no serviço de email do Google, o Gmail. Com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço.
 Provavelmente estes diversos servidores ficam atrás do que chamamos de um balanceador de carga, que roteia as requisições seguindo diferentes políticas, por exemplo, <em>round robin</em>.</p>
-<p><img alt="http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/" src="images/lb.jpg" /></p>
+<p><img alt="http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/" src="images/lb.jpg"/></p>
 <h3 id="par-a-par-p2p">Par-a-Par (P2P)</h3>
 <p>Diferentemente de sistemas cliente/servidor, em que um nó serve o outro, em sistemas par-a-par, os nós são parceiros e tem igual responsabilidade (e daí o nome) na execução das tarefas.</p>
 <p>Diversos sistemas P2P existem, sendo, provavelmente, os mais famosos, os sistemas de compartilhamento de arquivos.
@@ -722,7 +694,7 @@ Nesta linha, embora diversos tenham existido, hoje o mais famoso é o Bittorrent
 Neste sistema, nós organizam-se em um anel lógico e cada um se torna responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
 Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
-<p><img alt="Chord" src="images/chord.png" /></p>
+<p><img alt="Chord" src="images/chord.png"/></p>
 <h3 id="hibridos">Híbridos</h3>
 <p>Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade consideradas híbridos.
 Considere um sistema de email, por exemplo. 
@@ -736,106 +708,84 @@ Neste sentido, o sistema é um híbrido P2P e cliente/servidor.</p>
 </ul>
 <p>Voltemos ao exemplo do Bittorrent; observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
 Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.</p>
-<p><img alt="Bittorrent" src="images/bittorrent.png" /></p>
+<p><img alt="Bittorrent" src="images/bittorrent.png"/></p>
 <p>Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.</p>
-<p><img alt="01-10" src="images/01-10.png" /></p>
+<p><img alt="01-10" src="images/01-10.png"/></p>
 <h3 id="sistemas-multi-camadas">Sistemas multi-camadas</h3>
 <p>Outra forma de hibridismo que podemos citar é quando um componente haje tanto como cliente quanto como servidor. 
 Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>tiers</em>).</p>
-<p><a href="https://managementmania.com/en/three-tier-architecture"><img alt="3 Tiers" src="images/3tierb.gif" /></a></p>
+<p><a href="https://managementmania.com/en/three-tier-architecture"><img alt="3 Tiers" src="images/3tierb.gif"/></a></p>
 <p>Neste caso, é interessante notar que esta disposição dos componentes é independente da disposição física. De fato, as três camadas podem estar em um mesmo nó, ou combinadas duas a duas, neste último caso resultando em duas camadas.</p>
-<p><img alt="2 Tiers" src="images/02-05.png" /></p>
+<p><img alt="2 Tiers" src="images/02-05.png"/></p>
 <p>Por outro lado, cada camada pode ser subdividida em mais componentes, resultando é múltiplos tiers, como neste exemplo de um sistema de busca na Web.</p>
-<p><img alt="Multi-tier" src="images/02-04.png" /></p>
+<p><img alt="Multi-tier" src="images/02-04.png"/></p>
 <h3 id="outras-arquiteturas">Outras arquiteturas</h3>
 <p>Diversas outras arquiteturas podem e foram propostas para o desenvolvimento de Sistemas Distribuídos.
 A moda da vez é a chamada arquitetura de micro serviços, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemnte.
 Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.</p>
-<p><img alt="Microserviços" src="images/microservice_sample.png" /></p>
+<p><img alt="Microserviços" src="images/microservice_sample.png"/></p>
 <p>Nós discutiremos micro-serviços mais adiante. 
 Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a href="http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/">os micro-serviços não são uma panacéia</a>.</p>
 <h1>TODO</h1>
-
 <p><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Event sourcing</a></p>
 <h3 id="para-aprender-mais">Para aprender mais</h3>
 <p>Para aprender mais sobre arquiteturas, consulte a seguinte referência: <a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</p>
 <p>Para aprender um pouco sobre como funcionam as redes de um datacenter, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" width="560"></iframe>
 <div class="footnote">
-<hr />
+<hr/>
 <ol>
 <li id="fn:0101">
-<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms <a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 <li id="fn:IEEEFP">
-<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a> <a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">↩</a></p>
 </li>
 <li id="fn:IBMFP">
-<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a> <a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 3 in the text">↩</a></p>
 </li>
 <li id="fn:stringjava">
-<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>Simplificações são possíveis, mas introduzem outras complexidades. <a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 4 in the text">↩</a></p>
 </li>
 <li id="fn:stadia">
-<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem. <a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 5 in the text">↩</a></p>
 </li>
 </ol>
 </div>
-              
-            </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../basics/" class="btn btn-neutral float-right" title="Fundamentos">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href=".." class="btn btn-neutral" title="Prólogo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
+</div>
+</div>
+<footer>
+<div aria-label="footer navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral float-right" href="../basics/" title="Fundamentos">Next <span class="icon icon-circle-arrow-right"></span></a>
+<a class="btn btn-neutral" href=".." title="Prólogo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+</div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../basics/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme.js" defer></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
-      <script src="../mathjaxhelper.js" defer></script>
-      <script src="../search/main.js" defer></script>
-    <script defer>
+</div>
+</section>
+</div>
+<div aria-label="versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span><a href=".." style="color: #fcfcfc;">« Previous</a></span>
+<span style="margin-left: 15px"><a href="../basics/" style="color: #fcfcfc">Next »</a></span>
+</span>
+</div>
+<script>var base_url = '..';</script>
+<script defer="" src="../js/theme.js"></script>
+<script defer="" src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script defer="" src="../mathjaxhelper.js"></script>
+<script defer="">
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);
         };
     </script>
-
 </body>
 </html>

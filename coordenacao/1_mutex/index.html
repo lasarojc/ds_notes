@@ -1,97 +1,74 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  
-  <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Exclusão Mútua - Sistemas Distribuídos</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../../css/theme.css" />
-  <link rel="stylesheet" href="../../css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../../img/favicon.ico" rel="shortcut icon"/>
+<title>Exclusão Mútua - Sistemas Distribuídos</title>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
+<link href="../../css/theme.css" rel="stylesheet"/>
+<link href="../../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet"/>
+<script>
     // Current page data
     var mkdocs_page_name = "Exclus\u00e3o M\u00fatua";
     var mkdocs_page_input_path = "coordenacao/1_mutex.md";
     var mkdocs_page_url = null;
   </script>
-  
-  <script src="../../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
-</head>
-
+<script defer="" src="../../js/jquery-2.1.1.min.js"></script>
+<script defer="" src="../../js/modernizr-2.8.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</link></head>
 <body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-        <a href="../.." class="icon icon-home"> Sistemas Distribuídos</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="../.."> Sistemas Distribuídos</a>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../intro/">Introdução</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../../basics/">Fundamentos</a>
-                    </li>
-                </ul>
-      </div>
-    </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../..">Sistemas Distribuídos</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Exclusão Mútua</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  
-  <hr/>
+<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../..">Prólogo</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro/">Introdução</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../basics/">Fundamentos</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../comm/">Comunicação</a>
+</li>
+</ul>
 </div>
-          <div role="main">
-            <div class="section">
-              
-                <h1 id="coordenacao">Coordenação</h1>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="../..">Sistemas Distribuídos</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a href="../..">Docs</a> »</li>
+<li>Exclusão Mútua</li>
+<li class="wy-breadcrumbs-aside">
+</li>
+</ul>
+<hr/>
+</div>
+<div role="main">
+<div class="section">
+<h1 id="coordenacao">Coordenação</h1>
 <h2 id="exclusao-mutua">Exclusão Mútua</h2>
 <p>Como visto em <a href="../concorrencia/concorrencia.md">Concorrência</a>, diversas tarefas exigem coordenação entre threads em uma aplicação centralizada em que se faz uso de concorrência para melhor uso de recursos computacionais,  obtenção de melhor desempenho, modularização do código. </p>
 <p>Sistemas distribuídos levam a concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos <em>threads</em>, ainda por cima, espalhados geograficamente. 
@@ -100,7 +77,7 @@ Contudo, ee em um sistema centralizado, uma variável global, um lock, ou outra 
 <h3 id="exclusao-mutua_1">Exclusão Mútua</h3>
 <p>Em um sistema distribuído, como controlar o acesso de múltiplos processos a um recurso compartilhado, garantindo que cada processo controla <strong>exclusivamente</strong> aquele recurso durante seu acesso?
 Qualquer solução que se proponha a este problema problema de exclusão mútua, precisa ter as propriedades 1, 2 e 3, e, idealmente, também a 4, a seguir:</p>
-<hr />
+<hr/>
 <h5 id="exclusao-mutua_2">Exclusão Mútua</h5>
 <ol>
 <li>exclusão mútua: somente um processo pode estar na <strong>região crítica</strong> em qualquer instante de tempo;</li>
@@ -108,16 +85,16 @@ Qualquer solução que se proponha a este problema problema de exclusão mútua,
 <li>não inanição: todos os processos interessados consguem, em algum momento, acessar o recurso;</li>
 <li>espera limitada: idealmente, o tempo de espera pelo recurso é limitado.</li>
 </ol>
-<hr />
+<hr/>
 <p>Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários e com resultados mais ou menos eficientes. Três das mais simples e que ilustram o universo de soluções são as seguintes:</p>
-<hr />
+<hr/>
 <h5 id="exclusao-mutua-solucoes">Exclusão Mútua - Soluções</h5>
 <ul>
 <li>Centralizado: Um processo acessa quando um coordenador diz que pode.</li>
 <li>Anel: Um processo acessa quando estiver com o ``token'' de acesso.</li>
 <li>Quorum: Um processo acessa quando houver acordo que é sua vez.</li>
 </ul>
-<hr />
+<hr/>
 <h4 id="centralizado">Centralizado</h4>
 <p>Enquanto em um sistema centralizado há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há esta entidade coordenadora.
 Uma possível solução para o problem de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.</p>
@@ -134,12 +111,12 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 <li>Ao receber liberação, marca recurso como livre</li>
 <li>Sempre que recurso marcado como livre <strong>E</strong> fila não vazia: envie liberação para primeiro da fila e o remova da fila.</li>
 </ul>
-<hr />
+<hr/>
 <h5 id="centralizado_1">Centralizado</h5>
-<p><img alt="Tanembaum 6.14" src="../images/06-14.png" /></p>
-<hr />
+<p><img alt="Tanembaum 6.14" src="../images/06-14.png"/></p>
+<hr/>
 <p>Este algoritmo tem diversas características positivas:</p>
-<hr />
+<hr/>
 <h5 id="pros">Prós</h5>
 <ul>
 <li>Justo: requests são processados em ordem (FCFS)</li>
@@ -147,16 +124,16 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 <li>Espera limitada</li>
 <li>Fácil de implementar, testar, entender</li>
 </ul>
-<hr />
+<hr/>
 <p>Contudo, tem também alguns aspectos negativos:</p>
-<hr />
+<hr/>
 <h5 id="contras">Contras</h5>
 <ul>
 <li>Coordenador pode se tornar um gargalo;</li>
 <li>Como lidar com falhas? Processos não sabem se recurso está bloqueado ou se usuário morreu e não devolveu a permissão;</li>
 <li>Coordenador pode falhar e congelar o sistema.</li>
 </ul>
-<hr />
+<hr/>
 <p>Estes aspectos nos permitem mergulhar na área de tolerância a falhas, e o faremos, mas mais tarde. Por enquanto, consideraremos tolerância a falhas de forma superficial, após discutirmos outra abordagem abordagem.</p>
 <h4 id="anel">Anel</h4>
 <p>Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. Um dos processos é iniciado com um <em>token</em>, que dá acesso ao recurso e o <em>token</em> é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:</p>
@@ -165,12 +142,12 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 <li>Ao receber o <em>token</em> de acesso, se quiser acessar o recurso, acessa.</li>
 <li>Envia o <em>token</em> para o próximo nó do anel.</li>
 </ul>
-<hr />
+<hr/>
 <h5 id="anel_1">Anel</h5>
 <p>![Anel](images/06-16.png}</p>
-<hr />
+<hr/>
 <p>Como o algoritmo centralizado, o algoritmo do anel também em suas vantagens e desvantagens.</p>
-<hr />
+<hr/>
 <h5 id="pros_1">Prós</h5>
 <ul>
 <li>Justo: Todos acessam</li>
@@ -178,15 +155,15 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 <li>Espera limitada</li>
 <li>Fácil de implementar, testar, entender</li>
 </ul>
-<hr />
-<hr />
+<hr/>
+<hr/>
 <h5 id="contras_1">Contras</h5>
 <ul>
 <li><em>Token</em> passado para quem não necessariamente quer acessar;</li>
 <li>Tempo de espera linear no número de processos;</li>
 <li>Como lidar com falhas?</li>
 </ul>
-<hr />
+<hr/>
 <h4 id="lidando-com-falhas-usando-timeouts">Lidando com falhas usando <em>timeouts</em></h4>
 <p>Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algoritmo pode ficar "travado". Vejamos alguns casos específicos:</p>
 <ul>
@@ -196,17 +173,17 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 </ul>
 <p>Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me ofereção alguma baseada em <em>timeouts</em>. Por exemplo, se o processo não devolver a permissão de acesso antes de um <em>timeout</em>, então assuma que o mesmo está falho e gere nova permissão, a ser passada a outros requisitantes.</p>
 <p>O problema desta e outras "soluções" baseadas em <em>timeouts" está no </em><em>assumir que o processo está falho</em><em>, pois caso isso não seja verdade, teremos agora dois </em>tokens*  no sistema, podendo levar à violação da propriedade de exclusão mútua. Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, o mesmo pode sempre estar errado. De fato, temos que</p>
-<hr />
+<hr/>
 <h5 id="impossibilidade-de-deteccao-de-falhas">Impossibilidade de detecção de falhas</h5>
 <p>Em um sistema distribuído assíncrono, é impossível distinguir um processo falho de um processo lento.</p>
-<hr />
+<hr/>
 <p>Também mais tarde discutiremos as implicações desta impossibilidade. Por agora, pense apenas no seguinte: </p>
-<hr />
+<hr/>
 <h5 id="pergunta">Pergunta:</h5>
 <p>Qual deve ser um <em>timeout</em>  razoável para o meu sistema?</p>
-<hr />
+<hr/>
 <p>A resposta depende de múltiplos fatores como:</p>
-<hr />
+<hr/>
 <h5 id="resposta-mais-perguntas">~~Resposta~~ Mais perguntas</h5>
 <ul>
 <li>Qual o custo $E$ de esperar por mais tempo?</li>
@@ -214,20 +191,20 @@ Uma possível solução para o problem de exclusão mútua em um ambiente distri
 <li>Qual a probabilidade $p$ de cometer um engano?</li>
 <li>$C * p &lt; E$</li>
 </ul>
-<hr />
+<hr/>
 <p>Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.</p>
-<hr />
+<hr/>
 <blockquote>
 <p>Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"</p>
 </blockquote>
 <p>Werner Fogels, CTO da Amazon.</p>
-<hr />
+<hr/>
 <p>Uma abordagem probabilística interessante é baseada em quóruns.</p>
 <h4 id="quorum">Quórum</h4>
 <p>De acordo com o <a href="https://dicionario.priberam.org/quorum">Dicionário Priberam da Língua Portuguesa, consultado em 17-04-2019</a>, "quórum" é o "Número de pessoas imprescindível para a realização de algo."
 Aqui, este este algo será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.</p>
 <p>Esta abordagem é semelhante em vários aspectos à centralizada. De fato, um dos papéis na abordagem é o de coordenador, que executa o mesmo protocolo que antes.</p>
-<hr />
+<hr/>
 <h5 id="quorum-coordenador">Quorum - Coordenador</h5>
 <ol>
 <li>Inicializa recurso como livre</li>
@@ -235,16 +212,16 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>Ao receber liberação, marca recurso como livre</li>
 <li>Sempre que recurso marcado como livre <strong>E</strong> fila não vazia: envie liberação para primeiro da fila e o remova da fila.</li>
 </ol>
-<hr />
+<hr/>
 <p>Entretanto, em vez de apenas um coordenador no sistema, temos $n$, dos quais o participante precisa obter $m &gt; n/2$ autorizações antes de acessar o recurso; $m$ é o quórum do sistema.</p>
-<hr />
+<hr/>
 <h5 id="quorum-quorum">Quorum - Quórum</h5>
 <ul>
 <li>$n$ coordenadores.</li>
 <li>$m &gt; n/2$ coordenadores</li>
 </ul>
-<hr />
-<hr />
+<hr/>
+<hr/>
 <h5 id="quorum-participante">Quorum - Participante</h5>
 <ol>
 <li>Envia requisição de acesso aos $n$ coordenadores</li>
@@ -252,14 +229,14 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>Acessa o recurso</li>
 <li>Envia liberação do recurso para o coordenador</li>
 </ol>
-<hr />
+<hr/>
 <p>Além disso, para tornamos os problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueçam-se  das autorizações já atribuídas.</p>
-<hr />
+<hr/>
 <h5 id="falhas">Falhas</h5>
 <p>Quando um coordenador falha, esquece que deu ok e reseta seu estado.</p>
-<hr />
+<hr/>
 <p>Suponha o seguinte cenário:</p>
-<hr />
+<hr/>
 <h5 id="quorum-exemplo">Quórum - Exemplo</h5>
 <ul>
 <li>Coordenadores = {$c_1,c_2,c_3,c_4,c_5,c_6,c_7$}</li>
@@ -270,9 +247,9 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>Participante $p_2$ consegue autorização de {$c_4,c_5,c_6,c_7$} e entra na região crítica.</li>
 <li><strong>Exclusão Mútua</strong> é violada.</li>
 </ul>
-<hr />
+<hr/>
 <p>Qual a probabilidade $P_v$ desta violação ocorrer?</p>
-<hr />
+<hr/>
 <h5 id="calculo-de-p_v">Cálculo de $P_v$</h5>
 <ul>
 <li>
@@ -315,9 +292,9 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 </li>
 <li>$P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$</li>
 </ul>
-<hr />
+<hr/>
 <p>Para facilitar o entendimento desta grandeza, considere o exemplo:</p>
-<hr />
+<hr/>
 <h5 id="exemplo">Exemplo</h5>
 <ul>
 <li>$p=0.0001$ (1 minuto a cada 10 dias)</li>
@@ -325,16 +302,16 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>$m = 0.75n$</li>
 <li>$P_v &lt; 10^{-40}$ (<a href="https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence">Curiosidade sobre $10^40$</a>)</li>
 </ul>
-<hr />
+<hr/>
 <p>A probabilidade de violação da exclusão mútua, neste caso, é muito pequena, a despeito de suportar falhas dos coordenadores. </p>
-<hr />
+<hr/>
 <h5 id="pros_2">Prós</h5>
 <ul>
 <li>Tolera falhas de coordenadores, com probabilidade controlada de violação de exclusão mútua</li>
 </ul>
-<hr />
+<hr/>
 <p>Mas e as outras propriedades desejáveis do algoritmo de exclusão mútua, são alcançadas? Relembrando:</p>
-<hr />
+<hr/>
 <h5 id="exclusao-mutua_3">Exclusão Mútua</h5>
 <ol>
 <li>exclusão mútua: somente um processo pode estar na <strong>região crítica</strong> em qualquer instante de tempo;</li>
@@ -342,8 +319,8 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>não inanição: todos os processos interessados consguem, em algum momento, acessar o recurso;</li>
 <li>espera limitada: idealmente, o tempo de espera pelo recurso é limitado.</li>
 </ol>
-<hr />
-<hr />
+<hr/>
+<hr/>
 <h5 id="contras_2">Contras</h5>
 <ul>
 <li>Exclusão Mútua: $1 - P_v$</li>
@@ -353,50 +330,37 @@ Aqui, este este algo será a liberação de acesso ao recurso almejado pelos pro
 <li>Espera limitada</li>
 <li>Aborts podem levar a espera infinita.</li>
 </ul>
-<hr />
+<hr/>
 <p>Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
-              
-            </div>
-          </div>
-          <footer>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
+</div>
+</div>
+<footer>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+</div>
 
   Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-      
-    </span>
 </div>
-    <script>var base_url = '../..';</script>
-    <script src="../../js/theme.js" defer></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" defer></script>
-      <script src="../../mathjaxhelper.js" defer></script>
-      <script src="../../search/main.js" defer></script>
-    <script defer>
+</div>
+</section>
+</div>
+<div aria-label="versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+</span>
+</div>
+<script>var base_url = '../..';</script>
+<script defer="" src="../../js/theme.js"></script>
+<script defer="" src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script defer="" src="../../mathjaxhelper.js"></script>
+<script defer="">
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);
         };
     </script>
-
 </body>
 </html>

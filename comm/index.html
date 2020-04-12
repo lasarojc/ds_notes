@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<title>Comunicação - Sistemas Distribuídos</title>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet"/>
+<link href="../css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet"/>
+<script>
+    // Current page data
+    var mkdocs_page_name = "Comunica\u00e7\u00e3o";
+    var mkdocs_page_input_path = "comm/index.md";
+    var mkdocs_page_url = null;
+  </script>
+<script defer="" src="../js/jquery-2.1.1.min.js"></script>
+<script defer="" src="../js/modernizr-2.8.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</link></head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href=".."> Sistemas Distribuídos</a>
+</div>
+<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/">Introdução</a>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/">Fundamentos</a>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="./">Comunicação</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#abaixo-os-sockets">Abaixo os Sockets!</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#representacao-de-dados">Representação de dados</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#protobuffers">ProtoBuffers</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</a>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-grpc">Estudo de Caso RPC: gRPC</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#instalacao">Instalação</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#exemplo-java">Exemplo Java</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#exemplo-python">Exemplo Python</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#instalacao_1">Instalação</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#idl-thrift">IDL Thrift</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#arquitetura">Arquitetura</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#classpath">Classpath</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#referencias">Referências</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="..">Sistemas Distribuídos</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a href="..">Docs</a> »</li>
+<li>Comunicação</li>
+<li class="wy-breadcrumbs-aside">
+</li>
+</ul>
+<hr/>
+</div>
+<div role="main">
+<div class="section">
+<h1 id="communicacao">Communicação</h1>
+<h2 id="abaixo-os-sockets">Abaixo os Sockets!</h2>
+<p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
+Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
+Suas desvantagens, entretanto, são várias:</p>
+<ul>
+<li>interface de "arquivo" para se ler e escrever bytes;</li>
+<li>controle de fluxo de "objetos" é por conta da aplicação, isto é, a aplicação precisa sinalizar quantos bytes serão escritos de um lado, para que o outro saiba quanto ler para obter um "objeto" correto;</li>
+<li>logo, a serialização e desserialização de objetos é também por conta da aplicação;</li>
+<li>tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação, e nem a tão famosa confiabilidade do TCP ajuda.</li>
+</ul>
+<h3 id="representacao-de-dados">Representação de dados</h3>
+<p>Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">fim-a-fim</a>, é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
+Uma delas é a serialização de dados complexos.
+Imagine-se usando um tipo abstrato de daados com diversos campos, incluindo valores numéricos de diversos tipos, strings, aninhamentos, tudo somando vários KB.
+Você terá que se preocupar com diversos fatores na hora de colocar esta estrutura <em>no fio</em>:</p>
+<ul>
+<li>tipos com definição imprecisa</li>
+<li>Inteiro: 16, 32, 64 ... bits?</li>
+<li>ordem dos bytes</li>
+<li>little endian?<ul>
+<li>Intel x64, </li>
+<li>IA-32</li>
+</ul>
+</li>
+<li>big endian?<ul>
+<li>IP</li>
+<li>SPARC (&lt; V9), </li>
+<li>Motorola, </li>
+<li>PowerPC</li>
+</ul>
+</li>
+<li>bi-endian<ul>
+<li>ARM, </li>
+<li>MIPS, </li>
+<li>IA-64</li>
+</ul>
+</li>
+<li>Representação de ponto flutuante</li>
+<li>Conjunto de caracteres</li>
+<li>Alinhamento de bytes</li>
+<li>Linguagem mais adequada ao problema e não à API socket</li>
+<li>Classe x Estrutura</li>
+<li>Sistema operacional</li>
+<li>crlf (DOS) x lf (Unix)</li>
+<li>fragmentação <br/>
+<a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png"/></a></li>
+</ul>
+<p>Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
+Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.</p>
+<pre><code class="HTML">telnet www.google.com 80
+Trying 187.72.192.217...
+Connected to www.google.com.
+Escape character is '^]'.
+GET / HTTP/1.1
+host: www.google.com
+
+</code></pre>
+<p>As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio <a href="https://www.google.com">www.google.com</a>.
+A linha 7, vazia, indica ao servidor que a requisição está terminada.</p>
+<p>Em resposta a esta requisição, o servidor envia o seguinte, em que as primeiras linhas trazem metadados da página requisitada e, após a linha em branco, vem a resposta em HTML à requisição.</p>
+<pre><code class="HTML">HTTP/1.1 302 Found
+Location: http://www.google.com.br/?gws_rd=cr&amp;ei=HTDqWJ3BDYe-wATs_a3ACA
+Cache-Control: private
+Content-Type: text/html; charset=UTF-8
+P3P: CP="This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info."
+Date: Sun, 09 Apr 2017 12:59:09 GMT
+Server: gws
+Content-Length: 262
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Set-Cookie: NID=100=NB_AruuFWL0hXk2-h7VDduHO_UkjAr6RaqgG7VbccTsfLzFfhxEKx21Xpa2EH7IgshgczE9vU4W1TyKsa07wQeuZosl5DbyZluR1ViDRf0C-5lRpd9cCpCD5JXXjy-UE; expires=Mon, 09-Oct-2017 12:59:09 GMT; path=/; domain=.google.com; HttpOnly
+
+&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
+&lt;H1&gt;302 Moved&lt;/H1&gt;
+The document has moved
+&lt;A HREF="http://www.google.com.br/?gws_rd=cr&amp;amp;ei=HTDqWJ3BDYe-wATs_a3ACA"&gt;here&lt;/A&gt;.
+&lt;/BODY&gt;&lt;/HTML&gt;
+</code></pre>
+<p>Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
+Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
+Dois padrões bem conhecidas são XML e JSON.</p>
+<p><a href="https://xml.org">XML</a> é o acrônimo para <em>Extensible Markup Language</em>, ou seja, uma linguagem marcação que pode ser estendida para representar diferentes tipos de informação.
+A HTML, por exemplo, é uma instância de XML destinada à representação de hipertexto (A bem da verdade, XML foi uma generalização de HTML).</p>
+<p>Por exemplo, para representarmos os dados relativos à uma pessoa, podemos ter uma instância XML assim:</p>
+<pre><code class="xml">&lt;person&gt;
+    &lt;name&gt;John Doe&lt;/name&gt;
+    &lt;id&gt;112234556&lt;/id&gt;
+    &lt;email&gt;jdoe@example.com&lt;/email&gt;
+    &lt;telephones&gt;
+       &lt;telephone type="mobile"&gt;123 321 123&lt;/telephone&gt;
+       &lt;telephone type="home"&gt;321 123 321&lt;/telephone&gt;
+    &lt;/telephones&gt;
+&lt;/person&gt;
+</code></pre>
+<p>Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o que pode ou não estar em um arquivo para um certo domínio utilizando um <a href="https://docs.microsoft.com/pt-br/dotnet/standard/data/xml/xml-document-object-model-dom">XML <em>Domain Object Model</em></a>. Há, por exemplo, modelos para representação de documentos de texto, governos eletrônicos, representação de conhecimento, <a href="http://www.xml.org/">etc</a>.
+Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.</p>
+<p><a href="http://json.org/">JSON</a> é o acrônimo de <em>Javascript Object Notation</em>, isto é, o formato para representação de objetos da linguagem Javascript.
+Devido à sua simplicidade e versatilidade, entretanto, foi adotado como forma de representação de dados em sistemas desenvolvidos nas mais diferentes linguagens.
+O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:</p>
+<pre><code class="json">{
+    "name": "John Doe",
+    "id": 112234556,
+    "email": "jdoe@example.com",
+    "telephones": [
+        { "type": "mobile", "number": "123 321 123"},
+        { "type": "home", "number": "321 123 321"},
+    ]
+}
+</code></pre>
+<p>Em Python, por exemplo, JSON são gerados e interpretados nativamente, sem a necessidade de <em>frameworks</em> externos, facilitando seu uso.
+Mas de fato, a opção final por XML ou JSON é questão de preferência, uma vez que os dois formatos são, de fato, equivalentes na questão da representação de informação.</p>
+<p>Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar e transmitir dados, e por isso são frequentemente usados como forma de <em>serialização</em> de dados em sistemas distribuídos, isto é, na transformação de TAD para sequências de bytes que seguirão "no fio".</p>
+<ul>
+<li>ASN.1 (Abstract Syntax Notation), pela ISO</li>
+<li>XDR (eXternal Data Representation)</li>
+<li>Java serialization</li>
+<li>Google Protocol Buffers</li>
+<li>Thrift</li>
+</ul>
+<p>ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
+Quanto à serialização feita nativamente pelo Java, por meio de <code>ObjectOutputStreams</code>, como neste <a href="https://www.tutorialspoint.com/java/java_serialization.htm">exemplo</a>, embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.</p>
+<p>Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.</p>
+<h4 id="protobuffers">ProtoBuffers</h4>
+<p>Nas palavras dos <a href="https://developers.google.com/protocol-buffers/">criadores</a>,</p>
+<blockquote>
+<p>Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.</p>
+</blockquote>
+<p>Por meio de protobuffers, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
+Observe a presença de campos de preenchimento opcional (<strong>optional</strong>), de enumerações (<strong>enum</strong>), e de coleções (<strong>repeated</strong>).</p>
+<pre><code class="protobuf">message Person {
+    required string name = 1;
+    required int32 id = 2;
+    optional string email = 3;
+    enum PhoneType {
+        MOBILE = 0;
+        HOME = 1;
+        WORK = 2;
+    }
+    message PhoneNumber {
+        required string number = 1;
+        optional PhoneType type = 2 [default = HOME];
+    }
+    repeated PhoneNumber phone = 4;
+}
+</code></pre>
+<p>Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...</p>
+<pre><code class="c++">Person person;
+person.set_name("John Doe");
+person.set_id(1234);
+person.set_email("jdoe@example.com");
+fstream output("myfile", ios::out | ios::binary);
+person.SerializeToOstream(&amp;output);
+</code></pre>
+<p>e lê do arquivo e desserializa para hidratar um novo objeto.</p>
+<pre><code class="c++">fstream input("myfile", ios::in | ios::binary);
+Person person;
+person.ParseFromIstream(&amp;input);
+cout &lt;&lt; "Name: " &lt;&lt; person.name() &lt;&lt; endl;
+cout &lt;&lt; "E-mail: " &lt;&lt; person.email() &lt;&lt; endl;
+</code></pre>
+<p>De acordo com <em>benchmarks</em> do próprio <a href="https://developers.google.com/protocol-buffers/docs/overview">projeto</a>, a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.</p>
+<blockquote>
+<p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
+</blockquote>
+<h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
+<h3 id="estudo-de-caso-rpc-grpc">Estudo de Caso RPC: gRPC</h3>
+<p>gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
+Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.</p>
+<p>O sítio <a href="https://grpc.io">https://grpc.io</a> documenta muito bem o gRPC, inclusive os <a href="https://grpc.io/blog/principles/">princípios</a> que nortearam seu projeto.</p>
+<p>O seu uso segue, em linhas gerais, o modelo discutido nas seções anteriores, isto é, inicia-se pela definição de estruturas de dados e serviços, "compila-se" a definição para gerar stubs na linguagem desejada, e compila-se os stubs juntamente com os códigos cliente e servidor para gerar os binários correspondentes.
+Vejamos a seguir um tutorial passo a passo, em Java, baseado no <a href="https://grpc.io/docs/quickstart/java.html">quickstart guide</a>.</p>
+<h4 id="instalacao">Instalação</h4>
+<p>Os procedimentos de instalação dependem da linguagem em que pretende usar o gRPC, tanto para cliente quanto para servidor.
+No caso do <strong>Java</strong>, <strong>não há instalação propriamente dita</strong>.</p>
+<h4 id="exemplo-java">Exemplo Java</h4>
+<p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
+<h5 id="pegando-o-codigo">Pegando o código</h5>
+<p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
+<pre><code class="bash">git clone -b v1.19.0 https://github.com/grpc/grpc-java
+</code></pre>
+<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.</p>
+<pre><code class="bash">cd grpc-java\examples
+git checkout v1.19.0
+</code></pre>
+<h5 id="compilando-e-executando">Compilando e executando</h5>
+<p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
+<pre><code class="bash">./gradlew installDist
+</code></pre>
+<p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
+<pre><code class="bash">./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
+</code></pre>
+<p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
+<pre><code class="bash">./build/install/examples/bin/hello-world-server
+</code></pre>
+<p>Agora, em <strong>um terminal distinto</strong> e a partir da mesma localização, execute o cliente, quantas vezes quiser.</p>
+<pre><code class="bash">./build/install/examples/bin/hello-world-client
+</code></pre>
+<h5 id="o-servico">O serviço</h5>
+<p>O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
+O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <code>./src/main/proto/helloworld.proto</code>.</p>
+<pre><code class="protobuf">message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+
+// The greeting service definition.
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+</code></pre>
+<p>No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.</p>
+<p>A mensagem <code>HelloRequest</code> tem apenas um campo denominado <code>name</code>, do tipo <code>string</code>. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.</p>
+<p>A mensagem <code>HelloReply</code> também tem um campo do tipo <code>string</code>, denominado <code>message</code>, que conterá a resposta do servidor.</p>
+<p>O serviço disponível é definido pela palavra chave <code>service</code>e de nome <code>Greeter</code>; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.</p>
+<p>O serviço possui apenas uma operação, <code>SayHello</code>, que recebe como entrada uma mensagem <code>HelloRequest</code> e gera como resposta uma mensagem <code>HelloReply</code>.
+Caso a operação precisasse de mais do que o conteúdo de <code>name</code> para executar, a mensagem <code>HelloRequest</code> deveria ser estendida, pois não há passar mais de uma mensagem para a operação.
+Por outro lado, embora seja possível passar zero mensagens, esta não é uma prática recomendada.
+Isto porquê caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
+Assim, caso não haja a necessidade de se passar qualquer informação para a operação, recomenda-se que seja usada uma mensagem de entrada vazia, que poderia ser estendida no futuro.
+O mesmo se aplica ao resultado da operação.</p>
+<p>Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
+Por exemplo, para definir uma versão em português da operação <code>SayHello</code>, podemos fazer da seguinte forma.</p>
+<pre><code class="protobuf">message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+message OlaRequest {     // &lt;&lt;&lt;&lt;&lt;====
+  string name = 1;
+}
+
+message OlaReply {       // &lt;&lt;&lt;&lt;&lt;====
+  string message = 1;
+}
+
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc DigaOla (OlaRequest) returns (OlaReply) {}// &lt;&lt;&lt;&lt;&lt;====
+}
+...
+</code></pre>
+<p>Observe que a nova operação recebe como entrada  mensagens <code>OlaRequest</code> e <code>OlaReply</code>, que tem definições exatamente iguais a <code>HellorRequest</code> e <code>HelloReply</code>.
+Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
+Apenas reforçando, é boa prática definir <em>requests</em> e <em>responses</em> para cada método, a não ser que não haja dúvida de que serão para sempre iguais.</p>
+<h5 id="implementando-um-servico">Implementando um serviço</h5>
+<p>Agora modifique o arquivo <code>.proto</code> como acima, para incluir a operação <code>DigaOla</code>, recompile e reexecute o serviço.
+Não dá certo, não é mesmo? Isto porquê você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
+Façamos então a modificação do código, começando por <code>./src/main/java/io/grpc/examples/helloworld/HelloWorldServer.java</code>.
+Este arquivo define a classe que <strong>implementa</strong> o serviço <code>Greeter</code>, <code>GreeterImpl</code>, com um método para cada uma das operações definidas. 
+Para confirmar, procure por <code>sayHello</code>para encontrar a implementação de <code>SayHello</code>; observe que a diferença do <code>casing</code> vem das boas práticas de Java, de definir métodos e variáveis em <em>Camel casing</em>.</p>
+<p>Para que sua versão estendida do serviço <code>Greeter</code> funcione, defina um método correspondendo à <code>DigaOla</code>, sem consultar o código exemplo abaixo, mas usando o código de <code>sayHello</code> como base; não se importe por enquanto com os métodos sendo invocados.
+Note que os <code>...</code> indicam que parte do código, que não sofreu modificações, foi omitido.</p>
+<pre><code class="java">...
+private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
+...
+
+  @Override
+  public void sayHello(HelloRequest req, StreamObserver&lt;HelloReply&gt; responseObserver) {
+      ...
+  }
+
+  @Override
+  public void digaOla(OlaRequest req, StreamObserver&lt;OlaReply&gt; responseObserver) {
+    OlaReply reply = 
+      OlaReply.newBuilder().setMessage("Ola " + req.getName()).build();
+    responseObserver.onNext(reply);
+    responseObserver.onCompleted();
+  }
+}
+</code></pre>
+<p>Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em <code>src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java</code>, novamente se baseando no código existente e não se preocupando com "detalhes".</p>
+<pre><code class="java">public void greet(String name) {
+  logger.info("Will try to greet " + name + " ...");
+...
+  OlaRequest request2 = OlaRequest.newBuilder().setName(name).build();
+  OlaReply response2;
+  try {
+    response2 = blockingStub.digaOla(request2);
+  } catch (StatusRuntimeException e) {
+    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+   return;
+  }
+  logger.info("Greeting: " + response2.getMessage());
+}
+</code></pre>
+<p>Agora sim, você pode reexecutar cliente e servidor.</p>
+<pre><code class="bash">./gradlew installDist
+./build/install/examples/bin/hello-world-server &amp;
+./build/install/examples/bin/hello-world-client
+</code></pre>
+<p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.</p>
+<h5 id="stub-do-servidor">Stub do servidor</h5>
+<ul>
+<li>Como criar o servidor</li>
+<li>Como definir o serviço</li>
+<li>Como "startar" o servidor.</li>
+</ul>
+<h5 id="stub-do-cliente">Stub do cliente</h5>
+<ul>
+<li>Stub bloqueante</li>
+<li>Stub não bloqueante</li>
+</ul>
+<h5 id="idl-grpc">IDL gRPC</h5>
+<p>Outras características da IDL do gRPC</p>
+<ul>
+<li>Tipos básicos</li>
+<li>bool: boolean (true/false)</li>
+<li>double: 64-bit; ponto-flutuante </li>
+<li>float: 32-bit; ponto-flutuante </li>
+<li>i32: 32-bit; inteiro sinalizado </li>
+<li>i64: 64-bit; inteiro sinalizado</li>
+<li>siXX: signed</li>
+<li>uiXX: unsigned</li>
+<li>sfixedXX: codificação de tamanho fixo</li>
+<li>bytes: 8-bit; inteiro sinalizado</li>
+<li>string: string UTF-8 ou ASCII 7-bit</li>
+<li>
+<p>Any: tipo indefinido</p>
+</li>
+<li>
+<p><a href="https://developers.google.com/protocol-buffers/docs/proto3">Diferentes traduções</a></p>
+</li>
+<li>
+<p>Coleções
+Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.</p>
+</li>
+<li>
+<p><em>Streams</em></p>
+</li>
+<li>Do lado do servidor</li>
+</ul>
+<p>```java
+   List<string> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");</string></p>
+<p>@Override
+   public void digaOlas(OlaRequest req, StreamObserver<olareply> responseObserver) {
+   for (String hi: listOfHi)
+   {
+     OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
+     responseObserver.onNext(reply);
+   }
+   responseObserver.onCompleted();
+   }
+  ```
+  - Do lado do cliente</olareply></p>
+<p><code>java
+   OlaRequest request = OlaRequest.newBuilder().setName(name).build();
+   try {
+       Iterator&lt;OlaReply&gt; it = blockingStub.digaOlas(request);
+       while (it.hasNext()){
+         OlaReply response = it.next();
+         logger.info("Greeting: " + response.getMessage());
+       }
+    } catch (StatusRuntimeException e) {
+       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+       return;
+    }</code></p>
+<h4 id="exemplo-python">Exemplo Python</h4>
+<pre><code class="bash">apt-get install python3
+apt-get install python3-pip
+python3 -m pip install --upgrade pip
+python3 -m pip install grpcio
+python3 -m pip install grpcio-tools
+
+git clone -b v1.10.x https://github.com/grpc/grpc
+cd grpc/examples/python/helloworld
+python3 greeter\_server.py
+python3 greeter\_client.py
+</code></pre>
+<p>Para recompilar os stubs, faça</p>
+<pre><code class="bash">python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
+</code></pre>
+<p>Modifique o servidor</p>
+<pre><code class="Python">def DigaOla(self, request, context):
+    return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
+</code></pre>
+<p>Modifique o cliente</p>
+<pre><code class="Python">response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
+print("Greeter client received: " + response.message)
+</code></pre>
+<h3 id="estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</h3>
+<p><a href="https://thrift.apache.org/">Thrift</a></p>
+<h4 id="instalacao_1">Instalação</h4>
+<ul>
+<li><a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.10.0/thrift-0.10.0.tar.gz">Baixe</a> e compile o thrift</li>
+<li>ou instale-o usando apt-get, por exemplo. <code>apt-get install thrift-compiler</code></li>
+<li>execute "thrift" na linha de comando.</li>
+<li>Para thrift com Java, também precisarão dos seguintes arquivos</li>
+<li><a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21">slf4j</a></li>
+<li><a href="https://sites.google.com/site/lasaro/sistemasdistribuidos">libthrift0.9.3.jar</a></li>
+<li>coloque-os na pasta <code>jars</code></li>
+</ul>
+<h4 id="idl-thrift">IDL Thrift</h4>
+<ul>
+<li>Tipos básicos<ul>
+<li>bool: boolean (true/false)</li>
+<li>byte: 8-bit; inteiro sinalizado</li>
+<li>i16: 16-bit; inteiro sinalizado</li>
+<li>i32: 32-bit; inteiro sinalizado</li>
+<li>i64: 64-bit; inteiro sinalizado</li>
+<li>double: 64-bit; ponto-flutuante </li>
+<li>string: string UTF-8</li>
+<li>binary: sequência de bytes</li>
+</ul>
+</li>
+<li>Estruturas</li>
+</ul>
+<pre><code class="thrift">struct Example {
+    1:i32 number,
+    2:i64 bigNumber,
+    3:double decimals,
+    4:string name="thrifty"
+}
+</code></pre>
+<ul>
+<li>Serviços</li>
+</ul>
+<pre><code class="thrift">service ChaveValor {
+    void set(1:i32 key, 2:string value),
+    string get(1:i32 key) throws (1:KeyNotFound knf),
+    void delete(1:i32 key)
+}
+</code></pre>
+<ul>
+<li><strong>Não se pode retornar NULL!!!</strong></li>
+<li>Exceções</li>
+</ul>
+<pre><code class="thrift">exception KeyNotFound {
+   1:i64 hora r,
+   2:string chaveProcurada="thrifty"
+}
+</code></pre>
+<ul>
+<li>Containers<ul>
+<li>List</li>
+<li>Map</li>
+<li>Set</li>
+</ul>
+</li>
+</ul>
+<p>Exemplo: chavevalor.thrift</p>
+<pre><code class="Thrift">namespace java chavevalor
+namespace py chavevalor
+
+
+exception KeyNotFound
+{
+}
+
+
+service ChaveValor
+{
+    string getKV(1:i32 key) throws (1:KeyNotFound knf),
+    bool setKV(1:i32 key, 2:string value),
+    void delKV(1:i32 key)
+}  
+</code></pre>
+<p>Compilação</p>
+<p><code>thrift --gen java chavevalor.thrift</code></p>
+<p><code>thrift --gen py chavevalor.thrift</code></p>
+<p>ChaveValorHandler.java</p>
+<pre><code class="Java">namespace java chavevalor
+namespace py chavevalor
+
+
+exception KeyNotFound
+{
+}
+
+
+service ChaveValor
+{
+    string getKV(1:i32 key) throws (1:KeyNotFound knf),
+    bool setKV(1:i32 key, 2:string value),
+    void delKV(1:i32 key)
+}  
+
+package chavevalor;
+
+import org.apache.thrift.TException;
+import java.util.HashMap;
+import chavevalor.*;
+
+public class ChaveValorHandler implements ChaveValor.Iface {
+   private HashMap&lt;Integer,String&gt; kv = new HashMap&lt;&gt;();
+   @Override
+   public String getKV(int key) throws TException {
+       if(kv.containsKey(key))
+          return kv.get(key);
+       else
+          throw new KeyNotFound();
+   }
+   @Override
+   public boolean setKV(int key, String valor) throws TException {
+       kv.put(key,valor);
+       return true;
+   }
+   @Override
+   public void delKV(int key) throws TException {
+       kv.remove(key);
+   }    
+}
+</code></pre>
+<h4 id="arquitetura">Arquitetura</h4>
+<ul>
+<li>Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas</li>
+<li>Protocol -- responsável pela serializaçãoo dos dados<ul>
+<li>TBinaryProtocol</li>
+<li>TJSONProtocol</li>
+<li>TDebugProtocol</li>
+<li>...</li>
+</ul>
+</li>
+<li>Transport -- I/O no ``fio''<ul>
+<li>TSocket</li>
+<li>TFramedTransport (non-blocking server)</li>
+<li>TFileTransport</li>
+<li>TMemoryTransport</li>
+</ul>
+</li>
+<li>
+<p>Processor -- Conecta protocolos de entrada e saída com o \emph{handler}</p>
+</li>
+<li>
+<p>Handler -- Implementação das operações oferecidas</p>
+</li>
+<li>Server -- Escuta portas e repassa dados (protocolo) para o processors<ul>
+<li>TSimpleServer</li>
+<li>TThreadPool</li>
+<li>TNonBlockingChannel</li>
+</ul>
+</li>
+</ul>
+<h4 id="classpath">Classpath</h4>
+<pre><code class="bash">javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
+
+java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
+
+java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient 
+</code></pre>
+<h4 id="referencias">Referências</h4>
+<p><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></p>
+<h3 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h3>
+<h1>TODO</h1>
+</div>
+</div>
+<footer>
+<div aria-label="footer navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral" href="../basics/" title="Fundamentos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span><a href="../basics/" style="color: #fcfcfc;">« Previous</a></span>
+</span>
+</div>
+<script>var base_url = '..';</script>
+<script defer="" src="../js/theme.js"></script>
+<script defer="" src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
+<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script defer="" src="../mathjaxhelper.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>
