@@ -1,6 +1,5 @@
 # Communicação
 
-## Abaixo os Sockets!
 
 O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no **acesso baixo nível à rede**, e todo o ganho de desempenho que isso pode trazer.
@@ -9,39 +8,42 @@ Suas desvantagens, entretanto, são várias:
 * interface de "arquivo" para se ler e escrever bytes;
 * controle de fluxo de "objetos" é por conta da aplicação, isto é, a aplicação precisa sinalizar quantos bytes serão escritos de um lado, para que o outro saiba quanto ler para obter um "objeto" correto;
 * logo, a serialização e desserialização de objetos é também por conta da aplicação;
-* tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação, e nem a tão famosa confiabilidade do TCP ajuda.
-
-### Representação de dados
+* tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação e nem a tão famosa confiabilidade do TCP ajuda.
 
 Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação [fim-a-fim](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf), é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
-Uma delas é a serialização de dados complexos.
-Imagine-se usando um tipo abstrato de daados com diversos campos, incluindo valores numéricos de diversos tipos, strings, aninhamentos, tudo somando vários KB.
-Você terá que se preocupar com diversos fatores na hora de colocar esta estrutura *no fio*:
+Aqui discutiremos algumas destas funcionalidades e como podem e são implementadas por *frameworks* de comunicação de mais alto nível.
 
-* tipos com definição imprecisa
-  * Inteiro: 16, 32, 64 ... bits?
-* ordem dos bytes
-  * little endian?
-    * Intel x64, 
-    * IA-32
-  * big endian?
-    * IP
-    * SPARC (< V9), 
-    * Motorola, 
-    * PowerPC
-  * bi-endian
-    * ARM, 
-    * MIPS, 
-    * IA-64
-* Representação de ponto flutuante
-* Conjunto de caracteres
-* Alinhamento de bytes
-* Linguagem mais adequada ao problema e não à API socket
-  * Classe x Estrutura
-* Sistema operacional
+
+## Representação de dados
+
+Exceto por aplicações muito simples, processos em um sistema distribuídos trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
+Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura *no fio*, por exemplo:
+
+* Diferentes linguagens de programação usadas para desenvolver os componentes.
+  * tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?
+  * paradigmas distintos: classe x estrutura
+  * conjunto de caracteres diferentes: ASCII x UTF
+* Arquiteturas diferentes.
+  * ordem dos bytes
+    * little endian? 
+      * x64
+      * IA-32
+    * big endian? 
+      * IP
+      * SPARC (< V9)
+      * Motorola
+      * PowerPC
+    * bi-endian?  ARM, 
+      * MIPS, 
+      * IA-64
+  * representação de ponto flutuante
+  * alinhamento de bytes
+* Sistemas operacionais diferentes
   * crlf (DOS) x lf (Unix)
 * fragmentação <br>
   [![Fragmentação](images/ipfrag.png)](http://www.acsa.net/IP/)
+
+### Representação Textual
 
 Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
 Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.
@@ -135,9 +137,9 @@ Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar 
 ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
 Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputStreams`, como neste [exemplo](https://www.tutorialspoint.com/java/java_serialization.htm), embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.
 
-Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.
+Nos foquemos nas autras alternativas listadas, ProtoBuffers e Thrift, que podem levar a representações binárias e textuais.
 
-#### ProtoBuffers
+### ProtoBuffers
 
 Nas palavras dos [criadores](https://developers.google.com/protocol-buffers/),
 > Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
@@ -188,7 +190,219 @@ De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/p
 
 > When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
 
+### Thrift
+
+<h1>TODO</h1>
+
 ## Invocação Remota de Procedimentos - RPC
+
+Em 1984, Birrel e Nelson[^birrel]
+introduziram o mecanismo de **Invocação Remota de Procedimentos** (*Remote Procedure Calls*), que permite que processos façam, pasmem, invocações de procedimentos remotos!
+Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
+Por exemplo, RPC permita que se procure a *substring* `"teste"` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,"teste");`, mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
+
+[^birrel]:[Implementing RPC](http://www.birrell.org/andrew/papers/ImplementingRPC.pdf)
+
+Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo[^omissao].
+O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
+		
+[^omissao]: Omitirei alguns detalhes aqui, em nome da genericidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
+
+* coloque o endereço de `"teste"` na pilha
+* coloque `3` na pilha
+* coloque o valor de `a` na pilha
+* coloque o endereço de retorno na pilha (junto com outros dados de controle)
+* salte para `substring` ajustando o *instruction pointer*
+* ... procure substring ...
+* coloque o resultado no acumulador
+* limpe a pilha
+* salte de volta recuperando o endereço de retorno da pilha e ajustando o IP
+* coloque resultado em `x`
+
+Se o que queremos é colocar o código da função `substring` em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
+Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local mas que, por baixo do capô, use sockets para se comunicar com o processo remoto.  
+Estq simulação usará código extra, que finge implementar `substring` para o invocador mas delega ao código remoto o trabalho real da busca.
+Este código extra é conhecido como **stub**, ou para ser mais preciso, *stub cliente*, que faz parte do processo invocando a operação, e *stub* servidor, que faz parte do processo executando a operação invocada[^skeleton].
+
+[^skeleton]: O *stub* do servidor também é conhecido como *skeleton *.
+		
+Assim, o cliente invoca função no stub cliente, achando que é a função que quer executar.
+Stub cliente faz o **marshaling** [^marshal]  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
+Quando recebe a resposta do servidor, o stub cliente retorna a mesma resposta, como se tivesse calculado localmente.
+
+[^marshal]: Marshalling: representar parâmetros de forma própria para transmissão "no fio".
+
+!!!note "Stub cliente"
+    Implementa uma função `substring(char*, int, char*)` que
+
+    * abre socket para servidor
+    * envia parâmetros
+    * especifica função
+    * espera resposta
+    * retorna resultado
+
+Já o stub servidor fica esperando o contato do cliente.
+Quando acontece, faz o "unmarshalling" dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retona ao cliente.
+		
+!!!note "Stub servidor"
+    * espera conexão
+    * recebe parâmetros
+    * recebe especificação da função
+    * invoca função localmente
+    * envia resultado para cliente
+	
+![Skeleton](images/stubskeleton.png)
+
+
+### Particularidades do servidor RPC
+
+É importante notar que o servidor não está obrigado a atender requisições de somente um cliente.
+Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.
+
+Além disso, o servidor provavelmente suportará diversas operações e por isso deverá identificar qual a operação sendo requisitada.
+Isto é feito por um *dispatcher*, que demultiplexa as operações requisitadas; o dispatcher pode, em algumas arquiteturas, ser independente do skeleton em si.
+
+
+### Transparência
+
+A grande vantagem do uso de RPC é para o programador, escrever o código distribuído é igual a escrever código centralizado, certo? Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
+O problema é que não bem assim pois há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
+
+* processos independentes não compartilham um espaço de endereçamento
+* processos independentes não compartilham uma pilha
+
+Assim, como fica **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
+Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o enderço de tal posição para a função invocada.
+Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
+Além disso, isso só é possível se o valor apontado for delimitado, o que nem sempre é fácil. Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista?
+
+ Em Java, por exemplo, todo o grafo do objeto passado como parâmetro é serializado, a não ser que o grafo contenha objetos acessíveis remotamente e, neste caso, será passada uma referência remota que permitirá o servidor invocar métodos remotos no cliente, tornando nebulosa a definição de quem é quem.
+
+
+Além disso, mesmo que o socket fique oculto, ele ainda existe e precisa de informações sobre onde se conectar (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
+E uma vez estabelecido o socket e invocações comecem a ser feitas, não temos agora uma superfície maior de ataque?
+
+* onde se conectar?
+* segurança
+* latência
+* como lidar com erros?
+
+
+
+
+Onde se conectar?
+  * Páginas amarelas (Birel e Nelson)
+  * Quem administra?
+  * Mesmo serviço em múltiplos lugares?
+
+\begin{frame}{Onde está meu servidor?}{Banco de dados Distribuído}
+	\begin{itemize}
+		\item Cada servidor mantém sua própria lista
+		\item Como se descobrem?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Cadê minha resposta?}
+	\item Latência
+	\item Quando parar de esperar?
+
+
+{Tratamento de erros}
+	\item Se servidor quebra, cliente fica esperando
+	\item Erro de conexão
+	\item Não há transparência total em sistemas distribuídos
+
+
+{Tratamento de erros}
+	item Invocação local: exatamente 1 vez
+	\item Invocação remota:
+		\item 0: falhas
+		\item 1: tudo funcionou
+		\item $\geq 1$: retransmissão
+
+
+\begin{frame}{Múltiplas Invocações}
+	\begin{itemize}
+		\item Frameworks RPC oferecem
+		\begin{itemize}
+			\item at least once
+			\item at most once
+		\end{itemize}
+		\item Entenda suas funções
+		\begin{itemize}
+			\item idempotente: pode ser invocada múltiplas vezes (x = 10)
+			\item não idempotente: múltiplas invocações tem efeitos distintos (x += 10)
+		\end{itemize}
+		\item Projete para idempotência!
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Outros fatores}
+	\begin{itemize}
+		\item Latência
+		\item Segurança
+		\begin{itemize}
+			\item Conexão precisa de sigilo?
+			\item Dados precisam de sigilo?
+			\item Autenticação e autorização
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\subsection{Frameworks}
+\begin{frame}{Linguagens}
+	\begin{itemize}
+		\item Sem RPC: C, C++, Java < 5.0 (1.5), Python
+		\item Com RPC: Java, Go, Erlang, Scala, Haskell
+		\item Ambientes heterogêneos: Thrift, gRPC, Akka, SOAP
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{IDL: Interface Definition Language}
+	\begin{itemize}
+		\item Linguagem de definição de
+		\begin{itemize}
+			\item serviços acessados remotamente
+			\item estruturas de dados usadas no serviços
+		\end{itemize}
+		\item Pre-compilador
+		\begin{itemize}
+			\item Gera stubs e skeletons
+		\end{itemize}
+	\end{itemize}
+	
+	\centering
+	\includegraphics[width=.6\textwidth]{images/idl}
+	
+\end{frame}
+
+
+\begin{frame}{Cliente}
+	\begin{itemize}
+		\item Inicializar RPC
+		\begin{itemize}
+			\item Tipo de transporte
+			\item SSL?
+			\item Localizar servidor
+		\end{itemize}
+		\item Lidar com falhas
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Servidor}
+	Nadie, nill, zip, nulla! \pause Em geral...
+\end{frame}
+
+\begin{frame}{Como o sistema RPC é construído?}
+	\begin{itemize}
+		\item Naming: exportar e localizar serviços
+		\item Gerenciamento de portas
+		\item Conexões
+	\end{itemize}
+\end{frame}
+
 
 ### Estudo de Caso RPC: gRPC
 
@@ -649,3 +863,12 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 ### Estudo de Caso RPC: RMI
 
 <h1>TODO</h1>
+
+## Comunicação orientada a Mensagens
+
+<h1>TODO</h1>
+
+* [MOM](https://en.wikipedia.org/wiki/Message-oriented_middleware)
+* [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
+* [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
+

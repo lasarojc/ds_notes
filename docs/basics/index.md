@@ -1014,7 +1014,7 @@ O uso dos "locks" em ordens diferentes pode levar a um deadlock, pois o seguinte
 ##### Deadlock
 
 ```mermaid
-stateDiagram
+graph LR
   T1 --> lock1
   T2 --> lock2
   lock1 --> T2
