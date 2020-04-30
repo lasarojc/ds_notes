@@ -5,9 +5,11 @@ nav:
         - Fundamentos: basics/index.md
         - Comunicação: comm/index.md
 
-theme: readthedocs
+theme:
+        name: material #readthedocs
 plugins:
-        - markdownmermaid
+        - search
+        - mermaid2
 markdown_extensions:
         - mdx_math
         - admonition

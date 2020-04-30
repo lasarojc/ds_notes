@@ -570,7 +570,7 @@ A realidade, contudo, é outra e simplesmente criar múltiplos threads não gara
 
 Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
-Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads
+Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -639,7 +639,7 @@ Uma visão interessante sobre estado é apresentada em [On stateless software de
 Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
 A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
 
-
+[Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
 
 ### Multithread na prática
 

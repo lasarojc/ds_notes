@@ -203,6 +203,7 @@ Por exemplo, RPC permita que se procure a *substring* `"teste"` dentro da string
 
 [^birrel]:[Implementing RPC](http://www.birrell.org/andrew/papers/ImplementingRPC.pdf)
 
+### Stubs
 Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo[^omissao].
 O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
 		
@@ -254,155 +255,165 @@ Quando acontece, faz o "unmarshalling" dos dados, invoca a função localmente n
 ![Skeleton](images/stubskeleton.png)
 
 
-### Particularidades do servidor RPC
+### Transparência
 
-É importante notar que o servidor não está obrigado a atender requisições de somente um cliente.
+É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao centralizado, certo? Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
+Como já discutimos, vários fatores trabalham contra a [transparência em sistemas distribuídos](../intro/#transparencia).
+Em específico quanto à transparência dada pelo RPC, também temos limitações.
+O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
+
+* processos independentes não compartilham um espaço de endereçamento, e
+* processos independentes não compartilham uma pilha.
+
+Assim, como fica a **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
+Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.
+Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
+Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
+Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista? Como ensinar para o *framework* RPC o que é "toda" a lista?
+
+Java "resolve" o problema da passagem de parâmetro por referência passando todo o grafo do objeto passado como parâmetro para o servidor. Isto é, além de serializar o objeto apontado no parâmetro, se o mesmo aponta para outros objetos, estes também serão serializados e transferidos; o servidor irá então reconstruir todo o grafo e passar para o método sendo invocado.
+É muito fácil ver que esta abordagem pode se tornar inviável rapidamente. Quando for o caso, Java permite marcar objetos como **remotos** e, em vez de serializar este objeto e enviar para o servidor, envia informação suficiente para que o servidor possa invocar métodos em tal objeto no cliente, tornando nebulosa a definição de quem é quem.
+
+Outros fatores também trabalham contra a transparência para o desenvolvedor. Vejamos alguns
+
+#### Descoberta de Serviços
+Por exemplo, mesmo que o socket seja ocultado, ele ainda existe e precisa de informações sobre **onde se conectar** (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
+Esta informação pode ser configurada *a priori* por um administrador de sistemas, mas requer atualizações sempre que a localização do serviço for alterada ou novos servidores adicionados.
+Mais interessante seria um mecanismo que permitisse uma indireção para o serviço; o próprio DNS pode ser uma opção inicial, mas um serviço dedicado pode ser mais apropriado, pois permite descobrir serviços e não apenas servidores.
+
+Birrel e Nelson propuseram um serviço de **Páginas Amarelas**, no qual clientes podem questionar quem oferece um certo serviço e serem redirecionados automaticamente.
+Esta abordagem tem seus próprios problemas, como por exemplo determinar **quem administra** o serviço para incluir novos servidores.
+E como determinar qual serviço acessar, caso hajam **múltiplas opções de servidores**.
+
+Apesar dos problemas, **páginas amarelas** foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo [Web Services Discovery](https://en.wikipedia.org/wiki/Web_Services_Discovery), que permite a descoberta de Web Services em escala global, e [Java Remote Object Registry](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html) que permite a descoberta de objetos remotos Java.
+
+#### Tratamento de Exceções
+
+Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
+Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
+Assim, o que era um simples `x = substring(a,3,"teste");` passa para algo assim (em uma linguagem fictícia):
+
+```c
+int x = -2;
+try {
+    x = substring(a,3,"teste");`
+} catch(CommunicationFailureException cfe) {
+    log_error("Como pode substring falhar? Desespero!!!");
+}
+
+if (x == -2)
+    system_exit(-2)
+else if (x == -1)
+    //não achou
+else
+    //achou "teste" na posição x
+```
+
+O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.
+
+Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
+Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
+No caso de falhas, se o processo quebra como um todo, no seu reinício, pode-se identificar se a operação foi ou não executada e aplicar ações corretivas.
+Mas e no caso remoto?
+
+#### Reexecuções
+
+No caso da operação distribuída, se o servidor quebra, isso levará a um erro ser percebido do lado do cliente como uma **falha na conexão**.
+Se o cliente havia invocado uma operação mas percebeu o erro antes de receber uma confirmação de sua execução, isto pode indicar que:
+
+* (i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,
+* (ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.
+
+O cliente tem que tratar o erro, mas como?
+Se a operação **precisa** ser executada **a qualquer custo**, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
+Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
+Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
+Esta abordagem é garantirá que a execução acontece **pelo menos 1 vez**.
+
+Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
+Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
+Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
+
+Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados **exatamente uma** vez.
+Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
+De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.
+
+
+!!! note "Quantidade de execuções"
+    * No máximo uma - não retentar
+    * Exatamente uma - impedir que falhas aconteçam :/
+    * Pelo menos uma - retentar até ter confirmação
+
+Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
+Mas ela não pode ser repetida, então a alternativa é tornar as operações [**idempotentes**](https://en.wikipedia.org/wiki/Idempotence), o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.
+
+!!! note "Operações idempotentes"
+    Múltiplas execuções tem o mesmo efeito uma execução.
+
+    * Exemplo: `x = 10`
+    * Anti-exemplo:  `x = x+1`.
+
+
+
+Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.
+
+#### Concorrência no servidor
+
+É importante notar que um servidor não está obrigado a atender requisições de somente um cliente.
 Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.
+
+Pense por exemplo em um servidor que conta o número de acessos feitos por clientes.
+O incremento do contador deve ser considerado uma região crítica, caso múltiplos threads tratem as requisições dos clientes, o que já vimos ser uma boa idia.
+Claro que dificilmente seu servidor seria algo tão simples assim.
+Em vez disso, ele provavelmente executará lógicas complicadas, como por exemplo, armazenar o estado de contas bancárias e, neste caso, as funções expostas por RPC incluiríam a operação **transferir saldo de A para B**, o que nos leva a mais um problema interessante, o do risco de reexecuções.
 
 Além disso, o servidor provavelmente suportará diversas operações e por isso deverá identificar qual a operação sendo requisitada.
 Isto é feito por um *dispatcher*, que demultiplexa as operações requisitadas; o dispatcher pode, em algumas arquiteturas, ser independente do skeleton em si.
 
+### Frameworks
 
-### Transparência
+Há diversas opçõe de *frameworks* para RPC, com diferentes características, focos, e garantias.
+Alguns são parte da linguagem e outros são implementados como bibliotecas.
+Alguns suportam múltiplas linguagens e alguns apenas uma.
 
-A grande vantagem do uso de RPC é para o programador, escrever o código distribuído é igual a escrever código centralizado, certo? Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
-O problema é que não bem assim pois há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
+!!! note "Suporte a RPC na linguagem"
+    * Sem RPC: C, C++, Java < 5.0 (1.5), Python
+    * Com RPC: Java, Go, Erlang, Scala, Haskell
+    * Ambientes heterogêneos: Thrift, gRPC, Akka, SOAP
 
-* processos independentes não compartilham um espaço de endereçamento
-* processos independentes não compartilham uma pilha
-
-Assim, como fica **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
-Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o enderço de tal posição para a função invocada.
-Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
-Além disso, isso só é possível se o valor apontado for delimitado, o que nem sempre é fácil. Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista?
-
- Em Java, por exemplo, todo o grafo do objeto passado como parâmetro é serializado, a não ser que o grafo contenha objetos acessíveis remotamente e, neste caso, será passada uma referência remota que permitirá o servidor invocar métodos remotos no cliente, tornando nebulosa a definição de quem é quem.
-
-
-Além disso, mesmo que o socket fique oculto, ele ainda existe e precisa de informações sobre onde se conectar (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
-E uma vez estabelecido o socket e invocações comecem a ser feitas, não temos agora uma superfície maior de ataque?
-
-* onde se conectar?
-* segurança
-* latência
-* como lidar com erros?
+Frameworks mais modernos permitem escolher a forma de serialização dos dados, se legível para humanos ou binário, se o transporte é via HTTP ou protocolo mais baixo nível, se os dados trafegam abertamente ou se faz uso de comunicação criptografada (SSL).
+Outros permitem escolher semântica de execução entre **no máximo uma** e **pelo menos uma**, e há até quem prometa **exatamente uma**.
+Mas todos os **frameworks** tem algumas características em comum e uma delas é o uso de uma **Linguagem de Definição de Interface** (IDL).
 
 
+#### Interface Definition Language - IDL
 
+Uma [IDL](https://en.wikipedia.org/wiki/Interface_description_language) é a linguagem pela qual desenvolvedor define quais as operações (funções, procedimentos, métodos) serão acessíveis via RPC e quais os seus operandos.
+Há várias IDL definidas, para os diversos *frameworks* disponíveis.
 
-Onde se conectar?
-  * Páginas amarelas (Birel e Nelson)
-  * Quem administra?
-  * Mesmo serviço em múltiplos lugares?
+A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.
 
-\begin{frame}{Onde está meu servidor?}{Banco de dados Distribuído}
-	\begin{itemize}
-		\item Cada servidor mantém sua própria lista
-		\item Como se descobrem?
-	\end{itemize}
-\end{frame}
+![IDL](images/idl.png)
 
-\begin{frame}{Cadê minha resposta?}
-	\item Latência
-	\item Quando parar de esperar?
+O fluxo de processamento é o seguinte:
 
+* Arquivo em IDL é compilado por um compilador IDL e gera diversos arquivos:
+    * *stub* cliente - código que implementa a interface, com código para repassar invocações para o servidor.
+    * *stub* servidor (*skeleton*) - código que atende a conexões do *stub* cliente e repassa para a implementação própria da função.
+    * conversão de dados - código que serializa e deserializa dados para serem trafegados de e para o servidor
+    * cabeçalhos - definições da interface na linguagem de desenvolvimento da aplicação; se linguagem C, por exemplo, estes serão arquivos `.h`, se em Java, então estes serão arquivos`.java`, com definição de `interface`.
+* O código cliente é compilado e gera o cliente, que deve 
+    * inicializar a infraestrutura RPC
+        * Tipo de transporte
+        * SSL?
+        * Localizar servidor
+    * Lidar com falhas
+* O código servidor é compilado e gera o servidor, que deve
+    * exportar e localizar serviços (serviço de nomeação)
+    * Gerenciamento de portas
+    * Conexões
 
-{Tratamento de erros}
-	\item Se servidor quebra, cliente fica esperando
-	\item Erro de conexão
-	\item Não há transparência total em sistemas distribuídos
-
-
-{Tratamento de erros}
-	item Invocação local: exatamente 1 vez
-	\item Invocação remota:
-		\item 0: falhas
-		\item 1: tudo funcionou
-		\item $\geq 1$: retransmissão
-
-
-\begin{frame}{Múltiplas Invocações}
-	\begin{itemize}
-		\item Frameworks RPC oferecem
-		\begin{itemize}
-			\item at least once
-			\item at most once
-		\end{itemize}
-		\item Entenda suas funções
-		\begin{itemize}
-			\item idempotente: pode ser invocada múltiplas vezes (x = 10)
-			\item não idempotente: múltiplas invocações tem efeitos distintos (x += 10)
-		\end{itemize}
-		\item Projete para idempotência!
-	\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Outros fatores}
-	\begin{itemize}
-		\item Latência
-		\item Segurança
-		\begin{itemize}
-			\item Conexão precisa de sigilo?
-			\item Dados precisam de sigilo?
-			\item Autenticação e autorização
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-
-\subsection{Frameworks}
-\begin{frame}{Linguagens}
-	\begin{itemize}
-		\item Sem RPC: C, C++, Java < 5.0 (1.5), Python
-		\item Com RPC: Java, Go, Erlang, Scala, Haskell
-		\item Ambientes heterogêneos: Thrift, gRPC, Akka, SOAP
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[allowframebreaks]{IDL: Interface Definition Language}
-	\begin{itemize}
-		\item Linguagem de definição de
-		\begin{itemize}
-			\item serviços acessados remotamente
-			\item estruturas de dados usadas no serviços
-		\end{itemize}
-		\item Pre-compilador
-		\begin{itemize}
-			\item Gera stubs e skeletons
-		\end{itemize}
-	\end{itemize}
-	
-	\centering
-	\includegraphics[width=.6\textwidth]{images/idl}
-	
-\end{frame}
-
-
-\begin{frame}{Cliente}
-	\begin{itemize}
-		\item Inicializar RPC
-		\begin{itemize}
-			\item Tipo de transporte
-			\item SSL?
-			\item Localizar servidor
-		\end{itemize}
-		\item Lidar com falhas
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Servidor}
-	Nadie, nill, zip, nulla! \pause Em geral...
-\end{frame}
-
-\begin{frame}{Como o sistema RPC é construído?}
-	\begin{itemize}
-		\item Naming: exportar e localizar serviços
-		\item Gerenciamento de portas
-		\item Conexões
-	\end{itemize}
-\end{frame}
-
+Mas para entendermos melhor o fluxo, vejamos algumas ferramentas reais.
 
 ### Estudo de Caso RPC: gRPC
 
