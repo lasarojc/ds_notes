@@ -1,137 +1,865 @@
+
 <!DOCTYPE html>
 
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1, mkdocs-material-5.1.1" name="generator"/>
 <title>Fundamentos - Sistemas Distribuídos</title>
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
-<link href="../css/theme.css" rel="stylesheet"/>
-<link href="../css/theme_extra.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet"/>
-<script>
-    // Current page data
-    var mkdocs_page_name = "Fundamentos";
-    var mkdocs_page_input_path = "basics/index.md";
-    var mkdocs_page_url = null;
-  </script>
-<script defer="" src="../js/jquery-2.1.1.min.js"></script>
-<script defer="" src="../js/modernizr-2.8.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-</link></head>
-<body class="wy-body-for-nav" role="document">
-<div class="wy-grid-for-nav">
-<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
-<div class="wy-side-scroll">
-<div class="wy-side-nav-search">
-<a class="icon icon-home" href=".."> Sistemas Distribuídos</a>
+<link href="../assets/stylesheets/main.a676eddb.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#fundamentos">
+          Skip to content
+        </a>
 </div>
-<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro/">Introdução</a>
-</li>
-</ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal current" href="./">Fundamentos</a>
-<ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="#canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</a>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#a-internet">A Internet</a>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#no-principio-era-o-socket">No princípio, era o Socket</a>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#tcp">TCP</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#exercicio-multiplos-pacotes">Exercício: Múltiplos Pacotes</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#exercicio-ping-pong">Exercício: Ping-Pong</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#udp">UDP</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#exercicio-ping-pong-udp">Exercício: Ping-Pong UDP</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#ip-multicast">IP-Multicast</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#exercicio-ip-multicast">Exercício: IP-Multicast</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#referencias">Referências</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e Multithreading em Sistemas Distribuídos</a>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#cliente-multithreaded">Cliente multithreaded</a>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#servidor-multithreaded">Servidor multithreaded</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#single-threaded">Single-threaded</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#thread-per-request">Thread per request</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#thread-pool">Thread pool</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#problemas-com-multithreading">Problemas com multithreading</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#estado-em-servidores">Estado em Servidores</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#multithread-na-pratica">Multithread na prática</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#pthreads">PThreads</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#threads-java">Threads Java</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#threads-em-python">Threads em Python</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#exercicio-anel-multithread">Exercício - Anel Multithread</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../comm/">Comunicação</a>
-</li>
-</ul>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="Sistemas Distribuídos" class="md-header-nav__button md-logo" href=".." title="Sistemas Distribuídos">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            Sistemas Distribuídos
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Fundamentos
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Type to start searching
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 </nav>
-<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
-<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
-<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
-<a href="..">Sistemas Distribuídos</a>
-</nav>
-<div class="wy-nav-content">
-<div class="rst-content">
-<div aria-label="breadcrumbs navigation" role="navigation">
-<ul class="wy-breadcrumbs">
-<li><a href="..">Docs</a> »</li>
-<li>Fundamentos</li>
-<li class="wy-breadcrumbs-aside">
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sistemas Distribuídos" class="md-nav__button md-logo" href=".." title="Sistemas Distribuídos">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+    Sistemas Distribuídos
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href=".." title="Prólogo">
+      Prólogo
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../intro/" title="Introdução">
+      Introdução
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Fundamentos
+        <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z"></path></svg>
+</span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Fundamentos">
+      Fundamentos
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#canais-e-protocolos-de-comunicacao">
+    Canais e Protocolos de Comunicação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-internet">
+    A Internet
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#no-principio-era-o-socket">
+    No princípio, era o Socket
+  </a>
+<nav aria-label="No princípio, era o Socket" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp">
+    TCP
+  </a>
+<nav aria-label="TCP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-multiplos-pacotes">
+    Exercício: Múltiplos Pacotes
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ping-pong">
+    Exercício: Ping-Pong
+  </a>
 </li>
 </ul>
-<hr/>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#udp">
+    UDP
+  </a>
+<nav aria-label="UDP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ping-pong-udp">
+    Exercício: Ping-Pong UDP
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ip-multicast">
+    IP-Multicast
+  </a>
+<nav aria-label="IP-Multicast" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ip-multicast">
+    Exercício: IP-Multicast
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#referencias">
+    Referências
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos">
+    Multiprogramação e Multithreading em Sistemas Distribuídos
+  </a>
+<nav aria-label="Multiprogramação e Multithreading em Sistemas Distribuídos" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cliente-multithreaded">
+    Cliente multithreaded
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#servidor-multithreaded">
+    Servidor multithreaded
+  </a>
+<nav aria-label="Servidor multithreaded" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#single-threaded">
+    Single-threaded
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-per-request">
+    Thread per request
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-pool">
+    Thread pool
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#problemas-com-multithreading">
+    Problemas com multithreading
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estado-em-servidores">
+    Estado em Servidores
+  </a>
+<nav aria-label="Estado em Servidores" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#informacao-sobre-sessao">
+    Informação sobre Sessão
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tratamento-de-falhas">
+    Tratamento de falhas
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#qual-e-melhor">
+    Qual é melhor?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multithread-na-pratica">
+    Multithread na prática
+  </a>
+<nav aria-label="Multithread na prática" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pthreads">
+    PThreads
+  </a>
+<nav aria-label="PThreads" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#funcao-de-entrada">
+    Função de entrada
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#criacao">
+    Criação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#destruicao">
+    Destruição
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#execucao">
+    Execução
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threads-java">
+    Threads Java
+  </a>
+<nav aria-label="Threads Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#criacao-de-threads-java">
+    Criação de Threads Java
+  </a>
+<nav aria-label="Criação de Threads Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extender-thread">
+    Extender Thread
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementar-runnable">
+    Implementar Runnable
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-thread">
+    API Thread
+  </a>
+<nav aria-label="API Thread" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadsleep">
+    Thread.sleep()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interruptedexception">
+    InterruptedException
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadjoin">
+    Thread.join()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#counterjava">
+    Counter.java
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#synchronized">
+    synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio_1">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#blocos-synchronized">
+    Blocos synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio_2">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#synchronized_1">
+    synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deadlock">
+    Deadlock
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deadlock_1">
+    Deadlock
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sinalizacao">
+    Sinalização
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#espera-ocupada">
+    Espera ocupada
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#waitnotify">
+    Wait/Notify
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#locks">
+    Locks
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executor">
+    Executor
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadpool">
+    ThreadPool
+  </a>
+<nav aria-label="ThreadPool" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#forkjoin">
+    Fork/Join
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estrutura-para-coordenacao-de-threads">
+    Estrutura para Coordenação de Threads
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tipos-atomicos">
+    Tipos Atômicos
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadlocal">
+    ThreadLocal
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais_1">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threads-em-python">
+    Threads em Python
+  </a>
+<nav aria-label="Threads em Python" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais_2">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-anel-multithread">
+    Exercício - Anel Multithread
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../comm/" title="Comunicação">
+      Comunicação
+    </a>
+</li>
+</ul>
+</nav>
 </div>
-<div role="main">
-<div class="section">
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#canais-e-protocolos-de-comunicacao">
+    Canais e Protocolos de Comunicação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-internet">
+    A Internet
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#no-principio-era-o-socket">
+    No princípio, era o Socket
+  </a>
+<nav aria-label="No princípio, era o Socket" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tcp">
+    TCP
+  </a>
+<nav aria-label="TCP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-multiplos-pacotes">
+    Exercício: Múltiplos Pacotes
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ping-pong">
+    Exercício: Ping-Pong
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#udp">
+    UDP
+  </a>
+<nav aria-label="UDP" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ping-pong-udp">
+    Exercício: Ping-Pong UDP
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ip-multicast">
+    IP-Multicast
+  </a>
+<nav aria-label="IP-Multicast" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-ip-multicast">
+    Exercício: IP-Multicast
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#referencias">
+    Referências
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos">
+    Multiprogramação e Multithreading em Sistemas Distribuídos
+  </a>
+<nav aria-label="Multiprogramação e Multithreading em Sistemas Distribuídos" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cliente-multithreaded">
+    Cliente multithreaded
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#servidor-multithreaded">
+    Servidor multithreaded
+  </a>
+<nav aria-label="Servidor multithreaded" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#single-threaded">
+    Single-threaded
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-per-request">
+    Thread per request
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-pool">
+    Thread pool
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#problemas-com-multithreading">
+    Problemas com multithreading
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estado-em-servidores">
+    Estado em Servidores
+  </a>
+<nav aria-label="Estado em Servidores" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#informacao-sobre-sessao">
+    Informação sobre Sessão
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tratamento-de-falhas">
+    Tratamento de falhas
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#qual-e-melhor">
+    Qual é melhor?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multithread-na-pratica">
+    Multithread na prática
+  </a>
+<nav aria-label="Multithread na prática" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pthreads">
+    PThreads
+  </a>
+<nav aria-label="PThreads" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#funcao-de-entrada">
+    Função de entrada
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#criacao">
+    Criação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#destruicao">
+    Destruição
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#execucao">
+    Execução
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threads-java">
+    Threads Java
+  </a>
+<nav aria-label="Threads Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#criacao-de-threads-java">
+    Criação de Threads Java
+  </a>
+<nav aria-label="Criação de Threads Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extender-thread">
+    Extender Thread
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementar-runnable">
+    Implementar Runnable
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-thread">
+    API Thread
+  </a>
+<nav aria-label="API Thread" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadsleep">
+    Thread.sleep()
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interruptedexception">
+    InterruptedException
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadjoin">
+    Thread.join()
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#counterjava">
+    Counter.java
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#synchronized">
+    synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio_1">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#blocos-synchronized">
+    Blocos synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio_2">
+    Exercício
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#synchronized_1">
+    synchronized
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deadlock">
+    Deadlock
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deadlock_1">
+    Deadlock
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sinalizacao">
+    Sinalização
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#espera-ocupada">
+    Espera ocupada
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#waitnotify">
+    Wait/Notify
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#locks">
+    Locks
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executor">
+    Executor
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadpool">
+    ThreadPool
+  </a>
+<nav aria-label="ThreadPool" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#forkjoin">
+    Fork/Join
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estrutura-para-coordenacao-de-threads">
+    Estrutura para Coordenação de Threads
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tipos-atomicos">
+    Tipos Atômicos
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threadlocal">
+    ThreadLocal
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais_1">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#threads-em-python">
+    Threads em Python
+  </a>
+<nav aria-label="Threads em Python" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#leia-mais_2">
+    Leia mais
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exercicio-anel-multithread">
+    Exercício - Anel Multithread
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
 <h1 id="fundamentos">Fundamentos</h1>
 <p>A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
 No mundo de hoje, isto quer dizer que os <em>hosts</em> dos componentes devem possuir interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
@@ -603,7 +1331,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 <p><img alt="Multithreaded" src="images/multithreaded.jpg"/></p>
 <p>Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a <strong>inconsistências</strong> na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como <strong>deadlocks</strong> e <strong>inanição</strong>.
-Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads</p>
+Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.</p>
 <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" width="560"></iframe>
 <h4 id="estado-em-servidores">Estado em Servidores</h4>
 <p>A questão das regiões críticas no servidor está intimamente relacionada à questão da manutenção de estado nos servidores.
@@ -679,6 +1407,7 @@ Veja um pequeno comparativo das características das duas abordagens.</p>
 <p>Uma visão interessante sobre estado é apresentada em <a href="https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2">On stateless software design</a>.
 Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre <em>stateful</em> ser sempre mais complexo.
 A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.</p>
+<p><a href="https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html">Sobre IO não bloqueante em Java.</a></p>
 <h3 id="multithread-na-pratica">Multithread na prática</h3>
 <h4 id="pthreads">PThreads</h4>
 <p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição aberta de como <em>threads</em> devem funcionar em sistemas operacionais.
@@ -989,7 +1718,7 @@ Por isso, é essencial que o <code>synchronized</code> seja o mais limitado poss
 <h5 id="deadlock"><em>Deadlock</em></h5>
 <p>O uso dos "locks" em ordens diferentes pode levar a um deadlock, pois o seguinte grafo de dependência poderá ser gerado:</p>
 <h5 id="deadlock_1">Deadlock</h5>
-<div class="mermaid">stateDiagram
+<div class="mermaid">graph LR
   T1 --&gt; lock1
   T2 --&gt; lock2
   lock1 --&gt; T2
@@ -1212,39 +1941,67 @@ print "Exiting Main Thread"
 </li>
 </ol>
 </div>
+</article>
 </div>
 </div>
-<footer>
-<div aria-label="footer navigation" class="rst-footer-buttons" role="navigation">
-<a class="btn btn-neutral float-right" href="../comm/" title="Comunicação">Next <span class="icon icon-circle-arrow-right"></span></a>
-<a class="btn btn-neutral" href="../intro/" title="Introdução"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../intro/" rel="prev" title="Introdução">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
 </div>
-<hr/>
-<div role="contentinfo">
-<!-- Copyright etc -->
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Introdução
+              </div>
 </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</a>
+<a class="md-footer-nav__link md-footer-nav__link--next" href="../comm/" rel="next" title="Comunicação">
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Comunicação
+              </div>
+</div>
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
 </footer>
 </div>
-</div>
-</section>
-</div>
-<div aria-label="versions" class="rst-versions" role="note">
-<span class="rst-current-version" data-toggle="rst-current-version">
-<span><a href="../intro/" style="color: #fcfcfc;">« Previous</a></span>
-<span style="margin-left: 15px"><a href="../comm/" style="color: #fcfcfc">Next »</a></span>
-</span>
-</div>
-<script>var base_url = '..';</script>
-<script defer="" src="../js/theme.js"></script>
-<script defer="" src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
-<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script defer="" src="../mathjaxhelper.js"></script>
-<script defer="">
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
-<script>mermaid.initialize();</script></body>
+<script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+<script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+<script src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="../mathjaxhelper.js"></script>
+<script>mermaid.initialize({});</script></body>
 </html>

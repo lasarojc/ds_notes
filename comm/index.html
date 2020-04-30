@@ -1,117 +1,530 @@
+
 <!DOCTYPE html>
 
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="../img/favicon.ico" rel="shortcut icon"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../assets/images/favicon.png" rel="shortcut icon"/>
+<meta content="mkdocs-1.1, mkdocs-material-5.1.1" name="generator"/>
 <title>Comunicação - Sistemas Distribuídos</title>
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
-<link href="../css/theme.css" rel="stylesheet"/>
-<link href="../css/theme_extra.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet"/>
-<script>
-    // Current page data
-    var mkdocs_page_name = "Comunica\u00e7\u00e3o";
-    var mkdocs_page_input_path = "comm/index.md";
-    var mkdocs_page_url = null;
-  </script>
-<script defer="" src="../js/jquery-2.1.1.min.js"></script>
-<script defer="" src="../js/modernizr-2.8.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-</link></head>
-<body class="wy-body-for-nav" role="document">
-<div class="wy-grid-for-nav">
-<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
-<div class="wy-side-scroll">
-<div class="wy-side-nav-search">
-<a class="icon icon-home" href=".."> Sistemas Distribuídos</a>
+<link href="../assets/stylesheets/main.a676eddb.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#communicacao">
+          Skip to content
+        </a>
 </div>
-<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="..">Prólogo</a>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro/">Introdução</a>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../basics/">Fundamentos</a>
-</li>
-</ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal current" href="./">Comunicação</a>
-<ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="#abaixo-os-sockets">Abaixo os Sockets!</a>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#representacao-de-dados">Representação de dados</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#protobuffers">ProtoBuffers</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</a>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-grpc">Estudo de Caso RPC: gRPC</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#instalacao">Instalação</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#exemplo-java">Exemplo Java</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#exemplo-python">Exemplo Python</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#instalacao_1">Instalação</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#idl-thrift">IDL Thrift</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#arquitetura">Arquitetura</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#classpath">Classpath</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#referencias">Referências</a>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</a>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header-nav md-grid">
+<a aria-label="Sistemas Distribuídos" class="md-header-nav__button md-logo" href=".." title="Sistemas Distribuídos">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+<label class="md-header-nav__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
+</label>
+<div class="md-header-nav__title" data-md-component="header-title">
+<div class="md-header-nav__ellipsis">
+<span class="md-header-nav__topic md-ellipsis">
+            Sistemas Distribuídos
+          </span>
+<span class="md-header-nav__topic md-ellipsis">
+            
+              Comunicação
+            
+          </span>
+</div>
+</div>
+<label class="md-header-nav__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</label>
+<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
+</button>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Type to start searching
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 </nav>
-<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
-<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
-<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
-<a href="..">Sistemas Distribuídos</a>
-</nav>
-<div class="wy-nav-content">
-<div class="rst-content">
-<div aria-label="breadcrumbs navigation" role="navigation">
-<ul class="wy-breadcrumbs">
-<li><a href="..">Docs</a> »</li>
-<li>Comunicação</li>
-<li class="wy-breadcrumbs-aside">
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Sistemas Distribuídos" class="md-nav__button md-logo" href=".." title="Sistemas Distribuídos">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
+</a>
+    Sistemas Distribuídos
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href=".." title="Prólogo">
+      Prólogo
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../intro/" title="Introdução">
+      Introdução
+    </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../basics/" title="Fundamentos">
+      Fundamentos
+    </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+        Comunicação
+        <span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z"></path></svg>
+</span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./" title="Comunicação">
+      Comunicação
+    </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representacao-de-dados">
+    Representação de dados
+  </a>
+<nav aria-label="Representação de dados" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representacao-textual">
+    Representação Textual
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protobuffers">
+    ProtoBuffers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thrift">
+    Thrift
+  </a>
 </li>
 </ul>
-<hr/>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invocacao-remota-de-procedimentos-rpc">
+    Invocação Remota de Procedimentos - RPC
+  </a>
+<nav aria-label="Invocação Remota de Procedimentos - RPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stubs">
+    Stubs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparencia">
+    Transparência
+  </a>
+<nav aria-label="Transparência" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#descoberta-de-servicos">
+    Descoberta de Serviços
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tratamento-de-excecoes">
+    Tratamento de Exceções
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reexecucoes">
+    Reexecuções
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#concorrencia-no-servidor">
+    Concorrência no servidor
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#frameworks">
+    Frameworks
+  </a>
+<nav aria-label="Frameworks" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interface-definition-language-idl">
+    Interface Definition Language - IDL
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-grpc">
+    Estudo de Caso RPC: gRPC
+  </a>
+<nav aria-label="Estudo de Caso RPC: gRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#instalacao">
+    Instalação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exemplo-java">
+    Exemplo Java
+  </a>
+<nav aria-label="Exemplo Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pegando-o-codigo">
+    Pegando o código
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#compilando-e-executando">
+    Compilando e executando
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#o-servico">
+    O serviço
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementando-um-servico">
+    Implementando um serviço
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stub-do-servidor">
+    Stub do servidor
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stub-do-cliente">
+    Stub do cliente
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idl-grpc">
+    IDL gRPC
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exemplo-python">
+    Exemplo Python
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-thrift">
+    Estudo de Caso RPC: Thrift
+  </a>
+<nav aria-label="Estudo de Caso RPC: Thrift" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#instalacao_1">
+    Instalação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idl-thrift">
+    IDL Thrift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#arquitetura">
+    Arquitetura
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classpath">
+    Classpath
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#referencias">
+    Referências
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-rmi">
+    Estudo de Caso RPC: RMI
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comunicacao-orientada-a-mensagens">
+    Comunicação orientada a Mensagens
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </div>
-<div role="main">
-<div class="section">
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representacao-de-dados">
+    Representação de dados
+  </a>
+<nav aria-label="Representação de dados" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representacao-textual">
+    Representação Textual
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protobuffers">
+    ProtoBuffers
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thrift">
+    Thrift
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invocacao-remota-de-procedimentos-rpc">
+    Invocação Remota de Procedimentos - RPC
+  </a>
+<nav aria-label="Invocação Remota de Procedimentos - RPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stubs">
+    Stubs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparencia">
+    Transparência
+  </a>
+<nav aria-label="Transparência" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#descoberta-de-servicos">
+    Descoberta de Serviços
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tratamento-de-excecoes">
+    Tratamento de Exceções
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reexecucoes">
+    Reexecuções
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#concorrencia-no-servidor">
+    Concorrência no servidor
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#frameworks">
+    Frameworks
+  </a>
+<nav aria-label="Frameworks" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interface-definition-language-idl">
+    Interface Definition Language - IDL
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-grpc">
+    Estudo de Caso RPC: gRPC
+  </a>
+<nav aria-label="Estudo de Caso RPC: gRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#instalacao">
+    Instalação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exemplo-java">
+    Exemplo Java
+  </a>
+<nav aria-label="Exemplo Java" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pegando-o-codigo">
+    Pegando o código
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#compilando-e-executando">
+    Compilando e executando
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#o-servico">
+    O serviço
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementando-um-servico">
+    Implementando um serviço
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stub-do-servidor">
+    Stub do servidor
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stub-do-cliente">
+    Stub do cliente
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idl-grpc">
+    IDL gRPC
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exemplo-python">
+    Exemplo Python
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-thrift">
+    Estudo de Caso RPC: Thrift
+  </a>
+<nav aria-label="Estudo de Caso RPC: Thrift" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#instalacao_1">
+    Instalação
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#idl-thrift">
+    IDL Thrift
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#arquitetura">
+    Arquitetura
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#classpath">
+    Classpath
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#referencias">
+    Referências
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#estudo-de-caso-rpc-rmi">
+    Estudo de Caso RPC: RMI
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comunicacao-orientada-a-mensagens">
+    Comunicação orientada a Mensagens
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content">
+<article class="md-content__inner md-typeset">
 <h1 id="communicacao">Communicação</h1>
-<h2 id="abaixo-os-sockets">Abaixo os Sockets!</h2>
 <p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
 Suas desvantagens, entretanto, são várias:</p>
@@ -119,45 +532,41 @@ Suas desvantagens, entretanto, são várias:</p>
 <li>interface de "arquivo" para se ler e escrever bytes;</li>
 <li>controle de fluxo de "objetos" é por conta da aplicação, isto é, a aplicação precisa sinalizar quantos bytes serão escritos de um lado, para que o outro saiba quanto ler para obter um "objeto" correto;</li>
 <li>logo, a serialização e desserialização de objetos é também por conta da aplicação;</li>
-<li>tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação, e nem a tão famosa confiabilidade do TCP ajuda.</li>
+<li>tratamento de desconexões e eventuais reconexões também é gerenciado pela aplicação e nem a tão famosa confiabilidade do TCP ajuda.</li>
 </ul>
-<h3 id="representacao-de-dados">Representação de dados</h3>
 <p>Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">fim-a-fim</a>, é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
-Uma delas é a serialização de dados complexos.
-Imagine-se usando um tipo abstrato de daados com diversos campos, incluindo valores numéricos de diversos tipos, strings, aninhamentos, tudo somando vários KB.
-Você terá que se preocupar com diversos fatores na hora de colocar esta estrutura <em>no fio</em>:</p>
+Aqui discutiremos algumas destas funcionalidades e como podem e são implementadas por <em>frameworks</em> de comunicação de mais alto nível.</p>
+<h2 id="representacao-de-dados">Representação de dados</h2>
+<p>Exceto por aplicações muito simples, processos em um sistema distribuídos trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
+Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura <em>no fio</em>, por exemplo:</p>
 <ul>
-<li>tipos com definição imprecisa</li>
-<li>Inteiro: 16, 32, 64 ... bits?</li>
-<li>ordem dos bytes</li>
-<li>little endian?<ul>
-<li>Intel x64, </li>
+<li>Diferentes linguagens de programação usadas para desenvolver os componentes.</li>
+<li>tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?</li>
+<li>paradigmas distintos: classe x estrutura</li>
+<li>conjunto de caracteres diferentes: ASCII x UTF</li>
+<li>Arquiteturas diferentes.</li>
+<li>ordem dos bytes<ul>
+<li>little endian? </li>
+<li>x64</li>
 <li>IA-32</li>
-</ul>
-</li>
-<li>big endian?<ul>
+<li>big endian? </li>
 <li>IP</li>
-<li>SPARC (&lt; V9), </li>
-<li>Motorola, </li>
+<li>SPARC (&lt; V9)</li>
+<li>Motorola</li>
 <li>PowerPC</li>
-</ul>
-</li>
-<li>bi-endian<ul>
-<li>ARM, </li>
+<li>bi-endian?  ARM, </li>
 <li>MIPS, </li>
 <li>IA-64</li>
 </ul>
 </li>
-<li>Representação de ponto flutuante</li>
-<li>Conjunto de caracteres</li>
-<li>Alinhamento de bytes</li>
-<li>Linguagem mais adequada ao problema e não à API socket</li>
-<li>Classe x Estrutura</li>
-<li>Sistema operacional</li>
+<li>representação de ponto flutuante</li>
+<li>alinhamento de bytes</li>
+<li>Sistemas operacionais diferentes</li>
 <li>crlf (DOS) x lf (Unix)</li>
 <li>fragmentação <br/>
 <a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png"/></a></li>
 </ul>
+<h3 id="representacao-textual">Representação Textual</h3>
 <p>Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
 Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.</p>
 <pre><code class="HTML">telnet www.google.com 80
@@ -233,8 +642,8 @@ Mas de fato, a opção final por XML ou JSON é questão de preferência, uma ve
 </ul>
 <p>ASN.1 e XDR são de interesse histórico, mas não os discutiremos aqui.
 Quanto à serialização feita nativamente pelo Java, por meio de <code>ObjectOutputStreams</code>, como neste <a href="https://www.tutorialspoint.com/java/java_serialization.htm">exemplo</a>, embora seja tentadora para quem usa Java, é necessário saber que ela é restrita à JVM e que usa muito espaço, embora minimize riscos de uma desserialização para uma classe diferente.</p>
-<p>Outras alternativas, com codificações binárias são interessantes, dentre elas, ProtoBuffers e Thrift.</p>
-<h4 id="protobuffers">ProtoBuffers</h4>
+<p>Nos foquemos nas autras alternativas listadas, ProtoBuffers e Thrift, que podem levar a representações binárias e textuais.</p>
+<h3 id="protobuffers">ProtoBuffers</h3>
 <p>Nas palavras dos <a href="https://developers.google.com/protocol-buffers/">criadores</a>,</p>
 <blockquote>
 <p>Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.</p>
@@ -276,7 +685,200 @@ cout &lt;&lt; "E-mail: " &lt;&lt; person.email() &lt;&lt; endl;
 <blockquote>
 <p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
 </blockquote>
+<h3 id="thrift">Thrift</h3>
+<h1>TODO</h1>
 <h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
+<p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">1</a></sup>
+introduziram o mecanismo de <strong>Invocação Remota de Procedimentos</strong> (<em>Remote Procedure Calls</em>), que permite que processos façam, pasmem, invocações de procedimentos remotos!
+Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
+Por exemplo, RPC permita que se procure a <em>substring</em> <code>"teste"</code> dentro da string apontada por <code>a</code>, a partir da posição 3, usando <code>x = substring(a,3,"teste");</code>, mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.</p>
+<h3 id="stubs">Stubs</h3>
+<p>Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo<sup id="fnref:omissao"><a class="footnote-ref" href="#fn:omissao">2</a></sup>.
+O código <code>x = substring(a,3,"teste");</code>, que procura <code>"teste"</code> em <code>*a</code>, é traduzido nos seguintes passos em linguagem de máquina:</p>
+<ul>
+<li>coloque o endereço de <code>"teste"</code> na pilha</li>
+<li>coloque <code>3</code> na pilha</li>
+<li>coloque o valor de <code>a</code> na pilha</li>
+<li>coloque o endereço de retorno na pilha (junto com outros dados de controle)</li>
+<li>salte para <code>substring</code> ajustando o <em>instruction pointer</em></li>
+<li>... procure substring ...</li>
+<li>coloque o resultado no acumulador</li>
+<li>limpe a pilha</li>
+<li>salte de volta recuperando o endereço de retorno da pilha e ajustando o IP</li>
+<li>coloque resultado em <code>x</code></li>
+</ul>
+<p>Se o que queremos é colocar o código da função <code>substring</code> em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
+Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local mas que, por baixo do capô, use sockets para se comunicar com o processo remoto.<br>
+Estq simulação usará código extra, que finge implementar <code>substring</code> para o invocador mas delega ao código remoto o trabalho real da busca.
+Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <em>stub cliente</em>, que faz parte do processo invocando a operação, e <em>stub</em> servidor, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">3</a></sup>.</br></p>
+<p>Assim, o cliente invoca função no stub cliente, achando que é a função que quer executar.
+Stub cliente faz o <strong>marshaling</strong> <sup id="fnref:marshal"><a class="footnote-ref" href="#fn:marshal">4</a></sup>  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
+Quando recebe a resposta do servidor, o stub cliente retorna a mesma resposta, como se tivesse calculado localmente.</p>
+<div class="admonition note">
+<p class="admonition-title">Stub cliente</p>
+<p>Implementa uma função <code>substring(char*, int, char*)</code> que</p>
+<ul>
+<li>abre socket para servidor</li>
+<li>envia parâmetros</li>
+<li>especifica função</li>
+<li>espera resposta</li>
+<li>retorna resultado</li>
+</ul>
+</div>
+<p>Já o stub servidor fica esperando o contato do cliente.
+Quando acontece, faz o "unmarshalling" dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retona ao cliente.</p>
+<div class="admonition note">
+<p class="admonition-title">Stub servidor</p>
+<ul>
+<li>espera conexão</li>
+<li>recebe parâmetros</li>
+<li>recebe especificação da função</li>
+<li>invoca função localmente</li>
+<li>envia resultado para cliente</li>
+</ul>
+</div>
+<p><img alt="Skeleton" src="images/stubskeleton.png"/></p>
+<h3 id="transparencia">Transparência</h3>
+<p>É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao centralizado, certo? Isto é, <strong>interface baseada em procedimentos</strong> e sem a necessidade de detalhar <strong>portas, sockets, e representação de dados</strong>.  Ou seja, tudo é transparente!
+Como já discutimos, vários fatores trabalham contra a <a href="../intro/#transparencia">transparência em sistemas distribuídos</a>.
+Em específico quanto à transparência dada pelo RPC, também temos limitações.
+O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que </p>
+<ul>
+<li>processos independentes não compartilham um espaço de endereçamento, e</li>
+<li>processos independentes não compartilham uma pilha.</li>
+</ul>
+<p>Assim, como fica a <strong>passagem de parâmetro por referência</strong>, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
+Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, <strong>o valor apontado pelo ponteiro é passado para o servidor</strong>, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.
+Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
+Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
+Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista? Como ensinar para o <em>framework</em> RPC o que é "toda" a lista?</p>
+<p>Java "resolve" o problema da passagem de parâmetro por referência passando todo o grafo do objeto passado como parâmetro para o servidor. Isto é, além de serializar o objeto apontado no parâmetro, se o mesmo aponta para outros objetos, estes também serão serializados e transferidos; o servidor irá então reconstruir todo o grafo e passar para o método sendo invocado.
+É muito fácil ver que esta abordagem pode se tornar inviável rapidamente. Quando for o caso, Java permite marcar objetos como <strong>remotos</strong> e, em vez de serializar este objeto e enviar para o servidor, envia informação suficiente para que o servidor possa invocar métodos em tal objeto no cliente, tornando nebulosa a definição de quem é quem.</p>
+<p>Outros fatores também trabalham contra a transparência para o desenvolvedor. Vejamos alguns</p>
+<h4 id="descoberta-de-servicos">Descoberta de Serviços</h4>
+<p>Por exemplo, mesmo que o socket seja ocultado, ele ainda existe e precisa de informações sobre <strong>onde se conectar</strong> (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
+Esta informação pode ser configurada <em>a priori</em> por um administrador de sistemas, mas requer atualizações sempre que a localização do serviço for alterada ou novos servidores adicionados.
+Mais interessante seria um mecanismo que permitisse uma indireção para o serviço; o próprio DNS pode ser uma opção inicial, mas um serviço dedicado pode ser mais apropriado, pois permite descobrir serviços e não apenas servidores.</p>
+<p>Birrel e Nelson propuseram um serviço de <strong>Páginas Amarelas</strong>, no qual clientes podem questionar quem oferece um certo serviço e serem redirecionados automaticamente.
+Esta abordagem tem seus próprios problemas, como por exemplo determinar <strong>quem administra</strong> o serviço para incluir novos servidores.
+E como determinar qual serviço acessar, caso hajam <strong>múltiplas opções de servidores</strong>.</p>
+<p>Apesar dos problemas, <strong>páginas amarelas</strong> foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo <a href="https://en.wikipedia.org/wiki/Web_Services_Discovery">Web Services Discovery</a>, que permite a descoberta de Web Services em escala global, e <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html">Java Remote Object Registry</a> que permite a descoberta de objetos remotos Java.</p>
+<h4 id="tratamento-de-excecoes">Tratamento de Exceções</h4>
+<p>Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
+Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
+Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para algo assim (em uma linguagem fictícia):</p>
+<pre><code class="c">int x = -2;
+try {
+    x = substring(a,3,"teste");`
+} catch(CommunicationFailureException cfe) {
+    log_error("Como pode substring falhar? Desespero!!!");
+}
+
+if (x == -2)
+    system_exit(-2)
+else if (x == -1)
+    //não achou
+else
+    //achou "teste" na posição x
+</code></pre>
+<p>O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.</p>
+<p>Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
+Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
+No caso de falhas, se o processo quebra como um todo, no seu reinício, pode-se identificar se a operação foi ou não executada e aplicar ações corretivas.
+Mas e no caso remoto?</p>
+<h4 id="reexecucoes">Reexecuções</h4>
+<p>No caso da operação distribuída, se o servidor quebra, isso levará a um erro ser percebido do lado do cliente como uma <strong>falha na conexão</strong>.
+Se o cliente havia invocado uma operação mas percebeu o erro antes de receber uma confirmação de sua execução, isto pode indicar que:</p>
+<ul>
+<li>(i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,</li>
+<li>(ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.</li>
+</ul>
+<p>O cliente tem que tratar o erro, mas como?
+Se a operação <strong>precisa</strong> ser executada <strong>a qualquer custo</strong>, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
+Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
+Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
+Esta abordagem é garantirá que a execução acontece <strong>pelo menos 1 vez</strong>.</p>
+<p>Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
+Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a <strong>no máximo uma</strong> execução.
+Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um <em>stream</em> de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.</p>
+<p>Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados <strong>exatamente uma</strong> vez.
+Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
+De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.</p>
+<div class="admonition note">
+<p class="admonition-title">Quantidade de execuções</p>
+<ul>
+<li>No máximo uma - não retentar</li>
+<li>Exatamente uma - impedir que falhas aconteçam :/</li>
+<li>Pelo menos uma - retentar até ter confirmação</li>
+</ul>
+</div>
+<p>Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
+Mas ela não pode ser repetida, então a alternativa é tornar as operações <a href="https://en.wikipedia.org/wiki/Idempotence"><strong>idempotentes</strong></a>, o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.</p>
+<div class="admonition note">
+<p class="admonition-title">Operações idempotentes</p>
+<p>Múltiplas execuções tem o mesmo efeito uma execução.</p>
+<ul>
+<li>Exemplo: <code>x = 10</code></li>
+<li>Anti-exemplo:  <code>x = x+1</code>.</li>
+</ul>
+</div>
+<p>Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.</p>
+<h4 id="concorrencia-no-servidor">Concorrência no servidor</h4>
+<p>É importante notar que um servidor não está obrigado a atender requisições de somente um cliente.
+Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.</p>
+<p>Pense por exemplo em um servidor que conta o número de acessos feitos por clientes.
+O incremento do contador deve ser considerado uma região crítica, caso múltiplos threads tratem as requisições dos clientes, o que já vimos ser uma boa idia.
+Claro que dificilmente seu servidor seria algo tão simples assim.
+Em vez disso, ele provavelmente executará lógicas complicadas, como por exemplo, armazenar o estado de contas bancárias e, neste caso, as funções expostas por RPC incluiríam a operação <strong>transferir saldo de A para B</strong>, o que nos leva a mais um problema interessante, o do risco de reexecuções.</p>
+<p>Além disso, o servidor provavelmente suportará diversas operações e por isso deverá identificar qual a operação sendo requisitada.
+Isto é feito por um <em>dispatcher</em>, que demultiplexa as operações requisitadas; o dispatcher pode, em algumas arquiteturas, ser independente do skeleton em si.</p>
+<h3 id="frameworks">Frameworks</h3>
+<p>Há diversas opçõe de <em>frameworks</em> para RPC, com diferentes características, focos, e garantias.
+Alguns são parte da linguagem e outros são implementados como bibliotecas.
+Alguns suportam múltiplas linguagens e alguns apenas uma.</p>
+<div class="admonition note">
+<p class="admonition-title">Suporte a RPC na linguagem</p>
+<ul>
+<li>Sem RPC: C, C++, Java &lt; 5.0 (1.5), Python</li>
+<li>Com RPC: Java, Go, Erlang, Scala, Haskell</li>
+<li>Ambientes heterogêneos: Thrift, gRPC, Akka, SOAP</li>
+</ul>
+</div>
+<p>Frameworks mais modernos permitem escolher a forma de serialização dos dados, se legível para humanos ou binário, se o transporte é via HTTP ou protocolo mais baixo nível, se os dados trafegam abertamente ou se faz uso de comunicação criptografada (SSL).
+Outros permitem escolher semântica de execução entre <strong>no máximo uma</strong> e <strong>pelo menos uma</strong>, e há até quem prometa <strong>exatamente uma</strong>.
+Mas todos os <strong>frameworks</strong> tem algumas características em comum e uma delas é o uso de uma <strong>Linguagem de Definição de Interface</strong> (IDL).</p>
+<h4 id="interface-definition-language-idl">Interface Definition Language - IDL</h4>
+<p>Uma <a href="https://en.wikipedia.org/wiki/Interface_description_language">IDL</a> é a linguagem pela qual desenvolvedor define quais as operações (funções, procedimentos, métodos) serão acessíveis via RPC e quais os seus operandos.
+Há várias IDL definidas, para os diversos <em>frameworks</em> disponíveis.</p>
+<p>A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.</p>
+<p><img alt="IDL" src="images/idl.png"/></p>
+<p>O fluxo de processamento é o seguinte:</p>
+<ul>
+<li>Arquivo em IDL é compilado por um compilador IDL e gera diversos arquivos:<ul>
+<li><em>stub</em> cliente - código que implementa a interface, com código para repassar invocações para o servidor.</li>
+<li><em>stub</em> servidor (<em>skeleton</em>) - código que atende a conexões do <em>stub</em> cliente e repassa para a implementação própria da função.</li>
+<li>conversão de dados - código que serializa e deserializa dados para serem trafegados de e para o servidor</li>
+<li>cabeçalhos - definições da interface na linguagem de desenvolvimento da aplicação; se linguagem C, por exemplo, estes serão arquivos <code>.h</code>, se em Java, então estes serão arquivos<code>.java</code>, com definição de <code>interface</code>.</li>
+</ul>
+</li>
+<li>O código cliente é compilado e gera o cliente, que deve <ul>
+<li>inicializar a infraestrutura RPC<ul>
+<li>Tipo de transporte</li>
+<li>SSL?</li>
+<li>Localizar servidor</li>
+</ul>
+</li>
+<li>Lidar com falhas</li>
+</ul>
+</li>
+<li>O código servidor é compilado e gera o servidor, que deve<ul>
+<li>exportar e localizar serviços (serviço de nomeação)</li>
+<li>Gerenciamento de portas</li>
+<li>Conexões</li>
+</ul>
+</li>
+</ul>
+<p>Mas para entendermos melhor o fluxo, vejamos algumas ferramentas reais.</p>
 <h3 id="estudo-de-caso-rpc-grpc">Estudo de Caso RPC: gRPC</h3>
 <p>gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
 Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.</p>
@@ -662,37 +1264,78 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 <p><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></p>
 <h3 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h3>
 <h1>TODO</h1>
-</div>
-</div>
-<footer>
-<div aria-label="footer navigation" class="rst-footer-buttons" role="navigation">
-<a class="btn btn-neutral" href="../basics/" title="Fundamentos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-</div>
+<h2 id="comunicacao-orientada-a-mensagens">Comunicação orientada a Mensagens</h2>
+<h1>TODO</h1>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">MOM</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Enterprise_service_bus">Enterprise Message Bus</a></li>
+<li><a href="https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/">To Message Bus or Not: distributed system design</a></li>
+</ul>
+<div class="footnote">
 <hr/>
-<div role="contentinfo">
-<!-- Copyright etc -->
+<ol>
+<li id="fn:birrel">
+<p><a href="http://www.birrell.org/andrew/papers/ImplementingRPC.pdf">Implementing RPC</a> <a class="footnote-backref" href="#fnref:birrel" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+<li id="fn:omissao">
+<p>Omitirei alguns detalhes aqui, em nome da genericidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores. <a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 2 in the text">↩</a></p>
+</li>
+<li id="fn:skeleton">
+<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton </em>. <a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 3 in the text">↩</a></p>
+</li>
+<li id="fn:marshal">
+<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio". <a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 4 in the text">↩</a></p>
+</li>
+</ol>
 </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</article>
+</div>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-nav">
+<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
+<a class="md-footer-nav__link md-footer-nav__link--prev" href="../basics/" rel="prev" title="Fundamentos">
+<div class="md-footer-nav__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
+</div>
+<div class="md-footer-nav__title">
+<div class="md-ellipsis">
+<span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Fundamentos
+              </div>
+</div>
+</a>
+</nav>
+</div>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+          Material for MkDocs
+        </a>
+</div>
+</div>
+</div>
 </footer>
 </div>
-</div>
-</section>
-</div>
-<div aria-label="versions" class="rst-versions" role="note">
-<span class="rst-current-version" data-toggle="rst-current-version">
-<span><a href="../basics/" style="color: #fcfcfc;">« Previous</a></span>
-</span>
-</div>
-<script>var base_url = '..';</script>
-<script defer="" src="../js/theme.js"></script>
-<script defer="" src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
-<script defer="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script defer="" src="../mathjaxhelper.js"></script>
-<script defer="">
-        window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        };
-    </script>
+<script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+<script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+<script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+<script src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="../mathjaxhelper.js"></script>
 </body>
 </html>
