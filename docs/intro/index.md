@@ -140,7 +140,7 @@ Por exemplo,
 * localização geográfica.
 
 
-!!! note "Por quê distribuir?"
+!!! question "Por quê distribuir?"
     As principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
 
     * escalabilidade e
@@ -315,12 +315,22 @@ Dependendo das garantias desejadas na manutenção da **consistência** entre as
 Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da [Amazon.com](https://www.allthingsdistributed.com/2008/12/eventually_consistent.html), que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.
 
 Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
-Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de ** *frameworks* de comunicação em grupo**, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
-Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada [**replicação de máquinas de estado](https://en.wikipedia.org/wiki/State_machine_replication).
+Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de *frameworks* de **comunicação em grupo**, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
+Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada [**replicação de máquinas de estado**](https://en.wikipedia.org/wiki/State_machine_replication).
 
-* ![https://i.stack.imgur.com/YHIVL.gif](images/state_machine.gif)
 
-TODO: Figura com state machine replication
+```mermaid
+stateDiagram
+    [*] --> Estado 1
+    Estado 1 --> Estado 2
+    Estado 2 --> Estado 1
+    Estado 1 --> Estado N
+    Estado 1 --> [*]
+    Estado n --> [*]
+```
+
+??? todo
+    Figura com state machine replication
 
 Novamente é preciso chamar à atenção a questão dos custos desta técnica.
 Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema ondo inconsistências são absolutamente caras demais para sere permitidas.
@@ -388,10 +398,10 @@ Embora seja um uso válido, há outros tipos de escalabilidade.
 Diversas são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
 Classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
 
-### Computação de Alto Desempelho - High Performance Computing
+### Computação de Alto Desempelho
 
-A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
-Clusters como o da imagem a seguir, do Hight Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.
+A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos
+Clusters como o da imagem a seguir, do High Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.
 
 ![Cluster para HPC no High Performance Computing Center de Stuttgart](https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg)
 
@@ -511,17 +521,22 @@ Segundo Weiser, 1993
 
 O que é importante aqui é o foco na tarefa em vez de na ferramenta. 
 Assim, sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
-Para que seja realizada, a computação pervasiva requer que dispositivos **detectem o contexto** em que estão inseridos, **combinem-se de forma *ad-hod* ** e **compartilhem informações**.
-Veja alguns exemplos interessantes, fictícios e reais.
+Para que seja realizada, a computação pervasiva requer que dispositivos **detectem o contexto** em que estão inseridos, **combinem-se** de forma *ad-hoc* e **compartilhem** informações.
 
-*  Smart Life: Esta é uma visão futurística da Microsoft para a integração de tecnologias.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+!!! example "Exemplos fictícios e reais"
 
-* Amazon Go: Este mercado automatiza o pagamento dos itens escolhidos pelo consumidor, utilizando técnicas de processamento digital de imagens, aprendizado de máquina e sensores.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    === "Smart Life" 
+        Esta é uma visão futurística da Microsoft para a integração de tecnologias.
 
-* Reality Check: Para quem viu o filme [Minority Report](https://www.imdb.com/title/tt0181689/) e sonhou com as UI do futuro, aqui vai um *reality check*. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.<br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/M08fVm6zVyw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    === "Amazon Go"
+        Este mercado automatiza o pagamento dos itens escolhidos pelo consumidor, utilizando técnicas de processamento digital de imagens, aprendizado de máquina e sensores.
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/zdbumR6Bhd8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    === "Reality Check"
+        Para quem viu o filme [Minority Report](https://www.imdb.com/title/tt0181689/) e sonhou com as UI do futuro, aqui vai um *reality check*. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Redes de Sensores e Internet das Coisas
 
@@ -536,16 +551,16 @@ Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, a
 Para aprender mais sobre IoT, veja este [link](https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc) que descreve diversos projetos europeus na área.
 
 
-<h1> TODO </h1>
-Alguns exemplos de IoT e redes de sensores:
+??? todo
+    Alguns exemplos de IoT e redes de sensores:
 
-* Smart grid e lavadora que escolhe horário
-* Termostatos que percebem movimento
-* Fechaduras que se abrem quando o dono se aproxima
-* Movimentação de tropas e de fauna
-* Índices de poluição
-* Abalos sísmicos e predição de avalanches
-* [link](https://beebom.com/examples-of-internet-of-things-technology/)
+    * Smart grid e lavadora que escolhe horário
+    * Termostatos que percebem movimento
+    * Fechaduras que se abrem quando o dono se aproxima
+    * Movimentação de tropas e de fauna
+    * Índices de poluição
+    * Abalos sísmicos e predição de avalanches
+    * [link](https://beebom.com/examples-of-internet-of-things-technology/)
 
 
 #### Uma nota sobre privacidade nos sistemas pervasivos
@@ -553,12 +568,12 @@ Alguns exemplos de IoT e redes de sensores:
 À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.
 
-<h1> TODO </h1>
-Exemplos de problemas de privacidade.
+??? todo
+    Exemplos de problemas de privacidade.
 
-* [Roomba mapeando sua casa](https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html).
-* Ghost in the shell
-* Snow crash (Neil Stephenson)
+    * [Roomba mapeando sua casa](https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html).
+    * Ghost in the shell
+    * Snow crash
 
 ### Computação Utilitária
 
@@ -583,7 +598,10 @@ Em outras palavras, um estilo ou padrão arquitetural é o conjunto de princípi
 
 Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como componentes se conectam, por meio de conectores, para implementar a solução para um problema.
 
-![Componentes e Conectores](images/components.png)
+```mermaid
+graph LR
+   (Componente 1) --> [Conector] --> (Componente 2)
+```
 
 Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão **fortemente acoplados** (*tightly coupled*). Caso contrário, diremos que estão **fracamente acoplados** (*loosely coupled*).
@@ -697,10 +715,14 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
 Nós discutiremos micro-serviços mais adiante. 
 Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, [os micro-serviços não são uma panacéia](http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/).
 
+??? todo
+    [Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
 
-<h1>TODO</h1>
-[Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
+??? todo
+    MOM
 
+??? todo
+    Pub/Sub
 
 ### Para aprender mais
 

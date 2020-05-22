@@ -186,13 +186,14 @@ cout << "Name: " << person.name() << endl;
 cout << "E-mail: " << person.email() << endl;
 ```
 
-De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.
+De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria mais ordens de grandeza mais lenta e ocuparia mais espaço.
 
 > When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
 
 ### Thrift
 
-<h1>TODO</h1>
+??? todo "TODO"
+    Thrift como forma de representação de dados.
 
 ## Invocação Remota de Procedimentos - RPC
 
@@ -207,7 +208,7 @@ Por exemplo, RPC permita que se procure a *substring* `"teste"` dentro da string
 Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo[^omissao].
 O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
 		
-[^omissao]: Omitirei alguns detalhes aqui, em nome da genericidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
+[^omissao]: Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
 
 * coloque o endereço de `"teste"` na pilha
 * coloque `3` na pilha
@@ -225,7 +226,7 @@ Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precis
 Estq simulação usará código extra, que finge implementar `substring` para o invocador mas delega ao código remoto o trabalho real da busca.
 Este código extra é conhecido como **stub**, ou para ser mais preciso, *stub cliente*, que faz parte do processo invocando a operação, e *stub* servidor, que faz parte do processo executando a operação invocada[^skeleton].
 
-[^skeleton]: O *stub* do servidor também é conhecido como *skeleton *.
+[^skeleton]: O *stub* do servidor também é conhecido como *skeleton*.
 		
 Assim, o cliente invoca função no stub cliente, achando que é a função que quer executar.
 Stub cliente faz o **marshaling** [^marshal]  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
@@ -479,7 +480,7 @@ Agora, em **um terminal distinto** e a partir da mesma localização, execute o 
 O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
 O serviço é definido no seguinte arquivo `.proto`, localizado em `./src/main/proto/helloworld.proto`.
 
-```protobuf
+```protobuffer
 message HelloRequest {
   string name = 1;
 }
@@ -860,9 +861,7 @@ public class ChaveValorHandler implements ChaveValor.Iface {
 
 ```bash
 javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
-	
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
-	
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient	
 ```
 
@@ -873,13 +872,17 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 
 ### Estudo de Caso RPC: RMI
 
-<h1>TODO</h1>
+??? todo "TODO"
+    Como usar RMI.
 
 ## Comunicação orientada a Mensagens
 
-<h1>TODO</h1>
+??? todo "TODO"
+    * [MOM](https://en.wikipedia.org/wiki/Message-oriented_middleware)
+    * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
+    * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
 
-* [MOM](https://en.wikipedia.org/wiki/Message-oriented_middleware)
-* [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
-* [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
+## Publish/Subscribe
 
+??? todo "TODO"
+    Descrever pub/sub e diferenciar de MOM

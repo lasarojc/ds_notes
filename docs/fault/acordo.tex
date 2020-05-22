@@ -1,0 +1,237 @@
+\section{Acordo}
+
+\subsection{Comunicação em Grupo}
+\begin{frame}{Acordo}
+Dependendo do modelo, pode ser muito fácil ou impossível fazer com que um grupo de processos concorde sobre como agir/entre em acordo.
+\end{frame}
+
+Um dos fatores é como o grupo é organizado.
+
+\begin{frame}{Grupos de Processos}
+Grupos podem ser organizados de diferentes formas, dependendo da aplicação.
+
+\includegraphics[width=.5\textwidth]{images/08-03}
+\includegraphics[width=.45\textwidth]{images/chain}
+
+Assumindo um grupo estático (sem entrada e saída de processos), em que todos conversam com todos diretamente (grafo completo).
+\end{frame}
+
+É mais fácil, mas não trivial neste modelo. Vejamos o problema de difusão confiável. Mas antes, vamos definir.
+
+\begin{frame}{Correto x Falho}
+Um processo é correto se ele não falha.
+\end{frame}
+
+\begin{frame}{Difusão Confiável}
+\begin{itemize}
+	\item Corretude: Se um processo \alert{correto} $p$ difunde uma mensagem $m$ para processos no grupo $G$, então todos os processos corretos em $G$ entregam a mensagem.
+	
+	\item Acordo: Se um processo correto em $G$ entrega uma mensagem $m$, então todo processo correto em $G$ entrega $m$.
+	
+	\item Validade: Somente mensagens difundidas são entregues.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Terminologia}
+\begin{itemize}
+	\item Enviar/Receber: rede
+	\item Difundir/Entregar: difusão
+	
+	\item Corretude x Progresso
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Difusão Confiável}
+Algoritmo?
+\end{frame}
+
+
+\begin{frame}{Difusão Confiável}
+Para $p$ difundir $m$ para $G$
+\begin{itemize}
+\item $p$ envia $m$ para todo $q \in G$
+\item Todo processo $q\in G$ que receber a mensagem, envia $m_{ack}$ para $p$
+\item Ao receber ack de todos os processos $q \in G$, $p$ para de retransmitir e entrega $m$.
+\end{itemize}
+
+\pause Confiável? Isto é, satisfaz as duas propriedades?
+
+\pause e se um dos receptores falhar?
+
+\pause Assumamos detector de falhas perfeito.
+\end{frame}
+
+\begin{frame}{Difusão Confiável}
+Para $p$ difundir $m$ para $G$
+\begin{itemize}
+	\item $p$ envia $m$ para todo $q \in G$
+	\item Todo processo $q\in G$ que receber a mensagem, envia $m_{ack}$ para $p$
+	\item Ao receber ack de todos os processos \alert{corretos} $q \in G$, $p$ para de retransmitir e entrega $m$.
+\end{itemize}
+
+\pause Pq $p$ só entrega $m$ no final?
+\end{frame}
+
+
+\begin{frame}{Difusão Confiável}
+Posso assumir TCP como protocolo de comunicação?
+
+\begin{itemize}
+	\item $p$ envia $m$ para $G$
+	\item $p$ entrega $m$
+\end{itemize}
+
+\pause Não! TCP não é confiável neste sentido.
+\end{frame}
+
+\begin{frame}{Difusão Confiável}
+Assuma máximo de $f$ falhas, fail stop
+
+\begin{itemize}
+\item $p$ envia $m$ para processos em $G$.
+\item Todo processo $q \in G$ que receber $m$
+\begin{itemize}
+	\item envia $m_{ack}$
+	\item repassa $m$ para $G$ processos.
+\end{itemize}
+\item Mensagens são retransmitidas de tempos em tempos.
+\item Ao receber $f+1$ acks, entrega $m$.
+\end{itemize}
+%https://www.youtube.com/watch?v=uzcALT7sHew
+\end{frame}
+
+\begin{frame}{Difusão Confiável}
+Assuma máximo de $f$ falhas e uso de TCP
+\begin{itemize}
+	\item $p$ envia $m$ para processos em $G$.
+	\item Em caso de quebra/falha de conexão, substitua destinatário.
+	\item Todo processo $q \in G$ que receber $m$, repassa $m$ para os outros  processos.
+	\item Entrega $m$.
+\end{itemize}
+
+\pause Confiável? Somente se conexões quebradas for reestabelecidas e mensagens reenviadas.
+
+\pause Escalável?
+\end{frame}
+
+\begin{frame}{Difusão Confiável FIFO}
+\begin{itemize}
+	\item Corretude.
+	\item Acordo.	
+	\item Validade.
+	\item FIFO: Se $p$ difunde $m$ e então $n$, e se $q$ entrega $n$, então $q$ entrega $m$ antes $n$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Difusão Totalmente Ordenada}
+\begin{itemize}
+\item Corretude: Se um processo $p$ difunde uma mensagem $m$ para processos no grupo $G$, e se $p$ não falha, então todos os processos corretos em $G$ entregam $m$
+
+\item Acordo: Se um processo correto $q$ em $G$ entrega uma mensagem $m$, então todo processo correto em $G$ entrega $m$.
+
+\item Ordenação: Se um processo entrega mensagem $m$ e depois $n$, então qualquer processo que entregue a mensagem $n$ deve primeiro entregar $m$.
+
+\item Validade: Somente mensagens difundidas são entregues.
+\end{itemize}
+
+\pause Algoritmo?
+\pause Resolver diretamente este problema não é trivial. Por isso, veremos primeiro o problema do Consenso Distribuído.
+\end{frame}
+
+
+\begin{frame}{Consenso}
+Sejam vários processos. Cada um propõe um único valor por \emph{instância de consenso}. O objetivo é decidir um dentre os valores propostos:
+\begin{itemize}
+	\item Validade: Somente um valor proposto pode ser decidido.
+	\item Terminação: Todo processo não falho decide-se.
+	\item Acordo: Se um processo decide-se por $v$ e outro por $w$, então $v = w$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Consenso}
+É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas. \[Fischer, Lynch, Patterson, 85\]
+
+\pause Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
+\end{frame}
+
+
+
+\begin{frame}{Consenso}
+Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem. O mais famoso, atualmente, é o Paxos.
+
+
+\href{http://paxos.systems/index.html}{Leia mais aqui}
+%TODO: Synod
+%TODO: Paxos
+
+\end{frame}
+
+\begin{frame}{Primitivas}
+\begin{itemize}
+	\item send\&receive/enviar\&receber -- rede
+	\item propose\&decide/propor\&decidir -- consenso
+	\item broadcast\&deliver/difundir\&entregar -- difusão
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Difusão Totalmente Ordenada}
+Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica:
+\begin{itemize}
+\item Ordene as instâncias de consenso.
+\item Para difundir mensagem $m$, proponha a mensagem na menor instância $i$ em que não tiver visto uma decisão.
+\item Se a decisão de $i$ não é $m$, volte para o passo anterior.
+\item Entregue as decisões na ordem das instâncias.
+\end{itemize}
+\end{frame}
+
+
+\subsection{Replicação de Máquinas de Estados}
+
+\begin{frame}{Máquina de Estados Replicada}
+Ativo/Ativo -- Se todos os processos executam a mesma sequência de comandos, todos avançam pelos mesmos estados.
+
+\begin{itemize}
+	\item Mesmo estado inicial
+	\item Comandos determinísticos
+	\item Comandos causalmente relacionados são executados em mesma ordem
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Máquina de Estados Replicada}
+Possíveis ordens com mesmo efeito?
+\begin{itemize}
+\item \lstinline|touch /tmp/file1|
+\item \lstinline|echo "teste testando" $>>$ /tmp/file2|
+\item \lstinline|rm /tmp/file1|
+\item \lstinline|mkdir /dir1|
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Difusão Causal}
+Há diversos algoritmos, mas o mais recente e interessante é denominado Generalized Paxos.
+
+Para saber mais, leia minha dissertação!
+\end{frame}
+
+\begin{frame}{Frameworks para Coordenação}
+Diversos sistemas abstraem problemas de coordenação em sistemas distribuídos.
+
+Estudaremos alguns nas aulas seguintes.
+\end{frame}
+
+Antes, vamos nos aprofundar no estudo de um protocolo de Consenso/Difusão atômica.
+
+\subsection{RSM: Estudo de Caso do Raft}
+\begin{frame}{Raft}
+\url{http://thesecretlivesofdata.com/raft/}
+\end{frame}
+
+
+
+
+
+

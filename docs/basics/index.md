@@ -300,7 +300,7 @@ A criação do socket é feita explicitando-se o uso de **datagramas**: `s = soc
 
 Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `data, addr = sock.recvfrom(4096)` para receber o datagrama, onde `data` é o conteúdo recebido e  `addr` o endereço de quem enviou o datagrama.
 
-Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
+Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `#!py3 sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
 
 Além deste detalhe, é importante manter em mente outras características do UDP:
 
@@ -501,7 +501,9 @@ Detalhes do protocolo seguido por navegadores e servidores serão vistos mais ta
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página [www.google.com](https://www.google.com); um número muito maior é feito na carga de [www.bing.com](https://www.bing.com).
 
-<h1> TODO </h1>
+!!! todo
+    Estender
+
 ---
 
 ### Servidor multithreaded
@@ -586,7 +588,7 @@ Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados,
 Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:
 
 1. receba requisição informando a última linha lida
-2. **re**calcule todas as respostas para consulta
+2. recalcule todas as respostas para consulta
 3. salte até a linha informada pelo cliente
 4. retorne as próximas $n$ linhas para o cliente
 5. feche o resultado da consulta.
@@ -742,10 +744,6 @@ Neste tutorial, baseado neste [outro](https://docs.oracle.com/javase/tutorial/es
 Em Java, há essencialmente duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe `Thread`, e a segunda é via abstrações de mais alto nível, os `Executors`.
 
----
-* Thread
-* Executor
----
 
 Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote `java.util.concurrent`.
 
@@ -981,6 +979,7 @@ Neste caso, blocos sincronizados **no mesmo objeto**, não são executados conco
 
 ##### Exercício
 Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois *threads*  tal que:
+
 * executem um loop 1000 vezes em que
 * o primeiro *thread* primeiro invoca `inc1` e depois `inc2`
 * o segundo *thread* primeiro invoca `inc2` e depois `inc1`
@@ -1015,10 +1014,7 @@ O uso dos "locks" em ordens diferentes pode levar a um deadlock, pois o seguinte
 
 ```mermaid
 graph LR
-  T1 --> lock1
-  T2 --> lock2
-  lock1 --> T2
-  lock2 --> T1
+      T1 --> lock1 --> T2 --> lock2 --> T1
 ```
 
 ##### Sinalização

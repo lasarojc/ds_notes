@@ -1,5 +1,13 @@
 ---
 layout: default
+title: Tolerância a Falhas
+nav_order: 6
+has_children: true
+---
+
+Neste capítulo discutiremos o quê são sistemas distribuídos, por quê os desenvolvemos, e damos uma visão geral de como isto é feito.
+---
+layout: default
 title: Dependabilidade
 parent: Tolerância a Falhas
 nav_order: 1
@@ -50,4 +58,11 @@ Como obstáculos para se conseguir estes atributos estão os seguintes obstácul
 * Fault - Falha (Falta): bug -- \lstinline|<=| em vez de \lstinline|<| (pode nunca afetar a execução).
 * Error - Erro  (Erro): manifestação do bug -- iteração passa do ponto. (Pode não ser observável pelo usuário.)
 * Failure - Defeito (Falha): problema visível -- tela azul
+
+---
+layout: default
+title: Modelos 
+parent: Tolerância a Falhas
+nav_order: 2
+---
 

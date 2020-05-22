@@ -1,0 +1,291 @@
+\section{Dependabilidade}
+\subsection{Introdução}
+
+
+\begin{frame}{Dependabilidade}
+\begin{block}{}
+	Um componente provê serviços a um cliente.\\ 
+	Para prover o serviço, o componente pode \alert{depender} de outros.
+\end{block}
+
+\begin{block}{}
+	Um componente $C$ depende de um componente $C'$ se a corretude do comportamento de $C$ depende da corretude do componente $C'$.
+\end{block}
+
+\begin{block}{}
+Um componente é ``dependável'' (\emph{dependable}) na medida que outros podem depender dele.
+\end{block}
+\end{frame}
+
+\begin{frame}{Dependabilidade}
+O que queremos (Atributos)
+\begin{itemize}
+	\item Disponibilidade (\emph{Availability})-- Prontidão para uso.
+	\item Confiabilidade/Fiabilidade (\emph{Reliability}) -- Continuidade do serviço.
+	\item Manutenabilidade (\emph{Maintainability}) -- Facilidade de reparo.	\\~ \\~\\
+	
+	\item Segurança (\emph{Safety}) -- Tolerância a catástrofes.
+	\item Integridade (\emph{Integrity}) -- Tolerância a modificações
+	\item Confidencialidade (\emph{Confidentiality}) -- Informação somente a quem devido.
+	\item Segurança (\emph{Security}) -- Soma dos três anteriores.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Dependabilidade}
+O que gostaríamos de evitar (Ameaças)
+\begin{itemize}
+	\item Fault -- Falha (Falta): bug -- \lstinline|<=| em vez de \lstinline|<| (pode nunca afetar a execução).
+	\item Error -- Erro  (Erro): manifestação do bug -- iteração passa do ponto. (Pode não ser observável pelo usuário.)
+	\item Failure -- Defeito (Falha): problema visível -- tela azul
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Ariane 5}
+``The Explosion of the Ariane 5
+
+On June 4, 1996 an unmanned Ariane 5 rocket launched by the European Space Agency exploded just forty seconds after its lift-off [...] after a decade of development costing \$7B. The destroyed rocket and its cargo were valued at \$500M. [...] the failure was a software error [...] a 64 bit floating point number [...] was converted to a 16 bit signed integer. The number was larger than 32,767, the largest integer storeable in a 16 bit signed integer, and thus the conversion failed.''
+
+\includegraphics[width=.7\textwidth]{images/ariane5}
+
+\href{http://www-users.math.umn.edu/~arnold/disasters/ariane.html}{Fonte}
+\end{frame}
+
+O erro gerado foi tratado como input, causando outros erros, que geraram instabilidade e que levou o sistema a se auto-destruir.
+
+\begin{frame}{Dependabilidade}
+Como evitar (Meios)
+\begin{itemize}
+	\item Prevenção de falhas: \pause escreva sem bugs!\\
+	Especificações formais; prova de corretude; model checkers;...
+
+	\item Remoção de falhas: \pause resolva seus bugs!\\
+	Testes; manutenção.	
+
+	\item Previsão de falhas: \pause estime quando elas se manifestarão!
+	Reinicie processos frequentemente.
+
+	\item Tolerância a falhas: \pause conviva e mascare falhas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Subaru SUVs -- 2018}
+\includegraphics[width=.45\textwidth]{images/subaru}
+
+\href{https://spectrum.ieee.org/riskfactor/computing/it/coding-error-leads-293-subaru-ascents-to-the-car-crusher}{Fonte}
+\end{frame}
+
+\begin{frame}{Car Hack -- 2017}
+\includegraphics[width=.4\textwidth]{images/carhack}
+
+\href{https://www.wired.com/story/car-hack-shut-down-safety-features/}{Fonte}
+\end{frame}
+
+
+
+
+\begin{frame}{Tolerância a falhas}
+Dependendo dos efeitos e tratamentos.
+\begin{itemize}
+	\item Fail safe -- defeito não leva a comportamento inseguro (sistema de entretenimento no avião)
+	\item Fail soft -- graceful degradation (sistema de controle de vôo)
+	\item Fail fast -- para o fluxo de defeitos (e possível reinício)
+
+\vspace{1cm}
+
+	\item Robusto -- erros não atrapalham execução (tratamento de exceções)
+	\item Quebradiço (\emph{brittle}) -- não resiliente a falhas
+	
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Fail Fast -- Cadeia de supervisão}
+\includegraphics[width=.7\textwidth]{images/httpatomoreillycomsourceoreillyimages300817}
+\end{frame}
+
+
+\begin{frame}{Tolerância a Falhas -- Exemplos}
+\begin{itemize}
+	\item Pneu estepe
+	\item Gerador de eletricidade em casa
+	\item Calça extra na mala
+	\item Uber, em vez do ônibus
+\end{itemize}
+\pause O que há de comum?
+\end{frame}
+
+\begin{frame}{Redundância}
+Componentes extra, para uso em caso de defeitos. Ausência de um SPOF -- \emph{Single Point of Failure}
+\pause
+\begin{itemize}
+	\item Mais projeto
+	\item Mais testes
+	\item Mais custo
+	\item Mais tempo
+	\item Peso extra
+\end{itemize}
+
+\pause Custo x Beneficio -- Custo da redundância, Probabilidade de falha, beneficio.\\
+\pause Pneu x Motor x Radio
+
+
+
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Tipos de defeitos}
+\begin{itemize}
+	\item Quebra/Crash: componente para de funcionar.
+	\begin{itemize}
+		\item Fail-stop -- defeito é detectável (timeout, por exemplo).\\
+		E se o problema for a rede?
+		\item Fail-silent -- defeito pode não ser notável.
+		\item Fail-recover -- voltam a executar.
+	\end{itemize}
+
+	\item Omissão: componente não executa ações.
+	\begin{itemize}
+		\item Requisição não atendida
+		\item Mensagem não transmitida
+	\end{itemize}
+
+	\item Temporização: prazos não são respeitados.
+		
+	\item Arbitrária: qualquer coisa pode acontecer.
+	\begin{itemize}
+		\item Resposta: ações são executadas incorretamente mas sem maldade.
+		\item Arbitrária com detecção por falha de identificação
+	\end{itemize}
+\end{itemize}
+
+Fail-stop $\in$ Quebra $\in$ Omissão $\in$ Temporização $\in$ Arbitrária
+
+\end{frame}
+
+
+\begin{frame}{Resposta}
+\begin{itemize}
+	\item ALU defeituosa
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Arbitrária}
+\begin{itemize}
+	\item Bug
+	\item Hacking
+	\item Vírus
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Prepare-se para a vida de desenvolvedor}
+\begin{itemize}
+	\item Falhas intermitentes -- e.g., picos de energia, comportamento emergente, 
+	\item Heisenbugs -- inobservável
+	\item Schroedinbugs	-- inexistente até que observado
+\end{itemize}
+\end{frame}
+
+Heisenbug
+The name may seem to rhyme well with Heisenberg, but the Heisenbug is actually "a bug that disappears or alters its behavior when one attempts to probe or isolate it." The Freenet Project describes a Heisenbug in certain Java virtual machines.
+
+Bohrbug
+The Bohrbug is a sort of antonym of the Heisenbug, as this bug does not disappear or alter its characteristics when it is researched.
+
+Mandelbug
+The Mandelbug, named after Benoit Mandelbrot (think Mandelbrot set), is a bug whose underlying causes are so complex and obscure as to make its behavior appear chaotic.
+
+Schroedinbug
+The Schroedinbug is a design or implementation bug in a program that doesn't manifest until someone reading source or using the program in an unusual way notices that it never should have worked, at which point the program promptly stops working for everybody until fixed. Here, an Office developer describes "stupid SQL tricks" to get rid of a "classic Schroedinbug." 
+
+
+
+\begin{frame}{Correlação entre falhas?}
+N-Version programming
+\begin{itemize}
+	\item Múltiplos times
+	\item Múltiplas implementações do mesmo sistema
+	\item Falhas independentes
+	\vspace{1cm}
+	\item Custo maior
+	\item Erros de especificação são reproduzidos
+	\item Times diferentes, mas erros iguais
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Foco}
+Falhas do tipo crash.
+\end{frame}
+
+\begin{frame}{Redundância de Processos}
+Como lidar com falhas de processos? 
+
+Tenha múltiplos, tal que se um falha, outros podem continuar executando o serviço.
+
+\begin{itemize}
+	\item Ativo/Ativo
+	\item Mestre/Escravo
+	\item Replicação em cadeia
+	\item ...
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\subsection{Coordenação}
+
+\begin{frame}{Coordenação}
+Para replicar, precisamos coordenar as execuções dos processos, mas como?
+\end{frame}
+
+\begin{frame}{Uma história de três exércitos}
+	\begin{itemize}
+		\item A e B deve atacar C
+		\item Se A e B atacam juntos, ganham
+		\item Se atacarem separados, são ambos derrotados.
+		\item Comunicação por mensageiros, 
+		\begin{itemize}
+			\item que podem se perder e levar muito tempo para chegar
+			\item podem ser mortos no caminho
+		\end{itemize}
+	\pause
+		\item Atacamos ao amanhecer! (relógios sincronizados)	
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Uma história de três exércitos}
+Será que A não mandou uma resposta? Será que A foi destruído? Será que o mensageiro morreu? Será que parou em um inferninho?
+\end{frame}
+
+\begin{frame}{Uma história de três exércitos}
+Como saber se o outro recebeu a mensagem e irá atacar ao mesmo tempo?
+
+\pause
+Mensagem de confirmação.
+\end{frame}
+
+\begin{frame}{Uma história de três exércitos}
+Como saber se o um recebeu a confirmação?
+
+\pause
+Confirmação da confirmação!
+\end{frame}
+
+
+\begin{frame}{Uma história de três exércitos}
+Como saber se o outro/um ...?
+\end{frame}
+
+
+\begin{frame}{Uma história de três exércitos}
+Nesse cenário, até simples, coordenar os dois processos é \alert{impossível}!
+
+\pause É impossível garantir que chegarão a um \emph{acordo}.
+\end{frame}
+
+

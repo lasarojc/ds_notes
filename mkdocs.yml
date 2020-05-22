@@ -4,6 +4,13 @@ nav:
         - Introdução: intro/index.md
         - Fundamentos: basics/index.md
         - Comunicação: comm/index.md
+        - Arquiteturas: arch/index.md
+        - Coordenação: coord/index.md
+        - Tempo: time/index.md
+        - Tolerância a Falhas: fault/index.md
+        - Bancos de Dados: disdb/index.md
+        - Sistemas de Arquivos: disfs/index.md
+        - Tecnologias: tech/index.md
 
 theme:
         name: material #readthedocs
@@ -14,7 +21,26 @@ markdown_extensions:
         - mdx_math
         - admonition
         - footnotes
+        - pymdownx.arithmatex
+        - pymdownx.betterem:
+               smart_enable: all
+        - pymdownx.caret
+        - pymdownx.critic
+        - pymdownx.details
+        - pymdownx.emoji:
+            emoji_index: !!python/name:materialx.emoji.twemoji
+            emoji_generator: !!python/name:materialx.emoji.to_svg
+        - pymdownx.inlinehilite
+        - pymdownx.magiclink
+        - pymdownx.mark
+        - pymdownx.smartsymbols
+        #- pymdownx.superfences
+        - pymdownx.tasklist:
+            custom_checkbox: true
+        - pymdownx.tabbed
+        - pymdownx.tilde
+
 extra_javascript:
         - https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js
         - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-        - mathjaxhelper.js
+        #- mathjaxhelper.js
