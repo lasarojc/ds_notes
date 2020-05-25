@@ -16,7 +16,6 @@ theme:
         name: material #readthedocs
 plugins:
         - search
-        - mermaid2
 markdown_extensions:
         - mdx_math
         - admonition
@@ -30,17 +29,22 @@ markdown_extensions:
         - pymdownx.emoji:
             emoji_index: !!python/name:materialx.emoji.twemoji
             emoji_generator: !!python/name:materialx.emoji.to_svg
+        - pymdownx.highlight:
+             linenums: true
         - pymdownx.inlinehilite
         - pymdownx.magiclink
         - pymdownx.mark
         - pymdownx.smartsymbols
-        #- pymdownx.superfences
+        - pymdownx.superfences:
+              custom_fences:
+                   - name: mermaid
+                     class: mermaid
+                     format: !!python/name:pymdownx.superfences.fence_div_format
         - pymdownx.tasklist:
             custom_checkbox: true
         - pymdownx.tabbed
         - pymdownx.tilde
 
 extra_javascript:
-        - https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js
+        - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
         - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-        #- mathjaxhelper.js

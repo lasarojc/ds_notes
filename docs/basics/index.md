@@ -131,14 +131,37 @@ A API usada para estabelecer a conversa via socket tem várias chamadas, que dev
 ### TCP
 
 O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
+```mermaid
+stateDiagram-v2
+   Servidor --> Entrada/Saída
+   Cliente --> Entrada/Saída
+   Entrada/Saída --> sc
 
-![image](images/04-15.png)
+   state Servidor {
+     ss: Cria socket
+     sb: Associa porta
+     sl: Escuta conexões
+     sa: Aceita conexões
+     ss --> sb 
+     sb --> sl
+     sl --> sa
+   }
 
-* criar socket
-* bind
-* listen
-* accept
-* connect
+   state Entrada/Saída {
+     leitura --> escrita
+     escrita --> leitura
+   }
+
+   state Cliente {   
+     cs: Cria socket
+     cc: Inicia conexão
+     cs --> cc
+   }
+
+   state sc: Fecha conexão
+```
+
+<!--![image](images/04-15.png)-->
 
 Estabelecido o socket, o mesmo pode ser usado como **arquivo**, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
@@ -146,7 +169,7 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 Vejamos um exemplo do uso de sockets, em Python.
 O seguinte arquivo pode ser nomeado, por exemplo, `server.py`, mas não pode, de forma alguma, ser nomeado `socket.py`.
 
-```Python
+```python
 #server.py
 #!/usr/bin/python                               # This is server.py file
 
