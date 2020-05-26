@@ -1,4 +1,4 @@
-site_name: Sistemas Distribuídos
+site_name: Notas em Sistemas Distribuídos
 nav:
         - Prólogo: index.md
         - Introdução: intro/index.md
@@ -48,3 +48,5 @@ markdown_extensions:
 extra_javascript:
         - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
         - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+google_analytics: ['G-PJX835H7DP', 'lasarojc.github.org/dsnotes']
