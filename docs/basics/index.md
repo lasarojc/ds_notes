@@ -487,11 +487,25 @@ sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
 
 É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento. 
-O servidor, de sua parte, fica bloqueado esperando requisições, que atende e então volta a dormir.
-Assim, apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.
+Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições, que atende e então volta a dormir.
+Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.
 
-![Request/Response](./images/02-03.png)
+```mermaid
+sequenceDiagram
+    activate Cliente
+    note left of Cliente: Ativo (gerando requisição)
+    note right of Servidor: Inativo (esperando requisição)
+	Cliente->>+Servidor: Request
+    deactivate Cliente
+    note left of Cliente: Inativo (esperando resposta)
+    note right of Servidor: Ativo (processando requisição)
+	Servidor-->>-Cliente: Response
+	activate Cliente
+    note left of Cliente: Ativo (processando resposta
+	note right of Servidor: Inativo (esperando requisição)
+	deactivate Cliente
+```
+
 
 Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
