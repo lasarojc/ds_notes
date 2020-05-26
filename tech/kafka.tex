@@ -1,0 +1,399 @@
+\section{Estudo de caso: Kafka}
+
+\subsection{Introdução}
+
+
+
+\begin{frame}
+\includegraphics[width=\textwidth]{images/kafka0}
+\end{frame}
+
+\begin{frame}{Apache Kafka}
+
+``Kafka is a distributed streaming platform.''
+
+\begin{itemize}
+	\item LinkedIn
+	\item OpenSource em 2011
+	\item Projeto Apache em ????
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{O quê?}
+\includegraphics[width=.6\textwidth]{images/kafka1}
+\end{frame}
+
+\begin{frame}{Usos}
+\includegraphics[width=\textwidth]{images/kafka2}
+
+\pause record ~= message
+
+\pause
+\begin{block}{Enterprise Messaging System}
+	Producers x Message Broker x Consumers
+\end{block}
+\end{frame}
+
+\begin{frame}{Componentes}
+\includegraphics[width=\textwidth]{images/kafka3}
+
+\begin{itemize}
+	\item Produtores: enviam dados/mensagens/records (array de bytes)
+	\item Consumidores: recebem dados
+	\item Cluster/Broker: distribuído e tolerantes a falhas.
+	\item Conectores: integração simplificada com outras aplicações 
+	\item Stream processors: spark ou outros frameworks; transformam dados
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Apache Kafka}
+\begin{itemize}
+	\item Brokers
+	\item Cluster de brokers
+	\item Distribuído
+	\item Tolerante a falhas
+	\item Desacoplamento espacial
+	\item Desacoplamento temporal
+	\item Tópicos, não endereços
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tópicos}
+\begin{itemize}
+	\item Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
+	\item Quantidade pode ser imensa.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Partição}
+\begin{itemize}
+	\item Subdivisões de tópicos
+	\item Número de partições é definido por usuário
+	\item Cada partição está associada a um único servidor
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Offset}
+\begin{itemize}
+	\item Índice de uma mensagem em uma partição
+	\item Índices atribuídos na ordem de chegada
+	\item Offsets são locais às partições
+	\item Mensagens são unicamente identificadas por (tópico, partição, índice)
+\end{itemize}
+
+\includegraphics[width=.6\textwidth]{images/kafka4}
+
+\end{frame}
+
+
+\begin{frame}{Consumer group}
+\begin{itemize}
+	\item Carga pode ser muito grande para um consumidor
+	\item Compartilham o processamento de um tópico
+	\item Cada mensagem é processada por um membro do grupo
+	\item A mesma mensagem pode ser processada por múltiplos grupos
+	\item Número de consumidores $\leq$ partições no tópico
+	\item Máximo de dois consumidores por partição (mantem pos. de cada um)
+\end{itemize}
+
+\includegraphics[width=.6\textwidth]{images/kafka5}
+\end{frame}
+
+\subsection{Quickstart}
+
+\begin{frame}{Baixar e Executar}
+Siga o tutorial em \url{http://kafka.apache.org/quickstart}, até o passo 5.
+
+\begin{itemize}
+	\item Baixe e descompacte
+	\item Rode o zookeeper (Terminal 1)
+	\item Rode o Kafka (Terminal 2)
+	\item Crie um tópico (Terminal 3)\\
+		Mais de uma partição em um servidor
+	\item \alert{Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?}
+	\item Liste os tópicos criados
+	\item Envie algumas mensagens
+	\item Inicie um consumidor (Terminal 4)
+\end{itemize}
+\end{frame}
+
+
+
+\subsection{Tolerância a Falhas}
+\begin{frame}{O quê?}
+Manter dados/serviços disponíveis a despeito de falhas.
+\end{frame}
+
+\begin{frame}{Replicação}
+No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
+\end{frame}
+
+\begin{frame}{Líder e Seguidor}
+\begin{itemize}
+	\item Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
+	\item Consumidor conversa com líder. Líder envia dados ao consumidor.
+	\item Líder replica dados para seguidores.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Replicar}
+Passo 6  ensina a criar um sistema com múltiplos brokers.
+
+\begin{itemize}
+	\item Identificador
+	\item Porta (mesmo servidor)
+	\item \alert{Log directory}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Replicar}
+\begin{itemize}
+	\item Crie um novo tópico, com RF = 3 e duas partições
+	\item \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic <topico>|
+	\item Lista de réplicas
+	\item Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Zookeeper}
+\begin{itemize}
+	\item Permite que nós do cluster se descubram
+	\item Elege líder
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Armazenamento}
+\begin{itemize}
+	\item Dado deve ser removido depois de um tempo de ``retenção''
+	\item Pode definir retenção por tamanho (por partição, não tópico)
+\end{itemize}
+\end{frame}
+
+
+\subsection{Produtor}
+
+\begin{frame}{Produtor}
+\begin{itemize}
+	\item Produtor envia mensagens para os brokers
+	\item Producer API
+	\item \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{SimpleProducer.java}
+\begin{lstlisting}[language=Java]
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import java.util.Properties;
+
+public class SimpleProducer {
+ public static void main(String[] args) {
+  String topicName = "SimpleProducerTopic";
+  String key = "Chave";
+  String value = "Valor";
+  Properties props = new Properties();
+  props.put("bootstrap.servers", "localhost:9092, localhost:9093");
+  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+  Producer<String, String> producer = new KafkaProducer<String, String>(props);
+
+  ProducerRecord<String, String> record = new ProducerRecord<String, String>(topicName, key, value);
+
+  producer.send(record);
+  producer.close();
+
+  System.out.println("SimpleProducer Completed.");
+ }
+}
+
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Workflow}
+\includegraphics[width=.8\textwidth]{images/kafka6}
+
+\begin{itemize}
+	\item Particionador default
+	\begin{itemize}
+		\item Partition
+		\item Hash da ``chave''
+		\item Round robin
+	\end{itemize}
+	\item Retry automático
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Fire and Forget}
+Envia a mensagem e não se importa com o resultado.
+\end{frame}
+
+\begin{frame}[fragile]{Synchronous Call}
+Envia a mensagem e espera para saber se foi entregue ou não.
+
+\begin{lstlisting}[language=Java]
+try{
+ RecordMetadata metadata = producer.send(record).get();
+ System.out.println("Message is sent to Partition no " + metadata.partition() + " and offset " + metadata.offset());
+ System.out.println("SynchronousProducer Completed with success.");
+}catch (Exception e) {
+ e.printStackTrace();
+ System.out.println("SynchronousProducer failed with an exception");
+}finally{
+ producer.close();
+}
+\end{lstlisting}
+\begin{itemize}
+	\item Future
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Callback}
+Envia a mensagem e é invocado depois de receber um ACK
+
+\begin{lstlisting}[language=Java]
+producer.send(record, new MyProducerCallback());
+
+...
+
+class MyProducerCallback implements Callback{
+ @Override
+ public  void onCompletion(RecordMetadata recordMetadata, Exception e) {
+  if (e != null)
+   System.out.println("AsynchronousProducer failed with an exception");
+  else
+   System.out.println("AsynchronousProducer call Success:");
+ }
+}
+\end{lstlisting}
+\begin{itemize}
+	\item max.in.flight.requests.per.connection
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Default Partitioner}
+\includegraphics[width=.8\textwidth]{images/kafka6}
+
+\begin{itemize}
+	\item Partition
+	\item Hash da ``chave'' \% \#partition
+	\item Round robin
+\end{itemize}
+
+\href{https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo de Custom Partitioner}
+\end{frame}
+
+\subsection{Consumidor}
+
+\begin{frame}{Consumer Groups}
+\begin{itemize}
+	\item Múltiplos consumidores processam dados em paralelo
+	\item Grupo de consumidores de tópicos
+	\item Grupo pertence à mesma aplicação
+	\includegraphics[width=.6\textwidth]{images/kafka7}
+	\item Duplicate reads? Consumidores não compartilham partições
+	\item Group coordinator (broker eleito): lista de consumidores
+	\item Group líder: rebalanceamento
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Consumer}
+\begin{lstlisting}[language=Java]
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Properties;
+
+public class SimpleConsumer {
+ public static void main(String[] args) throws IOException {
+  String topicName = "SimpleProducerTopic";
+  String groupName = "SupplierTopicGroup";
+
+  Properties props = new Properties();
+  props.put("bootstrap.servers", "localhost:9092,localhost:9093");
+  props.put("group.id", groupName);
+  props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
+  KafkaConsumer<String, String> consumer = null;
+
+  try {
+   consumer = new KafkaConsumer<String, String>(props);
+   consumer.subscribe(Arrays.asList(topicName));
+
+   while (true) {
+    ConsumerRecords<String,String> records = consumer.poll(100);
+
+    for (ConsumerRecord<String, String> record: records)
+     System.out.println("Key = " + record.key() + " Value = " + record.value());
+   }
+  } catch (Exception ex) {
+   ex.printStackTrace();
+  } finally {
+   consumer.close();
+  }
+ }
+}
+\end{lstlisting}
+
+\begin{itemize}
+	\item Se não definir grupo, será novo grupo, e lerá todas as mensagens disponíveis
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Poll}
+\begin{itemize}
+	\item poll também envia hearbeat
+	\item executar a cada 3s, no mínimo	
+	\item Current offset: a cada poll, broker incrementa current offset
+	\item Commited offset: o consumidor informa quais índices foram processados
+	\begin{itemize}
+		\item Auto Commit
+		\begin{itemize}
+			\item enable.auto.commit
+			\item auto.commit.interval.ms
+			\item Pode causar reprocessamento de mensagens
+		\end{itemize}
+		\item Manual Commit
+		\begin{itemize}
+			\item CommitSync
+			\item CommitAsync
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\subsection{Arquitetura}
+%\begin{frame}{Líder}
+
+%\end{frame}
+
+%mensagens são ack depois de copiadas para todas as réplicas
+%replicas lentas são removidas se lentas ou falhas
+%at least once, at most once, exactly one (nao suportado)
+%rolling upgrade
+%tls security
+%rest
+%CRUD
+
+
+\subsection{Data Streams}
+\subsection{Connectors}
+
+%\begin{frame}{Data streams}
+%\begin{itemize}
+%	\item 
+%\end{itemize}
+%\end{frame}
+

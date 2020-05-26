@@ -1,530 +1,909 @@
 
-<!DOCTYPE html>
 
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../assets/images/favicon.png" rel="shortcut icon"/>
-<meta content="mkdocs-1.1, mkdocs-material-5.1.1" name="generator"/>
-<title>Comunicação - Sistemas Distribuídos</title>
-<link href="../assets/stylesheets/main.a676eddb.min.css" rel="stylesheet"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
-</head>
-<body dir="ltr">
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#communicacao">
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Comunicação - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#communicacao" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-</div>
-<header class="md-header" data-md-component="header">
-<nav aria-label="Header" class="md-header-nav md-grid">
-<a aria-label="Sistemas Distribuídos" class="md-header-nav__button md-logo" href=".." title="Sistemas Distribuídos">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
-</a>
-<label class="md-header-nav__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"></path></svg>
-</label>
-<div class="md-header-nav__title" data-md-component="header-title">
-<div class="md-header-nav__ellipsis">
-<span class="md-header-nav__topic md-ellipsis">
-            Sistemas Distribuídos
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notas em Sistemas Distribuídos
           </span>
-<span class="md-header-nav__topic md-ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
             
               Comunicação
             
           </span>
-</div>
-</div>
-<label class="md-header-nav__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
-</label>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
 <div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" data-md-state="active" name="query" placeholder="Search" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
-</label>
-<button aria-label="Clear" class="md-search__icon md-icon" data-md-component="search-reset" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
-</button>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Type to start searching
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</nav>
+    
+    
+  </nav>
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="Sistemas Distribuídos" class="md-nav__button md-logo" href=".." title="Sistemas Distribuídos">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z"></path></svg>
-</a>
-    Sistemas Distribuídos
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
   </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href=".." title="Prólogo">
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Prólogo" class="md-nav__link">
       Prólogo
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../intro/" title="Introdução">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../intro/" title="Introdução" class="md-nav__link">
       Introdução
     </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../basics/" title="Fundamentos">
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../basics/" title="Fundamentos" class="md-nav__link">
       Fundamentos
     </a>
-</li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
         Comunicação
         <span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z"></path></svg>
-</span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./" title="Comunicação">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Comunicação" class="md-nav__link md-nav__link--active">
       Comunicação
     </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
-</span>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#representacao-de-dados">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#representacao-de-dados" class="md-nav__link">
     Representação de dados
   </a>
-<nav aria-label="Representação de dados" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#representacao-textual">
+  
+    <nav class="md-nav" aria-label="Representação de dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representacao-textual" class="md-nav__link">
     Representação Textual
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#protobuffers">
+        
+          <li class="md-nav__item">
+  <a href="#protobuffers" class="md-nav__link">
     ProtoBuffers
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#thrift">
+        
+          <li class="md-nav__item">
+  <a href="#thrift" class="md-nav__link">
     Thrift
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#invocacao-remota-de-procedimentos-rpc">
+      
+        <li class="md-nav__item">
+  <a href="#invocacao-remota-de-procedimentos-rpc" class="md-nav__link">
     Invocação Remota de Procedimentos - RPC
   </a>
-<nav aria-label="Invocação Remota de Procedimentos - RPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stubs">
+  
+    <nav class="md-nav" aria-label="Invocação Remota de Procedimentos - RPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stubs" class="md-nav__link">
     Stubs
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#transparencia">
+        
+          <li class="md-nav__item">
+  <a href="#transparencia" class="md-nav__link">
     Transparência
   </a>
-<nav aria-label="Transparência" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#descoberta-de-servicos">
+  
+    <nav class="md-nav" aria-label="Transparência">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descoberta-de-servicos" class="md-nav__link">
     Descoberta de Serviços
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tratamento-de-excecoes">
+        
+          <li class="md-nav__item">
+  <a href="#tratamento-de-excecoes" class="md-nav__link">
     Tratamento de Exceções
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#reexecucoes">
+        
+          <li class="md-nav__item">
+  <a href="#reexecucoes" class="md-nav__link">
     Reexecuções
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#concorrencia-no-servidor">
+        
+          <li class="md-nav__item">
+  <a href="#concorrencia-no-servidor" class="md-nav__link">
     Concorrência no servidor
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#frameworks">
+        
+          <li class="md-nav__item">
+  <a href="#frameworks" class="md-nav__link">
     Frameworks
   </a>
-<nav aria-label="Frameworks" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#interface-definition-language-idl">
+  
+    <nav class="md-nav" aria-label="Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interface-definition-language-idl" class="md-nav__link">
     Interface Definition Language - IDL
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-grpc">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-grpc" class="md-nav__link">
     Estudo de Caso RPC: gRPC
   </a>
-<nav aria-label="Estudo de Caso RPC: gRPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#instalacao">
+  
+    <nav class="md-nav" aria-label="Estudo de Caso RPC: gRPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao" class="md-nav__link">
     Instalação
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exemplo-java">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-java" class="md-nav__link">
     Exemplo Java
   </a>
-<nav aria-label="Exemplo Java" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pegando-o-codigo">
+  
+    <nav class="md-nav" aria-label="Exemplo Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pegando-o-codigo" class="md-nav__link">
     Pegando o código
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#compilando-e-executando">
+        
+          <li class="md-nav__item">
+  <a href="#compilando-e-executando" class="md-nav__link">
     Compilando e executando
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#o-servico">
+        
+          <li class="md-nav__item">
+  <a href="#o-servico" class="md-nav__link">
     O serviço
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#implementando-um-servico">
+        
+          <li class="md-nav__item">
+  <a href="#implementando-um-servico" class="md-nav__link">
     Implementando um serviço
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stub-do-servidor">
+        
+          <li class="md-nav__item">
+  <a href="#stub-do-servidor" class="md-nav__link">
     Stub do servidor
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stub-do-cliente">
+        
+          <li class="md-nav__item">
+  <a href="#stub-do-cliente" class="md-nav__link">
     Stub do cliente
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#idl-grpc">
+        
+          <li class="md-nav__item">
+  <a href="#idl-grpc" class="md-nav__link">
     IDL gRPC
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exemplo-python">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-python" class="md-nav__link">
     Exemplo Python
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-thrift">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-thrift" class="md-nav__link">
     Estudo de Caso RPC: Thrift
   </a>
-<nav aria-label="Estudo de Caso RPC: Thrift" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#instalacao_1">
+  
+    <nav class="md-nav" aria-label="Estudo de Caso RPC: Thrift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao_1" class="md-nav__link">
     Instalação
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#idl-thrift">
+        
+          <li class="md-nav__item">
+  <a href="#idl-thrift" class="md-nav__link">
     IDL Thrift
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#arquitetura">
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura" class="md-nav__link">
     Arquitetura
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#classpath">
+        
+          <li class="md-nav__item">
+  <a href="#classpath" class="md-nav__link">
     Classpath
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referencias">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
     Referências
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-rmi">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-rmi" class="md-nav__link">
     Estudo de Caso RPC: RMI
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#comunicacao-orientada-a-mensagens">
+      
+        <li class="md-nav__item">
+  <a href="#comunicacao-orientada-a-mensagens" class="md-nav__link">
     Comunicação orientada a Mensagens
   </a>
+  
 </li>
-</ul>
-</nav>
+      
+        <li class="md-nav__item">
+  <a href="#publishsubscribe" class="md-nav__link">
+    Publish/Subscribe
+  </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
-</span>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+      Arquiteturas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../coord/" title="Coordenação" class="md-nav__link">
+      Coordenação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../time/" title="Tempo" class="md-nav__link">
+      Tempo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+      Tolerância a Falhas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disdb/index.md" title="Bancos de Dados" class="md-nav__link">
+      Bancos de Dados
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+      Sistemas de Arquivos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tech/index.md" title="Tecnologias" class="md-nav__link">
+      Tecnologias
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#representacao-de-dados">
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#representacao-de-dados" class="md-nav__link">
     Representação de dados
   </a>
-<nav aria-label="Representação de dados" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#representacao-textual">
+  
+    <nav class="md-nav" aria-label="Representação de dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representacao-textual" class="md-nav__link">
     Representação Textual
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#protobuffers">
+        
+          <li class="md-nav__item">
+  <a href="#protobuffers" class="md-nav__link">
     ProtoBuffers
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#thrift">
+        
+          <li class="md-nav__item">
+  <a href="#thrift" class="md-nav__link">
     Thrift
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#invocacao-remota-de-procedimentos-rpc">
+      
+        <li class="md-nav__item">
+  <a href="#invocacao-remota-de-procedimentos-rpc" class="md-nav__link">
     Invocação Remota de Procedimentos - RPC
   </a>
-<nav aria-label="Invocação Remota de Procedimentos - RPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stubs">
+  
+    <nav class="md-nav" aria-label="Invocação Remota de Procedimentos - RPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stubs" class="md-nav__link">
     Stubs
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#transparencia">
+        
+          <li class="md-nav__item">
+  <a href="#transparencia" class="md-nav__link">
     Transparência
   </a>
-<nav aria-label="Transparência" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#descoberta-de-servicos">
+  
+    <nav class="md-nav" aria-label="Transparência">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descoberta-de-servicos" class="md-nav__link">
     Descoberta de Serviços
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tratamento-de-excecoes">
+        
+          <li class="md-nav__item">
+  <a href="#tratamento-de-excecoes" class="md-nav__link">
     Tratamento de Exceções
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#reexecucoes">
+        
+          <li class="md-nav__item">
+  <a href="#reexecucoes" class="md-nav__link">
     Reexecuções
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#concorrencia-no-servidor">
+        
+          <li class="md-nav__item">
+  <a href="#concorrencia-no-servidor" class="md-nav__link">
     Concorrência no servidor
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#frameworks">
+        
+          <li class="md-nav__item">
+  <a href="#frameworks" class="md-nav__link">
     Frameworks
   </a>
-<nav aria-label="Frameworks" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#interface-definition-language-idl">
+  
+    <nav class="md-nav" aria-label="Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interface-definition-language-idl" class="md-nav__link">
     Interface Definition Language - IDL
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-grpc">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-grpc" class="md-nav__link">
     Estudo de Caso RPC: gRPC
   </a>
-<nav aria-label="Estudo de Caso RPC: gRPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#instalacao">
+  
+    <nav class="md-nav" aria-label="Estudo de Caso RPC: gRPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao" class="md-nav__link">
     Instalação
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exemplo-java">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-java" class="md-nav__link">
     Exemplo Java
   </a>
-<nav aria-label="Exemplo Java" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pegando-o-codigo">
+  
+    <nav class="md-nav" aria-label="Exemplo Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pegando-o-codigo" class="md-nav__link">
     Pegando o código
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#compilando-e-executando">
+        
+          <li class="md-nav__item">
+  <a href="#compilando-e-executando" class="md-nav__link">
     Compilando e executando
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#o-servico">
+        
+          <li class="md-nav__item">
+  <a href="#o-servico" class="md-nav__link">
     O serviço
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#implementando-um-servico">
+        
+          <li class="md-nav__item">
+  <a href="#implementando-um-servico" class="md-nav__link">
     Implementando um serviço
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stub-do-servidor">
+        
+          <li class="md-nav__item">
+  <a href="#stub-do-servidor" class="md-nav__link">
     Stub do servidor
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#stub-do-cliente">
+        
+          <li class="md-nav__item">
+  <a href="#stub-do-cliente" class="md-nav__link">
     Stub do cliente
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#idl-grpc">
+        
+          <li class="md-nav__item">
+  <a href="#idl-grpc" class="md-nav__link">
     IDL gRPC
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exemplo-python">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-python" class="md-nav__link">
     Exemplo Python
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-thrift">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-thrift" class="md-nav__link">
     Estudo de Caso RPC: Thrift
   </a>
-<nav aria-label="Estudo de Caso RPC: Thrift" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#instalacao_1">
+  
+    <nav class="md-nav" aria-label="Estudo de Caso RPC: Thrift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao_1" class="md-nav__link">
     Instalação
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#idl-thrift">
+        
+          <li class="md-nav__item">
+  <a href="#idl-thrift" class="md-nav__link">
     IDL Thrift
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#arquitetura">
+        
+          <li class="md-nav__item">
+  <a href="#arquitetura" class="md-nav__link">
     Arquitetura
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#classpath">
+        
+          <li class="md-nav__item">
+  <a href="#classpath" class="md-nav__link">
     Classpath
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#referencias">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
     Referências
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#estudo-de-caso-rpc-rmi">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-rpc-rmi" class="md-nav__link">
     Estudo de Caso RPC: RMI
   </a>
+  
 </li>
-</ul>
-</nav>
+        
+      </ul>
+    </nav>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#comunicacao-orientada-a-mensagens">
+      
+        <li class="md-nav__item">
+  <a href="#comunicacao-orientada-a-mensagens" class="md-nav__link">
     Comunicação orientada a Mensagens
   </a>
+  
 </li>
-</ul>
+      
+        <li class="md-nav__item">
+  <a href="#publishsubscribe" class="md-nav__link">
+    Publish/Subscribe
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content">
-<article class="md-content__inner md-typeset">
-<h1 id="communicacao">Communicação</h1>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="communicacao">Communicação</h1>
 <p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
 Suas desvantagens, entretanto, são várias:</p>
@@ -563,28 +942,50 @@ Neste cenário, vários fatores precisam ser levados em consideração na hora d
 <li>alinhamento de bytes</li>
 <li>Sistemas operacionais diferentes</li>
 <li>crlf (DOS) x lf (Unix)</li>
-<li>fragmentação <br/>
-<a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png"/></a></li>
+<li>fragmentação <br>
+  <a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png" /></a></li>
 </ul>
 <h3 id="representacao-textual">Representação Textual</h3>
 <p>Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
-Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.</p>
-<pre><code class="HTML">telnet www.google.com 80
+Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet www.google.com 80
 Trying 187.72.192.217...
 Connected to www.google.com.
-Escape character is '^]'.
+Escape character is &#39;^]&#39;.
 GET / HTTP/1.1
 host: www.google.com
-
-</code></pre>
-<p>As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio <a href="https://www.google.com">www.google.com</a>.
+</code></pre></div>
+</td></tr></table>
+As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio <a href="https://www.google.com">www.google.com</a>.
 A linha 7, vazia, indica ao servidor que a requisição está terminada.</p>
 <p>Em resposta a esta requisição, o servidor envia o seguinte, em que as primeiras linhas trazem metadados da página requisitada e, após a linha em branco, vem a resposta em HTML à requisição.</p>
-<pre><code class="HTML">HTTP/1.1 302 Found
-Location: http://www.google.com.br/?gws_rd=cr&amp;ei=HTDqWJ3BDYe-wATs_a3ACA
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>HTTP/1.1 302 Found
+Location: http://www.google.com.br/?gws_rd=cr<span class="err">&amp;</span>ei=HTDqWJ3BDYe-wATs_a3ACA
 Cache-Control: private
 Content-Type: text/html; charset=UTF-8
-P3P: CP="This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info."
+P3P: CP=&quot;This is not a P3P policy! See https://www.google.com/support/accounts/answer/151657?hl=en for more info.&quot;
 Date: Sun, 09 Apr 2017 12:59:09 GMT
 Server: gws
 Content-Length: 262
@@ -592,44 +993,66 @@ X-XSS-Protection: 1; mode=block
 X-Frame-Options: SAMEORIGIN
 Set-Cookie: NID=100=NB_AruuFWL0hXk2-h7VDduHO_UkjAr6RaqgG7VbccTsfLzFfhxEKx21Xpa2EH7IgshgczE9vU4W1TyKsa07wQeuZosl5DbyZluR1ViDRf0C-5lRpd9cCpCD5JXXjy-UE; expires=Mon, 09-Oct-2017 12:59:09 GMT; path=/; domain=.google.com; HttpOnly
 
-&lt;HTML&gt;&lt;HEAD&gt;&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;TITLE&gt;302 Moved&lt;/TITLE&gt;&lt;/HEAD&gt;&lt;BODY&gt;
-&lt;H1&gt;302 Moved&lt;/H1&gt;
+<span class="p">&lt;</span><span class="nt">HTML</span><span class="p">&gt;&lt;</span><span class="nt">HEAD</span><span class="p">&gt;&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;content-type&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;text/html;charset=utf-8&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">TITLE</span><span class="p">&gt;</span>302 Moved<span class="p">&lt;/</span><span class="nt">TITLE</span><span class="p">&gt;&lt;/</span><span class="nt">HEAD</span><span class="p">&gt;&lt;</span><span class="nt">BODY</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">H1</span><span class="p">&gt;</span>302 Moved<span class="p">&lt;/</span><span class="nt">H1</span><span class="p">&gt;</span>
 The document has moved
-&lt;A HREF="http://www.google.com.br/?gws_rd=cr&amp;amp;ei=HTDqWJ3BDYe-wATs_a3ACA"&gt;here&lt;/A&gt;.
-&lt;/BODY&gt;&lt;/HTML&gt;
-</code></pre>
+<span class="p">&lt;</span><span class="nt">A</span> <span class="na">HREF</span><span class="o">=</span><span class="s">&quot;http://www.google.com.br/?gws_rd=cr&amp;amp;ei=HTDqWJ3BDYe-wATs_a3ACA&quot;</span><span class="p">&gt;</span>here<span class="p">&lt;/</span><span class="nt">A</span><span class="p">&gt;</span>.
+<span class="p">&lt;/</span><span class="nt">BODY</span><span class="p">&gt;&lt;/</span><span class="nt">HTML</span><span class="p">&gt;</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
 Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
 Dois padrões bem conhecidas são XML e JSON.</p>
 <p><a href="https://xml.org">XML</a> é o acrônimo para <em>Extensible Markup Language</em>, ou seja, uma linguagem marcação que pode ser estendida para representar diferentes tipos de informação.
 A HTML, por exemplo, é uma instância de XML destinada à representação de hipertexto (A bem da verdade, XML foi uma generalização de HTML).</p>
 <p>Por exemplo, para representarmos os dados relativos à uma pessoa, podemos ter uma instância XML assim:</p>
-<pre><code class="xml">&lt;person&gt;
-    &lt;name&gt;John Doe&lt;/name&gt;
-    &lt;id&gt;112234556&lt;/id&gt;
-    &lt;email&gt;jdoe@example.com&lt;/email&gt;
-    &lt;telephones&gt;
-       &lt;telephone type="mobile"&gt;123 321 123&lt;/telephone&gt;
-       &lt;telephone type="home"&gt;321 123 321&lt;/telephone&gt;
-    &lt;/telephones&gt;
-&lt;/person&gt;
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">&lt;person&gt;</span>
+    <span class="nt">&lt;name&gt;</span>John Doe<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;id&gt;</span>112234556<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;email&gt;</span>jdoe@example.com<span class="nt">&lt;/email&gt;</span>
+    <span class="nt">&lt;telephones&gt;</span>
+       <span class="nt">&lt;telephone</span> <span class="na">type=</span><span class="s">&quot;mobile&quot;</span><span class="nt">&gt;</span>123 321 123<span class="nt">&lt;/telephone&gt;</span>
+       <span class="nt">&lt;telephone</span> <span class="na">type=</span><span class="s">&quot;home&quot;</span><span class="nt">&gt;</span>321 123 321<span class="nt">&lt;/telephone&gt;</span>
+    <span class="nt">&lt;/telephones&gt;</span>
+<span class="nt">&lt;/person&gt;</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o que pode ou não estar em um arquivo para um certo domínio utilizando um <a href="https://docs.microsoft.com/pt-br/dotnet/standard/data/xml/xml-document-object-model-dom">XML <em>Domain Object Model</em></a>. Há, por exemplo, modelos para representação de documentos de texto, governos eletrônicos, representação de conhecimento, <a href="http://www.xml.org/">etc</a>.
 Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.</p>
 <p><a href="http://json.org/">JSON</a> é o acrônimo de <em>Javascript Object Notation</em>, isto é, o formato para representação de objetos da linguagem Javascript.
 Devido à sua simplicidade e versatilidade, entretanto, foi adotado como forma de representação de dados em sistemas desenvolvidos nas mais diferentes linguagens.
 O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:</p>
-<pre><code class="json">{
-    "name": "John Doe",
-    "id": 112234556,
-    "email": "jdoe@example.com",
-    "telephones": [
-        { "type": "mobile", "number": "123 321 123"},
-        { "type": "home", "number": "321 123 321"},
-    ]
-}
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">112234556</span><span class="p">,</span>
+    <span class="nt">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;jdoe@example.com&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;telephones&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;mobile&quot;</span><span class="p">,</span> <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;123 321 123&quot;</span><span class="p">},</span>
+        <span class="p">{</span> <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;home&quot;</span><span class="p">,</span> <span class="nt">&quot;number&quot;</span><span class="p">:</span> <span class="s2">&quot;321 123 321&quot;</span><span class="p">},</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Em Python, por exemplo, JSON são gerados e interpretados nativamente, sem a necessidade de <em>frameworks</em> externos, facilitando seu uso.
 Mas de fato, a opção final por XML ou JSON é questão de preferência, uma vez que os dois formatos são, de fato, equivalentes na questão da representação de informação.</p>
 <p>Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar e transmitir dados, e por isso são frequentemente usados como forma de <em>serialização</em> de dados em sistemas distribuídos, isto é, na transformação de TAD para sequências de bytes que seguirão "no fio".</p>
@@ -650,43 +1073,73 @@ Quanto à serialização feita nativamente pelo Java, por meio de <code>ObjectOu
 </blockquote>
 <p>Por meio de protobuffers, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
 Observe a presença de campos de preenchimento opcional (<strong>optional</strong>), de enumerações (<strong>enum</strong>), e de coleções (<strong>repeated</strong>).</p>
-<pre><code class="protobuf">message Person {
-    required string name = 1;
-    required int32 id = 2;
-    optional string email = 3;
-    enum PhoneType {
-        MOBILE = 0;
-        HOME = 1;
-        WORK = 2;
-    }
-    message PhoneNumber {
-        required string number = 1;
-        optional PhoneType type = 2 [default = HOME];
-    }
-    repeated PhoneNumber phone = 4;
-}
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">Person</span> <span class="p">{</span>
+    <span class="k">required</span> <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">required</span> <span class="kt">int32</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">optional</span> <span class="kt">string</span> <span class="na">email</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kd">enum</span> <span class="n">PhoneType</span> <span class="p">{</span>
+        <span class="na">MOBILE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">HOME</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">WORK</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">message</span> <span class="nc">PhoneNumber</span> <span class="p">{</span>
+        <span class="k">required</span> <span class="kt">string</span> <span class="na">number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">optional</span> <span class="n">PhoneType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">[</span><span class="k">default</span> <span class="o">=</span> <span class="n">HOME</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">repeated</span> <span class="n">PhoneNumber</span> <span class="na">phone</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...</p>
-<pre><code class="c++">Person person;
-person.set_name("John Doe");
-person.set_id(1234);
-person.set_email("jdoe@example.com");
-fstream output("myfile", ios::out | ios::binary);
-person.SerializeToOstream(&amp;output);
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span> <span class="n">person</span><span class="p">;</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="mi">1234</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">set_email</span><span class="p">(</span><span class="s">&quot;jdoe@example.com&quot;</span><span class="p">);</span>
+<span class="n">fstream</span> <span class="nf">output</span><span class="p">(</span><span class="s">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+<span class="n">person</span><span class="p">.</span><span class="n">SerializeToOstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">output</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>e lê do arquivo e desserializa para hidratar um novo objeto.</p>
-<pre><code class="c++">fstream input("myfile", ios::in | ios::binary);
-Person person;
-person.ParseFromIstream(&amp;input);
-cout &lt;&lt; "Name: " &lt;&lt; person.name() &lt;&lt; endl;
-cout &lt;&lt; "E-mail: " &lt;&lt; person.email() &lt;&lt; endl;
-</code></pre>
-<p>De acordo com <em>benchmarks</em> do próprio <a href="https://developers.google.com/protocol-buffers/docs/overview">projeto</a>, a operação em XML seria mais órdens de grandeza mais lenta e ocuparia mais espaço.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">fstream</span> <span class="nf">input</span><span class="p">(</span><span class="s">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+<span class="n">Person</span> <span class="n">person</span><span class="p">;</span>
+<span class="n">person</span><span class="p">.</span><span class="n">ParseFromIstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">input</span><span class="p">);</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Name: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">person</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;E-mail: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">person</span><span class="p">.</span><span class="n">email</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>De acordo com <em>benchmarks</em> do próprio <a href="https://developers.google.com/protocol-buffers/docs/overview">projeto</a>, a operação em XML seria mais ordens de grandeza mais lenta e ocuparia mais espaço.</p>
 <blockquote>
 <p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
 </blockquote>
 <h3 id="thrift">Thrift</h3>
-<h1>TODO</h1>
+<details class="todo"><summary>TODO</summary><p>Thrift como forma de representação de dados.</p>
+</details>
 <h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
 <p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">1</a></sup>
 introduziram o mecanismo de <strong>Invocação Remota de Procedimentos</strong> (<em>Remote Procedure Calls</em>), que permite que processos façam, pasmem, invocações de procedimentos remotos!
@@ -708,9 +1161,9 @@ O código <code>x = substring(a,3,"teste");</code>, que procura <code>"teste"</c
 <li>coloque resultado em <code>x</code></li>
 </ul>
 <p>Se o que queremos é colocar o código da função <code>substring</code> em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
-Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local mas que, por baixo do capô, use sockets para se comunicar com o processo remoto.<br>
+Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local mas que, por baixo do capô, use sockets para se comunicar com o processo remoto.<br />
 Estq simulação usará código extra, que finge implementar <code>substring</code> para o invocador mas delega ao código remoto o trabalho real da busca.
-Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <em>stub cliente</em>, que faz parte do processo invocando a operação, e <em>stub</em> servidor, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">3</a></sup>.</br></p>
+Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <em>stub cliente</em>, que faz parte do processo invocando a operação, e <em>stub</em> servidor, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">3</a></sup>.</p>
 <p>Assim, o cliente invoca função no stub cliente, achando que é a função que quer executar.
 Stub cliente faz o <strong>marshaling</strong> <sup id="fnref:marshal"><a class="footnote-ref" href="#fn:marshal">4</a></sup>  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
 Quando recebe a resposta do servidor, o stub cliente retorna a mesma resposta, como se tivesse calculado localmente.</p>
@@ -737,7 +1190,7 @@ Quando acontece, faz o "unmarshalling" dos dados, invoca a função localmente n
 <li>envia resultado para cliente</li>
 </ul>
 </div>
-<p><img alt="Skeleton" src="images/stubskeleton.png"/></p>
+<p><img alt="Skeleton" src="images/stubskeleton.png" /></p>
 <h3 id="transparencia">Transparência</h3>
 <p>É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao centralizado, certo? Isto é, <strong>interface baseada em procedimentos</strong> e sem a necessidade de detalhar <strong>portas, sockets, e representação de dados</strong>.  Ou seja, tudo é transparente!
 Como já discutimos, vários fatores trabalham contra a <a href="../intro/#transparencia">transparência em sistemas distribuídos</a>.
@@ -767,20 +1220,34 @@ E como determinar qual serviço acessar, caso hajam <strong>múltiplas opções 
 <p>Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
 Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
 Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para algo assim (em uma linguagem fictícia):</p>
-<pre><code class="c">int x = -2;
-try {
-    x = substring(a,3,"teste");`
-} catch(CommunicationFailureException cfe) {
-    log_error("Como pode substring falhar? Desespero!!!");
-}
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">try</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">substring</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;teste&quot;</span><span class="p">);</span><span class="err">`</span>
+<span class="p">}</span> <span class="n">catch</span><span class="p">(</span><span class="n">CommunicationFailureException</span> <span class="n">cfe</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">log_error</span><span class="p">(</span><span class="s">&quot;Como pode substring falhar? Desespero!!!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 
-if (x == -2)
-    system_exit(-2)
-else if (x == -1)
-    //não achou
-else
-    //achou "teste" na posição x
-</code></pre>
+<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">system_exit</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1">//não achou</span>
+<span class="k">else</span>
+    <span class="c1">//achou &quot;teste&quot; na posição x</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.</p>
 <p>Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
 Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
@@ -851,7 +1318,7 @@ Mas todos os <strong>frameworks</strong> tem algumas características em comum e
 <p>Uma <a href="https://en.wikipedia.org/wiki/Interface_description_language">IDL</a> é a linguagem pela qual desenvolvedor define quais as operações (funções, procedimentos, métodos) serão acessíveis via RPC e quais os seus operandos.
 Há várias IDL definidas, para os diversos <em>frameworks</em> disponíveis.</p>
 <p>A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.</p>
-<p><img alt="IDL" src="images/idl.png"/></p>
+<p><img alt="IDL" src="images/idl.png" /></p>
 <p>O fluxo de processamento é o seguinte:</p>
 <ul>
 <li>Arquivo em IDL é compilado por um compilador IDL e gera diversos arquivos:<ul>
@@ -892,29 +1359,54 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 <p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
 <h5 id="pegando-o-codigo">Pegando o código</h5>
 <p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
-<pre><code class="bash">git clone -b v1.19.0 https://github.com/grpc/grpc-java
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.19.0 https://github.com/grpc/grpc-java
+</code></pre></div>
+</td></tr></table>
+
 <p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.</p>
-<pre><code class="bash">cd grpc-java\examples
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java<span class="se">\e</span>xamples
 git checkout v1.19.0
-</code></pre>
+</code></pre></div>
+</td></tr></table>
+
 <h5 id="compilando-e-executando">Compilando e executando</h5>
 <p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
-<pre><code class="bash">./gradlew installDist
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist
+</code></pre></div>
+</td></tr></table>
+
 <p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
-<pre><code class="bash">./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
+</code></pre></div>
+</td></tr></table>
+
 <p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
-<pre><code class="bash">./build/install/examples/bin/hello-world-server
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-server
+</code></pre></div>
+</td></tr></table>
+
 <p>Agora, em <strong>um terminal distinto</strong> e a partir da mesma localização, execute o cliente, quantas vezes quiser.</p>
-<pre><code class="bash">./build/install/examples/bin/hello-world-client
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-client
+</code></pre></div>
+</td></tr></table>
+
 <h5 id="o-servico">O serviço</h5>
 <p>O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
 O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <code>./src/main/proto/helloworld.proto</code>.</p>
-<pre><code class="protobuf">message HelloRequest {
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>message HelloRequest {
   string name = 1;
 }
 
@@ -927,7 +1419,9 @@ message HelloReply {
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
-</code></pre>
+</code></pre></div>
+</td></tr></table>
+
 <p>No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.</p>
 <p>A mensagem <code>HelloRequest</code> tem apenas um campo denominado <code>name</code>, do tipo <code>string</code>. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.</p>
 <p>A mensagem <code>HelloReply</code> também tem um campo do tipo <code>string</code>, denominado <code>message</code>, que conterá a resposta do servidor.</p>
@@ -940,28 +1434,50 @@ Assim, caso não haja a necessidade de se passar qualquer informação para a op
 O mesmo se aplica ao resultado da operação.</p>
 <p>Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
 Por exemplo, para definir uma versão em português da operação <code>SayHello</code>, podemos fazer da seguinte forma.</p>
-<pre><code class="protobuf">message HelloRequest {
-  string name = 1;
-}
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">HelloRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message HelloReply {
-  string message = 1;
-}
+<span class="kd">message</span> <span class="nc">HelloReply</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message OlaRequest {     // &lt;&lt;&lt;&lt;&lt;====
-  string name = 1;
-}
+<span class="kd">message</span> <span class="nc">OlaRequest</span> <span class="p">{</span>     <span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message OlaReply {       // &lt;&lt;&lt;&lt;&lt;====
-  string message = 1;
-}
+<span class="kd">message</span> <span class="nc">OlaReply</span> <span class="p">{</span>       <span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc DigaOla (OlaRequest) returns (OlaReply) {}// &lt;&lt;&lt;&lt;&lt;====
-}
-...
-</code></pre>
+<span class="kd">service</span> <span class="n">Greeter</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">SayHello</span> <span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="k">rpc</span> <span class="n">DigaOla</span> <span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">OlaReply</span><span class="p">)</span> <span class="p">{}</span><span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+<span class="p">}</span>
+<span class="o">...</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Observe que a nova operação recebe como entrada  mensagens <code>OlaRequest</code> e <code>OlaReply</code>, que tem definições exatamente iguais a <code>HellorRequest</code> e <code>HelloReply</code>.
 Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
 Apenas reforçando, é boa prática definir <em>requests</em> e <em>responses</em> para cada método, a não ser que não haja dúvida de que serão para sempre iguais.</p>
@@ -973,44 +1489,80 @@ Este arquivo define a classe que <strong>implementa</strong> o serviço <code>Gr
 Para confirmar, procure por <code>sayHello</code>para encontrar a implementação de <code>SayHello</code>; observe que a diferença do <code>casing</code> vem das boas práticas de Java, de definir métodos e variáveis em <em>Camel casing</em>.</p>
 <p>Para que sua versão estendida do serviço <code>Greeter</code> funcione, defina um método correspondendo à <code>DigaOla</code>, sem consultar o código exemplo abaixo, mas usando o código de <code>sayHello</code> como base; não se importe por enquanto com os métodos sendo invocados.
 Note que os <code>...</code> indicam que parte do código, que não sofreu modificações, foi omitido.</p>
-<pre><code class="java">...
-private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
-...
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
+<span class="kd">private</span> <span class="kd">class</span> <span class="nc">GreeterImpl</span> <span class="kd">extends</span> <span class="n">GreeterGrpc</span><span class="p">.</span><span class="na">GreeterImplBase</span> <span class="p">{</span>
+<span class="p">...</span>
 
-  @Override
-  public void sayHello(HelloRequest req, StreamObserver&lt;HelloReply&gt; responseObserver) {
-      ...
-  }
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="p">(</span><span class="n">HelloRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">HelloReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">...</span>
+  <span class="p">}</span>
 
-  @Override
-  public void digaOla(OlaRequest req, StreamObserver&lt;OlaReply&gt; responseObserver) {
-    OlaReply reply = 
-      OlaReply.newBuilder().setMessage("Ola " + req.getName()).build();
-    responseObserver.onNext(reply);
-    responseObserver.onCompleted();
-  }
-}
-</code></pre>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOla</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> 
+      <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="s">&quot;Ola &quot;</span> <span class="o">+</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
+    <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
+    <span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em <code>src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java</code>, novamente se baseando no código existente e não se preocupando com "detalhes".</p>
-<pre><code class="java">public void greet(String name) {
-  logger.info("Will try to greet " + name + " ...");
-...
-  OlaRequest request2 = OlaRequest.newBuilder().setName(name).build();
-  OlaReply response2;
-  try {
-    response2 = blockingStub.digaOla(request2);
-  } catch (StatusRuntimeException e) {
-    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-   return;
-  }
-  logger.info("Greeting: " + response2.getMessage());
-}
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Will try to greet &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ...&quot;</span><span class="p">);</span>
+<span class="p">...</span>
+  <span class="n">OlaRequest</span> <span class="n">request2</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+  <span class="n">OlaReply</span> <span class="n">response2</span><span class="p">;</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">response2</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOla</span><span class="p">(</span><span class="n">request2</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
+   <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response2</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Agora sim, você pode reexecutar cliente e servidor.</p>
-<pre><code class="bash">./gradlew installDist
-./build/install/examples/bin/hello-world-server &amp;
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist
+./build/install/examples/bin/hello-world-server <span class="p">&amp;</span>
 ./build/install/examples/bin/hello-world-client
-</code></pre>
+</code></pre></div>
+</td></tr></table>
+
 <p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.</p>
 <h5 id="stub-do-servidor">Stub do servidor</h5>
 <ul>
@@ -1052,54 +1604,96 @@ Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nom
 </li>
 <li>Do lado do servidor</li>
 </ul>
-<p>```java
-   List<string> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");</string></p>
-<p>@Override
-   public void digaOlas(OlaRequest req, StreamObserver<olareply> responseObserver) {
-   for (String hi: listOfHi)
-   {
-     OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
-     responseObserver.onNext(reply);
-   }
-   responseObserver.onCompleted();
-   }
-  ```
-  - Do lado do cliente</olareply></p>
-<p><code>java
-   OlaRequest request = OlaRequest.newBuilder().setName(name).build();
-   try {
-       Iterator&lt;OlaReply&gt; it = blockingStub.digaOlas(request);
-       while (it.hasNext()){
-         OlaReply response = it.next();
-         logger.info("Greeting: " + response.getMessage());
-       }
-    } catch (StatusRuntimeException e) {
-       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-       return;
-    }</code></p>
+<p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">listOfHi</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;e aih&quot;</span><span class="p">,</span> <span class="s">&quot;ola&quot;</span><span class="p">,</span> <span class="s">&quot;ciao&quot;</span><span class="p">,</span> <span class="s">&quot;bao&quot;</span><span class="p">,</span> <span class="s">&quot;howdy&quot;</span><span class="p">,</span> <span class="s">&quot;s&#39;up&quot;</span><span class="p">);</span>
+
+ <span class="nd">@Override</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOlas</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hi</span><span class="p">:</span> <span class="n">listOfHi</span><span class="p">)</span>
+ <span class="p">{</span>
+   <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="n">hi</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
+   <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
+ <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+  - Do lado do cliente</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> <span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+ <span class="k">try</span> <span class="p">{</span>
+     <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+     <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
+       <span class="n">OlaReply</span> <span class="n">response</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+       <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+     <span class="p">}</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
+     <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
 <h4 id="exemplo-python">Exemplo Python</h4>
-<pre><code class="bash">apt-get install python3
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-get install python3
 apt-get install python3-pip
 python3 -m pip install --upgrade pip
 python3 -m pip install grpcio
 python3 -m pip install grpcio-tools
 
 git clone -b v1.10.x https://github.com/grpc/grpc
-cd grpc/examples/python/helloworld
-python3 greeter\_server.py
-python3 greeter\_client.py
-</code></pre>
+<span class="nb">cd</span> grpc/examples/python/helloworld
+python3 greeter<span class="se">\_</span>server.py
+python3 greeter<span class="se">\_</span>client.py
+</code></pre></div>
+</td></tr></table>
+
 <p>Para recompilar os stubs, faça</p>
-<pre><code class="bash">python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 -m grpc_tools.protoc -I../../protos --python_out<span class="o">=</span>. --grpc_python_out<span class="o">=</span>. ../../protos/helloworld.proto
+</code></pre></div>
+</td></tr></table>
+
 <p>Modifique o servidor</p>
-<pre><code class="Python">def DigaOla(self, request, context):
-    return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">DigaOla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaReply</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Ola, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Modifique o cliente</p>
-<pre><code class="Python">response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
-print("Greeter client received: " + response.message)
-</code></pre>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="n">DigaOla</span><span class="p">(</span><span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zelelele&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Greeter client received: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
 <h3 id="estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</h3>
 <p><a href="https://thrift.apache.org/">Thrift</a></p>
 <h4 id="instalacao_1">Instalação</h4>
@@ -1125,34 +1719,43 @@ print("Greeter client received: " + response.message)
 <li>binary: sequência de bytes</li>
 </ul>
 </li>
-<li>Estruturas</li>
-</ul>
-<pre><code class="thrift">struct Example {
-    1:i32 number,
-    2:i64 bigNumber,
-    3:double decimals,
-    4:string name="thrifty"
-}
-</code></pre>
-<ul>
-<li>Serviços</li>
-</ul>
-<pre><code class="thrift">service ChaveValor {
-    void set(1:i32 key, 2:string value),
-    string get(1:i32 key) throws (1:KeyNotFound knf),
-    void delete(1:i32 key)
-}
-</code></pre>
-<ul>
+<li>Estruturas
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">struct</span><span class="w"> </span><span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">number</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2</span><span class="p">:</span><span class="kt">i64</span><span class="w"> </span><span class="n">bigNumber</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="mi">3</span><span class="p">:</span><span class="kt">double</span><span class="w"> </span><span class="n">decimals</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="mi">4</span><span class="p">:</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;thrifty&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table></li>
+<li>Serviços
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">service</span><span class="w"> </span><span class="nc">ChaveValor</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">set</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="kt">string</span><span class="w"> </span><span class="n">value</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nf">get</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="k">throws</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">KeyNotFound</span><span class="w"> </span><span class="n">knf</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">delete</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table></li>
 <li><strong>Não se pode retornar NULL!!!</strong></li>
-<li>Exceções</li>
-</ul>
-<pre><code class="thrift">exception KeyNotFound {
-   1:i64 hora r,
-   2:string chaveProcurada="thrifty"
-}
-</code></pre>
-<ul>
+<li>Exceções
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">exception</span><span class="w"> </span><span class="nc">KeyNotFound</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="mi">1</span><span class="p">:</span><span class="kt">i64</span><span class="w"> </span><span class="n">hora</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="mi">2</span><span class="p">:</span><span class="kt">string</span><span class="w"> </span><span class="n">chaveProcurada</span><span class="o">=</span><span class="s2">&quot;thrifty&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+</td></tr></table></li>
 <li>Containers<ul>
 <li>List</li>
 <li>Map</li>
@@ -1161,68 +1764,125 @@ print("Greeter client received: " + response.message)
 </li>
 </ul>
 <p>Exemplo: chavevalor.thrift</p>
-<pre><code class="Thrift">namespace java chavevalor
-namespace py chavevalor
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">namespace</span><span class="w"> </span><span class="nn">java</span><span class="w"> </span><span class="n">chavevalor</span><span class="w"></span>
+<span class="kn">namespace</span><span class="w"> </span><span class="nn">py</span><span class="w"> </span><span class="n">chavevalor</span><span class="w"></span>
 
 
-exception KeyNotFound
-{
-}
+<span class="kd">exception</span><span class="w"> </span><span class="nc">KeyNotFound</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
-</code></pre>
+<span class="kd">service</span><span class="w"> </span><span class="nc">ChaveValor</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="nf">getKV</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="k">throws</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">KeyNotFound</span><span class="w"> </span><span class="n">knf</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">setKV</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="kt">string</span><span class="w"> </span><span class="n">value</span><span class="p">),</span><span class="w"></span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">delKV</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w">  </span>
+</code></pre></div>
+</td></tr></table>
+
 <p>Compilação</p>
 <p><code>thrift --gen java chavevalor.thrift</code></p>
 <p><code>thrift --gen py chavevalor.thrift</code></p>
-<p>ChaveValorHandler.java</p>
-<pre><code class="Java">namespace java chavevalor
-namespace py chavevalor
+<p>ChaveValorHandler.java
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">namespace</span> <span class="n">java</span> <span class="n">chavevalor</span>
+<span class="n">namespace</span> <span class="n">py</span> <span class="n">chavevalor</span>
 
 
-exception KeyNotFound
-{
-}
+<span class="n">exception</span> <span class="n">KeyNotFound</span>
+<span class="p">{</span>
+<span class="p">}</span>
 
 
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
+<span class="n">service</span> <span class="n">ChaveValor</span>
+<span class="p">{</span>
+    <span class="n">string</span> <span class="nf">getKV</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i32</span> <span class="n">key</span><span class="p">)</span> <span class="kd">throws</span> <span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">KeyNotFound</span> <span class="n">knf</span><span class="p">),</span>
+    <span class="n">bool</span> <span class="nf">setKV</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i32</span> <span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">string</span> <span class="n">value</span><span class="p">),</span>
+    <span class="kt">void</span> <span class="nf">delKV</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i32</span> <span class="n">key</span><span class="p">)</span>
+<span class="p">}</span>  
 
-package chavevalor;
+<span class="kn">package</span> <span class="nn">chavevalor</span><span class="p">;</span>
 
-import org.apache.thrift.TException;
-import java.util.HashMap;
-import chavevalor.*;
+<span class="kn">import</span> <span class="nn">org.apache.thrift.TException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">chavevalor.*</span><span class="p">;</span>
 
-public class ChaveValorHandler implements ChaveValor.Iface {
-   private HashMap&lt;Integer,String&gt; kv = new HashMap&lt;&gt;();
-   @Override
-   public String getKV(int key) throws TException {
-       if(kv.containsKey(key))
-          return kv.get(key);
-       else
-          throw new KeyNotFound();
-   }
-   @Override
-   public boolean setKV(int key, String valor) throws TException {
-       kv.put(key,valor);
-       return true;
-   }
-   @Override
-   public void delKV(int key) throws TException {
-       kv.remove(key);
-   }    
-}
-</code></pre>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ChaveValorHandler</span> <span class="kd">implements</span> <span class="n">ChaveValor</span><span class="p">.</span><span class="na">Iface</span> <span class="p">{</span>
+   <span class="kd">private</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">kv</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="n">String</span> <span class="nf">getKV</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">TException</span> <span class="p">{</span>
+       <span class="k">if</span><span class="p">(</span><span class="n">kv</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+          <span class="k">return</span> <span class="n">kv</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+       <span class="k">else</span>
+          <span class="k">throw</span> <span class="k">new</span> <span class="n">KeyNotFound</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">setKV</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="n">String</span> <span class="n">valor</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">TException</span> <span class="p">{</span>
+       <span class="n">kv</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">valor</span><span class="p">);</span>
+       <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">delKV</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">TException</span> <span class="p">{</span>
+       <span class="n">kv</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+   <span class="p">}</span>    
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></p>
 <h4 id="arquitetura">Arquitetura</h4>
 <ul>
 <li>Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas</li>
@@ -1254,78 +1914,116 @@ public class ChaveValorHandler implements ChaveValor.Iface {
 </li>
 </ul>
 <h4 id="classpath">Classpath</h4>
-<pre><code class="bash">javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
-
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
-
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient 
-</code></pre>
+</code></pre></div>
+</td></tr></table>
+
 <h4 id="referencias">Referências</h4>
 <p><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></p>
 <h3 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h3>
-<h1>TODO</h1>
+<details class="todo"><summary>TODO</summary><p>Como usar RMI.</p>
+</details>
 <h2 id="comunicacao-orientada-a-mensagens">Comunicação orientada a Mensagens</h2>
-<h1>TODO</h1>
-<ul>
+<details class="todo"><summary>TODO</summary><ul>
 <li><a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">MOM</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Enterprise_service_bus">Enterprise Message Bus</a></li>
 <li><a href="https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/">To Message Bus or Not: distributed system design</a></li>
 </ul>
+</details>
+<h2 id="publishsubscribe">Publish/Subscribe</h2>
+<details class="todo"><summary>TODO</summary><p>Descrever pub/sub e diferenciar de MOM</p>
+</details>
 <div class="footnote">
-<hr/>
+<hr />
 <ol>
 <li id="fn:birrel">
-<p><a href="http://www.birrell.org/andrew/papers/ImplementingRPC.pdf">Implementing RPC</a> <a class="footnote-backref" href="#fnref:birrel" title="Jump back to footnote 1 in the text">↩</a></p>
+<p><a href="http://www.birrell.org/andrew/papers/ImplementingRPC.pdf">Implementing RPC</a>&#160;<a class="footnote-backref" href="#fnref:birrel" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:omissao">
-<p>Omitirei alguns detalhes aqui, em nome da genericidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores. <a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 2 in the text">↩</a></p>
+<p>Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.&#160;<a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:skeleton">
-<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton </em>. <a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 3 in the text">↩</a></p>
+<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton</em>.&#160;<a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:marshal">
-<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio". <a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 4 in the text">↩</a></p>
+<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio".&#160;<a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
-</article>
-</div>
-</div>
-</main>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
 <footer class="md-footer">
-<div class="md-footer-nav">
-<nav aria-label="Footer" class="md-footer-nav__inner md-grid">
-<a class="md-footer-nav__link md-footer-nav__link--prev" href="../basics/" rel="prev" title="Fundamentos">
-<div class="md-footer-nav__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>
-</div>
-<div class="md-footer-nav__title">
-<div class="md-ellipsis">
-<span class="md-footer-nav__direction">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../basics/" title="Fundamentos" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
                   Previous
                 </span>
                 Fundamentos
               </div>
-</div>
-</a>
-</nav>
-</div>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-footer-copyright">
+            </div>
+          </a>
+        
+        
+          <a href="../arch/" title="Arquiteturas" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Arquiteturas
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
         
         Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs
         </a>
-</div>
-</div>
-</div>
+      </div>
+      
+    </div>
+  </div>
 </footer>
-</div>
-<script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-<script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
-<script>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
         app = initialize({
           base: "..",
           features: [],
@@ -1334,8 +2032,11 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
           }, typeof search !== "undefined" && search)
         })
       </script>
-<script src="https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script src="../mathjaxhelper.js"></script>
-</body>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
 </html>

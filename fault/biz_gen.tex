@@ -1,0 +1,87 @@
+
+\subsection{Falhas Bizantinas}
+
+\begin{frame}{Uma história de três exércitos -- Versão 2}
+Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.
+
+Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.
+
+Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.
+
+Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.
+
+Fonte: \href{http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}
+\end{frame}
+
+\begin{frame}{Generais e Tenentes}
+Problema pode ser mudado para:
+\begin{itemize}
+	\item Comandante envia ordem.
+	\item Todos os tenentes leais executam ordem recebida.
+	\item Comandante pode ser traidor.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Generais e Tenentes}
+Suponha 3 exércitos. \\
+Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\\
+Ou \\
+Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.
+
+\pause E se os tenentes trocarem informações?
+
+\pause Como diferenciar casos em que Comandante ou Tenente é traidor?
+\end{frame}
+
+
+
+
+\begin{frame}{Generais e Tenentes}
+Só há solução se mais de $\frac{2}{3}$ dos Generais/Tenentes são leais.
+\end{frame}
+
+%http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5
+
+\begin{frame}{Comunicação}
+\begin{itemize}
+	\item Toda mensagem enviada é entregue corretamente.
+	\item A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{4/0}
+General manda ordens.
+
+Ausência de ordem = Retirada
+
+Tenente repassa ordens
+
+Maioria de comandos é comando a ser seguido
+\end{frame}
+
+
+\begin{frame}{4/0}
+General manda ordens.
+
+Ausência de ordem = Retirada
+
+Tenente repassa ordens
+
+Maioria de comandos é comando a ser seguido
+\end{frame}
+
+
+\begin{frame}{Comunicação}
+\begin{itemize}
+	\item Toda mensagem enviada é entregue corretamente.
+	\item Toda mensagem é assinada.
+	\item A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+\end{itemize}
+
+\pause É possível detectar inconsistências e processos bizantinos.
+\end{frame}
+
+
+%http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf

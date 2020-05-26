@@ -1,0 +1,1683 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Arquiteturas - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arquiteturas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Arquiteturas
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Prólogo" class="md-nav__link">
+      Prólogo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../intro/" title="Introdução" class="md-nav__link">
+      Introdução
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+      Fundamentos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../comm/" title="Comunicação" class="md-nav__link">
+      Comunicação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Arquiteturas
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Arquiteturas" class="md-nav__link md-nav__link--active">
+      Arquiteturas
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cliente-servidor" class="md-nav__link">
+    Cliente Servidor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#peer-2-peer" class="md-nav__link">
+    Peer-2-Peer
+  </a>
+  
+    <nav class="md-nav" aria-label="Peer-2-Peer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-sobreposta" class="md-nav__link">
+    Rede Sobreposta
+  </a>
+  
+    <nav class="md-nav" aria-label="Rede Sobreposta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-nao-estruturada" class="md-nav__link">
+    Rede Não-Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rede-estruturada" class="md-nav__link">
+    Rede Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-nao-estruturada-a-estruturada" class="md-nav__link">
+    De não estruturada a estruturada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabelas-de-espalhamento-distribuidas-distributed-hash-tables-dht" class="md-nav__link">
+    Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    Identificação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chord" class="md-nav__link">
+    Chord
+  </a>
+  
+    <nav class="md-nav" aria-label="Chord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#churn" class="md-nav__link">
+    Churn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamodb" class="md-nav__link">
+    DynamoDB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra" class="md-nav__link">
+    Cassandra
+  </a>
+  
+    <nav class="md-nav" aria-label="Cassandra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    CAN
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estruturas-de-dados-para-sd" class="md-nav__link">
+    Estruturas de Dados para SD
+  </a>
+  
+    <nav class="md-nav" aria-label="Estruturas de Dados para SD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-structured-merge-tree" class="md-nav__link">
+    Log Structured Merge Tree
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Structured Merge Tree">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compactacoes" class="md-nav__link">
+    Compactações
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtros-de-bloom" class="md-nav__link">
+    Filtros de Bloom
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtros de Bloom">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias_1" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-trees" class="md-nav__link">
+    Merkle Trees
+  </a>
+  
+    <nav class="md-nav" aria-label="Merkle Trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-sincronizar-duas-maquinas" class="md-nav__link">
+    Como sincronizar duas máquinas?
+  </a>
+  
+    <nav class="md-nav" aria-label="Como sincronizar duas máquinas?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-sincronizar-duas-maquinas_1" class="md-nav__link">
+    Como sincronizar duas máquinas?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-trees_1" class="md-nav__link">
+    Merkle Trees
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias_2" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rabin-fingerprint" class="md-nav__link">
+    Rabin Fingerprint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microservicos" class="md-nav__link">
+    Microserviços
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mom" class="md-nav__link">
+    MOM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishsubscribe" class="md-nav__link">
+    Publish/Subscribe
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-sourcing" class="md-nav__link">
+    Event Sourcing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../coord/" title="Coordenação" class="md-nav__link">
+      Coordenação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../time/" title="Tempo" class="md-nav__link">
+      Tempo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+      Tolerância a Falhas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disdb/index.md" title="Bancos de Dados" class="md-nav__link">
+      Bancos de Dados
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+      Sistemas de Arquivos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tech/index.md" title="Tecnologias" class="md-nav__link">
+      Tecnologias
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cliente-servidor" class="md-nav__link">
+    Cliente Servidor
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#peer-2-peer" class="md-nav__link">
+    Peer-2-Peer
+  </a>
+  
+    <nav class="md-nav" aria-label="Peer-2-Peer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-sobreposta" class="md-nav__link">
+    Rede Sobreposta
+  </a>
+  
+    <nav class="md-nav" aria-label="Rede Sobreposta">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-nao-estruturada" class="md-nav__link">
+    Rede Não-Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rede-estruturada" class="md-nav__link">
+    Rede Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-nao-estruturada-a-estruturada" class="md-nav__link">
+    De não estruturada a estruturada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tabelas-de-espalhamento-distribuidas-distributed-hash-tables-dht" class="md-nav__link">
+    Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    Identificação
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chord" class="md-nav__link">
+    Chord
+  </a>
+  
+    <nav class="md-nav" aria-label="Chord">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#churn" class="md-nav__link">
+    Churn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamodb" class="md-nav__link">
+    DynamoDB
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cassandra" class="md-nav__link">
+    Cassandra
+  </a>
+  
+    <nav class="md-nav" aria-label="Cassandra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#can" class="md-nav__link">
+    CAN
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estruturas-de-dados-para-sd" class="md-nav__link">
+    Estruturas de Dados para SD
+  </a>
+  
+    <nav class="md-nav" aria-label="Estruturas de Dados para SD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-structured-merge-tree" class="md-nav__link">
+    Log Structured Merge Tree
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Structured Merge Tree">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compactacoes" class="md-nav__link">
+    Compactações
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtros-de-bloom" class="md-nav__link">
+    Filtros de Bloom
+  </a>
+  
+    <nav class="md-nav" aria-label="Filtros de Bloom">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias_1" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-trees" class="md-nav__link">
+    Merkle Trees
+  </a>
+  
+    <nav class="md-nav" aria-label="Merkle Trees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-sincronizar-duas-maquinas" class="md-nav__link">
+    Como sincronizar duas máquinas?
+  </a>
+  
+    <nav class="md-nav" aria-label="Como sincronizar duas máquinas?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-sincronizar-duas-maquinas_1" class="md-nav__link">
+    Como sincronizar duas máquinas?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merkle-trees_1" class="md-nav__link">
+    Merkle Trees
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencias_2" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rabin-fingerprint" class="md-nav__link">
+    Rabin Fingerprint
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microservicos" class="md-nav__link">
+    Microserviços
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mom" class="md-nav__link">
+    MOM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishsubscribe" class="md-nav__link">
+    Publish/Subscribe
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-sourcing" class="md-nav__link">
+    Event Sourcing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="arquiteturas">Arquiteturas</h1>
+<h2 id="cliente-servidor">Cliente Servidor</h2>
+<p>Como brevemente discutido em <a href="../basics/#TCP">Fundamentos</a>, quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.
+Um exemplo genérico é apresentado na figura a seguir.</p>
+<div class="mermaid">sequenceDiagram
+    activate Servidor
+    activate Cliente
+    note left of Servidor: Cria socket e espera por conexões
+    deactivate Servidor
+
+    Cliente-&gt;&gt;+Servidor: Connect?
+    note left of Servidor: Aceita conexão
+    Servidor-&gt;&gt;-Cliente: Connect!
+
+
+
+    note right of Cliente: Ativo (gerando requisição)
+    note left of Servidor: Inativo (esperando requisição)
+    Cliente-&gt;&gt;+Servidor: Request
+    deactivate Cliente
+    note right of Cliente: Inativo (esperando resposta)
+    note left of Servidor: Ativo (processando requisição)
+    Servidor--&gt;&gt;-Cliente: Response
+    activate Cliente
+    note right of Cliente: Ativo (processando resposta
+    note left of Servidor: Inativo (esperando requisição)
+    deactivate Cliente</div>
+
+<p>Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.</p>
+<p>Contudo, em certas situações, esta terminologia pode se tornar confusa.
+Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
+Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P, a ser visto adiante.
+Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, ttambém a ser visto adiante.</p>
+<p>Apesar das questões apresentadas no parágrafo anterior, o modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
+Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor. </p>
+<p>Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, os sockets.
+Com os sockets, vem uma grande flexibilidade, pois um processo não precisa saber como o outro manuseia os dados que lhe cabem, desde que siga um protocolo pré-estabelecido na comunicação. Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter <a href="../intro/#transparencia">transparência de acesso</a>.
+Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.
+Exemplos cotidianos disto são servidores de bancos de dados, de páginas Web e email.
+De fato, esta flexibilidade permite que diversas aplicações continuem operando de forma centralizada, com servidores rodando, por exemplo, em mainframes e clientes rodando de forma emulada por software em computadores pessoais.</p>
+<h2 id="peer-2-peer">Peer-2-Peer</h2>
+<p>Nesta seção falaremos sobre os sistemas P2P, do inglês, <em>peer-to-peer</em>, e mostraremos como as DHT, o mais proeminente exemplo de P2P, evoluiram do Chord, essencialmente de uso acadêmico, aos bancos de dados NOSQL, com representantes como Cassandra e o DynamoDB, muito difundidos na indústria.</p>
+<p>Uma forma de ver a arquitetura P2P é como uma substituição dos papéis de clientes e servidores, onde há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão, isto é, executam as mesmas funções.
+Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.</p>
+<p>Na prática, muitos sistemas mantém os papéis de clientes e servidores, mas distribuem as tarefas dos servidores entre pares para aquela função; são sistemas híbridos. É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. </p>
+<p>Como principais características destes sistemas P2P, podemos destacar as seguintes:
+* arquitetura decentralizada;
+* não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
+* pode haver entrada e saída de nós do sistema com alta frequência; 
+* nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas.</p>
+<p>Os principais objetivos do uso arquitetura P2P são comuns a todas as arquiteturas distribuídas, isto é:
+* agregar poder computacional de múltiplos nós e
+* tolerar falhas de componentes sem paralizar o serviço, isto é, alta-disponibilidade.</p>
+<p>Devido à forma como são construídos, sistemas P2P também podem visar
+* escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
+* auto-administração, pois seria praticamente impossível centralizar a administração de tantos nós, com tantas configurações distintas e  em tantas localizações diferentes.</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>Exemplos de sistemas P2P</p>
+</div>
+<h3 id="rede-sobreposta">Rede Sobreposta</h3>
+<p>Como já mencionado, em sistemas P2P, os nós ou componentes do sistema se organizam em uma rede <em>sobreposta</em> à rede física. Esta rede lógica é constituída pelos processos atuando como nós e pelos canais de comunicação estabelecidos entre os nós, tipicamente na forma de conexões TCP/IP.</p>
+<p>Nestas redes sobrepostas são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
+Uma vez que as conexões na rede sobreposta não correspondem a conexões físicas, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Isto também implica que a otimização da rota lógica não necessariamente leva à otimização da rota física.</p>
+<p><img alt="Por Gustavo Lacerda - UFRJ, Domínio público" src="images/overlay.jpg" /></p>
+<p>Dependendo em como esta rede é organizada (ou não), a mesma é classificada como <em>estruturada</em> ou <em>não-estruturada</em>.</p>
+<h4 id="rede-nao-estruturada">Rede Não-Estruturada</h4>
+<p>Se a rede é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede <em>não-estruturada</em>. 
+A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.</p>
+<p><img alt="Não-estruturada" src="images/unstructured.png" /></p>
+<p>Suponha que esta rede seja usada para armazenar e consultar dados.
+Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
+Buscas, contudo, terão que vasculhar a rede usando algoritmos como
+* busca em largura
+* busca em profundidade
+* caminhada aleatória (resposta probabilística)</p>
+<h4 id="rede-estruturada">Rede Estruturada</h4>
+<p>Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de estruturada.
+Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
+A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
+Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
+Claramente, a inserção e acesso a dados nesta rede é mais custosa, pois independentemente de onde a requisição é feita, isto é, a partir de qual nó, ela deverá ser atendida por um nó específico. </p>
+<p>Veja o exemplo do Chord, uma rede P2P em que os nós formam um anel lógico, cujos detalhes veremos adiante.
+Cada nó é responsável pela faixa de valores indexados por chaves entre o identificador do nó e o do nó anterior.
+Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente para um determinado nó, e deve ser <strong>roteada</strong> para o mesmo.
+A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.</p>
+<p><img alt="" src="images/05-04.png" /></p>
+<p>Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica, e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.</p>
+<p><img alt="" src="images/02-08.png" /></p>
+<p>Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.</p>
+<div class="admonition note">
+<p class="admonition-title">Estruturada x Não-Estruturada</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Estruturada</th>
+<th>Não-Estruturada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estrutura bem definida</td>
+<td>Estrutura aleatória</td>
+</tr>
+<tr>
+<td>Adição de dados é lenta</td>
+<td>Adição de dados é rápida</td>
+</tr>
+<tr>
+<td>Adição de nós é lenta</td>
+<td>Adição de nós é rápida</td>
+</tr>
+<tr>
+<td>Busca por dados é rápida</td>
+<td>Busca por dados lenta</td>
+</tr>
+</tbody>
+</table>
+<h4 id="de-nao-estruturada-a-estruturada">De não estruturada a estruturada</h4>
+<p>Em certos cenários, é possível conseguir o melhor de dois mundos.
+Por exemplo, seja uma grade <span><span class="MathJax_Preview">N \times N</span><script type="math/tex">N \times N</script></span> em que nós se conectam aleatoriamente uns aos outros, e que nós em uma borda da matriz conseguem se conectar aos nós da borda oposta, com distância 1.
+Efetivamente, temos a rede sobreposta à esquerda.</p>
+<p><img alt="" src="images/02-11.png" /></p>
+<p>Se cada nó executar executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada à direita.
+* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+  <img alt="" src="images/02-10.png" /></p>
+<ul>
+<li>O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.</li>
+<li>O módulo de seleção computa a distância entre o nó e todos os seus vizinhos, e descarta as conexões com maior distância, onde</li>
+<li>a = (x,y)$, <span><span class="MathJax_Preview">b = (x', y')</span><script type="math/tex">b = (x', y')</script></span></li>
+<li><span><span class="MathJax_Preview">dx_{a,b} = min(|x - x'|, N - |x - x'|)</span><script type="math/tex">dx_{a,b} = min(|x - x'|, N - |x - x'|)</script></span></li>
+<li><span><span class="MathJax_Preview">dy_{a,b} = min(|y - y'|, N - |y - y'|)</span><script type="math/tex">dy_{a,b} = min(|y - y'|, N - |y - y'|)</script></span></li>
+</ul>
+<p>Ao final de múltiplas interações, cada nó conhecerá seus vizinhos à direita, esquerda, acima e abaixo.
+Outra visuzalização desta topologia é apresentada a seguir:</p>
+<p><img alt="Fujitsu and RIKEN, 2009" src="images/3d-torus.jpg" /></p>
+<p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, no qual diversos esquemas de roteamento eficientes podem ser usados.</p>
+<p><img alt="By Spiritia" src="images/hypercube.png" /></p>
+<h3 id="tabelas-de-espalhamento-distribuidas-distributed-hash-tables-dht">Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)</h3>
+<p>As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
+Em essência, estas tabelas são estruturas de dados que <strong>mapeiam</strong> uma chave para um valor, uma função <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span> tal que</p>
+<ul>
+<li><span><span class="MathJax_Preview">f(K): V \cup</span><script type="math/tex">f(K): V \cup</script></span> {null}</li>
+<li><span><span class="MathJax_Preview">K</span><script type="math/tex">K</script></span>: Universo de chaves</li>
+<li><span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>: Universo de valores</li>
+</ul>
+<p>isto é, <span><span class="MathJax_Preview">f(k) = v, k\in K, v \in V</span><script type="math/tex">f(k) = v, k\in K, v \in V</script></span> ou <span><span class="MathJax_Preview">v =</span><script type="math/tex">v =</script></span> null.</p>
+<p>Na prática, são estruturas de dados adaptáveis, com um API muito simples, e com operações de tempo (mais ou menos) constante.  </p>
+<div class="admonition note">
+<p class="admonition-title">Tabela de Espalhamento</p>
+<ul>
+<li>v' = put(k,v) //Retorna valor já existente</li>
+<li>v' = update(k,v) //Retorna valor já existente</li>
+<li>v' = get(k) //Retorna valor já existente</li>
+<li>v' = del(k) //Retorna valor já existente</li>
+<li><span><span class="MathJax_Preview">v</span><script type="math/tex">v</script></span> é um blob</li>
+</ul>
+</div>
+<ul>
+<li>v' = put(k,v) //Retorna valor já existente</li>
+<li>v' = update(k,v) //Retorna valor já existente</li>
+<li>v' = get(k) //Retorna valor já existente</li>
+<li>v' = del(k) //Retorna valor já existente</li>
+</ul>
+<p>Sobre os valores mapeados, dizemos que são ** <em>blobs</em> ** de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de resoluções. Além disso, é suas operações são eficientes em termos de tempo, uma vez que todas as operações tem tempo de execução (mais ou menos) constante.</p>
+<p>Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser <strong>tolerante a falhas</strong> e ter <strong>escalabilidade linear</strong>.
+Justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas (inglês <em>distributed hash tables</em>), estruturas de dados que mantém <strong>a mesma API</strong> e funcionalidades de tabelas de espalhamento, mas que <strong>agrega capacidades de diversos hosts</strong>.</p>
+<p>Os desafios na implementação de DHT incluem
+* "O que usar como chave?", uma vez que tal estrutura precisa ser genérica para que possa ser aplicada a diversos problemas;
+* "Como dividir a carga entre hosts?", para garantir um bom balanceamento de carga; e, 
+* "Como rotear requisições para o host correto?", uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade.</p>
+<h4 id="identificacao">Identificação</h4>
+<p>A identificação de objetos precisa ser facilmente <strong>determinável pela aplicação</strong> para permitir a recuperação precisa dos dados. 
+Por exemplo, pode-se dividir faixas de nomes entre os processos.
+* A -- C -- Host1
+* CA -- E -- Host2
+* EA -- G -- Host3
+* ...</p>
+<p>Esta distribuição tem três problemas graves. O primeiro, é no fato de nomes não serem <strong>unívocos</strong>.
+Neste caso, uma exemplo melhor seria o uso do CPF.
+* 000.000.000-00 -- 111.111.111-00 -- Host1
+* 111.111.111-01 -- 222.222.222-00 -- Host2
+* 222.222.222-01 -- 333.333.333-00 -- Host3
+* ...</p>
+<p>O segundo problema, presente também no uso de CPF, tem a ver com a distribuição da carga de trabalho entre os hosts.
+Nem nomes e nem CPF tem distribuição uniforme, então alguns nós ficariam mais carregados que outros.</p>
+<p>O terceiro problema tem a ver com o uso de chaves não genéricas, dependentes da aplicação.
+Para este problema, poderíamos usar um identificador auto-incrementável, por exemplo, mas em muitas situações esta abordagem implicaria em dificuldade para se recuperar os dados: "qual é mesmo o identificador numérico do livro <a href="https://ler.amazon.com.br/kp/embed?asin=B0796DNSVZ&amp;preview=newtab&amp;linkCode=kpe&amp;ref_=cm_sw_r_kb_dp_fAlUDbMBJM4RP">How Fascism Works</a>?"</p>
+<p>Para resolver estes três problemas, recorremos a uma abordagem usada na literatura da área, dividindo a identificação em duas camadas:
+* Seja <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> o identificador do objeto, dado pela aplicação (e.g., CPF, nome, telefone)
+* Seja <span><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span> uma função criptográfica
+* Seja <span><span class="MathJax_Preview">k = h(i)</span><script type="math/tex">k = h(i)</script></span> o identificador do objeto <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>.</p>
+<p>Se usarmos, por exemplo, MD5, é fato que <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> tem distribuição uniforme no espaço de 0 a <span><span class="MathJax_Preview">2^{160}-1</span><script type="math/tex">2^{160}-1</script></span> possíveis valores.
+Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>.
+Alguns exemplos de divisão são:
+* definia <em>buckets</em> para cada host e atribua o dado com chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> para bucket <span><span class="MathJax_Preview">k \% b</span><script type="math/tex">k \% b</script></span>, onde <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> é o número de buckets
+* divida a faixa de valores em <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> segmentos e atribua a cada host uma faixa
+* dados <span><span class="MathJax_Preview">2^n</span><script type="math/tex">2^n</script></span> hosts, atribua ao host <span><span class="MathJax_Preview">0 &lt; x &lt; 2^n-1</span><script type="math/tex">0 < x < 2^n-1</script></span> os dados cujas chaves terminem com o valor <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>.</p>
+<p>São várias as formas de se dividir os dados e estão intimamente ligadas à rede sobreposta que se pretende montar.
+Vejamos um caso específico e famoso, o Chord, e de dois outros sistemas que se inspiraram nele.</p>
+<h3 id="chord">Chord</h3>
+<p>Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do CSAIL, do MIT, e publicado em 2001. Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.</p>
+<p>No Chord, cada nó tem um identificador único de <strong><span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> bits</strong>, gerado aleatoriamente. Como <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.</p>
+<p>O Chord mantém uma rede estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
+A figura a seguir mostra as posições disponíveis no anel de um Chord com 4 bits (sem utilidade prática).</p>
+<p><img alt="" src="images/02-07.png" /></p>
+<p>Dados são também identificados por uma chave de <strong><span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> bits</strong>. Esta chave é gerada por meio de uma função hash criptográfica a partir de alguma chave que faça sentido para a aplicação, por exemplo um nome, telefone, ou CPF.
+Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída, e para que observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
+<p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
+O dado com chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> é responsabilidade do nó com menor identificador <span><span class="MathJax_Preview">i \geq k</span><script type="math/tex">i \geq k</script></span>, aka, <strong>sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span></strong> (<span><span class="MathJax_Preview">i = suc(k)</span><script type="math/tex">i = suc(k)</script></span>).</p>
+<p>Na figura anterior, considere que apenas as posições em cinza estão preenchidas, isto é, que há apenas cinco nós no sistema, com identificadores 1, 4, 7, 12 e 15.
+Neste cenário, o nó 7 é responsável por dados cujas chaves são 5, 6 e 7.</p>
+<h4 id="roteamento">Roteamento</h4>
+<p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span><span class="MathJax_Preview">v</span><script type="math/tex">v</script></span> associado à chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>.
+A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>.
+Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
+Caso contrário, a requisição é repassada ou <strong>roteada</strong> para o nó correto.</p>
+<p>Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. Esta solução, correta, tem custo da ordem do número de nós no sistema, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span>.
+Em uma instância com milhares de nós, <strong><span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span></strong> é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
+Observe que o custo em termos de espaço para se implementar esta solução é <strong><span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span></strong> para cada nó do sistema.</p>
+<p>Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
+O custo do roteamento, neste caso, é <strong><span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span></strong>, muito mais rápido que na abordagem anterior. O custo de armazenamento da <em>tabela de rotas</em> é, contudo, <strong><span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span></strong>, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (<em>single-hop</em> DHT).</p>
+<p>Como frequentemente acontece, um solução melhor pode ser nem uma nem outra opção, mas algo intermediário.
+O Chord propõe a criação de uma tabela de rotas também conhecida como <em>finger-table</em>, construída da seguinte forma, onde <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é a quantidade de bits usados para identificar nós no sistema:
+* seja <span><span class="MathJax_Preview">F_p</span><script type="math/tex">F_p</script></span> a <em>finger-table</em> do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>;
+* seja <span><span class="MathJax_Preview">F_p[i]</span><script type="math/tex">F_p[i]</script></span> a <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>-ésima da tabela; e,
+* <span><span class="MathJax_Preview">F_p[i] = suc(p+2^{i-1})</span><script type="math/tex">F_p[i] = suc(p+2^{i-1})</script></span>.</p>
+<p>Observe que nesta tabela, a <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>-ésima entrada aponta para o processo que no que sucede <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> pelo menos <span><span class="MathJax_Preview">2^{i-1}</span><script type="math/tex">2^{i-1}</script></span>, e que esta distância de sucessão aumenta exponencialmente. Observe também que a maior distância é proporcional a metade do tamanho do anel.
+Isto quer dizer que o último <em>finger</em> da tabela proporciona um salto de <span><span class="MathJax_Preview">1/2</span><script type="math/tex">1/2</script></span> anel, o penúltimo <span><span class="MathJax_Preview">1/4</span><script type="math/tex">1/4</script></span> do anel, o ante-penúltimo <span><span class="MathJax_Preview">1/8</span><script type="math/tex">1/8</script></span>, e assim sucessivamente.
+Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo <strong><span><span class="MathJax_Preview">O(log n)</span><script type="math/tex">O(log n)</script></span></strong>.</p>
+<p><img alt="" src="images/fingertable.jpeg" /></p>
+<p>Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>:
+* seja <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> a chave para qual estamos procurando o sucessor;
+* itere pela tabela até achar a primeira entrada cujo valor, i.e., o identificador de um nó, é maior que <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>;
+* se a entrada é a primeira da tabela, então encaminhe a requisição para o nó apontado, pois ele é o sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, até onde <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> consegue determinar;
+* senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.</p>
+<p>Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.</p>
+<p><img alt="" src="images/05-04.png" /></p>
+<p>Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, <span><span class="MathJax_Preview">31 &lt; 0</span><script type="math/tex">31 < 0</script></span>. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?</p>
+<p><img alt="" src="images/05-04.png" /></p>
+<p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> pode ser incompleta para partes distantes do anel.
+Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
+<p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
+<h4 id="churn">Churn</h4>
+<p>Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.</p>
+<p>Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:
+* Escolher um novo Identificador <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span>
+* Identificar o sucessor <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> de <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span>
+* Identificar o antecessor <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> de <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span>
+* Informar <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> e <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> de sua entrada, para que ajustem suas tabelas de rota.
+* <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> e <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> propagam a informação da entrada de <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span> para seus vizinhos, permitindo que ajustem suas tabelas de rota.</p>
+<p>Além disto, a reorganização dos nós exige movimentação de dados, pois parte dos dados armazenados em <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>, com chaves menores que <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span>, precisam ser copiadas para <span><span class="MathJax_Preview">I</span><script type="math/tex">I</script></span>, o novo responsável.
+As principais questões a serem respondidas durante a movimentação dos dados são
+* como manter os dados disponíveis para inserção e consulta durante todo o processo, e
+* como minimizar o impacto da reorganização nos nós vizinhos ao novo nó</p>
+<p>Quanto à primeira questão, pode-se rotear as requisições para os dois nós responsáveis, o atual e o novo, e combinar as respostas, mantendo os dados mais recentes.
+Quanto à segunda, uma opção é fazer com que cada novo nó assuma diversas posições no anel, com identificadores distintos, passando a "incomodar" múltiplos processos, mas de forma mais suave.</p>
+<p>Embora se possa "facilmente" resolver os problemas da entrada de nós, os da saída são mais complexos, principalmente porquê a saída acontece geralmente bruscamente, por exemplo por falhas no sistema.
+Quanto à reorganização das tabelas de rota, cada nó precisa monitorar os nós que figuram em sua tabela e, caso pareçam indisponíveis, ajustar par apontar para outro nó.
+Contudo, caso a suspeita seja indevida, isto pode levar a dados serem consultados e armazenados nos nós errados.
+Também com relação aos dados, há o problema de não perdê-los quando o nó responsável se torna indisponível.
+O tratamento destes problemas está relacionado e é feito pelo replicação dos dados em múltiplos nós. Isto é feito no Chord, por exemplo, da seguinte forma:
+* para cada dado, com chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, há <span><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span> cópias;
+* a primeira cópia é mantida no sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>;
+* a segunda cópia, no sucessor do sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, e assim por diante;
+* cada escrita é feita na primeira cópia, respondida, e replicada para as demais cópias;
+* cada leitura é feita na cópia com menor identificador.</p>
+<p>No caso de falha de uma cópia, há <span><span class="MathJax_Preview">r-1</span><script type="math/tex">r-1</script></span> cópias ainda disponíveis para responder à requisição, mantendo o sistema disponível a despeito de (<span><span class="MathJax_Preview">r-1</span><script type="math/tex">r-1</script></span>) falhas, no que se chama de <strong>degradação graciosa</strong>.
+Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequência de passos, em um sistema com <span><span class="MathJax_Preview">r=2</span><script type="math/tex">r=2</script></span>.
+* escrita na cópia 1;
+* resposta ao cliente;
+* replicação para cópia 2;
+* escrita na cópia 1;
+* resposta ao cliente;
+* falha da cópia 1;
+* leitura na cópia 2.</p>
+<p>O cliente, ao ler o dado, lê uma versão antiga do mesmo, inconsistente com a visão que tinha do sistema.
+De fato, este tipo de sistema é chamado de eventualmente consistente pois somente na <strong>ausência de falhas e de escritas</strong> as diversas réplicas serão consistentes umas com as outras.
+Continuemos a sequência:
+* escrita na cópia 2;
+* cópia 1 volta a funcionar;
+* leitura na cópia 1.</p>
+<p>Neste caso, a cópia "secundária" 2 tem um dado mais atual, que precisa ser repassado para a cópia 1; este movimento de convergência de dados é conhecido como anti-entropia.
+Finalmente, continuemos a sequência:
+* escrita na cópia 1, por outro cliente.</p>
+<p>Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um <strong>conflito</strong>.
+Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.</p>
+<p>O Dynamo, que veremos a seguir, é um destes sistemas.</p>
+<h4 id="referencias">Referências</h4>
+<p><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></p>
+<h3 id="dynamodb">DynamoDB</h3>
+<p>DynamoDB é o marco fundamental dos bancos de dados NoSQL. Neste <a href="https://www.youtube.com/watch?v=HaEPXoXVf2k">vídeo</a>, um dos integrantes do time que o desenvolveu e também um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.</p>
+<p>Enquanto o assiste, alguns pontos devem ser ressaltados sobre o Dynamo de forma específica e os NoSQL de forma geral:
+* surgiram da necessidade de escalabilidade dos bancos de dados, isto é, da necessidade de lidar com milhões e milhões de entradas de dados, gerados e processados com baixa latência e alta vazão, a despeito de falhas;
+* maior escalabilidade implica em maior exposição a particionamentos da rede em que o sistema roda, que associado à necessidade de manutenção de alta disponibilidade, implica em perda de garantias de consistência (veremos o <a href="https://en.wikipedia.org/wiki/CAP_theorem">Teorema CAP</a> adiante);
+* <em>Partition keys</em> são as chaves usadas para roteamento dos dados, ou seja, as chaves discutidas anteriormente neste capítulo sobre sistema P2P;
+* <em>Sort keys</em> são chaves usadas dentro de cada nó para ordenar os dados na hora de gerar as SSTables (<em>String Sorted Tables</em>), e se usadas em agregados de valores, são equivalentes ao <em>GROUP BY</em> do SQL;
+* <em>Lambda functions</em>  são funções para processamento de dados executadas em entradas definidas por um pipeline de processamento sem a definição explícita de sockets e portas, em um modelo conhecido como <a href="https://en.wikipedia.org/wiki/Serverless_computing">Serverless</a>.</p>
+<p>Este modelo é adequado a algumas aplicações, como o carrinho de compras da Amazon.com, aplicação para a qual o Dynamodb foi inicialmente desenvolvido.
+Nesta aplicação, cada usuário tem um <strong>identificador único</strong>, recuperado no momento em que se loga ao sistema da Amazon.
+Este identificador único é a <strong>chave de particionamento</strong> e os dados são o conteúdo do carrinho de compras.</p>
+<p>Para lidar com falhas, o conteúdo do carrinho é replicado nos nós sucessivos ao responsável pela dupla chave valor.
+O carrinho é <strong>modificado atomicamente</strong>, isto é, sobrescrito por inteiro. A replicação, associada às modificações atômicas, potencializa conflitos, que são identificados comparando-se os vetores de versão (relógios vetoriais) associados a cada valor escrito.
+No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao usuário na forma de um carrinho de compras com a união dos itens nos respectivos carrinhos, de forma que o usuário possa corrigí-lo. Na pior das hipóteses, uma compra com erros será feita, e necessitará de uma atividade compensatória para o usuário, como um brinde.</p>
+<p>Um <em>disclaimer</em>  importante é que este material foi preparado com base no DynamoDB original, não na versão atualmente disponível na AWS, com diversas novas funcionalidades.---</p>
+<h3 id="cassandra">Cassandra</h3>
+<p>O CassandraDB se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.</p>
+<p>A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
+A combinação chave-colunas são denominadas <strong>column-families</strong> e seu conjunto <strong>keyspace</strong>. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. </p>
+<p><img alt="keyspace" src="images/cass_keyspace.jpg" /></p>
+<p>Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.</p>
+<p><img alt="Column-family" src="images/cass_column_family.jpg" /></p>
+<p>Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um <em>timestamp</em>. 
+<img alt="timestamps" src="images/cass_column.jpg" />. Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.</p>
+<p>Dentro de um nó, entradas são ordenadas por chaves, possivelmente compostas com os valores de algumas colunas (<strong>chave composta</strong>). </p>
+<p>Para facilitar mais ainda o desenvolvimento, o Cassandra conta com uma linguagem de consulta similar ao SQL (Structured Query Language), a CQL (Cassandra Query Language).</p>
+<p>Para aprender mais sobre o Cassandra, visite o sítio do projeto, <a href="http://wiki.apache.org/cassandra/GettingStarted">aqui</a>, ou explore uma das muitas aplicações <em>Open Source</em> que o usam, por exemplo, o clone de Twiter <a href="https://github.com/twissandra/twissandra">Twissandra</a>---</p>
+<h4 id="can">CAN</h4>
+<div class="admonition todo">
+<p class="admonition-title">CAN</p>
+</div>
+<h3 id="estruturas-de-dados-para-sd">Estruturas de Dados para SD</h3>
+<p>Qualquer que seja a escolha de algoritmo para fazer o particionamento dos dados entre servidores, sobra ainda a questão de como manipular os dados dentro do servidor.
+Idealmente, toda operação seria executada a partir da memória principal, tendo assim a menor latência possível.
+Contudo, para que se tenha também durabilidade das operações executadas, para que os dados manipulados sobrevivam a reinicializações do servidor, intencionais ou não, é preciso armazenar os dados em <strong>memória estável</strong>, da qual a mais comum é são os <strong>discos rígidos</strong>.</p>
+<p>É notório que escritas em disco são muito mais lentas que em memória principal, mas o que exatamente é lento no acesso ao disco?
+Essencialmente, o posicionamento da cabeca de leitura/escrita na trilha correta do disco, pois esta operação é mecânica.
+Por esta razão, acessos aleatórios são mais custosos que acessos sequenciais, pois neste o custo de posicionamento é pago apenas uma vez.
+Por este motivo, muitos bancos de dados, especialmente DHT pois tem seu uso focado em quantidades muito grandes de dados, gerados e acessados com grande velocidade, tentam acessar o disco sempre de forma sequencial.
+Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma <em>Log Structured Merge Tree</em>, ou LSMT.</p>
+<h4 id="log-structured-merge-tree">Log Structured Merge Tree</h4>
+<p>Uma Log Structured Merge Tree é uma forma de se armazenar dados em disco de forma de forma quase sempre sequencial, minimizando assim os o impacto da durabilidade no desempenho do sistema.
+Considere um banco armazenando uma pequena quantidade de dados, que cabe em memória principal.
+Na LSMT, operações de escrita são adicionadas a um <strong><em>commit log</em></strong>, em disco,  e somente então são executadas em memória principal e confirmadas para o cliente; a estrutura que armazena os dados em memória é denominada <em>memory table</em>, ou simplesmente <strong>memtable</strong>.
+Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rápida.</p>
+<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="images/lsm2.png" /></p>
+<p>No caso de uma reinicialização do processo, a reexecução do <em>commit log</em> restaurará o estado da memtable. Contudo, se o <em>commit log</em> for extenso, reexecutá-lo demandará um tempo significativo.
+Uma forma de acelerar o processo é fazer <strong><em>snapshots</em></strong> da memtable de forma sincronizada com a escrita no log. 
+Isto é, digamos que todas as operações de escrita, até a décima, estão salvas no commit log e refletidas na memtable.
+Digamos também que todas as operações são modificações da mesma linha do banco de dados em memória.
+Se um <em>snapshot</em>  é tomado, ele será correspondente ao commit log, isto é, conterá o efeito de exatamente as mesmas 10 operações, mas de forma mais compacta que o log, uma vez que o log conterá dez operações e o snapshot somente uma linha de dados.
+Após o snapshot ser concluído, o log correspondente pode ser apagado.
+Novas operações de escrita devem ser armazenadas em um novo log e, no caso de uma reinicialização, primeiro se deve restaurar o <em>snapshot</em> e então o novo log.
+Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter mais do que o último log e <em>snapshot</em>, já que a recuperação do estado exigiria voltar mais atrás na reexecução de operações.</p>
+<p>Observe que, além da escrita dos logs, todos os outros acessos ao disco também são sequenciais, seja o <em>flush</em> das memtables, ou a leitura dos snapshots para recuperação e do commit log para reexecução, e já que operações de leitura são todas respondidas da memória, o sistema terá um excelente desempenho.
+Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. Isto é, se os dados não cabem em memória, <em>snapshots</em>  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.</p>
+<p>Consideremos então um cenário em que a memtable cabe apenas <em>n</em> entradas; quando a operação para adicionar <span><span class="MathJax_Preview">n+1</span><script type="math/tex">n+1</script></span>-ésima entrada à memtable é recebida, um <strong><em>flushs</em></strong> dos dados para um novo <em>snapshot</em> é feito e a memtable é <em>resetada</em>, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do <em>caminho crítico</em> da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.</p>
+<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="images/lsm2.png" /></p>
+<p>Neste novo fluxo, os arquivos em disco não correspondem mais a <em>snapshots</em> do banco de dados, então nos referiremos a eles como <em>stable storage tables</em>, ou <strong>sstables</strong>, em oposição às <em>memtables</em>, pelo menos por enquanto.</p>
+<h5 id="compactacoes">Compactações</h5>
+<p>Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nosso banco de dados, ele traz problemas para o fluxo de leitura.
+Digamos que a chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
+O primeiro problema aqui é que há vários valores antigos associados a <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, inutilmente e ocupando espaço, isto é, lixo.
+O segundo é que caso o valor associado a <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
+Para lidar com ambos os problemas, podemos <strong>compactar</strong> as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
+Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no <em>merge sort</em>, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
+A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por <em>flushs</em>, são unidas gerando sstables de nível 1 e assim sucessivamente.
+Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome <em>merge tree</em>.</p>
+<p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="images/lsm_compac.png" /></p>
+<p>No caso de uma pesquisa, somente as tabelas mais à direita e de nível mais alto precisam ser consultadas e portanto as sstables já usadas como entrada podem ser eliminadas como lixo do sistema.
+Ainda assim, no caso de uma leitura, diversas sstables potencialmente contém o dado a ser retornado. 
+O problema se agrava em sistemas em que partes do dado possam ser gravadas independentemente, como no CassandraDB, em que cada coluna é independente das outras.
+Diversas propostas poderiam ser feitas para se identificar mais rapidamente se uma sstable contém uma chave.
+Por exemplo, pode-se associar a cada tabela um bitmap indicando a presença ou não de uma certa chave, mas esta abordagem obviamente falha se o espaço de chaves for grande.
+Outra possibilidade é lembrar a faixa de chaves contida na tabela. Esta estratégia pode ser útil caso haja localidade no espaço de chaves no momento da escrita, mas falhará miseravelmente se o espaço de chaves for usado uniformemente, resultando em faixas grandes entre a menor e maior chaves de cada tabela.
+Como acelerar a identificação das sstables pertinentes? Entram em cena os filtros de <strong>Bloom</strong>.</p>
+<h4 id="filtros-de-bloom">Filtros de Bloom</h4>
+<p>De acordo com nossa fonte mais que confiável, a <a href="https://en.wikipedia.org/wiki/Bloom_filter">Wikipedia</a></p>
+<blockquote>
+<p><em>A Bloom filter is a **space-efficient*</em> <strong>probabilistic</strong> data structure, conceived by Burton Howard <em>Bloom</em> in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either <strong>"possibly in set"</strong> or <strong>"definitely not in set"</strong>.*</p>
+</blockquote>
+<p>Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.</p>
+<p><img alt="LSMT+Bloom Filter" src="images/bf_lsm.jpg" /></p>
+<p>Mas como exatamente construímos um filtro de Bloom?
+Iniciamos com um vetor de bits inicialmente zerados e um conjunto finito de funções de hash cujo resultado seja uniformemente distribuído no tamanho do vetor de bits.
+Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos cada uma das funções hash e colocamos o bit 1 na posição do vetor igual ao resultado da função.
+No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções hash.</p>
+<p><img alt="By David Eppstein" src="images/bloom.png" /></p>
+<p>Na <strong>consulta</strong>, cada elemento passa por pelas mesmas funções hash. 
+Se algum dos índices apontados não estiver com um 1, como no caso do w, no exemplo, o elemento não pertence ao conjunto. 
+Caso contrário, o filtro responderá que é possível que pertença.</p>
+<p>Mas quão bom é um filtro de Bloom na identificação do das sstables? Ou, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?
+* o número <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;
+* o número <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> de hashes, pois quanto mais hashes, mais bits transformados em 1; e,
+* o número <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de bits no vetor, pois quanto menos bits, mais colisões de bits.</p>
+<p>De forma mais precisa,
+* a probabilidade de setar um certo bit na inserção de um elemento é <span><span class="MathJax_Preview">1/m</span><script type="math/tex">1/m</script></span>, e
+* a probabilidade de não setar tal bit é <span><span class="MathJax_Preview">1 - 1/m</span><script type="math/tex">1 - 1/m</script></span>;
+* a probabilidade de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> hashes não setarem um bit é <span><span class="MathJax_Preview">(1 - 1/m)^k</span><script type="math/tex">(1 - 1/m)^k</script></span>;
+* a probabilidade de não setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">(1 - 1/m)^{kn}</span><script type="math/tex">(1 - 1/m)^{kn}</script></span>;
+* a probabilidade de setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">1 - (1 - 1/m)^{kn}</span><script type="math/tex">1 - (1 - 1/m)^{kn}</script></span></p>
+<p>Logo,
+* a probabilidade de falso positivo <span><span class="MathJax_Preview">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</span><script type="math/tex">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</script></span>
+O que nos permite chegar à relação
+* <span><span class="MathJax_Preview">m/n = - 1.44\log_2 p</span><script type="math/tex">m/n = - 1.44\log_2 p</script></span>, em que podemos calcular <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> em função do <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> esperado e do <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> desejado.
+E podemos também identificar o <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> ótimo para a situação, pela equação 
+* <span><span class="MathJax_Preview">k = - \frac{\ln p}{\ln 2} = - \log_2 p</span><script type="math/tex">k = - \frac{\ln p}{\ln 2} = - \log_2 p</script></span></p>
+<p>Uma forma "simples" de visualizar este resultado é dada pela figura a seguir, em que o eixo Y dá a taxa de falsos positivos do filtro em função do número de elementos inseridos, indicado no eixo X, para diversas configurações, apresentadas como curvas.
+Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b = 2MB</span><script type="math/tex">m = 2^{24}b = 2MB</script></span>, após 1 milhão de inserções, tem-se probabilidade de falsos positivo <span><span class="MathJax_Preview">p = 0,0001</span><script type="math/tex">p = 0,0001</script></span>.</p>
+<h5 id="referencias_1">Referências</h5>
+<p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Bloom-Filter</a></p>
+<h3 id="merkle-trees">Merkle Trees</h3>
+<div class="admonition todo">
+<p class="admonition-title">Todo</p>
+<p>Atualizar</p>
+</div>
+<h5 id="como-sincronizar-duas-maquinas">Como sincronizar duas máquinas?</h5>
+<p>Suponha que um mesmo arquivo exista em duas máquinas. Como sincronizá-los de forma eficiente, onde eficiência se mede em termos de uso da rede?</p>
+<ul>
+<li>Copie os arquivos de um servidor para outro</li>
+<li>Mantenha o mais novo</li>
+</ul>
+<p>Isso é eficiente?</p>
+<h6 id="como-sincronizar-duas-maquinas_1">Como sincronizar duas máquinas?</h6>
+<ul>
+<li>Produza um hash dos arquivos</li>
+<li>Troque hashes</li>
+<li>Se hashes iguais, pronto.</li>
+<li>Se hashes diferentes, volte para o slide anterior.</li>
+</ul>
+<h6 id="merkle-trees_1">Merkle Trees</h6>
+<ul>
+<li>Divida o arquivo em blocos de mesmo tamanho</li>
+<li>Faça um hash de cada bloco</li>
+<li>Se mais de um hash gerado, <ul>
+<li>Concatene os hashes em um arquivo</li>
+<li>Volte para o primeiro item</li>
+</ul>
+</li>
+</ul>
+<p><img alt="By Azaghal" src="images/merkle_tree.png" /></p>
+<ul>
+<li>Troque hashes da raiz.</li>
+<li>Se hashes iguais, pronto.</li>
+<li>Se hashes diferentes \pause compare subárvore.</li>
+</ul>
+<p>Se a única mudança no arquivo foi a adição de um byte no começo do arquivo?</p>
+<h4 id="referencias_2">Referências</h4>
+<p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Merkle Trees</a></p>
+<h3 id="rabin-fingerprint">Rabin Fingerprint</h3>
+<p><a href="https://en.wikipedia.org/wiki/Rolling_hash">Rolling Hash</a></p>
+<h2 id="microservicos">Microserviços</h2>
+<p>TODO</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>\subsection{Word of caution}
+<script type="math/tex; mode=display">\begin{frame}
+Não existe bala de prata!
+%\includegraphics[width=\textwidth]{images/nosilver}
+\end{frame}</script>
+</p>
+<p>\begin{frame}
+Todas estas tecnologias...
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Docker
+    \item Golang
+    \item nodejs
+    \item Angular
+    \item ...
+\end{itemize}</script>
+passarão ou encontrarão um nicho, como...
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Cobol
+    \item Assembly
+    \item C
+    \item SQL
+\end{itemize}</script>
+encontraram.</p>
+<p>Certamente nenhuma delas será usada para resolver todos os problemas.
+\end{frame}</p>
+<p>\begin{frame}
+<script type="math/tex; mode=display">\begin{quotation}
+    The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies.
+\end{quotation}</script>
+</p>
+<p>\includegraphics[width=.7\textwidth]{images/gartner-hype-cycle-overview}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}
+\begin{scriptsize}
+\begin{enumerate}
+\item Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.
+\item Peak of Inflated -- Expectations  Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.
+\item Trough of Disillusionment -- Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.
+\item  Slope of Enlightenment -- More instances of how the technology can benefit the enterprise start to crystallize and become more widely understood. Second- and third-generation products appear from technology providers. More enterprises fund pilots; conservative companies remain cautious.
+\item Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.
+\end{enumerate}
+\end{scriptsize}
+Fonte: Wikipedia
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}
+\begin{scriptsize}
+\begin{enumerate}
+\item Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.
+\item Peak of Inflated -- Expectations  Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.
+\item Trough of Disillusionment -- Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.
+\item  Slope of Enlightenment -- More instances of how the technology can benefit the enterprise start to crystallize and become more widely understood. Second- and third-generation products appear from technology providers. More enterprises fund pilots; conservative companies remain cautious.
+\item Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.
+\end{enumerate}
+\end{scriptsize}
+Fonte: Wikipedia
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}
+\begin{quotation}
+    We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.[3][4]
+\end{quotation} 
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}
+\begin{quotation}
+    We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.[3][4]
+\end{quotation} 
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}
+Microsserviços está próximo do pico da desilusão.
+\includegraphics[width=1.1\textwidth]{images/gartner-hype-cycle-2017}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}
+Microsserviços está próximo do pico da desilusão.
+\includegraphics[width=1.1\textwidth]{images/gartner-hype-cycle-2017}
+\end{frame}</script>
+</div>
+<p>\subsection{Visão Geral}
+<script type="math/tex; mode=display">\begin{frame}
+Monolítico x Micro-serviços
+\end{frame}</script>
+</p>
+<p>\begin{frame}{Monolito}
+\includegraphics[width=.6\textwidth]{images/monolith_2001}</p>
+<p>\href{<a href="http://www.imdb.com/title/tt0062622/}{2001">http://www.imdb.com/title/tt0062622/}{2001</a> Space Odyssey}
+\end{frame}</p>
+<p>\begin{frame}{Monolito}
+Um bloco com lógica. Por exemplo, um MVC é um sistema monolítico.</p>
+<p>\includegraphics[width=.4\textheight]{images/monolith_arc}</p>
+<p>\href{<a href="http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte">http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte</a>}
+\end{frame}</p>
+<p>\begin{frame}{Scala}
+\includegraphics[width=\textheight]{images/microservices_scale}</p>
+<p>\href{<a href="https://thenewstack.io/from-monolith-to-microservices/}{Fonte">https://thenewstack.io/from-monolith-to-microservices/}{Fonte</a>}
+\end{frame}</p>
+<p>\begin{frame}{Micro-serviços}
+Blocos especializados</p>
+<p>\includegraphics[width=.9\textheight]{images/microservices_arc}</p>
+<p>\href{<a href="http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte">http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte</a>}
+\end{frame}</p>
+<p>\subsection{Monolitos}
+\begin{frame}{Monolítico}
+Exemplos de aplicações monolíticas de sucesso são pervasivos.</p>
+<p>\pause Ciclo bem entendido:
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Desenvolva
+    \item Teste
+    \item Implante
+    \item Escale
+    \item loop
+\end{itemize}</script>
+\end{frame}</p>
+<p>%<a href="https://medium.com/@bfil/microservices-are-a-silver-bullet-f745d2b41dca">https://medium.com/@bfil/microservices-are-a-silver-bullet-f745d2b41dca</a></p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Monolítico}
+Com o passar do tempo, tornam-se gigantes que não podem ser movidos ou guiados. A complexidade é grande demais para qualquer indivíduo entender todo o sistema.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Monolítico}
+Com o passar do tempo, tornam-se gigantes que não podem ser movidos ou guiados. A complexidade é grande demais para qualquer indivíduo entender todo o sistema.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Monolítico}
+Desenvolvimento ágil se torna impossível. </p>
+<p>Implantações são custosas então são evitadas. Cada nova implantação traz muitas novas mudanças. Risco de problemas é maior. Muito cuidado é necessário. Implantações se tornam mais custosas. loop</p>
+<p>Até debugar o sistema é mais complicado. Como carregar tudo no Eclipse? \pause Como atacar o problema?
+\end{frame}</p>
+<p>\begin{frame}{Monolítico}
+Se está funcionando, por quê trocar?</p>
+<p>\pause</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Mais fácil estender?
+    \item Mais fácil de escalar?
+    \item Mais fácil de tornar tolerante a falhas?
+\end{itemize}</script>
+\end{frame}</p>
+<p>\subsection{Micro-serviço}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Micro-serviços}
+``Small autonomous services that work together, modelled around a business domain.''
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Micro-serviços}
+``Small autonomous services that work together, modelled around a business domain.''
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Micro-serviço}
+Ideia semelhante à programação paralela:
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Paralelismo de dados: trate dados diferentes em blocos diferentes.
+    \item Paralelismo de tarefas: trate funções diferentes em blocos diferentes.
+\end{itemize}</script>
+</p>
+<p>\pause\alert{Particionamento}
+\end{frame}</p>
+<p>Serviço de browsing pode ser replicado mais que de ordering, por exemplo.</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Cada componente executa um serviço... bem.
+    \item Cada time foca-se em um problema.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Cada componente executa um serviço... bem.
+    \item Cada time foca-se em um problema.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Escalas diferentes para blocos diferentes}
+\includegraphics[width=.7\textwidth]{images/microservice_sample}</p>
+<p>\href{<a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design}{Fonte">https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design}{Fonte</a>}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Mudanças são mais contidas (em um simples serviço)
+    \item Serviços são desenvolvidos e implantados em paralelo e independentemente
+    \item A organização do time de desenvolvimento reflete a organização do sistema
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Mudanças são mais contidas (em um simples serviço)
+    \item Serviços são desenvolvidos e implantados em paralelo e independentemente
+    \item A organização do time de desenvolvimento reflete a organização do sistema
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Separe componentes que tem requisitos conflitantes:
+    \begin{itemize}
+        \item CPU
+        \item E/S
+        \item Memória
+    \end{itemize}
+    \item Escale-os independentemente
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Particionamento}
+\begin{itemize}
+    \item Separe componentes que tem requisitos conflitantes:
+    \begin{itemize}
+        \item CPU
+        \item E/S
+        \item Memória
+    \end{itemize}
+    \item Escale-os independentemente
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Exemplo: Netflix}
+\begin{itemize}
+    \item \url{https://youtu.be/57UK46qfBLY}
+    \item \url{https://youtu.be/CZ3wIuvmHeM}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Exemplo: Netflix}
+\begin{itemize}
+    \item \url{https://youtu.be/57UK46qfBLY}
+    \item \url{https://youtu.be/CZ3wIuvmHeM}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Exemplos}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item <code>...over five hundred services... we don't know how many...''
+    \item</code>...availability of 9.995...'' (&lt; 16 segundos por ano)
+    \item <code>... four days down... ... moved to the cloud''
+    \item</code>... it is not if failures will happen... ... it is when it happens...'' 
+\end{itemize}</script>
+</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Para aprender mais}
+\begin{itemize}
+    \item \url{<a href="https://youtu.be/wgdBVIX9ifA">https://youtu.be/wgdBVIX9ifA</a>}
+    \item \url{<a href="https://youtu.be/PFQnNFe27kU">https://youtu.be/PFQnNFe27kU</a>}
+    \item \url{<a href="https://youtu.be/Ijs55IA8DIk">https://youtu.be/Ijs55IA8DIk</a>}
+    \item \url{<a href="https://www.slideshare.net/chris.e.richardson/microservices-pattern-language-microxchg-microxchg2016">https://www.slideshare.net/chris.e.richardson/microservices-pattern-language-microxchg-microxchg2016</a>}
+    \item \url{<a href="https://martinfowler.com/articles/microservices.html">https://martinfowler.com/articles/microservices.html</a>}</p>
+<p>\end{itemize}
+\end{frame}</p>
+<h2 id="mom">MOM</h2>
+<h2 id="publishsubscribe">Publish/Subscribe</h2>
+<h2 id="event-sourcing">Event Sourcing</h2>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../comm/" title="Comunicação" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Comunicação
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../coord/" title="Coordenação" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Coordenação
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
