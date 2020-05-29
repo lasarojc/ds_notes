@@ -3,6 +3,8 @@
 ## Cliente Servidor
 
 Como brevemente discutido em [Fundamentos](../basics/#TCP), quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.
+
+Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.
 Um exemplo genérico é apresentado na figura a seguir.
 
 ```mermaid
@@ -31,54 +33,52 @@ sequenceDiagram
     deactivate Cliente
 ```
 
-Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.
+O modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
+Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor, isto é, um servidor e vários clientes.
 
-Contudo, em certas situações, esta terminologia pode se tornar confusa.
-Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
-Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P, a ser visto adiante.
-Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, ttambém a ser visto adiante.
-
-Apesar das questões apresentadas no parágrafo anterior, o modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
-Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor. 
-
-
-Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, os sockets.
+Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, e assim surgiram os **sockets**.
 Com os sockets, vem uma grande flexibilidade, pois um processo não precisa saber como o outro manuseia os dados que lhe cabem, desde que siga um protocolo pré-estabelecido na comunicação. Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter [transparência de acesso](../intro/#transparencia).
 Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.
 Exemplos cotidianos disto são servidores de bancos de dados, de páginas Web e email.
 De fato, esta flexibilidade permite que diversas aplicações continuem operando de forma centralizada, com servidores rodando, por exemplo, em mainframes e clientes rodando de forma emulada por software em computadores pessoais.
 
 
+Contudo, em certas situações, esta divisão entre clientes e servidores pode ser tornar confusa.
+Primeiro, porquê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
+Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P.
+Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, também a ser visto adiante.
+Quarto, usando-se sockets como base, podemos construir outros modelos de comunicação entre processos, efetivamente colocando camadas na nossa cebola.[^shrek]
+
+[^shrek]: Se você não pegou a referência, volte ~~uma casa~~[^tabuleiro] um capítulo.
+[^tabuleiro]: Se você não pegou esta referência, não teve infância.
+
+A seguir, exploraremos as arquiteturas construídas sobre cliente/servidor.
 
 
+## Par-a-Par (Peer-to-Peer, P2P)
 
-## Peer-2-Peer
-
-
-Nesta seção falaremos sobre os sistemas P2P, do inglês, *peer-to-peer*, e mostraremos como as DHT, o mais proeminente exemplo de P2P, evoluiram do Chord, essencialmente de uso acadêmico, aos bancos de dados NOSQL, com representantes como Cassandra e o DynamoDB, muito difundidos na indústria.
-
-Uma forma de ver a arquitetura P2P é como uma substituição dos papéis de clientes e servidores, onde há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão, isto é, executam as mesmas funções.
+Nos sistemas que seguem a arquitetura Par-a-Par, ou simplesmente P2P, há uma substituição dos papéis de clientes e servidores, em que há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão.
 Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.
 
-Na prática, muitos sistemas mantém os papéis de clientes e servidores, mas distribuem as tarefas dos servidores entre pares para aquela função; são sistemas híbridos. É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. 
+Como todo sistema distribuído, a arquitetura P2P visa **agregar poder computacional de múltiplos nós**.
+Mas além disso, pelo não diferenciação dos componentes, espera-se **tolerar falhas de componentes sem paralizar o serviço**, uma vez que não há um componenente centralizador, detentor único de uma certa funcionalidade.
+Os sistemas P2P tendem portanto a lever a maior disponibilidade.
 
-Como principais características destes sistemas P2P, podemos destacar as seguintes:
-* arquitetura decentralizada;
-* não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
-* pode haver entrada e saída de nós do sistema com alta frequência; 
-* nós se organizam em redes sobrepostas (em inglês, *overlay*), redes lógicas sobre as redes físicas.
-
-Os principais objetivos do uso arquitetura P2P são comuns a todas as arquiteturas distribuídas, isto é:
-* agregar poder computacional de múltiplos nós e
-* tolerar falhas de componentes sem paralizar o serviço, isto é, alta-disponibilidade.
-
-Devido à forma como são construídos, sistemas P2P também podem visar
-* escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
-* auto-administração, pois seria praticamente impossível centralizar a administração de tantos nós, com tantas configurações distintas e  em tantas localizações diferentes.
+Historicamente, e devido às características já mencionadas, os sistemas P2P tem outra característica muito importante, a **alta escalabilidade** a que se oferecerem, chegando a níveis globais.
+Se pensarmos por exemplo nos sistemas de compartilhamento de arquivos, músicas e filmes, razão da fama e infâmia da arquitetura, teremos bons exemplos disso.
+Para que isso seja possível, estes sistemas precisam se tornar **auto-gerenciáveis**, pois sistemas globais devem tolerar **entrada e saída frequente de nós** (por falhas ou ação de seus usuários), **diferentes domínios administrativos**, e heterogeneidade na comunicação.
+Uma das ferramentas utilizadas para simplificar o trabalho de auto-gerenciamento é o conceito de **redes sobrepostas**, no qual nos aprofundaremos agora.
 
 
-!!! note "TODO"
-    Exemplos de sistemas P2P
+!!! note "Sistemas P2P"
+    * Arquitetura decentralizada;
+    * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
+    * Pode haver entrada e saída de nós do sistema com alta frequência; 
+    * Nós se organizam em redes sobrepostas (em inglês, *overlay*), redes lógicas sobre as redes físicas.
+    * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
+    * Auto-administração
+    * Redes sobrepostas
+
 
 ### Rede Sobreposta
 
@@ -174,8 +174,10 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 
 
-
 ### Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)
+
+A versatilidade dos sistemas P2P o levaram a ser amplamente estudados e aplicados.
+Nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
 
 As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
 Em essência, estas tabelas são estruturas de dados que **mapeiam** uma chave para um valor, uma função $f$ tal que
@@ -401,6 +403,13 @@ Um *disclaimer*  importante é que este material foi preparado com base no Dynam
 
 
 ### Cassandra
+Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições,, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
+É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. 
+
+![CassandraDB](drawings/cassandra_hibrido.drawio)
+
+
+
 
 O CassandraDB se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.
 
@@ -818,6 +827,8 @@ Serviço de browsing pode ser replicado mais que de ordering, por exemplo.
 
 ## MOM
 
-##  Publish/Subscribe 
-
-## Event Sourcing
+###  Publish/Subscribe 
+### Message Queues
+### Event Sourcing
+[Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
+[Kafka Overview](https://youtu.be/06iRM1Ghr1k)

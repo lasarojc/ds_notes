@@ -1,3 +1,718 @@
+\section{Modelos de Consistência}
+
+\subsection{Motivação}
+
+\begin{frame}{Content Delivery Network}
+\includegraphics[width=.7\textwidth]{images/cdn}
+
+\begin{itemize}
+	\item Conteúdo é colocado próximo aos clientes. 
+	\item Conteúdo estático ou majoritariamente determinístico. 
+	\item Um pequeno atraso na replicação é tolerado.
+	\item Atualização acontece infrequentemente.
+\end{itemize}
+
+Fonte: \url{https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/}
+\end{frame}
+
+
+\begin{frame} {RAFT}
+Considere um sistema replicado usando RAFT. Após cada operação que modifica o estado, todas as réplicas tem o mesmo valor.
+
+\includegraphics[width=.5\textwidth]{images/raft} %Fonte: http://thesecretlivesofdata.com/raft/
+
+Caso um cliente queira apenas ler o estado, o que deve fazer?
+\pause
+\begin{itemize}
+	\item Requisitar o valor do líder\pause : o valor lido será \alert{o último} valor escrito.\pause
+	\item Requisitar o valor de alguma réplica\pause : o valor lido será \alert{um} valor escrito, não necessariamente o último. Mais tempo implica maior a probabilidade de ser o valor escrito.\pause
+	\item Se em vez de difusão atômica usássemos IP-Multicast?\pause{} Alguns valores escritos poderiam nunca ser vistos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Replicação: solução ou problema?}
+	Replicação aumenta disponibilidade mas tem custo em desempenho e, possivelmente, inconsistências temporárias nos dados.
+\end{frame}
+
+\begin{frame}{Conflitos}
+O problema da replicação está em como lidar com conflitos nas operações dos clientes.
+\begin{itemize}
+	\item Leitura-Leitura: Não há conflitos. Qualquer quantidade de clientes.\\
+	Replicar ``... é fácil, extremamente fácil ...''
+	\item Leitura-Escrita: Clientes querem ler dados corretos e, geralmente, a última versão escrita.\\
+	Como atualizar rapidamente as réplicas?
+	\item Escrita-Escrita: Dados sendo atualizados em múltiplos lugares ao mesmo tempo.
+	Ordenação/compatibilização das escritas.
+\end{itemize}
+
+%\pause Ordenação total das operações pode ser custosa demais. 
+\pause Solução?
+
+\pause Enfraquecer os requisitos de consistência dos sistema.
+\end{frame}
+
+
+\begin{frame}{Modelos de Consistência}
+Diferentes formas de propagação e recuperação resultam em diferentes garantias, \pause diferentes \alert{modelos de consistência}. \pause
+
+\begin{itemize}
+	\item Consistência forte: todas a réplicas tem o mesmo valor dentro de um pequena janela de tempo.\\
+	 Alto custo.
+	\item Consistência eventual: réplicas um dia terão o mesmo valor.\\
+	Demora em sincronizar.
+	\item Consistência fraca: não há garantia da replicação.\\
+	Yay!!!
+	
+\end{itemize}
+
+\pause Diferentes modelos com nomes parecidos ou até iguais. É preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.
+\end{frame}
+
+\begin{block}{Modelo de Consistência}
+Contrato entre uma data-store (distribuída) em que se especifica os resultados de operações de leitura e escrita na presença de concorrência.
+\end{block}
+\end{frame}
+
+
+
+
+\begin{frame}{Modelos Centrados nos Dados x Cliente}
+\begin{itemize}
+	\item Os dados são mantidos consistentes.
+	\item Inconsistências não são vistas pelo cliente.
+\end{itemize}
+\end{frame}
+
+
+\subsection{Modelos Centrados nos Dados}
+
+\begin{frame}{Data store}
+\begin{block}{Modelo Computacional}
+	\center
+	\includegraphics[width=.7\textwidth]{images/07-01}
+\end{block}
+\end{frame}
+
+\begin{frame}{Modelos de Consistência Centrados nos Dados}
+\begin{itemize}
+	\item Consistência Forte: operações são sincronizadas
+	\begin{itemize}
+		\item Estrita (Strict): segue a linha do tempo.
+		\item Sequencial: bancos de dados transacionais (quase).
+		\item Causal: operações com dependência causal são ordenadas
+		\item FIFO: ordem dos comandos de um mesmo cliente.
+	\end{itemize}
+	\item Consistência Fraca: sincronização acontece quando necessário.
+	\begin{itemize}
+		\item Consistência fraca geral
+		\item Consistência de entrada
+	\end{itemize}
+	\item Quanto mais fraco, mais escalável.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Notação}
+\includegraphics[width=1\textwidth]{images/07-04}
+
+\begin{itemize}
+	\item A leitura de x em (a) retorna a
+	\item A primeira leitura de x em (b) retorna Nil
+	\item A segunda  leitura de x em (b) retorna a
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Consistência Estrita}
+	Qualquer leitura de um objeto $X$ retorna o valor gravado em $X$ pela operação de escrita mais recente em $X$.
+
+	\begin{itemize}
+	\item O que quer dizer ``mais recente'' em um sistema distribuído assíncrono?
+	\item Todas as operações de escrita são instantaneamente visíveis a todos os processos e \alert{tempo global} é respeitado.
+	\item Comportamento observado em um sistema sem conflitos ou centralizado
+\end{itemize}
+
+	\includegraphics[width=1\textwidth]{images/07-04}
+
+\end{frame}
+
+
+\begin{frame}{Consistência Sequencial}
+O resultado de qualquer execução é equivalente a alguma execução sequencial dos processos, e as operações da cada processo aparecem nesta execução sequencial na ordem especificada por seu programa.
+
+\pause \includegraphics[width=.5 \textwidth]{images/07-05a}
+\pause P2, P3, P4, P1, P4, P3
+
+\pause \includegraphics[width=.5 \textwidth]{images/07-05b}
+\pause P1 ou P2, qual veio primeiro?
+\end{frame}
+
+\begin{frame}{Consistência Causal}
+Escritas com potencial relação causal são vistas por todos os processos na mesma ordem. Escritas concorrentes (não causalmente relacionadas) podem se vistas em ordens diferentes por processos diferentes.
+
+
+\includegraphics[width=1 \textwidth]{images/07-08}
+
+\pause W(x)b depende de R(x)a que depende de W(x)a\\
+\pause W(x)c e W(x)b são concorrentes.
+\end{frame}
+
+
+\begin{frame}{Consistência Causal}
+\includegraphics[width=.5 \textwidth]{images/07-09a}
+
+\pause W(x)b depende de R(x)a que depende de W(x)a. W(x)a deve ser ordenado com W(x)b. P3 não pode ter lido b e depois a.
+
+\pause \includegraphics[width=.5 \textwidth]{images/07-09b}
+\end{frame}
+
+
+\begin{frame}{Consistência FIFO}
+Escritas de um processo são vistas por todos os outros processos na ordem em que foram feitas. Escritas de diferentes processos podem ser vistas em ordens diferentes.
+
+\includegraphics[width=1 \textwidth]{images/07-08b}
+\end{frame}
+
+
+
+%
+%\begin{frame}{Consistência Contínua}
+%Grau de (in)consistência é limitado.
+%\begin{itemize}
+%	\item réplicas podem diferir na quantidade e ordem de atualizações executadas.
+%	\item réplicas podem diferir em valores numéricos para dados
+%	\item réplicas podem diferir na idade dos dados
+%\end{itemize}
+%
+%\begin{block}{Conit}
+%	Unidade de Consisência -- especifica uma unidade de dados sobre a qual consistência pode ser medida.
+%\end{block}
+%\end{frame}
+%
+%\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: $x$ e $y$ }
+%\begin{itemize}
+%	\item Relógio vetorial (Vector clock)
+%	\item Operação em cinza é permanente
+%\end{itemize}
+%\end{block}
+%\end{frame}
+%
+%\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: $x$ e $y$ }
+%	\begin{itemize}
+%		\item A tem três operações não permanentes (pendentes): desvio de ordem = 3.
+%		\item B tem duas operações não permanentes: desvio de ordem = 2
+%	\end{itemize}
+%\end{block}
+%\end{frame}
+%
+%
+%\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: $x$ e $y$ }
+%	\begin{itemize}
+%		\item A não viu uma operação de B, que muda o valor em 5: desvio numérico (1,5)
+%		\item B não viu tês operações de A, que muda o valor em 9: desvio numérico (3,\alert{9})
+%	\end{itemize}
+%\end{block}
+%\end{frame}
+%
+%
+%\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: $x$ e $y$ }
+%	\begin{itemize}
+%		\item A não viu 11 operações de B
+%		\item B não viu 15 operações de A
+%	\end{itemize}
+%\end{block}
+%\end{frame}
+%
+%\begin{frame}{Conit}
+%Como manter distância numérica limitada?
+%\end{frame}
+%
+
+\begin{frame}{Operações Simples}
+Modelos desenvolvidos para processamento paralelo, especificando a ordem de execução de operações em múltiplos threads/processos.
+\end{frame}
+
+
+\begin{frame}{Grupos de Operações}
+\begin{block}{Ideia}
+Efeito de um grupo de operações se torna visível a outros processos ao mesmo tempo. 
+Efeitos de operações individuais em um grupo não são visíveis.
+\end{block}
+
+\begin{itemize}
+	\item Variáveis de sincronização
+	\begin{itemize}
+		\item Acesso às variáveis de sincronização da datastore é sequencialmente consistente.
+		\item Acesso à variável de sincronização não é permitido até que todas as escritas das anteriores tenham sido executadas em todos os lugares.
+		\item Acesso aos dados não é permitido até que todas as variáveis de sincronização tenham sido liberadas.
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Variáveis de sincronização}
+\includegraphics[width=.7\textwidth]{images/weaka}
+
+\includegraphics[width=.7\textwidth]{images/weakb}
+
+Materializando variáveis de sincronização na forma de \emph{locks}
+\end{frame}
+
+
+\begin{frame}{Consistência de Entrada}
+\begin{itemize}
+	\item Lock de leitura só retorna quando todas as mudanças guardadas por aquele lock tiverem sido executadas no processo.
+	\item Lock de escrita só retorna quando nenhum outro processo tiver um lock, de leitura ou escrita.
+	\item Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.
+\end{itemize}
+
+\includegraphics[width=1\textwidth]{images/07-10}
+\end{frame}
+
+\begin{frame}{Transações}
+Tornam o trancamento/destrancamento de variáveis transparente.
+\end{frame}
+
+
+
+
+\subsection{Modelos Centrados nos Clientes}
+
+\begin{frame}{Modelos Centrados nos Clientes}
+\begin{block}{Ideia}
+	Evitar sincronização global focando-se no que os clientes vêem do sistema. Se para os clientes parecer consistente, tudo bem.
+\end{block}
+
+\begin{itemize}
+	\item Consistência Eventual
+	\begin{itemize}
+		\item Se nenhuma escrita ocorrer em período considerável de tempo, os clientes gradualmente se sincronizarão e ficarão consistentes.
+		\item Se clientes sempre acessarem as mesmas réplicas, terão impressão de consistência.
+	\end{itemize}
+	\item Garantias são do ponto de vista de \alert{um} cliente.
+	\begin{itemize}
+		\item Leituras monotônicas
+		\item Escrita monotônicas
+		\item Leia suas escritas
+		\item Escritas seguem leituras.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Modelo de Sistema}
+\includegraphics[width=1\textwidth]{images/07-11}
+
+Cliente pode se mover antes de sua última operação ter replicado do servidor onde estava para o novo servidor.
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Leituras Monotônicas}
+\begin{block}{Garantia}
+	Se um processo lê o valor de um item $x$, qualquer leitura sucessiva de $x$ retornará o mesmo valor ou um mais recente.
+\end{block}
+\begin{itemize}
+	\item Toda vez que se conecta a um servidor de email, seu cliente lê novas mensagens, caso haja.
+	\item O cliente nunca esquece uma mensagem, mesmo que ainda não esteja no servidor conectado por último.
+\end{itemize}
+
+\framebreak
+
+\begin{itemize}
+	\item WS($x_i$) -- operações de escrita (\emph{write set}) que levaram a variável $x$ a ter o valor $x_i$.
+	\item WS($x_i;x_j$) -- operações de escrita relativas a $x_j$ incluem operações de escrita relativas a $x_i$
+\end{itemize}
+
+\includegraphics[width=.5\textwidth]{images/07-12}
+
+\end{frame}
+
+
+\begin{frame}{Escritas Monotônicas}
+\begin{block}{Garantia}
+	Se um processo escreve em item $x$, então esta operação deve terminar antes que qualquer escrita sucessiva em $x$ possa ser executada pelo mesmo processo.
+\end{block}
+\begin{itemize}
+	\item Em um sistema de arquivos na rede, a escrita do conteúdo de um arquivo, em certa posição, só pode ser feita se escritas anteriores já estão registradas no arquivo, independentemente de o cliente contactar novo servidor de arquivos.
+\end{itemize}
+
+
+\includegraphics[width=.5\textwidth]{images/07-13}
+
+\end{frame}
+
+
+
+\begin{frame}{Leia suas Escritas}
+\begin{block}{Garantia}
+	Se um processo escreve em item $x$, então leituras sucessivas no mesmo item pelo mesmo processo devem refletir tal escrita.
+\end{block}
+\begin{itemize}
+	\item Atualizar código fonte de uma página e exigir que o navegador carrega a nova versão.
+\end{itemize}
+
+
+\includegraphics[width=.5\textwidth]{images/07-14}
+
+\end{frame}
+
+
+\begin{frame}{Escritas seguem Leituras}
+\begin{block}{Garantia}
+	Se um processo lê um item $x$, então escritas sucessivas no mesmo item só podem ser completadas se o mesmo reflete o valor lido anteriormente.
+\end{block}
+\begin{itemize}
+	\item Só é permitido enviar uma resposta a uma mensagem se a mensagem em si é vista, independentemente do cliente ter se movimentado.
+\end{itemize}
+
+\includegraphics[width=.5\textwidth]{images/07-15}
+\end{frame}
+
+
+
+\section{Posicionamento de Réplicas}
+\begin{frame}{Posicionamento de Réplicas}
+Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor custo de comunicação?
+\end{frame}
+
+\begin{frame}{Posicionamento de Réplicas}
+\begin{itemize}
+	\item Objetos (código/dados)
+	\item Permanente
+	\item Sob demanda do servidor -- por exemplo em uma CDN
+	\item Sob demanda do cliente -- por exemplo um cache.
+\end{itemize}
+
+\includegraphics[width=\textwidth]{images/07-17}
+\end{frame}
+
+
+
+\begin{frame}{Sob demanda do Servidor}
+\begin{itemize}
+	\item $Q$ conta acessos ao arquivo $F$
+	\item Agrega acessos por possível réplica mais próxima ($P$)
+	\item Número de acessos acima de limiar $R$, replica para $P$
+	\item Número de acessos abaixo de $D$, apaga de $P$
+	\item $D < R$
+	\item Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre $D$ e $R$), considera migrar.
+\end{itemize}
+
+\includegraphics[width=.5\textwidth]{images/07-18}
+\end{frame}
+
+
+
+\begin{frame}{Propagação de Atualizações}
+Réplicas precisam ser atualizadas.\pause
+\begin{itemize}
+	\item Propagar dados -- não reexecuta operações.
+	\item Propagar operações -- não copia todos os dados modificados.
+	\pause
+	\item Propagar notificações -- réplica precisa solicitar atualização.\\ Usado em caches.
+\end{itemize}
+
+Melhor opção depende do custo das operações, dados manipulados, e taxa de leitura/escrita dos dados.
+\end{frame}
+
+\begin{frame}{Propagação de Atualizações}
+Réplicas precisam ser atualizadas.
+\begin{itemize}
+	\item Propagar dados
+	\begin{itemize}
+		\item razão leitura/escrita é grande.
+		\item operações são caras.
+	\end{itemize}
+	\item Propagar operações
+	\begin{itemize}
+		\item razão leitura/escrita é grande.
+		\item operações são baratas.
+	\end{itemize}
+	\item Propagar notificações
+	\begin{itemize}
+		\item razão leitura/escrita é pequena.
+		\item pouco uso da rede
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Proativo/Push ou Reativo/Pull}
+\begin{itemize}
+	\item Proativo
+	\begin{itemize}
+		\item Mantém réplicas consistentes
+		\item Desnecessário se leitura $<<$ escrita.
+	\end{itemize}
+	\item Reativo
+	\begin{itemize}
+		\item Réplicas só se tornam consistentes quando necessário.
+		\item Lento se leitura $>>$ escrita
+	\end{itemize}
+\end{itemize}
+
+Qual é melhor?
+\end{frame}
+
+
+\begin{frame}{Híbrido: Lease}
+\begin{itemize}
+	\item Réplica se registra para receber atualizações/notificações por um período.
+	\item Estado sobre réplicas é mantido enquanto possível, pelo período contratado.
+	\item Em caso de sobrecarga, deixa de mandar atualizações/notificações.
+	\item Em caso de lease antigo não renovado, deixa de mandar atualizações/notificações.
+	\item Em caso de renovações frequentes, aumenta o período do lease.
+\end{itemize}
+\end{frame}
+
+
+\section{Checkpointing \& Recuperação}
+\begin{frame}{Recuperação}
+	Suponha que uma série de erros aconteceram no sistema, e que não é possível continuar o processamento como o sistema está. Neste cenário, é necessário ou avançar para um novo estado, livre de erros, ou retroceder a um estado correto anterior.
+\end{frame}
+
+\begin{frame}{Recuperação}
+Voltar a um estado correto parece ser a solução mais fácil.
+
+\pause Para isso, precisamos de \alert{Pontos de Recuperação}
+\end{frame}
+
+\begin{frame}{Snapshots}
+Podem ser usados na:
+\begin{itemize}
+	\item Recuperação do sistema.
+	\item Coleta de lixo (remover objetos não referenciados em nenhum outro processo).
+	\item Deteção de deadlocks.
+	\item Depuração (pausar o sistema).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pontos de Recuperação}
+Ponto de Recuperação válidos são a união de backups locais que formam um \alert{Estado Global Consistente}.
+\end{frame}
+
+\begin{frame}{Estado Global Consistente}
+
+\begin{block}{O quê?}
+	Conjunto com um estado local de cada processo no sistema tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.
+\end{block}
+
+\begin{block}{Linha de recuperação}
+	O mais recente Estado Global Consistente
+\end{block}
+
+\includegraphics[width=.7\textwidth]{images/08-24}
+\end{frame}
+
+
+\begin{frame}{Estado Global Consistente}
+\begin{block}{Comunicação Confiável}
+Se o sistema provê comunicação confiável, então toda mensagem enviada no estado local de um processo também precisa fazer parte do estado local do destinatário.
+\end{block}
+
+\includegraphics[width=.7\textwidth]{images/08-24}
+\end{frame}
+
+
+\begin{frame}{Rollback em Cascata}
+\begin{block}{Bad timing}
+	Se estados locais são capturados na ``hora errada'', a linha de recuperação pode ser o estado inicial.
+\end{block}
+
+\includegraphics[width=.7\textwidth]{images/08-25}
+\end{frame}
+
+\begin{frame}{Armazenamento em Disco}
+Segue a técnica já estudada.
+
+\includegraphics[width=.7\textwidth]{images/08-23}
+\end{frame}
+
+\subsection{Checkpointing independente}
+
+\begin{frame}{Checkpointing independente}
+Cada processo faz o checkpoint local independentemente, incorrendo no risco de um \emph{rollback} em cascata.
+
+\begin{itemize}
+	\item Seja $C_i^m$ o $m$-ésimo checkpoint do processo $p_i$.
+	\item Seja $I_i^m$ o intervalo entre $C_i^{m-1}$ e $C_i^m$.
+	\item Quando o processo $p_i$ envia a mensagem no intervalo $I_i^m$, envia $(i,m)$ em piggyback
+	\item Quando o processo $p_j$ recebe a mensagem no intervalo $I_j^n$, grava a dependência $I_i^m \rightarrow I_j^n$
+	\item A dependência $I_i^m \rightarrow I_j^n$ é salva junto com o checkpoint $C_j^n$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Checkpointing independente}
+\begin{block}{Restrição}
+Se o processo $p_j$ é revertido para o estado $C_j^n$, então o $p_i$ não pode reverter para nenhum estado anterior a $C_i^m$, ou não teria enviado as mensagens recebidas por $p_j$ 4 inclusas em $C_j^n$.
+\end{block}
+
+Ou
+
+\begin{block}{Restrição}
+Se o processo $p_i$ é revertido para o estado $C_i^{m-1}$, então o $p_j$ tem que ser revertido pelo menos até $C_j^{n-1}$, ou incluiria mensagens ainda não enviadas por $p_i$.
+\end{block}
+
+\pause Como implementar a recuperação?
+\end{frame}
+
+\begin{frame}{Caso patológico}
+\begin{itemize}
+	\item $p_i$ e $p_j$ no estado inicial ($C_i^0, C_j^0$)
+	\item $p_i$ manda mensagens para $p_j$ ($C_i^1 \rightarrow C_j^1$)
+	\item $C_j^1$
+	\item $p_j$ manda mensagens para $p_i$ $C_j^2 \rightarrow C_i^1$
+	\item $C_i^1$
+	\item $p_i$ manda mensagens para $p_j$ $C_i^2 \rightarrow C_j^2$
+	\item $C_j^2$
+	\item $p_j$ manda mensagens para $p_i$ $C_j^3 \rightarrow C_i^2$
+	\item $C_i^2$
+	\item ...
+\end{itemize}
+\end{frame}
+
+
+
+\subsection{Checkpointing coordenado}
+
+\begin{frame}{Checkpointing coordenado}
+Processos se coordenam por troca de mensagem para executar checkpointing ``simultaneamente''.
+
+\pause Qual a vantagem sobre o não coordenado?
+
+\end{frame}
+
+
+\begin{frame}{Bloqueio em duas fases}
+\begin{itemize}
+	\item Um coordenador faz multicast da mensagem ``checkpoint-request''.
+	\item Quando um participante recebe ``checkpoint-request''
+	\begin{itemize}
+		\item faz um checkpoint local,
+		\item para de mandar mensagens da aplicação
+		\item responde com ``checkpoint-taken''
+	\end{itemize}
+	\item Quando ``checkpoint-taken'' recebido de todos os participantes, multicast ``checkpoint-done''
+	\item Quando receber ``checkpoint-done'', retoma computação normal
+\end{itemize}
+
+\begin{itemize}
+	\item Por quê funciona? \pause Impede formação de dependências circulares.
+	\item Todos os processos precisam participar? \pause Somente os que dependem da recuperação do coordenador.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bloqueio em duas fases}
+Pontos negativos? \pause
+\begin{itemize}
+	\item Duas fases? Já vi isso antes... \pause Se o coordenador falha, outros processos ficam bloqueados? \pause Timeout!
+	\item Como eleger outro coordenador? E se dois aparecerem juntos?\pause Pode ser resolvido com um protocolo de eleição como o do RAFT. \pause{} Não é garantido, mas aumenta as chances de sucesso.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Chandy-Lamport}
+	
+	\begin{itemize}
+		\item Não interfere na aplicação
+		\item Cada processo grava snapshot independentemente
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Chandy-Lamport}
+	\begin{itemize}
+		\item Observador (iniciador do snapshot)
+		\begin{itemize}
+			\item Salva o próprio estado
+			\item Envia uma mensagem ``snapshot'' aos outros processos em cada canal de saída
+			\item Grava as mensagens chegando em cada canal até que receba uma mensagem ``snapshot'' naquele canal.
+		\end{itemize}
+		\item Um processo $p$ que receba ``snapshot'' de um processo $q$
+		\begin{itemize}
+			\item grava estado local $S_p$
+			\item grava estado do canal $C_{q,p} =\emptyset$
+			\item Envia uma mensagem ``snapshot'' aos outros processos em cada canal de saída
+			\item Grava as mensagens chegando em cada canal até que receba uma mensagem ``snapshot'' naquele canal (excluindo $C_{q,p}$)
+		\end{itemize}
+		\item Protocolo termina para o processo $p$ quando tiver recebido marcador ``snapshot'' em cada um de seus canais.
+		\item O estado global consiste dos snapshots + estado em cada um dos canais.
+		\pause \item Exige canais FIFO
+	\end{itemize}
+	
+	\url{https://youtu.be/RQquDTYkHKY?t=383}
+\end{frame}
+
+
+\subsection{Message Logging}
+\begin{frame}{Message Logging}
+	Em vez de checkpoints frequentes, crie um log da comunicação e o re-execute a partir do último checkpoint.
+	
+	\begin{block}{Ideia}
+		A computação é determinada pela troca de mensagens (eventos não determinísticos). 
+		Ao se enviar a mesma mensagem a partir de um certo estado, a computação desencadeada é sempre a mesma.
+	\end{block}
+	
+	\pause Realista este modelo? Há outros eventos não determinísticos no sistema?
+\end{frame}
+
+\begin{frame}{Message Logging}
+	
+	
+	\includegraphics[width=\textwidth]{images/08-26}
+\end{frame}
+
+\begin{frame}{Notação}
+	\begin{itemize}
+		\item $Hdr(m)$
+		\begin{itemize}
+			\item Cabeçalho da mensagem $m$ contendo fonte, destino, número de sequência e número de entrega.
+			\item O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).
+			\item A mensagem $m$ é estável se $Hdr(m)$ estiver em memória estável.
+		\end{itemize}
+		\item $Dep(m)$ o conjunto de processos a quem $m$ ou mensagens que dependem de $m$ foram entregues.
+		\item $Copy(m)$: o conjunto de processos que tem uma cópia de $Hdr(m)$ em memória volátil.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Órfãos}
+	\begin{block}{Definição}
+		Se $C$ é um conjunto de processos falhos, então $Q\not\in C$ é um órfão se existe uma mensagem $m$ tal que $Q \in Dep(m)$ e $Copy(m)\subseteq C$	
+	\end{block}
+	
+	Se os processos em $C$ forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou $Q$ a receber $m$ ou um mensagem causalmente dependente de $m$.
+
+\end{frame}
+
+
+\begin{frame}{Protocolo Pessimista}
+	Para cada mensagem $m$ não estável, há no máximo um processo dependente em $m$ ($Dep(m) \leq 1$)
+	
+	\pause 
+	Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.
+	
+	\pause
+	Toda mensagem é precedida por uma escrita em disco.
+\end{frame}
+
+\begin{frame}{Protocolo Otimista}
+	Para cada mensagem $m$ não estável, então devemos garantir que se $Copy(m) \subseteq C$, então \emph{eventually} $Dep(m) \subseteq C$, onde $C$ é o conjunto de processos que falharam.
+	
+	\pause 
+	Para garantir que $Dep(m) \subseteq C$, fazemos um rollback de cada órfão $Q$ até que $Q \not\in Dep(m)$
+	
+	\pause Isto é, forçamos $Q$ a ser recuperado mesmo que não tenha falhado.
+\end{frame}
+
 \section{Bancos de Dados}
 
 \subsection{Transações}

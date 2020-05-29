@@ -16,6 +16,12 @@ theme:
         name: material #readthedocs
 plugins:
         - search
+        - drawio-exporter:
+                cache_dir: 'drawio-exporter'
+                drawio_executable: null
+                drawio_args: []
+                format: svg
+                sources: '*.drawio'
 markdown_extensions:
         - mdx_math
         - admonition
