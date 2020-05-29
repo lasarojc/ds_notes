@@ -1,0 +1,2145 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Bancos de Dados - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Bancos de Dados
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Prólogo" class="md-nav__link">
+      Prólogo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../intro/" title="Introdução" class="md-nav__link">
+      Introdução
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+      Fundamentos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../comm/" title="Comunicação" class="md-nav__link">
+      Comunicação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+      Arquiteturas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../coord/" title="Coordenação" class="md-nav__link">
+      Coordenação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../time/" title="Tempo" class="md-nav__link">
+      Tempo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+      Tolerância a Falhas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="Bancos de Dados" class="md-nav__link md-nav__link--active">
+      Bancos de Dados
+    </a>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+      Sistemas de Arquivos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../tech/" title="Tecnologias" class="md-nav__link">
+      Tecnologias
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>Bancos de Dados</h1>
+                
+                <p>\section{Modelos de Consistência}</p>
+<p>\subsection{Motivação}</p>
+<p>\begin{frame}{Content Delivery Network}
+\includegraphics[width=.7\textwidth]{images/cdn}</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+    \item Conteúdo é colocado próximo aos clientes. 
+    \item Conteúdo estático ou majoritariamente determinístico. 
+    \item Um pequeno atraso na replicação é tolerado.
+    \item Atualização acontece infrequentemente.
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Conteúdo é colocado próximo aos clientes. 
+    \item Conteúdo estático ou majoritariamente determinístico. 
+    \item Um pequeno atraso na replicação é tolerado.
+    \item Atualização acontece infrequentemente.
+\end{itemize}</script>
+</div>
+<p>Fonte: \url{<a href="https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/">https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/</a>}
+\end{frame}</p>
+<p>\begin{frame} {RAFT}
+Considere um sistema replicado usando RAFT. Após cada operação que modifica o estado, todas as réplicas tem o mesmo valor.</p>
+<p>\includegraphics[width=.5\textwidth]{images/raft} %Fonte: <a href="http://thesecretlivesofdata.com/raft/">http://thesecretlivesofdata.com/raft/</a></p>
+<p>Caso um cliente queira apenas ler o estado, o que deve fazer?
+\pause
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Requisitar o valor do líder\pause : o valor lido será \alert{o último} valor escrito.\pause
+    \item Requisitar o valor de alguma réplica\pause : o valor lido será \alert{um} valor escrito, não necessariamente o último. Mais tempo implica maior a probabilidade de ser o valor escrito.\pause
+    \item Se em vez de difusão atômica usássemos IP-Multicast?\pause{} Alguns valores escritos poderiam nunca ser vistos.
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Replicação: solução ou problema?}
+    Replicação aumenta disponibilidade mas tem custo em desempenho e, possivelmente, inconsistências temporárias nos dados.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Replicação: solução ou problema?}
+    Replicação aumenta disponibilidade mas tem custo em desempenho e, possivelmente, inconsistências temporárias nos dados.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Conflitos}
+O problema da replicação está em como lidar com conflitos nas operações dos clientes.
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Leitura-Leitura: Não há conflitos. Qualquer quantidade de clientes.\\
+    Replicar ``... é fácil, extremamente fácil ...''
+    \item Leitura-Escrita: Clientes querem ler dados corretos e, geralmente, a última versão escrita.\\
+    Como atualizar rapidamente as réplicas?
+    \item Escrita-Escrita: Dados sendo atualizados em múltiplos lugares ao mesmo tempo.
+    Ordenação/compatibilização das escritas.
+\end{itemize}</script>
+</p>
+<p>%\pause Ordenação total das operações pode ser custosa demais. 
+\pause Solução?</p>
+<p>\pause Enfraquecer os requisitos de consistência dos sistema.
+\end{frame}</p>
+<p>\begin{frame}{Modelos de Consistência}
+Diferentes formas de propagação e recuperação resultam em diferentes garantias, \pause diferentes \alert{modelos de consistência}. \pause</p>
+<p>\begin{itemize}
+    \item Consistência forte: todas a réplicas tem o mesmo valor dentro de um pequena janela de tempo.\
+     Alto custo.
+    \item Consistência eventual: réplicas um dia terão o mesmo valor.\
+    Demora em sincronizar.
+    \item Consistência fraca: não há garantia da replicação.\
+    Yay!!!</p>
+<p>\end{itemize}</p>
+<p>\pause Diferentes modelos com nomes parecidos ou até iguais. É preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.
+\end{frame}</p>
+<p>
+<script type="math/tex; mode=display">\begin{block}{Modelo de Consistência}
+Contrato entre uma data-store (distribuída) em que se especifica os resultados de operações de leitura e escrita na presença de concorrência.
+\end{block}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Modelos Centrados nos Dados x Cliente}
+\begin{itemize}
+    \item Os dados são mantidos consistentes.
+    \item Inconsistências não são vistas pelo cliente.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Modelos Centrados nos Dados x Cliente}
+\begin{itemize}
+    \item Os dados são mantidos consistentes.
+    \item Inconsistências não são vistas pelo cliente.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Modelos Centrados nos Dados}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Data store}
+\begin{block}{Modelo Computacional}
+    \center
+    \includegraphics[width=.7\textwidth]{images/07-01}
+\end{block}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Data store}
+\begin{block}{Modelo Computacional}
+    \center
+    \includegraphics[width=.7\textwidth]{images/07-01}
+\end{block}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Modelos de Consistência Centrados nos Dados}
+\begin{itemize}
+    \item Consistência Forte: operações são sincronizadas
+    \begin{itemize}
+        \item Estrita (Strict): segue a linha do tempo.
+        \item Sequencial: bancos de dados transacionais (quase).
+        \item Causal: operações com dependência causal são ordenadas
+        \item FIFO: ordem dos comandos de um mesmo cliente.
+    \end{itemize}
+    \item Consistência Fraca: sincronização acontece quando necessário.
+    \begin{itemize}
+        \item Consistência fraca geral
+        \item Consistência de entrada
+    \end{itemize}
+    \item Quanto mais fraco, mais escalável.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Modelos de Consistência Centrados nos Dados}
+\begin{itemize}
+    \item Consistência Forte: operações são sincronizadas
+    \begin{itemize}
+        \item Estrita (Strict): segue a linha do tempo.
+        \item Sequencial: bancos de dados transacionais (quase).
+        \item Causal: operações com dependência causal são ordenadas
+        \item FIFO: ordem dos comandos de um mesmo cliente.
+    \end{itemize}
+    \item Consistência Fraca: sincronização acontece quando necessário.
+    \begin{itemize}
+        \item Consistência fraca geral
+        \item Consistência de entrada
+    \end{itemize}
+    \item Quanto mais fraco, mais escalável.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Notação}
+\includegraphics[width=1\textwidth]{images/07-04}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item A leitura de x em (a) retorna a
+    \item A primeira leitura de x em (b) retorna Nil
+    \item A segunda  leitura de x em (b) retorna a
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Consistência Estrita}
+    Qualquer leitura de um objeto <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> retorna o valor gravado em <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> pela operação de escrita mais recente em <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{itemize}
+\item O que quer dizer ``mais recente&#39;&#39; em um sistema distribuído assíncrono?
+\item Todas as operações de escrita são instantaneamente visíveis a todos os processos e \alert{tempo global} é respeitado.
+\item Comportamento observado em um sistema sem conflitos ou centralizado
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{itemize}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\includegraphics[width=1\textwidth]{images/07-04}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\begin{frame}{Consistência Sequencial}
+O resultado de qualquer execução é equivalente a alguma execução sequencial dos processos, e as operações da cada processo aparecem nesta execução sequencial na ordem especificada por seu programa.</p>
+<p>\pause \includegraphics[width=.5 \textwidth]{images/07-05a}
+\pause P2, P3, P4, P1, P4, P3</p>
+<p>\pause \includegraphics[width=.5 \textwidth]{images/07-05b}
+\pause P1 ou P2, qual veio primeiro?
+\end{frame}</p>
+<p>\begin{frame}{Consistência Causal}
+Escritas com potencial relação causal são vistas por todos os processos na mesma ordem. Escritas concorrentes (não causalmente relacionadas) podem se vistas em ordens diferentes por processos diferentes.</p>
+<p>\includegraphics[width=1 \textwidth]{images/07-08}</p>
+<p>\pause W(x)b depende de R(x)a que depende de W(x)a\
+\pause W(x)c e W(x)b são concorrentes.
+\end{frame}</p>
+<p>\begin{frame}{Consistência Causal}
+\includegraphics[width=.5 \textwidth]{images/07-09a}</p>
+<p>\pause W(x)b depende de R(x)a que depende de W(x)a. W(x)a deve ser ordenado com W(x)b. P3 não pode ter lido b e depois a.</p>
+<p>\pause \includegraphics[width=.5 \textwidth]{images/07-09b}
+\end{frame}</p>
+<p>\begin{frame}{Consistência FIFO}
+Escritas de um processo são vistas por todos os outros processos na ordem em que foram feitas. Escritas de diferentes processos podem ser vistas em ordens diferentes.</p>
+<p>\includegraphics[width=1 \textwidth]{images/07-08b}
+\end{frame}</p>
+<p>%
+%<script type="math/tex; mode=display">\begin{frame}{Consistência Contínua}
+%Grau de (in)consistência é limitado.
+%\begin{itemize}
+%   \item réplicas podem diferir na quantidade e ordem de atualizações executadas.
+%   \item réplicas podem diferir em valores numéricos para dados
+%   \item réplicas podem diferir na idade dos dados
+%\end{itemize}
+%
+%\begin{block}{Conit}
+%   Unidade de Consisência -- especifica uma unidade de dados sobre a qual consistência pode ser medida.
+%\end{block}
+%\end{frame}</script>
+%
+%<script type="math/tex; mode=display">\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> e <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> }
+%\begin{itemize}
+%   \item Relógio vetorial (Vector clock)
+%   \item Operação em cinza é permanente
+%\end{itemize}
+%\end{block}
+%\end{frame}</script>
+%
+%<script type="math/tex; mode=display">\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> e <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> }
+%   \begin{itemize}
+%       \item A tem três operações não permanentes (pendentes): desvio de ordem = 3.
+%       \item B tem duas operações não permanentes: desvio de ordem = 2
+%   \end{itemize}
+%\end{block}
+%\end{frame}</script>
+%
+%
+%<script type="math/tex; mode=display">\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> e <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> }
+%   \begin{itemize}
+%       \item A não viu uma operação de B, que muda o valor em 5: desvio numérico (1,5)
+%       \item B não viu tês operações de A, que muda o valor em 9: desvio numérico (3,\alert{9})
+%   \end{itemize}
+%\end{block}
+%\end{frame}</script>
+%
+%
+%<script type="math/tex; mode=display">\begin{frame}{Conit}
+%\includegraphics[width=.7\textwidth]{images/07-02}
+%
+%\begin{block}{Conit: <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> e <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> }
+%   \begin{itemize}
+%       \item A não viu 11 operações de B
+%       \item B não viu 15 operações de A
+%   \end{itemize}
+%\end{block}
+%\end{frame}</script>
+%
+%<script type="math/tex; mode=display">\begin{frame}{Conit}
+%Como manter distância numérica limitada?
+%\end{frame}</script>
+%</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Operações Simples}
+Modelos desenvolvidos para processamento paralelo, especificando a ordem de execução de operações em múltiplos threads/processos.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Operações Simples}
+Modelos desenvolvidos para processamento paralelo, especificando a ordem de execução de operações em múltiplos threads/processos.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Grupos de Operações}
+<script type="math/tex; mode=display">\begin{block}{Ideia}
+Efeito de um grupo de operações se torna visível a outros processos ao mesmo tempo. 
+Efeitos de operações individuais em um grupo não são visíveis.
+\end{block}</script>
+</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+    \item Variáveis de sincronização
+    \begin{itemize}
+        \item Acesso às variáveis de sincronização da datastore é sequencialmente consistente.
+        \item Acesso à variável de sincronização não é permitido até que todas as escritas das anteriores tenham sido executadas em todos os lugares.
+        \item Acesso aos dados não é permitido até que todas as variáveis de sincronização tenham sido liberadas.
+    \end{itemize}
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Variáveis de sincronização
+    \begin{itemize}
+        \item Acesso às variáveis de sincronização da datastore é sequencialmente consistente.
+        \item Acesso à variável de sincronização não é permitido até que todas as escritas das anteriores tenham sido executadas em todos os lugares.
+        \item Acesso aos dados não é permitido até que todas as variáveis de sincronização tenham sido liberadas.
+    \end{itemize}
+\end{itemize}</script>
+</div>
+<p>\end{frame}</p>
+<p>\begin{frame}{Variáveis de sincronização}
+\includegraphics[width=.7\textwidth]{images/weaka}</p>
+<p>\includegraphics[width=.7\textwidth]{images/weakb}</p>
+<p>Materializando variáveis de sincronização na forma de \emph{locks}
+\end{frame}</p>
+<p>\begin{frame}{Consistência de Entrada}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Lock de leitura só retorna quando todas as mudanças guardadas por aquele lock tiverem sido executadas no processo.
+    \item Lock de escrita só retorna quando nenhum outro processo tiver um lock, de leitura ou escrita.
+    \item Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=1\textwidth]{images/07-10}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Transações}
+Tornam o trancamento/destrancamento de variáveis transparente.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Transações}
+Tornam o trancamento/destrancamento de variáveis transparente.
+\end{frame}</script>
+</div>
+<p>\subsection{Modelos Centrados nos Clientes}</p>
+<p>\begin{frame}{Modelos Centrados nos Clientes}
+<script type="math/tex; mode=display">\begin{block}{Ideia}
+    Evitar sincronização global focando-se no que os clientes vêem do sistema. Se para os clientes parecer consistente, tudo bem.
+\end{block}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Consistência Eventual
+    \begin{itemize}
+        \item Se nenhuma escrita ocorrer em período considerável de tempo, os clientes gradualmente se sincronizarão e ficarão consistentes.
+        \item Se clientes sempre acessarem as mesmas réplicas, terão impressão de consistência.
+    \end{itemize}</script>
+    \item Garantias são do ponto de vista de \alert{um} cliente.
+    <script type="math/tex; mode=display">\begin{itemize}
+        \item Leituras monotônicas
+        \item Escrita monotônicas
+        \item Leia suas escritas
+        \item Escritas seguem leituras.
+    \end{itemize}</script>
+\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Modelo de Sistema}
+\includegraphics[width=1\textwidth]{images/07-11}</p>
+<p>Cliente pode se mover antes de sua última operação ter replicado do servidor onde estava para o novo servidor.
+\end{frame}</p>
+<p>\begin{frame}[allowframebreaks]{Leituras Monotônicas}
+<script type="math/tex; mode=display">\begin{block}{Garantia}
+    Se um processo lê o valor de um item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, qualquer leitura sucessiva de <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> retornará o mesmo valor ou um mais recente.
+\end{block}</script>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Toda vez que se conecta a um servidor de email, seu cliente lê novas mensagens, caso haja.
+    \item O cliente nunca esquece uma mensagem, mesmo que ainda não esteja no servidor conectado por último.
+\end{itemize}</script>
+</p>
+<p>\framebreak</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+    \item WS($x_i$) -- operações de escrita (\emph{write set}) que levaram a variável $x$ a ter o valor $x_i$.
+    \item WS($x_i;x_j$) -- operações de escrita relativas a $x_j$ incluem operações de escrita relativas a $x_i$
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item WS($x_i$) -- operações de escrita (\emph{write set}) que levaram a variável $x$ a ter o valor $x_i$.
+    \item WS($x_i;x_j$) -- operações de escrita relativas a $x_j$ incluem operações de escrita relativas a $x_i$
+\end{itemize}</script>
+</div>
+<p>\includegraphics[width=.5\textwidth]{images/07-12}</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Escritas Monotônicas}
+<script type="math/tex; mode=display">\begin{block}{Garantia}
+    Se um processo escreve em item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então esta operação deve terminar antes que qualquer escrita sucessiva em <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> possa ser executada pelo mesmo processo.
+\end{block}</script>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Em um sistema de arquivos na rede, a escrita do conteúdo de um arquivo, em certa posição, só pode ser feita se escritas anteriores já estão registradas no arquivo, independentemente de o cliente contactar novo servidor de arquivos.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.5\textwidth]{images/07-13}</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Leia suas Escritas}
+<script type="math/tex; mode=display">\begin{block}{Garantia}
+    Se um processo escreve em item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então leituras sucessivas no mesmo item pelo mesmo processo devem refletir tal escrita.
+\end{block}</script>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Atualizar código fonte de uma página e exigir que o navegador carrega a nova versão.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.5\textwidth]{images/07-14}</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Escritas seguem Leituras}
+<script type="math/tex; mode=display">\begin{block}{Garantia}
+    Se um processo lê um item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então escritas sucessivas no mesmo item só podem ser completadas se o mesmo reflete o valor lido anteriormente.
+\end{block}</script>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Só é permitido enviar uma resposta a uma mensagem se a mensagem em si é vista, independentemente do cliente ter se movimentado.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.5\textwidth]{images/07-15}
+\end{frame}</p>
+<p>\section{Posicionamento de Réplicas}
+<script type="math/tex; mode=display">\begin{frame}{Posicionamento de Réplicas}
+Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor custo de comunicação?
+\end{frame}</script>
+</p>
+<p>\begin{frame}{Posicionamento de Réplicas}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Objetos (código/dados)
+    \item Permanente
+    \item Sob demanda do servidor -- por exemplo em uma CDN
+    \item Sob demanda do cliente -- por exemplo um cache.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=\textwidth]{images/07-17}
+\end{frame}</p>
+<p>\begin{frame}{Sob demanda do Servidor}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> conta acessos ao arquivo <span><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span>
+    \item Agrega acessos por possível réplica mais próxima (<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>)
+    \item Número de acessos acima de limiar <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>, replica para <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>
+    \item Número de acessos abaixo de <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>, apaga de <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>
+    \item <span><span class="MathJax_Preview">D &lt; R</span><script type="math/tex">D < R</script></span>
+    \item Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span> e <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>), considera migrar.
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.5\textwidth]{images/07-18}
+\end{frame}</p>
+<p>\begin{frame}{Propagação de Atualizações}
+Réplicas precisam ser atualizadas.\pause
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Propagar dados -- não reexecuta operações.
+    \item Propagar operações -- não copia todos os dados modificados.
+    \pause
+    \item Propagar notificações -- réplica precisa solicitar atualização.\\ Usado em caches.
+\end{itemize}</script>
+</p>
+<p>Melhor opção depende do custo das operações, dados manipulados, e taxa de leitura/escrita dos dados.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Propagação de Atualizações}
+Réplicas precisam ser atualizadas.
+\begin{itemize}
+    \item Propagar dados
+    \begin{itemize}
+        \item razão leitura/escrita é grande.
+        \item operações são caras.
+    \end{itemize}
+    \item Propagar operações
+    \begin{itemize}
+        \item razão leitura/escrita é grande.
+        \item operações são baratas.
+    \end{itemize}
+    \item Propagar notificações
+    \begin{itemize}
+        \item razão leitura/escrita é pequena.
+        \item pouco uso da rede
+    \end{itemize}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Propagação de Atualizações}
+Réplicas precisam ser atualizadas.
+\begin{itemize}
+    \item Propagar dados
+    \begin{itemize}
+        \item razão leitura/escrita é grande.
+        \item operações são caras.
+    \end{itemize}
+    \item Propagar operações
+    \begin{itemize}
+        \item razão leitura/escrita é grande.
+        \item operações são baratas.
+    \end{itemize}
+    \item Propagar notificações
+    \begin{itemize}
+        \item razão leitura/escrita é pequena.
+        \item pouco uso da rede
+    \end{itemize}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Proativo/Push ou Reativo/Pull}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Proativo
+    \begin{itemize}
+        \item Mantém réplicas consistentes
+        \item Desnecessário se leitura <span><span class="MathJax_Preview">&lt;&lt;</span><script type="math/tex"><<</script></span> escrita.
+    \end{itemize}</script>
+    \item Reativo
+    <script type="math/tex; mode=display">\begin{itemize}
+        \item Réplicas só se tornam consistentes quando necessário.
+        \item Lento se leitura <span><span class="MathJax_Preview">&gt;&gt;</span><script type="math/tex">>></script></span> escrita
+    \end{itemize}</script>
+\end{itemize}</p>
+<p>Qual é melhor?
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Híbrido: Lease}
+\begin{itemize}
+    \item Réplica se registra para receber atualizações/notificações por um período.
+    \item Estado sobre réplicas é mantido enquanto possível, pelo período contratado.
+    \item Em caso de sobrecarga, deixa de mandar atualizações/notificações.
+    \item Em caso de lease antigo não renovado, deixa de mandar atualizações/notificações.
+    \item Em caso de renovações frequentes, aumenta o período do lease.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Híbrido: Lease}
+\begin{itemize}
+    \item Réplica se registra para receber atualizações/notificações por um período.
+    \item Estado sobre réplicas é mantido enquanto possível, pelo período contratado.
+    \item Em caso de sobrecarga, deixa de mandar atualizações/notificações.
+    \item Em caso de lease antigo não renovado, deixa de mandar atualizações/notificações.
+    \item Em caso de renovações frequentes, aumenta o período do lease.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\section{Checkpointing \&amp; Recuperação}
+<script type="math/tex; mode=display">\begin{frame}{Recuperação}
+    Suponha que uma série de erros aconteceram no sistema, e que não é possível continuar o processamento como o sistema está. Neste cenário, é necessário ou avançar para um novo estado, livre de erros, ou retroceder a um estado correto anterior.
+\end{frame}</script>
+</p>
+<p>\begin{frame}{Recuperação}
+Voltar a um estado correto parece ser a solução mais fácil.</p>
+<p>\pause Para isso, precisamos de \alert{Pontos de Recuperação}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Snapshots}
+Podem ser usados na:
+\begin{itemize}
+    \item Recuperação do sistema.
+    \item Coleta de lixo (remover objetos não referenciados em nenhum outro processo).
+    \item Deteção de deadlocks.
+    \item Depuração (pausar o sistema).
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Snapshots}
+Podem ser usados na:
+\begin{itemize}
+    \item Recuperação do sistema.
+    \item Coleta de lixo (remover objetos não referenciados em nenhum outro processo).
+    \item Deteção de deadlocks.
+    \item Depuração (pausar o sistema).
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Pontos de Recuperação}
+Ponto de Recuperação válidos são a união de backups locais que formam um \alert{Estado Global Consistente}.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Pontos de Recuperação}
+Ponto de Recuperação válidos são a união de backups locais que formam um \alert{Estado Global Consistente}.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Estado Global Consistente}</p>
+<div>
+<div class="MathJax_Preview">\begin{block}{O quê?}
+    Conjunto com um estado local de cada processo no sistema tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.
+\end{block}</div>
+<script type="math/tex; mode=display">\begin{block}{O quê?}
+    Conjunto com um estado local de cada processo no sistema tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.
+\end{block}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{block}{Linha de recuperação}
+    O mais recente Estado Global Consistente
+\end{block}</div>
+<script type="math/tex; mode=display">\begin{block}{Linha de recuperação}
+    O mais recente Estado Global Consistente
+\end{block}</script>
+</div>
+<p>\includegraphics[width=.7\textwidth]{images/08-24}
+\end{frame}</p>
+<p>\begin{frame}{Estado Global Consistente}
+<script type="math/tex; mode=display">\begin{block}{Comunicação Confiável}
+Se o sistema provê comunicação confiável, então toda mensagem enviada no estado local de um processo também precisa fazer parte do estado local do destinatário.
+\end{block}</script>
+</p>
+<p>\includegraphics[width=.7\textwidth]{images/08-24}
+\end{frame}</p>
+<p>\begin{frame}{Rollback em Cascata}
+<script type="math/tex; mode=display">\begin{block}{Bad timing}
+    Se estados locais são capturados na ``hora errada'', a linha de recuperação pode ser o estado inicial.
+\end{block}</script>
+</p>
+<p>\includegraphics[width=.7\textwidth]{images/08-25}
+\end{frame}</p>
+<p>\begin{frame}{Armazenamento em Disco}
+Segue a técnica já estudada.</p>
+<p>\includegraphics[width=.7\textwidth]{images/08-23}
+\end{frame}</p>
+<p>\subsection{Checkpointing independente}</p>
+<p>\begin{frame}{Checkpointing independente}
+Cada processo faz o checkpoint local independentemente, incorrendo no risco de um \emph{rollback} em cascata.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Seja <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span> o <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>-ésimo checkpoint do processo <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span>.
+    \item Seja <span><span class="MathJax_Preview">I_i^m</span><script type="math/tex">I_i^m</script></span> o intervalo entre <span><span class="MathJax_Preview">C_i^{m-1}</span><script type="math/tex">C_i^{m-1}</script></span> e <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span>.
+    \item Quando o processo <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> envia a mensagem no intervalo <span><span class="MathJax_Preview">I_i^m</span><script type="math/tex">I_i^m</script></span>, envia <span><span class="MathJax_Preview">(i,m)</span><script type="math/tex">(i,m)</script></span> em piggyback
+    \item Quando o processo <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> recebe a mensagem no intervalo <span><span class="MathJax_Preview">I_j^n</span><script type="math/tex">I_j^n</script></span>, grava a dependência <span><span class="MathJax_Preview">I_i^m \rightarrow I_j^n</span><script type="math/tex">I_i^m \rightarrow I_j^n</script></span>
+    \item A dependência <span><span class="MathJax_Preview">I_i^m \rightarrow I_j^n</span><script type="math/tex">I_i^m \rightarrow I_j^n</script></span> é salva junto com o checkpoint <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span>
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Checkpointing independente}
+<script type="math/tex; mode=display">\begin{block}{Restrição}
+Se o processo <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> é revertido para o estado <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span>, então o <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> não pode reverter para nenhum estado anterior a <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span>, ou não teria enviado as mensagens recebidas por <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> 4 inclusas em <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span>.
+\end{block}</script>
+</p>
+<p>Ou</p>
+<div>
+<div class="MathJax_Preview">\begin{block}{Restrição}
+Se o processo $p_i$ é revertido para o estado $C_i^{m-1}$, então o $p_j$ tem que ser revertido pelo menos até $C_j^{n-1}$, ou incluiria mensagens ainda não enviadas por $p_i$.
+\end{block}</div>
+<script type="math/tex; mode=display">\begin{block}{Restrição}
+Se o processo $p_i$ é revertido para o estado $C_i^{m-1}$, então o $p_j$ tem que ser revertido pelo menos até $C_j^{n-1}$, ou incluiria mensagens ainda não enviadas por $p_i$.
+\end{block}</script>
+</div>
+<p>\pause Como implementar a recuperação?
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Caso patológico}
+\begin{itemize}
+    \item $p_i$ e $p_j$ no estado inicial ($C_i^0, C_j^0$)
+    \item $p_i$ manda mensagens para $p_j$ ($C_i^1 \rightarrow C_j^1$)
+    \item $C_j^1$
+    \item $p_j$ manda mensagens para $p_i$ $C_j^2 \rightarrow C_i^1$
+    \item $C_i^1$
+    \item $p_i$ manda mensagens para $p_j$ $C_i^2 \rightarrow C_j^2$
+    \item $C_j^2$
+    \item $p_j$ manda mensagens para $p_i$ $C_j^3 \rightarrow C_i^2$
+    \item $C_i^2$
+    \item ...
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Caso patológico}
+\begin{itemize}
+    \item $p_i$ e $p_j$ no estado inicial ($C_i^0, C_j^0$)
+    \item $p_i$ manda mensagens para $p_j$ ($C_i^1 \rightarrow C_j^1$)
+    \item $C_j^1$
+    \item $p_j$ manda mensagens para $p_i$ $C_j^2 \rightarrow C_i^1$
+    \item $C_i^1$
+    \item $p_i$ manda mensagens para $p_j$ $C_i^2 \rightarrow C_j^2$
+    \item $C_j^2$
+    \item $p_j$ manda mensagens para $p_i$ $C_j^3 \rightarrow C_i^2$
+    \item $C_i^2$
+    \item ...
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Checkpointing coordenado}</p>
+<p>\begin{frame}{Checkpointing coordenado}
+Processos se coordenam por troca de mensagem para executar checkpointing ``simultaneamente''.</p>
+<p>\pause Qual a vantagem sobre o não coordenado?</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Bloqueio em duas fases}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Um coordenador faz multicast da mensagem <code>checkpoint-request''.
+    \item Quando um participante recebe</code>checkpoint-request''
+    \begin{itemize}
+        \item faz um checkpoint local,
+        \item para de mandar mensagens da aplicação
+        \item responde com <code>checkpoint-taken''
+    \end{itemize}
+    \item Quando</code>checkpoint-taken'' recebido de todos os participantes, multicast <code>checkpoint-done''
+    \item Quando receber</code>checkpoint-done'', retoma computação normal
+\end{itemize}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Por quê funciona? \pause Impede formação de dependências circulares.
+    \item Todos os processos precisam participar? \pause Somente os que dependem da recuperação do coordenador.
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Bloqueio em duas fases}
+Pontos negativos? \pause
+\begin{itemize}
+    \item Duas fases? Já vi isso antes... \pause Se o coordenador falha, outros processos ficam bloqueados? \pause Timeout!
+    \item Como eleger outro coordenador? E se dois aparecerem juntos?\pause Pode ser resolvido com um protocolo de eleição como o do RAFT. \pause{} Não é garantido, mas aumenta as chances de sucesso.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Bloqueio em duas fases}
+Pontos negativos? \pause
+\begin{itemize}
+    \item Duas fases? Já vi isso antes... \pause Se o coordenador falha, outros processos ficam bloqueados? \pause Timeout!
+    \item Como eleger outro coordenador? E se dois aparecerem juntos?\pause Pode ser resolvido com um protocolo de eleição como o do RAFT. \pause{} Não é garantido, mas aumenta as chances de sucesso.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Chandy-Lamport}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{itemize}
+    \item Não interfere na aplicação
+    \item Cada processo grava snapshot independentemente
+\end{itemize}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\begin{frame}{Chandy-Lamport}
+    <script type="math/tex; mode=display">\begin{itemize}
+        \item Observador (iniciador do snapshot)
+        \begin{itemize}
+            \item Salva o próprio estado
+            \item Envia uma mensagem <code>snapshot'' aos outros processos em cada canal de saída
+            \item Grava as mensagens chegando em cada canal até que receba uma mensagem</code>snapshot'' naquele canal.
+        \end{itemize}</script>
+        \item Um processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> que receba <code>snapshot'' de um processo $q$
+        \begin{itemize}
+            \item grava estado local $S_p$
+            \item grava estado do canal $C_{q,p} =\emptyset$
+            \item Envia uma mensagem</code>snapshot'' aos outros processos em cada canal de saída
+            \item Grava as mensagens chegando em cada canal até que receba uma mensagem <code>snapshot'' naquele canal (excluindo $C_{q,p}$)
+        \end{itemize}
+        \item Protocolo termina para o processo $p$ quando tiver recebido marcador</code>snapshot'' em cada um de seus canais.
+        \item O estado global consiste dos snapshots + estado em cada um dos canais.
+        \pause \item Exige canais FIFO
+    \end{itemize}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\url{https://youtu.be/RQquDTYkHKY?t=383}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\subsection{Message Logging}
+\begin{frame}{Message Logging}
+    Em vez de checkpoints frequentes, crie um log da comunicação e o re-execute a partir do último checkpoint.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{block}{Ideia}
+    A computação é determinada pela troca de mensagens (eventos não determinísticos). 
+    Ao se enviar a mesma mensagem a partir de um certo estado, a computação desencadeada é sempre a mesma.
+\end{block}
+
+\pause Realista este modelo? Há outros eventos não determinísticos no sistema?
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\begin{frame}{Message Logging}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\includegraphics[width=\textwidth]{images/08-26}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Notação}
+    \begin{itemize}
+        \item $Hdr(m)$
+        \begin{itemize}
+            \item Cabeçalho da mensagem $m$ contendo fonte, destino, número de sequência e número de entrega.
+            \item O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).
+            \item A mensagem $m$ é estável se $Hdr(m)$ estiver em memória estável.
+        \end{itemize}
+        \item $Dep(m)$ o conjunto de processos a quem $m$ ou mensagens que dependem de $m$ foram entregues.
+        \item $Copy(m)$: o conjunto de processos que tem uma cópia de $Hdr(m)$ em memória volátil.
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Notação}
+    \begin{itemize}
+        \item $Hdr(m)$
+        \begin{itemize}
+            \item Cabeçalho da mensagem $m$ contendo fonte, destino, número de sequência e número de entrega.
+            \item O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).
+            \item A mensagem $m$ é estável se $Hdr(m)$ estiver em memória estável.
+        \end{itemize}
+        \item $Dep(m)$ o conjunto de processos a quem $m$ ou mensagens que dependem de $m$ foram entregues.
+        \item $Copy(m)$: o conjunto de processos que tem uma cópia de $Hdr(m)$ em memória volátil.
+    \end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Órfãos}
+    <script type="math/tex; mode=display">\begin{block}{Definição}
+        Se <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> é um conjunto de processos falhos, então <span><span class="MathJax_Preview">Q\not\in C</span><script type="math/tex">Q\not\in C</script></span> é um órfão se existe uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> tal que <span><span class="MathJax_Preview">Q \in Dep(m)</span><script type="math/tex">Q \in Dep(m)</script></span> e <span><span class="MathJax_Preview">Copy(m)\subseteq C</span><script type="math/tex">Copy(m)\subseteq C</script></span>    
+    \end{block}</script>
+</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Se os processos em $C$ forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou $Q$ a receber $m$ ou um mensagem causalmente dependente de $m$.
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\begin{frame}{Protocolo Pessimista}
+    Para cada mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não estável, há no máximo um processo dependente em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> (<span><span class="MathJax_Preview">Dep(m) \leq 1</span><script type="math/tex">Dep(m) \leq 1</script></span>)</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\pause 
+Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.
+
+\pause
+Toda mensagem é precedida por uma escrita em disco.
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\begin{frame}{Protocolo Otimista}
+    Para cada mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não estável, então devemos garantir que se <span><span class="MathJax_Preview">Copy(m) \subseteq C</span><script type="math/tex">Copy(m) \subseteq C</script></span>, então \emph{eventually} <span><span class="MathJax_Preview">Dep(m) \subseteq C</span><script type="math/tex">Dep(m) \subseteq C</script></span>, onde <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> é o conjunto de processos que falharam.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\pause 
+Para garantir que $Dep(m) \subseteq C$, fazemos um rollback de cada órfão $Q$ até que $Q \not\in Dep(m)$
+
+\pause Isto é, forçamos $Q$ a ser recuperado mesmo que não tenha falhado.
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\section{Bancos de Dados}</p>
+<p>\subsection{Transações}
+Falar em bancos de dados distribuídos implica falar em bancos transacionais e P2P.</p>
+<p>\begin{frame}{Operações Atômicas}
+Falar em bancos de dados distribuídos implica falar em bancos Relacionais/Transactionais e P2P.</p>
+<p>Falar em bancos transacionais, implica falar ACID!
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Operações Atômicas}
+No modelo de Máquinas de Estados Replicadas, operações são enviadas para as réplicas, que as executam em ordem, deterministicamente e também \emph{atomicamente}. Isto é, cada operação é ou executada independentemente das outras e por completo, ou não é executada.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Operações Atômicas}
+No modelo de Máquinas de Estados Replicadas, operações são enviadas para as réplicas, que as executam em ordem, deterministicamente e também \emph{atomicamente}. Isto é, cada operação é ou executada independentemente das outras e por completo, ou não é executada.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Conjuntos de Operações}
+Mesmo com Operações Atômicas, frequentemente queremos/precisamos agrupar operações tal que
+<script type="math/tex; mode=display">\begin{itemize}
+    \item \alert{todas ou nenhuma} sejam executadas
+    \item mesmo na presença de falhas.
+\end{itemize}</script>
+</p>
+<p>\pause \emph{Atomicidade}.
+\end{frame}</p>
+<p>\begin{frame}{Memória Estável}
+Para que os efeitos de operações não sejam esquecidos, eles precisam ser armazenados em \emph{memória estável} como
+<script type="math/tex; mode=display">\begin{itemize}
+    \item HD -- Hard Drives
+    \item SSD -- Solid State Drives
+    \item NVRAM -- Non Volatile Ram
+\end{itemize}</script>
+</p>
+<p>\pause \emph{Durabilidade}.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Transações}
+\begin{itemize}
+    \item \alert{Atomicidade} -- Todas as operações ou nenhuma.
+    \item Consistência -- Os dados transitam de estado válido para estado válido.
+    \item Isolamento -- Transações não interferem umas nas outras.
+    \item \alert{Durabilidade} -- Efeitos não são esquecidos.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Transações}
+\begin{itemize}
+    \item \alert{Atomicidade} -- Todas as operações ou nenhuma.
+    \item Consistência -- Os dados transitam de estado válido para estado válido.
+    \item Isolamento -- Transações não interferem umas nas outras.
+    \item \alert{Durabilidade} -- Efeitos não são esquecidos.
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{O Banco}
+Conta C
+\begin{itemize}
+    \item C.\alert{get}Saldo()
+    \item C.\alert{set}Saldo(montante)
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{O Banco}
+Conta C
+\begin{itemize}
+    \item C.\alert{get}Saldo()
+    \item C.\alert{set}Saldo(montante)
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}[fragile]{Transação}
+Mova 10\% do saldo de X, de Y para X.
+\begin{verbatim}
+T1: a -&gt; b
+sB = b.getSaldo()
+     b.setSaldo(sB*1.1)
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+\end{verbatim}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}[fragile]{Transação}
+Mova 10\% do saldo de X, de Y para X.
+\begin{verbatim}
+T1: a -> b
+sB = b.getSaldo()
+     b.setSaldo(sB*1.1)
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+\end{verbatim}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}[fragile]{Transação}
+Qual o saldo total das contas?
+\begin{verbatim}
+T2: a + b
+sA = a.getSaldo()
+sB = b.getSaldo()
+sT = sA + sB
+\end{verbatim}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}[fragile]{Transação}
+Qual o saldo total das contas?
+\begin{verbatim}
+T2: a + b
+sA = a.getSaldo()
+sB = b.getSaldo()
+sT = sA + sB
+\end{verbatim}
+\end{frame}</script>
+</div>
+<p>\begin{frame}[fragile]{Execução Concorrente}
+Execução concorrente de T1 e T2?
+<script type="math/tex; mode=display">\begin{verbatim}
+T1                           T2
+sB = b.getSaldo()
+                             sA = a.getSaldo()
+     b.setSaldo(sB*1.1)
+                             sB = b.getSaldo()
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+                             sT = sA+sB
+\end{verbatim}</script>
+</p>
+<p>\pause Dados não finais ``vazaram''. \emph{Dirty Read}. </p>
+<p>\pause Falta \emph{Isolamento}.
+\end{frame}</p>
+<p>Pode levar a mais que um resultado errado. Pode deixar o BD em estado inválido.</p>
+<p>\begin{frame}[fragile]{Execução Concorrente}
+Mova 10\% do saldo de X, de Y para X.
+<script type="math/tex; mode=display">\begin{verbatim}
+T1                       T1
+sB = b.getSaldo()
+                          sB = b.getSaldo()
+                               b.setSaldo(sB*1.1)
+     b.setSaldo(sB*1.1)                                        
+                          sA = a.getSaldo()                          
+                               a.setSaldo(sA-sB*0.1)
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+\end{verbatim}</script>
+</p>
+<p>\pause \verb|sB*0.1| foi perdido. \emph{Lost Update}</p>
+<p>\pause Perdeu \emph{Consistência}
+\end{frame}</p>
+<p>\begin{frame}{Solução?!}
+Para garantir Isolamento
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Execuções dos conjuntos não podem se sobrepor.
+    \item Execute um conjunto de operações por vez, serialmente!
+    \item Garantirá também Consistência
+\end{itemize}</script>
+</p>
+<p>\pause \alert{Que tal?}
+\pause Limite a concorrência de transações.
+\end{frame}</p>
+<p>\subsection{Equivalência Serial}</p>
+<p>\begin{frame}{Concorrência}
+Além de ACID, queremos o máximo de \emph{concorrência} para garantir o melhor \emph{desempenho}.\pause</p>
+<p>Queremos uma execução das transações semelhante à serial, mas com o desempenho de concorrente.\pause</p>
+<p>Não queremos uma execução serial, mas uma \alert{Equivalência Serial}, isto é, que os efeitos das transações, executadas concorrentemente, sejam equivalentes aos de alguma execução serial destas transações.
+\end{frame}</p>
+<p>\begin{frame}{Equivalência Serial}
+Preocupe-se com Operações Conflitantes
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Transações diferentes
+    \item Uma é escrita
+    \item Mesmo dado
+\end{itemize}</script>
+</p>
+<p>Duas execuções (de transações) são equivalentes se
+<script type="math/tex; mode=display">\begin{itemize}
+    \item as transações tem as mesmas operações
+    \item quaisquer duas operações conflitantes são executadas na mesma ordem nas duas execuções
+\end{itemize}</script>
+</p>
+<p>Uma execução tem Equivalência Serial se é equivalente a alguma execução serial das transações.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Equivalência Serial}
+Escalone operações concorrentemente, de forma a obter o melhor desempenho, mas de forma a manter Equivalência Serial.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Equivalência Serial}
+Escalone operações concorrentemente, de forma a obter o melhor desempenho, mas de forma a manter Equivalência Serial.
+\end{frame}</script>
+</div>
+<p>Esta definição difícil de ser testada. Algo mais simples?</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Equivalência Serial}
+\begin{itemize}
+    \item Como demonstrar Equivalência Serial? 
+    \item Tenho que testar todas as execuções seriais e ver se uma casa com o que planejo fazer?
+    \item É caro fazer este planejamento. É mais eficiente garantir por construção.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Equivalência Serial}
+\begin{itemize}
+    \item Como demonstrar Equivalência Serial? 
+    \item Tenho que testar todas as execuções seriais e ver se uma casa com o que planejo fazer?
+    \item É caro fazer este planejamento. É mais eficiente garantir por construção.
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Equivalência Serial}
+Simplificação: A execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Equivalência Serial}
+Simplificação: A execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.
+\end{frame}</script>
+</div>
+<p>\begin{frame}[fragile]{Lost Update}
+Mova 10\% do saldo de X, de Y para X.
+<script type="math/tex; mode=display">\begin{verbatim}
+a -> b                     c -> b
+s = b.getSaldo() [1]
+                           [2]s = b.getSaldo()
+                           [3]    b.setSaldo(s*1.1)
+    b.setSaldo(s*1.1)[4]                                        
+                                  c.setSaldo(s*0.1)
+    a.setSaldo(s*0.1)
+\end{verbatim}</script>
+</p>
+<p>Conflitos: 1x3:<span><span class="MathJax_Preview">\rightarrow</span><script type="math/tex">\rightarrow</script></span>, 2x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 3x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span></p>
+<p>\pause Consistência -- \verb|s*0.1| foi perdido
+\end{frame}</p>
+<p>\begin{frame}[fragile]{Lost Update}
+Mova 10\% do saldo de X, de Y para X.
+<script type="math/tex; mode=display">\begin{verbatim}
+a -> b                    c -> b
+                          [2] s = b.getSaldo()
+                             [3]  b.setSaldo(s*1.1)
+s = b.getSaldo() [1]
+    b.setSaldo(s*1.1)[4]                                        
+                              c.setSaldo(s*0.1)
+    a.setSaldo(saldo*0.1)
+\end{verbatim}</script>
+</p>
+<p>Conflitos: 1x3:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 2x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 3x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>
+\end{frame}</p>
+<p>\begin{frame}[fragile]{Dirty Read}
+Saldo total?
+<script type="math/tex; mode=display">\begin{verbatim}
+a -> b                  a -> b
+s = b.getSaldo()
+    b.setSaldo(s*1.1)
+    b.setSaldo(s*1.1)                                        
+    a.saque(s*0.1)
+                        s = b.getSaldo()
+                            b.setSaldo(s*1.1)
+                            b.setSaldo(s*1.1)                                        
+                            a.saque(s*0.1)
+\end{verbatim}</script>
+\pause Tem Equivalência Serial.</p>
+<p>\pause Exceto se
+<script type="math/tex; mode=display">\begin{verbatim}
+abortTransaction()
+\end{verbatim}</script>
+\pause Nenhuma transação que fez uma dirty read pode comitar. Logo, aborte a transação da direita.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Aborto em Cascata}
+T1 faz uma escrita. T2 lê o que T1 escreveu e faz outra escrita. T3 lê o que T2 escreveu e faz outra escrita. T4 lê o que... \alert{T1 aborta.}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Aborto em Cascata}
+T1 faz uma escrita. T2 lê o que T1 escreveu e faz outra escrita. T3 lê o que T2 escreveu e faz outra escrita. T4 lê o que... \alert{T1 aborta.}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Dirty Read}
+Como lidar?
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Suspenda a transação quando esta fizer dirty read.
+    \item Se transação foi abortada, todas as suspensas (que leram dela) devem ser abortadas.
+    \item Repita passo anterior.
+\end{itemize}</script>
+</p>
+<p>\pause E se evitarmos dirty reads em vez de tratarmos?
+\pause
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Suspenda antes de fazer dirty read.
+    \item Quando transação for terminada, continue execução.
+\end{itemize}</script>
+\pause Abordagem leva a menor concorrência.
+\end{frame}</p>
+<p>Para nos permitir identificar transações, vamos usar o seguinte framework para operá-las.
+<script type="math/tex; mode=display">\begin{frame}{Transações}
+\begin{itemize}
+    \item beginTransaction()
+    \item operações
+    \item commitTransaction(): Ok/NOk
+    \item abortTransaction()
+\end{itemize}
+\end{frame}</script>
+</p>
+<p>\begin{frame}[fragile]{Escrita Prematura}
+\begin{verbatim}
+Saldo inicial: 100</p>
+<p>a.setSaldo(105)
+                   a.setSaldo(110)<br />
+                   commitTransaction()
+abortTransaction()
+\end{verbatim}</p>
+<p>A transação da direita não le, apenas escreve. O resultado?  O saldo volta para 100.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Strict Execution}
+\begin{itemize}
+    \item Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas sejam commitadas ou abortadas.
+    \item Execução estrita garante Isolamento.
+    \item Como implementar eficientemente?
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Strict Execution}
+\begin{itemize}
+    \item Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas sejam commitadas ou abortadas.
+    \item Execução estrita garante Isolamento.
+    \item Como implementar eficientemente?
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Controle de Concorrência}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Como}
+\begin{itemize}
+    \item locks (pessimista): simples, mas problemático
+    \item multi-versão (otimista): custo se há muitos conflitos
+    \item timestamp: \alert{time} é algo complicado
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Como}
+\begin{itemize}
+    \item locks (pessimista): simples, mas problemático
+    \item multi-versão (otimista): custo se há muitos conflitos
+    \item timestamp: \alert{time} é algo complicado
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsubsection{Locks}
+\begin{frame}{Locks}
+Tranque todos os objetos para que outras transações não consigam ler ou escrevê-los. Destranque quando não mais necessários.</p>
+<p>Sofre de dirty reads e escritas prematuras.</p>
+<p>\begin{block}{Strict Two Phase Locking}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item tranque quando necessário
+    \item destranque ao final da transação
+    \item termine a transação
+\end{itemize}</script>
+</p>
+<p>\end{block}</p>
+<p>Como aumentar a concorrência?
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Read-Write Locks}
+\begin{itemize}
+    \item dois níveis de acesso
+    \item múltiplos leitores
+    \item único escritor
+    \item reads por ser transformados em locks
+    \item writes \alert{não} podem se transformados em reads (violaria Strict Two-Phase Locking)
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Read-Write Locks}
+\begin{itemize}
+    \item dois níveis de acesso
+    \item múltiplos leitores
+    \item único escritor
+    \item reads por ser transformados em locks
+    \item writes \alert{não} podem se transformados em reads (violaria Strict Two-Phase Locking)
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Variantes}
+\begin{itemize}
+    \item Two-version locking (read/write/commit)
+%   Similar idea but now with: read, write and commit locks.
+%   \begin{itemize}
+%       \item A read lock is allowed unless a commit lock is taken.
+%       \item One write lock is allowed if no commit lock is taken (i.e. even if read locks are taken)
+%       \item Written values are held local to the transaction and are not visible before commit.
+%       \item A write lock can be promoted to a commit lock if there are no read locks.
+%       \item When a transaction commits it tries to promote write locks to commit locks.
+%   \end{itemize}
+    \item Lock hierárquico (granularidades variadas)
+%   locks of mixed granularity.
+%   \begin{itemize}
+%       \item Small locks increase concurrency
+%       \item Large locks decrease overhead
+%   \end{itemize}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Variantes}
+\begin{itemize}
+    \item Two-version locking (read/write/commit)
+%   Similar idea but now with: read, write and commit locks.
+%   \begin{itemize}
+%       \item A read lock is allowed unless a commit lock is taken.
+%       \item One write lock is allowed if no commit lock is taken (i.e. even if read locks are taken)
+%       \item Written values are held local to the transaction and are not visible before commit.
+%       \item A write lock can be promoted to a commit lock if there are no read locks.
+%       \item When a transaction commits it tries to promote write locks to commit locks.
+%   \end{itemize}
+    \item Lock hierárquico (granularidades variadas)
+%   locks of mixed granularity.
+%   \begin{itemize}
+%       \item Small locks increase concurrency
+%       \item Large locks decrease overhead
+%   \end{itemize}
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Lock -- Por quê evitar?}
+\begin{itemize}
+    \item Pessimista
+    \item Overhead mesmo se não há conflitos
+    \item Ou restritivo ou risco de deadlock
+    \item Lock liberado somente no final, para evitar dirty reads/escrita prematura.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Lock -- Por quê evitar?}
+\begin{itemize}
+    \item Pessimista
+    \item Overhead mesmo se não há conflitos
+    \item Ou restritivo ou risco de deadlock
+    \item Lock liberado somente no final, para evitar dirty reads/escrita prematura.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsubsection{Otimista}
+\begin{frame}{Abordagem mais otimista?}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Modifique uma cópia privada dos dados
+    \item Na hora de terminar a transação, verifique se nenhuma transação modificou o dado, isto é,
+    \item se a cópia privada ainda é válida.
+    \item Substitua a cópia pública pela privada
+\end{itemize}</script>
+</p>
+<p>Esta técnica é conhecida como \emph{deferred update}, pois o Update dos dados só ocorre no final, se a Validação passar.
+\end{frame}</p>
+<p>\begin{frame}{Abordagem Otimista}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Baixo overhead, se não houver conflitos
+    \item Validação é rápida
+    \item Update é simples
+\end{itemize}</script>
+</p>
+<p>Se houver muitos conflitos, o trabalho da transação é todo desperdiçado.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Validação}
+Read e Write sets de quaisquer transações concorrentes deve ser disjuntos.
+\begin{itemize}
+    \item T1 não deve ler dados escritos por T2
+    \item T2 não deve ler dados escritos por T1
+    \item T1/T2 não deve escrever dados escritos por T2/T1
+\end{itemize}
+\includegraphics[width=.7\textwidth]{images/trans_validation}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Validação}
+Read e Write sets de quaisquer transações concorrentes deve ser disjuntos.
+\begin{itemize}
+    \item T1 não deve ler dados escritos por T2
+    \item T2 não deve ler dados escritos por T1
+    \item T1/T2 não deve escrever dados escritos por T2/T1
+\end{itemize}
+\includegraphics[width=.7\textwidth]{images/trans_validation}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Backward Validation}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item T1: transação sendo validada
+    \item T2: transação já comitada.
+    \item T1 não deve ler dados escritos por T2
+\end{itemize}</script>
+Em caso de não validação, aborte T1</p>
+<p>\includegraphics[width=.7\textwidth]{images/trans_validation}
+\end{frame}</p>
+<p>\begin{frame}{Forward Validation}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item T1: transação sendo validada
+    \item T2: transação ainda em execução
+    \item T2 não deve ler dados escritos por T1
+\end{itemize}</script>
+Em caso de não validação, aborte T1</p>
+<p>\includegraphics[width=.7\textwidth]{images/trans_validation}</p>
+<p>\pause, possivelmente nunca terminando uma transação.\
+Ou aborte T2.
+\end{frame}</p>
+<p>\subsubsection{Timestamp}
+\begin{frame}{Timestamping}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Transação recebe um \emph{timestamp} no início
+    \item Operações são validadas na execução
+    \begin{itemize}
+        \item leia somente se nenhuma transação com maior timestamp tiver escrito e comitado
+        \item escreva somente se nenhuma transação com maior timestamp tiver lido e comitado
+    \end{itemize}</script>
+    \item Transações ``executam na ordem do timestamp''
+\end{itemize}</p>
+<p>Como implementar?
+\end{frame}</p>
+<p>\begin{frame}{Como implementar}
+\begin{itemize}
+    \item Objetos tem valores \emph{tentativos}, não comitados
+    \item Objetos tem versões em que foram escritos
+    \item em que foram comitados
+    \item e em que foram lidos</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\includegraphics[width=.9\textwidth]{images/timestamp1}
+
+\item Consistência é testado na execução da operação
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{itemize}
+\end{frame}</p>
+<p>\begin{frame}{Como implementar -- Escrita}
+\begin{itemize}
+    \item Escritas tem sucesso somente se versão sendo escrita é maior que versões lidas
+    \item Se versão sendo escrita é menor que versão já escrita, ignore e continue</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\includegraphics[width=.9\textwidth]{images/timestamp1}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{itemize}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Como implementar -- Leitura}
+\begin{itemize}
+    \item Leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada
+    \item Leitura com versão v é suspensa se maior versão é não comitada e menor que v
+    \includegraphics[width=.9\textwidth]{images/timestamp2}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Como implementar -- Leitura}
+\begin{itemize}
+    \item Leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada
+    \item Leitura com versão v é suspensa se maior versão é não comitada e menor que v
+    \includegraphics[width=.9\textwidth]{images/timestamp2}
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Como implementar}
+\begin{itemize}
+    \item Leitura com versão v é abortada se maior versão comitada é maior que v
+    \includegraphics[width=.9\textwidth]{images/timestamp3} 
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Como implementar}
+\begin{itemize}
+    \item Leitura com versão v é abortada se maior versão comitada é maior que v
+    \includegraphics[width=.9\textwidth]{images/timestamp3} 
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Referências}
+Inspirado nas notas de aula de Johan Montelius e Vladimir Vlassov, da disciplina ID2201 Distributed Systems, KTH Royal Institute of Technology. Imagens copiadas descaradamente de seus slides.</p>
+<p>Também aqui, \url{<a href="https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf">https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf</a>}
+\end{frame}</p>
+<p>\section{Bancos de Dados Distribuídos}</p>
+<p>\subsection{Transações Distribuídas}
+\begin{frame}{Bancos de Dados Transacionais Distribuídos}
+Agora que relembramos como transações funcionam e temos uma noção de como podem ser implementadas em um sistema centralizado, vamos tentar entender como fazê-lo em um sistema distribuído.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Múltiplos servidores
+    \item Transações em cada servidor
+    \item Transações distribuídas
+    \item Como obter Equivalência Serial em transações distribuídas
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Transação Distribuída}
+\begin{itemize}
+    \item beginTransaction(): tid (transaction id)
+    \item operation(tid,op)
+    \item endTransaction(tid): Ok/NOk
+    \item abortTransaction(tid)
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Transação Distribuída}
+\begin{itemize}
+    \item beginTransaction(): tid (transaction id)
+    \item operation(tid,op)
+    \item endTransaction(tid): Ok/NOk
+    \item abortTransaction(tid)
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Transações Distribuídas}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Cliente
+    \item Servidor: \emph{resource managers}
+    \item Servidor: \emph{transaction monitor/manager}
+\end{itemize}</script>
+</p>
+<div>
+<div class="MathJax_Preview">\begin{center}
+    \includegraphics[width=.55\textwidth]{images/01-10}
+\end{center}</div>
+<script type="math/tex; mode=display">\begin{center}
+    \includegraphics[width=.55\textwidth]{images/01-10}
+\end{center}</script>
+</div>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item beginTransaction(): tid (transaction id)
+    \item operation(tid,op) 
+    \item endTransaction(tid): Ok/NOk
+    \item abortTransaction(tid)
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Transações Distribuídas}
+Localmente, cada BD funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.</p>
+<p>O grande problema no BD distribuído é garantir o \emph{acordo} na terminação.
+\end{frame}</p>
+<p>\subsection{Comprometimento Distribuído}</p>
+<p>\begin{frame}{Atomicidade}
+<script type="math/tex; mode=display">\begin{block}{O problema...}
+    \begin{itemize}
+        \item Transação <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span> acessa recursos nos Resource Managers (RM)
+        \item Terminar com sucessos <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span> em todos os RM -- commit -- ou
+        \item abortar <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span> em todos os RM
+        \item ainda que enlaces de comunicação, nós e RM falhem, antes ou durante a terminação da transação.
+    \end{itemize}
+\end{block}</script>
+</p>
+<p>\alert{Comprometimento Distribuído}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{2PC}
+\begin{itemize}
+    \item Participante -- Resource Manager ``tocados'' pela transação
+    \item Coordenador -- Transaction Manager
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{2PC}
+\begin{itemize}
+    \item Participante -- Resource Manager ``tocados'' pela transação
+    \item Coordenador -- Transaction Manager
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Premissas}
+\begin{itemize}
+    \item Cliente decide quando iniciar o commit.
+    \item Cada Participante faz commit ou abort da transação local.\\
+          Pode retornar Ok ou NOk.
+    \item Coordenador não começa a commit até que a $T$ tenha terminado em todos os participantes e cliente tenha solicitado.
+    \item Participantes falham por parada.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Premissas}
+\begin{itemize}
+    \item Cliente decide quando iniciar o commit.
+    \item Cada Participante faz commit ou abort da transação local.\\
+          Pode retornar Ok ou NOk.
+    \item Coordenador não começa a commit até que a $T$ tenha terminado em todos os participantes e cliente tenha solicitado.
+    \item Participantes falham por parada.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsubsection{1 Phase Commit -- 1PC}
+<script type="math/tex; mode=display">\begin{frame}[fragile]{Comprometimento em 1 Fase}
+Aka 1-Phase Commit -- 1PC
+\begin{itemize}
+    \item Cliente envia \verb|endTransaction(tid)| para o Coordenador
+    \item Coordenador envia mensagem para participantes ``comitarem'' \pause
+    \item E se um participante retornar NOk? % enquanto outros retornam Ok?
+    \item E se um participante não responder?
+\end{itemize}
+\end{frame}</script>
+</p>
+<p>\subsubsection{2-PC}</p>
+<p>\begin{frame}[fragile]{Comprometimento em 2 Fases}
+Aka 2-Phase Commit -- 2PC</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Cliente envia \verb|endTransaction(tid)| para o coordenador
+    \item coordenador envia mensagem para participantes se prepararem para terminar
+    \item coordenador espera que todos se preparem ou digam se não podem
+    \item coordenador envia \alert{ordem} de terminação
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Comprometimento}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Um Participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> está pronto para commit se tiver todos os valores modificados por <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)
+    \item O Coordenador não pode começar a terminação até que todos os participantes estejam prontos.
+    \item Se algum participante aborta, o Coordenador deve abortar. 
+\end{itemize}</script>
+</p>
+<p>Problema de Acordo, mas não igual ao Consenso.
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{2PC -- O Protocolo}
+\begin{itemize}
+    \item Fase 1
+    \begin{itemize}
+        \item A: Coordenador envia vote-request para participantes.
+        \item B: Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.
+    \end{itemize}
+    \item Fase 2
+    \begin{itemize}
+        \item A: Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia global-commit para os participantes e ok para o cliente
+        \item B: Participantes esperam por global-commit ou global-abort
+    \end{itemize}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{2PC -- O Protocolo}
+\begin{itemize}
+    \item Fase 1
+    \begin{itemize}
+        \item A: Coordenador envia vote-request para participantes.
+        \item B: Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.
+    \end{itemize}
+    \item Fase 2
+    \begin{itemize}
+        \item A: Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia global-commit para os participantes e ok para o cliente
+        \item B: Participantes esperam por global-commit ou global-abort
+    \end{itemize}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{O Protocolo}
+Coordenador \hfill Participante</p>
+<p>\hfill
+\includegraphics[width=.45\textwidth]{images/08-18a}
+\hfill
+\includegraphics[width=.45\textwidth]{images/08-18b}
+\end{frame}</p>
+<p>\begin{frame}{Falha no Participante}
+Participante falha no estado <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
+<p>Se está no estado
+<script type="math/tex; mode=display">\begin{itemize}
+    \item INIT: \pause nem sabia que a terminação começou. \pause Aborta unilateralmente, pois ou já abortaram ou vão abortar.\pause
+    \item ABORT: havia votado abort ou recebido global-abort -- continua protocolo.
+    \item COMMIT: estava pronto para terminar a transação com sucesso -- continua protocolo. 
+    \item READY: \pause estava esperando por commit ou abort. \pause Precisa saber se coordenador enviou global-commit ou global-abort\pause -- consulta coordenador.
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{2PC}
+Por quê difícil?
+\begin{itemize}
+    \item E se $R_i$ falhar depois de ter se preparado?\pause
+    \item E se $R_i$ falhar mas $R_j$ continuar funcionando?\pause
+    \item E se todos estiverem desligados quando $R_i$ se recuperar?\pause
+    \item E se $R_i$ estiver lento e parecer que a transação falhou?
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{2PC}
+Por quê difícil?
+\begin{itemize}
+    \item E se $R_i$ falhar depois de ter se preparado?\pause
+    \item E se $R_i$ falhar mas $R_j$ continuar funcionando?\pause
+    \item E se todos estiverem desligados quando $R_i$ se recuperar?\pause
+    \item E se $R_i$ estiver lento e parecer que a transação falhou?
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Falha no Participante}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item READY: esperando por commit ou abort. Precisa saber se coordenador enviou global-commit our global-abort -- consulta coordenador.
+\end{itemize}</script>
+    \alert{E se coordenador não estiver presente?} \pause </p>
+<p>Assumindo que participantes se conhecem \pause , contate participante <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> <br />
+<script type="math/tex; mode=display">\begin{itemize}
+        \item Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em COMMIT\pause , vai para COMMIT
+        \item Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em ABORT\pause , vai para ABORT
+        \item Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em INIT\pause , ordena que Q aborte e, se confirmado, veja passo anterior
+        \item Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em READY\pause , consulta outro participante.
+    \end{itemize}</script>
+\pause \alert{Se todos os participantes em READY?} \pause Possivelmente o coordenador já respondeu ao cliente.</p>
+<p>\pause\alert{Precisa} esperar pelo coordenador.
+\end{frame}</p>
+<p>\begin{frame}{Falha no Coordenador}
+O problema principal é: e se ninguém ouviu a decisão final do coordenador?</p>
+<p>Neste caso, \pause o protocolo não pode continuar, enquanto o coordenador não retornar, pois se os RM abortarem, podem estar contradizendo algo dito ao cliente, por exemplo, "Sim, ATM, pode entregar o dinheiro", ou executando um comando que o cliente vê como anulado, como "Reenvie o pedido de mais 27 carros à fábrica."
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Recuperação do Coordenador}
+    Ao se recuperar, o coordenador:
+    \begin{itemize}
+        \item sabe se começou a terminação de alguma transação
+        \item sabe se já enviou alguma resposta final para as transações inacabadas
+        \item sabe se já recebeu a confirmação de todos os participantes (se transação não estiver em aberto)
+        \item reenvia a última mensagem das transações em aberto.
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Recuperação do Coordenador}
+    Ao se recuperar, o coordenador:
+    \begin{itemize}
+        \item sabe se começou a terminação de alguma transação
+        \item sabe se já enviou alguma resposta final para as transações inacabadas
+        \item sabe se já recebeu a confirmação de todos os participantes (se transação não estiver em aberto)
+        \item reenvia a última mensagem das transações em aberto.
+    \end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Otimizações}
+    \begin{itemize}
+        \item Participantes ``somente-leitura''
+            \begin{itemize}
+                \item Não se importa com a decisão; termina após fase 1.
+                \item Responde com vote-commit-ro
+            \end{itemize} 
+        \item Abort presumido
+            \begin{itemize}
+                \item Se ocorrer timeout, coordenador envia global-abort a todos e esquece transação
+                \item Se questionado, responde com global-abort.
+            \end{itemize}
+        \item Transferência de coordenação
+            \begin{itemize}
+                \item se houver somente um participante...
+                \item vote-request-transfer
+                \item participante responde com global-commit/global-abort
+            \end{itemize} 
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Otimizações}
+    \begin{itemize}
+        \item Participantes ``somente-leitura''
+            \begin{itemize}
+                \item Não se importa com a decisão; termina após fase 1.
+                \item Responde com vote-commit-ro
+            \end{itemize} 
+        \item Abort presumido
+            \begin{itemize}
+                \item Se ocorrer timeout, coordenador envia global-abort a todos e esquece transação
+                \item Se questionado, responde com global-abort.
+            \end{itemize}
+        \item Transferência de coordenação
+            \begin{itemize}
+                \item se houver somente um participante...
+                \item vote-request-transfer
+                \item participante responde com global-commit/global-abort
+            \end{itemize} 
+    \end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Coleta de Lixo}
+Mesmo quando somente um participante falha...</p>
+<p>Após receber decisão, o participante pode concluir e esquecer a transação. </p>
+<p>Mas e se o participante falho precisar se recuperar e todos os outros envolvidos tiverem esquecido a transação?</p>
+<p>\pause Coleta de lixo só pode ser feita quando todos tiverem confirmado a execução da transação e, por isso, Fase 2b é necessária.
+\end{frame}</p>
+<p>\subsubsection{3-PC}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Comprometimento em Três Fases}
+Estende o protocolo para permitir contornar  falha do coordenador.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Comprometimento em Três Fases}
+Estende o protocolo para permitir contornar  falha do coordenador.
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{O Protocolo}
+\begin{itemize}
+    \item Fase 1a -- Coordenador envia vote-request para participantes.
+    \item Fase 1b -- Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.
+    \item Fase 2a -- Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia \alert{prepare-commit} para os participantes; se não, global-abort e para.
+    \item Fase 2b -- Participantes esperam por prepare-commit ou global-abort; se o primeiro, \alert{respondem com ready-commit}; se o segundo, param.
+    \item Fase 3a -- coordenador espera por ready-commit de todos e então envia global-commit.
+    \item Fase 3b -- participantes esperam por global-commit.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{O Protocolo}
+\begin{itemize}
+    \item Fase 1a -- Coordenador envia vote-request para participantes.
+    \item Fase 1b -- Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.
+    \item Fase 2a -- Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia \alert{prepare-commit} para os participantes; se não, global-abort e para.
+    \item Fase 2b -- Participantes esperam por prepare-commit ou global-abort; se o primeiro, \alert{respondem com ready-commit}; se o segundo, param.
+    \item Fase 3a -- coordenador espera por ready-commit de todos e então envia global-commit.
+    \item Fase 3b -- participantes esperam por global-commit.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{O Protocolo}
+Coordenador \hfill Participante</p>
+<p>\includegraphics[width=.45\textwidth]{images/08-22a}
+\hfill
+\includegraphics[width=.45\textwidth]{images/08-22b}
+\end{frame}</p>
+<p>\begin{frame}{Falha no Participante}</p>
+<p><span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
+<p>\pause 
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Participantes e coordenador não distam mais que um estado.
+    \item Se alguém em READY, o coordenador não mandou global-commit ainda; Aborte.
+    \item Se \alert{todos} em PRE-COMMIT, é possível comitar, comite.
+    \item A execução dos passos anteriores tem que anular o poder do coordenador.
+\end{itemize}</script>
+\pause \alert{Se todos os participantes em READY?}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{3PC x 2PC}
+    \begin{itemize}
+        \item 3PC -- Aumenta disponibilidade
+        \item 2PC -- Falha do coordenador é ``corner case''
+        \item 3PC -- Aumenta o custo do ``caminho feliz'' e por isso não é usado na prática
+        \item Nenhum escala e não usá-los é uma das razões para o surgimento dos sistemas NoSQL
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{3PC x 2PC}
+    \begin{itemize}
+        \item 3PC -- Aumenta disponibilidade
+        \item 2PC -- Falha do coordenador é ``corner case''
+        \item 3PC -- Aumenta o custo do ``caminho feliz'' e por isso não é usado na prática
+        \item Nenhum escala e não usá-los é uma das razões para o surgimento dos sistemas NoSQL
+    \end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsubsection{Paxos-Commit}
+<script type="math/tex; mode=display">\begin{frame}{Paxos-Commit}
+Usa instâncias de Consenso Distribuído para votar. Se o consenso é tolerante a falhas e consistente, todos vêem o mesmo resultado na transação.
+\end{frame}</script>
+</p>
+<p>\begin{frame}{O protocolo}
+\begin{itemize}
+    \item Para terminar a transação <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>, o coordenador envia request-commit a todos os participantes.
+    \item Um participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> propõe seu voto na instância <span><span class="MathJax_Preview">T_P</span><script type="math/tex">T_P</script></span> de consenso.
+    \item Todo participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> espera pelas decisões das instâncias de consenso <span><span class="MathJax_Preview">T_i</span><script type="math/tex">T_i</script></span> para todos os participantes <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>, inclusive si mesmo; se todas as decisões forem commit, o participante comita a transação.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\item Se cansar de esperar por $T_Q$, o participante propõe abort em $T_Q$.
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{itemize}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Falha no Participante}
+\begin{itemize}
+    \item Se o participante falha antes de votar, então alguém votará abort por ele.
+    \item Se o participante $P$ falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em $T_P$;\pause isso não é um problema pois a decisão é a mesma para todos observando a instância.
+    \item Após se recuperar, o participante recupera as decisões de todas as instâncias $T_i$ e termina apropriadamente.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Falha no Participante}
+\begin{itemize}
+    \item Se o participante falha antes de votar, então alguém votará abort por ele.
+    \item Se o participante $P$ falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em $T_P$;\pause isso não é um problema pois a decisão é a mesma para todos observando a instância.
+    \item Após se recuperar, o participante recupera as decisões de todas as instâncias $T_i$ e termina apropriadamente.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Log Recuperável}
+<script type="math/tex; mode=display">\begin{frame}{Log Recuperável}
+Como garantir que o log poderá ser lido para recuperar o processo?
+\end{frame}</script>
+</p>
+<p>\begin{frame}{Disco Duplicado}
+\includegraphics[width=.7\textwidth]{images/08-23}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Dois discos iguais?
+    \item Dados diferentes, mas ambos bons?
+    \item Um bom outro estragado?
+    \item Ambos estragados?
+\end{itemize}</script>
+\end{frame}</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../fault/" title="Tolerância a Falhas" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Tolerância a Falhas
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../tech/" title="Tecnologias" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tecnologias
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>

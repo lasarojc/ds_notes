@@ -245,11 +245,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#peer-2-peer" class="md-nav__link">
-    Peer-2-Peer
+  <a href="#par-a-par-peer-to-peer-p2p" class="md-nav__link">
+    Par-a-Par (Peer-to-Peer, P2P)
   </a>
   
-    <nav class="md-nav" aria-label="Peer-2-Peer">
+    <nav class="md-nav" aria-label="Par-a-Par (Peer-to-Peer, P2P)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -491,19 +491,32 @@
     MOM
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="MOM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#publishsubscribe" class="md-nav__link">
     Publish/Subscribe
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
+  <a href="#message-queues" class="md-nav__link">
+    Message Queues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#event-sourcing" class="md-nav__link">
     Event Sourcing
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -556,7 +569,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disdb/index.md" title="Bancos de Dados" class="md-nav__link">
+    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
       Bancos de Dados
     </a>
   </li>
@@ -580,7 +593,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tech/index.md" title="Tecnologias" class="md-nav__link">
+    <a href="../tech/" title="Tecnologias" class="md-nav__link">
       Tecnologias
     </a>
   </li>
@@ -619,11 +632,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#peer-2-peer" class="md-nav__link">
-    Peer-2-Peer
+  <a href="#par-a-par-peer-to-peer-p2p" class="md-nav__link">
+    Par-a-Par (Peer-to-Peer, P2P)
   </a>
   
-    <nav class="md-nav" aria-label="Peer-2-Peer">
+    <nav class="md-nav" aria-label="Par-a-Par (Peer-to-Peer, P2P)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -865,19 +878,32 @@
     MOM
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="MOM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#publishsubscribe" class="md-nav__link">
     Publish/Subscribe
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
+  <a href="#message-queues" class="md-nav__link">
+    Message Queues
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#event-sourcing" class="md-nav__link">
     Event Sourcing
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -899,7 +925,8 @@
                 
                 <h1 id="arquiteturas">Arquiteturas</h1>
 <h2 id="cliente-servidor">Cliente Servidor</h2>
-<p>Como brevemente discutido em <a href="../basics/#TCP">Fundamentos</a>, quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.
+<p>Como brevemente discutido em <a href="../basics/#TCP">Fundamentos</a>, quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.</p>
+<p>Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.
 Um exemplo genérico é apresentado na figura a seguir.</p>
 <div class="mermaid">sequenceDiagram
     activate Servidor
@@ -925,37 +952,40 @@ Um exemplo genérico é apresentado na figura a seguir.</p>
     note left of Servidor: Inativo (esperando requisição)
     deactivate Cliente</div>
 
-<p>Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.</p>
-<p>Contudo, em certas situações, esta terminologia pode se tornar confusa.
-Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
-Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P, a ser visto adiante.
-Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, ttambém a ser visto adiante.</p>
-<p>Apesar das questões apresentadas no parágrafo anterior, o modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
-Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor. </p>
-<p>Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, os sockets.
+<p>O modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
+Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor, isto é, um servidor e vários clientes.</p>
+<p>Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, e assim surgiram os <strong>sockets</strong>.
 Com os sockets, vem uma grande flexibilidade, pois um processo não precisa saber como o outro manuseia os dados que lhe cabem, desde que siga um protocolo pré-estabelecido na comunicação. Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter <a href="../intro/#transparencia">transparência de acesso</a>.
 Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.
 Exemplos cotidianos disto são servidores de bancos de dados, de páginas Web e email.
 De fato, esta flexibilidade permite que diversas aplicações continuem operando de forma centralizada, com servidores rodando, por exemplo, em mainframes e clientes rodando de forma emulada por software em computadores pessoais.</p>
-<h2 id="peer-2-peer">Peer-2-Peer</h2>
-<p>Nesta seção falaremos sobre os sistemas P2P, do inglês, <em>peer-to-peer</em>, e mostraremos como as DHT, o mais proeminente exemplo de P2P, evoluiram do Chord, essencialmente de uso acadêmico, aos bancos de dados NOSQL, com representantes como Cassandra e o DynamoDB, muito difundidos na indústria.</p>
-<p>Uma forma de ver a arquitetura P2P é como uma substituição dos papéis de clientes e servidores, onde há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão, isto é, executam as mesmas funções.
+<p>Contudo, em certas situações, esta divisão entre clientes e servidores pode ser tornar confusa.
+Primeiro, porquê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
+Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P.
+Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, também a ser visto adiante.
+Quarto, usando-se sockets como base, podemos construir outros modelos de comunicação entre processos, efetivamente colocando camadas na nossa cebola.<sup id="fnref:shrek"><a class="footnote-ref" href="#fn:shrek">1</a></sup></p>
+<p>A seguir, exploraremos as arquiteturas construídas sobre cliente/servidor.</p>
+<h2 id="par-a-par-peer-to-peer-p2p">Par-a-Par (Peer-to-Peer, P2P)</h2>
+<p>Nos sistemas que seguem a arquitetura Par-a-Par, ou simplesmente P2P, há uma substituição dos papéis de clientes e servidores, em que há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão.
 Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.</p>
-<p>Na prática, muitos sistemas mantém os papéis de clientes e servidores, mas distribuem as tarefas dos servidores entre pares para aquela função; são sistemas híbridos. É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. </p>
-<p>Como principais características destes sistemas P2P, podemos destacar as seguintes:
-* arquitetura decentralizada;
-* não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
-* pode haver entrada e saída de nós do sistema com alta frequência; 
-* nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas.</p>
-<p>Os principais objetivos do uso arquitetura P2P são comuns a todas as arquiteturas distribuídas, isto é:
-* agregar poder computacional de múltiplos nós e
-* tolerar falhas de componentes sem paralizar o serviço, isto é, alta-disponibilidade.</p>
-<p>Devido à forma como são construídos, sistemas P2P também podem visar
-* escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
-* auto-administração, pois seria praticamente impossível centralizar a administração de tantos nós, com tantas configurações distintas e  em tantas localizações diferentes.</p>
+<p>Como todo sistema distribuído, a arquitetura P2P visa <strong>agregar poder computacional de múltiplos nós</strong>.
+Mas além disso, pelo não diferenciação dos componentes, espera-se <strong>tolerar falhas de componentes sem paralizar o serviço</strong>, uma vez que não há um componenente centralizador, detentor único de uma certa funcionalidade.
+Os sistemas P2P tendem portanto a lever a maior disponibilidade.</p>
+<p>Historicamente, e devido às características já mencionadas, os sistemas P2P tem outra característica muito importante, a <strong>alta escalabilidade</strong> a que se oferecerem, chegando a níveis globais.
+Se pensarmos por exemplo nos sistemas de compartilhamento de arquivos, músicas e filmes, razão da fama e infâmia da arquitetura, teremos bons exemplos disso.
+Para que isso seja possível, estes sistemas precisam se tornar <strong>auto-gerenciáveis</strong>, pois sistemas globais devem tolerar <strong>entrada e saída frequente de nós</strong> (por falhas ou ação de seus usuários), <strong>diferentes domínios administrativos</strong>, e heterogeneidade na comunicação.
+Uma das ferramentas utilizadas para simplificar o trabalho de auto-gerenciamento é o conceito de <strong>redes sobrepostas</strong>, no qual nos aprofundaremos agora.</p>
 <div class="admonition note">
-<p class="admonition-title">TODO</p>
-<p>Exemplos de sistemas P2P</p>
+<p class="admonition-title">Sistemas P2P</p>
+<ul>
+<li>Arquitetura decentralizada;</li>
+<li>Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;</li>
+<li>Pode haver entrada e saída de nós do sistema com alta frequência; </li>
+<li>Nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas.</li>
+<li>Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e</li>
+<li>Auto-administração</li>
+<li>Redes sobrepostas</li>
+</ul>
 </div>
 <h3 id="rede-sobreposta">Rede Sobreposta</h3>
 <p>Como já mencionado, em sistemas P2P, os nós ou componentes do sistema se organizam em uma rede <em>sobreposta</em> à rede física. Esta rede lógica é constituída pelos processos atuando como nós e pelos canais de comunicação estabelecidos entre os nós, tipicamente na forma de conexões TCP/IP.</p>
@@ -1038,6 +1068,8 @@ Outra visuzalização desta topologia é apresentada a seguir:</p>
 <p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, no qual diversos esquemas de roteamento eficientes podem ser usados.</p>
 <p><img alt="By Spiritia" src="images/hypercube.png" /></p>
 <h3 id="tabelas-de-espalhamento-distribuidas-distributed-hash-tables-dht">Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)</h3>
+<p>A versatilidade dos sistemas P2P o levaram a ser amplamente estudados e aplicados.
+Nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.</p>
 <p>As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
 Em essência, estas tabelas são estruturas de dados que <strong>mapeiam</strong> uma chave para um valor, uma função <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span> tal que</p>
 <ul>
@@ -1205,6 +1237,9 @@ O carrinho é <strong>modificado atomicamente</strong>, isto é, sobrescrito por
 No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao usuário na forma de um carrinho de compras com a união dos itens nos respectivos carrinhos, de forma que o usuário possa corrigí-lo. Na pior das hipóteses, uma compra com erros será feita, e necessitará de uma atividade compensatória para o usuário, como um brinde.</p>
 <p>Um <em>disclaimer</em>  importante é que este material foi preparado com base no DynamoDB original, não na versão atualmente disponível na AWS, com diversas novas funcionalidades.---</p>
 <h3 id="cassandra">Cassandra</h3>
+<p>Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições,, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
+É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. </p>
+<p><img alt="CassandraDB" src="drawings/cassandra_hibrido.drawio-0.svg" /></p>
 <p>O CassandraDB se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.</p>
 <p>A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas <strong>column-families</strong> e seu conjunto <strong>keyspace</strong>. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. </p>
@@ -1593,8 +1628,22 @@ Ideia semelhante à programação paralela:
 <p>\end{itemize}
 \end{frame}</p>
 <h2 id="mom">MOM</h2>
-<h2 id="publishsubscribe">Publish/Subscribe</h2>
-<h2 id="event-sourcing">Event Sourcing</h2>
+<h3 id="publishsubscribe">Publish/Subscribe</h3>
+<h3 id="message-queues">Message Queues</h3>
+<h3 id="event-sourcing">Event Sourcing</h3>
+<p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a>
+<a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:shrek">
+<p>Se você não pegou a referência, volte <del>uma casa</del><sup id="fnref:tabuleiro"><a class="footnote-ref" href="#fn:tabuleiro">2</a></sup> um capítulo.&#160;<a class="footnote-backref" href="#fnref:shrek" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:tabuleiro">
+<p>Se você não pegou esta referência, não teve infância.&#160;<a class="footnote-backref" href="#fnref:tabuleiro" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
               
               

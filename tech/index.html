@@ -1,0 +1,1445 @@
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Tecnologias - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+        
+<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Tecnologias
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Prólogo" class="md-nav__link">
+      Prólogo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../intro/" title="Introdução" class="md-nav__link">
+      Introdução
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+      Fundamentos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../comm/" title="Comunicação" class="md-nav__link">
+      Comunicação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+      Arquiteturas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../coord/" title="Coordenação" class="md-nav__link">
+      Coordenação
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../time/" title="Tempo" class="md-nav__link">
+      Tempo
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+      Tolerância a Falhas
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
+      Bancos de Dados
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+      Sistemas de Arquivos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="Tecnologias" class="md-nav__link md-nav__link--active">
+      Tecnologias
+    </a>
+    
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                  <h1>Tecnologias</h1>
+                
+                <p>\section{Blockchain}</p>
+<p>\subsection{Introdução}
+<script type="math/tex; mode=display">\begin{frame}{Mercado}
+    \begin{itemize}
+        \item Clientes, consumidores, fornecedores, vendedores
+        \item Bens, serviços, contratos
+        \item Mercado público (feira livre, supermercados) e Privado (supply chain)
+    \end{itemize}
+\end{frame}</script>
+</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Asset -- Bem}
+    Tudo que tem valor e pode pertencer a alguém.
+    \begin{itemize}
+        \item Casa, empréstimo (tangível e intangível)
+        \item Patente
+        \item Ação
+        \item Dinheiro -- é anônimo
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Asset -- Bem}
+    Tudo que tem valor e pode pertencer a alguém.
+    \begin{itemize}
+        \item Casa, empréstimo (tangível e intangível)
+        \item Patente
+        \item Ação
+        \item Dinheiro -- é anônimo
+    \end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Ledger}
+    Livro registro</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{itemize}
+    \item 1000 reais pagos ao funcionário F
+    \item Carro X vendido ao João por 50k
+    \item Cada entidade mantém o seu, privadamente.
+    \item Ineficiente -- retrabalho e lento
+    \item Caro -- Retrabalho
+    \item Vulnerável -- hack, erros, e modificações maliciosas
+\end{itemize}
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Blockchain}
+Ledger distribuído e centralizado
+    \begin{itemize}
+        \item Replicado usando P2P
+        \item Só envolvidos tem acesso ao registro
+        \item Consenso -- acordo na transação
+        \item Proveniência -- todo o histórico de um asset é mantido na blockchain.
+        \item Imutabilidade -- entradas não podem ser alteradas
+        \item Finalidade -- entradas não podem ser refutadas
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Blockchain}
+Ledger distribuído e centralizado
+    \begin{itemize}
+        \item Replicado usando P2P
+        \item Só envolvidos tem acesso ao registro
+        \item Consenso -- acordo na transação
+        \item Proveniência -- todo o histórico de um asset é mantido na blockchain.
+        \item Imutabilidade -- entradas não podem ser alteradas
+        \item Finalidade -- entradas não podem ser refutadas
+    \end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Bitcoin}
+Primeira aplicação da blockchain
+\begin{itemize}
+    \item Bitcoin
+    \begin{itemize}
+        \item Moeda é o asset
+        \item Anonimidade
+        \item Proof of work
+    \end{itemize}
+    \item Negócios  
+    \begin{itemize}
+        \item Qualquer coisa é asset
+        \item Identificação das partes
+        \item Selective endorsement
+    \end{itemize}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Bitcoin}
+Primeira aplicação da blockchain
+\begin{itemize}
+    \item Bitcoin
+    \begin{itemize}
+        \item Moeda é o asset
+        \item Anonimidade
+        \item Proof of work
+    \end{itemize}
+    \item Negócios  
+    \begin{itemize}
+        \item Qualquer coisa é asset
+        \item Identificação das partes
+        \item Selective endorsement
+    \end{itemize}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Smart Contracts}
+    Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Verificável, assinável e \emph{executável}.
+</code></pre></div>
+</td></tr></table>
+
+<p>\end{frame}</p>
+<p>\frame{}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Bitcoin}
+\includegraphics[width=\textwidth]{images/bitcoin_jun_2018}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Bitcoin}
+\includegraphics[width=\textwidth]{images/bitcoin_jun_2018}
+\end{frame}</script>
+</div>
+<p>
+<script type="math/tex; mode=display">\begin{frame}{Bitcoin}
+\includegraphics[width=\textwidth]{images/bitcoin_dec_2018}
+\end{frame}</script>\section{A Small Piece of Big Data}</p>
+<p>\subsection{Introdução}</p>
+<p>\frame{
+    <script type="math/tex; mode=display">\begin{block}{Big-Data}
+``Big data is a term for data sets that are so large or complex that traditional data processing application software is inadequate to deal with them.''
+    \end{block}</script>
+</p>
+<p>Ciclo convencional:
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Coleta
+    \item Armazenamento
+    \item Análise
+    \item Consulta
+    \item Compartilhamento
+    \item Visualização
+    \item Atualização
+    \item ...
+\end{itemize}</script>
+</p>
+<p>\href{<a href="https://en.wikipedia.org/wiki/Big_data}{Fonte">https://en.wikipedia.org/wiki/Big_data}{Fonte</a>}
+}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Áreas}
+Grandes massas de dados:
+\begin{itemize}
+    \item Propaganda
+    \item Astronomia
+    \item Ciência
+    \item e-governos
+    \item meteorologia
+    \item \emph{genomics}
+    \item ...
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Áreas}
+Grandes massas de dados:
+\begin{itemize}
+    \item Propaganda
+    \item Astronomia
+    \item Ciência
+    \item e-governos
+    \item meteorologia
+    \item \emph{genomics}
+    \item ...
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Dados}
+\begin{itemize}
+    \item Internet das coisas
+    \item sensoriamento remoto
+    \item suas fotos
+    \item logs de software
+    \item RFID
+    \item redes de sensores
+    \item ...
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Dados}
+\begin{itemize}
+    \item Internet das coisas
+    \item sensoriamento remoto
+    \item suas fotos
+    \item logs de software
+    \item RFID
+    \item redes de sensores
+    \item ...
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{O quê?}
+    Quão grande é ``big'' o suficiente? \pause Depende dos dados, ferramentas, e capacidade de manipulá-los. \pause Uma vez dado um passo, o alvo passa a ser o próximo passo. \pause Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{O quê?}
+    Quão grande é ``big'' o suficiente? \pause Depende dos dados, ferramentas, e capacidade de manipulá-los. \pause Uma vez dado um passo, o alvo passa a ser o próximo passo. \pause Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.
+\end{frame}</script>
+</div>
+<p>\begin{frame}{O quê?}
+<script type="math/tex; mode=display">\begin{block}{Gartner, 2012}
+Big data is high volume, high velocity, and/or high variety information assets that require new forms of processing to enable enhanced decision making, insight discovery and process optimization.
+\end{block}</script>
+</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Volume: incapacidade de armazenar todos os dados; apenas observe e guarde conclusões
+    \item Velocidade: dados passando em ``tempo real''
+    \item Variedade: imagens, vídeos, áudio, temperatura,...
+    \pause
+    \item Machine learning para automação de extração de informação, por exemplo, detecção de padrões, sem se preocupar com o porquê dos mesmos.
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Como lidar?}
+\begin{itemize}
+    \item Bancos de dados colunares
+    \item Stream DBs
+    \item ...
+    \item \alert{MapReduce}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Como lidar?}
+\begin{itemize}
+    \item Bancos de dados colunares
+    \item Stream DBs
+    \item ...
+    \item \alert{MapReduce}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Google FS}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Google FS}
+\begin{itemize}
+    \item Google, 2003
+    \item File System
+    \item Dados recuperados da Internet usados em consultas
+    \item Milhões de arquivos de múltiplos GB
+    \item Chunks de 64MB (``blocos do disco'')
+    \item Operações comuns são appends ou reads
+    \item Servidores/discos/memórias estão sempre falhando
+    \item Centenas de clientes concorrentes no mesmo arquivo
+\end{itemize}
+\includegraphics[width=.6\textwidth]{images/gfs3}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Google FS}
+\begin{itemize}
+    \item Google, 2003
+    \item File System
+    \item Dados recuperados da Internet usados em consultas
+    \item Milhões de arquivos de múltiplos GB
+    \item Chunks de 64MB (``blocos do disco'')
+    \item Operações comuns são appends ou reads
+    \item Servidores/discos/memórias estão sempre falhando
+    \item Centenas de clientes concorrentes no mesmo arquivo
+\end{itemize}
+\includegraphics[width=.6\textwidth]{images/gfs3}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Google FS}
+\includegraphics[width=.7\textwidth]{images/gfs2}</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+\item Clusters de nós ``comuns''
+\item Master node: metadata
+\item Chunk servers: data
+\item Permite usar um cluster como um único HD elástico na rede.
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+\item Clusters de nós ``comuns''
+\item Master node: metadata
+\item Chunk servers: data
+\item Permite usar um cluster como um único HD elástico na rede.
+\end{itemize}</script>
+</div>
+<p>\href{<a href="https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html}{Fonte">https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html}{Fonte</a>}
+\end{frame}</p>
+<p>\begin{frame}{Google FS}
+\includegraphics[width=.7\textwidth]{images/gfs5}</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+    \item Apps recebem \emph{leases} de acesso direto aos dados
+    \item Atomic commitment garante consistência entre réplicas
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Apps recebem \emph{leases} de acesso direto aos dados
+    \item Atomic commitment garante consistência entre réplicas
+\end{itemize}</script>
+</div>
+<p>\href{<a href="http://google-file-system.wikispaces.asu.edu/}{Fonte">http://google-file-system.wikispaces.asu.edu/}{Fonte</a>}
+\end{frame}</p>
+<p>\begin{frame}[fragile,allowframebreaks]{Google FS: Consistência }
+\includegraphics[width=\textwidth]{images/gfs6}</p>
+<p>\framebreak
+<script type="math/tex; mode=display">\begin{enumerate}
+\item Application sends the file name and data to the GFS client.
+\item GFS Client send the file name and chunk index to master
+\item Master sends the identity of the primary and other secondary replicas to the client.
+\item Client caches this information. Client contacts master again only when primary is unreachable or it sends a reply saying it does not holds the lease anymore.
+\item Considering the network topology the client sends the data to all the replicas.This improves performance. GFS separates data flow from the control flow. Replicas store the data in their LRU buffers till it is used.
+\item After all replicas receiving of the data, client sends write request to the primary. Primary decides the mutation order. It applies this order to its local copy.
+\item Primary sends the write request to all the secondary replicas. They perform write according to serial order decided by the primary.
+\item After completing the operation all secondary acknowledge primary.
+\item Primary replies the client about completion of the operation. In case of the errors that is when some of the secondary fail to write client request is supposed to be fail.This leaves modified chunk inconsistent. \item Client handles this by retrying the failed mutation. 
+\end{enumerate}</script>
+</p>
+<p>\href{<a href="http://google-file-system.wikispaces.asu.edu/}{Fonte">http://google-file-system.wikispaces.asu.edu/}{Fonte</a>}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Map Reduce}
+\begin{itemize}
+    \item Google, 2004
+    \item Processamento distribuído
+    \item Processa arquivos no Google FS
+\end{itemize}
+\includegraphics[width=.6\textwidth]{images/gfs4}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Map Reduce}
+\begin{itemize}
+    \item Google, 2004
+    \item Processamento distribuído
+    \item Processa arquivos no Google FS
+\end{itemize}
+\includegraphics[width=.6\textwidth]{images/gfs4}
+\end{frame}</script>
+</div>
+<p>\frame{\alert{leases?}}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Chubby}
+    \begin{itemize}
+        \item Google, 2006
+    \end{itemize}
+    \includegraphics[width=.6\textwidth]{images/chubby1}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Chubby}
+    \begin{itemize}
+        \item Google, 2006
+    \end{itemize}
+    \includegraphics[width=.6\textwidth]{images/chubby1}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Hadoop}
+\begin{itemize}
+    \item HDFS: Hadoop Distributed File System
+    \item Map Reduce
+    \item Yahoo!
+    \item Open source em 2011, 1.0.0
+    \item 2012, 2.0.0,
+    \item 2017, 3.0.0
+    \item nov 2018, 2.9.2
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Hadoop}
+\begin{itemize}
+    \item HDFS: Hadoop Distributed File System
+    \item Map Reduce
+    \item Yahoo!
+    \item Open source em 2011, 1.0.0
+    \item 2012, 2.0.0,
+    \item 2017, 3.0.0
+    \item nov 2018, 2.9.2
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Hadoop Ecosystem}
+\begin{itemize}
+    \item Hive: data warehouse
+    \item Spark: 
+    \item Kafka
+    \item Yarn
+    \item Pig: linguagem para especificação de data flow.
+    \item HBase: banco de dados estruturado
+    \item Sqoop
+    \item Flume
+    \item Oozie
+    \item Avro: serialização
+    \item Mahout: machine learning
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Hadoop Ecosystem}
+\begin{itemize}
+    \item Hive: data warehouse
+    \item Spark: 
+    \item Kafka
+    \item Yarn
+    \item Pig: linguagem para especificação de data flow.
+    \item HBase: banco de dados estruturado
+    \item Sqoop
+    \item Flume
+    \item Oozie
+    \item Avro: serialização
+    \item Mahout: machine learning
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{HDFS}
+\begin{itemize}
+    \item Distribuído
+    \item Escalável
+    \item Cost effective
+    \item Tolerante a falhas
+    \item Alta vazão
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{HDFS}
+\begin{itemize}
+    \item Distribuído
+    \item Escalável
+    \item Cost effective
+    \item Tolerante a falhas
+    \item Alta vazão
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Arquitetura}
+\begin{itemize}
+    \item Rack e rack failure
+    \item Top of rack switch
+    \item Core switch
+    \item Name Node: nomes das pastas e arquivos
+    \item Data Node: conteúdo dos arquivos
+    \item Cliente
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Arquitetura}
+\begin{itemize}
+    \item Rack e rack failure
+    \item Top of rack switch
+    \item Core switch
+    \item Name Node: nomes das pastas e arquivos
+    \item Data Node: conteúdo dos arquivos
+    \item Cliente
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Arquitetura}
+\begin{itemize}
+    \item Crie arquivo: cliente -&gt; name node
+    \item Escreva um block (e.g., 128MB): cliente
+    \item Aloque block: cliente -&gt; name node
+    \item Salve os dados: cliente -&gt; data node
+    \item Heartbeat block report: data node -&gt; name node
+    \item Dados são replicados (RF configurado por arquivo): Data node -&gt; data node
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Arquitetura}
+\begin{itemize}
+    \item Crie arquivo: cliente -> name node
+    \item Escreva um block (e.g., 128MB): cliente
+    \item Aloque block: cliente -> name node
+    \item Salve os dados: cliente -> data node
+    \item Heartbeat block report: data node -> name node
+    \item Dados são replicados (RF configurado por arquivo): Data node -> data node
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Name node}
+Dados em memory e edit log.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Name node é um SPOF? 
+    \item Quorum Journal Manager replica edit log.
+    \item Standby Name Node
+    \item Zookeeper usado para decidir quem é o líder
+    \item Secondary Name Node replica checkpoint da imagem em memória.
+\end{itemize}</script>
+\end{frame}</p>
+<p>\subsection{MapReduce}
+<script type="math/tex; mode=display">\begin{frame}{MapReduce}
+    \begin{itemize}
+        \item Programação funcional
+        \item Map: (map length (() (a) (a b c)) = (0 1 3))
+        \item Fold/Reduce: (reduce + (1 2 3)) = 6
+    \end{itemize}
+\end{frame}</script>
+</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{MapReduce}
+    \begin{itemize}
+        \item Não há dependência entre os dados
+        \item Dados divididos em \emph{shards}
+        \item Execução paralela e distribuída
+        \item Trabalhador recebe um shard
+        \item Mestre agrega valores
+        \item Milhares de processos
+        \item Petabytes de dados
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{MapReduce}
+    \begin{itemize}
+        \item Não há dependência entre os dados
+        \item Dados divididos em \emph{shards}
+        \item Execução paralela e distribuída
+        \item Trabalhador recebe um shard
+        \item Mestre agrega valores
+        \item Milhares de processos
+        \item Petabytes de dados
+    \end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{MapReduce}
+    \begin{itemize}
+        \item Shards são arquivos do GFS/HDFS/EC2
+        \item Função mapeada a cada shard
+        \item Resultado é lista de chaves e valores
+        \item Agregação acontece por chaves
+        \item Resultado são arquivos no GFS/HDFS/EC2
+    \end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{MapReduce}
+    \begin{itemize}
+        \item Shards são arquivos do GFS/HDFS/EC2
+        \item Função mapeada a cada shard
+        \item Resultado é lista de chaves e valores
+        \item Agregação acontece por chaves
+        \item Resultado são arquivos no GFS/HDFS/EC2
+    \end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{MapReduce}
+    \includegraphics[width=.8\textwidth]{images/mapreduce1}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{MapReduce}
+    \includegraphics[width=.8\textwidth]{images/mapreduce1}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{MapReduce}
+    \includegraphics[width=.8\textwidth]{images/mapreduce2}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{MapReduce}
+    \includegraphics[width=.8\textwidth]{images/mapreduce2}
+\end{frame}</script>
+</div>
+<p>\subsection{Laboratório}</p>
+<p>\begin{frame}[fragile]{Exemplo}
+\begin{lstlisting}[language=java]
+import ...</p>
+<p>public class WordCount 
+{
+ public static class TokenizerMapper 
+ extends Mapper<Object, Text, Text, IntWritable>
+ {
+  private final static IntWritable one = new IntWritable(1);
+  private Text word = new Text();</p>
+<p>public void map(Object key, Text value, Context context) 
+   throws IOException, InterruptedException 
+  {
+   StringTokenizer itr = new StringTokenizer(value.toString());
+   while (itr.hasMoreTokens()) 
+   {
+    word.set(itr.nextToken());
+    context.write(word, one);
+   }
+  } 
+ }
+...
+\end{lstlisting}
+\end{frame}</p>
+<p>\begin{frame}[fragile]{Exemplo}
+\begin{lstlisting}[language=java]
+...
+ public static class IntSumReducer 
+  extends Reducer<Text,IntWritable,Text,IntWritable> 
+ { 
+  private IntWritable result = new IntWritable();
+  public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException 
+  {
+   int sum = 0;
+   for (IntWritable val : values) 
+    sum += val.get();
+   result.set(sum);
+   context.write(key, result);
+  }
+ }</p>
+<p>public static void main(String[] args) throws Exception 
+ {
+  ...
+ }
+}</p>
+<p>\end{lstlisting}
+\href{<a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0}{Fonte">https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0}{Fonte</a>}
+\end{frame}</p>
+<p>\frame{\url{<a href="https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v">https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v</a>}}</p>
+<p>\section{Estudo de caso: Kafka}</p>
+<p>\subsection{Introdução}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}
+\includegraphics[width=\textwidth]{images/kafka0}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}
+\includegraphics[width=\textwidth]{images/kafka0}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Apache Kafka}</p>
+<p>``Kafka is a distributed streaming platform.''</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item LinkedIn
+    \item OpenSource em 2011
+    \item Projeto Apache em ????
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{O quê?}
+\includegraphics[width=.6\textwidth]{images/kafka1}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{O quê?}
+\includegraphics[width=.6\textwidth]{images/kafka1}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Usos}
+\includegraphics[width=\textwidth]{images/kafka2}</p>
+<p>\pause record ~= message</p>
+<p>\pause
+<script type="math/tex; mode=display">\begin{block}{Enterprise Messaging System}
+    Producers x Message Broker x Consumers
+\end{block}</script>
+\end{frame}</p>
+<p>\begin{frame}{Componentes}
+\includegraphics[width=\textwidth]{images/kafka3}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Produtores: enviam dados/mensagens/records (array de bytes)
+    \item Consumidores: recebem dados
+    \item Cluster/Broker: distribuído e tolerantes a falhas.
+    \item Conectores: integração simplificada com outras aplicações 
+    \item Stream processors: spark ou outros frameworks; transformam dados
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Apache Kafka}
+\begin{itemize}
+    \item Brokers
+    \item Cluster de brokers
+    \item Distribuído
+    \item Tolerante a falhas
+    \item Desacoplamento espacial
+    \item Desacoplamento temporal
+    \item Tópicos, não endereços
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Apache Kafka}
+\begin{itemize}
+    \item Brokers
+    \item Cluster de brokers
+    \item Distribuído
+    \item Tolerante a falhas
+    \item Desacoplamento espacial
+    \item Desacoplamento temporal
+    \item Tópicos, não endereços
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Tópicos}
+\begin{itemize}
+    \item Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
+    \item Quantidade pode ser imensa.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Tópicos}
+\begin{itemize}
+    \item Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
+    \item Quantidade pode ser imensa.
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Partição}
+\begin{itemize}
+    \item Subdivisões de tópicos
+    \item Número de partições é definido por usuário
+    \item Cada partição está associada a um único servidor
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Partição}
+\begin{itemize}
+    \item Subdivisões de tópicos
+    \item Número de partições é definido por usuário
+    \item Cada partição está associada a um único servidor
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Offset}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Índice de uma mensagem em uma partição
+    \item Índices atribuídos na ordem de chegada
+    \item Offsets são locais às partições
+    \item Mensagens são unicamente identificadas por (tópico, partição, índice)
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.6\textwidth]{images/kafka4}</p>
+<p>\end{frame}</p>
+<p>\begin{frame}{Consumer group}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Carga pode ser muito grande para um consumidor
+    \item Compartilham o processamento de um tópico
+    \item Cada mensagem é processada por um membro do grupo
+    \item A mesma mensagem pode ser processada por múltiplos grupos
+    \item Número de consumidores <span><span class="MathJax_Preview">\leq</span><script type="math/tex">\leq</script></span> partições no tópico
+    \item Máximo de dois consumidores por partição (mantem pos. de cada um)
+\end{itemize}</script>
+</p>
+<p>\includegraphics[width=.6\textwidth]{images/kafka5}
+\end{frame}</p>
+<p>\subsection{Quickstart}</p>
+<p>\begin{frame}{Baixar e Executar}
+Siga o tutorial em \url{<a href="http://kafka.apache.org/quickstart">http://kafka.apache.org/quickstart</a>}, até o passo 5.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Baixe e descompacte
+    \item Rode o zookeeper (Terminal 1)
+    \item Rode o Kafka (Terminal 2)
+    \item Crie um tópico (Terminal 3)\\
+        Mais de uma partição em um servidor
+    \item \alert{Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?}
+    \item Liste os tópicos criados
+    \item Envie algumas mensagens
+    \item Inicie um consumidor (Terminal 4)
+\end{itemize}</script>
+\end{frame}</p>
+<p>\subsection{Tolerância a Falhas}
+<script type="math/tex; mode=display">\begin{frame}{O quê?}
+Manter dados/serviços disponíveis a despeito de falhas.
+\end{frame}</script>
+</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Replicação}
+No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Replicação}
+No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Líder e Seguidor}
+\begin{itemize}
+    \item Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
+    \item Consumidor conversa com líder. Líder envia dados ao consumidor.
+    \item Líder replica dados para seguidores.
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Líder e Seguidor}
+\begin{itemize}
+    \item Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
+    \item Consumidor conversa com líder. Líder envia dados ao consumidor.
+    \item Líder replica dados para seguidores.
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}{Replicar}
+Passo 6  ensina a criar um sistema com múltiplos brokers.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Identificador
+    \item Porta (mesmo servidor)
+    \item \alert{Log directory}
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Replicar}
+\begin{itemize}
+    \item Crie um novo tópico, com RF = 3 e duas partições
+    \item \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic &lt;topico&gt;|
+    \item Lista de réplicas
+    \item Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Replicar}
+\begin{itemize}
+    \item Crie um novo tópico, com RF = 3 e duas partições
+    \item \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic <topico>|
+    \item Lista de réplicas
+    \item Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Zookeeper}
+\begin{itemize}
+    \item Permite que nós do cluster se descubram
+    \item Elege líder
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Zookeeper}
+\begin{itemize}
+    \item Permite que nós do cluster se descubram
+    \item Elege líder
+\end{itemize}
+\end{frame}</script>
+</div>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Armazenamento}
+\begin{itemize}
+    \item Dado deve ser removido depois de um tempo de ``retenção''
+    \item Pode definir retenção por tamanho (por partição, não tópico)
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Armazenamento}
+\begin{itemize}
+    \item Dado deve ser removido depois de um tempo de ``retenção''
+    \item Pode definir retenção por tamanho (por partição, não tópico)
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Produtor}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Produtor}
+\begin{itemize}
+    \item Produtor envia mensagens para os brokers
+    \item Producer API
+    \item \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Produtor}
+\begin{itemize}
+    \item Produtor envia mensagens para os brokers
+    \item Producer API
+    \item \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}[fragile]{SimpleProducer.java}
+\begin{lstlisting}[language=Java]
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import java.util.Properties;</p>
+<p>public class SimpleProducer {
+ public static void main(String[] args) {
+  String topicName = "SimpleProducerTopic";
+  String key = "Chave";
+  String value = "Valor";
+  Properties props = new Properties();
+  props.put("bootstrap.servers", "localhost:9092, localhost:9093");
+  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");</p>
+<p>Producer<String, String> producer = new KafkaProducer<String, String>(props);</p>
+<p>ProducerRecord<String, String> record = new ProducerRecord<String, String>(topicName, key, value);</p>
+<p>producer.send(record);
+  producer.close();</p>
+<p>System.out.println("SimpleProducer Completed.");
+ }
+}</p>
+<p>\end{lstlisting}
+\end{frame}</p>
+<p>\begin{frame}{Workflow}
+\includegraphics[width=.8\textwidth]{images/kafka6}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Particionador default
+    \begin{itemize}
+        \item Partition
+        \item Hash da ``chave''
+        \item Round robin
+    \end{itemize}</script>
+    \item Retry automático
+\end{itemize}
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Fire and Forget}
+Envia a mensagem e não se importa com o resultado.
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Fire and Forget}
+Envia a mensagem e não se importa com o resultado.
+\end{frame}</script>
+</div>
+<p>\begin{frame}[fragile]{Synchronous Call}
+Envia a mensagem e espera para saber se foi entregue ou não.</p>
+<p>
+<script type="math/tex; mode=display">\begin{lstlisting}[language=Java]
+try{
+ RecordMetadata metadata = producer.send(record).get();
+ System.out.println("Message is sent to Partition no " + metadata.partition() + " and offset " + metadata.offset());
+ System.out.println("SynchronousProducer Completed with success.");
+}catch (Exception e) {
+ e.printStackTrace();
+ System.out.println("SynchronousProducer failed with an exception");
+}finally{
+ producer.close();
+}
+\end{lstlisting}</script>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Future
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}[fragile]{Callback}
+Envia a mensagem e é invocado depois de receber um ACK</p>
+<p>\begin{lstlisting}[language=Java]
+producer.send(record, new MyProducerCallback());</p>
+<p>...</p>
+<p>class MyProducerCallback implements Callback{
+ @Override
+ public  void onCompletion(RecordMetadata recordMetadata, Exception e) {
+  if (e != null)
+   System.out.println("AsynchronousProducer failed with an exception");
+  else
+   System.out.println("AsynchronousProducer call Success:");
+ }
+}
+\end{lstlisting}
+<script type="math/tex; mode=display">\begin{itemize}
+    \item max.in.flight.requests.per.connection
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Default Partitioner}
+\includegraphics[width=.8\textwidth]{images/kafka6}</p>
+<div>
+<div class="MathJax_Preview">\begin{itemize}
+    \item Partition
+    \item Hash da ``chave'' \% \#partition
+    \item Round robin
+\end{itemize}</div>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Partition
+    \item Hash da ``chave'' \% \#partition
+    \item Round robin
+\end{itemize}</script>
+</div>
+<p>\href{<a href="https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo">https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo</a> de Custom Partitioner}
+\end{frame}</p>
+<p>\subsection{Consumidor}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Consumer Groups}
+\begin{itemize}
+    \item Múltiplos consumidores processam dados em paralelo
+    \item Grupo de consumidores de tópicos
+    \item Grupo pertence à mesma aplicação
+    \includegraphics[width=.6\textwidth]{images/kafka7}
+    \item Duplicate reads? Consumidores não compartilham partições
+    \item Group coordinator (broker eleito): lista de consumidores
+    \item Group líder: rebalanceamento
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Consumer Groups}
+\begin{itemize}
+    \item Múltiplos consumidores processam dados em paralelo
+    \item Grupo de consumidores de tópicos
+    \item Grupo pertence à mesma aplicação
+    \includegraphics[width=.6\textwidth]{images/kafka7}
+    \item Duplicate reads? Consumidores não compartilham partições
+    \item Group coordinator (broker eleito): lista de consumidores
+    \item Group líder: rebalanceamento
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\begin{frame}[fragile, allowframebreaks]{Consumer}
+\begin{lstlisting}[language=Java]
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.io.IOException;
+import java.util.Arrays;
+import java.util.Properties;</p>
+<p>public class SimpleConsumer {
+ public static void main(String[] args) throws IOException {
+  String topicName = "SimpleProducerTopic";
+  String groupName = "SupplierTopicGroup";</p>
+<p>Properties props = new Properties();
+  props.put("bootstrap.servers", "localhost:9092,localhost:9093");
+  props.put("group.id", groupName);
+  props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</p>
+<p>KafkaConsumer<String, String> consumer = null;</p>
+<p>try {
+   consumer = new KafkaConsumer<String, String>(props);
+   consumer.subscribe(Arrays.asList(topicName));</p>
+<p>while (true) {
+    ConsumerRecords<String,String> records = consumer.poll(100);</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>for (ConsumerRecord&lt;String, String&gt; record: records)
+ System.out.println(&quot;Key = &quot; + record.key() + &quot; Value = &quot; + record.value());
+</code></pre></div>
+</td></tr></table>
+
+<p>}
+  } catch (Exception ex) {
+   ex.printStackTrace();
+  } finally {
+   consumer.close();
+  }
+ }
+}
+\end{lstlisting}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
+    \item Se não definir grupo, será novo grupo, e lerá todas as mensagens disponíveis
+\end{itemize}</script>
+\end{frame}</p>
+<div>
+<div class="MathJax_Preview">\begin{frame}{Poll}
+\begin{itemize}
+    \item poll também envia hearbeat
+    \item executar a cada 3s, no mínimo 
+    \item Current offset: a cada poll, broker incrementa current offset
+    \item Commited offset: o consumidor informa quais índices foram processados
+    \begin{itemize}
+        \item Auto Commit
+        \begin{itemize}
+            \item enable.auto.commit
+            \item auto.commit.interval.ms
+            \item Pode causar reprocessamento de mensagens
+        \end{itemize}
+        \item Manual Commit
+        \begin{itemize}
+            \item CommitSync
+            \item CommitAsync
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{frame}</div>
+<script type="math/tex; mode=display">\begin{frame}{Poll}
+\begin{itemize}
+    \item poll também envia hearbeat
+    \item executar a cada 3s, no mínimo 
+    \item Current offset: a cada poll, broker incrementa current offset
+    \item Commited offset: o consumidor informa quais índices foram processados
+    \begin{itemize}
+        \item Auto Commit
+        \begin{itemize}
+            \item enable.auto.commit
+            \item auto.commit.interval.ms
+            \item Pode causar reprocessamento de mensagens
+        \end{itemize}
+        \item Manual Commit
+        \begin{itemize}
+            \item CommitSync
+            \item CommitAsync
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{frame}</script>
+</div>
+<p>\subsection{Arquitetura}
+%\begin{frame}{Líder}</p>
+<p>%\end{frame}</p>
+<p>%mensagens são ack depois de copiadas para todas as réplicas
+%replicas lentas são removidas se lentas ou falhas
+%at least once, at most once, exactly one (nao suportado)
+%rolling upgrade
+%tls security
+%rest
+%CRUD</p>
+<p>\subsection{Data Streams}
+\subsection{Connectors}</p>
+<p>%<script type="math/tex; mode=display">\begin{frame}{Data streams}
+%\begin{itemize}
+%   \item 
+%\end{itemize}
+%\end{frame}</script>
+</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../disdb/" title="Bancos de Dados" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Bancos de Dados
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  </body>
+</html>
