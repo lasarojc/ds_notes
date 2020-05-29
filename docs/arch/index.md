@@ -67,50 +67,45 @@ Os sistemas P2P tendem portanto a lever a maior disponibilidade.
 Historicamente, e devido às características já mencionadas, os sistemas P2P tem outra característica muito importante, a **alta escalabilidade** a que se oferecerem, chegando a níveis globais.
 Se pensarmos por exemplo nos sistemas de compartilhamento de arquivos, músicas e filmes, razão da fama e infâmia da arquitetura, teremos bons exemplos disso.
 Para que isso seja possível, estes sistemas precisam se tornar **auto-gerenciáveis**, pois sistemas globais devem tolerar **entrada e saída frequente de nós** (por falhas ou ação de seus usuários), **diferentes domínios administrativos**, e heterogeneidade na comunicação.
-Uma das ferramentas utilizadas para simplificar o trabalho de auto-gerenciamento é o conceito de **redes sobrepostas**, no qual nos aprofundaremos agora.
+Uma das ferramentas utilizadas para simplificar o trabalho de auto-gerenciamento é o conceito de **redes sobrepostas**.
 
 
-!!! note "Sistemas P2P"
-    * Arquitetura decentralizada;
-    * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
-    * Pode haver entrada e saída de nós do sistema com alta frequência; 
-    * Nós se organizam em redes sobrepostas (em inglês, *overlay*), redes lógicas sobre as redes físicas.
-    * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo e
-    * Auto-administração
-    * Redes sobrepostas
 
 
-### Rede Sobreposta
+### Rede Sobreposta (*Overlay*)
 
-Como já mencionado, em sistemas P2P, os nós ou componentes do sistema se organizam em uma rede *sobreposta* à rede física. Esta rede lógica é constituída pelos processos atuando como nós e pelos canais de comunicação estabelecidos entre os nós, tipicamente na forma de conexões TCP/IP.
+Os componentes de um sistema P2P se organizam em uma rede lógica, **sobreposta** à rede física.
+Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente na forma de conexões TCP/IP.
+Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
+Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
 
-Nestas redes sobrepostas são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
 Uma vez que as conexões na rede sobreposta não correspondem a conexões físicas, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
 Isto também implica que a otimização da rota lógica não necessariamente leva à otimização da rota física.
 
-![[Por Gustavo Lacerda - UFRJ, Domínio público](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)](images/overlay.jpg)
+[![Por Gustavo Lacerda - UFRJ, Domínio público](images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
 
+??? todo
+    A figura não mostra hosts, apenas roteadores. Trocar por figura em com hosts, roteadores, e processos nos hosts.
 
-Dependendo em como esta rede é organizada (ou não), a mesma é classificada como *estruturada* ou *não-estruturada*.
+Dependendo em como esta rede é organizada (ou não), a mesma é classificada como **estruturada** ou **não-estruturada**.
 
 
 #### Rede Não-Estruturada
 
-Se a rede é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede *não-estruturada*. 
+Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
-![[Não-estruturada]({http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)](images/unstructured.png)
+[![Não-estruturada](images/unstructured.png)]({http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
 
 Suponha que esta rede seja usada para armazenar e consultar dados.
 Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
-Buscas, contudo, terão que vasculhar a rede usando algoritmos como
-* busca em largura
-* busca em profundidade
-* caminhada aleatória (resposta probabilística)
+Os objetos amarelo e vermelho foram inseridos desta forma, e copiados em nós próximos para tolerar a falha de alguns hosts sem perder os dados.
+Buscas, contudo, terão que vasculhar a rede usando algoritmos como **busca em largura**, **busca em profundidade** ou **caminhada aleatória** (resposta probabilística).
+
 
 #### Rede Estruturada
 
-Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de estruturada.
+Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de **estruturada**.
 Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
 A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
 Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
@@ -124,14 +119,16 @@ A estrutura da rede permite que tal roteamento seja feito eficientemente, no ní
 ![](images/05-04.png)
 
 
-Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica, e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.
+Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.
 
 ![](images/02-08.png)
 
 Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.
 
 
-!!! note "Estruturada x Não-Estruturada"
+#### De não estruturada a estruturada
+
+A seguinte tabela resume as diferenças entre os dois tipos de redes sobrepostas.
 
  Estruturada                      | Não-Estruturada 
 ----------------------------------|---------------------------
@@ -140,47 +137,50 @@ Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear 
  Adição de nós é lenta            | Adição de nós é rápida
  Busca por dados é rápida         | Busca por dados lenta
 
-
-#### De não estruturada a estruturada
-
-Em certos cenários, é possível conseguir o melhor de dois mundos.
+Mas, e se pudéssemos juntar o melhor dos dois mundos em um único sistema? Isso é possível em certos cenários. 
 Por exemplo, seja uma grade $N \times N$ em que nós se conectam aleatoriamente uns aos outros, e que nós em uma borda da matriz conseguem se conectar aos nós da borda oposta, com distância 1.
 Efetivamente, temos a rede sobreposta à esquerda.
 
 ![](images/02-11.png)
 
-Se cada nó executar executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada à direita.
-* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+Se cada nó executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada, à direita.
+
+* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.  
   ![](images/02-10.png)
-
 * O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.
-* O módulo de seleção computa a distância entre o nó e todos os seus vizinhos, e descarta as conexões com maior distância, onde
-  * a = (x,y)$, $b = (x', y')$
-  * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
-  * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
+* O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância, onde
+    * a = (x,y)$, $b = (x', y')$
+    * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
+    * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
 
-Ao final de múltiplas interações, cada nó conhecerá seus vizinhos à direita, esquerda, acima e abaixo.
-Outra visuzalização desta topologia é apresentada a seguir:
+Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos ser'ão os nós à direita, esquerda, acima e abaixo.
+A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" 3D.
 
-![[Fujitsu and RIKEN, 2009](https://clusterdesign.org/torus/)](images/3d-torus.jpg)
+[![Fujitsu and RIKEN, 2009](images/3d-torus.jpg)](https://clusterdesign.org/torus/)
 
-Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, no qual diversos esquemas de roteamento eficientes podem ser usados.
+Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura, no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
 
-![[By Spiritia](https://commons.wikimedia.org/w/index.php?curid=5071550)](images/hypercube.png)
+[^icpc_hyper]: Neste [problema](https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf) do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.
 
-
-
-
+[![By Spiritia](images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
 
 
+!!! note "Sistemas P2P"
+    * Arquitetura decentralizada;
+    * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
+    * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo;
+    * Pode haver entrada e saída de nós do sistema com alta frequência; 
+    * Nós se organizam em redes sobrepostas (em inglês, *overlay*), redes lógicas sobre as redes físicas;
+    * Auto-administração.
 
-### Tabelas de Espalhamento Distribuídas (Distributed Hash Tables - DHT)
 
-A versatilidade dos sistemas P2P o levaram a ser amplamente estudados e aplicados.
-Nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
+
+### Tabelas de Espalhamento Distribuídas (DHT)
+
+A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuíds (DHT, do inglês, *Distributed Hash Tables*).
 
 As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
-Em essência, estas tabelas são estruturas de dados que **mapeiam** uma chave para um valor, uma função $f$ tal que
+Em essência, estas tabelas são funções que **mapeiam** uma chave para um valor, uma função $f$ tal que
 
 * $f(K): V \cup$ \{null\}
 * $K$: Universo de chaves
@@ -188,36 +188,31 @@ Em essência, estas tabelas são estruturas de dados que **mapeiam** uma chave p
 
 isto é, $f(k) = v, k\in K, v \in V$ ou $v =$ null.
 
+Na prática, são estruturas de dados adaptáveis, com um API muito simples, e com operações de tempo (mais ou menos) constante para fazer CRUD de pares chave/valor.
+Tanto $K$ quanto $V$ são **blobs** de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de problemas.
 
-Na prática, são estruturas de dados adaptáveis, com um API muito simples, e com operações de tempo (mais ou menos) constante.  
-
-!!! note "Tabela de Espalhamento"
-    * v' = put(k,v) //Retorna valor já existente
-    * v' = update(k,v) //Retorna valor já existente
-    * v' = get(k) //Retorna valor já existente
-    * v' = del(k) //Retorna valor já existente
-    * $v$ é um blob
-
-
-* v' = put(k,v) //Retorna valor já existente
-* v' = update(k,v) //Retorna valor já existente
-* v' = get(k) //Retorna valor já existente
-* v' = del(k) //Retorna valor já existente
-
-Sobre os valores mapeados, dizemos que são ** *blobs* ** de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de resoluções. Além disso, é suas operações são eficientes em termos de tempo, uma vez que todas as operações tem tempo de execução (mais ou menos) constante.
+!!! note "API"
+    * $put(k,v)$: if $k \rightarrow w$ then return $w$ else $k \rightarrow v$; return $\emptyset$
+    * $update(k,v)$: if $k \rightarrow w$ then return $w$ else return $\emptyset$
+    * $get(k)$: if $k \rightarrow w$ then return $w$ else return $\emptyset$ 
+    * $del(k)$: if $k \rightarrow w$ then return $w$ else $k \rightarrow v$; return $\emptyset$
+    * $k$ e $v$ são blobs
+    * execução $O(1)$
 
 Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser **tolerante a falhas** e ter **escalabilidade linear**.
-Justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas (inglês *distributed hash tables*), estruturas de dados que mantém **a mesma API** e funcionalidades de tabelas de espalhamento, mas que **agrega capacidades de diversos hosts**.
+É justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas, estruturas de dados que mantém **a mesma API** e funcionalidades de tabelas de espalhamento, mas que **agrega capacidades de diversos hosts**.
 
-Os desafios na implementação de DHT incluem
-* "O que usar como chave?", uma vez que tal estrutura precisa ser genérica para que possa ser aplicada a diversos problemas;
-* "Como dividir a carga entre hosts?", para garantir um bom balanceamento de carga; e, 
-* "Como rotear requisições para o host correto?", uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade.
+Dentre os desafios na implementação de uma DHT estão
+
+* O que usar como chave? Uma DHT deve ser versátil para ser utilizada para vários fins, então a chave precisa ser independente da aplicação.
+* Como dividir a carga entre hosts? É preciso balancear a carga para que um lado da rede não se torne mais importante que o outro e para não levar a uma hierarquização entre os nós.
+* Como rotear requisições para o host correto? Uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade, como encontrar o nó onde determinado dado está or deveria estar?
 
 #### Identificação
 
 A identificação de objetos precisa ser facilmente **determinável pela aplicação** para permitir a recuperação precisa dos dados. 
 Por exemplo, pode-se dividir faixas de nomes entre os processos.
+
 * A -- C -- Host1
 * CA -- E -- Host2
 * EA -- G -- Host3
@@ -225,6 +220,7 @@ Por exemplo, pode-se dividir faixas de nomes entre os processos.
 
 Esta distribuição tem três problemas graves. O primeiro, é no fato de nomes não serem **unívocos**.
 Neste caso, uma exemplo melhor seria o uso do CPF.
+
 * 000.000.000-00 -- 111.111.111-00 -- Host1
 * 111.111.111-01 -- 222.222.222-00 -- Host2
 * 222.222.222-01 -- 333.333.333-00 -- Host3
@@ -237,26 +233,29 @@ O terceiro problema tem a ver com o uso de chaves não genéricas, dependentes d
 Para este problema, poderíamos usar um identificador auto-incrementável, por exemplo, mas em muitas situações esta abordagem implicaria em dificuldade para se recuperar os dados: "qual é mesmo o identificador numérico do livro [How Fascism Works](https://ler.amazon.com.br/kp/embed?asin=B0796DNSVZ&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_fAlUDbMBJM4RP)?"
 
 Para resolver estes três problemas, recorremos a uma abordagem usada na literatura da área, dividindo a identificação em duas camadas:
+
 * Seja $i$ o identificador do objeto, dado pela aplicação (e.g., CPF, nome, telefone)
 * Seja $h$ uma função criptográfica
 * Seja $k = h(i)$ o identificador do objeto $i$.
 
+#### Divisão da carga
 Se usarmos, por exemplo, MD5, é fato que $k$ tem distribuição uniforme no espaço de 0 a $2^{160}-1$ possíveis valores.
 Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de $k$.
 Alguns exemplos de divisão são:
+
 * definia *buckets* para cada host e atribua o dado com chave $k$ para bucket $k \% b$, onde $b$ é o número de buckets
 * divida a faixa de valores em $b$ segmentos e atribua a cada host uma faixa
 * dados $2^n$ hosts, atribua ao host $0 < x < 2^n-1$ os dados cujas chaves terminem com o valor $x$.
 
 São várias as formas de se dividir os dados e estão intimamente ligadas à rede sobreposta que se pretende montar.
-Vejamos um caso específico e famoso, o Chord, e de dois outros sistemas que se inspiraram nele.
+Para estudar o terceiro desafio, o do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
 
+#### Chord
+Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do [CSAIL](https://www.csail.mit.edu/), do MIT, e publicado em 2001. 
+Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 
-### Chord
-
-Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do CSAIL, do MIT, e publicado em 2001. Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
-
-No Chord, cada nó tem um identificador único de **$m$ bits**, gerado aleatoriamente. Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
+No Chord, cada nó tem um identificador único de **$m$ bits**, gerado aleatoriamente. 
+Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 
 O Chord mantém uma rede estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
 A figura a seguir mostra as posições disponíveis no anel de um Chord com 4 bits (sem utilidade prática).
@@ -272,7 +271,7 @@ O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq 
 Na figura anterior, considere que apenas as posições em cinza estão preenchidas, isto é, que há apenas cinco nós no sistema, com identificadores 1, 4, 7, 12 e 15.
 Neste cenário, o nó 7 é responsável por dados cujas chaves são 5, 6 e 7.
 
-#### Roteamento
+##### Roteamento
 
 Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor $v$ associado à chave $k$.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por $k$.
@@ -288,6 +287,7 @@ O custo do roteamento, neste caso, é **$O(1)$**, muito mais rápido que na abor
 
 Como frequentemente acontece, um solução melhor pode ser nem uma nem outra opção, mas algo intermediário.
 O Chord propõe a criação de uma tabela de rotas também conhecida como *finger-table*, construída da seguinte forma, onde $m$ é a quantidade de bits usados para identificar nós no sistema:
+
 * seja $F_p$ a *finger-table* do processo $p$;
 * seja $F_p[i]$ a $i$-ésima da tabela; e,
 * $F_p[i] = suc(p+2^{i-1})$.
@@ -299,6 +299,7 @@ Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos 
 ![](images/fingertable.jpeg)
 
 Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo $p$:
+
 * seja $k$ a chave para qual estamos procurando o sucessor;
 * itere pela tabela até achar a primeira entrada cujo valor, i.e., o identificador de um nó, é maior que $k$;
 * se a entrada é a primeira da tabela, então encaminhe a requisição para o nó apontado, pois ele é o sucessor de $k$, até onde $p$ consegue determinar;
@@ -318,11 +319,12 @@ Tente identificar exemplos no anel a seguir onde este comportamento seria errado
 A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como **espalhamento consistente**, do inglês, *consistent hashing*.
 
 
-#### Churn
+##### Churn
 
 Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.
 
 Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:
+
 * Escolher um novo Identificador $I$
 * Identificar o sucessor $S$ de $I$
 * Identificar o antecessor $A$ de $I$
@@ -331,6 +333,7 @@ Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:
 
 Além disto, a reorganização dos nós exige movimentação de dados, pois parte dos dados armazenados em $S$, com chaves menores que $I$, precisam ser copiadas para $I$, o novo responsável.
 As principais questões a serem respondidas durante a movimentação dos dados são
+
 * como manter os dados disponíveis para inserção e consulta durante todo o processo, e
 * como minimizar o impacto da reorganização nos nós vizinhos ao novo nó
 
@@ -342,6 +345,7 @@ Quanto à reorganização das tabelas de rota, cada nó precisa monitorar os nó
 Contudo, caso a suspeita seja indevida, isto pode levar a dados serem consultados e armazenados nos nós errados.
 Também com relação aos dados, há o problema de não perdê-los quando o nó responsável se torna indisponível.
 O tratamento destes problemas está relacionado e é feito pelo replicação dos dados em múltiplos nós. Isto é feito no Chord, por exemplo, da seguinte forma:
+
 * para cada dado, com chave $k$, há $r$ cópias;
 * a primeira cópia é mantida no sucessor de $k$;
 * a segunda cópia, no sucessor do sucessor de $k$, e assim por diante;
@@ -350,6 +354,7 @@ O tratamento destes problemas está relacionado e é feito pelo replicação dos
 
 No caso de falha de uma cópia, há $r-1$ cópias ainda disponíveis para responder à requisição, mantendo o sistema disponível a despeito de ($r-1$) falhas, no que se chama de **degradação graciosa**.
 Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequência de passos, em um sistema com $r=2$.
+
 * escrita na cópia 1;
 * resposta ao cliente;
 * replicação para cópia 2;
@@ -361,12 +366,14 @@ Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequ�
 O cliente, ao ler o dado, lê uma versão antiga do mesmo, inconsistente com a visão que tinha do sistema.
 De fato, este tipo de sistema é chamado de eventualmente consistente pois somente na **ausência de falhas e de escritas** as diversas réplicas serão consistentes umas com as outras.
 Continuemos a sequência:
+
 * escrita na cópia 2;
 * cópia 1 volta a funcionar;
 * leitura na cópia 1.
 
 Neste caso, a cópia "secundária" 2 tem um dado mais atual, que precisa ser repassado para a cópia 1; este movimento de convergência de dados é conhecido como anti-entropia.
 Finalmente, continuemos a sequência:
+
 * escrita na cópia 1, por outro cliente.
 
 Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um **conflito**.
@@ -374,16 +381,20 @@ Qual dos dois é o correto neste contexto? É impossível apresentar uma estrat�
 
 O Dynamo, que veremos a seguir, é um destes sistemas.
 
-#### Referências
+##### Referências
 
 [https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
 
 
-### DynamoDB
+#### DynamoDB
 
-DynamoDB é o marco fundamental dos bancos de dados NoSQL. Neste [vídeo](https://www.youtube.com/watch?v=HaEPXoXVf2k), um dos integrantes do time que o desenvolveu e também um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.
+DynamoDB é o marco fundamental dos bancos de dados NoSQL. 
+Neste [vídeo](https://www.youtube.com/watch?v=HaEPXoXVf2k), um dos integrantes do time que o desenvolveu e também um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.
+Antes, porém, um *disclaimer*  importante: este material foi preparado com base no DynamoDB original, não na versão atualmente disponível na AWS, com diversas novas funcionalidades.---
+
 
 Enquanto o assiste, alguns pontos devem ser ressaltados sobre o Dynamo de forma específica e os NoSQL de forma geral:
+
 * surgiram da necessidade de escalabilidade dos bancos de dados, isto é, da necessidade de lidar com milhões e milhões de entradas de dados, gerados e processados com baixa latência e alta vazão, a despeito de falhas;
 * maior escalabilidade implica em maior exposição a particionamentos da rede em que o sistema roda, que associado à necessidade de manutenção de alta disponibilidade, implica em perda de garantias de consistência (veremos o [Teorema CAP](https://en.wikipedia.org/wiki/CAP_theorem) adiante);
 * *Partition keys* são as chaves usadas para roteamento dos dados, ou seja, as chaves discutidas anteriormente neste capítulo sobre sistema P2P;
@@ -399,20 +410,16 @@ Para lidar com falhas, o conteúdo do carrinho é replicado nos nós sucessivos 
 O carrinho é **modificado atomicamente**, isto é, sobrescrito por inteiro. A replicação, associada às modificações atômicas, potencializa conflitos, que são identificados comparando-se os vetores de versão (relógios vetoriais) associados a cada valor escrito.
 No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao usuário na forma de um carrinho de compras com a união dos itens nos respectivos carrinhos, de forma que o usuário possa corrigí-lo. Na pior das hipóteses, uma compra com erros será feita, e necessitará de uma atividade compensatória para o usuário, como um brinde.
 
-Um *disclaimer*  importante é que este material foi preparado com base no DynamoDB original, não na versão atualmente disponível na AWS, com diversas novas funcionalidades.---
-
-
-### Cassandra
-Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições,, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
-É assim que funcionam, por exemplo, boa parte os bancos de dados NOSQL, como Cassandra e DynamoDB, que discutiremos mais adiante neste capítulo. 
+Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
+Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar, e também do Cassandra, que veremos a seguir.
 
 ![CassandraDB](drawings/cassandra_hibrido.drawio)
 
+#### Cassandra
 
-
-
-O CassandraDB se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.
-
+O CassandraDB foi, sem sombra de dúvida, influenciado pelo projeto do DynamoDB, o que é facilmente explicável já que um dos criadores do Dynamo foi o arquiteto do Cassandra.
+Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dynamo ao se inspirar no banco de dados BigTable, do Google.
+Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.  
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas **column-families** e seu conjunto **keyspace**. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. 
 
@@ -432,9 +439,6 @@ Para facilitar mais ainda o desenvolvimento, o Cassandra conta com uma linguagem
 Para aprender mais sobre o Cassandra, visite o sítio do projeto, [aqui](http://wiki.apache.org/cassandra/GettingStarted), ou explore uma das muitas aplicações *Open Source* que o usam, por exemplo, o clone de Twiter [Twissandra](https://github.com/twissandra/twissandra)---
 
 
-#### CAN
-
-!!! todo "CAN"
 
 
 ### Estruturas de Dados para SD
@@ -598,6 +602,8 @@ Se a única mudança no arquivo foi a adição de um byte no começo do arquivo?
 [Rolling Hash](https://en.wikipedia.org/wiki/Rolling_hash)
 
 
+#### CAN
+!!! todo "CAN"
 
 ## Microserviços
 
