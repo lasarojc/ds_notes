@@ -1647,54 +1647,68 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 <h4 id="exercicio-ping-pong">Exercício: Ping-Pong</h4>
 <p>Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.</p>
 <table>
+<thead>
 <tr>
-<td> Terminal 1</td> <td> Terminal 2</td>
+<th>Terminal 1</th>
+<th>Terminal 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>python server.py</td>
+<td>python client.py</td>
 </tr>
 <tr>
-<td> 
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python server.py
-Esperando conexão.
-Esperando mensagem.
-Mensagem recebida: lalala
-Digite resposta: lelele
-Resposta enviada.
-Conexão encerrada.
-Esperando conexão.
-</code></pre></div>
-</td></tr></table>
-</td>
-<td>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python client.py
-Digite mensagem: lalala
-Mensagem enviada.
-Esperando resposta.
-Resposta recebida: lelele
-Digite mensagem: SAIR
-Desconectando.
-</code></pre></div>
-</td></tr></table>
-</td>
+<td>Esperando conexão.</td>
+<td>conectando-se ao servidor</td>
 </tr>
+<tr>
+<td>Conectado</td>
+<td>Conectado</td>
+</tr>
+<tr>
+<td>Esperando mensagem</td>
+<td>Digite mensagem: lalala</td>
+</tr>
+<tr>
+<td></td>
+<td>Mensagem enviada</td>
+</tr>
+<tr>
+<td>Mensagem recebida: lalala</td>
+<td>Esperando resposta</td>
+</tr>
+<tr>
+<td>Digite resposta: lelele</td>
+<td></td>
+</tr>
+<tr>
+<td>Resposta enviada.</td>
+<td>Resposta recebida: lelele</td>
+</tr>
+<tr>
+<td></td>
+<td>Digite mensagem: SAIR</td>
+</tr>
+<tr>
+<td></td>
+<td>Desconectando.</td>
+</tr>
+<tr>
+<td>Conexão encerrada.</td>
+<td></td>
+</tr>
+<tr>
+<td>Esperando conexão.</td>
+<td></td>
+</tr>
+</tbody>
 </table>
-
-<p>Observe que para ler do teclado em Python 2 você deve usar <code>x = raw_input()</code>, enquanto que em Python 3 seria <code>x = input()</code>. Além disso, em Python 2, você deve remover as invocações para <code>encode</code> e <code>decode</code>.</p>
+<p>Observe que para ler do teclado em Python 2 você deve usar <code class="highlight"><span class="n">x</span> <span class="o">=</span> <span class="n">raw_input</span><span class="p">()</span></code>, enquanto que em Python 3 seria <code class="highlight"><span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span></code>. Além disso, em Python 2, você deve remover as invocações para <code>encode</code> e <code>decode</code>.</p>
 <h3 id="udp">UDP</h3>
 <p>No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.</p>
-<p>A criação do socket é feita explicitando-se o uso de <strong>datagramas</strong>: <code>s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)</code></p>
-<p>Um servidor UDP não executa <code>listen</code> ou <code>accept</code> e, em Python, simplesmente executa <code>data, addr = sock.recvfrom(4096)</code> para receber o datagrama, onde <code>data</code> é o conteúdo recebido e  <code>addr</code> o endereço de quem enviou o datagrama.</p>
+<p>A criação do socket é feita explicitando-se o uso de <strong>datagramas</strong>: <code class="highlight"><span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span><span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span></code></p>
+<p>Um servidor UDP não executa <code>listen</code> ou <code>accept</code> e, em Python, simplesmente executa <code class="highlight"><span class="n">data</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">4096</span><span class="p">)</span></code> para receber o datagrama, onde <code>data</code> é o conteúdo recebido e  <code>addr</code> o endereço de quem enviou o datagrama.</p>
 <p>Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, <code>addr</code> é usado: <code class="highlight"><span class="n">sent</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span></code>, onde <code>sent</code> é a quantidade de bytes enviados.</p>
 <p>Além deste detalhe, é importante manter em mente outras características do UDP:</p>
 <ul>
@@ -1719,8 +1733,42 @@ Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no 
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. </p>
 <p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
-Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.</p>
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/"><img alt="" src="images/ipmulticast2.png" /></a></p>
+Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">3</a></sup></p>
+<table>
+<thead>
+<tr>
+<th>Endereço</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>224.0.0.0-224.0.0.255</td>
+<td>Multicast local - Usado por protocolos L2, como EIGRP e OSPF</td>
+</tr>
+<tr>
+<td>224.0.1.0-224.0.1.255</td>
+<td>Multicast roteaddo - Usado por protocolos L3</td>
+</tr>
+<tr>
+<td>232.0.0.0-232.255.255.255</td>
+<td><em>Source Specific Multicast</em> - Receptores definem fontes confiáveis</td>
+</tr>
+<tr>
+<td>233.0.0.0-233.255.255.255</td>
+<td>Reservado para detentores <em>Autonomous Systems</em></td>
+</tr>
+<tr>
+<td>239.0.0.0-239.255.255.255</td>
+<td>Reservado para IANA</td>
+</tr>
+<tr>
+<td>Resto</td>
+<td>Uso geral</td>
+</tr>
+</tbody>
+</table>
 <p>Quando um pacote é enviado para o endereço do grupo, <strong>todos</strong> os membros do grupo recebem tal mensagem.
 Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos falando de UDP, <strong>é possível que alguns não recebam</strong>.
 Além disso, <strong>não há garantia qualquer sobre a ordem de recepção das mensagens</strong>.</p>
@@ -1823,7 +1871,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition note">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">3</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">4</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
@@ -2951,8 +2999,11 @@ A seguir são apresentados dois exemplos, usando o pacote <code>thread</code> ou
 <li id="fn:nc">
 <p>Se o segundo comando não funcionar, tente <code>nc</code> em vez de <code>netcat</code>.&#160;<a class="footnote-backref" href="#fnref:nc" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
+<li id="fn:multicast_use">
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
