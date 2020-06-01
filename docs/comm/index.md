@@ -421,7 +421,7 @@ Mas para entendermos melhor o fluxo, vejamos algumas ferramentas reais.
 gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
 Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.
 
-O sítio [https://grpc.io](https://grpc.io) documenta muito bem o gRPC, inclusive os [princípios](https://grpc.io/blog/principles/) que nortearam seu projeto.
+O sítio [gRPC.io](https://grpc.io) documenta muito bem o gRPC, inclusive os [princípios](https://grpc.io/blog/principles/) que nortearam seu projeto.
 
 O seu uso segue, em linhas gerais, o modelo discutido nas seções anteriores, isto é, inicia-se pela definição de estruturas de dados e serviços, "compila-se" a definição para gerar stubs na linguagem desejada, e compila-se os stubs juntamente com os códigos cliente e servidor para gerar os binários correspondentes.
 Vejamos a seguir um tutorial passo a passo, em Java, baseado no [quickstart guide](https://grpc.io/docs/quickstart/java.html).
@@ -882,7 +882,12 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
     * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
     * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
 
+O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.
+
 ## Publish/Subscribe
+
 
 ??? todo "TODO"
     Descrever pub/sub e diferenciar de MOM
+
+O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.

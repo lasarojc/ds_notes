@@ -407,12 +407,12 @@ Clusters como o da imagem a seguir, do High Performance Computing Center de Stut
 
 Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de projetos sem construir protótipos, seja
 
-* de uma turbina <br>
-![CFD](images/turbine.jpeg)
-* um carro <br>
-![CFD](images/cfd_car.jpg)
-* ou uma vaca <br>
-![CFD](images/CFD_Cow.jpg)
+* de uma turbina  
+ ![CFD](images/turbine.jpeg)
+* um carro  
+ ![CFD](images/cfd_car.jpg)
+* ou uma vaca  
+ ![CFD](images/CFD_Cow.jpg)
 
 Os **nós** de um cluster são normalmente divididos em três categorias: administraçao, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.

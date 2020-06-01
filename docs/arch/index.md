@@ -247,29 +247,37 @@ Alguns exemplos de divisão são:
 * divida a faixa de valores em $b$ segmentos e atribua a cada host uma faixa
 * dados $2^n$ hosts, atribua ao host $0 < x < 2^n-1$ os dados cujas chaves terminem com o valor $x$.
 
-São várias as formas de se dividir os dados e estão intimamente ligadas à rede sobreposta que se pretende montar.
-Para estudar o terceiro desafio, o do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
+São várias as formas de se dividir os dados e estas estão intimamente ligadas à rede sobreposta que se pretende montar e a como o roteamento será feito.
 
-#### Chord
+#### Roteamento
+Para estudar o desafio do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
+
+#### Estudo de Caso: Chord
 Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do [CSAIL](https://www.csail.mit.edu/), do MIT, e publicado em 2001. 
 Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 
-No Chord, cada nó tem um identificador único de **$m$ bits**, gerado aleatoriamente. 
+##### Identificação
+No Chord o problema da indentificação dos dados é resolvido usando-se chaves de **$m$ bits**, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
+Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.
+
+##### Divisão de carga
+A cada nó é atribuído um identificador único de **$m$ bits**, gerado aleatoriamente. 
 Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 
-O Chord mantém uma rede estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra as posições disponíveis no anel de um Chord com 4 bits (sem utilidade prática).
-
-![](images/02-07.png)
-
-Dados são também identificados por uma chave de **$m$ bits**. Esta chave é gerada por meio de uma função hash criptográfica a partir de alguma chave que faça sentido para a aplicação, por exemplo um nome, telefone, ou CPF.
-Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída, e para que observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.
-
 Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
-O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka, **sucessor de $k$** ($i = suc(k)$).
+A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 
-Na figura anterior, considere que apenas as posições em cinza estão preenchidas, isto é, que há apenas cinco nós no sistema, com identificadores 1, 4, 7, 12 e 15.
-Neste cenário, o nó 7 é responsável por dados cujas chaves são 5, 6 e 7.
+Mais especificamente, o Chord mantém uma rede estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
+A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.[^chord_dist]
+[^chord_dist]: Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcial à diferença numérica entre os identificadores.
+
+![CassandraDB](drawings/chord_ring.drawio)
+
+O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka, **sucessor de $k$** ($i = suc(k)$).
+Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.
+
+![CassandraDB](drawings/chord_ring_data.drawio)
+
 
 ##### Roteamento
 
@@ -278,7 +286,8 @@ A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não
 Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
 Caso contrário, a requisição é repassada ou **roteada** para o nó correto.
 
-Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. Esta solução, correta, tem custo da ordem do número de nós no sistema, $O(n)$.
+Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. 
+Esta solução, correta, tem custo da ordem do número de nós no sistema, $O(n)$.
 Em uma instância com milhares de nós, **$O(n)$** é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
 Observe que o custo em termos de espaço para se implementar esta solução é **$O(1)$** para cada nó do sistema.
 
@@ -296,7 +305,7 @@ Observe que nesta tabela, a $i$-ésima entrada aponta para o processo que no que
 Isto quer dizer que o último *finger* da tabela proporciona um salto de $1/2$ anel, o penúltimo $1/4$ do anel, o ante-penúltimo $1/8$, e assim sucessivamente.
 Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo **$O(log n)$**.
 
-![](images/fingertable.jpeg)
+![Fingertable Chord](images/fingertable.jpeg)
 
 Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo $p$:
 
@@ -386,14 +395,15 @@ O Dynamo, que veremos a seguir, é um destes sistemas.
 [https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
 
 
-#### DynamoDB
+#### Estudo de Caso: DynamoDB
 
 DynamoDB é o marco fundamental dos bancos de dados NoSQL. 
-Neste [vídeo](https://www.youtube.com/watch?v=HaEPXoXVf2k), um dos integrantes do time que o desenvolveu e também um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.
-Antes, porém, um *disclaimer*  importante: este material foi preparado com base no DynamoDB original, não na versão atualmente disponível na AWS, com diversas novas funcionalidades.---
+No vídeo a seguir um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/HaEPXoXVf2k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-Enquanto o assiste, alguns pontos devem ser ressaltados sobre o Dynamo de forma específica e os NoSQL de forma geral:
+Enquanto o assiste, alguns pontos devem ser ressaltados sobre o Dynamo de forma específica e os NoSQL de forma geral:     
 
 * surgiram da necessidade de escalabilidade dos bancos de dados, isto é, da necessidade de lidar com milhões e milhões de entradas de dados, gerados e processados com baixa latência e alta vazão, a despeito de falhas;
 * maior escalabilidade implica em maior exposição a particionamentos da rede em que o sistema roda, que associado à necessidade de manutenção de alta disponibilidade, implica em perda de garantias de consistência (veremos o [Teorema CAP](https://en.wikipedia.org/wiki/CAP_theorem) adiante);
@@ -415,191 +425,45 @@ Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar
 
 ![CassandraDB](drawings/cassandra_hibrido.drawio)
 
-#### Cassandra
-
+#### Estudo de Caso: Cassandra
 O CassandraDB foi, sem sombra de dúvida, influenciado pelo projeto do DynamoDB, o que é facilmente explicável já que um dos criadores do Dynamo foi o arquiteto do Cassandra.
-Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dynamo ao se inspirar no banco de dados BigTable, do Google.
+Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dynamo ao se inspirar no banco de dados [BigTable](https://en.wikipedia.org/wiki/Bigtable), do Google.
 Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.  
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas **column-families** e seu conjunto **keyspace**. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. 
 
 ![keyspace](images/cass_keyspace.jpg)
 
+
 Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.
 
 ![Column-family](images/cass_column_family.jpg)
 
-Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um *timestamp*. 
-![timestamps](images/cass_column.jpg). Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
+Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um *timestamp*.  
+![timestamps](images/cass_column.jpg).  
+Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
+Devido a possibilidade de valores serem escritos para diferentes colunas independentemente, valores válidos e inválidos podem ter o mesmo *timestamp*.
+Por exemplo, considere os seguintes dados escritos no banco:
 
-Dentro de um nó, entradas são ordenadas por chaves, possivelmente compostas com os valores de algumas colunas (**chave composta**). 
+| Chave| Coluna$\rightarrow$Valor | Timestamp|
+|------|--------------|----------|
+| 3    | Nome$\rightarrow$José, Idade$\rightarrow$30 | 02:02:2020,13:45:00 |
+| 3    | Idade$\rightarrow$33 | 02:02:2020,13:50:00|
+| 3    | Telefone$\rightarrow$333444554433 | 02:02:2020,13:55:00|
 
+Uma busca pelos dados associados à chave 3 retornará o seguinte resultado:  Nome$\rightarrow$José, Idade$\rightarrow$33, Telefone$\rightarrow$333444554433.
 Para facilitar mais ainda o desenvolvimento, o Cassandra conta com uma linguagem de consulta similar ao SQL (Structured Query Language), a CQL (Cassandra Query Language).
+Assim, a consulta a estes dados seria mais ou menos como `#!sql SELECT * FROM dados WHERE key == 3`.[^cql_sintax]
 
-Para aprender mais sobre o Cassandra, visite o sítio do projeto, [aqui](http://wiki.apache.org/cassandra/GettingStarted), ou explore uma das muitas aplicações *Open Source* que o usam, por exemplo, o clone de Twiter [Twissandra](https://github.com/twissandra/twissandra)---
-
-
-
-
-### Estruturas de Dados para SD
-
-Qualquer que seja a escolha de algoritmo para fazer o particionamento dos dados entre servidores, sobra ainda a questão de como manipular os dados dentro do servidor.
-Idealmente, toda operação seria executada a partir da memória principal, tendo assim a menor latência possível.
-Contudo, para que se tenha também durabilidade das operações executadas, para que os dados manipulados sobrevivam a reinicializações do servidor, intencionais ou não, é preciso armazenar os dados em **memória estável**, da qual a mais comum é são os **discos rígidos**.
-
-É notório que escritas em disco são muito mais lentas que em memória principal, mas o que exatamente é lento no acesso ao disco?
-Essencialmente, o posicionamento da cabeca de leitura/escrita na trilha correta do disco, pois esta operação é mecânica.
-Por esta razão, acessos aleatórios são mais custosos que acessos sequenciais, pois neste o custo de posicionamento é pago apenas uma vez.
-Por este motivo, muitos bancos de dados, especialmente DHT pois tem seu uso focado em quantidades muito grandes de dados, gerados e acessados com grande velocidade, tentam acessar o disco sempre de forma sequencial.
-Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma *Log Structured Merge Tree*, ou LSMT.
-
-#### Log Structured Merge Tree
-
-Uma Log Structured Merge Tree é uma forma de se armazenar dados em disco de forma de forma quase sempre sequencial, minimizando assim os o impacto da durabilidade no desempenho do sistema.
-Considere um banco armazenando uma pequena quantidade de dados, que cabe em memória principal.
-Na LSMT, operações de escrita são adicionadas a um ***commit log***, em disco,  e somente então são executadas em memória principal e confirmadas para o cliente; a estrutura que armazena os dados em memória é denominada *memory table*, ou simplesmente **memtable**.
-Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rápida.
-
-![https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html](./images/lsm2.png)
-
-No caso de uma reinicialização do processo, a reexecução do *commit log* restaurará o estado da memtable. Contudo, se o *commit log* for extenso, reexecutá-lo demandará um tempo significativo.
-Uma forma de acelerar o processo é fazer ***snapshots*** da memtable de forma sincronizada com a escrita no log. 
-Isto é, digamos que todas as operações de escrita, até a décima, estão salvas no commit log e refletidas na memtable.
-Digamos também que todas as operações são modificações da mesma linha do banco de dados em memória.
-Se um *snapshot*  é tomado, ele será correspondente ao commit log, isto é, conterá o efeito de exatamente as mesmas 10 operações, mas de forma mais compacta que o log, uma vez que o log conterá dez operações e o snapshot somente uma linha de dados.
-Após o snapshot ser concluído, o log correspondente pode ser apagado.
-Novas operações de escrita devem ser armazenadas em um novo log e, no caso de uma reinicialização, primeiro se deve restaurar o *snapshot* e então o novo log.
-Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter mais do que o último log e *snapshot*, já que a recuperação do estado exigiria voltar mais atrás na reexecução de operações.
-
-Observe que, além da escrita dos logs, todos os outros acessos ao disco também são sequenciais, seja o *flush* das memtables, ou a leitura dos snapshots para recuperação e do commit log para reexecução, e já que operações de leitura são todas respondidas da memória, o sistema terá um excelente desempenho.
-Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. Isto é, se os dados não cabem em memória, *snapshots*  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.
-
-Consideremos então um cenário em que a memtable cabe apenas *n* entradas; quando a operação para adicionar $n+1$-ésima entrada à memtable é recebida, um ***flushs*** dos dados para um novo *snapshot* é feito e a memtable é *resetada*, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do *caminho crítico* da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.
-
-![https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html](./images/lsm2.png)
-
-Neste novo fluxo, os arquivos em disco não correspondem mais a *snapshots* do banco de dados, então nos referiremos a eles como *stable storage tables*, ou **sstables**, em oposição às *memtables*, pelo menos por enquanto.
+[^cql_sintax]: Este exemplo é meramente ilustrativo e não segue estritamente a sintaxe do CQL.
 
 
-##### Compactações
+Há muitos recursos *online*  para se aprender mais se aprender mais sobre como usar o Cassandra, por exemplo, [aqui](http://wiki.apache.org/cassandra/GettingStarted).
+Há também diversos projetos de código livre que o usam e podem ser estudados, por exemplo, o clone de Twiter [Twissandra](https://github.com/twissandra/twissandra).
+Mas embora o uso de sistemas gerenciadores de bancos de dados em sistemas distribuídos seja interessante, aqui nos focaremos em alguns dos aspectos de como estes SGBD são construídos.
 
-Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nosso banco de dados, ele traz problemas para o fluxo de leitura.
-Digamos que a chave $k$ teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
-O primeiro problema aqui é que há vários valores antigos associados a $k$, inutilmente e ocupando espaço, isto é, lixo.
-O segundo é que caso o valor associado a $k$ seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
-Para lidar com ambos os problemas, podemos **compactar** as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
-Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no *merge sort*, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
-A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por *flushs*, são unidas gerando sstables de nível 1 e assim sucessivamente.
-Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome *merge tree*.
-
-![https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters](./images/lsm_compac.png)
-
-
-No caso de uma pesquisa, somente as tabelas mais à direita e de nível mais alto precisam ser consultadas e portanto as sstables já usadas como entrada podem ser eliminadas como lixo do sistema.
-Ainda assim, no caso de uma leitura, diversas sstables potencialmente contém o dado a ser retornado. 
-O problema se agrava em sistemas em que partes do dado possam ser gravadas independentemente, como no CassandraDB, em que cada coluna é independente das outras.
-Diversas propostas poderiam ser feitas para se identificar mais rapidamente se uma sstable contém uma chave.
-Por exemplo, pode-se associar a cada tabela um bitmap indicando a presença ou não de uma certa chave, mas esta abordagem obviamente falha se o espaço de chaves for grande.
-Outra possibilidade é lembrar a faixa de chaves contida na tabela. Esta estratégia pode ser útil caso haja localidade no espaço de chaves no momento da escrita, mas falhará miseravelmente se o espaço de chaves for usado uniformemente, resultando em faixas grandes entre a menor e maior chaves de cada tabela.
-Como acelerar a identificação das sstables pertinentes? Entram em cena os filtros de **Bloom**.
-
-#### Filtros de Bloom
-
-De acordo com nossa fonte mais que confiável, a [Wikipedia](https://en.wikipedia.org/wiki/Bloom_filter)
-> *A Bloom filter is a **space-efficient** **probabilistic** data structure, conceived by Burton Howard *Bloom* in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either **"possibly in set"** or **"definitely not in set"**.*
-
-Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.
-
-![LSMT+Bloom Filter](./images/bf_lsm.jpg)
-
-Mas como exatamente construímos um filtro de Bloom?
-Iniciamos com um vetor de bits inicialmente zerados e um conjunto finito de funções de hash cujo resultado seja uniformemente distribuído no tamanho do vetor de bits.
-Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos cada uma das funções hash e colocamos o bit 1 na posição do vetor igual ao resultado da função.
-No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções hash.
-
-![By [David Eppstein](https://commons.wikimedia.org/w/index.php?curid=2609777)](./images/bloom.png)
-
-Na **consulta**, cada elemento passa por pelas mesmas funções hash. 
-Se algum dos índices apontados não estiver com um 1, como no caso do w, no exemplo, o elemento não pertence ao conjunto. 
-Caso contrário, o filtro responderá que é possível que pertença.
-
-Mas quão bom é um filtro de Bloom na identificação do das sstables? Ou, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?
-* o número $n$ de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;
-* o número $k$ de hashes, pois quanto mais hashes, mais bits transformados em 1; e,
-* o número $m$ de bits no vetor, pois quanto menos bits, mais colisões de bits.
-
-De forma mais precisa,
-* a probabilidade de setar um certo bit na inserção de um elemento é $1/m$, e
-* a probabilidade de não setar tal bit é $1 - 1/m$;
-* a probabilidade de $k$ hashes não setarem um bit é $(1 - 1/m)^k$;
-* a probabilidade de não setar um bit após $n$ inserções é $(1 - 1/m)^{kn}$;
-* a probabilidade de setar um bit após $n$ inserções é $1 - (1 - 1/m)^{kn}$
-
-Logo,
-* a probabilidade de falso positivo $p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k$
-O que nos permite chegar à relação
-* $m/n = - 1.44\log_2 p$, em que podemos calcular $m$ em função do $n$ esperado e do $p$ desejado.
-E podemos também identificar o $k$ ótimo para a situação, pela equação 
-* $k = - \frac{\ln p}{\ln 2} = - \log_2 p$
-
-Uma forma "simples" de visualizar este resultado é dada pela figura a seguir, em que o eixo Y dá a taxa de falsos positivos do filtro em função do número de elementos inseridos, indicado no eixo X, para diversas configurações, apresentadas como curvas.
-Por exemplo, com um filtro com $m = 2^{24}b = 2MB$, após 1 milhão de inserções, tem-se probabilidade de falsos positivo $p = 0,0001$.
-
-
-##### Referências
-
-[Modern Algorithms and Data Structures: Bloom-Filter](http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees)
-
-
-
-
-### Merkle Trees
-
-!!! todo 
-    Atualizar
-
-##### Como sincronizar duas máquinas?
-Suponha que um mesmo arquivo exista em duas máquinas. Como sincronizá-los de forma eficiente, onde eficiência se mede em termos de uso da rede?
-
-* Copie os arquivos de um servidor para outro
-* Mantenha o mais novo
-
-Isso é eficiente?
-
-
-###### Como sincronizar duas máquinas?
-
-* Produza um hash dos arquivos
-* Troque hashes
-* Se hashes iguais, pronto.
-* Se hashes diferentes, volte para o slide anterior.
-
-
-###### Merkle Trees
-
-* Divida o arquivo em blocos de mesmo tamanho
-* Faça um hash de cada bloco
-* Se mais de um hash gerado, 
-	* Concatene os hashes em um arquivo
-	* Volte para o primeiro item
-
-![By [Azaghal](https://commons.wikimedia.org/w/index.php?curid=18157888)](./images/merkle_tree.png)
-
-* Troque hashes da raiz.
-* Se hashes iguais, pronto.
-* Se hashes diferentes \pause compare subárvore.
-
-Se a única mudança no arquivo foi a adição de um byte no começo do arquivo?
-
-
-#### Referências
-
-[Modern Algorithms and Data Structures: Merkle Trees](http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees)
-
-
-### Rabin Fingerprint
-
-[Rolling Hash](https://en.wikipedia.org/wiki/Rolling_hash)
+!!! note "Detalhes de Implementação"
+    A seção de [tecnologias](../tech/#estruturas-de-dados-para-sd) descreve várias estruturas de dados recorrentemente usadas em implementação de bancos de dados como o Cassandra.
 
 
 #### CAN
@@ -831,9 +695,11 @@ Serviço de browsing pode ser replicado mais que de ordering, por exemplo.
 \end{frame}
 
 
-## MOM
+## Outras arquiteturas
 
-###  Publish/Subscribe 
+Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
+### MOM
+### Publish/Subscribe 
 ### Message Queues
 ### Event Sourcing
 [Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)

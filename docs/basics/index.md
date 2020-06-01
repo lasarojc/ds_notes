@@ -280,38 +280,23 @@ E agora, o que acontece? A saída é como esperava? Como explica este fenômeno 
 
 Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
-<table>
-<tr>
-<td> Terminal 1</td> <td> Terminal 2</td>
-</tr>
-<tr>
-<td> 
-```bash
-python server.py
-Esperando conexão.
-Esperando mensagem.
-Mensagem recebida: lalala
-Digite resposta: lelele
-Resposta enviada.
-Conexão encerrada.
-Esperando conexão.
-```
-</td>
-<td>
-```bash
-python client.py
-Digite mensagem: lalala
-Mensagem enviada.
-Esperando resposta.
-Resposta recebida: lelele
-Digite mensagem: SAIR
-Desconectando.
-```
-</td>
-</tr>
-</table>
 
-Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, enquanto que em Python 3 seria `x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
+| Terminal 1                 |  Terminal 2 |
+|----------------------------|-------------|
+| python server.py           | python client.py| 
+| Esperando conexão.         | conectando-se ao servidor |
+| Conectado                  | Conectado                 |
+| Esperando mensagem         | Digite mensagem: lalala   |
+|                            | Mensagem enviada          |
+| Mensagem recebida: lalala  | Esperando resposta        |
+| Digite resposta: lelele    |                           |
+| Resposta enviada.          |  Resposta recebida: lelele|
+|                            |  Digite mensagem: SAIR    |
+|                            |  Desconectando.           |
+| Conexão encerrada.         |                           |
+| Esperando conexão.         |                           |
+  
+Observe que para ler do teclado em Python 2 você deve usar `#!py3 x = raw_input()`, enquanto que em Python 3 seria `#!py3 x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
 
 
 
@@ -319,9 +304,9 @@ Observe que para ler do teclado em Python 2 você deve usar `x = raw_input()`, e
 
 No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.
 
-A criação do socket é feita explicitando-se o uso de **datagramas**: `s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)`
+A criação do socket é feita explicitando-se o uso de **datagramas**: `#!py3 s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)`
 
-Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `data, addr = sock.recvfrom(4096)` para receber o datagrama, onde `data` é o conteúdo recebido e  `addr` o endereço de quem enviou o datagrama.
+Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `#!py3 data, addr = sock.recvfrom(4096)` para receber o datagrama, onde `data` é o conteúdo recebido e  `addr` o endereço de quem enviou o datagrama.
 
 Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `#!py3 sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
 
@@ -358,8 +343,19 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 
 IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
+A seguinte tabela descreve os usos das sub-faixas de endereços.[^multicast_use]
+[^multicast_use]:  [Understanding IP Multicast](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
 
-[![](images/ipmulticast2.png)](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
+| Endereço | Uso |
+|----------|-----|
+|224.0.0.0-224.0.0.255| Multicast local - Usado por protocolos L2, como EIGRP e OSPF|
+|224.0.1.0-224.0.1.255| Multicast roteaddo - Usado por protocolos L3| 
+|232.0.0.0-232.255.255.255| *Source Specific Multicast* - Receptores definem fontes confiáveis|
+|233.0.0.0-233.255.255.255| Reservado para detentores *Autonomous Systems* |
+|239.0.0.0-239.255.255.255| Reservado para IANA |
+|Resto | Uso geral|
+
+
 
 Quando um pacote é enviado para o endereço do grupo, **todos** os membros do grupo recebem tal mensagem.
 Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos falando de UDP, **é possível que alguns não recebam**.
