@@ -377,6 +377,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#outros-exemplos" class="md-nav__link">
+    Outros exemplos
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -388,9 +395,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#microservicos" class="md-nav__link">
-    Microserviços
+  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
+    Arquitetura Orientada a Microsserviços
   </a>
+  
+    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monolitos" class="md-nav__link">
+    Monolitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsservicos" class="md-nav__link">
+    Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
+    Do Monolito aos Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-saber-mais" class="md-nav__link">
+    Para saber mais
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -401,6 +442,13 @@
   
     <nav class="md-nav" aria-label="Outras arquiteturas">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soa" class="md-nav__link">
+    SOA
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mom" class="md-nav__link">
@@ -679,6 +727,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#outros-exemplos" class="md-nav__link">
+    Outros exemplos
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -690,9 +745,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#microservicos" class="md-nav__link">
-    Microserviços
+  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
+    Arquitetura Orientada a Microsserviços
   </a>
+  
+    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monolitos" class="md-nav__link">
+    Monolitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsservicos" class="md-nav__link">
+    Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
+    Do Monolito aos Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-saber-mais" class="md-nav__link">
+    Para saber mais
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -703,6 +792,13 @@
   
     <nav class="md-nav" aria-label="Outras arquiteturas">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#soa" class="md-nav__link">
+    SOA
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mom" class="md-nav__link">
@@ -896,6 +992,7 @@ A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo pri
 <li>Pode haver entrada e saída de nós do sistema com alta frequência; </li>
 <li>Nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas;</li>
 <li>Auto-administração.</li>
+<li>Resiliente a falhas</li>
 </ul>
 </div>
 <h3 id="tabelas-de-espalhamento-distribuidas-dht">Tabelas de Espalhamento Distribuídas (DHT)</h3>
@@ -976,37 +1073,39 @@ Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.<
 Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
 <h5 id="divisao-de-carga">Divisão de carga</h5>
 <p>A cada nó é atribuído um identificador único de <strong><span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> bits</strong>, gerado aleatoriamente. 
-Como <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.</p>
+Como <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
+Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
+A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">4</a></sup>
+Assumamos inicialmente que os nós só estão cientes dos seus vizihos imediatos no anel.</p>
+<p><img alt="Anel Chord" src="drawings/chord_ring.drawio-0.svg" /></p>
 <p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
-A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.</p>
-<p>Mais especificamente, o Chord mantém uma rede estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">4</a></sup></p>
-<p><img alt="CassandraDB" src="drawings/chord_ring.drawio-0.svg" /></p>
-<p>O dado com chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> é responsabilidade do nó com menor identificador <span><span class="MathJax_Preview">i \geq k</span><script type="math/tex">i \geq k</script></span>, aka, <strong>sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span></strong> (<span><span class="MathJax_Preview">i = suc(k)</span><script type="math/tex">i = suc(k)</script></span>).
+A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
+O dado com chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> é responsabilidade do nó com menor identificador <span><span class="MathJax_Preview">i \geq k</span><script type="math/tex">i \geq k</script></span>, aka, <strong>sucessor de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span></strong> (<span><span class="MathJax_Preview">i = suc(k)</span><script type="math/tex">i = suc(k)</script></span>), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="CassandraDB" src="drawings/chord_ring_data.drawio-0.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="drawings/chord_ring_data.drawio-0.svg" /></p>
 <h5 id="roteamento_1">Roteamento</h5>
 <p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span><span class="MathJax_Preview">v</span><script type="math/tex">v</script></span> associado à chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>.
 Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
-Caso contrário, a requisição é repassada ou <strong>roteada</strong> para o nó correto.</p>
-<p>Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para "a direita" sucessivamente até que alcance o nó correto. 
+Caso contrário, a requisição deve repassada ou <strong>roteada</strong> para o nó correto.</p>
+<p>Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para um dos vizinhos e assim sucessivamente até que alcance o nó correto. 
 Esta solução, correta, tem custo da ordem do número de nós no sistema, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span>.
-Em uma instância com milhares de nós, <strong><span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span></strong> é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
-Observe que o custo em termos de espaço para se implementar esta solução é <strong><span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span></strong> para cada nó do sistema.</p>
-<p>Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
-O custo do roteamento, neste caso, é <strong><span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span></strong>, muito mais rápido que na abordagem anterior. O custo de armazenamento da <em>tabela de rotas</em> é, contudo, <strong><span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span></strong>, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (<em>single-hop</em> DHT).</p>
-<p>Como frequentemente acontece, um solução melhor pode ser nem uma nem outra opção, mas algo intermediário.
-O Chord propõe a criação de uma tabela de rotas também conhecida como <em>finger-table</em>, construída da seguinte forma, onde <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é a quantidade de bits usados para identificar nós no sistema:</p>
+Em uma instância com milhares de nós, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span> é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
+Observe que o custo em termos de espaço para se implementar esta solução é <span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span> para cada nó do sistema.
+Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
+<p>Com uma rede com milhares de nós, uma solução <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
+Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
+<p><img alt="Anel com Chaves no Chord" src="drawings/chord_ring_fingers.drawio-0.svg" /></p>
+<p>A <em>finger-table</em> é construída da seguinte forma, onde <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é a quantidade de bits usados para identificar nós no sistema:</p>
 <ul>
 <li>seja <span><span class="MathJax_Preview">F_p</span><script type="math/tex">F_p</script></span> a <em>finger-table</em> do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>;</li>
 <li>seja <span><span class="MathJax_Preview">F_p[i]</span><script type="math/tex">F_p[i]</script></span> a <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>-ésima da tabela; e,</li>
 <li><span><span class="MathJax_Preview">F_p[i] = suc(p+2^{i-1})</span><script type="math/tex">F_p[i] = suc(p+2^{i-1})</script></span>.</li>
 </ul>
-<p>Observe que nesta tabela, a <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>-ésima entrada aponta para o processo que no que sucede <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> pelo menos <span><span class="MathJax_Preview">2^{i-1}</span><script type="math/tex">2^{i-1}</script></span>, e que esta distância de sucessão aumenta exponencialmente. Observe também que a maior distância é proporcional a metade do tamanho do anel.
+<p>Observe que nesta tabela, a <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>-ésima entrada aponta para o processo que no que sucede <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> pelo menos <span><span class="MathJax_Preview">2^{i-1}</span><script type="math/tex">2^{i-1}</script></span>, e que esta distância de sucessão aumenta exponencialmente. 
+Observe também que a maior distância é proporcional a metade do tamanho do anel.
 Isto quer dizer que o último <em>finger</em> da tabela proporciona um salto de <span><span class="MathJax_Preview">1/2</span><script type="math/tex">1/2</script></span> anel, o penúltimo <span><span class="MathJax_Preview">1/4</span><script type="math/tex">1/4</script></span> do anel, o ante-penúltimo <span><span class="MathJax_Preview">1/8</span><script type="math/tex">1/8</script></span>, e assim sucessivamente.
-Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo <strong><span><span class="MathJax_Preview">O(log n)</span><script type="math/tex">O(log n)</script></span></strong>.</p>
-<p><img alt="Fingertable Chord" src="images/fingertable.jpeg" /></p>
+Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo <span><span class="MathJax_Preview">O(log n)</span><script type="math/tex">O(log n)</script></span>.</p>
 <p>Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>:</p>
 <ul>
 <li>seja <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> a chave para qual estamos procurando o sucessor;</li>
@@ -1076,8 +1175,17 @@ Finalmente, continuemos a sequência:</p>
 <li>escrita na cópia 1, por outro cliente.</li>
 </ul>
 <p>Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um <strong>conflito</strong>.
-Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.</p>
-<p>O Dynamo, que veremos a seguir, é um destes sistemas.</p>
+Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.
+O Dynamo, que veremos a seguir, é um destes sistemas.</p>
+<div class="admonition note">
+<p class="admonition-title">Espalhamento Consistente</p>
+<ul>
+<li>Carga uniforme entre nós.</li>
+<li>Todos os nós sabem como rotear requisições</li>
+<li>Número de saltos médio é conhecido.</li>
+<li>O sistema se adapta a entrada e saída de nós, por falhas ou não.</li>
+</ul>
+</div>
 <h5 id="referencias">Referências</h5>
 <p><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></p>
 <h4 id="estudo-de-caso-dynamodb">Estudo de Caso: DynamoDB</h4>
@@ -1103,6 +1211,8 @@ No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao us
 Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar, e também do Cassandra, que veremos a seguir.</p>
 <p><img alt="CassandraDB" src="drawings/cassandra_hibrido.drawio-0.svg" /></p>
 <h4 id="estudo-de-caso-cassandra">Estudo de Caso: Cassandra</h4>
+<p>Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
+O custo do roteamento, neste caso, é <span><span class="MathJax_Preview">O(1)</span><script type="math/tex">O(1)</script></span>, muito mais rápido que na abordagem anterior. O custo de armazenamento da <em>tabela de rotas</em> é, contudo, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span>, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (<em>single-hop</em> DHT).</p>
 <p>O CassandraDB foi, sem sombra de dúvida, influenciado pelo projeto do DynamoDB, o que é facilmente explicável já que um dos criadores do Dynamo foi o arquiteto do Cassandra.
 Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dynamo ao se inspirar no banco de dados <a href="https://en.wikipedia.org/wiki/Bigtable">BigTable</a>, do Google.
 Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.<br />
@@ -1152,262 +1262,85 @@ Mas embora o uso de sistemas gerenciadores de bancos de dados em sistemas distri
 <p class="admonition-title">Detalhes de Implementação</p>
 <p>A seção de <a href="../tech/#estruturas-de-dados-para-sd">tecnologias</a> descreve várias estruturas de dados recorrentemente usadas em implementação de bancos de dados como o Cassandra.</p>
 </div>
-<div class="admonition todo">
-<p class="admonition-title">CAN</p>
-</div>
-<h2 id="microservicos">Microserviços</h2>
-<p>TODO</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<p>\subsection{Word of caution}
-<script type="math/tex; mode=display">\begin{frame}
-Não existe bala de prata!
-%\includegraphics[width=\textwidth]{images/nosilver}
-\end{frame}</script>
-</p>
-<p>\begin{frame}
-Todas estas tecnologias...
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Docker
-    \item Golang
-    \item nodejs
-    \item Angular
-    \item ...
-\end{itemize}</script>
-passarão ou encontrarão um nicho, como...
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Cobol
-    \item Assembly
-    \item C
-    \item SQL
-\end{itemize}</script>
-encontraram.</p>
-<p>Certamente nenhuma delas será usada para resolver todos os problemas.
-\end{frame}</p>
-<p>\begin{frame}
-<script type="math/tex; mode=display">\begin{quotation}
-    The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies.
-\end{quotation}</script>
-</p>
-<p>\includegraphics[width=.7\textwidth]{images/gartner-hype-cycle-overview}
-\end{frame}</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}
-\begin{scriptsize}
-\begin{enumerate}
-\item Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.
-\item Peak of Inflated -- Expectations  Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.
-\item Trough of Disillusionment -- Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.
-\item  Slope of Enlightenment -- More instances of how the technology can benefit the enterprise start to crystallize and become more widely understood. Second- and third-generation products appear from technology providers. More enterprises fund pilots; conservative companies remain cautious.
-\item Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.
-\end{enumerate}
-\end{scriptsize}
-Fonte: Wikipedia
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}
-\begin{scriptsize}
-\begin{enumerate}
-\item Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.
-\item Peak of Inflated -- Expectations  Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.
-\item Trough of Disillusionment -- Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.
-\item  Slope of Enlightenment -- More instances of how the technology can benefit the enterprise start to crystallize and become more widely understood. Second- and third-generation products appear from technology providers. More enterprises fund pilots; conservative companies remain cautious.
-\item Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.
-\end{enumerate}
-\end{scriptsize}
-Fonte: Wikipedia
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}
-\begin{quotation}
-    We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.[3][4]
-\end{quotation} 
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}
-\begin{quotation}
-    We tend to overestimate the effect of a technology in the short run and underestimate the effect in the long run.[3][4]
-\end{quotation} 
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}
-Microsserviços está próximo do pico da desilusão.
-\includegraphics[width=1.1\textwidth]{images/gartner-hype-cycle-2017}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}
-Microsserviços está próximo do pico da desilusão.
-\includegraphics[width=1.1\textwidth]{images/gartner-hype-cycle-2017}
-\end{frame}</script>
-</div>
-<p>\subsection{Visão Geral}
-<script type="math/tex; mode=display">\begin{frame}
-Monolítico x Micro-serviços
-\end{frame}</script>
-</p>
-<p>\begin{frame}{Monolito}
-\includegraphics[width=.6\textwidth]{images/monolith_2001}</p>
-<p>\href{<a href="http://www.imdb.com/title/tt0062622/}{2001">http://www.imdb.com/title/tt0062622/}{2001</a> Space Odyssey}
-\end{frame}</p>
-<p>\begin{frame}{Monolito}
-Um bloco com lógica. Por exemplo, um MVC é um sistema monolítico.</p>
-<p>\includegraphics[width=.4\textheight]{images/monolith_arc}</p>
-<p>\href{<a href="http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte">http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte</a>}
-\end{frame}</p>
-<p>\begin{frame}{Scala}
-\includegraphics[width=\textheight]{images/microservices_scale}</p>
-<p>\href{<a href="https://thenewstack.io/from-monolith-to-microservices/}{Fonte">https://thenewstack.io/from-monolith-to-microservices/}{Fonte</a>}
-\end{frame}</p>
-<p>\begin{frame}{Micro-serviços}
-Blocos especializados</p>
-<p>\includegraphics[width=.9\textheight]{images/microservices_arc}</p>
-<p>\href{<a href="http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte">http://nodexperts.com/blog/microservice-vs-monolithic/}{Fonte</a>}
-\end{frame}</p>
-<p>\subsection{Monolitos}
-\begin{frame}{Monolítico}
-Exemplos de aplicações monolíticas de sucesso são pervasivos.</p>
-<p>\pause Ciclo bem entendido:
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Desenvolva
-    \item Teste
-    \item Implante
-    \item Escale
-    \item loop
-\end{itemize}</script>
-\end{frame}</p>
-<p>%<a href="https://medium.com/@bfil/microservices-are-a-silver-bullet-f745d2b41dca">https://medium.com/@bfil/microservices-are-a-silver-bullet-f745d2b41dca</a></p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Monolítico}
-Com o passar do tempo, tornam-se gigantes que não podem ser movidos ou guiados. A complexidade é grande demais para qualquer indivíduo entender todo o sistema.
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Monolítico}
-Com o passar do tempo, tornam-se gigantes que não podem ser movidos ou guiados. A complexidade é grande demais para qualquer indivíduo entender todo o sistema.
-\end{frame}</script>
-</div>
-<p>\begin{frame}{Monolítico}
-Desenvolvimento ágil se torna impossível. </p>
-<p>Implantações são custosas então são evitadas. Cada nova implantação traz muitas novas mudanças. Risco de problemas é maior. Muito cuidado é necessário. Implantações se tornam mais custosas. loop</p>
-<p>Até debugar o sistema é mais complicado. Como carregar tudo no Eclipse? \pause Como atacar o problema?
-\end{frame}</p>
-<p>\begin{frame}{Monolítico}
-Se está funcionando, por quê trocar?</p>
-<p>\pause</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Mais fácil estender?
-    \item Mais fácil de escalar?
-    \item Mais fácil de tornar tolerante a falhas?
-\end{itemize}</script>
-\end{frame}</p>
-<p>\subsection{Micro-serviço}</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Micro-serviços}
-``Small autonomous services that work together, modelled around a business domain.''
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Micro-serviços}
-``Small autonomous services that work together, modelled around a business domain.''
-\end{frame}</script>
-</div>
-<p>\begin{frame}{Micro-serviço}
-Ideia semelhante à programação paralela:
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Paralelismo de dados: trate dados diferentes em blocos diferentes.
-    \item Paralelismo de tarefas: trate funções diferentes em blocos diferentes.
-\end{itemize}</script>
-</p>
-<p>\pause\alert{Particionamento}
-\end{frame}</p>
-<p>Serviço de browsing pode ser replicado mais que de ordering, por exemplo.</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Cada componente executa um serviço... bem.
-    \item Cada time foca-se em um problema.
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Cada componente executa um serviço... bem.
-    \item Cada time foca-se em um problema.
-\end{itemize}
-\end{frame}</script>
-</div>
-<p>\begin{frame}{Escalas diferentes para blocos diferentes}
-\includegraphics[width=.7\textwidth]{images/microservice_sample}</p>
-<p>\href{<a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design}{Fonte">https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design}{Fonte</a>}
-\end{frame}</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Mudanças são mais contidas (em um simples serviço)
-    \item Serviços são desenvolvidos e implantados em paralelo e independentemente
-    \item A organização do time de desenvolvimento reflete a organização do sistema
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Mudanças são mais contidas (em um simples serviço)
-    \item Serviços são desenvolvidos e implantados em paralelo e independentemente
-    \item A organização do time de desenvolvimento reflete a organização do sistema
-\end{itemize}
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Separe componentes que tem requisitos conflitantes:
-    \begin{itemize}
-        \item CPU
-        \item E/S
-        \item Memória
-    \end{itemize}
-    \item Escale-os independentemente
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Particionamento}
-\begin{itemize}
-    \item Separe componentes que tem requisitos conflitantes:
-    \begin{itemize}
-        \item CPU
-        \item E/S
-        \item Memória
-    \end{itemize}
-    \item Escale-os independentemente
-\end{itemize}
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Exemplo: Netflix}
-\begin{itemize}
-    \item \url{https://youtu.be/57UK46qfBLY}
-    \item \url{https://youtu.be/CZ3wIuvmHeM}
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Exemplo: Netflix}
-\begin{itemize}
-    \item \url{https://youtu.be/57UK46qfBLY}
-    \item \url{https://youtu.be/CZ3wIuvmHeM}
-\end{itemize}
-\end{frame}</script>
-</div>
-<p>\begin{frame}{Exemplos}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item <code>...over five hundred services... we don't know how many...''
-    \item</code>...availability of 9.995...'' (&lt; 16 segundos por ano)
-    \item <code>... four days down... ... moved to the cloud''
-    \item</code>... it is not if failures will happen... ... it is when it happens...'' 
-\end{itemize}</script>
-</p>
-<p>\end{frame}</p>
-<p>\begin{frame}{Para aprender mais}
-\begin{itemize}
-    \item \url{<a href="https://youtu.be/wgdBVIX9ifA">https://youtu.be/wgdBVIX9ifA</a>}
-    \item \url{<a href="https://youtu.be/PFQnNFe27kU">https://youtu.be/PFQnNFe27kU</a>}
-    \item \url{<a href="https://youtu.be/Ijs55IA8DIk">https://youtu.be/Ijs55IA8DIk</a>}
-    \item \url{<a href="https://www.slideshare.net/chris.e.richardson/microservices-pattern-language-microxchg-microxchg2016">https://www.slideshare.net/chris.e.richardson/microservices-pattern-language-microxchg-microxchg2016</a>}
-    \item \url{<a href="https://martinfowler.com/articles/microservices.html">https://martinfowler.com/articles/microservices.html</a>}</p>
-<p>\end{itemize}
-\end{frame}</p>
+<h4 id="outros-exemplos">Outros exemplos</h4>
+<p>P2P é terreno fértil e poderíamos passar muito tempo apenas enumerando exemplos interessantes, mas nos limitaremos aqui a dois dos mais atuais.
+O primeiro é o sistema de compartilhamento de arquivos já mencionado na <a href="../intro/index.html">introdução</a>, BitTorrent.</p>
+<p><img alt="Bittorrent" src="images/bittorrent.png" /></p>
+<p>O que há de mais interessante neste exemplo o fato de haverem diversas implementações dos clientes, e.g., <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>Torrent, Azureus, Transmission, Vuze, qTorrent, implemenados em diversas linguagens e para diversas plataformas, todos interoperáveis.
+Isso é um atestado do que uma <a href="http://bittorrent.org/beps/bep_0003.html">especificação</a> bem feita e aberta pode alcançar.</p>
+<p>O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
+Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção <a href="../tech/#blockchain">BlockChain</a>.
+Apenas para abrir o apetite, </p>
+<h2 id="arquitetura-orientada-a-microsservicos">Arquitetura Orientada a Microsserviços</h2>
+<p>No dia 3 de Junho de 2020, termo <strong>microservice</strong> resultava em 6.6 milhões de resultados no <a href="https://www.bing.com/search?q=microservice&amp;PC=U316&amp;FORM=CHROMN">Google</a>.
+Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes, que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
+Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surgiram com grande estrondo, sendo alguns exemplos recentes Docker, Golang, Angular, e JQuery, e embora seja certo que algumas destas encontrarão seus nichos, como fizeram antes delas Cobol, C, e SQL, outras deparecerão da face da indústria; afinal, quem sabe o que é Delphi e quem ainda usa JQuery?
+Este fenômeno é capturado pelas várias fases do <em>hype-cycle</em> da Gartner.<sup id="fnref:hype_gartner"><a class="footnote-ref" href="#fn:hype_gartner">6</a></sup></p>
+<p><a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle"><img alt="Hype Cycle" src="images/gartner-hype-cycle-overview.png" /></a></p>
+<p>A Arquitetura Orientada a Microsserviços, tendo atingido o pico das expectativas infladas<sup id="fnref:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">7</a></sup> em 2017, está deslizando na <a href="https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-">Trough of Desilusionment</a><sup id="fnref2:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">7</a></sup> em 2019.
+Isto é, este modelo de desenvolvimento não é mais propagandeado como uma bala de prata para todas as aplicações distribuídas.
+Ainda assim, é um importante modelo. Mas afinal, o que é a arquitetura de microsserviços?
+Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termoss de sistemas monolíticos. <br />
+<a href="http://www.imdb.com/title/tt0062622/"><img alt="2001 Space Odyssey" src="images/monolith_2001.jpg" /></a>   </p>
+<h3 id="monolitos">Monolitos</h3>
+<p>Muitas aplicações seguem o modelo de 3 camadas em que em um dos extremos tem-se a interface com os usuários, materializada normalmente por um navegador, no outro tem-se um SGBD onde são armazenados os dados da aplicação, e, no meio, a lógica do negócio.
+A camada central, implementada por um único processo, que alimenta a interface com o usuário, manipula o modelo de dados, e onde reside a lógica do negócio, é um <strong>monolito</strong>.</p>
+<p><a href="http://nodexperts.com/blog/microservice-vs-monolithic/"><img alt="Monolitos" src="images/monolith_arc.png" /></a></p>
+<p>Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em colocadas em desenvolvimento de forma atômica:   </p>
+<ul>
+<li>Desenvolva</li>
+<li>Teste</li>
+<li>Implante</li>
+<li>loop</li>
+</ul>
+<p>Simples não quer dizer necessariamente eficiente; no caso de atualizações de uma parte do sistema, todo o monolito precisa ser trocado, incorrendo em indisponibilidade total do sistema, mesmo das partes não modificadas.
+Esta dificuldade tende a limitar as janelas de atualização do sistema, o que aumenta no número de mudanças que ocorrem a cada atualização, o que aumenta o risco de regressões e portanto requer mais testes, o que aumenta o intervalo entre janelas de atualização. Além disso, nos caso de bugs, é mais difícil encontrar o problema, uma vez que fica impossível os desenvolvedores conhecerem todo o sistema.
+Isso apenas exacerba o problema, o que limita mais ainda as atualizações, gerando um ciclo vicioso que mantem desenvolvedores acordados nas madrugadas de sexta para sábado quando é dia de <em>deploy</em>.</p>
+<p>Sistemas monolíticos também podem ser problemáticos quanto à escalabilidde, pois quando a capacidade do sistema é atingida, ou todo o sistema é movido para um <em>host</em> de maior capacidade ou todo o sistema deve ser  replicado.
+Na primeira abordagem, o custo geralmente é um impecilho, pois preços de hardware crescem exponencialmente. Além disso, um servidor, por mais parrudo que seja, é um Ponto Único de Falha (ou SPOF, do inglês <em>single point of failure</em>).
+Quanto à segunda abordagem, ela traz complexidades na coordenação das réplicas e ineficiências ao replicar inclusive as partes subutilizadas.
+Ambas as abordagens também esbarram na escalabilidade do banco de dados que lhes serve de <em>backend</em>.
+Para contornar ou pelo menos minimizar estes problemas, pode-se fragmentar o serviço e o banco de dados, o que facilita tanto a escalabilidade vertical quanto horizontal de cada módulo, que é menor e mais simples de coordenar, e divide a carga nos bancos de dados; mas isso é a troca do servíço monolítico por microsserviços.</p>
+<p><a href="https://thenewstack.io/from-monolith-to-microservices/"><img alt="Escala de Microsserviços" src="images/microservices_scale.png" /></a></p>
+<h3 id="microsservicos">Microsserviços</h3>
+<p>De acordo com <a href="https://martinfowler.com/articles/microservices.html">Lewis &amp; Fowler</a></p>
+<blockquote>
+<p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
+</blockquote>
+<p>Em outras palavras, com os microsserviços, quebra-se o monolito em diferentes processos, "<em>small autonomous services that work together, modelled around a business domain</em>", cada um gerenciando os dados relevantes para aquela parte do sistema e, possivelmente, sua própria interação com o usuário.
+Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhas o funcionamento de todo o sistema.</p>
+<p>Além disso, quando um serviço precisa ser atualizado, todos os demais podem continuar operantes e possível até que múltiplas versões do mesmo serviço sejam executadas concorrentemente, possibilitando atualizações sem janelas de manutenção.  </p>
+<p>Quanto à escalabilidade, esta é feita indepentendentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design"><img alt="" src="images/microservice_sample.png" /></a></p>
+<p>Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou <em>sharding</em>).
+Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
+<h3 id="do-monolito-aos-microsservicos">Do Monolito aos Microsserviços</h3>
+<p>Com tantas vantagens, suge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
+A resposta é <strong>não</strong>, pois como colocado no início desta seção, <strong>não existem balas de prata</strong> e se um sistema monolítico está funcionando para você e não há perspectiva de problemas acometerem (a demanda no sistema não está aumentando, a lógica do sistema é muito simples, indisponibilidade não te traz prejuízo, você não pode arcar com a refatoração), então mantenha seu sistema como está.</p>
+<p>Caso haja a necessidade de evolução e o modelo de microsserviços pareça adequado, existem recomendações de como a migração pode ser feita.
+Primeiro, é preciso aceitar que o desenvolvimento de microsserviços afeta a organização do time de desenvolvimento e que a organização provavelmente refletirá a arquitetura.
+O desenvolvimento, manutenção e operação de microsserviços acontece em times pequenos, de 1 a 8 pessoas ("pizza team"), dependendo da complexidade do serviço; se houver a necessidade de mais pesssoas no time, o escopo do microsserviço provavelmente está grande demais; cada componente resolve um problema, bem.</p>
+<p>Segundo, a mudança não deverá acontecer atomicamente. 
+Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como microsserviço, desenvolvê-la e modificar o monolito para usar o microsserviço.
+O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
+Mais fácil dito que feito, há muita documentação orientando o processo.</p>
+<h3 id="para-saber-mais">Para saber mais</h3>
+<p>Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
+Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.</p>
+<p>Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wgdBVIX9ifA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
+ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles/microservices.html">sítio</a>.</p>
+<p>Para entender os princípios por trás do uso da arquitetura,<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por <strong>menos de 16 segundos por ano</strong>. <br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
+Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
+Os diferentes tiposde falhas são injetados por um "<strong>exército de macacos do caos</strong>"<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Para uma visão prática da implementação de microsserviços usando AWS, veja
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 <h2 id="outras-arquiteturas">Outras arquiteturas</h2>
+<h3 id="soa">SOA</h3>
 <p>Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</p>
 <h3 id="mom">MOM</h3>
 <h3 id="publishsubscribe">Publish/Subscribe</h3>
@@ -1432,6 +1365,19 @@ Ideia semelhante à programação paralela:
 </li>
 <li id="fn:cql_sintax">
 <p>Este exemplo é meramente ilustrativo e não segue estritamente a sintaxe do CQL.&#160;<a class="footnote-backref" href="#fnref:cql_sintax" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hype_gartner">
+<p>"The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies."&#160;<a class="footnote-backref" href="#fnref:hype_gartner" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:gartner_inflated">
+<ul>
+<li>Peak of Inflated - Expectations  Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.</li>
+<li>Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.</li>
+<li>Slope of Enlightenment -- More instances of how the technology can benefit the enterprise start to crystallize and become more widely understood. Second- and third-generation products appear from technology providers. More enterprises fund pilots; conservative companies remain cautious.</li>
+<li>Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.</li>
+<li>Trough of Disillusionmen - Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.</li>
+</ul>
+<p><a class="footnote-backref" href="#fnref:gartner_inflated" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:gartner_inflated" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

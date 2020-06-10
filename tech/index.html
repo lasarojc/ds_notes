@@ -600,7 +600,7 @@ Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma <em
 Considere um banco armazenando uma pequena quantidade de dados, que cabe em memória principal.
 Na LSMT, operações de escrita são adicionadas a um <strong><em>commit log</em></strong>, em disco,  e somente então são executadas em memória principal e confirmadas para o cliente; a estrutura que armazena os dados em memória é denominada <em>memory table</em>, ou simplesmente <strong>memtable</strong>.
 Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rápida.</p>
-<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="./images/lsm2.png" /></p>
+<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="images/lsm2.png" /></p>
 <p>No caso de uma reinicialização do processo, a reexecução do <em>commit log</em> restaurará o estado da memtable. Contudo, se o <em>commit log</em> for extenso, reexecutá-lo demandará um tempo significativo.
 Uma forma de acelerar o processo é fazer <strong><em>snapshots</em></strong> da memtable de forma sincronizada com a escrita no log. 
 Isto é, digamos que todas as operações de escrita, até a décima, estão salvas no commit log e refletidas na memtable.
@@ -612,7 +612,7 @@ Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter
 <p>Observe que, além da escrita dos logs, todos os outros acessos ao disco também são sequenciais, seja o <em>flush</em> das memtables, ou a leitura dos snapshots para recuperação e do commit log para reexecução, e já que operações de leitura são todas respondidas da memória, o sistema terá um excelente desempenho.
 Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. Isto é, se os dados não cabem em memória, <em>snapshots</em>  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.</p>
 <p>Consideremos então um cenário em que a memtable cabe apenas <em>n</em> entradas; quando a operação para adicionar <span><span class="MathJax_Preview">n+1</span><script type="math/tex">n+1</script></span>-ésima entrada à memtable é recebida, um <strong><em>flushs</em></strong> dos dados para um novo <em>snapshot</em> é feito e a memtable é <em>resetada</em>, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do <em>caminho crítico</em> da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.</p>
-<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="./images/lsm2.png" /></p>
+<p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="images/lsm2.png" /></p>
 <p>Neste novo fluxo, os arquivos em disco não correspondem mais a <em>snapshots</em> do banco de dados, então nos referiremos a eles como <em>stable storage tables</em>, ou <strong>sstables</strong>, em oposição às <em>memtables</em>, pelo menos por enquanto.</p>
 <h5 id="compactacoes">Compactações</h5>
 <p>Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nosso banco de dados, ele traz problemas para o fluxo de leitura.
@@ -623,7 +623,7 @@ Para lidar com ambos os problemas, podemos <strong>compactar</strong> as sstable
 Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no <em>merge sort</em>, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
 A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por <em>flushs</em>, são unidas gerando sstables de nível 1 e assim sucessivamente.
 Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome <em>merge tree</em>.</p>
-<p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="./images/lsm_compac.png" /></p>
+<p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="images/lsm_compac.png" /></p>
 <p>No caso de uma pesquisa, somente as tabelas mais à direita e de nível mais alto precisam ser consultadas e portanto as sstables já usadas como entrada podem ser eliminadas como lixo do sistema.
 Ainda assim, no caso de uma leitura, diversas sstables potencialmente contém o dado a ser retornado. 
 O problema se agrava em sistemas em que partes do dado possam ser gravadas independentemente, como no CassandraDB, em que cada coluna é independente das outras.
@@ -637,7 +637,7 @@ Como acelerar a identificação das sstables pertinentes? Entram em cena os filt
 <p><em>A Bloom filter is a **space-efficient*</em> <strong>probabilistic</strong> data structure, conceived by Burton Howard <em>Bloom</em> in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either <strong>"possibly in set"</strong> or <strong>"definitely not in set"</strong>.*</p>
 </blockquote>
 <p>Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.</p>
-<p><img alt="LSMT+Bloom Filter" src="./images/bf_lsm.jpg" /></p>
+<p><img alt="LSMT+Bloom Filter" src="images/bf_lsm.jpg" /></p>
 <p>Mas como exatamente construímos um filtro de Bloom?
 Iniciamos com um vetor de bits inicialmente zerados e um conjunto finito de funções de hash cujo resultado seja uniformemente distribuído no tamanho do vetor de bits.
 Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos cada uma das funções hash e colocamos o bit 1 na posição do vetor igual ao resultado da função.
