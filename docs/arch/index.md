@@ -149,7 +149,7 @@ Se cada nó executar o seguinte protocolo, a rede evoluirá da topologia não es
   ![](images/02-10.png)
 * O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.
 * O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância, onde
-    * a = (x,y)$, $b = (x', y')$
+    * $a = (x,y), b = (x', y')$
     * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
     * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
 
@@ -567,33 +567,30 @@ Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como
 O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
 Mais fácil dito que feito, há muita documentação orientando o processo.
 
-### Para saber mais
-Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
-Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.
+!!! tip "Para saber mais"
+    Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
+    Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.
 
-Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wgdBVIX9ifA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
-ou consulte os vários artigos no seu [sítio](https://martinfowler.com/articles/microservices.html).
+    Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista  
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/wgdBVIX9ifA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
+    ou consulte os vários artigos no seu [sítio](https://martinfowler.com/articles/microservices.html).
 
-Para entender os princípios por trás do uso da arquitetura,  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    Para entender os princípios por trás do uso da arquitetura,  
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por **menos de 16 segundos por ano**.   
-<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
+    Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por **menos de 16 segundos por ano**.   
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
 Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
-Os diferentes tiposde falhas são injetados por um "**exército de macacos do caos**"  
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    Os diferentes tiposde falhas são injetados por um "**exército de macacos do caos**"  
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
+    Para uma visão prática da implementação de microsserviços usando AWS, veja
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Para uma visão prática da implementação de microsserviços usando AWS, veja
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-## Outras arquiteturas
-
-### SOA 
-Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
-### MOM
-### Publish/Subscribe 
-### Message Queues
-### Event Sourcing
-[Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
-[Kafka Overview](https://youtu.be/06iRM1Ghr1k)
+???bug "TODO"
+    * SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
+    * MOM 
+    * Publish/Subscribe 
+    * Message Queues
+    * Event Sourcing    
+        * [Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
+        * [Kafka Overview](https://youtu.be/06iRM1Ghr1k)

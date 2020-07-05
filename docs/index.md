@@ -17,5 +17,9 @@ Estas notas, em sua forma atual, são fortemente baseadas em uma literatura já 
 Em futuras iterações, as notas serão atualizadas para conter cada vez mais material autoral e referências mais atuais; fique ligado.
 
 
-!!! note "Atenção"
-    Para navegar no material, utilize o menu à esquerda ou os botões abaixo.
+!!! note "Atenção!"
+    Para navegar no material, utilize o menu à esquerda para Capítulos, à direita para seções, ou os botões abaixo para Anterior e Próximo.
+
+??? todo "Tipografia"
+    * Clarificar uso de diferentes fontes.
+    * Clarificar uso de caixas como esta.

@@ -1,236 +1,204 @@
 # Coordenação
 
+Como visto na seção sobre [Multiprogramação](../basics/#multiprogramacao-e-multithreading-em-sistemas-distribuidos
+../Multiprogramação concorrencia/concorrencia.md), diversas tarefas exigem coordenação entre threads em uma aplicação centralizada em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. 
+
+Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, ainda por cima, espalhados geograficamente. 
+Outras soluções e abstrações são portanto necessárias.
+
 ## Exclusão Mútua
+Um dos problemas enfrentados em sistemas que fazem uso de concorrência, distribuídos ou não, é a exclusão mútua.
+Em um sistema centralizado, uma variável global, um lock, ou outra primitiva de sincronização podem ser usadas na sincronização, mas em um sistema distribuído, primitivas simples como estas provavelmente não estarão disponíveis ou o sistema será muito restrito.
+Como, então, controlar o acesso de múltiplos processos a um recurso compartilhado, garantindo que cada processo controla **exclusivamente** aquele recurso durante seu acesso?
+Qualquer solução que se proponha a este problema de exclusão mútua, precisa ter as propriedades 1, 2, 3, e, idealmente, a 4, a seguir:
 
-Como visto em [Concorrência](../concorrencia/concorrencia.md), diversas tarefas exigem coordenação entre threads em uma aplicação centralizada em que se faz uso de concorrência para melhor uso de recursos computacionais,  obtenção de melhor desempenho, modularização do código. 
+!!!info "Exclusão Mútua"
+    1. **exclusão mútua** - somente um processo pode estar na **região crítica** em qualquer instante de tempo;
+    2. **ausência de deadlocks** - se processos estão tentando acessar o recurso, então **algum processo deve conseguir acesso** em algum instante, dado que nenhum processo fique na região crítica indefinidamente;
+    3. **não-inanição** - todos os processos interessados conseguem, em algum momento, acessar o recurso;
+    4. **espera limitada** - idealmente, o tempo de espera pelo recurso é limitado.
 
-Sistemas distribuídos levam a concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, ainda por cima, espalhados geograficamente. 
-Contudo, ee em um sistema centralizado, uma variável global, um lock, ou outra primitiva de sincronização podem ser usadas na sincronização, em um sistema distribuído, primitivas simples como estas provavelmente não estarão disponíveis ou o sistema será muito restrito.
+Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
+Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que a vez é circulada, e baseada em quoruns.
 
-Um dos problemas enfrentados é o da exclusão mútua.
+### Coordenador 
 
-### Exclusão Mútua
-
-Em um sistema distribuído, como controlar o acesso de múltiplos processos a um recurso compartilhado, garantindo que cada processo controla **exclusivamente** aquele recurso durante seu acesso?
-Qualquer solução que se proponha a este problema problema de exclusão mútua, precisa ter as propriedades 1, 2 e 3, e, idealmente, também a 4, a seguir:
-
-
-
-
----
-##### Exclusão Mútua
-
-1. exclusão mútua: somente um processo pode estar na **região crítica** em qualquer instante de tempo;
-2. ausência de *deadlocks*: se processos estão tentando acessar o recurso, então **algum processo deve conseguir acesso** em algum instante, dado que nenhum processo fique na região crítica indefinidamente;
-3. não inanição: todos os processos interessados consguem, em algum momento, acessar o recurso;
-4. espera limitada: idealmente, o tempo de espera pelo recurso é limitado.
-
----
-
-
-
-Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários e com resultados mais ou menos eficientes. Três das mais simples e que ilustram o universo de soluções são as seguintes:
-
----
-##### Exclusão Mútua - Soluções
-
-* Centralizado: Um processo acessa quando um coordenador diz que pode.
-* Anel: Um processo acessa quando estiver com o ``token'' de acesso.
-* Quorum: Um processo acessa quando houver acordo que é sua vez.
-
----
-
-
-
-#### Centralizado
-
-Enquanto em um sistema centralizado há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há esta entidade coordenadora.
+Enquanto em um sistema centralizado há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há naturalmente tal entidade.
 Uma possível solução para o problem de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.
 
-Nesta abordagem, o seguinte protocolo é implementado:
+Nesta abordagem, os processos que precisam acessar a região crítica são denominados **participantes** e um dos processos assume o pal de **coordenador**. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:
 
-* Participante:
-  1. Envia requisição de acesso ao coordenador
-  2. Espera por resposta do coordenador
-  3. Acessa o recurso
-  4. Envia liberação do recurso para o coordenador
+* Participante
+    1. Envia requisição de acesso ao coordenador
+    2. Espera por resposta do coordenador
+    3. Acessa o recurso
+    4. Envia liberação do recurso para o coordenador
 * Coordenador
-  1. Inicializa recurso como livre
-  2. Ao receber requisição enfileira requisição
-  3. Ao receber liberação, marca recurso como livre
-  4. Sempre que recurso marcado como livre **E** fila não vazia: envie liberação para primeiro da fila e o remova da fila.
+    1. Inicializa recurso como livre
+    2. Ao receber uma requisição, a enfileira
+    3. Ao receber uma liberação, marca o recurso como livre
+    4. Sempre que recurso estiver marcado como livre **E** a fila não estiver vazia
+        1. remove primeiro processo da fila
+        2. envia liberação para processo removido
+        3. marca o recurso como ocupado
 
+O diagrama a seguir apresenta uma execução deste protocolo em um cenário com três participantes.
+O estado do coordenador mostra se o recurso está livre ou ocupado e quais processos esperam por permissão de acesso.
 
----
-##### Centralizado
+```mermaid
+sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+	Part1->>Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+	Coordenador->>Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+	Part2->>Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1->>Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador->>Part1: ResponseFree
+	Part3->>Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+	Coordenador->>Part2: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+    	Part2->>Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+    	Coordenador->>Part2: ResponseFree
+    note over Coordenador: Recurso=ocupado/Fila = []
+	Coordenador->>Part3: ResponseOK
+    	Part3->>Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = []
+    	Coordenador->>Part3: ResponseFree
+```
 
-![Tanembaum 6.14](images/06-14.png)
+Este algoritmo satisfaz as características elencadas acima.   
+* Exclusão mútua - se o coordenador autoriza um participante, somente após outro participante liberar o recurso, outro participante poderá obter tal autorização.
+* Ausência de deadlocks - Todo processo que requisitar o recurso, entrará em uma fila, em apenas uma posição; assim, a fila proverá uma ordem total para os acessos, sem a possibilidade de circularidade nesta ordem.
+* Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.
+* Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.
 
----
+Outra vantagem deste algoritmo é sua simplicidade e, conseguentemente, facilidade de implementação.
+Contudo, este algoritmo tem também desvantagens, por exemplo, se muitas requisições de acesso forem feitas, o coordenador pode ser sobrecarregado e se tornar um **gargalo** no acesso à região crítica.
 
-Este algoritmo tem diversas características positivas:
+Mais sério ainda é a questão de como lidar com falhas, por exemplo, se ou o coordenador ou o participante que detem o direito de acesso ao recurso para de funcionar,  então nenhum outro processo conseguirá acesso.
+Estes aspectos nos permitem mergulhar na área de tolerância a falhas, e o faremos, mas mais tarde. 
+Por enquanto, consideraremos tolerância a falhas de forma superficial, após discutirmos outra abordagem.
 
----
-##### Prós
+### Anel
 
-* Justo: requests são processados em ordem (FCFS)
-* Não inanição
-* Espera limitada
-* Fácil de implementar, testar, entender
+Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. 
+Um dos processos é iniciado com um *token* que dá acesso ao recurso e o *token* é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:
 
----
+* Participante
+    1. Ao receber o *token* de acesso, se quiser acessar o recurso, acessa.
+    2. Envia o *token* para o próximo nó do anel.
 
-Contudo, tem também alguns aspectos negativos:
-
----
-##### Contras
-
-* Coordenador pode se tornar um gargalo;
-* Como lidar com falhas? Processos não sabem se recurso está bloqueado ou se usuário morreu e não devolveu a permissão;
-* Coordenador pode falhar e congelar o sistema.
-
----
-
-Estes aspectos nos permitem mergulhar na área de tolerância a falhas, e o faremos, mas mais tarde. Por enquanto, consideraremos tolerância a falhas de forma superficial, após discutirmos outra abordagem abordagem.
-
-#### Anel
-
-Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. Um dos processos é iniciado com um *token*, que dá acesso ao recurso e o *token* é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:
-
-* Participante:
-  1. Ao receber o *token* de acesso, se quiser acessar o recurso, acessa.
-  2. Envia o *token* para o próximo nó do anel.
+O diagrama adiante mostra uma execução do algoritmo em que apenas os participantes 1 e 3 acessam o recurso.
   
----
-##### Anel
+```mermaid
+sequenceDiagram
+	Part1->>Part2: Permissão de Acesso
+	Part2->>Part3: Permissão de Acesso
+        note over Part3: Acessa o recurso
+	Part3->>Part4: Permissão de Acesso
+	Part4->>Part1: Permissão de Acesso
+        note over Part1: Acessa o recurso
+        Part1->>Part2: Permissão de Acesso
+	Part2->>Part3: Permissão de Acesso
+        note over Part3: Acessa o recurso
+	Part3->>Part4: Permissão de Acesso
+	Part4->>Part1: Permissão de Acesso
+```
 
-![Anel](images/06-16.png}
+Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar testar e entender.
+Diferente do algoritmo centralizado, o algoritmo do anel não sofre com problemas de gargalo, pois nenhum processo precisa participar em todos os acessos, como o coordenador.
+Contudo, o algoritmo do anel desperdiça tempo passando o *token* para quem não necessariamente quer acessar a região crítica.
+Também importante é que este algoritmo também sofre com falhas: se um participante falha enquanto com o *token*, levando-o para além.
 
----
-
-Como o algoritmo centralizado, o algoritmo do anel também em suas vantagens e desvantagens.
-
----
-##### Prós
-
-* Justo: Todos acessam
-* Não inanição
-* Espera limitada
-* Fácil de implementar, testar, entender
-
----
-
----
-##### Contras
-
-* *Token* passado para quem não necessariamente quer acessar;
-* Tempo de espera linear no número de processos;
-* Como lidar com falhas?
-
----
-
-#### Lidando com falhas usando *timeouts*
-
-Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algoritmo pode ficar "travado". Vejamos alguns casos específicos:
+### Lidando com Falhas 
+Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algoritmo pode ficar "travado". 
+Vejamos alguns casos específicos:
 
 * No algoritmo centralizado, se o coordenador falha antes de liberar o acesso para algum processo, ele leva consigo a permissão.
 * Em ambos os algoritmos, se o processo acessando o recurso falha, a permissão é perdida e os demais processos sofrerão inanição.
 * No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido o anel não conseguirá circular.
 
-Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me ofereção alguma baseada em *timeouts*. Por exemplo, se o processo não devolver a permissão de acesso antes de um *timeout*, então assuma que o mesmo está falho e gere nova permissão, a ser passada a outros requisitantes.
+Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me oferecerão alguma baseada em *timeouts*.
+Por exemplo, se o processo não devolver a permissão de acesso antes de que uma certa quantidade de tempo tenha passado, um *timeout*, então assuma que o mesmo parou de funcionar e não voltará mais, e gere uma nova permissão a ser passada a outros requisitantes.
 
-O problema desta e outras "soluções" baseadas em *timeouts" está no **assumir que o processo está falho**, pois caso isso não seja verdade, teremos agora dois *tokens*  no sistema, podendo levar à violação da propriedade de exclusão mútua. Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, o mesmo pode sempre estar errado. De fato, temos que
+O problema desta e outras "soluções" baseadas em *timeouts* está no **assumir que o processo parou de funcionar**, pois caso isso não seja verdade, teremos agora dois *tokens*  no sistema, podendo levar à violação da propriedade de exclusão mútua. 
 
----
-##### Impossibilidade de detecção de falhas
+??? bug "Violação da exclusão mútua"
+     Fazer diagrama de sequência mostrando violação da exclusão mútua.
 
-Em um sistema distribuído assíncrono, é impossível distinguir um processo falho de um processo lento.
+Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, mesmo que aumentado com um relógio para medir a passagem do tempo local, o mesmo pode **sempre** estar errado. 
 
----
+!!! warning "Impossibilidade de detecção de falhas"
+    Em um sistema distribuído assíncrono, é impossível distinguir um processo falho de um processo lento.
 
-Também mais tarde discutiremos as implicações desta impossibilidade. Por agora, pense apenas no seguinte: 
+Mais tarde discutiremos as implicações desta impossibilidade. Por agora, tentemos responder à seguinte questão.
 
----
-##### Pergunta:
+!!! question
+    Qual deve ser um *timeout*  **razoável** para o meu sistema?
 
-Qual deve ser um *timeout*  razoável para o meu sistema?
-
----
-
-A resposta depende de múltiplos fatores como:
-
----
-##### ~~Resposta~~ Mais perguntas
+A resposta depende de mais perguntas, como:
 
 * Qual o custo $E$ de esperar por mais tempo?
 * Qual o custo $C$ de cometer um engano?
 * Qual a probabilidade $p$ de cometer um engano?
-* $C * p < E$
-
----
-
+* $C * p < E$.
 
 Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.
+Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois como disse certa vez Werner Fogels, CTO da Amazon
 
-
----
 > Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"
-
-Werner Fogels, CTO da Amazon.
-
----
 
 Uma abordagem probabilística interessante é baseada em quóruns.
 
-#### Quórum
+### Quórum
 
-De acordo com o [Dicionário Priberam da Língua Portuguesa, consultado em 17-04-2019](https://dicionario.priberam.org/quorum), "quórum" é o "Número de pessoas imprescindível para a realização de algo."
-Aqui, este este algo será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.
+De acordo com o [Dicionário Priberam da Língua Portuguesa, consultado em 17-04-2019](https://dicionario.priberam.org/quorum), "quórum" é o  
+> Número de pessoas imprescindível para a realização de algo.
 
-Esta abordagem é semelhante em vários aspectos à centralizada. De fato, um dos papéis na abordagem é o de coordenador, que executa o mesmo protocolo que antes.
+Aqui, este este *algo* será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.
 
----
-##### Quorum - Coordenador
-1. Inicializa recurso como livre
-2. Ao receber requisição enfileira requisição
-3. Ao receber liberação, marca recurso como livre
-4. Sempre que recurso marcado como livre **E** fila não vazia: envie liberação para primeiro da fila e o remova da fila.
-
----
-
+Esta abordagem é semelhante em vários aspectos à coordenada.
+De fato, um dos papéis na abordagem é o de coordenador, que executa o mesmo protocolo que antes.
 Entretanto, em vez de apenas um coordenador no sistema, temos $n$, dos quais o participante precisa obter $m > n/2$ autorizações antes de acessar o recurso; $m$ é o quórum do sistema.
 
+!!! note "Quórum"
+    * $n$ coordenadores.
+    * $m > n/2$ coordenadores
+
+Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:
+* Coordenador
+    1. Inicializa recurso como livre
+    2. Ao receber uma requisição, a enfileira
+    3. Ao receber uma liberação, marca o recurso como livre
+    4. Sempre que recurso estiver marcado como livre **E** a fila não estiver vazia
+        1. remove primeiro processo da fila
+        2. envia liberação para processo removido
+        3. marca o recurso como ocupado
+* Participante
+    1. Envia requisição de acesso aos $n$ coordenadores
+    2. Espera por resposta de $m$ coordenadores
+    3. Acessa o recurso
+    4. Envia liberação do recurso para o coordenador
+
+Além disso, para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueceme das autorizações já atribuídas.
+
+!!! warning "Perda de memória"
+    Quando um coordenador falha, esquece que deu ok e reinicia seu estado.
+
+Vejamos uma execução bem sucedida destes algoritmo:
+
+???bug "TODO"
+     Construir execução bem sucedida.
+
 ---
-##### Quorum - Quórum
 
-* $n$ coordenadores.
-* $m > n/2$ coordenadores
-
----
-
----
-##### Quorum - Participante
-
-1. Envia requisição de acesso aos $n$ coordenadores
-2. Espera por resposta de $m$ coordenadores
-3. Acessa o recurso
-4. Envia liberação do recurso para o coordenador
-
----
-
-Além disso, para tornamos os problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueçam-se  das autorizações já atribuídas.
-
----
-##### Falhas
-
-Quando um coordenador falha, esquece que deu ok e reseta seu estado.
-
----
-
-Suponha o seguinte cenário:
-
----
-##### Quórum - Exemplo
+Este algoritmo é bom? Suponha o seguinte cenário:
 
 * Coordenadores = {$c_1,c_2,c_3,c_4,c_5,c_6,c_7$}
 * $n = 7$
@@ -240,111 +208,57 @@ Suponha o seguinte cenário:
 * Participante $p_2$ consegue autorização de {$c_4,c_5,c_6,c_7$} e entra na região crítica.
 * **Exclusão Mútua** é violada.
 
----
-
 Qual a probabilidade $P_v$ desta violação ocorrer?
 
----
-##### Cálculo de $P_v$
+* Probabilidade de um coordenador falhar e se recuperar em $\delta t$, dentro de uma janela $T$: $P$.
+* Probabilidade de falha de exatamente 1 coordenador: $P^1(1-P)^{n-1}$
+* Probabilidade de $k$ coordenadores falharem: $P^k(1-P)^{n-k}$
+* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem: $\binom{m}{k} P^k(1-P)^{m-k}$		
+* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem: $\binom{m}{k} P^k(1-P)^{m-k}$
+* Diferentes valores de $k$ que são problemáticos
+    * ???bug "TODO"
+          desenho dos quóruns sobrepostos
+    * $\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k$
+    * $\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n$
+* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem, para qualquer $k$ que seja problemático: $P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$
 
-* Seja $P$ a probabilidade de um coordenador falhar e se recuperar em $\delta t$, dentro de uma janela $T$.
-
-* Probabilidade de falha de exatamente 1 coordenador
-  * $P^1(1-P)^{n-1}$
-
-* Probabilidade de $k$ coordenadores falharem?
-  * $P^k(1-P)^{n-k}$
-
-* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem
-  * $\binom{m}{k} P^k(1-P)^{m-k}$		
-
-* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem
-  * $\binom{m}{k} P^k(1-P)^{m-k}$
-
-* Diferentes valores de $k$ que são problemáticos?
-  * TODO: desenho dos quóruns sobrepostos
-  * $\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k$
-  * $\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n$
-
-* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem, para qualquer $k$ que seja problemático
-  * $P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$
-
----
 
 Para facilitar o entendimento desta grandeza, considere o exemplo:
-
----
-##### Exemplo
 
 * $p=0.0001$ (1 minuto a cada 10 dias)
 * $n = 32$
 * $m = 0.75n$
 * $P_v < 10^{-40}$ ([Curiosidade sobre $10^40$](https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence))
 
----
-
 A probabilidade de violação da exclusão mútua, neste caso, é muito pequena, a despeito de suportar falhas dos coordenadores. 
 
----
-##### Prós
-
-* Tolera falhas de coordenadores, com probabilidade controlada de violação de exclusão mútua
-
----
+!!! note "Pró"
+    * Tolera falhas de coordenadores, com probabilidade controlada de violação de exclusão mútua.
 
 Mas e as outras propriedades desejáveis do algoritmo de exclusão mútua, são alcançadas? Relembrando:
 
----
-##### Exclusão Mútua
-
-1. exclusão mútua: somente um processo pode estar na **região crítica** em qualquer instante de tempo;
-2. ausência de *deadlocks*: se processos estão tentando acessar o recurso, então **algum processo deve conseguir acesso** em algum instante, dado que nenhum processo fique na região crítica indefinidamente;
-3. não inanição: todos os processos interessados consguem, em algum momento, acessar o recurso;
-4. espera limitada: idealmente, o tempo de espera pelo recurso é limitado.
-
----
-
----
-##### Contras
-
-* Exclusão Mútua: $1 - P_v$
-* Não-inanição
-  * E se cada participante obter o ok de um coordenador?
-  * Temporizador para quebrar o *deadlock*?
-* Espera limitada
-  * Aborts podem levar a espera infinita.
-
----
+!!! note "Contras"
+    * Exclusão Mútua probabilística: $1 - P_v$
+    * Não-inanição
+        * E se cada participante obtiver o ok de um coordenador?
+        * Temporizador para quebrar o *deadlock*?
+    * Espera limitada
+        * Aborts podem levar a espera infinita.
 
 Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
----
-layout: default
-title: Eleição de Líderes
-parent: Coordenação
-nav_order: 2
----
 
-Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
-Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
-Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
+???bug "TODO"
+    Outros algoritmos
 
 ## Eleição de Líderes
 
 O problema da escolha de um processo centralizador pode ser posto informamente como:
 
----
-##### Eleição de Líderes
-
 * Procedimento pelo qual um processo é escolhido dentre os demais processos.
 * Todos os processos identificam o mesmo processo como eleito.
 * Uma nova eleição deve acontecer sempre que o líder corrente se tornar indisponível.
-
----
-
-
-
 
 Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que precisamos?
 

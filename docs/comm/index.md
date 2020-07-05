@@ -1,6 +1,5 @@
 # Communicação
 
-
 O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no **acesso baixo nível à rede**, e todo o ganho de desempenho que isso pode trazer.
 Suas desvantagens, entretanto, são várias:
@@ -19,28 +18,28 @@ Aqui discutiremos algumas destas funcionalidades e como podem e são implementad
 Exceto por aplicações muito simples, processos em um sistema distribuídos trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
 Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura *no fio*, por exemplo:
 
-* Diferentes linguagens de programação usadas para desenvolver os componentes.
-  * tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?
-  * paradigmas distintos: classe x estrutura
-  * conjunto de caracteres diferentes: ASCII x UTF
-* Arquiteturas diferentes.
-  * ordem dos bytes
-    * little endian? 
-      * x64
-      * IA-32
-    * big endian? 
-      * IP
-      * SPARC (< V9)
-      * Motorola
-      * PowerPC
-    * bi-endian?  ARM, 
-      * MIPS, 
-      * IA-64
-  * representação de ponto flutuante
-  * alinhamento de bytes
+* Diferentes linguagens de programação usadas para desenvolver os componentes.    
+    * tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?   
+    * paradigmas distintos: classe x estrutura   
+    * conjunto de caracteres diferentes: ASCII x UTF   
+* Arquiteturas diferentes.    
+    * ordem dos bytes   
+         * little endian? 
+             * x64
+             * IA-32
+         * big endian? 
+             * IP
+             * SPARC (< V9)
+             * Motorola
+             * PowerPC
+         * bi-endian?  ARM, 
+             * MIPS, 
+             * IA-64
+     * representação de ponto flutuante
+     * alinhamento de bytes
 * Sistemas operacionais diferentes
-  * crlf (DOS) x lf (Unix)
-* fragmentação <br>
+     * crlf (DOS) x lf (Unix)
+* fragmentação    
   [![Fragmentação](images/ipfrag.png)](http://www.acsa.net/IP/)
 
 ### Representação Textual
@@ -192,7 +191,7 @@ De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/p
 
 ### Thrift
 
-??? todo "TODO"
+??? bug "TODO"
     Thrift como forma de representação de dados.
 
 ## Invocação Remota de Procedimentos - RPC
@@ -234,7 +233,7 @@ Quando recebe a resposta do servidor, o stub cliente retorna a mesma resposta, c
 
 [^marshal]: Marshalling: representar parâmetros de forma própria para transmissão "no fio".
 
-!!!note "Stub cliente"
+!!! note "Stub cliente"
     Implementa uma função `substring(char*, int, char*)` que
 
     * abre socket para servidor
@@ -618,59 +617,52 @@ Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemo
 Outras características da IDL do gRPC
 
 * Tipos básicos
-  * bool: boolean (true/false)
-  * double: 64-bit; ponto-flutuante 
-  * float: 32-bit; ponto-flutuante 
-  * i32: 32-bit; inteiro sinalizado 
-  * i64: 64-bit; inteiro sinalizado
-  * siXX: signed
-  * uiXX: unsigned
-  * sfixedXX: codificação de tamanho fixo
-  * bytes: 8-bit; inteiro sinalizado
-  * string: string UTF-8 ou ASCII 7-bit
-  * Any: tipo indefinido
-
+    * bool: boolean (true/false)
+    * double: 64-bit; ponto-flutuante 
+    * float: 32-bit; ponto-flutuante 
+    * i32: 32-bit; inteiro sinalizado 
+    * i64: 64-bit; inteiro sinalizado
+    * siXX: signed
+    * uiXX: unsigned
+    * sfixedXX: codificação de tamanho fixo
+    * bytes: 8-bit; inteiro sinalizado
+    * string: string UTF-8 ou ASCII 7-bit
+    * Any: tipo indefinido
 * [Diferentes traduções](https://developers.google.com/protocol-buffers/docs/proto3)
-
 * Coleções
 Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.
 
 * *Streams*
-  - Do lado do servidor
+    - Do lado do servidor   
+    ```java
+    List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
 
-  ```java
-   List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
-
-   @Override
-   public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-   for (String hi: listOfHi)
-   {
-     OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
-     responseObserver.onNext(reply);
-   }
-   responseObserver.onCompleted();
-   }
-  ```
-  - Do lado do cliente
-  
-  ```java
-   OlaRequest request = OlaRequest.newBuilder().setName(name).build();
-   try {
-       Iterator<OlaReply> it = blockingStub.digaOlas(request);
-       while (it.hasNext()){
-         OlaReply response = it.next();
-         logger.info("Greeting: " + response.getMessage());
-       }
-    } catch (StatusRuntimeException e) {
-       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-       return;
+    @Override
+    public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
+    for (String hi: listOfHi)
+    {
+      OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
+      responseObserver.onNext(reply);
     }
-  ```
+    responseObserver.onCompleted();
+    }
+    ```   
+    - Do lado do cliente   
+     ```java
+     OlaRequest request = OlaRequest.newBuilder().setName(name).build();
+     try {
+        Iterator<OlaReply> it = blockingStub.digaOlas(request);
+        while (it.hasNext()){
+          OlaReply response = it.next();
+          logger.info("Greeting: " + response.getMessage());
+        }
+     } catch (StatusRuntimeException e) {
+        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+        return;
+     }
+     ```
 
-
-
-
-#### Exemplo Python
+##### Exemplo Python
 
 ```bash
 apt-get install python3
@@ -872,12 +864,12 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 
 ### Estudo de Caso RPC: RMI
 
-??? todo "TODO"
+??? bug "TODO"
     Como usar RMI.
 
 ## Comunicação orientada a Mensagens
 
-??? todo "TODO"
+??? bug "TODO"
     * [MOM](https://en.wikipedia.org/wiki/Message-oriented_middleware)
     * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
     * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
@@ -887,7 +879,7 @@ O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultant
 ## Publish/Subscribe
 
 
-??? todo "TODO"
+??? bug "TODO"
     Descrever pub/sub e diferenciar de MOM
 
 O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.

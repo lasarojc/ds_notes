@@ -249,54 +249,53 @@ O cliente em Java também é simplificado.
 Socket s = new Socket(hostname,port);
 ```
 
-#### Exercício: Múltiplos Pacotes
+!!! question "Exercício: Múltiplos Pacotes"
+    Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim
 
-Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim
+    ```Python
+    ...
+    c.send('Thank you for connecting'.encode())
+    c.send('Come back often'.encode())
+    ...
+    ```
 
-```Python
-...
-   c.send('Thank you for connecting'.encode())
-   c.send('Come back often'.encode())
-...
-```
+    Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
 
-Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
+    Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
+    ```Python
+    ...
+    print("1")
+    data = s.recv(1024)
+    print(data.decode())
+    print("2")
+    data = s.recv(1024)
+    print(data.decode())
+    ...
+    ```
 
-Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
-```Python
-...
-print("1")
-data = s.recv(1024)
-print(data.decode())
-print("2")
-data = s.recv(1024)
-print(data.decode())
-...
-```
+    E agora, o que acontece? A saída é como esperava? Como explica este fenômeno e como poderia corrigí-lo?
 
-E agora, o que acontece? A saída é como esperava? Como explica este fenômeno e como poderia corrigí-lo?
+!!! question "Exercício: Ping-Pong"
 
-####  Exercício: Ping-Pong
-
-Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
+    Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
 
 
-| Terminal 1                 |  Terminal 2 |
-|----------------------------|-------------|
-| python server.py           | python client.py| 
-| Esperando conexão.         | conectando-se ao servidor |
-| Conectado                  | Conectado                 |
-| Esperando mensagem         | Digite mensagem: lalala   |
-|                            | Mensagem enviada          |
-| Mensagem recebida: lalala  | Esperando resposta        |
-| Digite resposta: lelele    |                           |
-| Resposta enviada.          |  Resposta recebida: lelele|
-|                            |  Digite mensagem: SAIR    |
-|                            |  Desconectando.           |
-| Conexão encerrada.         |                           |
-| Esperando conexão.         |                           |
+    | Terminal 1                 |  Terminal 2 |
+    |----------------------------|-------------|
+    | python server.py           | python client.py| 
+    | Esperando conexão.         | conectando-se ao servidor |
+    | Conectado                  | Conectado                 |
+    | Esperando mensagem         | Digite mensagem: lalala   |
+    |                            | Mensagem enviada          |
+    | Mensagem recebida: lalala  | Esperando resposta        |
+    | Digite resposta: lelele    |                           |
+    | Resposta enviada.          |  Resposta recebida: lelele|
+    |                            |  Digite mensagem: SAIR    |
+    |                            |  Desconectando.           |
+    | Conexão encerrada.         |                           |
+    | Esperando conexão.         |                           |
   
-Observe que para ler do teclado em Python 2 você deve usar `#!py3 x = raw_input()`, enquanto que em Python 3 seria `#!py3 x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
+    Observe que para ler do teclado em Python 2 você deve usar `#!py3 x = raw_input()`, enquanto que em Python 3 seria `#!py3 x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
 
 
 
@@ -319,10 +318,9 @@ Além deste detalhe, é importante manter em mente outras características do UD
 
 Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
 
-
-#### Exercício: Ping-Pong UDP
-Modifique o código do exercício Ping-Pong para usar UDP em vez de TCP na comunicação entre nós.
-Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. 
+!!! question "Exercício: Ping-Pong UDP"
+    Modifique o código do exercício Ping-Pong para usar UDP em vez de TCP na comunicação entre nós.
+    Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. 
 
 
 ### IP-Multicast
@@ -423,7 +421,7 @@ Observe como a mesma mensagem é recebida pelos vários membros e que como difer
 
 A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças 
 
-!!! note "IP-Multicast em IPv6[^ipv6multi]"
+!!! tip "IP-Multicast em IPv6[^ipv6multi]"
     In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
 
     In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
@@ -431,44 +429,41 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
 [^ipv6multi]: [IP-Multicast em IPv6](http://www.baeldung.com/java-broadcast-multicast)
 
 
-#### Exercício: IP-Multicast
+!!! question "Exercício: IP-Multicast"
+    Implemente e teste o seguinte sevidor.
 
-Implemente e teste o seguinte sevidor.
+    ```Python
+    import socket
+    import struct
 
-```Python
-import socket
-import struct
+    MCAST_GRP = '224.1.1.1'
+    MCAST_PORT = 5007
 
-MCAST_GRP = '224.1.1.1'
-MCAST_PORT = 5007
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((MCAST_GRP, MCAST_PORT))
+    mreq = struct.pack("=4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
+    #4 bytes (4s) seguidos de um long (l), usando ordem nativa (=)
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-sock.bind((MCAST_GRP, MCAST_PORT))
-mreq = struct.pack("=4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
-#4 bytes (4s) seguidos de um long (l), usando ordem nativa (=)
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
-sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+    while True:
+        print(sock.recv(10240).decode())
+    ```
 
-while True:
-    print(sock.recv(10240).decode())
-```
+    Implemente e teste o seguinte cliente.
 
+    ```Python
+    import socket
 
-Implemente e teste o seguinte cliente.
+    MCAST_GRP = '224.1.1.1'
+    MCAST_PORT = 5007
 
-```Python
-import socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+    sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
+    ```
 
-MCAST_GRP = '224.1.1.1'
-MCAST_PORT = 5007
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
-sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
-```
-
----
 
 ### Referências
 
@@ -534,7 +529,7 @@ Detalhes do protocolo seguido por navegadores e servidores serão vistos mais ta
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página [www.google.com](https://www.google.com); um número muito maior é feito na carga de [www.bing.com](https://www.bing.com).
 
-!!! todo
+!!! bug 
     Estender
 
 ---
@@ -668,19 +663,16 @@ Veja um pequeno comparativo das características das duas abordagens.
 | re-autenticação (mesmo que simplficada) a cada requisição | Autentica no começo da sessão |
 
 
-##### Leia mais
-
-Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
+!!! tip "Leia mais"
+    Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
 Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
-A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
+    A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
 
-[Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
+    [Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
 
 ### Multithread na prática
 
-
-
-#### PThreads
+#### POSIX
 
 [POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição aberta de como *threads* devem funcionar em sistemas operacionais.
 Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, compatíveis com especifições POSIX, mas também para Windows, via subsistemas.
@@ -770,60 +762,54 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 	
 * `pthread_attr_setaffinity_np *` - ajusta afinidade dos threads.
 
-#### Threads Java
+#### Java
 
-Neste tutorial, baseado neste [outro](https://docs.oracle.com/javase/tutorial/essential/concurrency/), exploraremos formas de se obter concorrência em Java. Isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
-
+[outro](https://docs.oracle.com/javase/tutorial/essential/concurrency/), 
 Em Java, há essencialmente duas formas de se conseguir concorrência. 
-A primeira é via instâncias explícitas da classe `Thread`, e a segunda é via abstrações de mais alto nível, os `Executors`.
-
-
+A primeira é via instâncias explícitas da classe `Thread` e, a segunda, via abstrações de mais alto nível, os `Executors`.
+Aqui exploraremos formas de se obter concorrência em Java, isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
 Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote `java.util.concurrent`.
 
+##### Ciclo de vida
+Há duas formas básicas de definir um novo *thread*  em Java, via extensão da classe `Thread`, como no primeiro exemplo, ou ou via implementação da interface `Runnable`, como no segundo, a seguir.
 
-##### Criação de *Threads* Java
-Há duas formas básicas de se usar a classe `Thread`, via extensão ou delegação de um objeto implementando `Runnable`.
+!!! example "Exemplo 1: *Thread*"
+    ```Java
+    public class HelloThread extends Thread {
+        public void run() {
+            System.out.println("Hello from a thread!");
+        }
 
-###### Extender `Thread`
-```Java
-public class HelloThread extends Thread {
-    public void run() {
-        System.out.println("Hello from a thread!");
+        public static void main(String args[]) {
+            Thread t = new HelloThread();
+            t.start();
+        }
     }
+    ```
 
-    public static void main(String args[]) {
-        Thread t = new HelloThread();
-        t.start();
+!!! example "Exemplo 1: *Runnable*"
+    ```Java
+    public class HelloRunnable implements Runnable {
+        public void run() {
+            System.out.println("Hello from a thread!");
+        }
+
+        public static void main(String args[]) {
+            Thread t = new Thread(new HelloRunnable());
+            t.start();
+        }
     }
-}
-```
-
-
-###### Implementar `Runnable`
-```Java
-public class HelloRunnable implements Runnable {
-    public void run() {
-        System.out.println("Hello from a thread!");
-    }
-
-    public static void main(String args[]) {
-        Thread t = new Thread(new HelloRunnable());
-        t.start();
-    }
-}
-```
+    ```
 
 Observe que nos dois exemplos, um método `run()` é implementado com o código a ser executado pelo *thread*. Em nenhum dos exemplos, contudo, o método é invocado diretamente. 
-Em vez disto, o método `start()`, sim, é invocado. Isto ocorre pq antes de executar as instruções definidas pelo pelo programador no método `run()`,
+Em vez disto, o método `start()`, sim, é invocado. Isto ocorre porquê antes de executar as instruções definidas pelo pelo programador no método `run()`,
 a máquina virtual precisa executar alguma "mágica" por baixo dos panos como, por exemplo, solicitar ao sistema operacional a criação de um *thread* do SO, que servirá de hospedeiro para o *thread* Java. 
 Isto acontece dentro do `start()`, que em algum ponto de sua execução levará à invocação do método `run()`.
 
 
-##### API Thread
 A classe `Thread` também provê uma série de métodos que permitem gerenciar a vida do *thread* criado. 
 Por exemplo, o método de classe (`static`) `Thread.sleep()` permite bloquear um *thread*  por um determinado período.
 
-###### Thread.sleep()
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -847,7 +833,6 @@ public class HelloRunnable implements Runnable {
 
 Observe que a chamada a `sleep()` está dentro de um bloco `try/catch`. Isto é necessário pois é permitido à JVM acordar o *thread* em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o *thread*, ao acordar, verifique se já dormiu o suficiente.
 
-###### InterruptedException
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -879,7 +864,6 @@ Web, o *thread* que faz a renderização da página não pode começar a trabalh
 do servidor não receber sua resposta. Um *thread* indica a intenção de esperar por outro usando o método `join()`.
 
 
-###### Thread.join()
 ```Java
 public class HelloRunnable implements Runnable {
     public void run() {
@@ -924,43 +908,77 @@ Caso a espera termine por causa de um *timeout*, é possível testar o estado at
 
 Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode ser terminado quando a *thread* principal terminar. Descomente a invocação e teste o efeito.
 
-##### Exercício
+!!! question "Exercício"
+    Façamos um exercício simples do uso de *threads*. Considere a classe e siga as instruções abaixo.
 
-Vejamos um exemplo simples do uso de *threads*.
+    ```Java
+    class Counter {
+        private int c = 0;
 
-* Instancie um programa que gere 10 *threads*. 
-* Todos os *threads* devem compartilhar **uma mesma instância** de `Counter`
-* Cada *thread* deve executar um *loop* em que incrementa o valor do contador 20 vezes 
-  * a cada vez, imprime o resultado precedido do identificador do *thread* (use `Thread.getName()` ou `Thread.currentThread().getName()`)
-* A *thread*  principal deve esperar todas as outras terminarem antes de terminar (use `Thread.join()`).
-* Analise a saída do programa observando a ordem de execução dos *threads*.
+        public int increment() {
+            return ++c;
+        }
 
-##### Counter.java
+        public int decrement() {
+            return --c;
+        }
+
+        public int value() {
+            return c;
+        }
+    }
+    ```
+
+    * Instancie um programa que gere 10 *threads*. 
+    * Todos os *threads* devem compartilhar **uma mesma instância** de `Counter`
+    * Cada *thread* deve executar um *loop* em que incrementa o valor do contador 20 vezes 
+      * a cada vez, imprime o resultado precedido do identificador do *thread* (use `Thread.getName()` ou `Thread.currentThread().getName()`)
+    * A *thread*  principal deve esperar todas as outras terminarem antes de terminar (use `Thread.join()`).
+    * Analise a saída do programa observando a ordem de execução dos *threads*.
+
+
+    ??? tip "Análise"
+        É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. Isso acontece porquê a execução dos *threads* é não determinística; uma vez que estejam prontos para executar, cabe ao escalonador do sistema operacional a decisão sobre qual processo e em qual processador deverá executar.
+    
+
+!!! bug 
+   Melhorar explicação abaixo
+
+Além de extensão de `Thread` e implementação de `Runnable`, Java disponibiliza também `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
+
+* `Executor`
+* `ExecutorService`
+* `ScheduledExecutorService`
+
 ```Java
-class Counter {
-    private int c = 0;
-
-    public int increment() {
-        return ++c;
-    }
-
-    public int decrement() {
-        return --c;
-    }
-
-    public int value() {
-        return c;
-    }
-}
+Executor e = ...;
+Runnable r = ...;
+e.execute(r);
 ```
 
+Executors normalmente implementam *thread pools*, que podem ser de diferentes tipos. 
+O mais simples é o de tamanho fixo em que há um número inicial de *threads* criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.
 
-É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. 
-Como discutido anteriormente, frequentemente *threads* tem que coordenar suas ações para que não pisem uns nos outros, por exemplo decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma tarefa. 
+`#!java Executor e = java.util.concurrent.Executors.newFixedThreadPool();`
+
+* `newCachedThreadPool()` - *expandable thread pool*
+* `newSingleThreadExecutor()` - *single task at a time*
+* e outras versões
+* `ForkJoinPool`
+
+```
+if (my portion of the work is small enough)
+  do the work directly
+else
+  split my work into two pieces
+  invoke the two pieces and wait for the results
+```
+
+##### Coordenação
+Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma tarefa. 
 Em Java, esta coordenação pode ser feita por diversas abstrações: `synchronized`, `Lock`, variáveis atômicas, ...
 
-
-##### `synchronized`
+###### `synchronized`
 Ao definir métodos como `synchronized`, garante-se que os mesmos nunca serão executados concorrentemente. 
 Observe a classe a seguir, que modifica o contador do exercício anterior.
 
@@ -986,10 +1004,10 @@ Caso dois *threads* invoquem os métodos `increment` e `decrement` ao mesmo temp
 Isto não quer dizer que executar o exercício anterior com esta versão do contador não levará a saídas com incrementos completamente sequenciais, pois um *thread*  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método `increment`, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
 O que quer dizer é que, mesmo que saídas estranhas existam, cada operação foi executada integralmente antes da operação seguinte.
 
-##### Exercício
-Modifique o código do exercício anterior para usar a versão `synchronized` do contador. Depois de executá-lo, adicione um `println("Dentro: " + c)` **dentro** do método de incremento para verificar que estas saídas acontecem ordenadamente.
+!!! question "Exercício"
+    Modifique o código do exercício anterior para usar a versão `synchronized` do contador. Depois de executá-lo, adicione um `println("Dentro: " + c)` **dentro** do método de incremento para verificar que estas saídas acontecem ordenadamente.
 
-##### Blocos `synchronized`
+
 `synchronized` funciona porquê limita a concorrência, e é problemático exatamente pela mesma razão. 
 Por isso, é essencial que o `synchronized` seja o mais limitado possível em termos de escopo, o que nos leva ao uso de `synchronized` em blocos de código menores que métodos. Por exemplo:
 
@@ -1010,54 +1028,42 @@ public class Namer {
 
 Neste caso, blocos sincronizados **no mesmo objeto**, não são executados concorrentemente, mas outros blocos sim.
 
-##### Exercício
-Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois *threads*  tal que:
+!!! question "Exercício"
+    Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois *threads*  tal que:
 
-* executem um loop 1000 vezes em que
-* o primeiro *thread* primeiro invoca `inc1` e depois `inc2`
-* o segundo *thread* primeiro invoca `inc2` e depois `inc1`
-* ambos os threads imprimem o valor de `c1` e `c2`
+    * executem um loop 1000 vezes em que
+    * o primeiro *thread* primeiro invoca `inc1` e depois `inc2`
+    * o segundo *thread* primeiro invoca `inc2` e depois `inc1`
+    * ambos os threads imprimem o valor de `c1` e `c2`
 
-##### synchronized
-```Java
-public class MsLunch {
-    private long c1 = 0;
-    private long c2 = 0;
-    private Object lock1 = new Object();
-    private Object lock2 = new Object();
+    ??? tip "Análise"
+        ```Java
+        public class MsLunch {
+            private long c1 = 0;
+            private long c2 = 0;
+            private Object lock1 = new Object();
+            private Object lock2 = new Object();
 
-    public void inc1() {
-        synchronized(lock1) {
-            c1++;
+            public void inc1() {
+                synchronized(lock1) {
+                    c1++;
+                }
+            }
+
+            public void inc2() {
+                synchronized(lock2) {
+                    c2++;
+                }
+            }
         }
-    }
+        ```
 
-    public void inc2() {
-        synchronized(lock2) {
-            c2++;
-        }
-    }
-}
-```
 
-##### *Deadlock*
-O uso dos "locks" em ordens diferentes pode levar a um deadlock, pois o seguinte grafo de dependência poderá ser gerado:
-
-##### Deadlock
-
-```mermaid
-graph LR
-      T1 --> lock1 --> T2 --> lock2 --> T1
-```
-
-##### Sinalização
+###### Sinalização
 Usados corretamente, o bloco `synchronized` é executado de forma atômica, isto é, indivisível.
 Algumas operações muito simples são naturalmente atômicas, e não precisam ser "protegidas" pelo `synchronized`.
-Por exemplo, leituras e escritas de tipos básicos como (`int`, `char`, `byte`, mas não `long` ou `double`), ou variáveis declaradas `volatile`.
-
-Usando estas variáveis, é possível coordenar *threads*, por exemplo, assim:
-
-##### Espera ocupada
+Por exemplo, leituras e escritas de tipos básicos como `int`, `char` e `byte`, mas não `long` ou `double`, pois usam mais de uma palavra em algumas arquiteturas, ou variáveis declaradas `volatile`.
+Usando estas variáveis, é possível coordenar *threads*, como no exemplo a seguir.
 
 ```Java
 boolean condicao = false;
@@ -1077,11 +1083,8 @@ public void satisfacaCondicao() {
 ```
 
 
-Embora correto, esta abordagem não é eficiente, pois o primeiro método desperdiça computação. 
+Embora correta, esta abordagem, conhecida como **espera ocupada**, não é eficiente pois o desperdiça computação.
 Felizmente, em Java, todos os objetos implementam os métodos `wait` e `notify/notifyAll`, que podem ser usados para sincronizar eficientemente *threads*.
-
-
-##### Wait/Notify
 
 ```Java
 public class Sync{
@@ -1090,7 +1093,9 @@ public class Sync{
    public void espereCondicao() {
       while(!condicao) {
          try {
-            synch.wait();
+             synchronized(synch){
+                 synch.wait();
+             }
          } catch (InterruptedException e) {}
       }
       System.out.println("Condicao alcancada");
@@ -1098,16 +1103,20 @@ public class Sync{
 ...
    public void satisfacaCondicao() {
       condicao = true;
-      synch.notifyAll();
+      synchronized(synch){
+          synch.notifyAll();
+      }
    }
 }
 ```
 
+Neste exemplo, a execução da função `espereCondicao` é "pausada" por `#!java synch.wait()` até que uma notificação seja enviada via `#!java sync.notifiyAll()`, na função `satisfaçaCondicao`.
+Observe que estas operações só podem ocorrer dentro de blocos sincronizados na variável usada na sinalização.
 
-##### *Locks*
+###### *Locks*
 Outras abstrações para coordenação de *threads* estão disponíveis no pacote `java.util.concurrent`. 
 As mais simples delas são `java.util.concurrent.locks.Lock` e `java.util.concurrent.locks.ReentrantLock`. 
-Veja um exemplo de uso, notando o idioma de uso dentro de block `try/catch`.
+Veja um exemplo de uso, notando o idioma de uso dentro de block `try/catch/finally`, que garante que o *lock* será liberado a despeito de exceções no bloco.
 
 ```Java
 Lock l = new ReentrantLock();
@@ -1119,53 +1128,24 @@ Lock l = new ReentrantLock();
   }
 ```
 
+Como bem sabido, o uso dos "locks" em ordens diferentes pode levar a um *deadlock* pois um ciclo de dependências pode ser formado entre locks, detentores de locks e interessados em locks. O grafo de dependência seguinte exemplifica o cenário, em que o *thread* T1 obteve o lock2 e tenta obter o lock1, e o *thread* T2 obteve o lock1 e tenta obter o lock2.
 
-##### Executor
-Além de *threads*, Java disponibiliza `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
-
-* `Executor`
-* `ExecutorService`
-* `ScheduledExecutorService`
-
-```Java
-Executor e = ...;
-Runnable r = ...;
-e.execute(r);
+```mermaid
+graph LR
+      T1 --> lock1 --> T2 --> lock2 --> T1
 ```
 
-Executors normalmente implementam *thread pools*, que podem ser de diferentes tipos. 
-O mais simples é o de tamanho fixo em que há um número inicial de *threads* criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.
 
-##### ThreadPool
-`Executor e = java.util.concurrent.Executors.newFixedThreadPool();`
+###### Estruturas *thread-safe*
 
-* `newCachedThreadPool()` - *expandable thread pool*
-* `newSingleThreadExecutor()` - *single task at a time*
-* e outras versões
-* `ForkJoinPool`
-
-###### Fork/Join
-
-```
-if (my portion of the work is small enough)
-  do the work directly
-else
-  split my work into two pieces
-  invoke the two pieces and wait for the results
-```
-
-##### Estrutura para Coordenação de *Threads*
-
-Finalmente, Java também disponibiliza estruturas de dados que podem ser acessadas concorrentemente por múltiplos *threads* 
-sem risco de corrupção. 
-
+Finalmente, Java também disponibiliza estruturas de dados que podem ser acessadas concorrentemente por múltiplos *threads* sem risco de corrupção, denominadas *thread-safe*.
 
 * `BlockingQueue` - bloquei *threads*  se não houver elementos na filq.
 * `ConcurrentMap/ConcurrentHashMap` - operações atômicas;
    * `if (!m.containsKey(k)) m.put(k,v);`
    * `vOld = m.putIfAbsent(k,v);`
 
-##### Tipos Atômicos
+###### Tipos Atômicos
 
 ```java
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1188,7 +1168,7 @@ class AtomicCounter {
 ```
 
 
-##### ThreadLocal
+###### ThreadLocal
 ```java
 private static ThreadLocal<Integer> myId = new ThreadLocal<Integer>() {
    public Integer initialValue() {
@@ -1201,19 +1181,18 @@ public static Integer getMyId() {
 }
 ```
 
-##### Leia mais
+!!! tip "Leia mais"
+    Para aprender mais, muito mais sobre concorrência em Java, ótimas referências são:
 
-Para aprender mais, muito mais sobre concorrência em Java, ótimas referências são:
-
-* [Java Concurrency in Practice](http://jcip.net/)
-* [The Well-Grounded Java Developer](https://www.manning.com/books/the-well-grounded-java-developer)
-* [Concorrência em Java](http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html)
-* [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
-* [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
-* [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
+    * [Java Concurrency in Practice](http://jcip.net/)
+    * [The Well-Grounded Java Developer](https://www.manning.com/books/the-well-grounded-java-developer)
+    * [Concorrência em Java](http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html)
+    * [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
+    * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
+    * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
 
 
-#### Threads em Python
+#### Python
 
 Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*.
 A seguir são apresentados dois exemplos, usando o pacote `thread` ou `threading`.
@@ -1282,17 +1261,13 @@ thread2.start()
 print "Exiting Main Thread"
 ```
 
-##### Leia mais
-
-[Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
-
-
-### Exercício - Anel Multithread
-
-* Usando uma linguagem de alto-nível como C/C++/Java, escrever um programa que crie 30 threads e faça com que uma mensagem circule entre os mesmos. 
-* A mensagem é uma string aleatória de pelo menos 80 caracteres. 
-* A cada vez que um thread recebe a mensagem ele a imprime, modifica o primeiro caractere minúsculo para maiúsculo, caso exista, dorme por 1 segundo, e repassa a mensagem. 
-* Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. 
-* Antes de terminar, o processo deve imprimir a mensagem resultante.
+!!! tip "Leia mais"
+    [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
 
 
+!!! question "Exercício - Anel Multithread"
+    * Usando uma linguagem de alto-nível como C/C++/Java, escrever um programa que crie 30 threads e faça com que uma mensagem circule entre os mesmos. 
+    * A mensagem é uma string aleatória de pelo menos 80 caracteres. 
+    * A cada vez que um thread recebe a mensagem ele a imprime, modifica o primeiro caractere minúsculo para maiúsculo, caso exista, dorme por 1 segundo, e repassa a mensagem. 
+    * Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. 
+    * Antes de terminar, o processo deve imprimir a mensagem resultante.
