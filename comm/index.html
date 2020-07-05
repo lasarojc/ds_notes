@@ -407,15 +407,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#exemplo-python" class="md-nav__link">
     Exemplo Python
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -796,15 +796,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#exemplo-python" class="md-nav__link">
     Exemplo Python
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -919,31 +919,43 @@ Aqui discutiremos algumas destas funcionalidades e como podem e são implementad
 <p>Exceto por aplicações muito simples, processos em um sistema distribuídos trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
 Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura <em>no fio</em>, por exemplo:</p>
 <ul>
-<li>Diferentes linguagens de programação usadas para desenvolver os componentes.</li>
-<li>tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?</li>
-<li>paradigmas distintos: classe x estrutura</li>
-<li>conjunto de caracteres diferentes: ASCII x UTF</li>
-<li>Arquiteturas diferentes.</li>
-<li>ordem dos bytes<ul>
-<li>little endian? </li>
+<li>Diferentes linguagens de programação usadas para desenvolver os componentes.    <ul>
+<li>tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?   </li>
+<li>paradigmas distintos: classe x estrutura   </li>
+<li>conjunto de caracteres diferentes: ASCII x UTF   </li>
+</ul>
+</li>
+<li>Arquiteturas diferentes.    <ul>
+<li>ordem dos bytes   <ul>
+<li>little endian? <ul>
 <li>x64</li>
 <li>IA-32</li>
-<li>big endian? </li>
+</ul>
+</li>
+<li>big endian? <ul>
 <li>IP</li>
 <li>SPARC (&lt; V9)</li>
 <li>Motorola</li>
 <li>PowerPC</li>
-<li>bi-endian?  ARM, </li>
+</ul>
+</li>
+<li>bi-endian?  ARM, <ul>
 <li>MIPS, </li>
 <li>IA-64</li>
 </ul>
 </li>
+</ul>
+</li>
 <li>representação de ponto flutuante</li>
 <li>alinhamento de bytes</li>
-<li>Sistemas operacionais diferentes</li>
+</ul>
+</li>
+<li>Sistemas operacionais diferentes<ul>
 <li>crlf (DOS) x lf (Unix)</li>
-<li>fragmentação <br>
-  <a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png" /></a></li>
+</ul>
+</li>
+<li>fragmentação  <br />
+<a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="images/ipfrag.png" /></a></li>
 </ul>
 <h3 id="representacao-textual">Representação Textual</h3>
 <p>Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
@@ -1138,7 +1150,7 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
 </blockquote>
 <h3 id="thrift">Thrift</h3>
-<details class="todo"><summary>TODO</summary><p>Thrift como forma de representação de dados.</p>
+<details class="bug"><summary>TODO</summary><p>Thrift como forma de representação de dados.</p>
 </details>
 <h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
 <p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">1</a></sup>
@@ -1578,7 +1590,7 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 <h5 id="idl-grpc">IDL gRPC</h5>
 <p>Outras características da IDL do gRPC</p>
 <ul>
-<li>Tipos básicos</li>
+<li>Tipos básicos<ul>
 <li>bool: boolean (true/false)</li>
 <li>double: 64-bit; ponto-flutuante </li>
 <li>float: 32-bit; ponto-flutuante </li>
@@ -1589,45 +1601,18 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 <li>sfixedXX: codificação de tamanho fixo</li>
 <li>bytes: 8-bit; inteiro sinalizado</li>
 <li>string: string UTF-8 ou ASCII 7-bit</li>
-<li>
-<p>Any: tipo indefinido</p>
+<li>Any: tipo indefinido</li>
+</ul>
 </li>
-<li>
-<p><a href="https://developers.google.com/protocol-buffers/docs/proto3">Diferentes traduções</a></p>
-</li>
+<li><a href="https://developers.google.com/protocol-buffers/docs/proto3">Diferentes traduções</a></li>
 <li>
 <p>Coleções
 Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.</p>
 </li>
 <li>
 <p><em>Streams</em></p>
-</li>
-<li>Do lado do servidor</li>
-</ul>
-<p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">listOfHi</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;e aih&quot;</span><span class="p">,</span> <span class="s">&quot;ola&quot;</span><span class="p">,</span> <span class="s">&quot;ciao&quot;</span><span class="p">,</span> <span class="s">&quot;bao&quot;</span><span class="p">,</span> <span class="s">&quot;howdy&quot;</span><span class="p">,</span> <span class="s">&quot;s&#39;up&quot;</span><span class="p">);</span>
-
- <span class="nd">@Override</span>
- <span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOlas</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
- <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hi</span><span class="p">:</span> <span class="n">listOfHi</span><span class="p">)</span>
- <span class="p">{</span>
-   <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="n">hi</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
-   <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
- <span class="p">}</span>
- <span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
- <span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-  - Do lado do cliente</p>
+<ul>
+<li>Do lado do servidor <br />
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1638,21 +1623,47 @@ Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nom
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code> <span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
- <span class="k">try</span> <span class="p">{</span>
-     <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-     <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
-       <span class="n">OlaReply</span> <span class="n">response</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-       <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-     <span class="p">}</span>
-  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-     <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
-     <span class="k">return</span><span class="p">;</span>
-  <span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">listOfHi</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;e aih&quot;</span><span class="p">,</span> <span class="s">&quot;ola&quot;</span><span class="p">,</span> <span class="s">&quot;ciao&quot;</span><span class="p">,</span> <span class="s">&quot;bao&quot;</span><span class="p">,</span> <span class="s">&quot;howdy&quot;</span><span class="p">,</span> <span class="s">&quot;s&#39;up&quot;</span><span class="p">);</span>
 
-<h4 id="exemplo-python">Exemplo Python</h4>
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOlas</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hi</span><span class="p">:</span> <span class="n">listOfHi</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="n">hi</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
+  <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></li>
+<li>Do lado do cliente <br />
+ <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<span class="k">try</span> <span class="p">{</span>
+   <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
+     <span class="n">OlaReply</span> <span class="n">response</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+     <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+   <span class="p">}</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
+   <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table></li>
+</ul>
+</li>
+</ul>
+<h5 id="exemplo-python">Exemplo Python</h5>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1925,10 +1936,10 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 <h4 id="referencias">Referências</h4>
 <p><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></p>
 <h3 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h3>
-<details class="todo"><summary>TODO</summary><p>Como usar RMI.</p>
+<details class="bug"><summary>TODO</summary><p>Como usar RMI.</p>
 </details>
 <h2 id="comunicacao-orientada-a-mensagens">Comunicação orientada a Mensagens</h2>
-<details class="todo"><summary>TODO</summary><ul>
+<details class="bug"><summary>TODO</summary><ul>
 <li><a href="https://en.wikipedia.org/wiki/Message-oriented_middleware">MOM</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Enterprise_service_bus">Enterprise Message Bus</a></li>
 <li><a href="https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/">To Message Bus or Not: distributed system design</a></li>
@@ -1936,7 +1947,7 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 </details>
 <p>O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.</p>
 <h2 id="publishsubscribe">Publish/Subscribe</h2>
-<details class="todo"><summary>TODO</summary><p>Descrever pub/sub e diferenciar de MOM</p>
+<details class="bug"><summary>TODO</summary><p>Descrever pub/sub e diferenciar de MOM</p>
 </details>
 <p>O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.</p>
 <div class="footnote">

@@ -423,61 +423,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#para-saber-mais" class="md-nav__link">
-    Para saber mais
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outras-arquiteturas" class="md-nav__link">
-    Outras arquiteturas
-  </a>
-  
-    <nav class="md-nav" aria-label="Outras arquiteturas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#soa" class="md-nav__link">
-    SOA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mom" class="md-nav__link">
-    MOM
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#publishsubscribe" class="md-nav__link">
-    Publish/Subscribe
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#message-queues" class="md-nav__link">
-    Message Queues
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#event-sourcing" class="md-nav__link">
-    Event Sourcing
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -773,61 +718,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#para-saber-mais" class="md-nav__link">
-    Para saber mais
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outras-arquiteturas" class="md-nav__link">
-    Outras arquiteturas
-  </a>
-  
-    <nav class="md-nav" aria-label="Outras arquiteturas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#soa" class="md-nav__link">
-    SOA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mom" class="md-nav__link">
-    MOM
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#publishsubscribe" class="md-nav__link">
-    Publish/Subscribe
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#message-queues" class="md-nav__link">
-    Message Queues
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#event-sourcing" class="md-nav__link">
-    Event Sourcing
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -972,7 +862,7 @@ Efetivamente, temos a rede sobreposta à esquerda.</p>
 <img alt="" src="images/02-10.png" /></li>
 <li>O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.</li>
 <li>O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância, onde<ul>
-<li>a = (x,y)$, <span><span class="MathJax_Preview">b = (x', y')</span><script type="math/tex">b = (x', y')</script></span></li>
+<li><span><span class="MathJax_Preview">a = (x,y), b = (x', y')</span><script type="math/tex">a = (x,y), b = (x', y')</script></span></li>
 <li><span><span class="MathJax_Preview">dx_{a,b} = min(|x - x'|, N - |x - x'|)</span><script type="math/tex">dx_{a,b} = min(|x - x'|, N - |x - x'|)</script></span></li>
 <li><span><span class="MathJax_Preview">dy_{a,b} = min(|y - y'|, N - |y - y'|)</span><script type="math/tex">dy_{a,b} = min(|y - y'|, N - |y - y'|)</script></span></li>
 </ul>
@@ -1324,7 +1214,8 @@ O desenvolvimento, manutenção e operação de microsserviços acontece em time
 Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como microsserviço, desenvolvê-la e modificar o monolito para usar o microsserviço.
 O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
 Mais fácil dito que feito, há muita documentação orientando o processo.</p>
-<h3 id="para-saber-mais">Para saber mais</h3>
+<div class="admonition tip">
+<p class="admonition-title">Para saber mais</p>
 <p>Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
 Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.</p>
 <p>Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista<br />
@@ -1333,21 +1224,25 @@ ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles
 <p>Para entender os princípios por trás do uso da arquitetura,<br />
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 <p>Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por <strong>menos de 16 segundos por ano</strong>. <br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
-Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
-Os diferentes tiposde falhas são injetados por um "<strong>exército de macacos do caos</strong>"<br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-<p>Para uma visão prática da implementação de microsserviços usando AWS, veja
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-<h2 id="outras-arquiteturas">Outras arquiteturas</h2>
-<h3 id="soa">SOA</h3>
-<p>Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</p>
-<h3 id="mom">MOM</h3>
-<h3 id="publishsubscribe">Publish/Subscribe</h3>
-<h3 id="message-queues">Message Queues</h3>
-<h3 id="event-sourcing">Event Sourcing</h3>
-<p><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a>
-<a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   </p>
+</div>
+<p>Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
+    Os diferentes tiposde falhas são injetados por um "<strong>exército de macacos do caos</strong>"<br />
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
+    Para uma visão prática da implementação de microsserviços usando AWS, veja
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<details class="bug"><summary>TODO</summary><ul>
+<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
+<li>MOM </li>
+<li>Publish/Subscribe </li>
+<li>Message Queues</li>
+<li>Event Sourcing    <ul>
+<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
+<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
+</ul>
+</li>
+</ul>
+</details>
 <div class="footnote">
 <hr />
 <ol>
