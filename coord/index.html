@@ -299,8 +299,36 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#eleicao-de-representate-de-sala" class="md-nav__link">
-    Eleição de representate de sala
+  <a href="#algoritmo-do-brigao-bully" class="md-nav__link">
+    Algoritmo do Brigão (Bully)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-anel" class="md-nav__link">
+    Algoritmo do Anel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-chang-robert" class="md-nav__link">
+    Algoritmo de Chang &amp; Robert
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-yoyo" class="md-nav__link">
+    Algoritmo do YoYo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questoes-importantes" class="md-nav__link">
+    Questões importantes
   </a>
   
 </li>
@@ -452,8 +480,36 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#eleicao-de-representate-de-sala" class="md-nav__link">
-    Eleição de representate de sala
+  <a href="#algoritmo-do-brigao-bully" class="md-nav__link">
+    Algoritmo do Brigão (Bully)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-anel" class="md-nav__link">
+    Algoritmo do Anel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-chang-robert" class="md-nav__link">
+    Algoritmo de Chang &amp; Robert
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-yoyo" class="md-nav__link">
+    Algoritmo do YoYo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questoes-importantes" class="md-nav__link">
+    Questões importantes
   </a>
   
 </li>
@@ -726,302 +782,188 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <p>Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
-<details class="bug"><summary>TODO</summary><p>Outros algoritmos</p>
+<details class="bug"><summary>TODO</summary><p>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>
+Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a>
+Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>
+<a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></p>
 </details>
 <h2 id="eleicao-de-lideres">Eleição de Líderes</h2>
-<p>O problema da escolha de um processo centralizador pode ser posto informamente como:</p>
-<ul>
-<li>Procedimento pelo qual um processo é escolhido dentre os demais processos.</li>
-<li>Todos os processos identificam o mesmo processo como eleito.</li>
-<li>Uma nova eleição deve acontecer sempre que o líder corrente se tornar indisponível.</li>
+<p>O problema da escolha de um processo centralizador, ou líder, pode ser posto informalmente como o procedimento pelo qual <strong>um processo é escolhido</strong> dentre os demais processos, sendo que o <strong>processo escolhido é ciente da escolha</strong> e <strong>todos os demais processos o identificam como eleito</strong>. Uma <strong>nova eleição</strong> deve acontecer sempre que o líder se tornar <strong>indisponível</strong>.
+Para entendermos melhor o problema, tentemos desenvolver um protocolo simples para escolhermos um líder, por exemplo, em sua turma da disciplina de Sistemas Distribuídos. </p>
+<p>Em primeiro lugar, precisamos definir um conjunto de candidatos: são todos elegíveis ou apenas um subconjunto se candidata? 
+Todos se conhecem ou há grupos incomunicáveis diretamente dentro da turma?
+Mesmo que um colega seja bem conectado na turma, de que adianta ele ser líder se frequentemente não está presente quando necessário?
+Em termos computacionais, estas questões são relevantes pois todos os processoes não nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
+Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.</p>
+<p>Em segundo lugar, ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos identificar processos, de forma inequívoca. 
+Dentro de uma única máquina, identificamos processos facilmente usando seu <strong>pid</strong>, ou <em>process id</em>, um inteiro associado a cada processoinstanciado pelo sistema operacional; o pid é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, o <em>host</em> é reiniciado, os pid também são, e portanto esta identificação não é duradoura. Mais importante, o pid só faz sentido dentro de uma única máquina e não em um sistema distribuído.</p>
+<p>Se apenas uma instância do processo executa em um mesmo <em>host</em>, então o identificador do <em>host</em> em si é suficiente e, de fato, comumente utilizado. Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
+<p>Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos a ao problema de eleger um líder para sua turma.
+Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
+A despeito desta opção gerar um líder não muito popular e dos abundantes memes sobre <em>bullying</em>, como este,<br />
+<img alt="Why you bully?" src="images/why-you-bully-meme.jpg" /><br />
+o algoritmo do brigão é um clássico.</p>
+<h3 id="algoritmo-do-brigao-bully">Algoritmo do Brigão (<em>Bully</em>)</h3>
+<p>No algoritmo do brigão, alguma características comparável dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+Por exemplo, pode ser vantajoso ter um um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.</p>
+<p>Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o maior identificador seja o melhor candidato. Os maiores processos, os "brigões", elimina os processos menores da competição, sempre que uma eleição acontecer. 
+O algoritmo, é o seguinte, onde <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> e <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> são usados para representar tanto identificadores de processos quando os processos em si.</p>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo do Brigão<ul>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> suspeita que o líder não está presente<ul>
+<li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> envia mensagem (ELEICAO,<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>) para todos os processos com identificador maior que <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></li>
+<li>Se <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> não recebe (OK,<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>) de outros processos, envia (COORD,<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>) para todos os processos</li>
+<li>Se algum responde, aguarda notificação do novo líder</li>
 </ul>
-<p>Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que precisamos?</p>
-<hr />
-<h5 id="eleicao-de-representate-de-sala">Eleição de representate de sala</h5>
-<ul>
-<li>Votação?</li>
-<li>Identidade</li>
-<li>Teste de força?</li>
-<li>Estabilidade?</li>
+</li>
 </ul>
-<hr />
-<h1 id="para-ser-terminado">PARA SER TERMINADO</h1>
-<p>\begin{frame}{Identidade}
-Antes de qualquer coisa, é preciso ser possível identificar um processo.</p>
-<p>Como isso pode ser feito, na prática?</p>
-<p>\pause</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item PID -- Process Identier
-    \item IP -- Internet Protocol Address
-    \item Socket -- IP + Port
-\end{itemize}</script>
-\end{frame}</p>
-<p>\begin{frame}{Algoritmo do Brigão/Bully}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Selecione o processo <code>vivo'' com o maior identificador!
-    \item Quando $p$ acha que o líder está morto:
-    \begin{itemize}
-        \item Envia mensagem</code>eleição,<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>'' para todos os processo com identificador maior
-        \item Se ninguém responde, <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> assume como líder
-        \item Se algum responde, aguarda notificação.
-    \end{itemize}</script>
-    \item Quando <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> recebe <code>eleição,$p$''
-    \begin{itemize}
-        \item Envia</code>ok'' para <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>
-        \item Fica ciente de que o coordenador atual está morto
-    \end{itemize}
-\pause
-    \item Ao assumir como líder, o processo notifica a todos os outros
-    \item Se um processo falho se recupera, inicia uma eleição.</p>
-<p>\end{itemize}
-\end{frame}</p>
-<p>\begin{frame}{Algoritmo do Brigão/Bully}
-    \includegraphics[width=.75\textwidth]{images/bully}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\href{https://my.oschina.net/juliashine/blog/88173}{Fonte}
-</code></pre></div>
-</td></tr></table>
-
-<p>\end{frame}</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Algoritmo do Anel}
-\begin{itemize}
-    \item Organize os nós em um anel lógico
-    \item Quando $p$ acha que o líder está morto:
-    \begin{itemize}
-        \item Envia mensagem \{$p$\} para ``a direita'' no anel.
-        \item Se processo à direita está falho, salte-o, e assim por diante.
-    \end{itemize}
-    \pause
-    \item Quando $q$ recebe \{$p$\}
-    \begin{itemize}
-        \item Envia  \{$p,q$\} para a direita.
-    \end{itemize}
-    \pause
-    \item Quando $p$ recebe $S$ tal que $q \in S$
-    \begin{itemize}
-        \item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
-    \end{itemize}
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Algoritmo do Anel}
-\begin{itemize}
-    \item Organize os nós em um anel lógico
-    \item Quando $p$ acha que o líder está morto:
-    \begin{itemize}
-        \item Envia mensagem \{$p$\} para ``a direita'' no anel.
-        \item Se processo à direita está falho, salte-o, e assim por diante.
-    \end{itemize}
-    \pause
-    \item Quando $q$ recebe \{$p$\}
-    \begin{itemize}
-        \item Envia  \{$p,q$\} para a direita.
-    \end{itemize}
-    \pause
-    \item Quando $p$ recebe $S$ tal que $q \in S$
-    \begin{itemize}
-        \item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
-    \end{itemize}
-\end{itemize}
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Chang \&amp; Robert's}
-\begin{itemize}
-    \item Organize os nós em um anel lógico
-    \item Quando $p$ acha que o líder está morto:
-    \begin{itemize}
-        \item Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
-        \item Liga flag ``participante''
-    \end{itemize}
-    \pause
-    \item Quando $q$ recebe $p$
-    \begin{itemize}
-        \item Se $p &gt; q$, repassa $p$ para a direita.
-        \item Senão, envia  $q$ para a direita.
-        \item Liga flag ``participante''        
-    \end{itemize}
-    \pause
-    \item Quando $p$ recebe $q$ da esquerda 
-    \begin{itemize}
-        \item Se ``participante'' está ligado, identifica $q$ como líder.
-        \item Desliga ``participante''
-        \item Se $p \neq q$, repassa $q$ à direita
-    \end{itemize}
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Chang \& Robert's}
-\begin{itemize}
-    \item Organize os nós em um anel lógico
-    \item Quando $p$ acha que o líder está morto:
-    \begin{itemize}
-        \item Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
-        \item Liga flag ``participante''
-    \end{itemize}
-    \pause
-    \item Quando $q$ recebe $p$
-    \begin{itemize}
-        \item Se $p > q$, repassa $p$ para a direita.
-        \item Senão, envia  $q$ para a direita.
-        \item Liga flag ``participante''        
-    \end{itemize}
-    \pause
-    \item Quando $p$ recebe $q$ da esquerda 
-    \begin{itemize}
-        \item Se ``participante'' está ligado, identifica $q$ como líder.
-        \item Desliga ``participante''
-        \item Se $p \neq q$, repassa $q$ à direita
-    \end{itemize}
-\end{itemize}
-\end{frame}</script>
-</div>
-<p>\begin{frame}[allowframebreaks]{Yo-Yo}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Grafos incompletos
-    \item Duas fases
-\end{itemize}</script>
 </p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\framebreak
-
-\begin{block}{Fase 1}
-\begin{itemize}
-    \item $p$ envia seu identificador para seus vizinhos.
-    \item Quando $q$ recebe $p$
-    \begin{itemize}
-        \item Se $p&gt;q$, adiciona aresta $q\rightarrow p$
-        \item Senão, adiciona aresta $q\leftarrow p$
-        \item Fonte (source)
-        \item Vertedouro (sink)
-        \item Interno
-    \end{itemize}
-\end{itemize}
-\end{block}
-</code></pre></div>
-</td></tr></table>
-
-<p>\framebreak</p>
+<ul>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> recebe (ELEICAO,<span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>), <span><span class="MathJax_Preview">q &lt; p</span><script type="math/tex">q < p</script></span>
+        * Envia (OK,<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>)</li>
+<li>Se um processo falho se recupera, inicia uma eleição</li>
+</ul>
+</div>
+<p><img alt="Bully algorithm" src="images/bully.png" /></p>
+<details class="todo"><summary>TODO</summary><p>Explicar passos.
+  Expandir próximos</p>
+</details>
+<h3 id="algoritmo-do-anel">Algoritmo do Anel</h3>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo do Anel</p>
+<ul>
+<li>Organize os nós em um anel lógico</li>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> acha que o líder está morto:<ul>
+<li>Envia mensagem {<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>} para ``a direita'' no anel.<ul>
+<li>Se processo à direita está falho, salte-o, e assim por diante.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Quando <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> recebe {<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>}<ul>
+<li>Envia  {<span><span class="MathJax_Preview">p,q</span><script type="math/tex">p,q</script></span>} para a direita.</li>
+</ul>
+</li>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> recebe <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> tal que <span><span class="MathJax_Preview">q \in S</span><script type="math/tex">q \in S</script></span><ul>
+<li>Escolhe menor id em <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>, por exemplo, e anuncia como líder.</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="algoritmo-de-chang-robert">Algoritmo de Chang &amp; Robert</h3>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo de Chang e Robert</p>
+<ul>
+<li>Organize os nós em um anel lógico</li>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> acha que o líder está morto:<ul>
+<li>Envia mensagem <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> para ``a direita'' no anel, saltando falhos.</li>
+<li>Liga flag ``participante''</li>
+</ul>
+</li>
+<li>Quando <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> recebe <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span><ul>
+<li>Se <span><span class="MathJax_Preview">p &gt; q</span><script type="math/tex">p > q</script></span>, repassa <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> para a direita.</li>
+<li>Senão, envia  <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> para a direita.</li>
+<li>Liga flag ``participante''        </li>
+</ul>
+</li>
+<li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> recebe <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> da esquerda <ul>
+<li>Se ``participante'' está ligado, identifica <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> como líder.</li>
+<li>Desliga ``participante''</li>
+<li>Se <span><span class="MathJax_Preview">p \neq q</span><script type="math/tex">p \neq q</script></span>, repassa <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> à direita</li>
+</ul>
+</li>
+</ul>
+</div>
+<h3 id="algoritmo-do-yoyo">Algoritmo do YoYo</h3>
+<p><a href="https://en.wikipedia.org/wiki/Leader_election">Fonte</a></p>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo do YoYo</p>
+<ul>
+<li>Grafos incompletos</li>
+<li>
+<p>Duas fases</p>
+</li>
+<li>
+<p>Fase 1</p>
+<ul>
+<li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> envia seu identificador para seus vizinhos.</li>
+<li>Quando <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> recebe <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span><ul>
+<li>Se <span><span class="MathJax_Preview">p&gt;q</span><script type="math/tex">p>q</script></span>, adiciona aresta <span><span class="MathJax_Preview">q\rightarrow p</span><script type="math/tex">q\rightarrow p</script></span></li>
+<li>Senão, adiciona aresta <span><span class="MathJax_Preview">q\leftarrow p</span><script type="math/tex">q\leftarrow p</script></span></li>
+<li>Fonte (source)</li>
+<li>Vertedouro (sink)</li>
+<li>Interno</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Fase 2</p>
+<ul>
+<li>Fontes enviam seus identificadores para seus vizinhos.</li>
+<li>Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.</li>
+<li>
+<p>Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.</p>
+</li>
+<li>
+<p>Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.</p>
+</li>
+<li>Interno repassa S para o vizinho correspondente ao menor id e N para os demais.</li>
+<li>Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.</li>
+<li>N inverte a direção das arestas em que trafega.</li>
+<li>Possível otimizar para eliminar nós e arestas irrelevantes.</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Exemplo
+<img alt="Fonte: Hemis62 - Own work, CC BY-SA 4.0" src="images/yoyo.png" /></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
 4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{block}{Fase 2: Yo-\alert{Yo}}
-\begin{itemize}
-\item Fontes enviam seus identificadores para seus vizinhos.
-\item Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
-\item Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
-\end{itemize}
-\end{block}
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a) The network, 
+b) Oriented network after setup phase, 
+c) YO- phase in which source values are passed, 
+d)-YO phase sending responses from sinks, 
+e) updated structure after -YO phase.
 </code></pre></div>
 </td></tr></table>
 
-<p>\framebreak</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{block}{Fase 2: \alert{Yo}-Yo}
-\begin{itemize}
-\item Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
-\item Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
-\item Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
-\item N inverte a direção das arestas em que trafega.
-\item Possível otimizar para eliminar nós e arestas irrelevantes.
-\end{itemize}
-\end{block}
-</code></pre></div>
-</td></tr></table>
-
-<p>\framebreak</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\includegraphics[width=.8\textwidth]{images/yoyo}*
-</code></pre></div>
-</td></tr></table>
-
-<p>\begin{small}
-a) The network, b) Oriented network after setup phase, c) YO- phase in which source values are passed, d)-YO phase sending responses from sinks, e) updated structure after -YO phase. **</p>
-<p>*\href{<a href="https://commons.wikimedia.org/w/index.php?curid=36757409}{Fonte">https://commons.wikimedia.org/w/index.php?curid=36757409}{Fonte</a>: Hemis62 - Own work, CC BY-SA 4.0, }</p>
-<p>**\href{<a href="https://en.wikipedia.org/wiki/Leader_election}{Fonte">https://en.wikipedia.org/wiki/Leader_election}{Fonte</a>}
-\end{small}
-\end{frame}</p>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Problemas?}
-O que acontece se a rede é particionada?
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Problemas?}
-O que acontece se a rede é particionada?
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Split Brain}
-\begin{itemize}
-    \item Network Partitioning: rede dividida em duas partes incomunicáveis.
-    \item Múltiplas eleições podem acontecer em paralelo.
-    \item Múltiplos líderes em paralelo.
-    \item Como lidar com este problema? 
-    \pause
-    \begin{itemize}
-        \item Use primeiro algoritmo e só eleja líder após maioria de votos.
-        \item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
-    \end{itemize}
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Split Brain}
-\begin{itemize}
-    \item Network Partitioning: rede dividida em duas partes incomunicáveis.
-    \item Múltiplas eleições podem acontecer em paralelo.
-    \item Múltiplos líderes em paralelo.
-    \item Como lidar com este problema? 
-    \pause
-    \begin{itemize}
-        \item Use primeiro algoritmo e só eleja líder após maioria de votos.
-        \item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
-    \end{itemize}
-\end{itemize}
-\end{frame}</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{frame}{Detecção de Falhas}
-Eleição de líderes perfeita é impossível em cenários realísticos.
-\begin{itemize}
-    \item Detecção de falhas perfeita é impossível...
-    \item em sistemas distribuídos assíncronos (Internet)
-    \item sujeitos à partições (Internet)
-    \item com requisitos de disponibilidade total.
-    \pause
-    \item Falemos mais sobre este problema depois.
-\end{itemize}
-\end{frame}</div>
-<script type="math/tex; mode=display">\begin{frame}{Detecção de Falhas}
-Eleição de líderes perfeita é impossível em cenários realísticos.
-\begin{itemize}
-    \item Detecção de falhas perfeita é impossível...
-    \item em sistemas distribuídos assíncronos (Internet)
-    \item sujeitos à partições (Internet)
-    \item com requisitos de disponibilidade total.
-    \pause
-    \item Falemos mais sobre este problema depois.
-\end{itemize}
-\end{frame}</script>
-</div>
+<h3 id="questoes-importantes">Questões importantes</h3>
+<p>Problemas?</p>
+<ul>
+<li>Estabilidade?</li>
+<li>
+<p>O que acontece se a rede é particionada?</p>
+<ul>
+<li>Split Brain   <ul>
+<li>Network Partitioning: rede dividida em duas partes incomunicáveis.</li>
+<li>Múltiplas eleições podem acontecer em paralelo.</li>
+<li>Múltiplos líderes em paralelo.</li>
+<li>Como lidar com este problema? <ul>
+<li>Use primeiro algoritmo e só eleja líder após maioria de votos.</li>
+<li>Rede redundante, disco compartilhado, centralização, volta ao primeiro caso.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Detecção de Falhas</p>
+<ul>
+<li>Eleição de líderes perfeita é impossível em cenários realísticos.<ul>
+<li>Detecção de falhas perfeita é impossível...</li>
+<li>em sistemas distribuídos assíncronos (Internet)</li>
+<li>sujeitos à partições (Internet)</li>
+<li>com requisitos de disponibilidade total.</li>
+<li>Falemos mais sobre este problema depois.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
                 
               
               
