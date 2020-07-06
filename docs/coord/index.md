@@ -250,204 +250,142 @@ Por um lado, o uso de um líder para coordenar ações em um SD simplifica o pro
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
 
 ???bug "TODO"
-    Outros algoritmos
+    Maekawa - Diminui número de votos necessários ([descrição](https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp)
+    Lamport - Usa relógios lógicos, mas é possível entender sem este background ([descriçao](https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/)
+    Ricart-Agrawala - Melhora algoritmo de Lamport ([descrição](https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp)
+    [Distributed-Mutual-Exclusion-slides](https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf)
 
 ## Eleição de Líderes
 
-O problema da escolha de um processo centralizador pode ser posto informamente como:
+O problema da escolha de um processo centralizador, ou líder, pode ser posto informalmente como o procedimento pelo qual **um processo é escolhido** dentre os demais processos, sendo que o **processo escolhido é ciente da escolha** e **todos os demais processos o identificam como eleito**. Uma **nova eleição** deve acontecer sempre que o líder se tornar **indisponível**.
+Para entendermos melhor o problema, tentemos desenvolver um protocolo simples para escolhermos um líder, por exemplo, em sua turma da disciplina de Sistemas Distribuídos. 
 
-* Procedimento pelo qual um processo é escolhido dentre os demais processos.
-* Todos os processos identificam o mesmo processo como eleito.
-* Uma nova eleição deve acontecer sempre que o líder corrente se tornar indisponível.
+Em primeiro lugar, precisamos definir um conjunto de candidatos: são todos elegíveis ou apenas um subconjunto se candidata? 
+Todos se conhecem ou há grupos incomunicáveis diretamente dentro da turma?
+Mesmo que um colega seja bem conectado na turma, de que adianta ele ser líder se frequentemente não está presente quando necessário?
+Em termos computacionais, estas questões são relevantes pois todos os processoes não nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
+Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
 
-Experimentemos com protocolos triviais. Vamos eleger um líder na sala. Do que precisamos?
+Em segundo lugar, ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos identificar processos, de forma inequívoca. 
+Dentro de uma única máquina, identificamos processos facilmente usando seu **pid**, ou *process id*, um inteiro associado a cada processoinstanciado pelo sistema operacional; o pid é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, o *host* é reiniciado, os pid também são, e portanto esta identificação não é duradoura. Mais importante, o pid só faz sentido dentro de uma única máquina e não em um sistema distribuído.
 
----
-##### Eleição de representate de sala
+Se apenas uma instância do processo executa em um mesmo *host*, então o identificador do *host* em si é suficiente e, de fato, comumente utilizado. Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um **parâmetro** passado na inicialização do processo ou a combinação **IP/porta**.
 
-* Votação?
-  * Identidade
-* Teste de força?
+Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos a ao problema de eleger um líder para sua turma.
+Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
+A despeito desta opção gerar um líder não muito popular e dos abundantes memes sobre *bullying*, como este,  
+![Why you bully?](./images/why-you-bully-meme.jpg)  
+o algoritmo do brigão é um clássico.
+
+### Algoritmo do Brigão (*Bully*)
+No algoritmo do brigão, alguma características comparável dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+Por exemplo, pode ser vantajoso ter um um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
+
+Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o maior identificador seja o melhor candidato. Os maiores processos, os "brigões", elimina os processos menores da competição, sempre que uma eleição acontecer. 
+O algoritmo, é o seguinte, onde $p$ e $q$ são usados para representar tanto identificadores de processos quando os processos em si.
+
+!!!note "Algoritmo do Brigão"
+        * Quando $p$ suspeita que o líder não está presente
+            * $p$ envia mensagem (ELEICAO,$p$) para todos os processos com identificador maior que $p$
+            * Se $p$ não recebe (OK,$p$) de outros processos, envia (COORD,$p$) para todos os processos
+            * Se algum responde, aguarda notificação do novo líder
+	* Quando $p$ recebe (ELEICAO,$q$), $q < p$
+            * Envia (OK,$p$)
+	* Se um processo falho se recupera, inicia uma eleição
+	
+![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](./images/bully.png)
+
+???todo "TODO"
+      Explicar passos.
+      Expandir próximos
+
+	
+	
+### Algoritmo do Anel
+
+!!!note "Algoritmo do Anel"
+     * Organize os nós em um anel lógico
+     * Quando $p$ acha que o líder está morto:
+          * Envia mensagem \{$p$\} para ``a direita'' no anel.
+              * Se processo à direita está falho, salte-o, e assim por diante.
+     * Quando $q$ recebe \{$p$\}
+          * Envia  \{$p,q$\} para a direita.
+     * Quando $p$ recebe $S$ tal que $q \in S$
+          *  Escolhe menor id em $S$, por exemplo, e anuncia como líder.
+
+### Algoritmo de Chang & Robert 
+
+!!!note "Algoritmo de Chang e Robert"
+	* Organize os nós em um anel lógico
+	* Quando $p$ acha que o líder está morto:
+		* Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
+		* Liga flag ``participante''
+	* Quando $q$ recebe $p$
+		* Se $p > q$, repassa $p$ para a direita.
+		* Senão, envia  $q$ para a direita.
+		* Liga flag ``participante''		
+	* Quando $p$ recebe $q$ da esquerda 
+		* Se ``participante'' está ligado, identifica $q$ como líder.
+		* Desliga ``participante''
+		* Se $p \neq q$, repassa $q$ à direita
+
+### Algoritmo do YoYo 
+
+[Fonte](https://en.wikipedia.org/wiki/Leader_election)
+
+!!!note "Algoritmo do YoYo"
+	* Grafos incompletos
+	* Duas fases
+
+	* Fase 1
+		* $p$ envia seu identificador para seus vizinhos.
+		* Quando $q$ recebe $p$
+			* Se $p>q$, adiciona aresta $q\rightarrow p$
+			* Senão, adiciona aresta $q\leftarrow p$
+			* Fonte (source)
+			* Vertedouro (sink)
+			* Interno
+
+	* Fase 2
+	      * Fontes enviam seus identificadores para seus vizinhos.
+	      * Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
+	      * Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
+
+	      * Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
+	      * Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
+	      * Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
+	      * N inverte a direção das arestas em que trafega.
+	      * Possível otimizar para eliminar nós e arestas irrelevantes.
+
+
+Exemplo
+![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](./images/yoyo.png)
+
+    a) The network, 
+    b) Oriented network after setup phase, 
+    c) YO- phase in which source values are passed, 
+    d)-YO phase sending responses from sinks, 
+    e) updated structure after -YO phase.
+
+
+### Questões importantes
+
+Problemas?
+
 * Estabilidade?
+* O que acontece se a rede é particionada?
+    * Split Brain   
+        * Network Partitioning: rede dividida em duas partes incomunicáveis.
+        * Múltiplas eleições podem acontecer em paralelo.
+        * Múltiplos líderes em paralelo.
+        * Como lidar com este problema?	
+              * Use primeiro algoritmo e só eleja líder após maioria de votos.
+              * Rede redundante, disco compartilhado, centralização, volta ao primeiro caso.
 
----
-
-PARA SER TERMINADO
-==================
-
-
-\begin{frame}{Identidade}
-Antes de qualquer coisa, é preciso ser possível identificar um processo.
-
-Como isso pode ser feito, na prática?
-
-\pause
-
-\begin{itemize}
-	\item PID -- Process Identier
-	\item IP -- Internet Protocol Address
-	\item Socket -- IP + Port
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Algoritmo do Brigão/Bully}
-\begin{itemize}
-	\item Selecione o processo ``vivo'' com o maior identificador!
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem ``eleição,$p$'' para todos os processo com identificador maior
-		\item Se ninguém responde, $p$ assume como líder
-		\item Se algum responde, aguarda notificação.
-	\end{itemize}
-	\item Quando $q$ recebe ``eleição,$p$''
-	\begin{itemize}
-		\item Envia ``ok'' para $p$
-		\item Fica ciente de que o coordenador atual está morto
-	\end{itemize}
-\pause
-	\item Ao assumir como líder, o processo notifica a todos os outros
-	\item Se um processo falho se recupera, inicia uma eleição.
-	
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Algoritmo do Brigão/Bully}
-	\includegraphics[width=.75\textwidth]{images/bully}
-	
-	\href{https://my.oschina.net/juliashine/blog/88173}{Fonte}
-\end{frame}
-
-\begin{frame}{Algoritmo do Anel}
-\begin{itemize}
-	\item Organize os nós em um anel lógico
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem \{$p$\} para ``a direita'' no anel.
-		\item Se processo à direita está falho, salte-o, e assim por diante.
-	\end{itemize}
-	\pause
-	\item Quando $q$ recebe \{$p$\}
-	\begin{itemize}
-		\item Envia  \{$p,q$\} para a direita.
-	\end{itemize}
-	\pause
-	\item Quando $p$ recebe $S$ tal que $q \in S$
-	\begin{itemize}
-		\item Escolhe menor id em $S$, por exemplo, e anuncia como líder.
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Chang \& Robert's}
-\begin{itemize}
-	\item Organize os nós em um anel lógico
-	\item Quando $p$ acha que o líder está morto:
-	\begin{itemize}
-		\item Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
-		\item Liga flag ``participante''
-	\end{itemize}
-	\pause
-	\item Quando $q$ recebe $p$
-	\begin{itemize}
-		\item Se $p > q$, repassa $p$ para a direita.
-		\item Senão, envia  $q$ para a direita.
-		\item Liga flag ``participante''		
-	\end{itemize}
-	\pause
-	\item Quando $p$ recebe $q$ da esquerda 
-	\begin{itemize}
-		\item Se ``participante'' está ligado, identifica $q$ como líder.
-		\item Desliga ``participante''
-		\item Se $p \neq q$, repassa $q$ à direita
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}[allowframebreaks]{Yo-Yo}
-\begin{itemize}
-	\item Grafos incompletos
-	\item Duas fases
-\end{itemize}
-
-	\framebreak
-
-	\begin{block}{Fase 1}
-	\begin{itemize}
-		\item $p$ envia seu identificador para seus vizinhos.
-		\item Quando $q$ recebe $p$
-		\begin{itemize}
-			\item Se $p>q$, adiciona aresta $q\rightarrow p$
-			\item Senão, adiciona aresta $q\leftarrow p$
-			\item Fonte (source)
-			\item Vertedouro (sink)
-			\item Interno
-		\end{itemize}
-	\end{itemize}
-	\end{block}
-
-\framebreak
-
-	\begin{block}{Fase 2: Yo-\alert{Yo}}
-	\begin{itemize}
-	\item Fontes enviam seus identificadores para seus vizinhos.
-	\item Interno espera msg de todas as arestas de entrada, escolhe o menor id, e repassa para arestas de saída.
-	\item Vertedouro espera msg de todas as arestas de entrada e escolhe o menor id.
-	\end{itemize}
-	\end{block}
-
-\framebreak
-
-	\begin{block}{Fase 2: \alert{Yo}-Yo}
-	\begin{itemize}
-	\item Vertedouro envia S para vizinhos de onde viu menor valor e N para os demais.
-	\item Interno repassa S para o vizinho correspondente ao menor id e N para os demais.
-	\item Fonte espera por todos os votos. Se todos são S, continua; caso contrário, desiste.
-	\item N inverte a direção das arestas em que trafega.
-	\item Possível otimizar para eliminar nós e arestas irrelevantes.
-	\end{itemize}
-	\end{block}
-\framebreak
-
-	\includegraphics[width=.8\textwidth]{images/yoyo}*
-	
-\begin{small}
-a) The network, b) Oriented network after setup phase, c) YO- phase in which source values are passed, d)-YO phase sending responses from sinks, e) updated structure after -YO phase. **
-
-*\href{https://commons.wikimedia.org/w/index.php?curid=36757409}{Fonte: Hemis62 - Own work, CC BY-SA 4.0, }
-
-**\href{https://en.wikipedia.org/wiki/Leader_election}{Fonte}
-\end{small}
-\end{frame}
-
-\begin{frame}{Problemas?}
-O que acontece se a rede é particionada?
-\end{frame}
-
-\begin{frame}{Split Brain}
-\begin{itemize}
-	\item Network Partitioning: rede dividida em duas partes incomunicáveis.
-	\item Múltiplas eleições podem acontecer em paralelo.
-	\item Múltiplos líderes em paralelo.
-	\item Como lidar com este problema?	
-	\pause
-	\begin{itemize}
-		\item Use primeiro algoritmo e só eleja líder após maioria de votos.
-		\item Rede redundante, disco compartilhado \pause ,... centralização...\pause volta ao primeiro caso.
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Detecção de Falhas}
-Eleição de líderes perfeita é impossível em cenários realísticos.
-\begin{itemize}
-	\item Detecção de falhas perfeita é impossível...
-	\item em sistemas distribuídos assíncronos (Internet)
-	\item sujeitos à partições (Internet)
-	\item com requisitos de disponibilidade total.
-	\pause
-	\item Falemos mais sobre este problema depois.
-\end{itemize}
-\end{frame}
-
+* Detecção de Falhas
+     * Eleição de líderes perfeita é impossível em cenários realísticos.
+         * Detecção de falhas perfeita é impossível...
+         * em sistemas distribuídos assíncronos (Internet)
+         * sujeitos à partições (Internet)
+         * com requisitos de disponibilidade total.
+         * Falemos mais sobre este problema depois.
