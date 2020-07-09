@@ -15,7 +15,7 @@
     
     
       
-        <title>Tempo</title>
+        <title>Tempo - Notas em Sistemas Distribuídos</title>
       
     
     
@@ -53,7 +53,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#neste-capitulo-discutiremos-o-que-sao-sistemas-distribuidos-por-que-os-desenvolvemos-e-damos-uma-visao-geral-de-como-isto-e-feito" class="md-skip">
+        <a href="#tempo" class="md-skip">
           Skip to content
         </a>
       
@@ -235,9 +235,214 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tempo
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
     <a href="./" title="Tempo" class="md-nav__link md-nav__link--active">
       Tempo
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#relogios-fisicos" class="md-nav__link">
+    Relógios Físicos
+  </a>
+  
+    <nav class="md-nav" aria-label="Relógios Físicos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frequencia-de-sincronizacao" class="md-nav__link">
+    Frequencia de Sincronização
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuidados" class="md-nav__link">
+    Cuidados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizar-com-quem-gps" class="md-nav__link">
+    Sincronizar com quem? GPS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trilateracao" class="md-nav__link">
+    Trilateração
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizar-com-quem-outra-maquina" class="md-nav__link">
+    Sincronizar com quem? Outra máquina
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-cristian" class="md-nav__link">
+    Algoritmo de Cristian
+  </a>
+  
+    <nav class="md-nav" aria-label="Algoritmo de Cristian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-cristian_1" class="md-nav__link">
+    Algoritmo de Cristian
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erro-maximo" class="md-nav__link">
+    Erro máximo?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-berkeley" class="md-nav__link">
+    Algoritmo de Berkeley
+  </a>
+  
+    <nav class="md-nav" aria-label="Algoritmo de Berkeley">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-berkeley_1" class="md-nav__link">
+    Algoritmo de Berkeley
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-time-protocol" class="md-nav__link">
+    Network Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-time-protocol_1" class="md-nav__link">
+    Network Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modos-de-trabalho-do-ntp" class="md-nav__link">
+    Modos de trabalho do NTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-ntp" class="md-nav__link">
+    Simple NTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-do-sntp" class="md-nav__link">
+    Exemplo do SNTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptp-precision-time-protocol" class="md-nav__link">
+    PTP - Precision Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usos-de-relogios-sincronizados" class="md-nav__link">
+    Usos de relógios sincronizados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-bancario" class="md-nav__link">
+    Sistema Bancário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordenacao-de-requisicoes" class="md-nav__link">
+    Ordenação de Requisições
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordenacao-de-requisicoes_1" class="md-nav__link">
+    Ordenação de Requisições
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lease" class="md-nav__link">
+    Lease
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devido-ao-alto-custo-de-se-manter-o-recurso-nao-utilizado-deltadelta-deve-ser-feito-tao-pequeno-quanto-possivel-leia-google-true-time-e-spanner-para-como-o-google-consegue-manter-a-diferenca-em-sub-milisegundos-usando-relogios-atomicos-dentro-de-seus-datacenters-e-um-api-para-geracao-de-timestamps" class="md-nav__link">
+    Devido ao alto custo de se manter o recurso não utilizado, \Delta\Delta deve ser feito tão pequeno quanto possível. Leia Google True Time e Spanner para como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -307,6 +512,195 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#relogios-fisicos" class="md-nav__link">
+    Relógios Físicos
+  </a>
+  
+    <nav class="md-nav" aria-label="Relógios Físicos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frequencia-de-sincronizacao" class="md-nav__link">
+    Frequencia de Sincronização
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuidados" class="md-nav__link">
+    Cuidados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizar-com-quem-gps" class="md-nav__link">
+    Sincronizar com quem? GPS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trilateracao" class="md-nav__link">
+    Trilateração
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sincronizar-com-quem-outra-maquina" class="md-nav__link">
+    Sincronizar com quem? Outra máquina
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-cristian" class="md-nav__link">
+    Algoritmo de Cristian
+  </a>
+  
+    <nav class="md-nav" aria-label="Algoritmo de Cristian">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-cristian_1" class="md-nav__link">
+    Algoritmo de Cristian
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#erro-maximo" class="md-nav__link">
+    Erro máximo?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-berkeley" class="md-nav__link">
+    Algoritmo de Berkeley
+  </a>
+  
+    <nav class="md-nav" aria-label="Algoritmo de Berkeley">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-de-berkeley_1" class="md-nav__link">
+    Algoritmo de Berkeley
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-time-protocol" class="md-nav__link">
+    Network Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-time-protocol_1" class="md-nav__link">
+    Network Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modos-de-trabalho-do-ntp" class="md-nav__link">
+    Modos de trabalho do NTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-ntp" class="md-nav__link">
+    Simple NTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-do-sntp" class="md-nav__link">
+    Exemplo do SNTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptp-precision-time-protocol" class="md-nav__link">
+    PTP - Precision Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usos-de-relogios-sincronizados" class="md-nav__link">
+    Usos de relógios sincronizados
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-bancario" class="md-nav__link">
+    Sistema Bancário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordenacao-de-requisicoes" class="md-nav__link">
+    Ordenação de Requisições
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ordenacao-de-requisicoes_1" class="md-nav__link">
+    Ordenação de Requisições
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lease" class="md-nav__link">
+    Lease
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#devido-ao-alto-custo-de-se-manter-o-recurso-nao-utilizado-deltadelta-deve-ser-feito-tao-pequeno-quanto-possivel-leia-google-true-time-e-spanner-para-como-o-google-consegue-manter-a-diferenca-em-sub-milisegundos-usando-relogios-atomicos-dentro-de-seus-datacenters-e-um-api-para-geracao-de-timestamps" class="md-nav__link">
+    Devido ao alto custo de se manter o recurso não utilizado, \Delta\Delta deve ser feito tão pequeno quanto possível. Leia Google True Time e Spanner para como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -321,116 +715,69 @@
                   
                 
                 
-                <h2 id="neste-capitulo-discutiremos-o-que-sao-sistemas-distribuidos-por-que-os-desenvolvemos-e-damos-uma-visao-geral-de-como-isto-e-feito">Neste capítulo discutiremos o quê são sistemas distribuídos, por quê os desenvolvemos, e damos uma visão geral de como isto é feito.</h2>
-<p>layout: default
-title: Tempo Físico
-parent: Tempo
-nav_order: 1</p>
-<hr />
-<h1 id="tempo">Tempo</h1>
-<p>Se um mesmo arquivo no Dropbox é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam?</p>
-<hr />
-<h5 id="problema">Problema</h5>
-<p>Se dois arquivos com o mesmo nome são enviadas ao servidor, qual deve ser mantido?</p>
-<hr />
-<p>Uma possibilidade é aceitar o arquivo que chega primeiro e rejeitar o que chega depois. Mas imagine que seu serviço esteja interessado em registrar a anterioridade de ideias anotadas nos arquivos.  Neste caso, o sistema poderia dar anterioridade ao arquivo errado, isto é, o mais recentemente criado. </p>
-<p>Outra abordagem, é manter janelas de aceite de arquivos, e dentro destas janelas, manter os arquivos com horário de <strong>criação</strong> menor. Neste caso, um trapaceiro poderia modificar seu relógico para fazer seu arquivo passar na frente.</p>
+                <h1 id="tempo">Tempo</h1>
+<p>Neste capítulo discutiremos como o <strong>tempo</strong> é importante no desenvolvimento de sistemas distribuídos.
+Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o armazenamento de arquivos na nuvem, sincronizado com o sistema de arquivos local. 
+Alguns exemplos do munto real são DropBox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.</p>
+<p>Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
+Mais especificamente, quando as duas máquins se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?</p>
+<p>Uma possibilidade simples é sempre aceitar o cada nova versão como uma modificação do arquivo.
+Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva. 
+Mas imagine que esteja usando o cloud-drive para registrar a anterioridade de ideias (quem pensou nisso primeiro?), registrando-as em arquivos salvos no cloud-drive. 
+Neste caso, o sistema poderia dar anterioridade à entrada errada, que chegou por último.
+Se invertermos a abordagem, o cloud-drive poderia manter versões antigas de um documento em detrimento de versões mais atualizadas, o que obviamente seria um problema para outros usos.</p>
+<p>Mas mesmo que manter a versão mais recente ou mais antiga fosse adequada, o problema é mais fundamental que isso. Afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram criados.
+Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas na <strong>criação</strong> do arquivo, e não em sua recepção. Contudo, o horário de criação de um arquivo é relativo a onde foi criado e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.</p>
 <p>Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em <em>operações de modificação</em>, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas.</p>
-<p>Em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e autmatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox deixa os dois arquivos para que o usuário analize e decida o que fazer, que servidores git permitem a submissão de apenas um conjunto de operações por vez para um mesmo repositório, e o Perforce trabalhe com <em>locks</em>  de arquivos.</p>
-<p>De forma mais genérica, </p>
-<hr />
-<h5 id="problema_1">Problema</h5>
+<p>Em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analize e decida o que fazer, que servidores git permitem a submissão de apenas um conjunto de operações por vez para um mesmo repositório/branch, e o Perforce trabalha com <em>locks</em>  de arquivos.</p>
+<p>Dada esta problemática, podemos simplificar a questão em nossas mãos.</p>
+<div class="admonition question">
+<p class="admonition-title">Pergunta</p>
 <p>Se duas operações originadas em clientes são enviadas ao servidor, qual deve ser executada primeiro?</p>
-<hr />
-<p>Alguns sistemas, contudo, tentam resolver automaticamente os conflitos. No caso do CassandraDB, usa-se</p>
-<hr />
-<h5 id="cassandradb">CassandraDB</h5>
-<p><em>"last write wins"</em> ou "latest version wins"</p>
-<hr />
-<p>Onde <em>last</em> é definido pelo relógio do cliente. Acontece que a maior parte dos nossos sistemas não dá garantias de tempo na entrega de mensagens ou processamento de instruções. Assim, temos novo problema:</p>
-<hr />
-<h5 id="problema_2">Problema</h5>
+</div>
+<p>Alguns sistemas tentam resolver automaticamente os conflitos; o CassandraDB, por exemplo, usa <strong>last write wins</strong> ou <strong>latest version wins</strong>, onde <em>last</em> é definido em termos do relógio do cliente. 
+Acontece que a maior parte dos nossos sistemas não dá garantias de tempo na entrega de mensagens ou processamento de instruções. Assim, temos novo problema:</p>
+<div class="admonition question">
+<p class="admonition-title">Pergunta</p>
 <p>Como determinar qual foi enviada primeiro, em um sistema assíncrono?</p>
-<hr />
-<p>Assim, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>.
-O desafio começa com o entendimento de relógios físicos.</p>
+</div>
+<p>Assim, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>, e o desafio começa com o entendimento de relógios físicos.</p>
 <h2 id="relogios-fisicos">Relógios Físicos</h2>
-<hr />
-<h5 id="relogio-de-quartzo">Relógio de Quartzo</h5>
-<ul>
-<li>Diapazão de cristal cortado a laser.</li>
-<li>Efeito Piezoelétrico invertido: corrente elétrica gera oscilção</li>
-<li>Efeito Piezoelétrico: oscilação gera impulsos</li>
-<li>Oscila a <span><span class="MathJax_Preview">32768 = 2^{15}</span><script type="math/tex">32768 = 2^{15}</script></span>Hz </li>
-<li>Contador conta 1 segundo por <em>overflow</em></li>
-<li>Trabalha de 5 a 35 Celcius</li>
-<li>Tem erro de &frac12; segundo/dia</li>
-<li>Frequência muda com idade</li>
-<li>temperatura</li>
-<li>corrente elétrica</li>
-<li>imperfeições</li>
-</ul>
-<p><a href="https://www.explainthatstuff.com/quartzclockwatch.html">Fonte</a></p>
-<hr />
-<p>Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. Felizmente, estes relógios podem ser corrigidos usando outras constantes físicas. </p>
-<hr />
-<h5 id="relogio-atomico">Relógio Atômico</h5>
-<ul>
-<li>relógio de quartzo gera 9.192.631.770 impulsos por segundo</li>
-<li>impulsos mantem cesium-133 excitado</li>
-<li>se número de átomos excitados cai, relógio é corrigido.</li>
-<li><em>drift</em> de 1 segundo em 6.000.000 anos.</li>
-</ul>
-<hr />
-<p>Uma vez que agora temos um relógio com altíssima precisão, como podemos espalhar esta informação para nossos computadores pessoais? A resposta está no UTC, Tempo Universal Coordenado (da sigla em Francês).</p>
-<hr />
-<h5 id="tempo-coordenado-universal-utc-do-nome-em-frances">Tempo Coordenado Universal -- UTC (do nome em Francês)</h5>
-<blockquote>
-<p>Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.</p>
-</blockquote>
-<hr />
-<p>Abrindo um parêntese, o UTC é usado como <strong>base</strong> para os relógios locais, mas fatores políticos também são importantes.</p>
-<hr />
-<h5 id="fuso-horarios">Fuso-horários</h5>
+<p>Quando falamos em relógios, provavelmente falamos sobre relógios a base de quartzo.
+Para uma introdução rápida, assista o seguinte vídeo.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Em suma, um relógio de quartzo consiste em um <strong>diapazão de quartzo</strong> cortado a laser que, devido ao <strong>efeito Piezoelétrico</strong><sup id="fnref:piezo"><a class="footnote-ref" href="#fn:piezo">2</a></sup> e sua forma particular, vibra a <span><span class="MathJax_Preview">32768 = 2^{15}</span><script type="math/tex">32768 = 2^{15}</script></span>Hz<sup id="fnref:freq"><a class="footnote-ref" href="#fn:freq">3</a></sup>, e em um contador que conta cada vibração, medindo a passagem do tempo.
+Estes relógios erram na medição do tempo em no máximo <strong>&frac12;s por dia</strong>, desde que operem dentro da faixa de 5 a 35C, mas isso também muda com a idade do cristal, a corrente elétrica passando por ele e também devido a imperfeições no cristal<sup id="fnref:quartz"><a class="footnote-ref" href="#fn:quartz">1</a></sup>.</p>
+<p>Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. 
+Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como <strong>relógios atômicos</strong>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/p2BxAu6WZI8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Considerando um relógio atômico com altíssima precisão, colocamos nova pergunta:</p>
+<div class="admonition question">
+<p class="admonition-title">Pergunta</p>
+<p>É possível sincronizar nossos computadores com um relógio atômico tal que todos percebam a mesma passagem do tempo?</p>
+</div>
+<p>Embora a resposta seja negativa, no sentido de que não é possível alcançar sincronização perfeita, nada nos impede de fazer um melhor esforço e, neste sentido, a resposta está Tempo Universal Coordenado, UTC (de uma mistura dos nomes em Inglês e Francês), um padrão global para coordenação da medição da passagem do tempo.</p>
+<p>Segundo o UTC, o sol está a pino às 12:00 na latitude 0, ou a no máximo 1s deste instante; ao redor da latitude 0 grau estabelece-se uma faixa em que todos os pontos tem o mesmo horário, e outras 23 faixas como esta com deslocamentos consecutivos de +-1 hora.
+Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores políticos; a China, por exemplo, apesar de seu tamanho, está toda dentro de um mesmo horário, "correto" para Beijing.</p>
 <p><img alt="Fuso-horários" src="images/TimeZones.png" /></p>
-<p><a href="https://commons.wikimedia.org/w/index.php?curid=42165217">Fonte</a></p>
-<hr />
 <p>Mas como o UTC é definido? Com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
-<hr />
-<h5 id="utc">UTC</h5>
-<ul>
-<li>TAI - Tempo Atômico Internacional -- média de +- 200 relógios atômicos.</li>
-<li>UT0 - Tempo solar, em Greenwich; observações astronômicas</li>
-<li>UT1 - UT0 + correções por movimento polar (terra se inclinou?)</li>
-<li>UT2 - UT1 + variações sazonais na rotação (placas tectônicas se movimentaram)</li>
-<li>UTC - Medido como TAI mas aproximado para UT0 para dar percepção de que "meio dia é meio dia"</li>
-</ul>
-<hr />
-<p>Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais. Nos resta ainda, propagar a referência do UTC para os sistemas. Vejamos como o tempo é mantido em um computador.</p>
-<hr />
-<h5 id="relogios-nos-computadores">Relógios nos Computadores</h5>
-<ul>
-<li>Cada computador mantém uma visão local do tempo.</li>
-<li>Relógio de quartzo mede a passagem de tempo.</li>
-<li>Bateria usada para períodos de desconexão.</li>
-<li>Interrupções programadas: Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz.</li>
-<li>Interrupções incrementam contador:</li>
-<li>1000Hz, 1 interrupção a cada 1ms</li>
-<li>500Hz, 1 interrupção a cada 2ms</li>
-<li>Contador usado como base para relógio em software <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>.</li>
-</ul>
-<hr />
-<p>Este relógio em software, <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>, que usa um relógio de quartzo, impreciso, pode marcar a passagem do tempo com erro para mais ou para menos.
-Embora o erro exato do relógio seja desconhecido, o mesmo pode ser limitado.</p>
-<hr />
-<h5 id="sincronizacao">Sincronização</h5>
-<ul>
-<li>C - clock</li>
-<li>t - tempo, ou melhor aproximação, UTC </li>
-<li><span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span> - Clock-drift/Drift rate</li>
-</ul>
-<p><img alt="Drift rate" src="images/tanembaum-06-05.png" /></p>
-<p><span><span class="MathJax_Preview">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</span><script type="math/tex">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</script></span>.</p>
+<div class="admonition quote">
+<p class="admonition-title">UTC</p>
+<p>Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.</p>
+</div>
+<p>Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais. 
+Nos resta ainda, propagar a referência do UTC para os sistemas. 
+Do ponto de vista de um único computador, o tempo é medido com base em um relógio <strong>quartzo</strong>, cujos incrementos são capturados em um contador. O contador gera <strong>interrupções em intervalos programados</strong> (e.g., Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz) e as interrupções causam ajustes em um <strong>relógio em software</strong>, um contador indireto <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>.</p>
+<div class="admonition question">
+<p class="admonition-title">Precisão</p>
+<p>Dado a frequência padrão de 250Hz, medições de tempo menores que 4ms são altamente imprecisas.
+ Como medir o tempo gasto em uma função do seu código?</p>
+</div>
+<p>Este relógio em software, <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>, que usa um relógio de quartzo, impreciso, pode marcar a passagem do tempo com erro para mais ou para menos. Embora o erro exato do relógio seja desconhecido, o mesmo é limitado probabilisticamente. A taxa de erro é denominada <em>drift</em>, é representada por <span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>.
+Assumindo um relógio perfeito, <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>, temos que <span><span class="MathJax_Preview">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</span><script type="math/tex">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</script></span>.</p>
+<p><img alt="Clock drift" src="drawings/clock_skew.drawio-0.svg" /></p>
 <hr />
 <p>Logo, dado um mecanismo de sincronização com UTC ou outra fonte confiável, podemos limitar a dessincronização com UTC.</p>
 <hr />
@@ -850,8 +1197,20 @@ Considere o seguinte algoritmo.</p>
 <p>(Fonte)(<a href="http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html">http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html</a>)</p>
 <h2 id="interceptadores">Interceptadores</h2>
 <p>!(Transparente para a aplicação)[images/06-10]</p>
-                
-                  
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:quartz">
+<p><a href="https://www.explainthatstuff.com/quartzclockwatch.html">Explain that stuff.</a>&#160;<a class="footnote-backref" href="#fnref:quartz" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:piezo">
+<p>Distorção mecânica gera corrente elétrica e submissão a uma corrente elétrica gera uma distorção mecânica.&#160;<a class="footnote-backref" href="#fnref:piezo" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:freq">
+<p>32768 é a primeira potência de 2 maior que 20000, a maior frequência sonora audível aos seres humanos.&#160;<a class="footnote-backref" href="#fnref:freq" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
               
               

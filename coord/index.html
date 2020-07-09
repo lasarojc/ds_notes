@@ -698,20 +698,28 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <li><span><span class="MathJax_Preview">m &gt; n/2</span><script type="math/tex">m > n/2</script></span> coordenadores</li>
 </ul>
 </div>
-<p>Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:
-* Coordenador
-    1. Inicializa recurso como livre
-    2. Ao receber uma requisição, a enfileira
-    3. Ao receber uma liberação, marca o recurso como livre
-    4. Sempre que recurso estiver marcado como livre <strong>E</strong> a fila não estiver vazia
-        1. remove primeiro processo da fila
-        2. envia liberação para processo removido
-        3. marca o recurso como ocupado
-* Participante
-    1. Envia requisição de acesso aos <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> coordenadores
-    2. Espera por resposta de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores
-    3. Acessa o recurso
-    4. Envia liberação do recurso para o coordenador</p>
+<p>Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:   </p>
+<ul>
+<li>Coordenador   <ol>
+<li>Inicializa recurso como livre</li>
+<li>Ao receber uma requisição, a enfileira</li>
+<li>Ao receber uma liberação, marca o recurso como livre</li>
+<li>Sempre que recurso estiver marcado como livre <strong>E</strong> a fila não estiver vazia<ol>
+<li>remove primeiro processo da fila</li>
+<li>envia liberação para processo removido</li>
+<li>marca o recurso como ocupado</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Participante<ol>
+<li>Envia requisição de acesso aos <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> coordenadores</li>
+<li>Espera por resposta de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores</li>
+<li>Acessa o recurso</li>
+<li>Envia liberação do recurso para o coordenador</li>
+</ol>
+</li>
+</ul>
 <p>Além disso, para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueceme das autorizações já atribuídas.</p>
 <div class="admonition warning">
 <p class="admonition-title">Perda de memória</p>
@@ -720,8 +728,7 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <p>Vejamos uma execução bem sucedida destes algoritmo:</p>
 <details class="bug"><summary>TODO</summary><p>Construir execução bem sucedida.</p>
 </details>
-<hr />
-<p>Este algoritmo é bom? Suponha o seguinte cenário:</p>
+<p>Este algoritmo é bom? Suponhamos o seguinte cenário:</p>
 <ul>
 <li>Coordenadores = {<span><span class="MathJax_Preview">c_1,c_2,c_3,c_4,c_5,c_6,c_7</span><script type="math/tex">c_1,c_2,c_3,c_4,c_5,c_6,c_7</script></span>}</li>
 <li><span><span class="MathJax_Preview">n = 7</span><script type="math/tex">n = 7</script></span></li>
@@ -729,29 +736,30 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <li>Participante <span><span class="MathJax_Preview">p_1</span><script type="math/tex">p_1</script></span> consegue autorização de {<span><span class="MathJax_Preview">c_1,c_2,c_3,c_4</span><script type="math/tex">c_1,c_2,c_3,c_4</script></span>} e entra na região crítica.</li>
 <li>Coordenador <span><span class="MathJax_Preview">c_4</span><script type="math/tex">c_4</script></span> falha e se recupera</li>
 <li>Participante <span><span class="MathJax_Preview">p_2</span><script type="math/tex">p_2</script></span> consegue autorização de {<span><span class="MathJax_Preview">c_4,c_5,c_6,c_7</span><script type="math/tex">c_4,c_5,c_6,c_7</script></span>} e entra na região crítica.</li>
-<li><strong>Exclusão Mútua</strong> é violada.</li>
 </ul>
-<p>Qual a probabilidade <span><span class="MathJax_Preview">P_v</span><script type="math/tex">P_v</script></span> desta violação ocorrer?</p>
+<p>Neste cenário, a propriedade de <strong>Exclusão Mútua</strong> é violada. 
+Isto porquê, dados dados os dois quóruns, todos os processos na interseção foram reinicidaos.
+Mas de forma geral, qual a probabilidade de isso acontecer? 
+Ou seja, dados dois quoruns, de tamanho <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, que se sobrepoem em <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> processos, qual a probabilidade <span><span class="MathJax_Preview">P_v</span><script type="math/tex">P_v</script></span> de que os <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> processos na interseção sejam reiniciados e levem à violação?</p>
+<p><img alt="Quoruns" src="drawings/quorum_k.drawio-0.svg" /></p>
+<p>Seja a <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> a probabilidade de <strong>um coordenador em específico falhar</strong> e se recuperar dentro de uma janela de tempo <span><span class="MathJax_Preview">\delta t</span><script type="math/tex">\delta t</script></span>. Temos</p>
 <ul>
-<li>Probabilidade de um coordenador falhar e se recuperar em <span><span class="MathJax_Preview">\delta t</span><script type="math/tex">\delta t</script></span>, dentro de uma janela <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>: <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>.</li>
-<li>Probabilidade de falha de exatamente 1 coordenador: <span><span class="MathJax_Preview">P^1(1-P)^{n-1}</span><script type="math/tex">P^1(1-P)^{n-1}</script></span></li>
-<li>Probabilidade de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> coordenadores falharem: <span><span class="MathJax_Preview">P^k(1-P)^{n-k}</span><script type="math/tex">P^k(1-P)^{n-k}</script></span></li>
+<li>Probabilidade de falha de <strong>exatamente 1</strong> coordenador: <span><span class="MathJax_Preview">P^1(1-P)^{n-1}</span><script type="math/tex">P^1(1-P)^{n-1}</script></span></li>
+<li>Probabilidade de <strong><span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> coordenadores</strong> falharem: <span><span class="MathJax_Preview">P^k(1-P)^{n-k}</span><script type="math/tex">P^k(1-P)^{n-k}</script></span></li>
 <li>Probabilidade de quaisquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores falharem: <span><span class="MathJax_Preview">\binom{m}{k} P^k(1-P)^{m-k}</span><script type="math/tex">\binom{m}{k} P^k(1-P)^{m-k}</script></span>       </li>
-<li>Probabilidade de quaisquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores falharem: <span><span class="MathJax_Preview">\binom{m}{k} P^k(1-P)^{m-k}</span><script type="math/tex">\binom{m}{k} P^k(1-P)^{m-k}</script></span></li>
-<li>Diferentes valores de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> que são problemáticos<ul>
-<li>
-<details class="bug"><summary>TODO</summary>
-  desenho dos quóruns sobrepostos</details>
-</li>
+</ul>
+<p>Mas qual é o tamanho <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> da interseção?</p>
+<ul>
 <li><span><span class="MathJax_Preview">\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k</span><script type="math/tex">\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k</script></span></li>
 <li><span><span class="MathJax_Preview">\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n</span><script type="math/tex">\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n</script></span></li>
 </ul>
-</li>
-<li>Probabilidade de quaisquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores falharem, para qualquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> que seja problemático: <span><span class="MathJax_Preview">P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}</span><script type="math/tex">P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}</script></span></li>
+<p>Até agora consideramos que a <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> corresponde à cardinalidade da interseção dos dois quoruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. </p>
+<ul>
+<li>Probabilidade de quaisquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> coordenadores falharem, para qualquer <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> variando de <span><span class="MathJax_Preview">2m-n</span><script type="math/tex">2m-n</script></span> a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>: <span><span class="MathJax_Preview">P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}</span><script type="math/tex">P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}</script></span></li>
 </ul>
 <p>Para facilitar o entendimento desta grandeza, considere o exemplo:</p>
 <ul>
-<li><span><span class="MathJax_Preview">p=0.0001</span><script type="math/tex">p=0.0001</script></span> (1 minuto a cada 10 dias)</li>
+<li><span><span class="MathJax_Preview">P=0.0001</span><script type="math/tex">P=0.0001</script></span> (1 minuto a cada 10 dias)</li>
 <li><span><span class="MathJax_Preview">n = 32</span><script type="math/tex">n = 32</script></span></li>
 <li><span><span class="MathJax_Preview">m = 0.75n</span><script type="math/tex">m = 0.75n</script></span></li>
 <li><span><span class="MathJax_Preview">P_v &lt; 10^{-40}</span><script type="math/tex">P_v < 10^{-40}</script></span> (<a href="https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence">Curiosidade sobre <span><span class="MathJax_Preview">10^40</span><script type="math/tex">10^40</script></span></a>)</li>
@@ -782,10 +790,12 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <p>Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
-<details class="bug"><summary>TODO</summary><p>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>
-Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a>
-Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>
-<a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></p>
+<details class="bug"><summary>TODO</summary><ul>
+<li>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a></li>
+<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a></li>
+<li>Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a></li>
+<li><a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></li>
+</ul>
 </details>
 <h2 id="eleicao-de-lideres">Eleição de Líderes</h2>
 <p>O problema da escolha de um processo centralizador, ou líder, pode ser posto informalmente como o procedimento pelo qual <strong>um processo é escolhido</strong> dentre os demais processos, sendo que o <strong>processo escolhido é ciente da escolha</strong> e <strong>todos os demais processos o identificam como eleito</strong>. Uma <strong>nova eleição</strong> deve acontecer sempre que o líder se tornar <strong>indisponível</strong>.
@@ -800,12 +810,11 @@ Dentro de uma única máquina, identificamos processos facilmente usando seu <st
 <p>Se apenas uma instância do processo executa em um mesmo <em>host</em>, então o identificador do <em>host</em> em si é suficiente e, de fato, comumente utilizado. Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
 <p>Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos a ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
-A despeito desta opção gerar um líder não muito popular e dos abundantes memes sobre <em>bullying</em>, como este,<br />
-<img alt="Why you bully?" src="images/why-you-bully-meme.jpg" /><br />
-o algoritmo do brigão é um clássico.</p>
+A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.</p>
+<p><img alt="Why you bully?" src="images/why-you-bully-meme.jpg" />  </p>
 <h3 id="algoritmo-do-brigao-bully">Algoritmo do Brigão (<em>Bully</em>)</h3>
 <p>No algoritmo do brigão, alguma características comparável dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
-Por exemplo, pode ser vantajoso ter um um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.</p>
+Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.</p>
 <p>Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o maior identificador seja o melhor candidato. Os maiores processos, os "brigões", elimina os processos menores da competição, sempre que uma eleição acontecer. 
 O algoritmo, é o seguinte, onde <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> e <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> são usados para representar tanto identificadores de processos quando os processos em si.</p>
 <div class="admonition note">
@@ -834,7 +843,7 @@ O algoritmo, é o seguinte, onde <span><span class="MathJax_Preview">p</span><sc
 <ul>
 <li>Organize os nós em um anel lógico</li>
 <li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> acha que o líder está morto:<ul>
-<li>Envia mensagem {<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>} para ``a direita'' no anel.<ul>
+<li>Envia mensagem {<span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>} para "a direita" no anel.<ul>
 <li>Se processo à direita está falho, salte-o, e assim por diante.</li>
 </ul>
 </li>
@@ -856,19 +865,19 @@ O algoritmo, é o seguinte, onde <span><span class="MathJax_Preview">p</span><sc
 <ul>
 <li>Organize os nós em um anel lógico</li>
 <li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> acha que o líder está morto:<ul>
-<li>Envia mensagem <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> para ``a direita'' no anel, saltando falhos.</li>
-<li>Liga flag ``participante''</li>
+<li>Envia mensagem <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> para "a direita" no anel, saltando falhos.</li>
+<li>Liga flag "participante"</li>
 </ul>
 </li>
 <li>Quando <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> recebe <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span><ul>
 <li>Se <span><span class="MathJax_Preview">p &gt; q</span><script type="math/tex">p > q</script></span>, repassa <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> para a direita.</li>
 <li>Senão, envia  <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> para a direita.</li>
-<li>Liga flag ``participante''        </li>
+<li>Liga flag "participante"</li>
 </ul>
 </li>
 <li>Quando <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> recebe <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> da esquerda <ul>
-<li>Se ``participante'' está ligado, identifica <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> como líder.</li>
-<li>Desliga ``participante''</li>
+<li>Se "participante" está ligado, identifica <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> como líder.</li>
+<li>Desliga "participante"</li>
 <li>Se <span><span class="MathJax_Preview">p \neq q</span><script type="math/tex">p \neq q</script></span>, repassa <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> à direita</li>
 </ul>
 </li>
@@ -916,20 +925,15 @@ O algoritmo, é o seguinte, onde <span><span class="MathJax_Preview">p</span><sc
 </li>
 </ul>
 </div>
-<p>Exemplo
+<p>Exemplo: 
 <img alt="Fonte: Hemis62 - Own work, CC BY-SA 4.0" src="images/yoyo.png" /></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a) The network, 
-b) Oriented network after setup phase, 
-c) YO- phase in which source values are passed, 
-d)-YO phase sending responses from sinks, 
-e) updated structure after -YO phase.
-</code></pre></div>
-</td></tr></table>
-
+<ul>
+<li>a) The network, </li>
+<li>b) Oriented network after setup phase, </li>
+<li>c) YO- phase in which source values are passed, </li>
+<li>d) YO phase sending responses from sinks, </li>
+<li>e) updated structure after -YO phase.</li>
+</ul>
 <h3 id="questoes-importantes">Questões importantes</h3>
 <p>Problemas?</p>
 <ul>
