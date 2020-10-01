@@ -73,7 +73,8 @@ sequenceDiagram
 ```
 
 Este algoritmo satisfaz as características elencadas acima.   
-* Exclusão mútua - se o coordenador autoriza um participante, somente após outro participante liberar o recurso, outro participante poderá obter tal autorização.
+
+* Exclusão mútua - se o coordenador autoriza um participante X, somente após o participante X liberar o recurso é que outro participante poderá obter nova autorização.
 * Ausência de deadlocks - Todo processo que requisitar o recurso, entrará em uma fila, em apenas uma posição; assim, a fila proverá uma ordem total para os acessos, sem a possibilidade de circularidade nesta ordem.
 * Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.
 * Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.
@@ -111,7 +112,7 @@ sequenceDiagram
 	Part4->>Part1: Permissão de Acesso
 ```
 
-Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar testar e entender.
+Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar, testar e entender.
 Diferente do algoritmo centralizado, o algoritmo do anel não sofre com problemas de gargalo, pois nenhum processo precisa participar em todos os acessos, como o coordenador.
 Contudo, o algoritmo do anel desperdiça tempo passando o *token* para quem não necessariamente quer acessar a região crítica.
 Também importante é que este algoritmo também sofre com falhas: se um participante falha enquanto com o *token*, levando-o para além.
@@ -147,10 +148,11 @@ A resposta depende de mais perguntas, como:
 * Qual o custo $E$ de esperar por mais tempo?
 * Qual o custo $C$ de cometer um engano?
 * Qual a probabilidade $p$ de cometer um engano?
-* $C * p < E$.
+
+O custo esperado por causa dos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo, isto é, $C * p < E$?
 
 Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.
-Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois como disse certa vez Werner Fogels, CTO da Amazon
+Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Fogels, CTO da Amazon
 
 > Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"
 
@@ -171,8 +173,9 @@ Entretanto, em vez de apenas um coordenador no sistema, temos $n$, dos quais o p
     * $n$ coordenadores.
     * $m > n/2$ coordenadores
 
-Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:
-* Coordenador
+Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:   
+
+* Coordenador   
     1. Inicializa recurso como livre
     2. Ao receber uma requisição, a enfileira
     3. Ao receber uma liberação, marca o recurso como livre
@@ -188,7 +191,7 @@ Já os demais participantes devem agora considerar todo o conjunto de coordenado
 
 Além disso, para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueceme das autorizações já atribuídas.
 
-!!! warning "Perda de memória"
+!!!warning "Perda de memória"
     Quando um coordenador falha, esquece que deu ok e reinicia seu estado.
 
 Vejamos uma execução bem sucedida destes algoritmo:
@@ -196,9 +199,7 @@ Vejamos uma execução bem sucedida destes algoritmo:
 ???bug "TODO"
      Construir execução bem sucedida.
 
----
-
-Este algoritmo é bom? Suponha o seguinte cenário:
+Este algoritmo é bom? Suponhamos o seguinte cenário:
 
 * Coordenadores = {$c_1,c_2,c_3,c_4,c_5,c_6,c_7$}
 * $n = 7$
@@ -206,29 +207,36 @@ Este algoritmo é bom? Suponha o seguinte cenário:
 * Participante $p_1$ consegue autorização de {$c_1,c_2,c_3,c_4$} e entra na região crítica.
 * Coordenador $c_4$ falha e se recupera
 * Participante $p_2$ consegue autorização de {$c_4,c_5,c_6,c_7$} e entra na região crítica.
-* **Exclusão Mútua** é violada.
 
-Qual a probabilidade $P_v$ desta violação ocorrer?
+Neste cenário, a propriedade de **Exclusão Mútua** é violada. 
+Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
+Mas de forma geral, qual a probabilidade de isso acontecer? 
+Ou seja, dados dois quoruns, de tamanho $m$, que se sobrepoem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
 
-* Probabilidade de um coordenador falhar e se recuperar em $\delta t$, dentro de uma janela $T$: $P$.
-* Probabilidade de falha de exatamente 1 coordenador: $P^1(1-P)^{n-1}$
-* Probabilidade de $k$ coordenadores falharem: $P^k(1-P)^{n-k}$
+![Quoruns](drawings/quorum_k.drawio#0)
+
+Seja a $P$ a probabilidade de **um coordenador em específico falhar** e se recuperar dentro de uma janela de tempo $\delta t$. Temos
+
+* Probabilidade de falha de **exatamente 1** coordenador: $P^1(1-P)^{n-1}$
+* Probabilidade de **$k$ coordenadores** falharem: $P^k(1-P)^{n-k}$
 * Probabilidade de quaisquer $k$ em $m$ coordenadores falharem: $\binom{m}{k} P^k(1-P)^{m-k}$		
-* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem: $\binom{m}{k} P^k(1-P)^{m-k}$
-* Diferentes valores de $k$ que são problemáticos
-    * ???bug "TODO"
-          desenho dos quóruns sobrepostos
-    * $\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k$
-    * $\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n$
-* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem, para qualquer $k$ que seja problemático: $P_v = \sum_{2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$
+
+Mas qual é o tamanho $k$ da interseção?
+
+* $\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k$
+* $\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n$
+
+Até agora consideramos que a $k$ corresponde à cardinalidade da interseção dos dois quoruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se $k$ assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. 
+
+* Probabilidade de quaisquer $k$ em $m$ coordenadores falharem, para qualquer $k$ variando de $2m-n$ a $n$: $P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$
 
 
 Para facilitar o entendimento desta grandeza, considere o exemplo:
 
-* $p=0.0001$ (1 minuto a cada 10 dias)
+* $P=0.0001$ (1 minuto a cada 10 dias)
 * $n = 32$
 * $m = 0.75n$
-* $P_v < 10^{-40}$ ([Curiosidade sobre $10^40$](https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence))
+* $P_v < 10^{-40}$ ([Curiosidade sobre $10^{40}$](https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence))
 
 A probabilidade de violação da exclusão mútua, neste caso, é muito pequena, a despeito de suportar falhas dos coordenadores. 
 
@@ -250,10 +258,10 @@ Por um lado, o uso de um líder para coordenar ações em um SD simplifica o pro
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
 
 ???bug "TODO"
-    Maekawa - Diminui número de votos necessários ([descrição](https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp)
-    Lamport - Usa relógios lógicos, mas é possível entender sem este background ([descriçao](https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/)
-    Ricart-Agrawala - Melhora algoritmo de Lamport ([descrição](https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp)
-    [Distributed-Mutual-Exclusion-slides](https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf)
+    * Maekawa - Diminui número de votos necessários ([descrição](https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp))
+    * Lamport - Usa relógios lógicos, mas é possível entender sem este background ([descriçao](https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/))
+    * Ricart-Agrawala - Melhora algoritmo de Lamport ([descrição](https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp))
+    * [Distributed-Mutual-Exclusion-slides](https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf)
 
 ## Eleição de Líderes
 
@@ -271,15 +279,15 @@ Dentro de uma única máquina, identificamos processos facilmente usando seu **p
 
 Se apenas uma instância do processo executa em um mesmo *host*, então o identificador do *host* em si é suficiente e, de fato, comumente utilizado. Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um **parâmetro** passado na inicialização do processo ou a combinação **IP/porta**.
 
-Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos a ao problema de eleger um líder para sua turma.
+Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
-A despeito desta opção gerar um líder não muito popular e dos abundantes memes sobre *bullying*, como este,  
+A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.
+
 ![Why you bully?](./images/why-you-bully-meme.jpg)  
-o algoritmo do brigão é um clássico.
 
 ### Algoritmo do Brigão (*Bully*)
 No algoritmo do brigão, alguma características comparável dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
-Por exemplo, pode ser vantajoso ter um um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
+Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
 
 Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o maior identificador seja o melhor candidato. Os maiores processos, os "brigões", elimina os processos menores da competição, sempre que uma eleição acontecer. 
 O algoritmo, é o seguinte, onde $p$ e $q$ são usados para representar tanto identificadores de processos quando os processos em si.
@@ -306,10 +314,10 @@ O algoritmo, é o seguinte, onde $p$ e $q$ são usados para representar tanto id
 !!!note "Algoritmo do Anel"
      * Organize os nós em um anel lógico
      * Quando $p$ acha que o líder está morto:
-          * Envia mensagem \{$p$\} para ``a direita'' no anel.
+          * Envia mensagem {$p$} para "a direita" no anel.
               * Se processo à direita está falho, salte-o, e assim por diante.
-     * Quando $q$ recebe \{$p$\}
-          * Envia  \{$p,q$\} para a direita.
+     * Quando $q$ recebe {$p$}
+          * Envia  {$p,q$} para a direita.
      * Quando $p$ recebe $S$ tal que $q \in S$
           *  Escolhe menor id em $S$, por exemplo, e anuncia como líder.
 
@@ -318,15 +326,15 @@ O algoritmo, é o seguinte, onde $p$ e $q$ são usados para representar tanto id
 !!!note "Algoritmo de Chang e Robert"
 	* Organize os nós em um anel lógico
 	* Quando $p$ acha que o líder está morto:
-		* Envia mensagem $p$ para ``a direita'' no anel, saltando falhos.
-		* Liga flag ``participante''
+		* Envia mensagem $p$ para "a direita" no anel, saltando falhos.
+		* Liga flag "participante"
 	* Quando $q$ recebe $p$
 		* Se $p > q$, repassa $p$ para a direita.
 		* Senão, envia  $q$ para a direita.
-		* Liga flag ``participante''		
+		* Liga flag "participante"
 	* Quando $p$ recebe $q$ da esquerda 
-		* Se ``participante'' está ligado, identifica $q$ como líder.
-		* Desliga ``participante''
+		* Se "participante" está ligado, identifica $q$ como líder.
+		* Desliga "participante"
 		* Se $p \neq q$, repassa $q$ à direita
 
 ### Algoritmo do YoYo 
@@ -358,14 +366,14 @@ O algoritmo, é o seguinte, onde $p$ e $q$ são usados para representar tanto id
 	      * Possível otimizar para eliminar nós e arestas irrelevantes.
 
 
-Exemplo
+Exemplo: 
 ![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](./images/yoyo.png)
 
-    a) The network, 
-    b) Oriented network after setup phase, 
-    c) YO- phase in which source values are passed, 
-    d)-YO phase sending responses from sinks, 
-    e) updated structure after -YO phase.
+* a) The network, 
+* b) Oriented network after setup phase, 
+* c) YO- phase in which source values are passed, 
+* d) YO phase sending responses from sinks, 
+* e) updated structure after -YO phase.
 
 
 ### Questões importantes
