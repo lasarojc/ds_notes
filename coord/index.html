@@ -608,11 +608,13 @@ O estado do coordenador mostra se o recurso está livre ou ocupado e quais proce
     note over Coordenador: Recurso=livre/Fila = []
         Coordenador-&gt;&gt;Part3: ResponseFree</div>
 
-<p>Este algoritmo satisfaz as características elencadas acima. <br />
-* Exclusão mútua - se o coordenador autoriza um participante, somente após outro participante liberar o recurso, outro participante poderá obter tal autorização.
-* Ausência de deadlocks - Todo processo que requisitar o recurso, entrará em uma fila, em apenas uma posição; assim, a fila proverá uma ordem total para os acessos, sem a possibilidade de circularidade nesta ordem.
-* Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.
-* Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.</p>
+<p>Este algoritmo satisfaz as características elencadas acima.   </p>
+<ul>
+<li>Exclusão mútua - se o coordenador autoriza um participante X, somente após o participante X liberar o recurso é que outro participante poderá obter nova autorização.</li>
+<li>Ausência de deadlocks - Todo processo que requisitar o recurso, entrará em uma fila, em apenas uma posição; assim, a fila proverá uma ordem total para os acessos, sem a possibilidade de circularidade nesta ordem.</li>
+<li>Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.</li>
+<li>Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.</li>
+</ul>
 <p>Outra vantagem deste algoritmo é sua simplicidade e, conseguentemente, facilidade de implementação.
 Contudo, este algoritmo tem também desvantagens, por exemplo, se muitas requisições de acesso forem feitas, o coordenador pode ser sobrecarregado e se tornar um <strong>gargalo</strong> no acesso à região crítica.</p>
 <p>Mais sério ainda é a questão de como lidar com falhas, por exemplo, se ou o coordenador ou o participante que detem o direito de acesso ao recurso para de funcionar,  então nenhum outro processo conseguirá acesso.
@@ -642,7 +644,7 @@ Um dos processos é iniciado com um <em>token</em> que dá acesso ao recurso e o
     Part3-&gt;&gt;Part4: Permissão de Acesso
     Part4-&gt;&gt;Part1: Permissão de Acesso</div>
 
-<p>Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar testar e entender.
+<p>Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar, testar e entender.
 Diferente do algoritmo centralizado, o algoritmo do anel não sofre com problemas de gargalo, pois nenhum processo precisa participar em todos os acessos, como o coordenador.
 Contudo, o algoritmo do anel desperdiça tempo passando o <em>token</em> para quem não necessariamente quer acessar a região crítica.
 Também importante é que este algoritmo também sofre com falhas: se um participante falha enquanto com o <em>token</em>, levando-o para além.</p>
@@ -674,10 +676,10 @@ Por exemplo, se o processo não devolver a permissão de acesso antes de que uma
 <li>Qual o custo <span><span class="MathJax_Preview">E</span><script type="math/tex">E</script></span> de esperar por mais tempo?</li>
 <li>Qual o custo <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> de cometer um engano?</li>
 <li>Qual a probabilidade <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> de cometer um engano?</li>
-<li><span><span class="MathJax_Preview">C * p &lt; E</span><script type="math/tex">C * p < E</script></span>.</li>
 </ul>
+<p>O custo esperado por causa dos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo, isto é, <span><span class="MathJax_Preview">C * p &lt; E</span><script type="math/tex">C * p < E</script></span>?</p>
 <p>Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.
-Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois como disse certa vez Werner Fogels, CTO da Amazon</p>
+Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Fogels, CTO da Amazon</p>
 <blockquote>
 <p>Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"</p>
 </blockquote>
@@ -738,7 +740,7 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span><span class=
 <li>Participante <span><span class="MathJax_Preview">p_2</span><script type="math/tex">p_2</script></span> consegue autorização de {<span><span class="MathJax_Preview">c_4,c_5,c_6,c_7</span><script type="math/tex">c_4,c_5,c_6,c_7</script></span>} e entra na região crítica.</li>
 </ul>
 <p>Neste cenário, a propriedade de <strong>Exclusão Mútua</strong> é violada. 
-Isto porquê, dados dados os dois quóruns, todos os processos na interseção foram reinicidaos.
+Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quoruns, de tamanho <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, que se sobrepoem em <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> processos, qual a probabilidade <span><span class="MathJax_Preview">P_v</span><script type="math/tex">P_v</script></span> de que os <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> processos na interseção sejam reiniciados e levem à violação?</p>
 <p><img alt="Quoruns" src="drawings/quorum_k.drawio-0.svg" /></p>
@@ -762,7 +764,7 @@ Ou seja, dados dois quoruns, de tamanho <span><span class="MathJax_Preview">m</s
 <li><span><span class="MathJax_Preview">P=0.0001</span><script type="math/tex">P=0.0001</script></span> (1 minuto a cada 10 dias)</li>
 <li><span><span class="MathJax_Preview">n = 32</span><script type="math/tex">n = 32</script></span></li>
 <li><span><span class="MathJax_Preview">m = 0.75n</span><script type="math/tex">m = 0.75n</script></span></li>
-<li><span><span class="MathJax_Preview">P_v &lt; 10^{-40}</span><script type="math/tex">P_v < 10^{-40}</script></span> (<a href="https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence">Curiosidade sobre <span><span class="MathJax_Preview">10^40</span><script type="math/tex">10^40</script></span></a>)</li>
+<li><span><span class="MathJax_Preview">P_v &lt; 10^{-40}</span><script type="math/tex">P_v < 10^{-40}</script></span> (<a href="https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence">Curiosidade sobre <span><span class="MathJax_Preview">10^{40}</span><script type="math/tex">10^{40}</script></span></a>)</li>
 </ul>
 <p>A probabilidade de violação da exclusão mútua, neste caso, é muito pequena, a despeito de suportar falhas dos coordenadores. </p>
 <div class="admonition note">
@@ -791,9 +793,9 @@ Ou seja, dados dois quoruns, de tamanho <span><span class="MathJax_Preview">m</s
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
 <details class="bug"><summary>TODO</summary><ul>
-<li>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a></li>
-<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a></li>
-<li>Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a></li>
+<li>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
+<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a>)</li>
+<li>Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
 <li><a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></li>
 </ul>
 </details>
@@ -808,7 +810,7 @@ Além disso, se o processo está frequentemente desconectado, mesmo que bem serv
 <p>Em segundo lugar, ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos identificar processos, de forma inequívoca. 
 Dentro de uma única máquina, identificamos processos facilmente usando seu <strong>pid</strong>, ou <em>process id</em>, um inteiro associado a cada processoinstanciado pelo sistema operacional; o pid é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, o <em>host</em> é reiniciado, os pid também são, e portanto esta identificação não é duradoura. Mais importante, o pid só faz sentido dentro de uma única máquina e não em um sistema distribuído.</p>
 <p>Se apenas uma instância do processo executa em um mesmo <em>host</em>, então o identificador do <em>host</em> em si é suficiente e, de fato, comumente utilizado. Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
-<p>Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos a ao problema de eleger um líder para sua turma.
+<p>Assumindo um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
 A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.</p>
 <p><img alt="Why you bully?" src="images/why-you-bully-meme.jpg" />  </p>
