@@ -1,89 +1,64 @@
 # Introdução
 
-As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e tem atraído mais e mais profissionais, mais ou menos qualificados, tornando este **mercado cada vez mais competitivo**.
+Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.
 
-Ter conhecimentos específicos da subárea de desenvolvimento de **sistemas distribuídos** e pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
-"Como assim?", você pergunta, já que nunca ouviu falar em sistemas distribuídos até ter que se matricular nesta disciplina.
-Bem, o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, não é tão "quente" como outras áreas, por exemplo inteligência artificial e ciência de dados.
-Mas acontece que sem a computação distribuída, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais. Veja por exemplo a seguinte descrição dos *skills* necessários para atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
+## O quê são Sistemas Distribuídos?
 
-Se estiver convencido de que esta é uma área importante, ótimo! 
- Neste curso apesentaremos uma visão geral do que são sistemas distribuídos, porquês técnicos para os desenvolvemos e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
-Caso contrário, bem, você não tem muita escolha, certo? Então tente aproveitar esta visão geral para praticar um pouco de [programação neuro-liguística](https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_neurolingu%C3%ADstica) e repita o seguinte mantra: heeeeeeeuuuuummmmmm amo computação distribuída.
+Para entendermos o que é um Sistema Distribuído, talvez seja mais fácil por um sistema não-distribuído ou, como os denominaremos aqui, sistema monolítico[^centr].
 
-Brincadeiras a parte, você desenvolverá um projeto em várias etapas que lhe permitirá exercitar os conceitos vistos aqui e que te levará a:
+[^centr]: Muitos se referem a sistemas não-distribuídos como **centralizados** mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso é em acordo como o oposto a distribuído.
 
-* programar processos que se comuniquem via redes de computadores;
-* conhecer arquiteturas clássicas de sistemas distribuídos (e.g, cliente/servidor, p2p e híbrida), seus usos e limitações;
-* escrever programas *multithreaded* simples e a entender como o uso de *multithreading* afeta os componentes de um sistema distribuído;
-* entender a problemática da coordenação e do controle de concorrência em sistemas distribuídos;
-* entender o uso de sistemas de nomeação em sistemas distribuídos bem como diversas formas de se implementar tais sistemas de nomeação;
-* entender os conceitos básicos de replicação e tolerância a falhas;
-* entender as implicações da dessincronização de relógios na coordenação, replicação e tolerância a falhas;
-* projetar sistemas com componentes geograficamente distantes, fracamente acoplados;
-* entender onde os diversos *middleware* podem ser usados para acoplar tais componentes;
-* conhecer várias técnicas que controle de concorrência controlar o acesso a um recurso compartilhado;
-
-
-## O quê?
-
-Mas afinal, o quê é um sistema distribuído? Talvez seja mais fácil começarmos por sistemas não distribuídos, ou como normalmente os denominamos, sistemas centralizados.
-Pense na maioria das aplicações que desenvolveu no curso até agora. Elas provavelmente executam integralmente em um único processo, executando em uma única máquina.
-Mesmo que use diferentes bibliotecas e *frameworks*, toda lógica de negócio, armazenamento e interface com usuário está contida em um mesmo lugar, e por isso são chamadas centralizadas.
-Quando começou a programar este tipo de aplicação, o trabalho era basicamente colar blocos Lego, que se encaixavam perfeitamente, bastando importar a biblioteca correta e invocar suas funções.
+Pense na maioria das aplicações que desenvolveu no curso até agora.
+Mesmo que use diferentes bibliotecas e *frameworks*, toda a lógica de negócio, armazenamento e interface com usuário está contida em um mesmo executável e, quando executado, em um único processo. 
+Quando começou a programar este tipo de aplicação, o trabalho era basicamente colar blocos que se encaixavam perfeitamente, como Lego :registered:, bastando importar a biblioteca correta e invocar suas funções.
 
 ![Lego Rainbow](./images/lego0.jpg)
 
-O cenário deve ter mudado um pouco no decorrer do curso e com o início de sua atividade profissional, quando passou a ter muito mais blocos, de muito mais tipos, para encaixar uns nos outros, aumentando consideravelmente a complexidade do desenvolvimento.
-Mesmo que haja diferentes bibliotecas a serem usadas, com desenvolvedores e estilos diferentes, bem ou mal testadas, seus encaixes ainda fazem sentido.
+O cenário deve ter mudado um pouco no decorrer do curso e com o início de sua atividade profissional, quando passou a usar muito mais bibliotecas de muitos desenvolvedores diferentes, em equipes com várias pessoas, aumentando consideravelmente a complexidade do desenvolvimento; o resultado, contudo, continua sendo um artefato só. 
 
 ![Lego Hell](images/lego3.jpg)
 
-
-Infelizmente, programar sistemas distribuídos é muito mais complexo que sistemas centralizados.
-Frequentemente temos peças que nunca foram pensadas para trabalharem juntas, e nos resta  usar um pouco de *crazy glue*,
-
-![Lego SD](images/lego5.jpg)
-
-persuasão,
-
-![Lego SD](images/lego4.jpg)
-
-e muito arame. 
-No caso, o arame é de um tipo especial conhecido como cabo de rede, usado para estabelecer um canal de comunicação entre as diferentes partes do sistema. 
+Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que nunca foram pensadas para trabalharem juntas, nos forçando a usar um pouco de ![*crazy glue*](images/lego5.jpg),  ![jeitinho](images/lego4.jpg) e fios, no caso, um tipo especial de fio conhecido como cabo de rede.
 
 ![Lego SD](images/cablemess.jpg)
 
-
-De fato, a principal característica de um sistema distribuído em relação a um não distribuído, é a separação de suas partes em vários componentes independentes (processos, sensores, atuadores), mas que se coordenam por meio de canais de comunicação para execução de alguma tarefa.
+De fato, a principal característica de um sistema distribuído em relação a um não-distribuído, é a separação e disperção de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
 Assim, uma possível definição de Sistema Distribuído, que me agrada, é a seguinte:
 
 !!! note "Sistema Distribuído"
-    Coleção de sistemas computacionais (software ou hardware), independentes mas com alguma forma de comunicação, que colaboram na execução de alguma tarefa.
+    **Coleção** de sistemas computacionais (software ou hardware), **independentes** mas com alguma forma de **comunicação**, que **colaboram** na execução de alguma **tarefa**.
 
+No jargão da área, os componentes indepedentes são denominados **nós**. Frequentemente, cada **nó** do sistema será na prática um processo em um computador hospedeiro, um *host*, mas possivelmente múltiplos podem ser executados em um mesmo *host*; isso não muda o fato de que são independentes e poderiam ser distanciados.
 
-Uma definição mais cínica mas definitivamente realista é a de [Leslie Lamport](https://en.wikipedia.org/wiki/Leslie_Lamport), que certa vez disse:
+Quanto à comunicação, Os nós podem compartilhar um espaço de endereçamento comum, seja por que estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
+Eles também podem se comunicar por mensagens trocadas via uma rede de comunicação, como a Internet.
+
+Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não ttem ciência. 
+
+![Sistema Distribuído](drawings/sis_dis.drawio)
+
+Neste exemplo, cada celular é um nó do sistema, assim como o processo responsável por receber os emails e encaminhá-los para o banco, bem como ler do banco e entregar para os destinatários.
+Neste exemplo, se o banco de dados para de funcionar, o processo na outra máquina passa a ser inútil, uma vez que não pode armazenar novas mensagens e nem recuperar mensagens já armazenadas. 
+Neste contexto, uma definição mais cínica mas definitivamente realista é a de [Leslie Lamport](https://en.wikipedia.org/wiki/Leslie_Lamport), que certa vez disse:
 > A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable.
- 
+
 Mas se esta é a realidade da programação distribuída, por quê fazê-lo?
 
+## Por quê desenvolvemos sistemas distribuídos?
 
-## Por quê?
+Aqui diremos que um sistema é bom se está sempre funcional, mesmo que partes do sistema deixem de funcionar, com bom desempenho, i.e., respostas rápidas são dadas para o usuário, e com baixo custo, ou pelo menos tão baixo qunto possível para realizar a tarefa para a qual foi construído.
+Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.
 
-Todos estamos a par de que aplicações importantes nos dias de hoje são aplicações distribuídas rodando em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc).
+Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos:
 Alguns exemplos óbvios são
 
 * [Amazon.com](https://www.amazon.com),
 * [Facebook](https://www.facebook.com), e
 * [GMail](https://www.gmail.com).
 
-Mas as razões que levam a este cenário são válidas para diversas outras aplicações.
-De fato, praticamente qualquer sistema de informação que precise atingir um público considerável, necessitará aplicar técnicas de computação distribuída para conseguir **escalar**, isto é, "ser grande", seja no número de clientes que atende (computacionais ou humanos), seja em sua área de cobertura, ou na qualidade do serviço que presta, mesmo que não cheguem a estas escalas.
+Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos fontes queimadas, discos corruptos, memórias defeituosas. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
 
-Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
-Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em **Sistemas Distribuídos**.
-
-Há quem diga que [somos todos desenvolvedores de sistemas distribuídos agora](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/).
+Enquanto a primeira vista possa se pensar que as técnicas usadas na construção destes sistemas devem ser muito especializadas e fora da realidade dos sistemas que nós desenvolvemos, a verdade não poderia ser mais longe disto.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.
 
 ![Data Growth](images/datagrowth.jpg)
@@ -96,78 +71,71 @@ O que nos resta então é agregar o poder computacional de diversos computadores
 
 ![Custo de melhoria](images/scaleupout.jpg)
 
+De fato, praticamente qualquer sistema de informação de sucesso necessitará aplicar as mesmas técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender a número crescente de clientes (computacionais ou humanos), aumentar sua área de cobertura, e melhorar ou manter a qualidade do serviço que presta, mesmo que não chegue a escala dos exemplos acima.
+
+Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
+Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em **Sistemas Distribuídos**.
+
 O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhem, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
 E estejam certos, **computadores [falham](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/) o tempo todo!**
+Nós precisamos então entender este ambiente, determinar e especificar várias de suas propriedades e comportamentos.
 
-Nós precisamos então entender este ambiente e determinar
-
-* qual a probabilidade de um nó falhar;
-* como os computadores, ou melhor, como os processos se comunicam; 
-* se mensagens podem ser perdidas, atrasadas, corrompidas;
-* se os relógios dos computadores são sincronizados;
-* se há agentes maliciosos que possam querer perturbar o sistema;
-* quais os padrões de acesso ao serviços, isto é, se aumentam à noite, diminuem no verão, etc.
+* Qual a probabilidade de um nó parar de funcionar?
+* Como os hospedeiros, ou melhor, como os processos se comunicam? Via memória compartilhada ou por troca de mensagens?
+* Se por mensagens, estas podem ser perdidas, atrasadas, corrompidas?
+* Os relógios dos hospedeiros marcam o mesmo valor no mesmo instante, ou melhor, são sincronizados?
+* Quanto tempo leva uma mensagem para sair de um nó A e chegar a um nó B?
+* Há agentes que possam querer perturbar o sistema, por exemplo para ganhar acesso a mais recursos do que seria justo?
+* Quais os padrões de acesso ao serviços, isto é, se aumentam à noite, diminuem no verão, etc?
 
 Assim, definimos **modelos computacionais**, que nos permitem desenvolver **algoritmos adequados** aos diversos problemas que enfrentamos.
-Modelos clássicos englobam três variáveis:
+Definido ou identificado o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas.
+Modelos clássicos englobam três variáveis: **Comunicação**, **Sincronismo** e **Falhas**.
 
-* Comunicação;
-* Sincronismo; e,
-* Falhas.
+Com relação à comunicação, como já indicado acima, as possibilidades são por acesso a uma memória compartilhada ou via troca de mensagens, o modelo mais comum.
+Quanto ao sincronismo, se considera se há limites de tempo para execução de operações, para troca de mensagens (caso seja este o modelo de comunicação), e se os hospedeiros do sistema tem acesso a relógios e, finalmente, quão sincronizados estes são.  
+Quanto a falhas, é preciso entender como estas (bugs, por exemplo) afetam a execução do sistema, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
+O objetivo é entender como evitar que a falha de algum componente possa levar o sistema a parar como um todo e garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.
 
-Definido o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas. Para isto, precisamos entender 
+Nós voltaremos a falar sobre modelos computacionais adiante. Por enquanto, vejamos alguns exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.
 
-* como falhas (bugs, por exemplo) afetam a execução; 
-* como evitar que a falha de algum componente possa levar o sistema a parar como um todo; e
-* garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.
+!!!example "Sistema de e-mail"
+    * Entregue este email para fulano@knowhere.uni.
+    * Envie o item X para este endereço, após cobrança de Y dinheiros da conta Z.
+    * Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil nesta direção e sentido, com velocidade v, enquanto movimenta o avatar A para a esquerda.
+    * Autorize a transferência de X dinheiros da conta C para a conta C'.
+    * Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda
+    * Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
+    * Leia o valor do sensor de temperatura S e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
 
-Vejamos algumas exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.
+Fica claro por estes exemplos que há comunicação entre diversos componentes, por exemplo o console de videogame e um serviço que mantem uma "sala" aberta para um jogo.
+Também fica claro pelo mesmo exemplo que a latência desta comunicação deve ser mantida dentro certos patamares, para não inviabilizar a interação entre jogares.
+Além disso, pode-se dizer que algumas aplicações ão críticas, como no exemplo de tele-cirurgia, enquanto outras são muito menos imoportantes, como acessar sua rede social de fotos.
 
-* Entregue este email para fulano@knowhere.uni.
-* Envie o item X para este endereço, após cobrança de Y dinheiros da conta Z.
-* Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil nesta direção e sentido, com velocidade v, enquanto movimenta o avatar A para a esquerda.
-* Autorize a transferência de X dinheiros da conta C para a conta C'.
-* Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda
-* Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
-* Leia o valor do sensor de temperatura S e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
+Voltando à definição, acima, sistemas distribuídos implicam em algum tipo de colaboração entre componentes para permitir que recursos de um sejam usados por outro.
+Colaboração cria dependência e, nos exemplos acima, é claro que problemas em alguns compontes pode fazer com que a tarefa que o sistema executa seja inviabilizada, como no caso do sensor do último exemplo, que se parar de funcionar, impede a medição da temperatura e o disparo adequado do alarme.
+Entre os recursos compartilhados por componentes em um sistema distribuído estão alguns óbvios, como **capacidade de armazenamento** e de **processamento**, mas também a **localização** de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.
 
-Um sistema distribuído implica em algum tipo de colaboração entre componentes, para permitir que recursos de um sejam usados por outro. 
-Por exemplo, 
+Assim, podemos concluir que as principais razões para se desenvolver sistemas distribuídos são alcançar **escalabilidade** e **tolerância a falhas**, ambas resultantes da **agregação** (correta) do poder computacional de múltiplos componentes.
 
-* capacidade de armazenamento, 
-* de processamento, 
-* conexão física com uma impressora, ou
-* localização geográfica.
-
-
-!!! question "Por quê distribuir?"
-    As principais razões para se desenvolver sistemas distribuídos são duas, ambas resultantes da **agregação** (correta) do poder computacional de múltiplas máquinas:
-
-    * escalabilidade e
-    * tolerância a falhas.
-
-## Como?
+## Como desenvolvemos Sistemas Distribuídos?
 
 Reforçando, distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
-
-Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas. Ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão** reduzida, **latência** aumentada, com limitação no quantidade de **conexões paralelas** suportadas, ou nas **funcionalidades** que mantem disponível.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão** reduzida, **latência** aumentada, menor capacidade de tratamento de requisições concorrentes, ou com  **funcionalidades** desabilitadas.
 
 Para colaborar, as diversas partes do sistema distribuído devem se comunicar. 
-Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, **troca de mensagens**, ** *streams* de dados**, ou **invocação remota de procedimentos**.
+Isto pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
-Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
+Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
 Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
-Mas lembrem-se, também que
-
-![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif)
-
-e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. 
+Mas lembrem-se, também que ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. 
 
 
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
-Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um ** *middleware* **.
+Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um **middleware**.
 
 ### Middleware
 
@@ -192,14 +160,16 @@ Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](h
 
 
 Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  `write(byte[])` e `read(): byte[]` dos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
-Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo qualquer, sem usar bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
+Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo sem usar quaisquer bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
-Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, centralizado.
-Pense no browser e na WWW: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores?
+Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
+Pense no browser e na WWW, por exemplo; o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de transparência.
 
 ### Transparência
 
-Podemos quebrar esta "transparência total" em várias transparências mais simples: **Acesso**, **Localização**, **Relocação**,
+
+Se não há qualquer indício de que a aplicação é distribuída, então temos **transparência total**.  
+Podemos quebrar esta transparência total em várias transparências mais simples: **Acesso**, **Localização**, **Relocação**,
 **Migração**, **Replicação**, e **Falha**.
 Vejamos cada uma destas separadamente.
 
@@ -318,22 +288,19 @@ Outras aplicações são normalmente construídas com requisitos de consistênci
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de *frameworks* de **comunicação em grupo**, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
 Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada [**replicação de máquinas de estado**](https://en.wikipedia.org/wiki/State_machine_replication).
 
-
 ```mermaid
 stateDiagram
-    [*] --> Estado 1
+    [Estado Inicial] --> Estado 1
     Estado 1 --> Estado 2
     Estado 2 --> Estado 1
     Estado 1 --> Estado N
-    Estado 1 --> [*]
-    Estado n --> [*]
 ```
 
 ??? todo
     Figura com state machine replication
 
 Novamente é preciso chamar à atenção a questão dos custos desta técnica.
-Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema ondo inconsistências são absolutamente caras demais para sere permitidas.
+Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema onde inconsistências são absolutamente caras demais para sere permitidas.
 Isto porquê manter múltiplas cópias $\Rightarrow$ sincronização $\Rightarrow$ custos. 
 Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
 Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.
@@ -395,8 +362,8 @@ Embora seja um uso válido, há outros tipos de escalabilidade.
 
 ## Tipos
 
-Diversas são as finalidades dos sistemas distribuídos que construímos, assim como são diversas as arquiteturas que usamos.
-Classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
+Há quem diga que [já somos todos desenvolvedores de sistemas distribuídos](https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/).
+Ainda assim, é importante entender que há vários tipos de sistemas distribuídos, com diversas finalidades e diversas as arquiteturas, pois classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. 
 
 ### Computação de Alto Desempelho
 
