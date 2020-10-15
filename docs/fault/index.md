@@ -1352,3 +1352,7 @@ E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões indep
 
 
 [Swim](https://asafdav2.github.io/2017/swim-protocol/)
+
+
+
+[Lista de Falhas Reais](https://github.com/danluu/post-mortems)

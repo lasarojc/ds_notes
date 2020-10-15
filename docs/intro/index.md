@@ -159,14 +159,13 @@ Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](h
 * prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.
 
 
-Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  `write(byte[])` e `read(): byte[]` dos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
+Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  `write(byte[])` e `read(): byte[]` dos protocolos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo sem usar quaisquer bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
-Idealmente, com o *middleware* se obteria transparência total do fato da aplicação estar distribuída, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
+Idealmente, com o *middleware* o desenvolvedor conseguiria facilmente implementar uma aplicação em a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
 Pense no browser e na WWW, por exemplo; o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de transparência.
 
 ### Transparência
-
 
 Se não há qualquer indício de que a aplicação é distribuída, então temos **transparência total**.  
 Podemos quebrar esta transparência total em várias transparências mais simples: **Acesso**, **Localização**, **Relocação**,
@@ -200,14 +199,12 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 [^IBMFP]: [IBM Floating Point](https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit)
 
 E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
-É preciso que usem um padrão conhecido por ambos os *hosts*, seja o padrão "nativo" da mesma, ou um padrão intermediário, definido pelo *middleware*.
+É preciso que usem um padrão conhecido por ambos os *hosts*, seja o padrão a arquitura "nativa" do host ou um padrão intermediário, definido pelo *middleware*.
 
 A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
-No caso específico das strings, pense em um programa escrito em linguagem C; uma string é uma sequência de bytes imprimíveis terminadas por um `\0`.
-Já em um programa escrito em Java, uma string é uma classe que encapsula uma sequência de chars, sendo que cada [char é um código 16 bits](https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html) representativo de um código Unicode[^stringjava].
-Como transferir strings entre duas plataforms?
-Não fazê-lo? Simplificar a string Java?
-Estender a string C?
+No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com o mesmo.
+Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um `\0`, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada [char é um código 16 bits](https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html) representativo de um código Unicode[^stringjava].
+Como transferir strings entre duas plataforms?  Não fazê-lo? Simplificar a string Java?  Estender a string C?  
 
 [^stringjava]: Simplificações são possíveis, mas introduzem outras complexidades.
 
@@ -217,7 +214,7 @@ Estender a string C?
 
 #### Transparência de Localização
 
-A transparência de localização diz respeito a onde está o objeto: pouco importa ao usuário, se o serviço está dentro da mesma máquina em que acessa o serviço, se na sala do lado, ou na nuvem, do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
+A transparência de localização diz respeito a onde está o objeto acessado pela aplicação, seja um BD, página Web ou serviço de echo: pouco importa ao usuário, se está dentro da mesma máquina de onde executa o acesso, se na sala ao lado ou em um servidor do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
 A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.
 
 ##### Escondendo a Latência

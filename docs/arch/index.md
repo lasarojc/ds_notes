@@ -95,7 +95,7 @@ Dependendo em como esta rede é organizada (ou não), a mesma é classificada co
 Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
-[![Não-estruturada](images/unstructured.png)]({http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
+[![Não-estruturada](images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
 
 Suponha que esta rede seja usada para armazenar e consultar dados.
 Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
