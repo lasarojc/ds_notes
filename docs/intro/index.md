@@ -287,10 +287,19 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
 
 ```mermaid
 stateDiagram
-    [Estado Inicial] --> Estado 1
-    Estado 1 --> Estado 2
-    Estado 2 --> Estado 1
-    Estado 1 --> Estado N
+    ei: Estado Inicial
+    e1: Estado 1
+    e2: Estado 2
+    e3: Estado 3
+    en: Estado N
+
+    ei --> e1
+    e1 --> e2
+    e2 --> e1
+    e2 --> e3
+    e3 --> e2
+    e1 --> en
+    e3 --> en
 ```
 
 ??? todo
