@@ -1138,10 +1138,19 @@ Isto porquê para se manter um serviço funcional a despeito de falhas, é preci
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de <em>frameworks</em> de <strong>comunicação em grupo</strong>, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
 Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada <a href="https://en.wikipedia.org/wiki/State_machine_replication"><strong>replicação de máquinas de estado</strong></a>.</p>
 <div class="mermaid">stateDiagram
-    [Estado Inicial] --&gt; Estado 1
-    Estado 1 --&gt; Estado 2
-    Estado 2 --&gt; Estado 1
-    Estado 1 --&gt; Estado N</div>
+    ei: Estado Inicial
+    e1: Estado 1
+    e2: Estado 2
+    e3: Estado 3
+    en: Estado N
+
+    ei --&gt; e1
+    e1 --&gt; e2
+    e2 --&gt; e1
+    e2 --&gt; e3
+    e3 --&gt; e2
+    e1 --&gt; en
+    e3 --&gt; en</div>
 
 <details class="todo"><summary>Todo</summary><p>Figura com state machine replication</p>
 </details>
