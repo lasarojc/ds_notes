@@ -861,14 +861,14 @@ Quando começou a programar este tipo de aplicação, o trabalho era basicamente
 <p><img alt="Lego Hell" src="images/lego3.jpg" /></p>
 <p>Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que nunca foram pensadas para trabalharem juntas, nos forçando a usar um pouco de <img alt="*crazy glue*" src="images/lego5.jpg" />,  <img alt="jeitinho" src="images/lego4.jpg" /> e fios, no caso, um tipo especial de fio conhecido como cabo de rede.</p>
 <p><img alt="Lego SD" src="images/cablemess.jpg" /></p>
-<p>De fato, a principal característica de um sistema distribuído em relação a um não-distribuído, é a separação e disperção de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
+<p>De fato, a principal característica de um sistema distribuído em relação a um não-distribuído, é a separação e dispersão de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
 Assim, uma possível definição de Sistema Distribuído, que me agrada, é a seguinte:</p>
 <div class="admonition note">
 <p class="admonition-title">Sistema Distribuído</p>
 <p><strong>Coleção</strong> de sistemas computacionais (software ou hardware), <strong>independentes</strong> mas com alguma forma de <strong>comunicação</strong>, que <strong>colaboram</strong> na execução de alguma <strong>tarefa</strong>.</p>
 </div>
-<p>No jargão da área, os componentes indepedentes são denominados <strong>nós</strong>. Frequentemente, cada <strong>nó</strong> do sistema será na prática um processo em um computador hospedeiro, um <em>host</em>, mas possivelmente múltiplos podem ser executados em um mesmo <em>host</em>; isso não muda o fato de que são independentes e poderiam ser distanciados.</p>
-<p>Quanto à comunicação, Os nós podem compartilhar um espaço de endereçamento comum, seja por que estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
+<p>No jargão da área, os componentes indepedentes são denominados <strong>nós</strong>. Frequentemente, cada <strong>nó</strong> do sistema será na prática um processo em um computador hospedeiro, um <em>host</em>, mas possivelmente múltiplos podem ser executados em um mesmo <em>host</em>; isso não muda o fato de que são independentes e poderiam ser distanciados.<sup id="fnref:embed"><a class="footnote-ref" href="#fn:embed">2</a></sup></p>
+<p>Quanto à comunicação, os nós podem compartilhar um espaço de endereçamento comum, seja porquê estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
 Eles também podem se comunicar por mensagens trocadas via uma rede de comunicação, como a Internet.</p>
 <p>Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não ttem ciência. </p>
 <p><img alt="Sistema Distribuído" src="drawings/sis_dis.drawio-0.svg" /></p>
@@ -880,24 +880,25 @@ Neste contexto, uma definição mais cínica mas definitivamente realista é a d
 </blockquote>
 <p>Mas se esta é a realidade da programação distribuída, por quê fazê-lo?</p>
 <h2 id="por-que-desenvolvemos-sistemas-distribuidos">Por quê desenvolvemos sistemas distribuídos?</h2>
-<p>Aqui diremos que um sistema é bom se está sempre funcional, mesmo que partes do sistema deixem de funcionar, com bom desempenho, i.e., respostas rápidas são dadas para o usuário, e com baixo custo, ou pelo menos tão baixo qunto possível para realizar a tarefa para a qual foi construído.
-Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.</p>
-<p>Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos:
+<p>Aqui diremos que um sistema é bom se está sempre funcional, com bom desempenho e é de baixo custo.
+Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas; bom desempenho implica que  respostas "rápidas" são dadas para o usuário; baixo custo implica não gastar mais que o necessário para realizar a tarefa para a qual foi construído.</p>
+<p>Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.
+Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos:
 Alguns exemplos óbvios são</p>
 <ul>
 <li><a href="https://www.amazon.com">Amazon.com</a>,</li>
 <li><a href="https://www.facebook.com">Facebook</a>, e</li>
 <li><a href="https://www.gmail.com">GMail</a>.</li>
 </ul>
-<p>Estes sistemas rodam em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>, estando constantemente sujeitos fontes queimadas, discos corruptos, memórias defeituosas. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.</p>
+<p>Estes sistemas rodam em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>, estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.</p>
 <p>Enquanto a primeira vista possa se pensar que as técnicas usadas na construção destes sistemas devem ser muito especializadas e fora da realidade dos sistemas que nós desenvolvemos, a verdade não poderia ser mais longe disto.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.</p>
 <p><img alt="Data Growth" src="images/datagrowth.jpg" /></p>
-<p>Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (<strong>scale up</strong>) mesmo de forma linear tem custo exponencial.</p>
+<p>Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (<strong>scale up</strong>), mesmo de forma linear, tem custo exponencial.</p>
 <p><img alt="Custo de melhoria" src="images/exponential.jpg" /></p>
 <p>O que nos resta então é agregar o poder computacional de diversos computadores "baratos" (<strong>scale out</strong>) para satisfazer nossas necessidades.</p>
 <p><img alt="Custo de melhoria" src="images/scaleupout.jpg" /></p>
-<p>De fato, praticamente qualquer sistema de informação de sucesso necessitará aplicar as mesmas técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender a número crescente de clientes (computacionais ou humanos), aumentar sua área de cobertura, e melhorar ou manter a qualidade do serviço que presta, mesmo que não chegue a escala dos exemplos acima.</p>
+<p>De fato, praticamente qualquer sistema de informação de sucesso necessitará aplicar as mesmas técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender ao número crescente de clientes (computacionais ou humanos), aumentar sua área de cobertura, e melhorar ou manter a qualidade do serviço que presta, mesmo que não chegue a escala dos exemplos acima.</p>
 <p>Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
 Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em <strong>distribuição</strong> e em <strong>Sistemas Distribuídos</strong>.</p>
 <p>O remédio, contudo, é bem amargo: com muitos computadores conectados, vem a necessidade de coordená-los, de forma a agir de forma coerente, mesmo quando alguns deles falhem, e quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando.
@@ -916,7 +917,7 @@ Nós precisamos então entender este ambiente, determinar e especificar várias 
 Definido ou identificado o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas.
 Modelos clássicos englobam três variáveis: <strong>Comunicação</strong>, <strong>Sincronismo</strong> e <strong>Falhas</strong>.</p>
 <p>Com relação à comunicação, como já indicado acima, as possibilidades são por acesso a uma memória compartilhada ou via troca de mensagens, o modelo mais comum.
-Quanto ao sincronismo, se considera se há limites de tempo para execução de operações, para troca de mensagens (caso seja este o modelo de comunicação), e se os hospedeiros do sistema tem acesso a relógios e, finalmente, quão sincronizados estes são.<br />
+Quanto ao sincronismo, considera-se se há limites de tempo para execução de operações, para troca de mensagens (caso seja este o modelo de comunicação), e se os hospedeiros do sistema tem acesso a relógios e, finalmente, quão sincronizados estes são.<br />
 Quanto a falhas, é preciso entender como estas (bugs, por exemplo) afetam a execução do sistema, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
 O objetivo é entender como evitar que a falha de algum componente possa levar o sistema a parar como um todo e garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.</p>
 <p>Nós voltaremos a falar sobre modelos computacionais adiante. Por enquanto, vejamos alguns exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.</p>
@@ -924,17 +925,17 @@ O objetivo é entender como evitar que a falha de algum componente possa levar o
 <p class="admonition-title">Sistema de e-mail</p>
 <ul>
 <li>Entregue este email para <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#117;&#108;&#97;&#110;&#111;&#64;&#107;&#110;&#111;&#119;&#104;&#101;&#114;&#101;&#46;&#117;&#110;&#105;">&#102;&#117;&#108;&#97;&#110;&#111;&#64;&#107;&#110;&#111;&#119;&#104;&#101;&#114;&#101;&#46;&#117;&#110;&#105;</a>.</li>
-<li>Envie o item X para este endereço, após cobrança de Y dinheiros da conta Z.</li>
-<li>Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil nesta direção e sentido, com velocidade v, enquanto movimenta o avatar A para a esquerda.</li>
-<li>Autorize a transferência de X dinheiros da conta C para a conta C'.</li>
+<li>Envie o item I para o endereço E, após cobrança de D dinheiros da conta C.</li>
+<li>Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil na direção em que o o avatar está olhando, com velocidade V, enquanto movimenta o avatar A para a esquerda com velocidade W.</li>
+<li>Autorize a transferência de D dinheiros da conta C para a conta C'.</li>
 <li>Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda</li>
 <li>Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T</li>
-<li>Leia o valor do sensor de temperatura S e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro</li>
+<li>Leia o valor do sensor de temperatura T e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro</li>
 </ul>
 </div>
 <p>Fica claro por estes exemplos que há comunicação entre diversos componentes, por exemplo o console de videogame e um serviço que mantem uma "sala" aberta para um jogo.
-Também fica claro pelo mesmo exemplo que a latência desta comunicação deve ser mantida dentro certos patamares, para não inviabilizar a interação entre jogares.
-Além disso, pode-se dizer que algumas aplicações ão críticas, como no exemplo de tele-cirurgia, enquanto outras são muito menos imoportantes, como acessar sua rede social de fotos.</p>
+Também fica claro pelo mesmo exemplo que a latência desta comunicação deve ser mantida dentro de certos patamares, para não inviabilizar a interação entre jogares.
+Além disso, pode-se dizer que algumas aplicações não críticas, como no exemplo de tele-cirurgia, enquanto outras são muito menos imoportantes, como acessar sua rede social de fotos.</p>
 <p>Voltando à definição, acima, sistemas distribuídos implicam em algum tipo de colaboração entre componentes para permitir que recursos de um sejam usados por outro.
 Colaboração cria dependência e, nos exemplos acima, é claro que problemas em alguns compontes pode fazer com que a tarefa que o sistema executa seja inviabilizada, como no caso do sensor do último exemplo, que se parar de funcionar, impede a medição da temperatura e o disparo adequado do alarme.
 Entre os recursos compartilhados por componentes em um sistema distribuído estão alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, mas também a <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.</p>
@@ -948,8 +949,7 @@ Implementar estas abstrações em si já é uma tarefa complicada, pois é preci
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
 Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
-Mas lembrem-se, também que <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. </p>
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup></p>
 <p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong>middleware</strong>.</p>
 <h3 id="middleware">Middleware</h3>
@@ -960,7 +960,7 @@ Com sistemas distribuídos, não é diferente, e no caso da comunicação entre 
 <p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, entre, o <em>software</em> e o <em>hardware</em>. 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
 Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular <em>hardware</em> real, mas também pode encapsular outra abstração de <em>hardware</em>, por exemplo, uma máquina virtual ou contêiner.</p>
-<p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">2</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
+<p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">4</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
 <p><img alt="Middleware" src="images/01-01.png" /></p>
 <p>Com este cenário em mente, é importante entender o que diz <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a> quando afirma que as principais funções do <em>middleware</em> são:</p>
 <ul>
@@ -982,7 +982,7 @@ Vejamos cada uma destas separadamente.</p>
 Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.</p>
 <p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
 <div class="admonition note">
-<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">3</a></sup></p>
+<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">5</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1026,7 +1026,7 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 </table>
 </div>
 <div class="admonition note">
-<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">4</a></sup></p>
+<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">6</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1066,7 +1066,7 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão a arquitura "nativa" do host ou um padrão intermediário, definido pelo <em>middleware</em>.</p>
 <p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
 No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com o mesmo.
-Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">5</a></sup>.
+Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">7</a></sup>.
 Como transferir strings entre duas plataforms?  Não fazê-lo? Simplificar a string Java?  Estender a string C?  </p>
 <div class="admonition note">
 <p class="admonition-title">Transparência de Acesso</p>
@@ -1097,7 +1097,7 @@ A esta transparência é essencial uma boa distribuição do serviço, sobre uma
 </ul>
 <p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
-Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">6</a></sup>.
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">8</a></sup>.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
 <p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
 <ul>
@@ -1458,20 +1458,26 @@ Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a
 <li id="fn:centr">
 <p>Muitos se referem a sistemas não-distribuídos como <strong>centralizados</strong> mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso é em acordo como o oposto a distribuído.&#160;<a class="footnote-backref" href="#fnref:centr" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
+<li id="fn:embed">
+<p>Escolhemos aqui ignorar o argumento muito plausível de que um algoritmo distribuído poderia ser executado entre, por exemplo, diversos chips em uma mesma placa.&#160;<a class="footnote-backref" href="#fnref:embed" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:ogros">
+<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
 <li id="fn:0101">
-<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:IEEEFP">
-<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:IBMFP">
-<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:stringjava">
-<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:stadia">
-<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
