@@ -10,7 +10,7 @@
       
       
       
-      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../img/favicon.png">
       <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
     
     
@@ -990,25 +990,24 @@ Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coe
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="images/network.png" /></p>
 <p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
-Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima.
-Cada camada tem um <strong>cabeçalho</strong> (<em>header</em>) e uma <strong>carga</strong> (<em>payload</em>) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
-Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. </p>
-<p><img alt="image" src="images/04-01.png" /></p>
+Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:</p>
 <ol>
-<li>Bits</li>
-<li>Frames/quadros; controle de fluxo; acesso ao meio.</li>
-<li>Datagramas/pacotes; roteamento</li>
-<li>Controle de fluxo; fim a fim; confiabilidade; tcp e udp</li>
-<li>Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
-<li>Objetos; json, xml; criptografia</li>
-<li>Aplicações; http, pop, ftp</li>
+<li>Física: Bits</li>
+<li>Enlace: Frames/quadros; controle de fluxo; acesso ao meio.</li>
+<li>Rede: Datagramas/pacotes; roteamento</li>
+<li>Transporte: Controle de fluxo; fim a fim; confiabilidade; tcp e udp</li>
+<li>Sessão: Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl</li>
+<li>Apresentação: Objetos; json, xml; criptografia</li>
+<li>Aplicação: Aplicações; http, pop, ftp</li>
 </ol>
-<p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
+<p><img alt="image" src="images/04-01.png" /></p>
+<p>O protocolo de cada camada inclui <strong>cabeçalhos</strong> (<em>header</em>) e <strong>carga</strong> (<em>payload</em>) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. </p>
 <p>Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
-Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
-Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
-<p>Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
-Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
+Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
+pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.</p>
+<p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="images/osi-ip.jpg" /></a></p>
+<p>Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
 Alguns exemplos de tais funcionalidades são</p>
 <ul>
 <li>(De)Serialização</li>
@@ -1019,6 +1018,7 @@ Alguns exemplos de tais funcionalidades são</p>
 </ul>
 <p>A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
 Este característica é conhecida como o <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">argumento fim-a-fim no projeto de sistemas</a>; uma análise recente deste argumento foi feita <a href="https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/">aqui</a>.</p>
+<p>Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
 <h2 id="no-principio-era-o-socket">No princípio, era o Socket</h2>
 <p>Na prática, para implementarmos a comunicação entre processos, usamos <strong>sockets</strong>.
 Para se definir um socket a partir de um <strong>host</strong> é necessário identificar o outro fim da comunicação, isto é, o outro <em>host</em>, ou melhor, uma de suas interfaces de rede.
@@ -1028,20 +1028,20 @@ No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
 Escolhido o protocolo, </p>
 <ul>
 <li>cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e </li>
-<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet <sup id="fnref:obs"><a class="footnote-ref" href="#fn:obs">1</a></sup>. </li>
+<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.^[Endereços IP não públicos não server como identificadores únicos na Internet.]</li>
 </ul>
 <p>Mas dentro de um <em>host</em>, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:</p>
 <ul>
 <li>Porta: 16 bits<ul>
-<li><a href="http://www.iana.org">IANA</a> (Internet Assigned Numbers Authority)</li>
-<li>Bem conhecidas -- 0-1023</li>
-<li>Proprietárias -- 49151</li>
-<li>Dinâmicas -- 65535</li>
+<li>Associado a serviços pela <a href="http://www.iana.org">Internet Assigned Numbers Authority</a>, IANA.</li>
+<li>Portas "Bem conhecidas": 0-1023</li>
+<li>Portas Proprietárias: 49151</li>
+<li>Portas Dinâmicas: 65535</li>
 </ul>
 </li>
 </ul>
-<p>Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
+<p>Também é necessário definir o protocolo de transporte dos dados, na camada 4.
 Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) ou UPD (<strong>SOCK_DGRAM</strong>).</p>
 <p>A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.</p>
 <h3 id="tcp">TCP</h3>
@@ -1049,7 +1049,7 @@ Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) 
 <div class="mermaid">stateDiagram-v2
    Servidor --&gt; Entrada/Saída
    Cliente --&gt; Entrada/Saída
-   Entrada/Saída --&gt; sc
+   Entrada/Saída --&gt; Encerramento
 
    state Servidor {
      ss: Cria socket
@@ -1072,7 +1072,9 @@ Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) 
      cs --&gt; cc
    }
 
-   state sc: Fecha conexão</div></p>
+   state Encerramento {
+       sc: Fecha conexão
+   }</div></p>
 <!--![image](images/04-15.png)-->
 
 <p>Estabelecido o socket, o mesmo pode ser usado como <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.
@@ -1118,7 +1120,7 @@ O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas n�
 </code></pre></div>
 </td></tr></table>
 
-<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir<sup id="fnref:nc"><a class="footnote-ref" href="#fn:nc">2</a></sup>: </p>
+<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir.^[O programa <code>telnet</code> é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o <code>netcat</code> normalmente precisa ser instalado por você. Em alguns sistemas, em vez de <code>netcat</code> o comando é o <code>nc</code>].</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet localhost <span class="m">12345</span>
 </code></pre></div>
 </td></tr></table>
@@ -1292,7 +1294,7 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. </p>
 </div>
 <h3 id="ip-multicast">IP-Multicast</h3>
-<p>Imagine que você tenha que enviar um <em>stream</em> de vídeo para um destinatário, mostrando como você está jogando o mais novo jogo da velha no mercado.
+<p>Imagine que você tenha que enviar um <em>stream</em> de vídeo para um amigo mostrando como você está jogando o mais novo jogo da velha no mercado.
 Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
 Como você já sabe, o TCP envia confirmações de pacotes recebidos e usa uma janela deslizante para determinar quais pacotes reenviar, o que pode causar interrupções na execução do vídeo.
 Além do mais, as pessoas provavelmente preferirão perder alguns quadros que perder a sincronia com sua excitante partida.
@@ -1304,7 +1306,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 <p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
-A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">3</a></sup></p>
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">1</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1441,7 +1443,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">4</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">2</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
@@ -2588,17 +2590,11 @@ A seguir são apresentados dois exemplos, usando o pacote <code>thread</code> ou
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:obs">
-<p>Endereços IP não públicos não server como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:obs" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:nc">
-<p>Se o segundo comando não funcionar, tente <code>nc</code> em vez de <code>netcat</code>.&#160;<a class="footnote-backref" href="#fnref:nc" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
 <li id="fn:multicast_use">
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
