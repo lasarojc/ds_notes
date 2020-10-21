@@ -117,12 +117,12 @@ Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Com
 Isto é feito pela definição uma porta:
 
 * Porta: 16 bits
-     * [IANA](http://www.iana.org) (Internet Assigned Numbers Authority)
-     * Bem conhecidas -- 0-1023
-     * Proprietárias -- 49151
-     * Dinâmicas -- 65535
+     * Associado a serviços pela [Internet Assigned Numbers Authority](http://www.iana.org), IANA.
+     * Portas "Bem conhecidas": 0-1023
+     * Portas Proprietárias: 49151
+     * Portas Dinâmicas: 65535
 
-Também é necessário definir também o protocolo de transporte dos dados, na camada 4.
+Também é necessário definir o protocolo de transporte dos dados, na camada 4.
 Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UPD (**SOCK\_DGRAM**).
 
 A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.
@@ -134,7 +134,7 @@ O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
 stateDiagram-v2
    Servidor --> Entrada/Saída
    Cliente --> Entrada/Saída
-   Entrada/Saída --> sc
+   Entrada/Saída --> Encerramento
 
    state Servidor {
      ss: Cria socket
@@ -157,7 +157,9 @@ stateDiagram-v2
      cs --> cc
    }
 
-   state sc: Fecha conexão
+   state Encerramento {
+       sc: Fecha conexão
+   }
 ```
 
 <!--![image](images/04-15.png)-->
@@ -193,8 +195,7 @@ Para executá-lo, execute o seguinte comando em um terminal.
 python server.py
 ```
 
-Em outro terminal, execute **um dos** dois comandos a seguir[^nc]: 
-[^nc]: Se o segundo comando não funcionar, tente `nc` em vez de `netcat`.
+Em outro terminal, execute **um dos** dois comandos a seguir.^[O programa `telnet` é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o `netcat` normalmente precisa ser instalado por você. Em alguns sistemas, em vez de `netcat` o comando é o `nc`].
 
 ```bash
 telnet localhost 12345
@@ -324,7 +325,7 @@ Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UD
 
 ### IP-Multicast
 
-Imagine que você tenha que enviar um *stream* de vídeo para um destinatário, mostrando como você está jogando o mais novo jogo da velha no mercado.
+Imagine que você tenha que enviar um *stream* de vídeo para um amigo mostrando como você está jogando o mais novo jogo da velha no mercado.
 Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
 Como você já sabe, o TCP envia confirmações de pacotes recebidos e usa uma janela deslizante para determinar quais pacotes reenviar, o que pode causar interrupções na execução do vídeo.
 Além do mais, as pessoas provavelmente preferirão perder alguns quadros que perder a sincronia com sua excitante partida.
