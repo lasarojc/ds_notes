@@ -65,28 +65,27 @@ Os elementos que conectam as diversas redes são denominados **roteadores** e fa
 ![A Internet](images/network.png)
 
 Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
-Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima.
-Cada camada tem um **cabeçalho** (*header*) e uma **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
-Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
+Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
+
+1. Física: Bits
+2. Enlace: Frames/quadros; controle de fluxo; acesso ao meio.
+3. Rede: Datagramas/pacotes; roteamento
+4. Transporte: Controle de fluxo; fim a fim; confiabilidade; tcp e udp
+5. Sessão: Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl
+6. Apresentação: Objetos; json, xml; criptografia
+7. Aplicação: Aplicações; http, pop, ftp
 
 ![image](images/04-01.png)
 
+O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
 
-1. Bits
-* Frames/quadros; controle de fluxo; acesso ao meio.
-* Datagramas/pacotes; roteamento
-* Controle de fluxo; fim a fim; confiabilidade; tcp e udp
-* Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl
-* Objetos; json, xml; criptografia
-* Aplicações; http, pop, ftp
+Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
+Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
+pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
 
 [![OSI x IP](images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
-Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
-Comparada à pilha OSI, a IP é mais simples, como se vê na figura.
-Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de **transporte**.
-
-Como se vê, as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
 Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
 Alguns exemplos de tais funcionalidades são
 
@@ -100,6 +99,8 @@ A grande vantagem desta abordagem é que se pode implementar exatamente e soment
 Este característica é conhecida como o [argumento fim-a-fim no projeto de sistemas](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf); uma análise recente deste argumento foi feita [aqui](https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/).
 
 
+Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de **transporte**.
+
 ## No princípio, era o Socket
 
 Na prática, para implementarmos a comunicação entre processos, usamos **sockets**.
@@ -110,9 +111,7 @@ No caso da pilha IP, usa-se o protocolo AF\_INET ou PF\_INET.
 Escolhido o protocolo, 
 
 * cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e 
-* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet [^obs]. 
-
-[^obs]: Endereços IP não públicos não server como identificadores únicos na Internet.
+* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.^[Endereços IP não públicos não server como identificadores únicos na Internet.]
 
 Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:

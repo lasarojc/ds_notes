@@ -22,15 +22,17 @@ Programar sistemas distribuídos é dar outro salto em complexidade, pois freque
 
 ![Lego SD](images/cablemess.jpg)
 
-De fato, a principal característica de um sistema distribuído em relação a um não-distribuído, é a separação e disperção de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
+De fato, a principal característica de um sistema distribuído em relação a um não-distribuído, é a separação e dispersão de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
 Assim, uma possível definição de Sistema Distribuído, que me agrada, é a seguinte:
 
 !!! note "Sistema Distribuído"
     **Coleção** de sistemas computacionais (software ou hardware), **independentes** mas com alguma forma de **comunicação**, que **colaboram** na execução de alguma **tarefa**.
 
-No jargão da área, os componentes indepedentes são denominados **nós**. Frequentemente, cada **nó** do sistema será na prática um processo em um computador hospedeiro, um *host*, mas possivelmente múltiplos podem ser executados em um mesmo *host*; isso não muda o fato de que são independentes e poderiam ser distanciados.
+No jargão da área, os componentes indepedentes são denominados **nós**. Frequentemente, cada **nó** do sistema será na prática um processo em um computador hospedeiro, um *host*, mas possivelmente múltiplos podem ser executados em um mesmo *host*; isso não muda o fato de que são independentes e poderiam ser distanciados.[^embed]
 
-Quanto à comunicação, Os nós podem compartilhar um espaço de endereçamento comum, seja por que estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
+[^embed]: Escolhemos aqui ignorar o argumento muito plausível de que um algoritmo distribuído poderia ser executado entre, por exemplo, diversos chips em uma mesma placa.
+
+Quanto à comunicação, os nós podem compartilhar um espaço de endereçamento comum, seja porquê estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
 Eles também podem se comunicar por mensagens trocadas via uma rede de comunicação, como a Internet.
 
 Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não ttem ciência. 
@@ -46,9 +48,10 @@ Mas se esta é a realidade da programação distribuída, por quê fazê-lo?
 
 ## Por quê desenvolvemos sistemas distribuídos?
 
-Aqui diremos que um sistema é bom se está sempre funcional, mesmo que partes do sistema deixem de funcionar, com bom desempenho, i.e., respostas rápidas são dadas para o usuário, e com baixo custo, ou pelo menos tão baixo qunto possível para realizar a tarefa para a qual foi construído.
-Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.
+Aqui diremos que um sistema é bom se está sempre funcional, com bom desempenho e é de baixo custo.
+Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas; bom desempenho implica que  respostas "rápidas" são dadas para o usuário; baixo custo implica não gastar mais que o necessário para realizar a tarefa para a qual foi construído.
 
+Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.
 Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos:
 Alguns exemplos óbvios são
 
@@ -56,14 +59,14 @@ Alguns exemplos óbvios são
 * [Facebook](https://www.facebook.com), e
 * [GMail](https://www.gmail.com).
 
-Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos fontes queimadas, discos corruptos, memórias defeituosas. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
+Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
 
 Enquanto a primeira vista possa se pensar que as técnicas usadas na construção destes sistemas devem ser muito especializadas e fora da realidade dos sistemas que nós desenvolvemos, a verdade não poderia ser mais longe disto.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.
 
 ![Data Growth](images/datagrowth.jpg)
 
-Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (**scale up**) mesmo de forma linear tem custo exponencial.
+Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (**scale up**), mesmo de forma linear, tem custo exponencial.
 
 ![Custo de melhoria](images/exponential.jpg)
 
@@ -71,7 +74,7 @@ O que nos resta então é agregar o poder computacional de diversos computadores
 
 ![Custo de melhoria](images/scaleupout.jpg)
 
-De fato, praticamente qualquer sistema de informação de sucesso necessitará aplicar as mesmas técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender a número crescente de clientes (computacionais ou humanos), aumentar sua área de cobertura, e melhorar ou manter a qualidade do serviço que presta, mesmo que não chegue a escala dos exemplos acima.
+De fato, praticamente qualquer sistema de informação de sucesso necessitará aplicar as mesmas técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender ao número crescente de clientes (computacionais ou humanos), aumentar sua área de cobertura, e melhorar ou manter a qualidade do serviço que presta, mesmo que não chegue a escala dos exemplos acima.
 
 Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
 Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em **Sistemas Distribuídos**.
@@ -93,7 +96,7 @@ Definido ou identificado o modelo computacional, podemos distribuir nosso sistem
 Modelos clássicos englobam três variáveis: **Comunicação**, **Sincronismo** e **Falhas**.
 
 Com relação à comunicação, como já indicado acima, as possibilidades são por acesso a uma memória compartilhada ou via troca de mensagens, o modelo mais comum.
-Quanto ao sincronismo, se considera se há limites de tempo para execução de operações, para troca de mensagens (caso seja este o modelo de comunicação), e se os hospedeiros do sistema tem acesso a relógios e, finalmente, quão sincronizados estes são.  
+Quanto ao sincronismo, considera-se se há limites de tempo para execução de operações, para troca de mensagens (caso seja este o modelo de comunicação), e se os hospedeiros do sistema tem acesso a relógios e, finalmente, quão sincronizados estes são.  
 Quanto a falhas, é preciso entender como estas (bugs, por exemplo) afetam a execução do sistema, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
 O objetivo é entender como evitar que a falha de algum componente possa levar o sistema a parar como um todo e garantir que clientes em qualquer lugar do mundo tenham a mesma facilidade em acessar o serviço.
 
@@ -101,16 +104,16 @@ Nós voltaremos a falar sobre modelos computacionais adiante. Por enquanto, veja
 
 !!!example "Sistema de e-mail"
     * Entregue este email para fulano@knowhere.uni.
-    * Envie o item X para este endereço, após cobrança de Y dinheiros da conta Z.
-    * Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil nesta direção e sentido, com velocidade v, enquanto movimenta o avatar A para a esquerda.
-    * Autorize a transferência de X dinheiros da conta C para a conta C'.
+    * Envie o item I para o endereço E, após cobrança de D dinheiros da conta C.
+    * Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil na direção em que o o avatar está olhando, com velocidade V, enquanto movimenta o avatar A para a esquerda com velocidade W.
+    * Autorize a transferência de D dinheiros da conta C para a conta C'.
     * Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda
     * Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
-    * Leia o valor do sensor de temperatura S e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
+    * Leia o valor do sensor de temperatura T e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
 
 Fica claro por estes exemplos que há comunicação entre diversos componentes, por exemplo o console de videogame e um serviço que mantem uma "sala" aberta para um jogo.
-Também fica claro pelo mesmo exemplo que a latência desta comunicação deve ser mantida dentro certos patamares, para não inviabilizar a interação entre jogares.
-Além disso, pode-se dizer que algumas aplicações ão críticas, como no exemplo de tele-cirurgia, enquanto outras são muito menos imoportantes, como acessar sua rede social de fotos.
+Também fica claro pelo mesmo exemplo que a latência desta comunicação deve ser mantida dentro de certos patamares, para não inviabilizar a interação entre jogares.
+Além disso, pode-se dizer que algumas aplicações não críticas, como no exemplo de tele-cirurgia, enquanto outras são muito menos imoportantes, como acessar sua rede social de fotos.
 
 Voltando à definição, acima, sistemas distribuídos implicam em algum tipo de colaboração entre componentes para permitir que recursos de um sejam usados por outro.
 Colaboração cria dependência e, nos exemplos acima, é claro que problemas em alguns compontes pode fazer com que a tarefa que o sistema executa seja inviabilizada, como no caso do sensor do último exemplo, que se parar de funcionar, impede a medição da temperatura e o disparo adequado do alarme.
@@ -130,8 +133,10 @@ Implementar estas abstrações em si já é uma tarefa complicada, pois é preci
 Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
 Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.
-Mas lembrem-se, também que ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. 
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.[^ogros]
+
+
+[^ogros]: Lembrem-se que também ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.
 
 
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
@@ -162,8 +167,8 @@ Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](h
 Assim, os *middleware* facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  `write(byte[])` e `read(): byte[]` dos protocolos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
 Desenvolver sistemas distribuídos sem usar um middleware é como desenvolver um aplicativo sem usar quaisquer bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o *middleware* antes de desenvolver o sistema em si.
 
-Idealmente, com o *middleware* o desenvolvedor conseguiria facilmente implementar uma aplicação em a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
-Pense no browser e na WWW, por exemplo; o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de transparência.
+Idealmente, com o *middleware* o desenvolvedor conseguiria facilmente implementar uma aplicação em que a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
+Pense no browser e na WWW, por exemplo: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de **transparência**.
 
 ### Transparência
 
@@ -179,7 +184,8 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 
 ![IEEE Floating Point](images/float_point.jpg)
 
-!!! note "IEEE[^IEEEFP]"
+!!!note "IEEE[^IEEEFP]"
+
      Precisão | Tamanho total (bits) | Sinal (bits) | Expoente (bits) | Mantissa (bits)
     :--------:|:--------------------:|:------------:|:---------------:|:--------------:
      Half | 16 | 1 | 5 | 10 
@@ -673,7 +679,7 @@ Neste caso, é interessante notar que esta disposição dos componentes é indep
 
 ![2 Tiers](images/02-05.png)
 
-Por outro lado, cada camada pode ser subdividida em mais componentes, resultando é múltiplos tiers, como neste exemplo de um sistema de busca na Web.
+Por outro lado, cada camada pode ser subdividida em mais componentes, resultando em múltiplos tiers, como neste exemplo de um sistema de busca na Web.
 
 ![Multi-tier](images/02-04.png)
 
