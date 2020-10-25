@@ -414,13 +414,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#relogios-logicos_1" class="md-nav__link">
-    Relógios Lógicos
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#happened-before" class="md-nav__link">
     Happened-Before
   </a>
@@ -448,26 +441,6 @@
   <a href="#relogio-vetorial" class="md-nav__link">
     Relógio vetorial
   </a>
-  
-    <nav class="md-nav" aria-label="Relógio vetorial">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multicast-totalmente-ordenado" class="md-nav__link">
-    Multicast totalmente ordenado
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multicast-causalmente-ordenado" class="md-nav__link">
-    Multicast causalmente ordenado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -732,13 +705,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#relogios-logicos_1" class="md-nav__link">
-    Relógios Lógicos
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#happened-before" class="md-nav__link">
     Happened-Before
   </a>
@@ -766,26 +732,6 @@
   <a href="#relogio-vetorial" class="md-nav__link">
     Relógio vetorial
   </a>
-  
-    <nav class="md-nav" aria-label="Relógio vetorial">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#multicast-totalmente-ordenado" class="md-nav__link">
-    Multicast totalmente ordenado
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#multicast-causalmente-ordenado" class="md-nav__link">
-    Multicast causalmente ordenado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1196,7 +1142,7 @@ Que não haverão sobreposições de requisições?
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos <strong>relógios lógicos</strong>.</p>
 <hr />
-<h6 id="relogios-logicos_1">Relógios Lógicos</h6>
+<h6>Relógios Lógicos</h6>
 <ul>
 <li>Envio e recepção (e possivelmente outros eventos) fazem o relógio ``ticar''.</li>
 <li>Processos podem usar este relógio para concordar na <strong>ordem</strong> dos eventos, mesmo que não no <strong>instante</strong> do evento.</li>
@@ -1288,7 +1234,7 @@ Acontece que multicast totalmente ordenado pode garantir exatamente isso, que to
 <p>Mas como podemos implementar estas primitivas de multicast usando relógios lógicos?
 Considere o seguinte algoritmo.</p>
 <hr />
-<h6 id="multicast-totalmente-ordenado">Multicast totalmente ordenado</h6>
+<h6>Multicast totalmente ordenado</h6>
 <ul>
 <li>Fila com prioridade em cada processo.</li>
 <li>Mensagens são enviadas a todos os processos e colocadas em uma fila local.</li>
@@ -1300,7 +1246,7 @@ Considere o seguinte algoritmo.</p>
 </ul>
 <hr />
 <hr />
-<h6 id="multicast-causalmente-ordenado">Multicast causalmente ordenado</h6>
+<h6>Multicast causalmente ordenado</h6>
 <ul>
 <li>Mensagens são enviadas a todos os processos.</li>
 <li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> incrementa <span><span class="MathJax_Preview">c_p[p]</span><script type="math/tex">c_p[p]</script></span> somente no envio de mensagens.</li>
