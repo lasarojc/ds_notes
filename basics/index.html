@@ -313,6 +313,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#estagios" class="md-nav__link">
+    Estágios
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#problemas-com-multithreading" class="md-nav__link">
     Problemas com multithreading
   </a>
@@ -722,6 +729,13 @@
           <li class="md-nav__item">
   <a href="#thread-pool" class="md-nav__link">
     Thread pool
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estagios" class="md-nav__link">
+    Estágios
   </a>
   
 </li>
@@ -1586,15 +1600,17 @@ Detalhes do protocolo seguido por navegadores e servidores serão vistos mais ta
 <h3 id="cliente-multithreaded">Cliente multithreaded</h3>
 <p>Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com <strong>várias tarefas concorrentemente</strong>, por exemplo solicitar CSS, HTML e imagens concorrentemente, <strong>escondendo latência</strong> das várias operações, e permite <strong>organizar código</strong> em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página <a href="https://www.google.com">www.google.com</a>; um número muito maior é feito na carga de <a href="https://www.bing.com">www.bing.com</a>.</p>
-<div class="admonition bug">
-<p class="admonition-title">Bug</p>
-<p>Estender</p>
-</div>
-<hr />
+<details class="todo"><summary>Todo</summary><p>Estender</p>
+</details>
 <h3 id="servidor-multithreaded">Servidor multithreaded</h3>
+<p>Do lado do servidores há diversas possibilidades de uso de threads em servidores. 
+Contudo, há vantagens em se usar múltiplos threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis melhorando a experiência do usuário.</p>
 <h4 id="single-threaded">Single-threaded</h4>
-<p>Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora:</p>
+<p>A estratégia mais simples de se implementar e manter é a de usar apenas um thread, com temos feito até agora.
+Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura:</p>
+<p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
 <ol>
+<li>O servidor é iniciado, criando o socket e invocando accept</li>
 <li>o cliente envia a requisição para o servidor</li>
 <li>o servidor aceita a conexão em seu único thread</li>
 <li>uma tarefa é gerada para ler o arquivo</li>
@@ -1603,31 +1619,75 @@ Se você usar o console de desenvolvimento do navegador, verá que trinta e seis
 <li>a requisição é descartada</li>
 <li>o thread do servidor volta a esperar uma nova requisição</li>
 </ol>
-<p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
+<p>Se qualquer outro cliente tenta se conectar enquanto o servidor está executando os passos de 2 a 6, este ficará bloqueado ou terá sua conexão recusada (depenendendo do <em>backlock</em> do socket). 
+A espera será maior quanto mais o servidor demorar para atender a uma requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
+Para evitar que isto ocorra, o servidor pode usar mais threads.</p>
 <h4 id="thread-per-request">Thread per request</h4>
-<p>Outra opção é criar um novo thread para cada nova requisição, levando a múltiplos threads atendendo a múltiplas requisições concorrentemente.
-Desta forma, quando um thread é bloqueado para leitura de arquivos do disco, outros clientes podem continuar sendo atendidos.</p>
+<p>O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
+Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.</p>
 <p><img alt="Multi Threaded" src="images/multithreadedserver.gif" /></p>
-<p>Contudo, o número de threads que se pode criar em um SO é limitado. 
-Além disso, a criação e destruição de threads é cara e por isso devemos evitar este processo.</p>
+<p>Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
+Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
+Se possível, devemos evitar a criação de novos threads em aplicações com requisitos de desempenho, e recliclá-los pode ser uma boa estratégia.</p>
 <h4 id="thread-pool">Thread pool</h4>
-<p>Assim, temos uma outra opção que também usa múltiplos threads, que usa <em>pools</em>  de threads para lidar com as requições.
-No cerne desta abordagem, junto com um pool de threads, fica uma fila bloquenante <strong>thread-safe</strong>, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas, e que bloqueia os threads que tentam inserir quando a fila está cheia ou remover quando ela está vazia.</p>
+<p>Para reciclarmos threads, podemos criar <em>pools</em>, um balde de threads que são usados quando necessário e devolvidos para o balde quando não mais.
+No cerne desta abordagem, junto com o <em>pool</em> de threads, fica uma fila bloquenante na qual tarefas são inseridas e de onde os threads tentam retirá-las.</p>
+<p>Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de consumir recursos. Tão logo nova tarefa seja inserida, a fila acorda os threads para que a processem. Para garantir a corretude no processamento, a fila deve ser <strong>thread-safe</strong>, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas.</p>
+<p>Na figura, um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.</p>
 <p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="images/poolthreadedserver.gif" /></a></p>
-<p>Um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
-Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; se a fila se esvazia, os threads ficam bloqueados esperando novas requisições.</p>
-<p>É possível refinar mais este modelo, quebrando o processamento em vários pools, no que é conhecido como <strong>Staged Event-Driven Architecture</strong>, SEDA.</p>
+<p>Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; requisições que demandam menor processamento liberam o thread mais rapidamente para que pegue nova tarefa.
+Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo. Se todas são grandes, as tarefas se acumularão na fila.
+Por isso é importante dimensionar bem o tamanho to <em>pool</em>, ou mesmo torná-lo dinâmico para que use menos recursos (threads) quando não necessário e não deixe tarefas pendentes por muito tempo. </p>
+<p>Se considerarmos que cada tarefa na verdade tem várias partes, 
+é possível refinar mais este modelo, quebrando o processamento em vários pools.</p>
+<h4 id="estagios">Estágios</h4>
+<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA^[O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.], cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda1.png" /></a></p>
-<p>Nesta abordagem, cada <strong>estágio</strong>,  por ter seu próprio <em>pool</em>, pode ser escalado individualmente de acordo com a demanda do estágio.
-Esta abordagem também é útil quando múltiplas partes da tarefa consistem em E/S.</p>
+<p>Por ter seu próprio <em>pool</em>, cada estágio pode ser escalado individualmente de acordo com a demanda.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
 <p>Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a>.</p>
-<p>Para aprender mais sobre SEDA, vá <a href="http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf">aqui</a>.  </p>
-<h1> TODO </h1>
-
 <h4 id="problemas-com-multithreading">Problemas com multithreading</h4>
-<p>Embora a ideia de usar múltiplos threads seja resolver problemas, fazê-lo efetivamente não trivial.
-Vejamos, por exemplo, o problema de definir afinidade entre threads, isto é, de definir quais threads compartilham o mesmo estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
+<p>Embora a ideia de usar múltiplos threads seja melhorar desempenho e experiência do usuário, fazê-lo efetivamente é não trivial.
+Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte pseudo-código:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">threadfunction</span><span class="p">(</span><span class="n">int32</span> <span class="o">*</span> <span class="n">exclusivo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">int32</span> <span class="n">local</span> <span class="o">=</span> <span class="n">trabalha</span><span class="p">();</span>
+        <span class="n">exclusivo</span> <span class="o">=</span> <span class="n">local</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+<span class="n">int32</span> <span class="n">X</span><span class="p">;</span>
+<span class="n">int32</span> <span class="n">Y</span><span class="p">;</span>
+
+<span class="n">thread1</span> <span class="o">=</span> <span class="n">tread_new</span><span class="p">(</span><span class="n">threadfunction</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
+<span class="n">thread2</span> <span class="o">=</span> <span class="n">tread_new</span><span class="p">(</span><span class="n">threadfunction</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Y</span><span class="p">);</span>
+
+<span class="p">...</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
+Não exatamente, pois mesmo este código simplíssimo podemos sofrer de <a href="https://dzone.com/articles/false-sharing">falso compartilhamento</a>.
+Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto <code>X</code>quanto <code>Y</code> no programa tem tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada.</p>
+<p><img alt="Multithreaded" src="images/cache-line.png" /></p>
+<p>Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache.
+Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento pode ser real (por exemplo se ambos os threads usarem a variável X).
+Neste caso, é preciso definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.</p>
 <p><img alt="Multithreaded" src="images/multithread2.png" /></p>
 <p>A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos, e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.</p>
@@ -1643,7 +1703,7 @@ Quanto a este respeito, podemos classificar servidores como <strong>stateful</st
 <p>O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
 Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> novas linhas para processar e, quando estiver pronto, requisite <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> novas linhas.
-Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:</p>
+Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:</p>
 <ol>
 <li>receba requisição informando a última linha lida</li>
 <li>recalcule todas as respostas para consulta</li>
@@ -1651,10 +1711,14 @@ Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:</p>
 <li>retorne as próximas <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> linhas para o cliente</li>
 <li>feche o resultado da consulta.</li>
 </ol>
-<p>Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma <em>visão</em>  dos resultados; a cada nova requisição, basta o servidor preparar rapidamente uma nova resposta.
-Em contrapartida, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?
-Também a complexidade do servidor aumenta, uma vez que ele precisa manter as respostas a novas requisições consistentes com as respostas anteriores e portanto, caso o serviço seja implementado por múltiplos servidores acessíveis ao cliente,  o estado deve ser compartilhado por tais servidores.
-Além disso, imagine que o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava: por quanto tempo o servidor deve manter a visão aberta?</p>
+<p>Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma <em>visão</em>  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
+Por outro lado, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?</p>
+<p>Também a complexidade do servidor aumenta. Considere as algumas de muitas perguntas possíveis neste cenário:</p>
+<ul>
+<li>Como o servidor mantém as respostas a novas requisições consistentes com as respostas anteriores? E se linhas são removidas ou inseridas no banco de dados?</li>
+<li>Se múltiplos servidores existem, como compartilhar os estado entre os mesmos?</li>
+<li>Se o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava, por quanto tempo o servidor deve manter a visão aberta?</li>
+</ul>
 <p>Você já deve ter adivinhado que no primeiro exemplo temos um servidor <em>stateless</em> e no segundo um <em>stateful</em>, e percebido que cada um tem suas vantagens e desvantagens.
 Vejamos mais algumas.</p>
 <h5 id="informacao-sobre-sessao">Informação sobre Sessão</h5>
