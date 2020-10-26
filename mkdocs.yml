@@ -26,6 +26,8 @@ plugins:
                 format: svg
                 sources: '*.drawio'
 markdown_extensions:
+        - toc:
+            toc_depth: 5
         - mdx_math
         - admonition
         - footnotes

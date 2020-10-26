@@ -524,21 +524,28 @@ Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma 
 Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requição `GET arquivo.html` será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.
 
 
-### Cliente multithreaded
+### Cliente
 
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página [www.google.com](https://www.google.com); um número muito maior é feito na carga de [www.bing.com](https://www.bing.com).
 
-!!! bug 
+???todo 
     Estender
 
----
 
-### Servidor multithreaded
+### Servidor
+
+Do lado do servidores há diversas possibilidades de uso de threads em servidores. 
+Contudo, há vantagens em se usar múltiplos threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis melhorando a experiência do usuário.
+
 
 #### Single-threaded
-Há diversas possibilidades de uso de threads em servidores. A mais simples é usar apenas um, com temos feito até agora:
+A estratégia mais simples de se implementar e manter é a de usar apenas um thread, com temos feito até agora.
+Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura:
 
+![Single Threaded](./images/singlethreadedserver.gif)
+
+0. O servidor é iniciado, criando o socket e invocando accept
 1. o cliente envia a requisição para o servidor
 2. o servidor aceita a conexão em seu único thread
 3. uma tarefa é gerada para ler o arquivo
@@ -547,49 +554,84 @@ Há diversas possibilidades de uso de threads em servidores. A mais simples é u
 6. a requisição é descartada
 7. o thread do servidor volta a esperar uma nova requisição
 
-![Single Threaded](./images/singlethreadedserver.gif)
+Se qualquer outro cliente tenta se conectar enquanto o servidor está executando os passos de 2 a 6, este ficará bloqueado ou terá sua conexão recusada (depenendendo do *backlock* do socket). 
+A espera será maior quanto mais o servidor demorar para atender a uma requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
+Para evitar que isto ocorra, o servidor pode usar mais threads.
 
 #### Thread per request
-
-Outra opção é criar um novo thread para cada nova requisição, levando a múltiplos threads atendendo a múltiplas requisições concorrentemente.
-Desta forma, quando um thread é bloqueado para leitura de arquivos do disco, outros clientes podem continuar sendo atendidos.
+O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
+Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.
 
 ![Multi Threaded](./images/multithreadedserver.gif)
 
-Contudo, o número de threads que se pode criar em um SO é limitado. 
-Além disso, a criação e destruição de threads é cara e por isso devemos evitar este processo.
+Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
+Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
+Se possível, devemos evitar a criação de novos threads em aplicações com requisitos de desempenho, e recliclá-los pode ser uma boa estratégia.
 
 #### Thread pool
+Para reciclarmos threads, podemos criar *pools*, um balde de threads que são usados quando necessário e devolvidos para o balde quando não mais.
+No cerne desta abordagem, junto com o *pool* de threads, fica uma fila bloquenante na qual tarefas são inseridas e de onde os threads tentam retirá-las.
 
-Assim, temos uma outra opção que também usa múltiplos threads, que usa *pools*  de threads para lidar com as requições.
-No cerne desta abordagem, junto com um pool de threads, fica uma fila bloquenante **thread-safe**, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas, e que bloqueia os threads que tentam inserir quando a fila está cheia ou remover quando ela está vazia.
+Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de consumir recursos. Tão logo nova tarefa seja inserida, a fila acorda os threads para que a processem. Para garantir a corretude no processamento, a fila deve ser **thread-safe**, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas.
+
+Na figura, um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
 
 [![Pool Threaded](./images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
 
-Um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
-Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; se a fila se esvazia, os threads ficam bloqueados esperando novas requisições.
+Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; requisições que demandam menor processamento liberam o thread mais rapidamente para que pegue nova tarefa.
+Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo. Se todas são grandes, as tarefas se acumularão na fila.
+Por isso é importante dimensionar bem o tamanho to *pool*, ou mesmo torná-lo dinâmico para que use menos recursos (threads) quando não necessário e não deixe tarefas pendentes por muito tempo. 
 
-É possível refinar mais este modelo, quebrando o processamento em vários pools, no que é conhecido como **Staged Event-Driven Architecture**, SEDA.
+Se considerarmos que cada tarefa na verdade tem várias partes, 
+é possível refinar mais este modelo, quebrando o processamento em vários pools.
+
+#### Estágios
+Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**, SEDA^[O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.], cada **estágio**, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.
 
 [![Seda](images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
-Nesta abordagem, cada **estágio**,  por ter seu próprio *pool*, pode ser escalado individualmente de acordo com a demanda do estágio.
-Esta abordagem também é útil quando múltiplas partes da tarefa consistem em E/S.
+Por ter seu próprio *pool*, cada estágio pode ser escalado individualmente de acordo com a demanda.
 
 [![Seda](images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
 Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html).
 
-Para aprender mais sobre SEDA, vá [aqui](http://courses.cs.vt.edu/cs5204/fall05-gback/presentations/SEDA_Presentation_Final.pdf).  
 
 
-<h1> TODO </h1>
 
 
-#### Problemas com multithreading
+#### Problemas
 
-Embora a ideia de usar múltiplos threads seja resolver problemas, fazê-lo efetivamente não trivial.
-Vejamos, por exemplo, o problema de definir afinidade entre threads, isto é, de definir quais threads compartilham o mesmo estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
+Embora a ideia de usar múltiplos threads seja melhorar desempenho e experiência do usuário, fazê-lo efetivamente é não trivial.
+Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte pseudo-código:
+
+```c
+void threadfunction(int32 * exclusivo) {
+    while (true) {
+        int32 local = trabalha();
+        exclusivo = local;
+    }
+}
+
+...
+int32 X;
+int32 Y;
+
+thread1 = tread_new(threadfunction, &X);
+thread2 = tread_new(threadfunction, &Y);
+
+...
+```
+
+Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
+Não exatamente, pois mesmo este código simplíssimo podemos sofrer de [falso compartilhamento](https://dzone.com/articles/false-sharing).
+Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto `X`quanto `Y` no programa tem tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada.
+
+![Multithreaded](images/cache-line.png)
+
+Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache.
+Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento pode ser real (por exemplo se ambos os threads usarem a variável X).
+Neste caso, é preciso definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.
 
 ![Multithreaded](images/multithread2.png)
@@ -605,15 +647,15 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JRaDkV0itbM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-#### Estado em Servidores
 
+#### Estado
 A questão das regiões críticas no servidor está intimamente relacionada à questão da manutenção de estado nos servidores.
 Quanto a este respeito, podemos classificar servidores como **stateful** e **stateless**, dois termos que ouvirão frequentemente enquanto trabalhando com SD.
 
 O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
 Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe $n$ novas linhas para processar e, quando estiver pronto, requisite $n$ novas linhas.
-Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:
+Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:
 
 1. receba requisição informando a última linha lida
 2. recalcule todas as respostas para consulta
@@ -621,23 +663,27 @@ Imagine quão infeficiente seria se o servidor seguisse o seguinte flxo:
 4. retorne as próximas $n$ linhas para o cliente
 5. feche o resultado da consulta.
 
-Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma *visão*  dos resultados; a cada nova requisição, basta o servidor preparar rapidamente uma nova resposta.
-Em contrapartida, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?
-Também a complexidade do servidor aumenta, uma vez que ele precisa manter as respostas a novas requisições consistentes com as respostas anteriores e portanto, caso o serviço seja implementado por múltiplos servidores acessíveis ao cliente,  o estado deve ser compartilhado por tais servidores.
-Além disso, imagine que o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava: por quanto tempo o servidor deve manter a visão aberta?
+Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma *visão*  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes $n$ entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
+Por outro lado, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?
+
+Também a complexidade do servidor aumenta. Considere as algumas de muitas perguntas possíveis neste cenário:
+
+* Como o servidor mantém as respostas a novas requisições consistentes com as respostas anteriores? E se linhas são removidas ou inseridas no banco de dados?
+* Se múltiplos servidores existem, como compartilhar os estado entre os mesmos?
+* Se o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava, por quanto tempo o servidor deve manter a visão aberta?
 
 Você já deve ter adivinhado que no primeiro exemplo temos um servidor *stateless* e no segundo um *stateful*, e percebido que cada um tem suas vantagens e desvantagens.
 Vejamos mais algumas.
 
-##### Informação sobre Sessão
+##### Sessão
 
 Essencialmente, o servidor *stateless* não mantem informação sobre a sessão do cliente e requer que a cada nova requisição, quaisquer informações necessárias para realizar a tarefa requisitada sejam novamente fornecidas ao servidor.
 No caso *stateful*, o servidor pode se lembrar, como no exemplo anterior, até onde o trabalho já foi executado, quais arquivos o cliente manipulou (e mantê-los abertos), qual o endereço o cliente e enviar-lhe notificações importantes (e.g., "Novo dado inserido!").
 
-##### Tratamento de falhas
+##### Falhas
 
 Enquanto servidores *stateful* obviamente levam a melhor desempenho no *happy path* (contanto que recursos suficientes sejam providos), no caso de falhas, serviços *stateless* tendem a voltar ao ar mais rapidamente, uma vez que não há estado que precise ser recuperado.
-Pela mesma razão, clientes que percebem que um servidor falhou, podem rapidamente se dirigirem a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.
+Pela mesma razão, clientes que percebem que um servidor falhou podem rapidamente se dirigir a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.
 
 Lidar com falhas também introduz outro requisito aos servidores: memória estável.
 Para que possa o recuperar o estado anterior à falha, o servidor precisa colocar o estado em algum lugar que independa do processo para se manter, por exemplo,
@@ -645,7 +691,7 @@ Para que possa o recuperar o estado anterior à falha, o servidor precisa coloca
 A perda deste estado implicaria na incapacidade de prover o serviço corretamente.
 Um projeto *stateless* não depende deste estado e por isso pode ser mais rapidamente recuperado, replicado ou substituído.
 
-##### Qual é melhor?
+##### Stateless x Stateful
 
 Não surpreendentemente, a resposta para "qual abordagem é melhor, *stateful* ou *stateless*?" é **depende**.
 Ambos as opções tem suas vantagens e desvantagens e para algums serviços apenas uma opção será viável.
@@ -663,7 +709,7 @@ Veja um pequeno comparativo das características das duas abordagens.
 | re-autenticação (mesmo que simplficada) a cada requisição | Autentica no começo da sessão |
 
 
-!!! tip "Leia mais"
+!!!tip "Leia mais"
     Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
 Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
     A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
@@ -679,7 +725,7 @@ Várias implementações desta especificação estão disponíveis tanto para si
 Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação *multi-threaded*.
 
 
-##### Função de entrada
+##### Ciclo de vida
 
 Para se definir um *thread*, é necessário definir uma função de entrada, que será para o *thread* como a função `main` é para o processo em si.
 No exemplo a seguir a função foi definida com retorno `void *` e com único parâmetro tambem `void *`; esta é uma obrigatoriedade para funções de entrata PThread.
@@ -698,8 +744,6 @@ void* hello(void* rank) {
 	return NULL;
 }
 ```
-
-##### Criação
 
 Um *thread*  é criado pela função `pthread_create`, que coloca em um `pthread_t` um *handle* para o *thread*.
 A função recebe como parâmetros opções para configuração, a função de entrada, e o parâmetro do tipo `void *`.
@@ -723,8 +767,6 @@ int main(int argc, char* argv[]) {
 	printf("Hello from the main thread\n");
 ```
 
-##### Destruição
-
 O *handle* do *thread* deve ser alocado previamente à função de criação e liberado após o fim da execução do *thread*.
 É possível esperar pelo fim da execução usando o `pthread_join`, que recebe como parâmetro o *handle* do *thread* e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo `void **`.
 
@@ -735,7 +777,6 @@ O *handle* do *thread* deve ser alocado previamente à função de criação e l
 	free(thread_handles);
 ```
 
-##### Execução
 
 Para executar um programa PThread, compile com
 ```bash
@@ -908,7 +949,7 @@ Caso a espera termine por causa de um *timeout*, é possível testar o estado at
 
 Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode ser terminado quando a *thread* principal terminar. Descomente a invocação e teste o efeito.
 
-!!! question "Exercício"
+!!! question "Exercício: contador"
     Façamos um exercício simples do uso de *threads*. Considere a classe e siga as instruções abaixo.
 
     ```Java
@@ -941,7 +982,7 @@ Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode
         É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. Isso acontece porquê a execução dos *threads* é não determinística; uma vez que estejam prontos para executar, cabe ao escalonador do sistema operacional a decisão sobre qual processo e em qual processador deverá executar.
     
 
-!!! bug 
+???todo 
    Melhorar explicação abaixo
 
 Além de extensão de `Thread` e implementação de `Runnable`, Java disponibiliza também `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
@@ -975,8 +1016,11 @@ else
 ```
 
 ##### Coordenação
-Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma tarefa. 
-Em Java, esta coordenação pode ser feita por diversas abstrações: `synchronized`, `Lock`, variáveis atômicas, ...
+Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. 
+
+Há várias astrações que podem ser usadas para coordenar as operações de *threads*, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são *locks*, variáveis de condição e semáforos.
+
+Especificamente em Java, provavelmente a abstração mais simples são os blocos `synchronized`.
 
 ###### `synchronized`
 Ao definir métodos como `synchronized`, garante-se que os mesmos nunca serão executados concorrentemente. 
@@ -1001,14 +1045,14 @@ public class SynchronizedCounter {
 ```
 
 Caso dois *threads* invoquem os métodos `increment` e `decrement` ao mesmo tempo, por exemplo, a JVM fará com que um dos *threads* pare sua execução até que o outro tenha completado a invocação.
-Isto não quer dizer que executar o exercício anterior com esta versão do contador não levará a saídas com incrementos completamente sequenciais, pois um *thread*  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método `increment`, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
-O que quer dizer é que, mesmo que saídas estranhas existam, cada operação foi executada integralmente antes da operação seguinte.
+Isto não quer dizer que executar o exercício anterior com esta versão do contador levará a saídas com incrementos completamente sequenciais, pois um *thread*  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método `increment`, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
+O que quer dizer é que, mesmo que saídas estranhas existam, cada método foi executada integralmente antes da operação seguinte.
 
-!!! question "Exercício"
+!!!question "Exercício: synchronized"
     Modifique o código do exercício anterior para usar a versão `synchronized` do contador. Depois de executá-lo, adicione um `println("Dentro: " + c)` **dentro** do método de incremento para verificar que estas saídas acontecem ordenadamente.
 
 
-`synchronized` funciona porquê limita a concorrência, e é problemático exatamente pela mesma razão. 
+`synchronized` funciona porquê limita a concorrência, mas é problemático exatamente pela mesma razão. 
 Por isso, é essencial que o `synchronized` seja o mais limitado possível em termos de escopo, o que nos leva ao uso de `synchronized` em blocos de código menores que métodos. Por exemplo:
 
 ```Java
@@ -1028,7 +1072,7 @@ public class Namer {
 
 Neste caso, blocos sincronizados **no mesmo objeto**, não são executados concorrentemente, mas outros blocos sim.
 
-!!! question "Exercício"
+!!!question "Exercício: bloco synchronized"
     Neste exercício, use dois objetos para travar o acesso a dois contadores. Instancie um programa com dois *threads*  tal que:
 
     * executem um loop 1000 vezes em que
@@ -1083,7 +1127,7 @@ public void satisfacaCondicao() {
 ```
 
 
-Embora correta, esta abordagem, conhecida como **espera ocupada**, não é eficiente pois o desperdiça computação.
+Embora correta, esta abordagem, conhecida como **espera ocupada**, não é eficiente pois desperdiça computação.
 Felizmente, em Java, todos os objetos implementam os métodos `wait` e `notify/notifyAll`, que podem ser usados para sincronizar eficientemente *threads*.
 
 ```Java
@@ -1110,7 +1154,7 @@ public class Sync{
 }
 ```
 
-Neste exemplo, a execução da função `espereCondicao` é "pausada" por `#!java synch.wait()` até que uma notificação seja enviada via `#!java sync.notifiyAll()`, na função `satisfaçaCondicao`.
+Neste exemplo a execução da função `espereCondicao` é "pausada" por `#!java synch.wait()` até que uma notificação seja enviada via `#!java sync.notifiyAll()`, na função `#!java satisfacaCondicao()`.
 Observe que estas operações só podem ocorrer dentro de blocos sincronizados na variável usada na sinalização.
 
 ###### *Locks*
@@ -1194,8 +1238,7 @@ public static Integer getMyId() {
 
 #### Python
 
-Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*.
-A seguir são apresentados dois exemplos, usando o pacote `thread` ou `threading`.
+Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*. A seguir são apresentados dois exemplos, usando o pacote `thread` ou `threading`.
 
 ```python
 #!/usr/bin/python
