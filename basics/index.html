@@ -918,7 +918,7 @@ Isto é feito pela definição uma porta:</p>
 </li>
 </ul>
 <p>Também é necessário definir o protocolo de transporte dos dados, na camada 4.
-Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) ou UPD (<strong>SOCK_DGRAM</strong>).</p>
+Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) ou UDP (<strong>SOCK_DGRAM</strong>).</p>
 <p>A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.</p>
 <h3 id="tcp">TCP</h3>
 <p>O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
@@ -953,10 +953,9 @@ Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) 
    }</div></p>
 <!--![image](images/04-15.png)-->
 
-<p>Estabelecido o socket, o mesmo pode ser usado como <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.
+<p>Estabelecido o socket, o mesmo pode ser usado como um <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, <strong>sua responsabilidade</strong>.</p>
-<p>Vejamos um exemplo do uso de sockets, em Python.
-O seguinte arquivo pode ser nomeado, por exemplo, <code>server.py</code>, mas não pode, de forma alguma, ser nomeado <code>socket.py</code>.</p>
+<p>Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo <code>server.py</code>.<sup id="fnref:pyname"><a class="footnote-ref" href="#fn:pyname">2</a></sup></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1182,7 +1181,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 <p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
-A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">2</a></sup></p>
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">3</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1319,7 +1318,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">3</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">4</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
@@ -2514,11 +2513,14 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li id="fn:ippub">
 <p>Endereços IP não públicos não servem como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:ippub" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
+<li id="fn:pyname">
+<p>Você pode usar outro nome, desde que não seja <code>socket.py</code>, e que adapte o comando para sua execução.&#160;<a class="footnote-backref" href="#fnref:pyname" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
 <li id="fn:multicast_use">
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
