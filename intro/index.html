@@ -1192,12 +1192,11 @@ Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a
 O termo está muito em voga e é usado, normalmente, para descrever a capacidade de um sistema de se adequar a variações de carga de trabalho.
 Embora seja um uso válido, há outros tipos de escalabilidade.</p>
 <ul>
-<li>Escalabilidade</li>
 <li>Tamanho: Número de usuários que suporta.</li>
 <li>Geográfica: Região que cobre.</li>
 <li>Administrativa: Número de domínios administrativos.</li>
-<li>Há várias possibilidades: seja específico e exija especificidade.</li>
 </ul>
+<p>Para evitar ambiguidade, dado que há várias possibilidades, seja específico.</p>
 <h2 id="tipos">Tipos</h2>
 <p>Há quem diga que <a href="https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/">já somos todos desenvolvedores de sistemas distribuídos</a>.
 Ainda assim, é importante entender que há vários tipos de sistemas distribuídos, com diversas finalidades e diversas as arquiteturas, pois classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. </p>
@@ -1370,7 +1369,7 @@ Este tipo de sistema, embora possa ser pensando como infraestrutura para outros 
 <h3 id="componentes-e-conectores">Componentes e Conectores</h3>
 <p>Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como componentes se conectam, por meio de conectores, para implementar a solução para um problema.</p>
 <div class="mermaid">graph LR
-   (Componente 1) --&gt; [Conector] --&gt; (Componente 2)</div>
+    A[Componente 1] --&gt; C{Conector} --&gt; B(Componente 2)</div>
 
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
