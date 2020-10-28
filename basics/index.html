@@ -897,7 +897,7 @@ Este característica é conhecida como o <a href="http://web.mit.edu/Saltzer/www
 <p>Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de <strong>transporte</strong>.</p>
 <h2 id="no-principio-era-o-socket">No princípio, era o Socket</h2>
 <p>Na prática, para implementarmos a comunicação entre processos, usamos <strong>sockets</strong>.
-Para se definir um socket a partir de um <strong>host</strong> é necessário identificar o outro fim da comunicação, isto é, o outro <em>host</em>, ou melhor, uma de suas interfaces de rede.
+Para se definir um socket a partir de um <strong><em>host</em></strong> é necessário identificar o outro fim da comunicação, isto é, o outro <em>host</em>, ou melhor, uma de suas interfaces de rede.
 Os sockets são então a abstração dos canais de comunicação, mas como dito antes, é necessário definir também os protocolos usados por estes sockets.
 O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos usar, na camada 3.
 No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
