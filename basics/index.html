@@ -995,7 +995,7 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 </code></pre></div>
 </td></tr></table>
 
-<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir.^[O programa <code>telnet</code> é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o <code>netcat</code> normalmente precisa ser instalado por você. Em alguns sistemas, em vez de <code>netcat</code> o comando é o <code>nc</code>].</p>
+<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir. <sup id="fnref:telnet"><a class="footnote-ref" href="#fn:telnet">3</a></sup></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet localhost <span class="m">12345</span>
 </code></pre></div>
 </td></tr></table>
@@ -1004,11 +1004,16 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 </code></pre></div>
 </td></tr></table>
 
+<p>No segundo terminal a mensagem 
+<code>Thank you for connecting</code>
+será impressa, enquanto no primeiro veremos algo como 
+ <code>('Got connection from', ('127.0.0.1', 57801))</code> </p>
 <p>O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
 Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
 Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
 Simples, não é mesmo?</p>
-<p>Em geral, denominamos o processo que fica aguardando a conexão de <strong>servidor</strong> e o processo que se conecta de <strong>cliente</strong>. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.</p>
+<p>Duas observações importantes a serem feitas aqui. 
+A primeira é que, em geral, denominamos o processo que fica aguardando a conexão de <strong>servidor</strong> e o processo que se conecta de <strong>cliente</strong>. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.</p>
 <p>Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
 Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1181,7 +1186,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 <p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
-A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">3</a></sup></p>
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">4</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1318,13 +1323,13 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">4</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">5</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
 <div class="admonition question">
 <p class="admonition-title">Exercício: IP-Multicast</p>
-<p>Implemente e teste o seguinte sevidor.</p>
+<p>Implemente e teste o seguinte sevidor, colocando várias instâncias para executar em múltiplos terminais, ao mesmo tempo.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -2516,11 +2521,14 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li id="fn:pyname">
 <p>Você pode usar outro nome, desde que não seja <code>socket.py</code>, e que adapte o comando para sua execução.&#160;<a class="footnote-backref" href="#fnref:pyname" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
+<li id="fn:telnet">
+<p>O programa <code>telnet</code> é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o <code>netcat</code> normalmente precisa ser instalado por você. Em alguns sistemas, em vez de <code>netcat</code> o comando é o <code>nc</code>].&#160;<a class="footnote-backref" href="#fnref:telnet" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
 <li id="fn:multicast_use">
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
