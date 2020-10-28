@@ -903,14 +903,14 @@ O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos
 No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
 Escolhido o protocolo, </p>
 <ul>
-<li>cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e </li>
-<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.<sup id="fnref:ippub"><a class="footnote-ref" href="#fn:ippub">1</a></sup>.</li>
+<li>cada interface tem um endereço MAC, na camada 2, que a identifica entre as interfaces na mesma rede local, e </li>
+<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.<sup id="fnref:ippub"><a class="footnote-ref" href="#fn:ippub">1</a></sup></li>
 </ul>
 <p>Mas dentro de um <em>host</em>, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:</p>
 <ul>
-<li>Porta: 16 bits<ul>
-<li>Associado a serviços pela <a href="http://www.iana.org">Internet Assigned Numbers Authority</a>, IANA.</li>
+<li>Porta: inteiro de 16 bits</li>
+<li>Associadas a serviços pela <a href="http://www.iana.org">Internet Assigned Numbers Authority</a>, IANA.<ul>
 <li>Portas "Bem conhecidas": 0-1023</li>
 <li>Portas Proprietárias: 49151</li>
 <li>Portas Dinâmicas: 65535</li>
