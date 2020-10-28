@@ -830,7 +830,7 @@ Na prática, canais de comunicação podem ter diversas formas e característica
 </ul>
 </li>
 </ul>
-<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação nós usando um <strong>barramento compartilhado</strong>.
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>.
 Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
 <li>Controle de acesso ao meio </li>
@@ -841,7 +841,7 @@ Sobre este meio, são usados protocolos para, por exemplo,</p>
 A conversa então é feita por meio de intermediários, <strong><em>gateways</em></strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.</p>
 <p>Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
 <ul>
-<li>Comutaçao de pacotes <ul>
+<li>Comutação de pacotes <ul>
 <li>Dados divididos em pacotes</li>
 <li>Cada pacote viaja independentemente</li>
 <li>Pacotes são perdidos</li>
@@ -856,13 +856,13 @@ A conversa então é feita por meio de intermediários, <strong><em>gateways</em
 </ul>
 </li>
 </ul>
-<p>Outro fator importante é o MTU, o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
+<p>Outro fator importante é a <strong>unidade máxima de transmissão</strong> (<em>maximum transmission unit</em>, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
 <p>Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
-<p>Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, <strong>você</strong>, lhe cabendo apenas a decisão de qual protocolo utilizar.
+<p>Felizmente boa parte da <strong>complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos</strong>, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 <h2 id="a-internet">A Internet</h2>
 <p>A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o <em>internetworking protocol</em>, ou IP.
-Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
+Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="images/network.png" /></p>
 <p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
@@ -904,7 +904,7 @@ No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
 Escolhido o protocolo, </p>
 <ul>
 <li>cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e </li>
-<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.^[Endereços IP não públicos não server como identificadores únicos na Internet.]</li>
+<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.<sup id="fnref:ippub"><a class="footnote-ref" href="#fn:ippub">1</a></sup>.</li>
 </ul>
 <p>Mas dentro de um <em>host</em>, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:</p>
@@ -1182,7 +1182,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 <p><img alt="Multicast" src="images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
-A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">1</a></sup></p>
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">2</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1319,7 +1319,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">2</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">3</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
@@ -2511,11 +2511,14 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:ippub">
+<p>Endereços IP não públicos não servem como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:ippub" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
 <li id="fn:multicast_use">
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
