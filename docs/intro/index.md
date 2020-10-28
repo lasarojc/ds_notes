@@ -362,13 +362,11 @@ Para terminar, deixem-me apenas retomar um termo usado acima, **escalabilidade**
 O termo está muito em voga e é usado, normalmente, para descrever a capacidade de um sistema de se adequar a variações de carga de trabalho.
 Embora seja um uso válido, há outros tipos de escalabilidade.
 
-* Escalabilidade
-  * Tamanho: Número de usuários que suporta.
-  * Geográfica: Região que cobre.
-  * Administrativa: Número de domínios administrativos.
-* Há várias possibilidades: seja específico e exija especificidade.
+* Tamanho: Número de usuários que suporta.
+* Geográfica: Região que cobre.
+* Administrativa: Número de domínios administrativos.
 
-
+ Para evitar ambiguidade, dado que há várias possibilidades, seja específico.
 
 
 
@@ -579,7 +577,7 @@ Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamen
 
 ```mermaid
 graph LR
-   (Componente 1) --> [Conector] --> (Componente 2)
+    A[Componente 1] --> C{Conector} --> B(Componente 2)
 ```
 
 Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
