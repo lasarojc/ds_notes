@@ -1213,13 +1213,14 @@ Clusters como o da imagem a seguir, do High Performance Computing Center de Stut
 <li>ou uma vaca<br />
 <img alt="CFD" src="images/CFD_Cow.jpg" /></li>
 </ul>
-<p>Os <strong>nós</strong> de um cluster são normalmente divididos em três categorias: administraçao, computação e armazenamento.
+<p>Os <strong>nós</strong> de um cluster são normalmente divididos em três categorias: administração, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
 O <a href="https://github.com/oscar-cluster/oscar">Oscar</a>, por exemplo, é uma é conjunto de softwares para gerenciamento de clusters.
 Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que sejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
-Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distrinta é normalmente responsável por resolver uma parte do problema.</p>
+Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distinta é normalmente responsável por resolver uma parte do problema.</p>
 <p><img alt="CFD" src="images/cfd_domain.png" /></p>
-<p>Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.</p>
+<p>Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
+A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.</p>
 <p><img alt="CFD" src="images/mpi.jpeg" /></p>
 <p>Este tipo de sistemas distribuídos são o que chamamos de fortemente acoplados pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
 Do ponto de vista deste curso, estamos mais interessados em sistemas fracamente acoplados.</p>
@@ -1283,7 +1284,15 @@ A figura a seguir mostra um cenário com três bancos.
 Imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e no terceiro as ordens de compra. 
 Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
 Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.</p>
-<p><img alt="01-10" src="images/01-10.png" /></p>
+<p>graph LR
+  A[Cliente] &rarr;|Requisição| B{Monitor de Transações}
+  B &rarr;|Resposta| A
+  B &rarr;|Requisição| C[(Servidor 1)]
+  B &rarr;|Requisição| D[(Servidor 2)]
+  B &rarr;|Requisição| E[(Servidor 3)]</p>
+<p>C &rarr;|Resposta| B
+  D &rarr;|Resposta| B
+  E &rarr;|Resposta| B</p>
 <p>Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
