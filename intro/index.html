@@ -10,7 +10,7 @@
       
       
       
-      <link rel="shortcut icon" href="../img/favicon.png">
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
     
     
@@ -1284,15 +1284,17 @@ A figura a seguir mostra um cenário com três bancos.
 Imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e no terceiro as ordens de compra. 
 Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
 Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.</p>
-<p>graph LR
-  A[Cliente] &rarr;|Requisição| B{Monitor de Transações}
-  B &rarr;|Resposta| A
-  B &rarr;|Requisição| C[(Servidor 1)]
-  B &rarr;|Requisição| D[(Servidor 2)]
-  B &rarr;|Requisição| E[(Servidor 3)]</p>
-<p>C &rarr;|Resposta| B
-  D &rarr;|Resposta| B
-  E &rarr;|Resposta| B</p>
+<div class="mermaid">graph LR
+  A[Cliente] --&gt;|Requisição| B{Monitor de Transações}
+  B --&gt;|Resposta| A
+  B --&gt;|Requisição| C[(Servidor 1)]
+  B --&gt;|Requisição| D[(Servidor 2)]
+  B --&gt;|Requisição| E[(Servidor 3)]
+
+  C --&gt;|Resposta| B
+  D --&gt;|Resposta| B
+  E --&gt;|Resposta| B</div>
+
 <p>Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
@@ -1383,10 +1385,10 @@ Este tipo de sistema, embora possa ser pensando como infraestrutura para outros 
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.</p>
+<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="images/loosetight.png" /></p>
 <p>Certos <em>middleware</em> permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.</p>
 <p><img alt="Desacoplamento" src="images/component2.png" /></p>
 <p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
-<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="images/loosetight.png" /></p>
 <h3 id="clienteservidor">Cliente/Servidor</h3>
 <p>A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. 
 Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
@@ -1398,7 +1400,20 @@ O <strong>servidor</strong>, por sua vez, pode desempenhar tarefas como fazer c�
 <p><img alt="http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html" src="images/cs.png" /></p>
 <p>Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 Assim, geralmente a comunicação entre cliente e servidor segue o seguinte esquema:</p>
-<p><img alt="02-03" src="images/02-03.png" /></p>
+<div class="mermaid">sequenceDiagram
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    Cliente-&gt;&gt;Servidor: Request
+    deactivate Cliente
+    activate Servidor
+    note right of Cliente: Espera pela resposta
+    note left of Servidor: Executa serviço
+    Servidor--&gt;&gt;Cliente: Resposta
+    deactivate Servidor
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    deactivate Cliente</div>
+
 <p>Observe que o cliente fica inativo enquanto espera a resposta e que o servidor fica inativo enquanto espera outras requisições.
 Para minimizar os períodos de inatividade, o cliente pode usar o socket assíncronamente, o que não é exatamente simples, ou usar múltiplos threads, para que continue operando mesmo enquanto um thread estiver bloqueado esperando a resposta do servidor.</p>
 <p>No lado do servidor, o minimização da ociosidade é feita pelo uso de múltiplos clientes, concorrentes, e também pelo uso de múltiplos threads.
@@ -1433,7 +1448,17 @@ Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo
 <p><img alt="Bittorrent" src="images/bittorrent.png" /></p>
 <p>Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.</p>
-<p><img alt="01-10" src="images/01-10.png" /></p>
+<div class="mermaid">graph LR
+  A[Cliente] --&gt;|Requisição| B{Monitor de Transações}
+  B --&gt;|Resposta| A
+  B --&gt;|Requisição| C[(Servidor 1)]
+  B --&gt;|Requisição| D[(Servidor 2)]
+  B --&gt;|Requisição| E[(Servidor 3)]
+
+  C --&gt;|Resposta| B
+  D --&gt;|Resposta| B
+  E --&gt;|Resposta| B</div>
+
 <h3 id="sistemas-multi-camadas">Sistemas multi-camadas</h3>
 <p>Outra forma de hibridismo que podemos citar é quando um componente haje tanto como cliente quanto como servidor. 
 Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>tiers</em>).</p>
