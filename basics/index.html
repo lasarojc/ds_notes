@@ -1507,7 +1507,7 @@ Por isso é importante dimensionar bem o tamanho to <em>pool</em>, ou mesmo torn
 <p>Se considerarmos que cada tarefa na verdade tem várias partes, 
 é possível refinar mais este modelo, quebrando o processamento em vários pools.</p>
 <h4 id="estagios">Estágios</h4>
-<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA^[O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.], cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.</p>
+<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">6</a></sup></p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda1.png" /></a></p>
 <p>Por ter seu próprio <em>pool</em>, cada estágio pode ser escalado individualmente de acordo com a demanda.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
@@ -1642,11 +1642,8 @@ Veja um pequeno comparativo das características das duas abordagens.</p>
 <p>Uma visão interessante sobre estado é apresentada em <a href="https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2">On stateless software design</a>.</p>
 </div>
 <p>Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre <em>stateful</em> ser sempre mais complexo.
-    A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>[Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
-</code></pre></div>
-</td></tr></table>
-
+    A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.
+    <a href="https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html">Sobre IO não bloqueante em Java.</a></p>
 <h3 id="multithread-na-pratica">Multithread na prática</h3>
 <h4 id="posix">POSIX</h4>
 <p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição aberta de como <em>threads</em> devem funcionar em sistemas operacionais.
@@ -2529,6 +2526,9 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 </li>
 <li id="fn:ipv6multi">
 <p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:seda">
+<p>O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.&#160;<a class="footnote-backref" href="#fnref:seda" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
