@@ -25,7 +25,7 @@ Na prática, canais de comunicação podem ter diversas formas e característica
   	* Menor custo
   	* Roteamento mais complicado
 
-Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação nós usando um **barramento compartilhado**.
+Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**.
 Sobre este meio, são usados protocolos para, por exemplo,
 
 * Controle de acesso ao meio 
@@ -33,11 +33,11 @@ Sobre este meio, são usados protocolos para, por exemplo,
 * Evitar e tratar colisões
 
 As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, ** *gateways* ** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
+A conversa então é feita por meio de intermediários, ***gateways*** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
 
 Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de **comutação de pacotes** (*packet switching*) ou de **circuitos** (*circuit switching*).
 
-* Comutaçao de pacotes 
+* Comutação de pacotes 
 	* Dados divididos em pacotes
 	* Cada pacote viaja independentemente
 	* Pacotes são perdidos
@@ -48,18 +48,18 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 	* Pacotes de tamanho fixo
 	* Latência constante
 
-Outro fator importante é o MTU, o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
+Outro fator importante é a **unidade máxima de transmissão** (*maximum transmission unit*, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
 
 Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
 
-Felizmente boa parte da complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos, isto é, **você**, lhe cabendo apenas a decisão de qual protocolo utilizar.
+Felizmente boa parte da **complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
 
 
 ## A Internet
 
 A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o *internetworking protocol*, ou IP.
-Para a aplicaçãu usando o IP, todas as redes se comportam com uma única e coerente rede, exceto por alguns detalhes.
+Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
 
 ![A Internet](images/network.png)
@@ -104,26 +104,28 @@ Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dif
 ## No princípio, era o Socket
 
 Na prática, para implementarmos a comunicação entre processos, usamos **sockets**.
-Para se definir um socket a partir de um **host** é necessário identificar o outro fim da comunicação, isto é, o outro *host*, ou melhor, uma de suas interfaces de rede.
+Para se definir um socket a partir de um ***host*** é necessário identificar o outro fim da comunicação, isto é, o outro *host*, ou melhor, uma de suas interfaces de rede.
 Os sockets são então a abstração dos canais de comunicação, mas como dito antes, é necessário definir também os protocolos usados por estes sockets.
 O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos usar, na camada 3.
 No caso da pilha IP, usa-se o protocolo AF\_INET ou PF\_INET.
 Escolhido o protocolo, 
 
-* cada interface tem um endereço MAC, na camada 2, que o identifica entre as interfaces na mesma rede local, e 
-* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.^[Endereços IP não públicos não server como identificadores únicos na Internet.]
+* cada interface tem um endereço MAC, na camada 2, que a identifica entre as interfaces na mesma rede local, e 
+* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.[^ippub]
+
+[^ippub]:Endereços IP não públicos não servem como identificadores únicos na Internet.
 
 Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:
 
-* Porta: 16 bits
-     * Associado a serviços pela [Internet Assigned Numbers Authority](http://www.iana.org), IANA.
+* Porta: inteiro de 16 bits
+* Associadas a serviços pela [Internet Assigned Numbers Authority](http://www.iana.org), IANA.
      * Portas "Bem conhecidas": 0-1023
      * Portas Proprietárias: 49151
      * Portas Dinâmicas: 65535
 
 Também é necessário definir o protocolo de transporte dos dados, na camada 4.
-Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UPD (**SOCK\_DGRAM**).
+Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UDP (**SOCK\_DGRAM**).
 
 A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.
 
@@ -164,11 +166,12 @@ stateDiagram-v2
 
 <!--![image](images/04-15.png)-->
 
-Estabelecido o socket, o mesmo pode ser usado como **arquivo**, isto é, lendo-se e escrevendo-se bytes.
+Estabelecido o socket, o mesmo pode ser usado como um **arquivo**, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
 
-Vejamos um exemplo do uso de sockets, em Python.
-O seguinte arquivo pode ser nomeado, por exemplo, `server.py`, mas não pode, de forma alguma, ser nomeado `socket.py`.
+Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo `server.py`.[^pyname]
+
+[^pyname]:Você pode usar outro nome, desde que não seja `socket.py`, e que adapte o comando para sua execução.
 
 ```python
 #server.py
@@ -195,7 +198,9 @@ Para executá-lo, execute o seguinte comando em um terminal.
 python server.py
 ```
 
-Em outro terminal, execute **um dos** dois comandos a seguir.^[O programa `telnet` é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o `netcat` normalmente precisa ser instalado por você. Em alguns sistemas, em vez de `netcat` o comando é o `nc`].
+Em outro terminal, execute **um dos** dois comandos a seguir. [^telnet]
+
+[^telnet]:O programa `telnet` é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o `netcat` normalmente precisa ser instalado por você. Em alguns sistemas, em vez de `netcat` o comando é o `nc`].
 
 ```bash
 telnet localhost 12345
@@ -205,12 +210,18 @@ telnet localhost 12345
 netcat localhost 12345
 ```
 
+No segundo terminal a mensagem 
+`Thank you for connecting`
+será impressa, enquanto no primeiro veremos algo como 
+ `('Got connection from', ('127.0.0.1', 57801))` 
+ 
 O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
 Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
 Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
 Simples, não é mesmo?
 
-Em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
+Duas observações importantes a serem feitas aqui. 
+A primeira é que, em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
 
 
 Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
@@ -430,7 +441,7 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
 
 
 !!! question "Exercício: IP-Multicast"
-    Implemente e teste o seguinte sevidor.
+    Implemente e teste o seguinte sevidor, colocando várias instâncias para executar em múltiplos terminais, ao mesmo tempo.
 
     ```Python
     import socket
@@ -586,7 +597,10 @@ Se considerarmos que cada tarefa na verdade tem várias partes,
 é possível refinar mais este modelo, quebrando o processamento em vários pools.
 
 #### Estágios
-Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**, SEDA^[O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.], cada **estágio**, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.
+Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**, SEDA, cada **estágio**, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.[^seda]
+
+[^seda]: O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.
+
 
 [![Seda](images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
@@ -713,7 +727,6 @@ Veja um pequeno comparativo das características das duas abordagens.
     Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
 Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
     A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
-
     [Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
 
 ### Multithread na prática

@@ -391,15 +391,16 @@ Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de proj
 * ou uma vaca  
  ![CFD](images/CFD_Cow.jpg)
 
-Os **nós** de um cluster são normalmente divididos em três categorias: administraçao, computação e armazenamento.
+Os **nós** de um cluster são normalmente divididos em três categorias: administração, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
 O [Oscar](https://github.com/oscar-cluster/oscar), por exemplo, é uma é conjunto de softwares para gerenciamento de clusters.
 Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que sejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
-Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distrinta é normalmente responsável por resolver uma parte do problema.
+Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distinta é normalmente responsável por resolver uma parte do problema.
 
 ![CFD](images/cfd_domain.png)
 
 Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
+A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.
 
 
 ![CFD](images/mpi.jpeg)
@@ -460,12 +461,24 @@ Imagine que em um deles está uma relação com os dados dos clientes, em outro,
 Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
 Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.
 
-![01-10](images/01-10.png)
+```mermaid
+graph LR
+  A[Cliente] -->|Requisição| B{Monitor de Transações}
+  B -->|Resposta| A
+  B -->|Requisição| C[(Servidor 1)]
+  B -->|Requisição| D[(Servidor 2)]
+  B -->|Requisição| E[(Servidor 3)]
+		
+  C -->|Resposta| B
+  D -->|Resposta| B
+  E -->|Resposta| B
+```
 
 Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
 Tambem discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.
+
 
 ![https://www.algoworks.com/blog/nosql-database/](images/nosql.jpeg)
 
@@ -584,13 +597,14 @@ Dependendo de como são conectados, haverá maior ou menor dependência entre os
 Quando houver forte dependência, diremos que os componentes estão **fortemente acoplados** (*tightly coupled*). Caso contrário, diremos que estão **fracamente acoplados** (*loosely coupled*).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.
 
+![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](images/loosetight.png)
+
 Certos *middleware* permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.
 
 ![Desacoplamento](images/component2.png)
 
 Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
 
-![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](images/loosetight.png)
 
 
 ### Cliente/Servidor
@@ -610,7 +624,21 @@ Um mesmo servidor pode atender a diversos clientes e, geralmente, a comunicaçã
 Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 Assim, geralmente a comunicação entre cliente e servidor segue o seguinte esquema:
 
-![02-03](images/02-03.png)
+```mermaid
+sequenceDiagram
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    Cliente->>Servidor: Request
+    deactivate Cliente
+    activate Servidor
+    note right of Cliente: Espera pela resposta
+    note left of Servidor: Executa serviço
+    Servidor-->>Cliente: Resposta
+    deactivate Servidor
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    deactivate Cliente
+```
 
 Observe que o cliente fica inativo enquanto espera a resposta e que o servidor fica inativo enquanto espera outras requisições.
 Para minimizar os períodos de inatividade, o cliente pode usar o socket assíncronamente, o que não é exatamente simples, ou usar múltiplos threads, para que continue operando mesmo enquanto um thread estiver bloqueado esperando a resposta do servidor.
@@ -661,7 +689,18 @@ Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo
 Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.
 
-![01-10](images/01-10.png)
+```mermaid
+graph LR
+  A[Cliente] -->|Requisição| B{Monitor de Transações}
+  B -->|Resposta| A
+  B -->|Requisição| C[(Servidor 1)]
+  B -->|Requisição| D[(Servidor 2)]
+  B -->|Requisição| E[(Servidor 3)]
+		
+  C -->|Resposta| B
+  D -->|Resposta| B
+  E -->|Resposta| B
+```
 
 
 

@@ -1356,3 +1356,5 @@ E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões indep
 
 
 [Lista de Falhas Reais](https://github.com/danluu/post-mortems)
+
+http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
