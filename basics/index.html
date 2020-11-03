@@ -1392,9 +1392,9 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <li><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Multicast em Python</a></li>
 </ul>
 <h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
-<p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
+<p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições, que atende e então volta a dormir.
+Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
 Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.</p>
 <div class="mermaid">sequenceDiagram
     activate Cliente
@@ -1406,56 +1406,77 @@ Este cenário, apresentado na figura a seguir, mostra que apesar do uso de proce
     note right of Servidor: Ativo (processando requisição)
     Servidor--&gt;&gt;-Cliente: Response
     activate Cliente
-    note left of Cliente: Ativo (processando resposta
+    note left of Cliente: Ativo (processando resposta)
     note right of Servidor: Inativo (esperando requisição)
     deactivate Cliente</div>
 
-<p>Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
-Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
-Além disso, sempre que possível, um componente não deve ficar exclusivamente esperando por eventos, aproveitando a chance executar outras tarefas até que eventos sejam recebidos.
-Dada que processos interagem com a rede usando sockets, cuja operação de leitura é bloqueante, para aumentar a concorrência em um processo, precisamos falar de multi-threading.</p>
+<p>Este modelo de sincronização entre as partes comunicantes é um exemplo de <strong>E/S bloqueante</strong>. O principal ponto positivo desta estratégia é a <strong>simplicidade do código</strong> e o principal ponto negativo é a <strong>limitação do paralelismo</strong> no uso de recursos, uma das razões de ser da computação distribuída.</p>
+<p>Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, temos então que pensar em termos de eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
+Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).</p>
+<p>No modelo de bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
+Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer <strong>E/S assíncrona</strong>.</p>
+<p>Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono<sup id="fnref:asyncio"><a class="footnote-ref" href="#fn:asyncio">6</a></sup> e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de multi-threading e as várias formas em que aparecem nos sistemas.</p>
 <p>Há duas razões claras para estudarmos multi-threading. A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
 A segunda, didática, é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas a abstração é essencialmente a mesma:</p>
 <table>
 <thead>
 <tr>
+<th></th>
 <th>Processo</th>
 <th>Thread</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>Definição</td>
 <td>Instância de um programa</td>
 <td>"Processo leve"</td>
 </tr>
 <tr>
-<td>Estado do processo</td>
-<td>Estado do thread</td>
+<td>Função de entrada</td>
+<td><code>main</code></td>
+<td>função "qualquer"</td>
 </tr>
 <tr>
-<td>Função main</td>
-<td>"qualquer" função</td>
+<td>Compartilhamento de memória</td>
+<td>privada ao processo</td>
+<td>Compartilhada entre threads</td>
 </tr>
 <tr>
-<td>Memória privada ao processo</td>
-<td>Compartilha estado do processo que os contém</td>
+<td>Compartilhammento de código e dados</td>
+<td>Privado ao processo</td>
+<td>Compartilhado pelos threads</td>
 </tr>
 <tr>
+<td>EStado</td>
 <td>Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso</td>
 <td>Stack, variáveis locais</td>
 </tr>
 <tr>
+<td>Comunicação</td>
 <td>IPC - Inter process communication</td>
-<td>IPC -- Inter process communication</td>
+<td>IPC</td>
 </tr>
 <tr>
+<td>Nível da implementação</td>
 <td>Sistema operacional</td>
 <td>Diferentes implementações</td>
 </tr>
 <tr>
+<td>API</td>
 <td></td>
 <td>Posix, C++, Java, ...</td>
+</tr>
+<tr>
+<td>Bloqueio</td>
+<td>Mudança de contexto para outro thread mesmo sem terminar quantum</td>
+<td>Mudança de contexto para outro thread do mesmo processo</td>
+</tr>
+<tr>
+<td>Tempo de criação, terminação e mudança de contexto</td>
+<td>Demora mais</td>
+<td>Demora menos</td>
 </tr>
 </tbody>
 </table>
@@ -1465,15 +1486,14 @@ Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma 
 Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requição <code>GET arquivo.html</code> será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.</p>
 <h3 id="cliente">Cliente</h3>
 <p>Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com <strong>várias tarefas concorrentemente</strong>, por exemplo solicitar CSS, HTML e imagens concorrentemente, <strong>escondendo latência</strong> das várias operações, e permite <strong>organizar código</strong> em blocos/módulos.
-Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página <a href="https://www.google.com">www.google.com</a>; um número muito maior é feito na carga de <a href="https://www.bing.com">www.bing.com</a>.</p>
-<details class="todo"><summary>Todo</summary><p>Estender</p>
-</details>
+Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. A figura a seguir mostra a carga do sítio da <a href="https://www.facom.ufu.br">Facom</a>.
+O primeiro arquivo, <code>index.html</code> é baixado individualmente, mas uma vez que isso acontece e são determinaos quais os demais arquivos necessários, requisções concorrentes são disparadas, minimizando o tempo total da operação.</p>
+<p><img alt="Facom loading times" src="images/facom.png" /></p>
 <h3 id="servidor">Servidor</h3>
-<p>Do lado do servidores há diversas possibilidades de uso de threads em servidores. 
-Contudo, há vantagens em se usar múltiplos threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis melhorando a experiência do usuário.</p>
+<p>Do lado dos servidores há diversas possibilidades de uso de threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis e melhorando a experiência do usuário.</p>
 <h4 id="single-threaded">Single-threaded</h4>
-<p>A estratégia mais simples de se implementar e manter é a de usar apenas um thread, com temos feito até agora.
-Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura:</p>
+<p>A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
+Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:</p>
 <p><img alt="Single Threaded" src="images/singlethreadedserver.gif" /></p>
 <ol>
 <li>O servidor é iniciado, criando o socket e invocando accept</li>
@@ -1485,8 +1505,8 @@ Considere um servidor Web com esta esta característica; o fluxo no tratamento d
 <li>a requisição é descartada</li>
 <li>o thread do servidor volta a esperar uma nova requisição</li>
 </ol>
-<p>Se qualquer outro cliente tenta se conectar enquanto o servidor está executando os passos de 2 a 6, este ficará bloqueado ou terá sua conexão recusada (depenendendo do <em>backlock</em> do socket). 
-A espera será maior quanto mais o servidor demorar para atender a uma requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
+<p>Se novas requisições forem recebidas enquanto o servidor está executando os passos de 2 a 6, sejam requisições paralelas do mesmo cliente ou de um outro cliente, estas ficarão bloqueadas. 
+A espera será maior quanto mais o servidor demorar para atender à primeira requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
 Para evitar que isto ocorra, o servidor pode usar mais threads.</p>
 <h4 id="thread-per-request">Thread per request</h4>
 <p>O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
@@ -1507,7 +1527,7 @@ Por isso é importante dimensionar bem o tamanho to <em>pool</em>, ou mesmo torn
 <p>Se considerarmos que cada tarefa na verdade tem várias partes, 
 é possível refinar mais este modelo, quebrando o processamento em vários pools.</p>
 <h4 id="estagios">Estágios</h4>
-<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">6</a></sup></p>
+<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">7</a></sup></p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda1.png" /></a></p>
 <p>Por ter seu próprio <em>pool</em>, cada estágio pode ser escalado individualmente de acordo com a demanda.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="images/seda2.png" /></a></p>
@@ -1556,7 +1576,7 @@ Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento
 Neste caso, é preciso definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.</p>
 <p><img alt="Multithreaded" src="images/multithread2.png" /></p>
-<p>A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos, e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.</p>
+<p>Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.</p>
 <p><img alt="Multithreaded" src="images/multithreaded.jpg" /></p>
 <p>Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a <strong>inconsistências</strong> na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como <strong>deadlocks</strong> e <strong>inanição</strong>.
@@ -2527,8 +2547,11 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li id="fn:ipv6multi">
 <p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
+<li id="fn:asyncio">
+<p>Um bom ponto de partida para o tópico é a sua entrada na <a href="https://en.wikipedia.org/wiki/Asynchronous_I/O">wikipedia</a>.&#160;<a class="footnote-backref" href="#fnref:asyncio" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
 <li id="fn:seda">
-<p>O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.&#160;<a class="footnote-backref" href="#fnref:seda" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.&#160;<a class="footnote-backref" href="#fnref:seda" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
