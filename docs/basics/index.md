@@ -487,47 +487,68 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
 
 ## Multiprogramação e *Multithreading* em Sistemas Distribuídos
 
-É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando, normalmente, em hosts distintos.
+É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor, para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições, que atende e então volta a dormir.
+Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
 Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.
 
 ```mermaid
 sequenceDiagram
     activate Cliente
-    note left of Cliente: Ativo (gerando requisição)
-    note right of Servidor: Inativo (esperando requisição)
-	Cliente->>+Servidor: Request
-    deactivate Cliente
-    note left of Cliente: Inativo (esperando resposta)
-    note right of Servidor: Ativo (processando requisição)
-	Servidor-->>-Cliente: Response
-	activate Cliente
-    note left of Cliente: Ativo (processando resposta
-	note right of Servidor: Inativo (esperando requisição)
+    note left of Cliente: Ativo gerando requisição
+    note right of Servidor: Inativo esperando requisição
+    activate Cliente2
+    note right of Cliente2: Ativo gerando requisição
+	Cliente->>+Servidor: Request (1)
+    deactivate Cliente 
+    note left of Cliente: Inativo esperando resposta
+  Cliente2-->>Servidor: Request (2)
+    deactivate Cliente2
+    note right of Cliente2: Inativo esperando resposta
+    note right of Servidor: Ativo processando requisição (1)
+	Servidor->>-Cliente: Response (1)
+	  activate Cliente
+    activate Servidor
+    note left of Cliente: Ativo processando resposta (1)
+    note right of Servidor: Ativo processando requisição (2)
+  Servidor-->>Cliente2: Response (2)
+    deactivate Servidor
+    activate Cliente2
+   	note right of Servidor: Inativo esperando requisição
+    note right of Cliente2: Ativo processando resposta (2)
 	deactivate Cliente
+  deactivate Cliente2
 ```
 
 
-Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, uma das razões de ser da computação distribuída, temos então que pensar em termos eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
+Este modelo de sincronização entre as partes comunicantes é um exemplo de **E/S bloqueante**. O principal ponto positivo desta estratégia é a **simplicidade do código** e o principal ponto negativo é a **limitação do paralelismo** no uso de recursos, uma das razões de ser da computação distribuída.
+
+Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, temos então que pensar em termos de eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
-Além disso, sempre que possível, um componente não deve ficar exclusivamente esperando por eventos, aproveitando a chance executar outras tarefas até que eventos sejam recebidos.
-Dada que processos interagem com a rede usando sockets, cuja operação de leitura é bloqueante, para aumentar a concorrência em um processo, precisamos falar de multi-threading.
+
+No modelo de bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
+Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer **E/S assíncrona**.
+
+Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono[^asyncio] e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de multi-threading e as várias formas em que aparecem nos sistemas.
+
+[^asyncio]: Um bom ponto de partida para o tópico é a sua entrada na [wikipedia](https://en.wikipedia.org/wiki/Asynchronous_I/O).
 
 Há duas razões claras para estudarmos multi-threading. A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
 A segunda, didática, é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre *threads* e processos, mas a abstração é essencialmente a mesma:
 
-| Processo | Thread |
-|----------|--------|
-| Instância de um programa | "Processo leve"|
-| Estado do processo | Estado do thread | 
-| Função main | "qualquer" função|
-| Memória privada ao processo| Compartilha estado do processo que os contém|
-| Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso | Stack, variáveis locais |
-| IPC - Inter process communication  | IPC -- Inter process communication|
-| Sistema operacional | Diferentes implementações |
-| | Posix, C++, Java, ...|
+|| Processo | Thread |
+-|----------|--------
+Definição | Instância de um programa | "Processo leve"
+Função de entrada | `main` | função "qualquer"
+Compartilhamento de memória| privada ao processo| Compartilhada entre threads
+Compartilhammento de código e dados | Privado ao processo | Compartilhado pelos threads
+EStado | Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso | Stack, variáveis locais 
+Comunicação| IPC - Inter process communication  | IPC
+Nível da implementação | Sistema operacional | Diferentes implementações 
+API || Posix, C++, Java, ...
+Bloqueio | Mudança de contexto para outro thread mesmo sem terminar quantum | Mudança de contexto para outro thread do mesmo processo
+Tempo de criação, terminação e mudança de contexto| Demora mais | Demora menos
 
 Vejamos como o uso de múltiplos threads podem melhorar o desenvolvimento de sistemas distribuídos na prática.
 Considere os exemplos de clientes e servidores vistos [anteriormente](#tcp).
@@ -538,21 +559,20 @@ Detalhes do protocolo seguido por navegadores e servidores serão vistos mais ta
 ### Cliente
 
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
-Se você usar o console de desenvolvimento do navegador, verá que trinta e seis requisições são feitas para carregar a página [www.google.com](https://www.google.com); um número muito maior é feito na carga de [www.bing.com](https://www.bing.com).
+Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. A figura a seguir mostra a carga do sítio da [Facom](https://www.facom.ufu.br).
+O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que isso acontece e são determinaos quais os demais arquivos necessários, requisções concorrentes são disparadas, minimizando o tempo total da operação.
 
-???todo 
-    Estender
+![Facom loading times](images/facom.png)
 
 
 ### Servidor
 
-Do lado do servidores há diversas possibilidades de uso de threads em servidores. 
-Contudo, há vantagens em se usar múltiplos threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis melhorando a experiência do usuário.
+Do lado dos servidores há diversas possibilidades de uso de threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis e melhorando a experiência do usuário.
 
 
 #### Single-threaded
-A estratégia mais simples de se implementar e manter é a de usar apenas um thread, com temos feito até agora.
-Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura:
+A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
+Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:
 
 ![Single Threaded](./images/singlethreadedserver.gif)
 
@@ -565,8 +585,8 @@ Considere um servidor Web com esta esta característica; o fluxo no tratamento d
 6. a requisição é descartada
 7. o thread do servidor volta a esperar uma nova requisição
 
-Se qualquer outro cliente tenta se conectar enquanto o servidor está executando os passos de 2 a 6, este ficará bloqueado ou terá sua conexão recusada (depenendendo do *backlock* do socket). 
-A espera será maior quanto mais o servidor demorar para atender a uma requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
+Se novas requisições forem recebidas enquanto o servidor está executando os passos de 2 a 6, sejam requisições paralelas do mesmo cliente ou de um outro cliente, estas ficarão bloqueadas. 
+A espera será maior quanto mais o servidor demorar para atender à primeira requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
 Para evitar que isto ocorra, o servidor pode usar mais threads.
 
 #### Thread per request
@@ -650,7 +670,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 
 ![Multithreaded](images/multithread2.png)
 
-A realidade, contudo, é outra e simplesmente criar múltiplos threads não garante paralelismo perfeito, pois o SO é quem é responsável por escalonar os mesmos, e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
+Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
 
 ![Multithreaded](./images/multithreaded.jpg)
 
@@ -816,18 +836,95 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 	
 * `pthread_attr_setaffinity_np *` - ajusta afinidade dos threads.
 
+#### Python
+
+Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*. 
+O exemplo a seguir usa o pacote `thread` e é essencialmente um envólucro POSIX.
+
+```python
+#!/usr/bin/python
+import thread
+import time
+
+# Define a function for the thread
+def print_time( threadName, delay):
+   count = 0
+   while count < 5:
+      time.sleep(delay)
+      count += 1
+      print "%s: %s" % ( threadName, time.ctime(time.time()) )
+
+# Create two threads as follows
+try:
+   thread.start_new_thread( print_time, ("Thread-1", 2, ) )
+   thread.start_new_thread( print_time, ("Thread-2", 4, ) )
+except:
+   print "Error: unable to start thread"
+
+while True:
+   pass
+```
+
+Já o próximo exemplo usa o pacote `threading` e uma abordagem orientada a objetos. Observe que há momentos distintos no ciclo de vida do thread em que acontece a criação e o início da execução.
+
+```python
+#!/usr/bin/python
+
+import threading
+import time
+
+exitFlag = 0
+
+class myThread (threading.Thread):
+   def __init__(self, threadID, name, counter):
+      threading.Thread.__init__(self)
+      self.threadID = threadID
+      self.name = name
+      self.counter = counter
+   def run(self):
+      print "Starting " + self.name
+      print_time(self.name, self.counter, 5)
+      print "Exiting " + self.name
+
+   def print_time(threadName, counter, delay):
+      while counter:
+         if exitFlag:
+            threadName.exit()
+         time.sleep(delay)
+         print "%s: %s" % (threadName, time.ctime(time.time()))
+         counter -= 1
+
+# Create new threads
+thread1 = myThread(1, "Thread-1", 1)
+thread2 = myThread(2, "Thread-2", 2)
+
+# Start new Threads
+thread1.start()
+thread2.start()
+
+print "Exiting Main Thread"
+```
+
+Uma consequência desta divisão é que um mesmo objeto do tipo `Thread` pode ser reciclado e executado várias vezes.
+
+!!! tip "Leia mais"
+    [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
+
+
 #### Java
 
-[outro](https://docs.oracle.com/javase/tutorial/essential/concurrency/), 
+Outro exemplo importante de API para multithreading é a Java.
 Em Java, há essencialmente duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe `Thread` e, a segunda, via abstrações de mais alto nível, os `Executors`.
-Aqui exploraremos formas de se obter concorrência em Java, isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
-Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote `java.util.concurrent`.
+Java também provê diversas estruturas para comunicação e coordenação de threads no pacote `java.util.concurrent`.
+
+Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico e uma ótima documentação é dispobinilizada pela própria [Oracle](https://docs.oracle.com/javase/tutorial/essential/concurrency/).
+
 
 ##### Ciclo de vida
-Há duas formas básicas de definir um novo *thread*  em Java, via extensão da classe `Thread`, como no primeiro exemplo, ou ou via implementação da interface `Runnable`, como no segundo, a seguir.
+Há duas formas básicas de definir um novo *thread* em Java, via extensão da classe `Thread`, como no primeiro exemplo, ou ou via implementação da interface `Runnable`, como no segundo, a seguir.
 
-!!! example "Exemplo 1: *Thread*"
+!!! example "*Thread*"
     ```Java
     public class HelloThread extends Thread {
         public void run() {
@@ -841,7 +938,7 @@ Há duas formas básicas de definir um novo *thread*  em Java, via extensão da 
     }
     ```
 
-!!! example "Exemplo 1: *Runnable*"
+!!! example "*Runnable*"
     ```Java
     public class HelloRunnable implements Runnable {
         public void run() {
@@ -862,7 +959,7 @@ Isto acontece dentro do `start()`, que em algum ponto de sua execução levará 
 
 
 A classe `Thread` também provê uma série de métodos que permitem gerenciar a vida do *thread* criado. 
-Por exemplo, o método de classe (`static`) `Thread.sleep()` permite bloquear um *thread*  por um determinado período.
+Por exemplo, o método de classe `Thread.sleep()` permite bloquear o thread no qual a invocação aconteceu por um determinado período.
 
 ```Java
 public class HelloRunnable implements Runnable {
@@ -956,7 +1053,7 @@ public class HelloRunnable implements Runnable {
 }
 ```
 
-Invocar `t.join()` fará com que o *thread* principal espere indefinidamente até que `t` termine de executar.
+Invocar `t.join()` fará com que o *thread* corrente, neste caso o principal, espere indefinidamente até que `t` termine de executar.
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
 Caso a espera termine por causa de um *timeout*, é possível testar o estado atual do thread com `Thread.isAlive()`.
 
@@ -1028,7 +1125,7 @@ else
   invoke the two pieces and wait for the results
 ```
 
-##### Coordenação
+#### Coordenação
 Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. 
 
 Há várias astrações que podem ser usadas para coordenar as operações de *threads*, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são *locks*, variáveis de condição e semáforos.
@@ -1248,77 +1345,6 @@ public static Integer getMyId() {
     * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
     * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
 
-
-#### Python
-
-Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*. A seguir são apresentados dois exemplos, usando o pacote `thread` ou `threading`.
-
-```python
-#!/usr/bin/python
-import thread
-import time
-
-# Define a function for the thread
-def print_time( threadName, delay):
-   count = 0
-   while count < 5:
-      time.sleep(delay)
-      count += 1
-      print "%s: %s" % ( threadName, time.ctime(time.time()) )
-
-# Create two threads as follows
-try:
-   thread.start_new_thread( print_time, ("Thread-1", 2, ) )
-   thread.start_new_thread( print_time, ("Thread-2", 4, ) )
-except:
-   print "Error: unable to start thread"
-
-while True:
-   pass
-```
-
-Ou
-
-```python
-#!/usr/bin/python
-
-import threading
-import time
-
-exitFlag = 0
-
-class myThread (threading.Thread):
-   def __init__(self, threadID, name, counter):
-      threading.Thread.__init__(self)
-      self.threadID = threadID
-      self.name = name
-      self.counter = counter
-   def run(self):
-      print "Starting " + self.name
-      print_time(self.name, self.counter, 5)
-      print "Exiting " + self.name
-
-   def print_time(threadName, counter, delay):
-      while counter:
-         if exitFlag:
-            threadName.exit()
-         time.sleep(delay)
-         print "%s: %s" % (threadName, time.ctime(time.time()))
-         counter -= 1
-
-# Create new threads
-thread1 = myThread(1, "Thread-1", 1)
-thread2 = myThread(2, "Thread-2", 2)
-
-# Start new Threads
-thread1.start()
-thread2.start()
-
-print "Exiting Main Thread"
-```
-
-!!! tip "Leia mais"
-    [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
 
 
 !!! question "Exercício - Anel Multithread"

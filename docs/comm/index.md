@@ -16,30 +16,14 @@ Aqui discutiremos algumas destas funcionalidades e como podem e são implementad
 ## Representação de dados
 
 Exceto por aplicações muito simples, processos em um sistema distribuídos trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
-Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura *no fio*, por exemplo:
+Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura *no fio*, como:
 
-* Diferentes linguagens de programação usadas para desenvolver os componentes.    
-    * tipos com definição imprecisa, por exemplo "inteiro": 8: 16, 32, 64 ou bits?   
-    * paradigmas distintos: classe x estrutura   
-    * conjunto de caracteres diferentes: ASCII x UTF   
-* Arquiteturas diferentes.    
-    * ordem dos bytes   
-         * little endian? 
-             * x64
-             * IA-32
-         * big endian? 
-             * IP
-             * SPARC (< V9)
-             * Motorola
-             * PowerPC
-         * bi-endian?  ARM, 
-             * MIPS, 
-             * IA-64
-     * representação de ponto flutuante
-     * alinhamento de bytes
-* Sistemas operacionais diferentes
-     * crlf (DOS) x lf (Unix)
-* fragmentação    
+* variações de definições de tipos, por exemplo, `inteiro`: 8: 16, 32, ou 64 bits?
+* variações na representação de dados complexos: classe x estrutura   
+* conjunto de caracteres diferentes: ASCII x UTF
+* little endian, como x64 e IA-32, ou  big endian como SPARC (< V9), Motorola e PowerPC? ou aidna, flexível como  ARM,  MIPS ou  IA-64?
+* fim de linha com crlf (DOS) x lf (Unix)?
+* fragmentação de dados na rede   
   [![Fragmentação](images/ipfrag.png)](http://www.acsa.net/IP/)
 
 ### Representação Textual
