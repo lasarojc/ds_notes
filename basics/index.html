@@ -394,6 +394,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
   </a>
@@ -408,21 +415,14 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#coordenacao" class="md-nav__link">
-    Coordenação
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    Python
+  <a href="#coordenacao" class="md-nav__link">
+    Coordenação
   </a>
   
 </li>
@@ -746,6 +746,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#python" class="md-nav__link">
+    Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
   </a>
@@ -760,21 +767,14 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#coordenacao" class="md-nav__link">
-    Coordenação
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    Python
+  <a href="#coordenacao" class="md-nav__link">
+    Coordenação
   </a>
   
 </li>
@@ -1398,17 +1398,29 @@ Apesar disso, a interação entre tais processos aconteceu sempre de forma sincr
 Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.</p>
 <div class="mermaid">sequenceDiagram
     activate Cliente
-    note left of Cliente: Ativo (gerando requisição)
-    note right of Servidor: Inativo (esperando requisição)
-    Cliente-&gt;&gt;+Servidor: Request
+    note left of Cliente: Ativo gerando requisição
+    note right of Servidor: Inativo esperando requisição
+    activate Cliente2
+    note right of Cliente2: Ativo gerando requisição
+    Cliente-&gt;&gt;+Servidor: Request (1)
+    deactivate Cliente 
+    note left of Cliente: Inativo esperando resposta
+  Cliente2--&gt;&gt;Servidor: Request (2)
+    deactivate Cliente2
+    note right of Cliente2: Inativo esperando resposta
+    note right of Servidor: Ativo processando requisição (1)
+    Servidor-&gt;&gt;-Cliente: Response (1)
+      activate Cliente
+    activate Servidor
+    note left of Cliente: Ativo processando resposta (1)
+    note right of Servidor: Ativo processando requisição (2)
+  Servidor--&gt;&gt;Cliente2: Response (2)
+    deactivate Servidor
+    activate Cliente2
+    note right of Servidor: Inativo esperando requisição
+    note right of Cliente2: Ativo processando resposta (2)
     deactivate Cliente
-    note left of Cliente: Inativo (esperando resposta)
-    note right of Servidor: Ativo (processando requisição)
-    Servidor--&gt;&gt;-Cliente: Response
-    activate Cliente
-    note left of Cliente: Ativo (processando resposta)
-    note right of Servidor: Inativo (esperando requisição)
-    deactivate Cliente</div>
+  deactivate Cliente2</div>
 
 <p>Este modelo de sincronização entre as partes comunicantes é um exemplo de <strong>E/S bloqueante</strong>. O principal ponto positivo desta estratégia é a <strong>simplicidade do código</strong> e o principal ponto negativo é a <strong>limitação do paralelismo</strong> no uso de recursos, uma das razões de ser da computação distribuída.</p>
 <p>Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, temos então que pensar em termos de eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
@@ -1774,16 +1786,141 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 <p><code>pthread_attr_setaffinity_np *</code> - ajusta afinidade dos threads.</p>
 </li>
 </ul>
+<h4 id="python">Python</h4>
+<p>Em Python, como seria de se esperar, há várias formas de se trabalhar com <em>threads</em>. 
+O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envólucro POSIX.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">thread</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Define a function for the thread</span>
+<span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+   <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+      <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="p">)</span>
+
+<span class="c1"># Create two threads as follows</span>
+<span class="k">try</span><span class="p">:</span>
+   <span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Thread-1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">)</span> <span class="p">)</span>
+   <span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Thread-2&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">)</span> <span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+   <span class="nb">print</span> <span class="s2">&quot;Error: unable to start thread&quot;</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+   <span class="k">pass</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Já o próximo exemplo usa o pacote <code>threading</code> e uma abordagem orientada a objetos. Observe que há momentos distintos no ciclo de vida do thread em que acontece a criação e o início da execução.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/python</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">exitFlag</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">class</span> <span class="nc">myThread</span> <span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threadID</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">counter</span><span class="p">):</span>
+      <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">threadID</span> <span class="o">=</span> <span class="n">threadID</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span>
+   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="nb">print</span> <span class="s2">&quot;Starting &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+      <span class="n">print_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="nb">print</span> <span class="s2">&quot;Exiting &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+   <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">threadName</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+      <span class="k">while</span> <span class="n">counter</span><span class="p">:</span>
+         <span class="k">if</span> <span class="n">exitFlag</span><span class="p">:</span>
+            <span class="n">threadName</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+         <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">threadName</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+         <span class="n">counter</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="c1"># Create new threads</span>
+<span class="n">thread1</span> <span class="o">=</span> <span class="n">myThread</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Thread-1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">thread2</span> <span class="o">=</span> <span class="n">myThread</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Thread-2&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Start new Threads</span>
+<span class="n">thread1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="nb">print</span> <span class="s2">&quot;Exiting Main Thread&quot;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Uma consequência desta divisão é que um mesmo objeto do tipo <code>Thread</code> pode ser reciclado e executado várias vezes.</p>
+<div class="admonition tip">
+<p class="admonition-title">Leia mais</p>
+<p><a href="https://www.tutorialspoint.com/python/python_multithreading.htm">Threads em Python</a></p>
+</div>
 <h4 id="java">Java</h4>
-<p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/">outro</a>, 
+<p>Outro exemplo importante de API para multithreading é a Java.
 Em Java, há essencialmente duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe <code>Thread</code> e, a segunda, via abstrações de mais alto nível, os <code>Executors</code>.
-Aqui exploraremos formas de se obter concorrência em Java, isto é, exploraremos como iniciar múltiplas linhas de execução de instruções, que podem ou não, ser executadas em paralelo.
-Além de formas de definir as linhas de execução, Java provê diversas estruturas para comunicação e coordenação destas linhas, desde de a versão 5 da linguagem, no pacote <code>java.util.concurrent</code>.</p>
+Java também provê diversas estruturas para comunicação e coordenação de threads no pacote <code>java.util.concurrent</code>.</p>
+<p>Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico e uma ótima documentação é dispobinilizada pela própria <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/">Oracle</a>.</p>
 <h5 id="ciclo-de-vida_1">Ciclo de vida</h5>
-<p>Há duas formas básicas de definir um novo <em>thread</em>  em Java, via extensão da classe <code>Thread</code>, como no primeiro exemplo, ou ou via implementação da interface <code>Runnable</code>, como no segundo, a seguir.</p>
+<p>Há duas formas básicas de definir um novo <em>thread</em> em Java, via extensão da classe <code>Thread</code>, como no primeiro exemplo, ou ou via implementação da interface <code>Runnable</code>, como no segundo, a seguir.</p>
 <div class="admonition example">
-<p class="admonition-title">Exemplo 1: <em>Thread</em></p>
+<p class="admonition-title"><em>Thread</em></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1808,7 +1945,7 @@ Além de formas de definir as linhas de execução, Java provê diversas estrutu
 
 </div>
 <div class="admonition example">
-<p class="admonition-title">Exemplo 1: <em>Runnable</em></p>
+<p class="admonition-title"><em>Runnable</em></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1837,7 +1974,7 @@ Em vez disto, o método <code>start()</code>, sim, é invocado. Isto ocorre porq
 a máquina virtual precisa executar alguma "mágica" por baixo dos panos como, por exemplo, solicitar ao sistema operacional a criação de um <em>thread</em> do SO, que servirá de hospedeiro para o <em>thread</em> Java. 
 Isto acontece dentro do <code>start()</code>, que em algum ponto de sua execução levará à invocação do método <code>run()</code>.</p>
 <p>A classe <code>Thread</code> também provê uma série de métodos que permitem gerenciar a vida do <em>thread</em> criado. 
-Por exemplo, o método de classe (<code>static</code>) <code>Thread.sleep()</code> permite bloquear um <em>thread</em>  por um determinado período.</p>
+Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o thread no qual a invocação aconteceu por um determinado período.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -2000,7 +2137,7 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 </code></pre></div>
 </td></tr></table>
 
-<p>Invocar <code>t.join()</code> fará com que o <em>thread</em> principal espere indefinidamente até que <code>t</code> termine de executar.
+<p>Invocar <code>t.join()</code> fará com que o <em>thread</em> corrente, neste caso o principal, espere indefinidamente até que <code>t</code> termine de executar.
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
 Caso a espera termine por causa de um <em>timeout</em>, é possível testar o estado atual do thread com <code>Thread.isAlive()</code>.</p>
 <p>Outro método interessante, <code>Thread.setDaemon()</code>, especifica que o <em>thread</em> pode ser terminado quando a <em>thread</em> principal terminar. Descomente a invocação e teste o efeito.</p>
@@ -2087,7 +2224,7 @@ else
 </code></pre></div>
 </td></tr></table>
 
-<h5 id="coordenacao">Coordenação</h5>
+<h4 id="coordenacao">Coordenação</h4>
 <p>Como visto no exercício anterior, a execução de <em>threads</em> é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. </p>
 <p>Há várias astrações que podem ser usadas para coordenar as operações de <em>threads</em>, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são <em>locks</em>, variáveis de condição e semáforos.</p>
 <p>Especificamente em Java, provavelmente a abstração mais simples são os blocos <code>synchronized</code>.</p>
@@ -2395,129 +2532,6 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li><a href="http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/">Locks</a></li>
 <li><a href="http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/">Tipos Atômicos</a></li>
 </ul>
-</div>
-<h4 id="python">Python</h4>
-<p>Em Python, como seria de se esperar, há várias formas de se trabalhar com <em>threads</em>. A seguir são apresentados dois exemplos, usando o pacote <code>thread</code> ou <code>threading</code>.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/python</span>
-<span class="kn">import</span> <span class="nn">thread</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="c1"># Define a function for the thread</span>
-<span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-   <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-   <span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
-      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
-      <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-      <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span> <span class="n">threadName</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="p">)</span>
-
-<span class="c1"># Create two threads as follows</span>
-<span class="k">try</span><span class="p">:</span>
-   <span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Thread-1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">)</span> <span class="p">)</span>
-   <span class="n">thread</span><span class="o">.</span><span class="n">start_new_thread</span><span class="p">(</span> <span class="n">print_time</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;Thread-2&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">)</span> <span class="p">)</span>
-<span class="k">except</span><span class="p">:</span>
-   <span class="nb">print</span> <span class="s2">&quot;Error: unable to start thread&quot;</span>
-
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-   <span class="k">pass</span>
-</code></pre></div>
-</td></tr></table>
-
-<p>Ou</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/python</span>
-
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="n">exitFlag</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="k">class</span> <span class="nc">myThread</span> <span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
-   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threadID</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">counter</span><span class="p">):</span>
-      <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">threadID</span> <span class="o">=</span> <span class="n">threadID</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span>
-   <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="nb">print</span> <span class="s2">&quot;Starting &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-      <span class="n">print_time</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-      <span class="nb">print</span> <span class="s2">&quot;Exiting &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-
-   <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">threadName</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
-      <span class="k">while</span> <span class="n">counter</span><span class="p">:</span>
-         <span class="k">if</span> <span class="n">exitFlag</span><span class="p">:</span>
-            <span class="n">threadName</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
-         <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">threadName</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">ctime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
-         <span class="n">counter</span> <span class="o">-=</span> <span class="mi">1</span>
-
-<span class="c1"># Create new threads</span>
-<span class="n">thread1</span> <span class="o">=</span> <span class="n">myThread</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Thread-1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">thread2</span> <span class="o">=</span> <span class="n">myThread</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Thread-2&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="c1"># Start new Threads</span>
-<span class="n">thread1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="n">thread2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-<span class="nb">print</span> <span class="s2">&quot;Exiting Main Thread&quot;</span>
-</code></pre></div>
-</td></tr></table>
-
-<div class="admonition tip">
-<p class="admonition-title">Leia mais</p>
-<p><a href="https://www.tutorialspoint.com/python/python_multithreading.htm">Threads em Python</a></p>
 </div>
 <div class="admonition question">
 <p class="admonition-title">Exercício - Anel Multithread</p>
