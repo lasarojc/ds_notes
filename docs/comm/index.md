@@ -419,21 +419,22 @@ No caso do **Java**, **não há instalação propriamente dita**.
 Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.
 
 ##### Pegando o código
+
 Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.
 
-
 ```bash
-git clone -b v1.19.0 https://github.com/grpc/grpc-java
+git clone -b v1.33.0 https://github.com/grpc/grpc-java
 ```
 
-Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.
+Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.
 
 ```bash
 cd grpc-java\examples
-git checkout v1.19.0
+git checkout v1.33.0
 ```
 
 ##### Compilando e executando
+
 O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
 
 ```bash
@@ -687,12 +688,12 @@ print("Greeter client received: " + response.message)
 
 #### Instalação
 
-* [Baixe](http://www.apache.org/dyn/closer.cgi?path=/thrift/0.10.0/thrift-0.10.0.tar.gz) e compile o thrift
+* [Baixe](http://www.apache.org/dyn/closer.cgi?path=/thrift/0.13.0/thrift-0.13.0.tar.gz) e compile o thrift
 * ou instale-o usando apt-get, por exemplo. `apt-get install thrift-compiler`
 * execute "thrift" na linha de comando.
 * Para thrift com Java, também precisarão dos seguintes arquivos
   * [slf4j](http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21)
-  * [libthrift0.9.3.jar](https://sites.google.com/site/lasaro/sistemasdistribuidos)
+  * [libthrift0.13.0.jar](https://mvnrepository.com/artifact/org.apache.thrift/libthrift/0.13.0)
   * coloque-os na pasta `jars`
 
 
@@ -862,8 +863,150 @@ O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultant
 
 ## Publish/Subscribe
 
+O padrão *publish/subscribe* (ou *pub/sub*) se apresenta como uma alternativa à arquitetura cliente-servidor.
+Enquanto no model client-servidor, o cliente se comunica diretamente com um *endpoint* representado pelo servidor, no padrão *pub/sub* temos clientes que enviam mensagens, ou *publishers*, e clientes que recebem as mensagens, ou *subscribers*. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
+Um agente especial, denominado *broker*, gerencia a conexão, armazena e filtrando as mensagens, além de distribui-las corretamente aos *subscribers*.
+
+### Desacoplamento
+
+Um dos aspectos mais importantes proporciados pelo padrão *pub/sub* é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:
+
+* Espaço: *publishers* e *subscribers* não precisam se conhecer (por exemplo, não há necessidade de informar endereço IP e porta de cada um).
+* Tempo: *publishers* e *subscribers* não precisam nem estar em execução ao mesmo tempo.
+* Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.
+
+### Filtragem
+
+O *broker* tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:
+
+* Baseada em assunto: *subscribers* se registram para receber mensagens de um ou mais tópicos de interesse. Em geral esses tópicos são strings com um formato hierárquico, por exemplo `/devices/sensor/+/temperature`.
+* Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. *Downside:* mensagem não pode ser criptografada.
+* Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo *Exception* e subtipos, por exemplo.
+
+### MQTT
+
+MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
+É leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
+
+>MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.
+
+O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.
+
+### Referência
+
+[MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
+
+### Estudo de caso: MosQuiTTo
+
+>[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
+
+#### Instalação
+
+```bash
+apt-get install mosquitto # Ubuntu
+brew install mosquitto # MacOS
+```
+
+#### Inicializando o serviço
+
+O arquivo `mosquito.conf` contém as configurações para o *broker*. 
+As configurações funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
+Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que ocorre internamente.
+
+```bash
+mosquitto -v
+```
+
+#### Publicando
+
+Para publicar uma mensagem, o *publisher* deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se `localhost:1883`.
+
+```bash
+# publicando valor de 40 para tópicos 'sensor/temperature/1' e 'sensor/temperature/2'
+mosquitto_pub -t sensor/temperature/1 -m 40
+mosquitto_pub -t sensor/temperature/2 -m 32
+```
+
+Caso o *subscriber* não esteja em execução, adicione a opção `-r` para que o broker retenha a mensagem.
+
+#### Consumindo
+
+O consumidor funciona de maneira semelhante, informando o tópico de interesse:
+
+```bash
+# consumindo mensagens de tópico /sensor/temperature/*
+mosquito_pub -t sensor/temperature/+
+```
+
+#### Programando
+
+Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
+A biblioteca pode ser baixada [aqui](https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar).
+
+##### Exemplo de *Publisher*
+
+```java
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
+public class MqttPublishSample {
+
+  public static void main(String[] args) {
+    String topic        = "MQTT Examples";
+    String content      = "Message from MqttPublishSample";
+    int qos             = 2;
+    String broker       = "tcp://mqtt.eclipse.org:1883";
+    String clientId     = "JavaSample";
+    MemoryPersistence persistence = new MemoryPersistence();
+
+    try {
+      MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+      MqttConnectOptions connOpts = new MqttConnectOptions();
+      connOpts.setCleanSession(true);
+      System.out.println("Connecting to broker: "+broker);
+      sampleClient.connect(connOpts);
+      System.out.println("Connected");
+      System.out.println("Publishing message: "+content);
+      MqttMessage message = new MqttMessage(content.getBytes());
+      message.setQos(qos);
+      sampleClient.publish(topic, message);
+      System.out.println("Message published");
+      sampleClient.disconnect();
+      System.out.println("Disconnected");
+      System.exit(0);
+    } catch(MqttException me) {
+      System.out.println("reason "+me.getReasonCode());
+      System.out.println("msg "+me.getMessage());
+      System.out.println("loc "+me.getLocalizedMessage());
+      System.out.println("cause "+me.getCause());
+      System.out.println("excep "+me);
+      me.printStackTrace();
+    }
+  }
+}
+```
+
+
+<!-- Distinction from message queues
+There is a lot of confusion about the name MQTT and whether the protocol is implemented as a message queue or not. We will try to shed some light on the topic and explain the differences. In our last post, we mentioned that MQTT refers to the MQseries product from IBM and has nothing to do with “message queue“. Regardless of where the name comes from, it’s useful to understand the differences between MQTT and a traditional message queue:
+
+A message queue stores message until they are consumed When you use a message queue, each incoming message is stored in the queue until it is picked up by a client (often called a consumer). If no client picks up the message, the message remains stuck in the queue and waits to be consumed. In a message queue, it is not possible for a message not to be processed by any client, as it is in MQTT if nobody subscribes to a topic.
+
+A message is only consumed by one client Another big difference is that in a traditional message queue a message can be processed by one consumer only. The load is distributed between all consumers for a queue. In MQTT the behavior is quite the opposite: every subscriber that subscribes to the topic gets the message.
+
+Queues are named and must be created explicitly A queue is far more rigid than a topic. Before a queue can be used, the queue must be created explicitly with a separate command. Only after the queue is named and created is it possible to publish or consume messages. In contrast, MQTT topics are extremely flexible and can be created on the fly.
+
+If you can think of any other differences that we overlooked, we would love to hear from you in the comments. -->
 
 ??? bug "TODO"
-    Descrever pub/sub e diferenciar de MOM
+    Diferenciar de MOM
 
-O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.
+<!-- O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte. -->
+
+!!! question "Exercícios - RPC e Publish/Subscribe"
+    * Usando *thrift* e a linguagem Java, extenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação `setKV()`  caso a chave já exista.
+    * Usando o *broker* mosquitto instalado localmente, faça em Java um *publisher* que simula um sensor de temperatura e publica valores aleatórios entre 15 e 45 a cada segundo.
+    * Faça o *subscriber* que irá consumir esses dados de temperatura.
