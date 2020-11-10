@@ -496,6 +496,101 @@
     Publish/Subscribe
   </a>
   
+    <nav class="md-nav" aria-label="Publish/Subscribe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desacoplamento" class="md-nav__link">
+    Desacoplamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtragem" class="md-nav__link">
+    Filtragem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mqtt" class="md-nav__link">
+    MQTT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia" class="md-nav__link">
+    Referência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-mosquitto" class="md-nav__link">
+    Estudo de caso: MosQuiTTo
+  </a>
+  
+    <nav class="md-nav" aria-label="Estudo de caso: MosQuiTTo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao_2" class="md-nav__link">
+    Instalação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inicializando-o-servico" class="md-nav__link">
+    Inicializando o serviço
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicando" class="md-nav__link">
+    Publicando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumindo" class="md-nav__link">
+    Consumindo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programando" class="md-nav__link">
+    Programando
+  </a>
+  
+    <nav class="md-nav" aria-label="Programando">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-publisher" class="md-nav__link">
+    Exemplo de Publisher
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -884,6 +979,101 @@
   <a href="#publishsubscribe" class="md-nav__link">
     Publish/Subscribe
   </a>
+  
+    <nav class="md-nav" aria-label="Publish/Subscribe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desacoplamento" class="md-nav__link">
+    Desacoplamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filtragem" class="md-nav__link">
+    Filtragem
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mqtt" class="md-nav__link">
+    MQTT
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencia" class="md-nav__link">
+    Referência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-mosquitto" class="md-nav__link">
+    Estudo de caso: MosQuiTTo
+  </a>
+  
+    <nav class="md-nav" aria-label="Estudo de caso: MosQuiTTo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instalacao_2" class="md-nav__link">
+    Instalação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inicializando-o-servico" class="md-nav__link">
+    Inicializando o serviço
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publicando" class="md-nav__link">
+    Publicando
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumindo" class="md-nav__link">
+    Consumindo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#programando" class="md-nav__link">
+    Programando
+  </a>
+  
+    <nav class="md-nav" aria-label="Programando">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exemplo-de-publisher" class="md-nav__link">
+    Exemplo de Publisher
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1341,14 +1531,14 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 <p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
 <h5 id="pegando-o-codigo">Pegando o código</h5>
 <p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.19.0 https://github.com/grpc/grpc-java
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.33.0 https://github.com/grpc/grpc-java
 </code></pre></div>
 </td></tr></table>
 
-<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.19, usada neste tutorial.</p>
+<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java<span class="se">\e</span>xamples
-git checkout v1.19.0
+git checkout v1.33.0
 </code></pre></div>
 </td></tr></table>
 
@@ -1679,12 +1869,12 @@ python3 greeter<span class="se">\_</span>client.py
 <p><a href="https://thrift.apache.org/">Thrift</a></p>
 <h4 id="instalacao_1">Instalação</h4>
 <ul>
-<li><a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.10.0/thrift-0.10.0.tar.gz">Baixe</a> e compile o thrift</li>
+<li><a href="http://www.apache.org/dyn/closer.cgi?path=/thrift/0.13.0/thrift-0.13.0.tar.gz">Baixe</a> e compile o thrift</li>
 <li>ou instale-o usando apt-get, por exemplo. <code>apt-get install thrift-compiler</code></li>
 <li>execute "thrift" na linha de comando.</li>
 <li>Para thrift com Java, também precisarão dos seguintes arquivos</li>
 <li><a href="http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21">slf4j</a></li>
-<li><a href="https://sites.google.com/site/lasaro/sistemasdistribuidos">libthrift0.9.3.jar</a></li>
+<li><a href="https://mvnrepository.com/artifact/org.apache.thrift/libthrift/0.13.0">libthrift0.13.0.jar</a></li>
 <li>coloque-os na pasta <code>jars</code></li>
 </ul>
 <h4 id="idl-thrift">IDL Thrift</h4>
@@ -1917,9 +2107,181 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 </details>
 <p>O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.</p>
 <h2 id="publishsubscribe">Publish/Subscribe</h2>
-<details class="bug"><summary>TODO</summary><p>Descrever pub/sub e diferenciar de MOM</p>
+<p>O padrão <em>publish/subscribe</em> (ou <em>pub/sub</em>) se apresenta como uma alternativa à arquitetura cliente-servidor.
+Enquanto no model client-servidor, o cliente se comunica diretamente com um <em>endpoint</em> representado pelo servidor, no padrão <em>pub/sub</em> temos clientes que enviam mensagens, ou <em>publishers</em>, e clientes que recebem as mensagens, ou <em>subscribers</em>. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
+Um agente especial, denominado <em>broker</em>, gerencia a conexão, armazena e filtrando as mensagens, além de distribui-las corretamente aos <em>subscribers</em>.</p>
+<h3 id="desacoplamento">Desacoplamento</h3>
+<p>Um dos aspectos mais importantes proporciados pelo padrão <em>pub/sub</em> é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:</p>
+<ul>
+<li>Espaço: <em>publishers</em> e <em>subscribers</em> não precisam se conhecer (por exemplo, não há necessidade de informar endereço IP e porta de cada um).</li>
+<li>Tempo: <em>publishers</em> e <em>subscribers</em> não precisam nem estar em execução ao mesmo tempo.</li>
+<li>Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.</li>
+</ul>
+<h3 id="filtragem">Filtragem</h3>
+<p>O <em>broker</em> tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:</p>
+<ul>
+<li>Baseada em assunto: <em>subscribers</em> se registram para receber mensagens de um ou mais tópicos de interesse. Em geral esses tópicos são strings com um formato hierárquico, por exemplo <code>/devices/sensor/+/temperature</code>.</li>
+<li>Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. <em>Downside:</em> mensagem não pode ser criptografada.</li>
+<li>Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo <em>Exception</em> e subtipos, por exemplo.</li>
+</ul>
+<h3 id="mqtt">MQTT</h3>
+<p>MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
+É leve, aberto e fácil de implementar, ideal para comunicação <em>Machine to Machine</em> (M2M) e uso no contexto de Internet das Coisas (<em>Internet of Things - I0T</em>).</p>
+<blockquote>
+<p>MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.</p>
+</blockquote>
+<p>O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.</p>
+<h3 id="referencia">Referência</h3>
+<p><a href="https://www.hivemq.com/mqtt-essentials/">MQTT Essentials</a></p>
+<h3 id="estudo-de-caso-mosquitto">Estudo de caso: MosQuiTTo</h3>
+<blockquote>
+<p><a href="https://mosquitto.org">Eclipse Mosquitto</a> is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.</p>
+</blockquote>
+<h4 id="instalacao_2">Instalação</h4>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-get install mosquitto <span class="c1"># Ubuntu</span>
+brew install mosquitto <span class="c1"># MacOS</span>
+</code></pre></div>
+</td></tr></table>
+
+<h4 id="inicializando-o-servico">Inicializando o serviço</h4>
+<p>O arquivo <code>mosquito.conf</code> contém as configurações para o <em>broker</em>. 
+As configurações funcionam bem para o nosso caso. O <em>broker</em> aceita requisições na porta 1883 e <em>publishers</em> e <em>subscribers</em> também utilizam essa porta por padrão.
+Basta iniciar o <em>broker</em> com a opção <code>-v</code> para ter mais detalhes sobre o que ocorre internamente.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>mosquitto -v
+</code></pre></div>
+</td></tr></table>
+
+<h4 id="publicando">Publicando</h4>
+<p>Para publicar uma mensagem, o <em>publisher</em> deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se <code>localhost:1883</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># publicando valor de 40 para tópicos &#39;sensor/temperature/1&#39; e &#39;sensor/temperature/2&#39;</span>
+mosquitto_pub -t sensor/temperature/1 -m <span class="m">40</span>
+mosquitto_pub -t sensor/temperature/2 -m <span class="m">32</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Caso o <em>subscriber</em> não esteja em execução, adicione a opção <code>-r</code> para que o broker retenha a mensagem.</p>
+<h4 id="consumindo">Consumindo</h4>
+<p>O consumidor funciona de maneira semelhante, informando o tópico de interesse:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># consumindo mensagens de tópico /sensor/temperature/*</span>
+mosquito_pub -t sensor/temperature/+
+</code></pre></div>
+</td></tr></table>
+
+<h4 id="programando">Programando</h4>
+<p>Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
+A biblioteca pode ser baixada <a href="https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar">aqui</a>.</p>
+<h5 id="exemplo-de-publisher">Exemplo de <em>Publisher</em></h5>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.MqttClient</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.MqttConnectOptions</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.MqttException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.MqttMessage</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.eclipse.paho.client.mqttv3.persist.MemoryPersistence</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MqttPublishSample</span> <span class="p">{</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="n">topic</span>        <span class="o">=</span> <span class="s">&quot;MQTT Examples&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">content</span>      <span class="o">=</span> <span class="s">&quot;Message from MqttPublishSample&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">qos</span>             <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">broker</span>       <span class="o">=</span> <span class="s">&quot;tcp://mqtt.eclipse.org:1883&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">clientId</span>     <span class="o">=</span> <span class="s">&quot;JavaSample&quot;</span><span class="p">;</span>
+    <span class="n">MemoryPersistence</span> <span class="n">persistence</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MemoryPersistence</span><span class="p">();</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="n">MqttClient</span> <span class="n">sampleClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttClient</span><span class="p">(</span><span class="n">broker</span><span class="p">,</span> <span class="n">clientId</span><span class="p">,</span> <span class="n">persistence</span><span class="p">);</span>
+      <span class="n">MqttConnectOptions</span> <span class="n">connOpts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttConnectOptions</span><span class="p">();</span>
+      <span class="n">connOpts</span><span class="p">.</span><span class="na">setCleanSession</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Connecting to broker: &quot;</span><span class="o">+</span><span class="n">broker</span><span class="p">);</span>
+      <span class="n">sampleClient</span><span class="p">.</span><span class="na">connect</span><span class="p">(</span><span class="n">connOpts</span><span class="p">);</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Connected&quot;</span><span class="p">);</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Publishing message: &quot;</span><span class="o">+</span><span class="n">content</span><span class="p">);</span>
+      <span class="n">MqttMessage</span> <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MqttMessage</span><span class="p">(</span><span class="n">content</span><span class="p">.</span><span class="na">getBytes</span><span class="p">());</span>
+      <span class="n">message</span><span class="p">.</span><span class="na">setQos</span><span class="p">(</span><span class="n">qos</span><span class="p">);</span>
+      <span class="n">sampleClient</span><span class="p">.</span><span class="na">publish</span><span class="p">(</span><span class="n">topic</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Message published&quot;</span><span class="p">);</span>
+      <span class="n">sampleClient</span><span class="p">.</span><span class="na">disconnect</span><span class="p">();</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Disconnected&quot;</span><span class="p">);</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">MqttException</span> <span class="n">me</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;reason &quot;</span><span class="o">+</span><span class="n">me</span><span class="p">.</span><span class="na">getReasonCode</span><span class="p">());</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;msg &quot;</span><span class="o">+</span><span class="n">me</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;loc &quot;</span><span class="o">+</span><span class="n">me</span><span class="p">.</span><span class="na">getLocalizedMessage</span><span class="p">());</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;cause &quot;</span><span class="o">+</span><span class="n">me</span><span class="p">.</span><span class="na">getCause</span><span class="p">());</span>
+      <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;excep &quot;</span><span class="o">+</span><span class="n">me</span><span class="p">);</span>
+      <span class="n">me</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<!-- Distinction from message queues
+There is a lot of confusion about the name MQTT and whether the protocol is implemented as a message queue or not. We will try to shed some light on the topic and explain the differences. In our last post, we mentioned that MQTT refers to the MQseries product from IBM and has nothing to do with “message queue“. Regardless of where the name comes from, it’s useful to understand the differences between MQTT and a traditional message queue:
+
+A message queue stores message until they are consumed When you use a message queue, each incoming message is stored in the queue until it is picked up by a client (often called a consumer). If no client picks up the message, the message remains stuck in the queue and waits to be consumed. In a message queue, it is not possible for a message not to be processed by any client, as it is in MQTT if nobody subscribes to a topic.
+
+A message is only consumed by one client Another big difference is that in a traditional message queue a message can be processed by one consumer only. The load is distributed between all consumers for a queue. In MQTT the behavior is quite the opposite: every subscriber that subscribes to the topic gets the message.
+
+Queues are named and must be created explicitly A queue is far more rigid than a topic. Before a queue can be used, the queue must be created explicitly with a separate command. Only after the queue is named and created is it possible to publish or consume messages. In contrast, MQTT topics are extremely flexible and can be created on the fly.
+
+If you can think of any other differences that we overlooked, we would love to hear from you in the comments. -->
+
+<details class="bug"><summary>TODO</summary><p>Diferenciar de MOM</p>
 </details>
-<p>O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.</p>
+<!-- O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte. -->
+
+<div class="admonition question">
+<p class="admonition-title">Exercícios - RPC e Publish/Subscribe</p>
+<ul>
+<li>Usando <em>thrift</em> e a linguagem Java, extenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação <code>setKV()</code>  caso a chave já exista.</li>
+<li>Usando o <em>broker</em> mosquitto instalado localmente, faça em Java um <em>publisher</em> que simula um sensor de temperatura e publica valores aleatórios entre 15 e 45 a cada segundo.</li>
+<li>Faça o <em>subscriber</em> que irá consumir esses dados de temperatura.</li>
+</ul>
+</div>
 <div class="footnote">
 <hr />
 <ol>
