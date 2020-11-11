@@ -1329,7 +1329,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 </div>
 <div class="admonition question">
 <p class="admonition-title">Exercício: IP-Multicast</p>
-<p>Implemente e teste o seguinte sevidor, colocando várias instâncias para executar em múltiplos terminais, ao mesmo tempo.</p>
+<p>Implemente e teste o seguinte <strong>receiver</strong>, colocando várias instâncias para executar em múltiplos terminais, ao mesmo tempo.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1353,7 +1353,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 
 <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_UDP</span><span class="p">)</span>
 <span class="n">sock</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">MCAST_GRP</span><span class="p">,</span> <span class="n">MCAST_PORT</span><span class="p">))</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">MCAST_PORT</span><span class="p">))</span>
 <span class="n">mreq</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=4sl&quot;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">MCAST_GRP</span><span class="p">),</span> <span class="n">socket</span><span class="o">.</span><span class="n">INADDR_ANY</span><span class="p">)</span>
 <span class="c1">#4 bytes (4s) seguidos de um long (l), usando ordem nativa (=)</span>
 
@@ -1364,7 +1364,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 </code></pre></div>
 </td></tr></table>
 
-<p>Implemente e teste o seguinte cliente.</p>
+<p>Implemente e teste o seguinte <strong>sender</strong>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1389,13 +1389,13 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
 <li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
 <li><a href="lycog.com/programming/multicast-programming-java/">Multicast em Java</a></li>
-<li><a href="https://stackoverflow.com/questions/603852/multicast-in-python">Multicast em Python</a></li>
+<li><a href="https://pymotw.com/2/socket/multicast.html">Multicast em Python</a></li>
 </ul>
 <h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
-Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo.</p>
+Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.</p>
 <div class="mermaid">sequenceDiagram
     activate Cliente
     note left of Cliente: Ativo gerando requisição
@@ -1451,24 +1451,19 @@ Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas 
 <td>função "qualquer"</td>
 </tr>
 <tr>
-<td>Compartilhamento de memória</td>
-<td>privada ao processo</td>
-<td>Compartilhada entre threads</td>
-</tr>
-<tr>
 <td>Compartilhammento de código e dados</td>
 <td>Privado ao processo</td>
 <td>Compartilhado pelos threads</td>
 </tr>
 <tr>
-<td>EStado</td>
+<td>Estado</td>
 <td>Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso</td>
 <td>Stack, variáveis locais</td>
 </tr>
 <tr>
 <td>Comunicação</td>
-<td>IPC - Inter process communication</td>
-<td>IPC</td>
+<td>IPC (<em>Inter Process Communication</em>): sockets, FIFO, memória compartilhada, etc</td>
+<td>IPC, mutex, variáveis de condição, semáforos, etc</td>
 </tr>
 <tr>
 <td>Nível da implementação</td>
@@ -1561,10 +1556,12 @@ Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte p
 12
 13
 14
-15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">threadfunction</span><span class="p">(</span><span class="n">int32</span> <span class="o">*</span> <span class="n">exclusivo</span><span class="p">)</span> <span class="p">{</span>
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">threadfunction</span><span class="p">(</span><span class="n">int32</span> <span class="o">*</span> <span class="n">exclusivo</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">int32</span> <span class="n">local</span> <span class="o">=</span> <span class="n">trabalha</span><span class="p">();</span>
-        <span class="n">exclusivo</span> <span class="o">=</span> <span class="n">local</span><span class="p">;</span>
+        <span class="n">int32</span> <span class="n">local</span> <span class="o">=</span> <span class="o">*</span><span class="n">exclusivo</span><span class="p">;</span>
+        <span class="n">local</span> <span class="o">=</span> <span class="n">processa</span><span class="p">(</span><span class="n">local</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">exclusivo</span> <span class="o">=</span> <span class="n">local</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -1581,7 +1578,7 @@ Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte p
 
 <p>Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
 Não exatamente, pois mesmo este código simplíssimo podemos sofrer de <a href="https://dzone.com/articles/false-sharing">falso compartilhamento</a>.
-Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto <code>X</code>quanto <code>Y</code> no programa tem tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada.</p>
+Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto <code>X</code> quanto <code>Y</code> no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.</p>
 <p><img alt="Multithreaded" src="images/cache-line.png" /></p>
 <p>Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache.
 Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento pode ser real (por exemplo se ambos os threads usarem a variável X).
@@ -1783,7 +1780,7 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 </blockquote>
 </li>
 <li>
-<p><code>pthread_attr_setaffinity_np *</code> - ajusta afinidade dos threads.</p>
+<p><code>pthread_attr_setaffinity_np</code> - ajusta afinidade dos threads.</p>
 </li>
 </ul>
 <h4 id="python">Python</h4>
