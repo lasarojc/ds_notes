@@ -53,7 +53,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#communicacao" class="md-skip">
+        <a href="#comunicacao" class="md-skip">
           Skip to content
         </a>
       
@@ -1093,7 +1093,7 @@
                   
                 
                 
-                <h1 id="communicacao">Communicação</h1>
+                <h1 id="comunicacao">Comunicação</h1>
 <p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
 Suas desvantagens, entretanto, são várias:</p>
@@ -1310,7 +1310,7 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
 </blockquote>
 <h3 id="thrift">Thrift</h3>
-<details class="bug"><summary>TODO</summary><p>Thrift como forma de representação de dados.</p>
+<details class="bug"><summary>TODO</summary><p>Thrift como forma de representação de dados: <a href="https://thrift-tutorial.readthedocs.io/en/latest/thrift-types.html">Thrift type system</a></p>
 </details>
 <h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
 <p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">1</a></sup>
@@ -2108,8 +2108,8 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 <p>O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.</p>
 <h2 id="publishsubscribe">Publish/Subscribe</h2>
 <p>O padrão <em>publish/subscribe</em> (ou <em>pub/sub</em>) se apresenta como uma alternativa à arquitetura cliente-servidor.
-Enquanto no model client-servidor, o cliente se comunica diretamente com um <em>endpoint</em> representado pelo servidor, no padrão <em>pub/sub</em> temos clientes que enviam mensagens, ou <em>publishers</em>, e clientes que recebem as mensagens, ou <em>subscribers</em>. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
-Um agente especial, denominado <em>broker</em>, gerencia a conexão, armazena e filtrando as mensagens, além de distribui-las corretamente aos <em>subscribers</em>.</p>
+Enquanto no modelo client-servidor, o cliente se comunica diretamente com um <em>endpoint</em> representado pelo servidor, no padrão <em>pub/sub</em> temos clientes que enviam mensagens, ou <em>publishers</em>, e clientes que recebem as mensagens, ou <em>subscribers</em>. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
+Um agente especial, denominado <em>broker</em>, gerencia a conexão, armazena e filtrando as mensagens, além de distribuí-las corretamente aos <em>subscribers</em>.</p>
 <h3 id="desacoplamento">Desacoplamento</h3>
 <p>Um dos aspectos mais importantes proporciados pelo padrão <em>pub/sub</em> é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:</p>
 <ul>
