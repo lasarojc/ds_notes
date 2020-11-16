@@ -405,6 +405,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../projeto/" title="Projeto" class="md-nav__link">
+      Projeto
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -537,12 +549,12 @@
                 
                 <h1 id="coordenacao">Coordenação</h1>
 <p>Como visto na seção sobre <a href="../basics/#multiprogramacao-e-multithreading-em-sistemas-distribuidos
-../Multiprogramação concorrencia/concorrencia.md">Multiprogramação</a>, diversas tarefas exigem coordenação entre threads em uma aplicação centralizada em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. </p>
+../Multiprogramação concorrencia/concorrencia.md">Multiprogramação</a>, diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. </p>
 <p>Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos <em>threads</em>, ainda por cima, espalhados geograficamente. 
 Outras soluções e abstrações são portanto necessárias.</p>
 <h2 id="exclusao-mutua">Exclusão Mútua</h2>
 <p>Um dos problemas enfrentados em sistemas que fazem uso de concorrência, distribuídos ou não, é a exclusão mútua.
-Em um sistema centralizado, uma variável global, um lock, ou outra primitiva de sincronização podem ser usadas na sincronização, mas em um sistema distribuído, primitivas simples como estas provavelmente não estarão disponíveis ou o sistema será muito restrito.
+Em um sistema monolítico, uma variável global, um lock, ou outra primitiva de sincronização podem ser usadas na sincronização, mas em um sistema distribuído, primitivas simples como estas provavelmente não estarão disponíveis ou o sistema será muito restrito.
 Como, então, controlar o acesso de múltiplos processos a um recurso compartilhado, garantindo que cada processo controla <strong>exclusivamente</strong> aquele recurso durante seu acesso?
 Qualquer solução que se proponha a este problema de exclusão mútua, precisa ter as propriedades 1, 2, 3, e, idealmente, a 4, a seguir:</p>
 <div class="admonition info">
@@ -557,9 +569,9 @@ Qualquer solução que se proponha a este problema de exclusão mútua, precisa 
 <p>Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
 Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que a vez é circulada, e baseada em quoruns.</p>
 <h3 id="coordenador">Coordenador</h3>
-<p>Enquanto em um sistema centralizado há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há naturalmente tal entidade.
-Uma possível solução para o problem de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.</p>
-<p>Nesta abordagem, os processos que precisam acessar a região crítica são denominados <strong>participantes</strong> e um dos processos assume o pal de <strong>coordenador</strong>. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:</p>
+<p>Enquanto em um sistema monolítico há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há naturalmente tal entidade.
+Uma possível solução para o problema de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.</p>
+<p>Nesta abordagem, os processos que precisam acessar a região crítica são denominados <strong>participantes</strong> e um dos processos assume o papel de <strong>coordenador</strong>. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:</p>
 <ul>
 <li>Participante<ol>
 <li>Envia requisição de acesso ao coordenador</li>
@@ -586,25 +598,25 @@ O estado do coordenador mostra se o recurso está livre ou ocupado e quais proce
 <div class="mermaid">sequenceDiagram
     participant Coordenador
     note over Coordenador: Recurso=livre/Fila = []
-    Part1-&gt;&gt;Coordenador: RequestAccess
+        Part1-&gt;&gt;Coordenador: RequestAccess
     note over Coordenador: Recurso=livre/Fila = [Part1]
-    Coordenador-&gt;&gt;Part1: ResponseOK
+        Coordenador-&gt;&gt;+Part1: ResponseOK
     note over Coordenador: Recurso=ocupado/Fila = []
-    Part2-&gt;&gt;Coordenador: RequestAccess
+        Part2-&gt;&gt;Coordenador: RequestAccess
     note over Coordenador: Recurso=ocupado/Fila = [Part2]
-        Part1-&gt;&gt;Coordenador: RequestFree
+        Part1-&gt;&gt;-Coordenador: RequestFree
     note over Coordenador: Recurso=livre/Fila = [Part2]
         Coordenador-&gt;&gt;Part1: ResponseFree
-    Part3-&gt;&gt;Coordenador: RequestAccess
+        Part3-&gt;&gt;Coordenador: RequestAccess
     note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
-    Coordenador-&gt;&gt;Part2: ResponseOK
+        Coordenador-&gt;&gt;+Part2: ResponseOK
     note over Coordenador: Recurso=ocupado/Fila = [Part3]
-        Part2-&gt;&gt;Coordenador: RequestFree
+        Part2-&gt;&gt;-Coordenador: RequestFree
     note over Coordenador: Recurso=livre/Fila = [Part3]
         Coordenador-&gt;&gt;Part2: ResponseFree
     note over Coordenador: Recurso=ocupado/Fila = []
-    Coordenador-&gt;&gt;Part3: ResponseOK
-        Part3-&gt;&gt;Coordenador: RequestFree
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+        Part3-&gt;&gt;-Coordenador: RequestFree
     note over Coordenador: Recurso=livre/Fila = []
         Coordenador-&gt;&gt;Part3: ResponseFree</div>
 
@@ -615,7 +627,7 @@ O estado do coordenador mostra se o recurso está livre ou ocupado e quais proce
 <li>Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.</li>
 <li>Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.</li>
 </ul>
-<p>Outra vantagem deste algoritmo é sua simplicidade e, conseguentemente, facilidade de implementação.
+<p>Outra vantagem deste algoritmo é sua simplicidade e, consequentemente, facilidade de implementação.
 Contudo, este algoritmo tem também desvantagens, por exemplo, se muitas requisições de acesso forem feitas, o coordenador pode ser sobrecarregado e se tornar um <strong>gargalo</strong> no acesso à região crítica.</p>
 <p>Mais sério ainda é a questão de como lidar com falhas, por exemplo, se ou o coordenador ou o participante que detem o direito de acesso ao recurso para de funcionar,  então nenhum outro processo conseguirá acesso.
 Estes aspectos nos permitem mergulhar na área de tolerância a falhas, e o faremos, mas mais tarde. 
@@ -657,10 +669,67 @@ Vejamos alguns casos específicos:</p>
 <li>No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido o anel não conseguirá circular.</li>
 </ul>
 <p>Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me oferecerão alguma baseada em <em>timeouts</em>.
-Por exemplo, se o processo não devolver a permissão de acesso antes de que uma certa quantidade de tempo tenha passado, um <em>timeout</em>, então assuma que o mesmo parou de funcionar e não voltará mais, e gere uma nova permissão a ser passada a outros requisitantes.</p>
-<p>O problema desta e outras "soluções" baseadas em <em>timeouts</em> está no <strong>assumir que o processo parou de funcionar</strong>, pois caso isso não seja verdade, teremos agora dois <em>tokens</em>  no sistema, podendo levar à violação da propriedade de exclusão mútua. </p>
-<details class="bug"><summary>Violação da exclusão mútua</summary><p>Fazer diagrama de sequência mostrando violação da exclusão mútua.</p>
-</details>
+Por exemplo, se o processo não devolver a permissão de acesso antes de que uma certa quantidade de tempo tenha passado, um <em>timeout</em>, então assuma que o mesmo parou de funcionar e não voltará mais, e gere uma nova permissão a ser passada a outros requisitantes.  Aplicada esta ideia do <em>timeout</em>  no algoritmo com coordenador, teremos o efeito ilustrado a seguir.</p>
+<div class="mermaid">sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+        Coordenador-&gt;&gt;+Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Part2-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador-&gt;&gt;Part1: ResponseFree
+        Part3-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+        Coordenador-&gt;&gt;Part2: ResponseOK
+    activate Part2
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+
+    note over Part2: 💀☠️💀☠️💀☠️💀
+    deactivate Part2
+        Coordenador-&gt;&gt;Coordenador: Timeout
+
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+        Part3-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = []
+        Coordenador-&gt;&gt;Part3: ResponseFree</div>
+
+<p>O problema desta e outras "soluções" baseadas em <em>timeouts</em> está no <strong>assumir que o processo parou de funcionar</strong>, pois caso isso não seja verdade, teremos agora duas autorizações ao mesmo tempo no sistema, podendo levar à violação da propriedade de exclusão mútua. </p>
+<div class="mermaid">sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+        Coordenador-&gt;&gt;+Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Part2-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador-&gt;&gt;Part1: ResponseFree
+        Part3-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+        Coordenador-&gt;&gt;+Part2: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+
+        Coordenador-&gt;&gt;Coordenador: Timeout
+
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+    note over Coordenador: Recurso=ocupado/Fila = []
+    rect rgb(200, 0, 0)
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+
+        Part2-&gt;&gt;-Coordenador: RequestFree
+        Part3-&gt;&gt;-Coordenador: RequestFree
+    end
+    note over Coordenador: Recurso=livre/Fila = []
+        Coordenador-&gt;&gt;Part3: ResponseFree</div>
+
 <p>Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, mesmo que aumentado com um relógio para medir a passagem do tempo local, o mesmo pode <strong>sempre</strong> estar errado. </p>
 <div class="admonition warning">
 <p class="admonition-title">Impossibilidade de detecção de falhas</p>
@@ -679,7 +748,7 @@ Por exemplo, se o processo não devolver a permissão de acesso antes de que uma
 </ul>
 <p>O custo esperado por causa dos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo, isto é, <span><span class="MathJax_Preview">C * p &lt; E</span><script type="math/tex">C * p < E</script></span>?</p>
 <p>Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.
-Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Fogels, CTO da Amazon</p>
+Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Vogels, CTO da Amazon</p>
 <blockquote>
 <p>Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"</p>
 </blockquote>
