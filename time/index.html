@@ -270,6 +270,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#relogios-de-quartzo-e-atomicos" class="md-nav__link">
+    Relógios de Quartzo e Atômicos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tempo-universal-coordenado" class="md-nav__link">
     Tempo Universal Coordenado
   </a>
@@ -307,36 +314,7 @@
         
           <li class="md-nav__item">
   <a href="#network-time-protocol" class="md-nav__link">
-    Network Time Protocol
-  </a>
-  
-    <nav class="md-nav" aria-label="Network Time Protocol">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#network-time-protocol_1" class="md-nav__link">
-    Network Time Protocol
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modos-de-trabalho-do-ntp" class="md-nav__link">
-    Modos de trabalho do NTP
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simple-ntp" class="md-nav__link">
-    Simple NTP
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-do-sntp" class="md-nav__link">
-    Exemplo do SNTP
+    Network Time Protocol.
   </a>
   
 </li>
@@ -345,11 +323,6 @@
   <a href="#ptp-precision-time-protocol" class="md-nav__link">
     PTP - Precision Time Protocol
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -573,6 +546,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#relogios-de-quartzo-e-atomicos" class="md-nav__link">
+    Relógios de Quartzo e Atômicos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#tempo-universal-coordenado" class="md-nav__link">
     Tempo Universal Coordenado
   </a>
@@ -610,36 +590,7 @@
         
           <li class="md-nav__item">
   <a href="#network-time-protocol" class="md-nav__link">
-    Network Time Protocol
-  </a>
-  
-    <nav class="md-nav" aria-label="Network Time Protocol">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#network-time-protocol_1" class="md-nav__link">
-    Network Time Protocol
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modos-de-trabalho-do-ntp" class="md-nav__link">
-    Modos de trabalho do NTP
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simple-ntp" class="md-nav__link">
-    Simple NTP
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-do-sntp" class="md-nav__link">
-    Exemplo do SNTP
+    Network Time Protocol.
   </a>
   
 </li>
@@ -648,11 +599,6 @@
   <a href="#ptp-precision-time-protocol" class="md-nav__link">
     PTP - Precision Time Protocol
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -794,31 +740,42 @@
                 <h1 id="tempo">Tempo</h1>
 <p>Neste capítulo discutiremos como o <strong>tempo</strong> é importante no desenvolvimento de sistemas distribuídos.
 Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o armazenamento de arquivos na nuvem, sincronizado com o sistema de arquivos local. 
-Alguns exemplos do munto real são DropBox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.</p>
+Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.</p>
+<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-0.svg" /></p>
 <p>Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
 Mais especificamente, quando as duas máquins se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?</p>
-<p>Uma possibilidade simples é sempre aceitar o cada nova versão como uma modificação do arquivo.
-Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva. 
-Mas imagine que esteja usando o cloud-drive para registrar a anterioridade de ideias (quem pensou nisso primeiro?), registrando-as em arquivos salvos no cloud-drive. 
-Neste caso, o sistema poderia dar anterioridade à entrada errada, que chegou por último.
-Se invertermos a abordagem, o cloud-drive poderia manter versões antigas de um documento em detrimento de versões mais atualizadas, o que obviamente seria um problema para outros usos.</p>
-<p>Mas mesmo que manter a versão mais recente ou mais antiga fosse adequada, o problema é mais fundamental que isso. Afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram criados.
-Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas na <strong>criação</strong> do arquivo, e não em sua recepção. Contudo, o horário de criação de um arquivo é relativo a onde foi criado e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.</p>
-<p>Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em <em>operações de modificação</em>, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas.</p>
-<p>Em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analize e decida o que fazer, que servidores git permitem a submissão de apenas um conjunto de operações por vez para um mesmo repositório/branch, e o Perforce trabalha com <em>locks</em>  de arquivos.</p>
-<p>Dada esta problemática, podemos simplificar a questão em nossas mãos.</p>
+<p>Uma possibilidade simples é sempre aceitar cada nova versão como uma modificação do arquivo.
+Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva.
+No exemplo seguinte, o resultado é o mesmo que no exemplo anterior, sem falhas.</p>
+<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-1.svg" /></p>
+<p>Contudo, se estendermos um pouco mais a descontividade do nó na parte de cima, o resultado final se inverte.</p>
+<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-2.svg" /></p>
+<p>No Exemplo, entre as entregas da "Versão B" e "Versão A" para o servidor no centro do diagrama, vale a "Versão B".
+Também pelo gráfico, vemos que a "Versão B" foi criada <strong>depois</strong> da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
+Logo, questionamos se esta abordagem é correta.
+Afinal ordem de chegada ao servidor não serve como critério para escolha, afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram criados.</p>
+<p>Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas na <strong>criação</strong> do arquivo. Contudo, o horário de criação de um arquivo é relativo a onde foi criado e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.</p>
+<!--Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em *operações de modificação*, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas. , a menos que façamos com que os processo concordem na passagem do tempo.-->
+
+<p>Se for possível identificar a causalidade entre as modificações, isto é, qual versão originou qual outra, então é claro que se deve manter versões de acordo com a ordem causal.
+Contudo, edições concorrentes, como a criação das versões A e B no exemplo anterior, não tem relação de causalidade entre si.</p>
+<p>Assim,
+em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analise e decida o que fazer, que servidores git exigem que o usuário pegue a versão salva mais recentemente e compatibilize suas mudanças com ela antes de submeter novas mudanças, e o Perforce trabalha com <em>locks</em>  de arquivos.</p>
+<p>Se pensarmos em termos não de arquivos sendo enviados para um servidor, mas de operações de modificações sendo executadas, então dada esta problemática, podemos simplificar a questão em nossas mãos.</p>
 <div class="admonition question">
-<p class="admonition-title">Pergunta</p>
+<p class="admonition-title">Como ordenar operações de clientes?</p>
 <p>Se duas operações originadas em clientes são enviadas ao servidor, qual deve ser executada primeiro?</p>
 </div>
-<p>Alguns sistemas tentam resolver automaticamente os conflitos; o CassandraDB, por exemplo, usa <strong>last write wins</strong> ou <strong>latest version wins</strong>, onde <em>last</em> é definido em termos do relógio do cliente. 
-Acontece que a maior parte dos nossos sistemas não dá garantias de tempo na entrega de mensagens ou processamento de instruções. Assim, temos novo problema:</p>
+<p>Embora, como já vimos, usar a ordem temporal da criação das operações também seja problemático, já que relógios são dessincronizados em sistemas distribuídos típicos, alguns sistemas tentam resolver automaticamente os conflitos usando exatamente estes relógios. O CassandraDB, por exemplo, usa <strong><em>last write wins</em></strong> ou <strong><em>latest version wins</em></strong>, onde <strong><em>last</em></strong> é definido em termos do relógio do cliente.
+Neste cenário, temos novo problema:</p>
 <div class="admonition question">
 <p class="admonition-title">Pergunta</p>
 <p>Como determinar qual foi enviada primeiro, em um sistema assíncrono?</p>
 </div>
-<p>Assim, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>, e o desafio começa com o entendimento de relógios físicos.</p>
+<p>Para usar esta abordagem, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>, construída pelo uso de protocolos de <strong>sincronização de relógios físicos</strong></p>
 <h2 id="relogios-fisicos">Relógios Físicos</h2>
+<p>Para falarmos sobre sincronização de relógios em um cenário distribuído, primeiro devemos entender como funcionam os relógios em nível de uma única máquina, isto é, seus relógios físicos e como são usados pelo sistema operacional.</p>
+<h3 id="relogios-de-quartzo-e-atomicos">Relógios de Quartzo e Atômicos</h3>
 <p>Quando falamos em relógios, provavelmente falamos sobre relógios a base de quartzo.
 Para uma introdução rápida, assista o seguinte vídeo.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -941,10 +898,10 @@ A figura a seguir demonstra o erro desta técnica</p>
 <p>Observe que há dois casos extremos de erro na estimativa.
 No primeiro caso, dado um tempo de ida + volta igual a <span><span class="MathJax_Preview">T_1 - T_0</span><script type="math/tex">T_1 - T_0</script></span>, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span> é menor que o tempo de volta real.
 No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span> a ser maior que tempo de transmissão real da mensagem.
-O erro, contudo, está limitado à faixa amarela no desenho, que tem duração $T_1 - T_0 - 2T_{min} $. 
+O erro, contudo, está limitado à faixa amarela no desenho, que tem duração <span><span class="MathJax_Preview">T_1 - T_0 - 2T_{min}</span><script type="math/tex">T_1 - T_0 - 2T_{min}</script></span>. 
 O erro então varia de mais ou menos metade deste valor. </p>
 <h4 id="algoritmo-de-berkeley">Algoritmo de Berkeley</h4>
-<p>Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo assume o que não há uma "fonte da verdade" do tempo, mas sim a necessidade de que todos os processos converjam para um mesmo valor do relógio. É como nos filmes de espião em que os relógios são sincronizados; pouco importa se a bomba explodirá 10:57 ou 10:59, desde que todos concordem quando isso vai acontecer. Isso é o que chamamos de <strong>sincronização interna</strong> em vez de externa, como provido pelo algoritmo de Cristian.</p>
+<p>Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo assume o que não há uma "fonte da verdade" do tempo, mas sim a necessidade de que todos os processos convirjam para um mesmo valor do relógio. É como nos filmes de espião em que os relógios são sincronizados; pouco importa se a bomba explodirá 10:57 ou 10:59, desde que todos concordem quando isso vai acontecer. Isso é o que chamamos de <strong>sincronização interna</strong> em vez de externa, como provido pelo algoritmo de Cristian.</p>
 <p>O algoritmo de Berkeley requer que todo nó execute um processo de sincronização, um "daemon", e separa seus papéis em dois tipos, <strong>primário</strong> e <strong>secundário</strong>.
 O papel do primário pode ser rotacionado entre os vários processos, sem perdas para sua execução. O algoritmo então é executacomo se segue:</p>
 <ul>
@@ -996,87 +953,46 @@ sequenceDiagram
 </div>
 
 <p>Embora interessantes, estes algoritmos não são normalmente usados, pelo menos não em sua forma "pura", em sistemas computacionais. Em vez deles, usamos o Network Time Protocol (NTP).</p>
-<h4 id="network-time-protocol">Network Time Protocol</h4>
-<ul>
-<li>1991/1992: RFC 1305</li>
-<li>2010: RFC 5905-5908 -- IPv6, 10s ms de acurácia</li>
-<li>Uso na Internet</li>
-<li>Sincronização com UTC</li>
-<li>Estatística permite minimizar erros</li>
-<li>Tolerante a falhas: caminhos redundantes; servidores redundantes</li>
-<li>Escalável: modelo hierárquico</li>
-<li>Seguro: usa autenticação</li>
-</ul>
-<hr />
-<p>Os diversos componentes do NTP são organizados em camadas, ou estrata, de forma que a informação do tempo flui da camada 0 (stratum 0) até a camada 15 (stratum 15).
-Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se um algoritmo de árvore geradora mínima.</p>
-<hr />
-<h5 id="network-time-protocol_1">Network Time Protocol</h5>
-<p><img alt="Network Time Protocol" src="images/ntp.png" /></p>
-<p><a href="https://commons.wikimedia.org/w/index.php?curid=2815097">Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick</a></p>
+<h4 id="network-time-protocol">Network Time Protocol.</h4>
+<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">5</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">6</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>s.</p>
+<p>Os diversos componentes do NTP são organizados em camadas, ou <em>estrata</em>, de forma que a informação do tempo flui da camada 0 (<em>stratum 0</em>) até a camada 15 (<em>stratum</em> 15).
+Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de <strong>tolerância a falhas</strong> à topologia.</p>
+<p><img alt="Network Time Protocol" src="images/ntp.png" /><sup id="fnref:ntpfigure"><a class="footnote-ref" href="#fn:ntpfigure">4</a></sup></p>
+<p>Esta <strong>organização hierárquica</strong> leva a cada camada garantir um nível de sincronização diferente e permite <strong>escalar o uso do protocolo para níveis globais</strong>, usando a <strong>Internet como meio</strong>.</p>
 <ul>
 <li>Stratum 0: relógios atômicos/receptores GPS</li>
 <li>Stratum 1: ms to stratum 0</li>
 <li>Stratum 2: contata múltiplos stratum 1 e pares</li>
 <li>Strata 3...15</li>
 <li>Stratum 16: dessincronizado</li>
-<li>Bellman-Ford: árvore geradora mínima para stratum 1</li>
 </ul>
-<hr />
-<p>O sítio do Comitê Gestor da Internet, CGI, tem uma entrada muito boa sobre o NTP, <a href="https://ntp.br/ntp.php">NTP.br</a>.
-De forma resumida, o NTP trabalha em diferentes modos, que permitem aos nós receberem informações de fontes de tempo das camadas superiores ou de pares, filtrar estas informações para escolher as mais confiáveis, e ajustar o relógio local de acordo com a filtragem.</p>
-<hr />
-<h5 id="modos-de-trabalho-do-ntp">Modos de trabalho do NTP</h5>
+<p>Toda a comunicação entre nós pode ser <strong>autenticada</strong>, garantindo que a sincronização não seja facilmente manipulada e erros são minimizados pela coleta e uso de estatísticas de latência de comunicação, para evitar desvios quando fontes se tornam problemáticas.</p>
+<p>NTP tem múltiplas formas de execução, adequadas para diferentes ambientes.</p>
 <ul>
 <li>Modo multicast: propaga tempo em rede local</li>
 <li>RPC: algoritmo de Cristian</li>
 <li>Simétrico: parecido com Berkeley</li>
 </ul>
-<hr />
-<p>Na prática, boa parte dos dispositivos usa uma versão simplificada do NTP, adequada aos nós nas folhas da hierarquia. O SNTP é essencialmente o algoritmo de Cristian.</p>
-<hr />
-<h5 id="simple-ntp">Simple NTP</h5>
+<p>Na prática, boa parte dos dispositivos usa uma versão simplificada do NTP, o SNTP (<strong><em>Simple Network Time Protocol</em></strong>), adequada aos nós nas <strong>folhas da hierarquia</strong>. 
+O SNTP é essencialmente o algoritmo de Cristian:</p>
 <ul>
-<li>Versão simplificada do NTP</li>
-<li>Recomendado para folhas da árvore</li>
 <li><span><span class="MathJax_Preview">\delta = (t_4-t_1)-(t_2-t_3)</span><script type="math/tex">\delta = (t_4-t_1)-(t_2-t_3)</script></span></li>
 <li><span><span class="MathJax_Preview">t = \frac{(t_2-t_1)+(t3-t_4)}{2}</span><script type="math/tex">t = \frac{(t_2-t_1)+(t3-t_4)}{2}</script></span></li>
 <li><span><span class="MathJax_Preview">t_c = t_4+t</span><script type="math/tex">t_c = t_4+t</script></span></li>
 </ul>
-<hr />
-<p>Veja um exemplo do ajuste de um relógio usando SNTP.</p>
-<hr />
-<h5 id="exemplo-do-sntp">Exemplo do SNTP</h5>
+<p>Por exemplo,</p>
 <ul>
 <li><span><span class="MathJax_Preview">t_1 = 1100, t_2 = 800, t_3=850, t_4=1200</span><script type="math/tex">t_1 = 1100, t_2 = 800, t_3=850, t_4=1200</script></span></li>
 <li><span><span class="MathJax_Preview">t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325</span><script type="math/tex">t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325</script></span></li>
 <li><span><span class="MathJax_Preview">t_c = 1200-325 = 875</span><script type="math/tex">t_c = 1200-325 = 875</script></span></li>
 </ul>
-<hr />
-<p>Mais recentemente foi proposta um novo protocolo de sincronização de relógios com melhor qualidade de servço,  Precision Time Protocol, PTP.</p>
-<hr />
-<h5 id="ptp-precision-time-protocol">PTP - Precision Time Protocol</h5>
-<ul>
-<li>IEEE 1588</li>
-<li>LAN</li>
-<li>
-<p>sub <span><span class="MathJax_Preview">\mu s</span><script type="math/tex">\mu s</script></span> (versus ordem de <span><span class="MathJax_Preview">ms</span><script type="math/tex">ms</script></span> no NTP)</p>
-</li>
-<li>
-<p>Escolha mestre</p>
-<ul>
-<li>Administrador</li>
-<li>Classe do relógio</li>
-<li>Acurácia do relógio</li>
-<li>Variância do relógio</li>
-<li>Identificador</li>
-</ul>
-</li>
-<li>Como algoritmo de Cristian, mas quem ajusta não é quem inicia.</li>
-</ul>
-<hr />
-<p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Há uma série de problemas interessantes que podem ser resolvidos.</p>
+<p>O Comitê Gestor da Internet, <a href="https://cgi.br/">CGI</a>, mantem uma excelente página sobre o NTP, com mais detalhes do que apresentado aqui, em <a href="https://ntp.br/ntp.php">NTP.br</a>.</p>
+<h4 id="ptp-precision-time-protocol">PTP - Precision Time Protocol</h4>
+<p>Mesmo com melhoria do protocolo e baratemento de dispositivos GPS, há ainda a necessidade de sincronização sub-microssegundo e barata. O <strong><em>Precision Time Protocol</em></strong>, PTP, especificação IEEE 1588<sup id="fnref:ieee1588"><a class="footnote-ref" href="#fn:ieee1588">7</a></sup> tenta cobrir este nicho.</p>
+<p>Se escrutinizarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o <em>timestamping</em> dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> (versus ordem de <span><span class="MathJax_Preview">ms</span><script type="math/tex">ms</script></span> no NTP).</p>
+<p>Mais detalhes sobre o protocolo estão fora do escopo deste documento, </p>
 <h3 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h3>
+<p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Há uma série de problemas interessantes que podem ser resolvidos.</p>
 <ul>
 <li>autenticação</li>
 <li>terminação de transações </li>
@@ -1293,6 +1209,18 @@ Considere o seguinte algoritmo.</p>
 </li>
 <li id="fn:freq">
 <p>32768 é a primeira potência de 2 maior que 20000, a maior frequência sonora audível aos seres humanos.&#160;<a class="footnote-backref" href="#fnref:freq" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:ntpfigure">
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=2815097">Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick</a>&#160;<a class="footnote-backref" href="#fnref:ntpfigure" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:rfc1305">
+<p><a href="https://datatracker.ietf.org/doc/rfc1305/">RFC 1305</a>, 1991/1992&#160;<a class="footnote-backref" href="#fnref:rfc1305" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:rfc5905-5908">
+<p>RFC 5905-5908,2010&#160;<a class="footnote-backref" href="#fnref:rfc5905-5908" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:ieee1588">
+<p><a href="https://www.nist.gov/el/intelligent-systems-division-73500/ieee-1588">IEEE 1588TM Standard for A Precision Clock Synchronization Protocol for Networked Measurement and Control Systems</a>.&#160;<a class="footnote-backref" href="#fnref:ieee1588" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
