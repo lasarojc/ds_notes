@@ -318,7 +318,9 @@ A ideia é implementar um banco de dados NoSQL (Not only SQL) rudimentar.
 Mesmo uma versão simples de um banco de dados distribuído é um sistema complexo e por isso você deverá trabalhar em fases. Infelizmnte enquanto esta abordagem facilita a jornada, ela poderá levar a um pouco de retrabalho no final.</p>
 <p>Para garantir que todo o seu esforço será concentrado no lugar certo e que sua avaliação seja justa, atente-se aos detalhes e aos passos na especificação abaixo.</p>
 <ul>
-<li>Etapa 1 - Cliente/Servidor usando RPC<ul>
+<li>
+<p>Etapa 1 - Cliente/Servidor usando RPC</p>
+<ul>
 <li>Objetivos<ul>
 <li>Hash Table acessível remotamente por interface CRUD usando gRPC.</li>
 <li>Armazenamento em disco com recuperação de dados no caso de falhas</li>
@@ -331,10 +333,12 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
 <li>Controle de concorrência para garantir corretude nos dados armazenados.</li>
 </ul>
 </li>
-<li>Servidor<ul>
+<li>
+<p>Servidor</p>
+<ul>
 <li>Todos os dados devem ser armazenados em um mapa Chave-Valor (Dicionário)</li>
-<li>Chaves é um número de precisão arbitrária do tipo BigInteger</li>
-<li>Valor são uma tripla (versão, timestamp, dados)<ul>
+<li>Chave é um número de precisão arbitrária do tipo BigInteger</li>
+<li>Valor é uma tripla (Versão, Timestamp, Dados)<ul>
 <li>Versão é um inteiro com 64 bits (long)</li>
 <li>Timestamp é um inteiro com 64 bits (long)</li>
 <li>Dados é um vetor de bytes (byte[]) de tamanho arbitrário</li>
@@ -374,9 +378,25 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
 </li>
 </ul>
 </li>
+<li>O mapa deve ser salvo em disco<ul>
+<li>Com periodicidade configurável, os dados do mapa devem ser salvos em disco.</li>
+<li>Os dados em disco devem corresponder a uma versão dos dados em memória. Para entender, veja a seguinte sequência de eventos, que leva a uma versão em disco que nunca ocorreu em memória.<ul>
+<li>Dados em memória (1/lala, 2/lele, 3/lili)</li>
+<li>Cópia para disco iniciada</li>
+<li>Dados em disco (1/lala)</li>
+<li>Dados em memória (1/lolo, 2/lele, 3/lili)</li>
+<li>Dados em disco (1/lala, 2/lele)</li>
+<li>Dados em memória (1/lolo, 2/lele, 3/lulu)</li>
+<li>Dados em disco (1/lala, 2/lele, 3/lulu)</li>
 </ul>
 </li>
-<li>Cliente<ul>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cliente</p>
+<ul>
 <li>O cliente deve implementar uma UI que permita a interação com o banco de dados usando todas as API</li>
 </ul>
 </li>
