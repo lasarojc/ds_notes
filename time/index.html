@@ -393,28 +393,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#implementacao" class="md-nav__link">
-    Implementação
+  <a href="#comunicacao-em-grupo" class="md-nav__link">
+    Comunicação em Grupo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
+    Exclusao Mútua Revisitada
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#replicacao-de-maquinas-de-estados" class="md-nav__link">
-    Replicação de Máquinas de Estados
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
-    Exclusao Mútua Revisitada
-  </a>
   
 </li>
       
@@ -642,28 +635,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#implementacao" class="md-nav__link">
-    Implementação
+  <a href="#comunicacao-em-grupo" class="md-nav__link">
+    Comunicação em Grupo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
+    Exclusao Mútua Revisitada
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#replicacao-de-maquinas-de-estados" class="md-nav__link">
-    Replicação de Máquinas de Estados
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
-    Exclusao Mútua Revisitada
-  </a>
   
 </li>
       
@@ -689,7 +675,7 @@ Comecemos por analisar o funcionamento de uma aplicação distribuída muito com
 Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.</p>
 <p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-0.svg" /></p>
 <p>Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
-Mais especificamente, quando as duas máquins se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?</p>
+Mais especificamente, quando as duas máquinas se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?</p>
 <p>Uma possibilidade simples é sempre aceitar cada nova versão como uma modificação do arquivo.
 Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva.
 No exemplo seguinte, o resultado é o mesmo que no exemplo anterior, sem falhas.</p>
@@ -988,6 +974,10 @@ Se relógio estiver atrasado em relação ao cliente anterior, vai achar que é 
 Recurso fica ocioso por <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span>, em média, a cada lease. </p>
 <p>Devido ao alto custo de se manter o recurso não utilizado, <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span> deve ser feito tão pequeno quanto possível. 
 Leia <a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google True Time e Spanner</a> para ver como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.</p>
+<details class="todo"><summary>Todo</summary><ul>
+<li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
+</ul>
+</details>
 <p>Nas soluções anteriores, um nó precisa esperar por muito tempo antes de usar um recurso. 
 E se ele aprendesse antes que os outros nós não farão requisições? 
 Que não haverão sobreposições de requisições? 
@@ -1039,7 +1029,7 @@ Experimentemos a seguinte definição:</p>
 <p class="admonition-title">Quase Relógio de Lamport</p>
 <ul>
 <li>Seja <span><span class="MathJax_Preview">c_p</span><script type="math/tex">c_p</script></span> um contador em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> com valor inicialmente igual a 0.</li>
-<li><span><span class="MathJax_Preview">C(e) = c++</span><script type="math/tex">C(e) = c++</script></span> no momento em que <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> ocorreu.</li>
+<li><span><span class="MathJax_Preview">C(e) = ++c_p</span><script type="math/tex">C(e) = ++c_p</script></span> no momento em que <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> ocorreu.</li>
 <li>Usamos como <span><span class="MathJax_Preview">&lt;</span><script type="math/tex"><</script></span> a relação normal de inteiros.</li>
 </ul>
 </div>
@@ -1054,9 +1044,16 @@ Observe com atenção os eventos <span><span class="MathJax_Preview">f</span><sc
 <p class="admonition-title">Relógio de Lamport</p>
 <ul>
 <li>Seja <span><span class="MathJax_Preview">c_p</span><script type="math/tex">c_p</script></span> um contador em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> com valor inicialmente igual a 0.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local, <span><span class="MathJax_Preview">C(e) = ++c</span><script type="math/tex">C(e) = ++c</script></span> no momento em que <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> ocorreu.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem, então <span><span class="MathJax_Preview">C(e)</span><script type="math/tex">C(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span>, então <span><span class="MathJax_Preview">C(e) = max(c,ts)+1</span><script type="math/tex">C(e) = max(c,ts)+1</script></span>.</li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local</li>
+<li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
+<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem</li>
+<li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
+<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
+<li><span><span class="MathJax_Preview">C(e)</span><script type="math/tex">C(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span></li>
+<li><span><span class="MathJax_Preview">c_p \gets max(c_e,ts)+1</span><script type="math/tex">c_p \gets max(c_e,ts)+1</script></span>.</li>
+<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
 </ul>
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
@@ -1076,12 +1073,21 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 <ul>
 <li>Seja <span><span class="MathJax_Preview">c_p[i], 1 \leq i \leq n</span><script type="math/tex">c_p[i], 1 \leq i \leq n</script></span> inicialmente igual a 0</li>
 <li>Seja um evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span><ul>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local: <span><span class="MathJax_Preview">c_p[p]++</span><script type="math/tex">c_p[p]++</script></span> e <span><span class="MathJax_Preview">V(e) = c_p</span><script type="math/tex">V(e) = c_p</script></span> no momento em que <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> ocorreu.</li>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem, então <span><span class="MathJax_Preview">V(e)</span><script type="math/tex">V(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
+<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
+<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
+</ul>
+</li>
+<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
+<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
+<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
+<li><span><span class="MathJax_Preview">V(e)</span><script type="math/tex">V(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+</ul>
+</li>
 <li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, então<ul>
-<li><span><span class="MathJax_Preview">c_p[i] = max(c_p[i], ts[i]), i \neq p</span><script type="math/tex">c_p[i] = max(c_p[i], ts[i]), i \neq p</script></span></li>
-<li><span><span class="MathJax_Preview">c_p[p]++</span><script type="math/tex">c_p[p]++</script></span></li>
-<li><span><span class="MathJax_Preview">V(e) = c_p</span><script type="math/tex">V(e) = c_p</script></span></li>
+<li><span><span class="MathJax_Preview">c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p</span><script type="math/tex">c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p</script></span></li>
+<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
+<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
 </ul>
 </li>
 </ul>
@@ -1101,7 +1107,7 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 <p>Assim, sejam dois eventos <span><span class="MathJax_Preview">e \neq e'</span><script type="math/tex">e \neq e'</script></span>:</p>
 <ul>
 <li><span><span class="MathJax_Preview">e \rightarrow e' \iff V(e) &lt; V(e')</span><script type="math/tex">e \rightarrow e' \iff V(e) < V(e')</script></span></li>
-<li>Se <span><span class="MathJax_Preview">V(e) \not &lt; V(e')</span><script type="math/tex">V(e) \not < V(e')</script></span> e <span><span class="MathJax_Preview">V(e') \not V(e)</span><script type="math/tex">V(e') \not V(e)</script></span>, então <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> e <span><span class="MathJax_Preview">e'</span><script type="math/tex">e'</script></span> são concorrentes.</li>
+<li>Se <span><span class="MathJax_Preview">V(e) \not &lt; V(e')</span><script type="math/tex">V(e) \not < V(e')</script></span> e <span><span class="MathJax_Preview">V(e') \not &lt; V(e)</span><script type="math/tex">V(e') \not < V(e)</script></span>, então <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> e <span><span class="MathJax_Preview">e'</span><script type="math/tex">e'</script></span> são concorrentes.</li>
 </ul>
 <p>Para entender melhor como esta definição funciona, considere a seguinte execução.
 O que quer dizer <span><span class="MathJax_Preview">c_p[q] = k</span><script type="math/tex">c_p[q] = k</script></span>, ou tomando o evendo <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> como exemplo, o que quer dizer <span><span class="MathJax_Preview">c_{P_2}[1]=2</span><script type="math/tex">c_{P_2}[1]=2</script></span>?</p>
@@ -1114,29 +1120,56 @@ Isso quer dizer que o nem <span><span class="MathJax_Preview">e</span><script ty
 <p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">13</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
 <h4 id="relogios-hibridos">Relógios Híbridos</h4>
-<details class="todo"><summary>Todo</summary><ul>
-<li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
-<li><a href="http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html">Hibrid Logical Clock</a><ul>
-<li><img alt="Hibrid Logical Clock" src="images/lc_hybrid.png" /> - Onde se lê 3,13, leia-se 3,10,3.</li>
-</ul>
-</li>
-</ul>
-</details>
-<h3 id="implementacao">Implementação</h3>
-<details class="todo"><summary>Todo</summary><p><img alt="Interceptadores" src="images/tanenbaum-06-10.png" />
-Transparente para a aplicação</p>
-</details>
-<h2 id="replicacao-de-maquinas-de-estados">Replicação de Máquinas de Estados</h2>
-<p>Relógios lógicos podem e são usados diretamente em sistemas, por exemplo, para controlar versões no sistema de identidade da Microsoft, <a href="https://cdn.ttgtmedia.com/searchwin2000/downloads/pdfs/ImplementingtheAD202014.pdf">Active Directory</a>.
-Outra forma de uso é como block de construção de outras abstrações, por exemplo:</p>
+<p>A grande vantagem dos relógios lógicos sobre os físicos é de ignorar a passagem do tempo, só se importanto com a ordem de eventos.
+Esta vantagem também é uma desvantagem quando eventos precisam ser associados a eventos externos ao sistema, por exemplo, durante uma sessão de depuração.
+Suponha que após uma atualização de um sistema, você note um problema nos dados e, em depurando o problema, identifique o evento problemático nos <em>logs</em> do sistema, associado ao seu relógio lógico.
+Como identificar se este evento problemático aconteceu antes ou depois da atualização?
+<a href="http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html">Relógios híbridos</a> tentam resolver este problema combinando relógios físicos e lógicos em um.</p>
+<p>No seguinte algoritmo, cada processo mantem um relógio físico e um lógico e sempre que um evento acontece, usa como novo valor do relógio lógico o máximo entre o valor anterior + 1, o valor do <em>timestamp</em> na mensagem sendo recebida + 1, se for o recebimento de uma mensagem, e o valor do relógio físico.
+Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará o valor do físico.</p>
+<div class="admonition example">
+<p class="admonition-title">Relógio Híbrido Simples</p>
+<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
 <ul>
-<li>Multicast Totalmente Ordenado:<ul>
-<li>Multicast: mensagens são enviadas de 1 para n (comunicação em grupo)</li>
-<li>Totalmente Ordenado: todos os processos entregam as mensagens na mesma ordem</li>
+<li><span><span class="MathJax_Preview">c_p.f</span><script type="math/tex">c_p.f</script></span> é o relógio físico de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, incrementado automaticamente</li>
+<li><span><span class="MathJax_Preview">c_p.l</span><script type="math/tex">c_p.l</script></span> é o relógio lógico de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, inicialmente 0</li>
+<li>Seja um evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span><ul>
+<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
+<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, c_p.f)</script></span></li>
+<li><span><span class="MathJax_Preview">H(e) \gets c_p.l</span><script type="math/tex">H(e) \gets c_p.l</script></span></li>
 </ul>
 </li>
-<li>Multicast Causalmente Ordenado:<ul>
-<li>Causalmente Ordenado: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.</li>
+<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
+<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, c_p.f)</script></span></li>
+<li><span><span class="MathJax_Preview">H(e) \gets c_p.l</span><script type="math/tex">H(e) \gets c_p.l</script></span></li>
+<li><span><span class="MathJax_Preview">H(e)</span><script type="math/tex">H(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+</ul>
+</li>
+<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, então<ul>
+<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)</script></span></li>
+<li><span><span class="MathJax_Preview">V(e) = c_p.l</span><script type="math/tex">V(e) = c_p.l</script></span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p><img alt="Relógio Híbrido Simples" src="drawings/hibrido.drawio-0.svg" /></p>
+<p>Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementadado muito rapidamente, perdendo a relação com o relógio físico.
+Em uma versão melhorada do algoritmo,<sup id="fnref:hlc"><a class="footnote-ref" href="#fn:hlc">14</a></sup> a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.<sup id="fnref:hlcerror"><a class="footnote-ref" href="#fn:hlcerror">15</a></sup></p>
+<!--![Hibrid Logical Clock](images/lc_hybrid.png) - Onde se lê 3,13, leia-se 3,10,3.-->
+
+<h3 id="comunicacao-em-grupo">Comunicação em Grupo</h3>
+<p>Relógios lógicos podem e são usados diretamente em sistemas, por exemplo, para controlar versões no sistema de identidade da Microsoft, <a href="https://cdn.ttgtmedia.com/searchwin2000/downloads/pdfs/ImplementingtheAD202014.pdf">Active Directory</a>.
+Outra forma de uso é como block de construção de outras abstrações, por exemplo, primitivas de comunicação em grupo, pelas quais um processo envia mensagens para um conjunto de processos.</p>
+<ul>
+<li>Difusão Totalmente Ordenada (<em>Total Order Multicast</em>):<ul>
+<li>Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)</li>
+<li>Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem</li>
+</ul>
+</li>
+<li>Difusão Causalmente Ordenada:<ul>
+<li>Causalmente Ordenada: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.</li>
 </ul>
 </li>
 </ul>
@@ -1144,29 +1177,58 @@ Outra forma de uso é como block de construção de outras abstrações, por exe
 Considere um programa qualquer, que se comporte de forma determinística (isto é, dada uma mesma entrada, gera sempre uma mesma saída). 
 Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
 Logo, se tivermos <strong>várias cópias</strong> deste programa, executando em locais distintos, mas garantirmos que cada cópia veja exatamente a <strong>mesma entrada de dados</strong>, então garantiremos que todas as cópias <strong>transitarão pelos mesmos estados</strong> e chegarão ao mesmo estado final.
-Como multicast totalmente ordenado pode ser usado para garantir que todas as cópias receberão a mesma entrada, pode ser usado para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, <a href="https://en.wikipedia.org/wiki/State_machine_replication"><em>State Machine Replication</em></a>, ou pelo menos o seu princípio.</p>
+Como difusão totalmente ordenada pode ser usado para garantir que todas as cópias receberão a mesma entrada, pode ser usado para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, <a href="https://en.wikipedia.org/wiki/State_machine_replication"><em>State Machine Replication</em></a>, ou pelo menos o seu princípio.</p>
 <p><img alt="State Machine Replication" src="drawings/multicast.drawio-1.svg" /></p>
-<p>Mas como podemos implementar estas primitivas de multicast usando relógios lógicos? 
-Considere o seguinte algoritmo.</p>
+<p>Mas como podemos implementar estas primitivas de difusão usando relógios lógicos? 
+Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a todos os processos, inclusive o próprio remetente.</p>
 <div class="admonition example">
-<p class="admonition-title">Multicast Totalmente Ordenado</p>
+<p class="admonition-title">Difusão Totalmente Ordenado</p>
 <ul>
-<li>Fila com prioridade em cada processo.</li>
-<li>Mensagens são enviadas a todos os processos e colocadas em uma fila local.</li>
-<li>Mensagens recebidas são colocadas na fila local e ack é enviado de volta.</li>
-<li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> só entrega uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> recebida de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> quando<ul>
-<li><span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> está na cabeça da fila de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></li>
-<li>Para cada processo <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, há uma mensagem <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, <span><span class="MathJax_Preview">ts'</span><script type="math/tex">ts'</script></span>, na fila de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> tal <span><span class="MathJax_Preview">ts &lt; ts'</span><script type="math/tex">ts < ts'</script></span></li>
+<li>
+<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+</li>
+<li>
+<p><em>f_p$ é uma fila de mensagens ordenadas pelo seus *timestamps</em>, mantida em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+</li>
+<li>Para difundir uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span><ul>
+<li>colocar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> na fila</li>
+<li>enviar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> para todos os demais processos</li>
 </ul>
 </li>
-<li>Canais confiáveis e FIFO.</li>
+<li>Quando uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é recebida<ul>
+<li>colocar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> na fila</li>
+<li>se <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não é um ack<ul>
+<li>enviar <span><span class="MathJax_Preview">m ack</span><script type="math/tex">m ack</script></span> de volta ao remetente de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> (com <em>timestamp</em> maior que de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Seja <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> a mensagem com <em>timestamp</em> ts na cabeça da fila<ul>
+<li>Se para cada processo <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, há uma mensagem <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> com <em>timestamp</em> ts' na fila de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> tal que <span><span class="MathJax_Preview">ts &lt; ts'</span><script type="math/tex">ts < ts'</script></span><ul>
+<li>entregar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> para a aplicação</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
+<p>O objetivo deste algoritmo é de entregar mensagens na ordem de seus <em>timestamps</em>. Para isso, antes de entregar a mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de menor <em>tmestamp</em> ts conhecido atualmente por <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> espera por mensagens com <span><span class="MathJax_Preview">timestamps</span><script type="math/tex">timestamps</script></span> maiores que ts de todos os processos. Uma vez que isso aconteça, <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> sabe que nenhuma outra mensagem que chegue depois poderia ter <span><span class="MathJax_Preview">timestamp</span><script type="math/tex">timestamp</script></span> menor que ts.
+Para que isto funcione, é necessário que os canais de comunicação usados sejam confiáveis (todas as mensagens enviadas são entregues) e FIFO (a primeira a ser enviada é primeira a ser recebida).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Exercício - FIFO e Confiáveis</p>
+<p>É necessário que canais de comunicação sejam FIFO e confiáveis para que mensagens com <em>timestamp</em> maiores não sejam perdidas e para que mensagens com <em>timestamps</em> maiores não sejam reordenadas e entregues primeiro. </p>
+<p>Explique porquê isto seria um problema; descreva execuções problemáticas.</p>
+</div>
+<p>Vejamos um outro algoritimo, de difusão <strong>causalmente</strong> ordenada.</p>
 <div class="admonition example">
-<p class="admonition-title">Multicast Causalmente Ordenado</p>
+<p class="admonition-title">Difusão Causalmente Ordenada</p>
 <ul>
-<li>Mensagens são enviadas a todos os processos.</li>
-<li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> incrementa <span><span class="MathJax_Preview">c_p[p]</span><script type="math/tex">c_p[p]</script></span> somente no envio de mensagens.</li>
+<li>
+<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+</li>
+<li>
+<p><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> incrementa <span><span class="MathJax_Preview">c_p[p]</span><script type="math/tex">c_p[p]</script></span> somente no envio de mensagens.</p>
+</li>
 <li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> só entrega uma mensagem recebida de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> quando<ul>
 <li><span><span class="MathJax_Preview">ts[q] = c_p[q]+1</span><script type="math/tex">ts[q] = c_p[q]+1</script></span></li>
 <li><span><span class="MathJax_Preview">ts[k] \leq c_p[k], k \neq q</span><script type="math/tex">ts[k] \leq c_p[k], k \neq q</script></span></li>
@@ -1175,8 +1237,17 @@ Considere o seguinte algoritmo.</p>
 </ul>
 </div>
 <p><img alt="causal" src="images/tanenbaum-06-13.png" /></p>
+<div class="admonition exercise">
+<p class="admonition-title">Difusão Causalmente Ordenada</p>
 <p>Considere <span><span class="MathJax_Preview">c_{P_2}[0,2,2]</span><script type="math/tex">c_{P_2}[0,2,2]</script></span> e <span><span class="MathJax_Preview">ts=[1,3,0]</span><script type="math/tex">ts=[1,3,0]</script></span>, de <span><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span>. O que <span><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> está esperando? Como age ao receber mensagem com <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span>?</p>
-<h2 id="exclusao-mutua-revisitada">Exclusao Mútua Revisitada</h2>
+</div>
+<p>Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
+Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de <em>timestamps</em>?
+Isto pode ser feito por meio de <strong>interceptadores</strong> em uma camada de <strong><em>middleware</em></strong>.</p>
+<p><img alt="Interceptadores" src="images/tanenbaum-06-10.png" /></p>
+<p>Quando a aplicação envia uma mensagem, o relógio lógico mantido no <em>middleware</em> é atualizado e seu valor usado como <em>timestamp</em> em uma versão estendida da mensagem, efetivamente enviada na rede.
+Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada para o interceptador que extrai o <em>timestamp</em> e atualiza seu relógio. A mensagem sem o <em>timestamp</em> é entregue para a aplicação quando apropriado, e aplicação não percebe a manipulação.</p>
+<h3 id="exclusao-mutua-revisitada">Exclusao Mútua Revisitada</h3>
 <details class="todo"><summary>Todo</summary><ul>
 <li><a href="http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf">Algoritmos de Excluão mútua baeados em LC</a></li>
 <li>Algoritmo de Lamport, Ricart e agrawalla</li>
@@ -1224,6 +1295,12 @@ Considere o seguinte algoritmo.</p>
 </li>
 <li id="fn:matrix_clock">
 <p><a href="https://en.wikipedia.org/wiki/Matrix_clock">Matrix Clock</a>&#160;<a class="footnote-backref" href="#fnref:matrix_clock" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hlc">
+<p>O <a href="http://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">blog</a> de um dos autores descreve ambas as versões de forma resumida. Para a versão completa dos algoritmos, consulte o <a href="http://www.cse.buffalo.edu/tech-reports/2014-04.pdf">artigo</a>.&#160;<a class="footnote-backref" href="#fnref:hlc" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hlcerror">
+<p>Tanto no artigo quanto no blog, a imagem que descreve um exemplo do HLC parece ter um erro e onde se lê (3,13) deve-se ler (3,10,3).&#160;<a class="footnote-backref" href="#fnref:hlcerror" title="Jump back to footnote 15 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
