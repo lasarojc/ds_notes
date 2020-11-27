@@ -1044,16 +1044,22 @@ Observe com atenção os eventos <span><span class="MathJax_Preview">f</span><sc
 <p class="admonition-title">Relógio de Lamport</p>
 <ul>
 <li>Seja <span><span class="MathJax_Preview">c_p</span><script type="math/tex">c_p</script></span> um contador em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> com valor inicialmente igual a 0.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local</li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
 <li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
 <li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem</li>
+</ul>
+</li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
 <li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
 <li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
 <li><span><span class="MathJax_Preview">C(e)</span><script type="math/tex">C(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span></li>
+</ul>
+</li>
+<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span><ul>
 <li><span><span class="MathJax_Preview">c_p \gets max(c_e,ts)+1</span><script type="math/tex">c_p \gets max(c_e,ts)+1</script></span>.</li>
 <li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
+</ul>
+</li>
 </ul>
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
@@ -1188,7 +1194,7 @@ Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a t
 <p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
 </li>
 <li>
-<p><em>f_p$ é uma fila de mensagens ordenadas pelo seus *timestamps</em>, mantida em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p><span><span class="MathJax_Preview">f_p</span><script type="math/tex">f_p</script></span> é uma fila de mensagens ordenadas pelo seus <em>timestamps</em>, mantida em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
 </li>
 <li>Para difundir uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span><ul>
 <li>colocar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> na fila</li>

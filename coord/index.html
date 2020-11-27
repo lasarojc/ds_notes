@@ -1088,7 +1088,7 @@ Executando o algoritmo Anel 1, os processos enviam (<span><span class="MathJax_P
 </tr>
 </tbody>
 </table>
-<p>Agora imagine que por um acado, tanto processo 1 quanto o 2 se candidatassem ao mesmo tempo.</p>
+<p>Agora imagine que por um acaso, tanto processo 1 quanto o 2 se candidatassem ao mesmo tempo.</p>
 <table>
 <thead>
 <tr>
@@ -1233,11 +1233,13 @@ Observe o papel do nó no centro, supondo que tem o maior identificador entre to
 Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
 Na segunda rodada, as mensagens são repassadas para os vizihos dos vizinhos, que também se inativam.</p>
 <p><img alt="Algoritmo de Franklin" src="drawings/leaderelection.drawio-0.svg" /></p>
-<p>Observe o seguinte:
-* Em cada fase, para qualquer par de vizinhos ativos, pelos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo <span><span class="MathJax_Preview">O(log n)</span><script type="math/tex">O(log n)</script></span> fases.
-* Na primeira fase, cada processo ativo leva a <span><span class="MathJax_Preview">4</span><script type="math/tex">4</script></span> mensagens serem enviadas na rede (sem nenhuma otimização). Dado que são <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> processos, temos <span><span class="MathJax_Preview">4n</span><script type="math/tex">4n</script></span> mensagens, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span>
-* Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos <span><span class="MathJax_Preview">8n \times n/2, O(n)</span><script type="math/tex">8n \times n/2, O(n)</script></span>
-* Assim, no máximo <span><span class="MathJax_Preview">O(n log n)</span><script type="math/tex">O(n log n)</script></span> mensagens são enviadas em uma execução do algoritmo.</p>
+<p>Observe o seguinte:</p>
+<ul>
+<li>Em cada fase, para qualquer par de vizinhos ativos, pelos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo <span><span class="MathJax_Preview">O(log n)</span><script type="math/tex">O(log n)</script></span> fases.</li>
+<li>Na primeira fase, cada processo ativo leva a <span><span class="MathJax_Preview">4</span><script type="math/tex">4</script></span> mensagens serem enviadas na rede (sem nenhuma otimização). Dado que são <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> processos, temos <span><span class="MathJax_Preview">4n</span><script type="math/tex">4n</script></span> mensagens, <span><span class="MathJax_Preview">O(n)</span><script type="math/tex">O(n)</script></span></li>
+<li>Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos <span><span class="MathJax_Preview">8n \times n/2, O(n)</span><script type="math/tex">8n \times n/2, O(n)</script></span></li>
+<li>Assim, no máximo <span><span class="MathJax_Preview">O(n log n)</span><script type="math/tex">O(n log n)</script></span> mensagens são enviadas em uma execução do algoritmo.</li>
+</ul>
 <h3 id="algoritmo-do-yoyo">Algoritmo do YoYo</h3>
 <p>Saindo da topologia em anel, vejamos o algoritmo do Yoyo, que funciona em qualquer topologia conexa, mesmo se processos não puderem se falar diretamente.
 Inicialmente as arestas do formado pelos processos e seus canais de comunicação são não direcionadas, mas na medida em que o protocolo é executado,  as arestas são marcadas como tendo um ou outro sentido.
