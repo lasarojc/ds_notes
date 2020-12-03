@@ -393,13 +393,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#degradacao-graciosa" class="md-nav__link">
-    Degradação graciosa
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#redundancia-de-processos" class="md-nav__link">
     Redundância de Processos
   </a>
@@ -412,11 +405,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comunicacao-em-grupo-tolerante-a-falhas" class="md-nav__link">
-    Comunicação em grupo tolerante a falhas
+  <a href="#problemas-de-acordo" class="md-nav__link">
+    Problemas de Acordo
   </a>
   
-    <nav class="md-nav" aria-label="Comunicação em grupo tolerante a falhas">
+    <nav class="md-nav" aria-label="Problemas de Acordo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -445,7 +438,14 @@
     Detectores de Defeitos
   </a>
   
-    <nav class="md-nav" aria-label="Detectores de Defeitos">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
+    Difusão Totalmente Ordenada
+  </a>
+  
+    <nav class="md-nav" aria-label="Difusão Totalmente Ordenada">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -464,13 +464,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
-    Difusão Totalmente Ordenada
-  </a>
   
 </li>
         
@@ -733,13 +726,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#degradacao-graciosa" class="md-nav__link">
-    Degradação graciosa
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#redundancia-de-processos" class="md-nav__link">
     Redundância de Processos
   </a>
@@ -752,11 +738,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comunicacao-em-grupo-tolerante-a-falhas" class="md-nav__link">
-    Comunicação em grupo tolerante a falhas
+  <a href="#problemas-de-acordo" class="md-nav__link">
+    Problemas de Acordo
   </a>
   
-    <nav class="md-nav" aria-label="Comunicação em grupo tolerante a falhas">
+    <nav class="md-nav" aria-label="Problemas de Acordo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -785,7 +771,14 @@
     Detectores de Defeitos
   </a>
   
-    <nav class="md-nav" aria-label="Detectores de Defeitos">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
+    Difusão Totalmente Ordenada
+  </a>
+  
+    <nav class="md-nav" aria-label="Difusão Totalmente Ordenada">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -804,13 +797,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
-    Difusão Totalmente Ordenada
-  </a>
   
 </li>
         
@@ -1021,38 +1007,42 @@ Este é um cenário em que as falhas não são independentes, mas correlatas. Pa
 </ul>
 <p>Esta técnica é interessante mais raramente usada, basicamente pelo seu alto custo.
 Além disso, erros de especificação são reproduzidos e levam times diferentes a produzir erros iguais.</p>
-<h3 id="degradacao-graciosa">Degradação graciosa</h3>
-<p>Dependendo dos efeitos e tratamentos.</p>
-<ul>
-<li>Fail safe - defeito não leva a comportamento inseguro (sistema de entretenimento no avião)</li>
-<li>Fail soft - graceful degradation (sistema de controle de vôo)</li>
-<li>
-<p>Fail fast - para o fluxo de defeitos (e possível reinício)
-<img alt="Cadeia de supervisão" src="images/httpatomoreillycomsourceoreillyimages300817.jpg" /></p>
-</li>
-<li>
-<p>Robusto -- erros não atrapalham execução (tratamento de exceções)</p>
-</li>
-<li>Quebradiço (<em>brittle</em>) -- não resiliente a falhas</li>
-</ul>
+<!--
+### Degradação graciosa
+
+Dependendo dos efeitos e tratamentos.
+
+* Fail safe - defeito não leva a comportamento inseguro (sistema de entretenimento no avião)
+* Fail soft - graceful degradation (sistema de controle de vôo)
+* Fail fast - para o fluxo de defeitos (e possível reinício)
+![Cadeia de supervisão](images/httpatomoreillycomsourceoreillyimages300817.jpg)
+
+* Robusto -- erros não atrapalham execução (tratamento de exceções)
+* Quebradiço (*brittle*) -- não resiliente a falhas
+-->
+
 <h3 id="redundancia-de-processos">Redundância de Processos</h3>
-<p>De forma geral, tolerância a defeitos é obtida por algum tipo de redundância. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
-Redundância permite remover os pontos únicos de falha, SPOF (<em>Single Point of Failure</em>), isto é, componentes que se pararem, levam o sistema como um todo a parar.</p>
-<p>Redundância pode ser aplicada em vários níveis, por exemplo, gastando mais tempo na especificação do projeto, ou montando um laboratório de testes mais próximo do ambiente de produção.</p>
-<p>Redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.</p>
-<p>No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em redundância de processos, cópias ou réplicas, mesmo que não desevolvidos usando <em>n-version programming</em>
+<p>Se remover todas as possbilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
+De forma geral, tolerância a falhas é obtida por algum tipo de <strong>redundância</strong>. 
+Redundância pode ser aplicada em vários níveis, por exemplo, gastando <strong>mais tempo na especificação do projeto</strong>, ou montando um laboratório de testes mais próximo do ambiente de produção.</p>
+<p>Outra forma óbvia de redundância é a <strong>replicação</strong> de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
+Replicação permite remover os <strong>pontos únicos de falha</strong> (SPOF, <em>Single Point of Failure</em>), ou seja, componentes não dependáveis.
+Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.</p>
+<p>No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desevolvidos usando <em>n-version programming</em>
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.
-Dois modos clássicos de replicação são o <strong>primário/cópia</strong> e <strong>ativo</strong>. </p>
+Dois modos clássicos de replicação são o <strong>primário/cópia</strong> e <strong>ativo</strong>.</p>
 <p>No caso da replicação <strong>primário/cópia</strong>, também conhecida como <strong>mestre/escravo</strong>, o primário é responsável por lidar com clientes e por informar cópias das modificações de estado.</p>
 <p><img alt="ha" src="images/ha-diagram-animated.gif" /></p>
 <p>Como as atualizações de estado fluem do primário para a cópia, é possível que a cópia não tenha o estado mais atual.
 Para visualizarmos melhor esta situação, vejamos a <strong>replicação em cadeia</strong>, uma generalização de primário/cópia em que os processos se organizam em um sequência para executar operações.</p>
 <p><img alt="Chain replication" src="images/chain.png" /></p>
-<p>Atualizações no sistema são sempre direcionadas ao primário, a cabeça da sequência. Leituras, se absolutamente necessitarem dos dados escritos mais recentemente, também devem ser direcionadas à cabeça. Caso contrário, podem ser direcionadas aos processos na cauda, diminuindo a carga de trabalho na cabeça.</p>
-<p>No caso da replicação ativa, as várias cópias executam todos os comandos enviados para o sistema, estando assim todas aptas a continuar a executar o serviço. 
-A técnica de replicação de máquinas de estados vista no capítulo anterior é uma materialização da replicação ativa.
+<p><strong>Atualizações</strong> no sistema são sempre <strong>direcionadas ao primário</strong>, a cabeça da sequência. 
+<strong>Leituras</strong>, se absolutamente necessitarem dos dados escritos mais recentemente, também devem ser direcionadas à <strong>cabeça</strong>. 
+Caso contrário, podem ser direcionadas aos processos na <strong>cauda</strong>, diminuindo a carga de trabalho na cabeça.</p>
+<p>No caso da replicação ativa, as <strong>várias cópias executam todos os comandos</strong> enviados para o sistema, estando assim todas aptas a continuar a executar o serviço. 
+A técnica de <strong>replicação de máquinas de estados vista no capítulo anterior</strong> é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
-<h2 id="comunicacao-em-grupo-tolerante-a-falhas">Comunicação em grupo tolerante a falhas</h2>
+<h2 id="problemas-de-acordo">Problemas de Acordo</h2>
 <p>Há diversas primitivas de comunicação em grupo, das quais se destaca a <strong>difusão atômica</strong>, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
 Difusão atômica, por sua vez, é equivalente ao problema do <strong>consenso distribuído</strong>, que está no coração da classe de problemas de <strong>acordo</strong>.
 Problemas de acordo são aqueles em que processos devem concordar em quais ações executar.
@@ -1060,17 +1050,18 @@ Dependendo do modelo computacional em que o problema deve ser resolvido, soluç�
 Vejamos um exemplo.</p>
 <h3 id="uma-historia-de-tres-exercitos">Uma história de três exércitos</h3>
 <p><strong>Era uma vez</strong> uma cidade estado no alto de uma montanha. 
-A despeito de sofrer de falta de água, afinal, estva no alto de uma montanha, a cidade era invejada pelos vizinhos.
-Como a cidade era muito bem fortificada, ela poderia se defender do ataque em uma única frente. Se atacada em duas frentes, contudo, cairia.
-Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em dois exércitos sob o comando de Alice (a sociedade é muito feminista naquela época) e Bastião (sim, Bastião, não Bob).<sup id="fnref:2generalsparadox"><a class="footnote-ref" href="#fn:2generalsparadox">4</a></sup></p>
+A despeito de sofrer de falta de água, afinal, estava no alto de uma montanha, a cidade era invejada pelos vizinhos.
+Como a cidade era muito bem fortificada, ela poderia se defender de qualquer <strong>ataque em uma única frente</strong>. 
+Se atacada em <strong>duas frentes</strong>, contudo, cairia.
+Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em <strong>dois exércitos</strong> sob o comando de Alice (a sociedade é muito feminista naquela época) e Bastião (sim, Bastião, não Bob).<sup id="fnref:2generalsparadox"><a class="footnote-ref" href="#fn:2generalsparadox">4</a></sup></p>
 <p><img alt="Paradoxo dos 2 Generais" src="drawings/2generals.drawio-0.svg" /></p>
-<p>Um complicador no ataque é que a comunicação entre os dois exércitos é feita por mensageiros que devem contornar a montanha para alcançar o outro exército. 
-O trajeto é complexo e cheio de armadilhas e por isso mensageiros podem se perder e demorar um longo tempo para chegar ou até mesmo serem mortos e nunca entregarem suas mensagens.</p>
-<p>Alice, a comandante mais sênior, deve decidir quando atacar, pode exemplo simplesmente ordenando "Atacar no dia 3, ao nascer do sol."
-Bastião obedecerá a ordem de atacar contanto que esteja certo de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
-Se mensagens podem ser perdidas, Alice não tem garantias de que Bastião recebeu o comando e por isso não pode simplesmente considerar como certo o ataque de Bastião.
+<p>Um complicador no ataque é que a <strong>comunicação entre os dois exércitos é feita por mensageiros</strong> que devem contornar a montanha para alcançar o outro exército. 
+O trajeto é complexo e cheio de armadilhas e por isso <strong>mensageiros podem se perder</strong> e demorar um longo tempo para chegar ou até mesmo <strong>serem mortos</strong> e nunca entregarem suas mensagens.</p>
+<p>Alice, a comandante mais sênior, deve decidir quando atacar, pode exemplo simplesmente ordenando "<strong>Atacar no dia 3, ao nascer do sol.</strong>"
+Bastião <strong>obedecerá</strong> a ordem de atacar contanto que esteja certo de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
+Se mensagens podem ser perdidas, <strong>Alice não tem garantias de que Bastião recebeu o comando</strong> e por isso não pode simplesmente considerar como certo o ataque de Bastião.
 Como o problema pode ser resolvido?</p>
-<p>Uma resposta natural é usar mensagens de confirmação. Isto é, quando Bastião recebe uma ordem, envia um mensageiro de volta para Alica com uma confirmação da recepção.
+<p>Uma resposta natural é usar <strong>mensagens de confirmação</strong>. Isto é, quando Bastião recebe uma ordem, envia um mensageiro de volta para Alice com uma confirmação da recepção.
 Alice ao receber tal mensagem, sabe que Bastião executará a ordem, correto? Mas não é tão simples assim no caso da ordem de atacar.
 Lembre-se que qualquer exército que ataque sozinho, perderá, seja Alice ou Bastião. 
 Por isso, ao enviar uma mensagem de confirmação do ataque, Bastião precisa estar certo de que Alice a recebeu, ou atacará sozinho.
@@ -1086,66 +1077,79 @@ E o problema se reinicia...</p>
 </ul>
 <p>Como um exército tem certeza que o outro irá atacar?</p>
 </details>
-<p>Suponhamos que há um algoritmo correto que executa uma sequência finita de troca de mensagens em que ao final tanto Alice quanto Bastião estão seguros, e corretos em sua segurança, de que o outro também atacará. Seja <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> o número máximo de mensagens trocadas. 
+<p>Suponhamos que <strong>há um algoritmo correto</strong> que executa uma sequência finita de troca de mensagens em que ao final tanto Alice quanto Bastião estão seguros, e corretos em sua segurança, de que o outro também atacará. Seja <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> o número máximo de mensagens trocadas. 
 Em uma execução em que todas as <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> mensagens possíveis são usadas, suponha sem perda de generalidade que Alice enviou a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>-ésima mensagem.</p>
 <p><img alt="Paradoxo dos 2 Generais" src="drawings/2generals.drawio-1.svg" /></p>
-<p>Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida é indistinguível de uma execução em que a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>-ésima mensagem é perdida.</p>
+<p>Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida, é indistinguível de uma execução em que a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>-ésima mensagem é perdida.</p>
 <p><img alt="Paradoxo dos 2 Generais" src="drawings/2generals.drawio-2.svg" /></p>
-<p>Dado que ao final da primeira execução completa Alice ataca, no fina da execução onde a mensagem <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> é perdida, Alice também deve atacar.
-Mas se o algoritmo é correto, então Bastião também ataca, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> mensagens.
-Repetindo-se o argumento mais <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um absurdo. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
+<p>Dado que ao final da primeira execução completa <strong>Alice ataca</strong>, no final da execução onde a mensagem <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> é perdida, Alice também deve atacar.
+Mas se o algoritmo é correto, então também <strong>Bastião ataca</strong>, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> mensagens.
+Repetindo-se o argumento mais <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um <strong>absurdo</strong>. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
 <p>Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?</p>
 <h3 id="impossibilidades-e-impossibilidades">Impossibilidades e impossibilidades</h3>
 <p>Quando dizemos que é impossível resolver um problema queremos dizer que é impossível produzir um algoritmo que <strong>sempre levará a uma resposta correta</strong>.
 Isto quer dizer que podemos produzir algoritmos, mas ou eles às vezes <strong>levarão a respostas incorretas</strong> ou eles às vezes <strong>não levarão a respostas</strong>; ambos podem ser úteis na prática.</p>
 <p>Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
-A confiança de Alice de que Bastião também atcaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
-Esta abordagem faria com com que o ataque funcionasse com uma certa probabilidade, mas com uma pequena probabilidade <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> de levar a um ataque fracassado, onde <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> pode ser feita tão pequena quanto se "queira".</p>
+A <strong>confiança</strong> de Alice de que Bastião também atcaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
+Esta abordagem faria com com que o ataque funcionasse com uma <strong>certa probabilidade</strong>, mas com uma pequena probabilidade <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> de levar a um ataque fracassado, onde <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> pode ser feita <strong>tão pequena quanto se "queira"</strong>.</p>
 <h3 id="consenso">Consenso</h3>
 <p>O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
 Neste problema, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong>. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.</p>
 <ul>
 <li>Validade: Somente um valor proposto pode ser decidido.</li>
 <li>Acordo: Se um processo decide-se por <span><span class="MathJax_Preview">v</span><script type="math/tex">v</script></span> e outro por <span><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>, então <span><span class="MathJax_Preview">v = w</span><script type="math/tex">v = w</script></span></li>
-<li>Terminação: Todo processo não defeituoso decide-se.</li>
+<li>Terminação: Todo processo não <strong>defeituoso</strong> decide-se.</li>
 </ul>
 <p>Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.</p>
-<p>É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas[^flp85].
+<p><strong>É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong><sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">5</a></sup>.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, Raft e <a href="http://paxos.systems/index.html">Paxos</a></p>
+<p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
+Os detectores de defeito abstraem este problema.</p>
 <h3 id="detectores-de-defeitos">Detectores de Defeitos</h3>
-<p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?</p>
-<p>???todo "Detectores de defeito
-    referências</p>
-<p>Chandra e Toueg [CT96] introduziram o conceito de Detectores de Defeitos Não Confiáveis. 
-Um detector de defeitos pode ser visto como oráculo distribuído, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.</p>
-<div class="admonition todo">
-<p class="admonition-title">Todo</p>
-<p>figura</p>
-</div>
-<p>Os detectores de defeitos não podem ser implementados em sistemas totalmente assíncronos. 
-Em ambientes parcialmente síncronos, nos quais os processos dispõem de temporizadores precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um limite de tempo para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
+<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">6</a></sup> introduziram o conceito de <strong>Detectores de Defeitos Não Confiáveis</strong>. 
+Um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.</p>
+<details class="todo"><summary>Todo</summary><p>figura</p>
+</details>
+<p>Os detectores de defeitos <strong>não podem ser implementados em sistemas totalmente assíncronos</strong>. 
+Em ambientes parcialmente síncronos, nos quais os processos dispõem de <strong>temporizadores</strong> precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um <strong>limite de tempo</strong> para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
 Esta determinação é por certo imprecisa, e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
-Entretanto, a despeito desta incerteza, a informação provida por estes detectores já é suficiente para que se alcance o consenso, salvo a restrição de que a maioria dos processos não sofra falhas e que os mesmos provejam certas propriedades mínimas, descritas adiante. 
+Entretanto, a despeito desta incerteza, a informação provida por estes detectores já é suficiente para que se alcance o consenso, salvo a restrição de que a maioria dos processos não sofra defeitos e que os mesmos provejam certas propriedades mínimas, descritas adiante. 
 Os detectores não confiáveis encapsulam, de certa forma, o sincronismo necessário à resolução do consenso.</p>
-<p>Chandra e Toueg classificaram os detectores de falhas segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo falho e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:</p>
+<p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:</p>
 <ul>
-<li>Completude Forte - A partir de algum instante futuro, todo processo falho é suspeito permanentemente por todos os processos corretos.</li>
-<li>Completude Fraca - A partir de algum instante futuro, todo processo falho é suspeito permanentemente por algum processo correto.</li>
-<li>Precisão Forte - Todos os processos são suspeitos somente após terem falhado.</li>
-<li>Precisão Fraca - Algum processo correto nunca é suspeito de ter falhado.</li>
-<li>Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após falharem.</li>
-<li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter falhado.</li>
+<li>Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.</li>
+<li>Completude Fraca - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por algum processo correto.</li>
+<li>Precisão Forte - Todos os processos são suspeitos somente após terem apresentado defeito.</li>
+<li>Precisão Fraca - Algum processo correto nunca é suspeito de ter apresentado defeito.</li>
+<li>Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após apresentarem defeito.</li>
+<li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.</li>
 </ul>
-<p>Em [CHT96] Chandra et al demonstram que <span><span class="MathJax_Preview">\diamond W</span><script type="math/tex">\diamond W</script></span> é o detector mais fraco com o qual se pode resolver consenso. Este detector tem as propriedades de completude fraca e acucárias eventual fraca e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
-Vários protocolos de consenso utilizam o detector equivalente, <span><span class="MathJax_Preview">\diamond S</span><script type="math/tex">\diamond S</script></span>, aproveitando-se da completude forte.
+<p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de completude fraca e acucárias eventual fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">7</a></sup> 
+Este detector, conhecido como <span><span class="MathJax_Preview">\diamont W</span><script type="math/tex">\diamont W</script></span> e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
+Vários protocolos de consenso utilizam o detector equivalente, <span><span class="MathJax_Preview">\diamond S</span><script type="math/tex">\diamond S</script></span>, equivalente ao <span><span class="MathJax_Preview">\diamond W</span><script type="math/tex">\diamond W</script></span> mas com completude forte.
 Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina; um <strong>resultado errado nunca é alcançado</strong>.</p>
-<p>Primitivas</p>
+<h3 id="difusao-totalmente-ordenada">Difusão Totalmente Ordenada</h3>
+<p>Se pudermos resolver o consenso, podemos então resolver o problema da difusão atômica e com ela implementar a replicação de máquinas de estados.
+Relembrando, na difusão Totalmente Ordenada (Total Order Multicast) temos que:</p>
 <ul>
-<li>send\&amp;receive/enviar\&amp;receber -- rede</li>
-<li>propose\&amp;decide/propor\&amp;decidir -- consenso</li>
-<li>broadcast\&amp;deliver/difundir\&amp;entregar -- difusão</li>
+<li>Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)</li>
+<li>Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.</li>
+</ul>
+<p><img alt="Total order multicast" src="../time/drawings/multicast.drawio-1.svg" /></p>
+<p>Para fazermos isso, precisamos primeiro diferenciar as primitivas em vários níveis da resolução do problema.</p>
+<ul>
+<li>enviar&amp;receber (<em>send&amp;receive</em>) - rede</li>
+<li>propor&amp;decidir (<em>propose&amp;decide</em>) - consenso</li>
+<li>difundir&amp;entregar (<em>broadcast&amp;deliver</em>) - difusão</li>
+</ul>
+<p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica:</p>
+<ul>
+<li>Ordene as instâncias de consenso.</li>
+<li>Para difundir mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, proponha a mensagem na menor instância <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> em que não tiver visto uma decisão.</li>
+<li>Se a decisão de <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> não é <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, volte para o passo anterior.</li>
+<li>Entregue as decisões na ordem das instâncias.</li>
 </ul>
 <h4 id="estudo-de-caso-do-raft">Estudo de Caso do Raft</h4>
 <p><a href="http://thesecretlivesofdata.com/raft/">The Secret lives of data</a></p>
@@ -1153,14 +1157,6 @@ Estes protocolos são escritos de forma que se o limite superior não existe, o 
 <ul>
 <li>Sínodo (Synod): consenso</li>
 <li>Paxos: Difusão Atômica</li>
-</ul>
-<h3 id="difusao-totalmente-ordenada">Difusão Totalmente Ordenada</h3>
-<p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica:</p>
-<ul>
-<li>Ordene as instâncias de consenso.</li>
-<li>Para difundir mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, proponha a mensagem na menor instância <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> em que não tiver visto uma decisão.</li>
-<li>Se a decisão de <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> não é <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, volte para o passo anterior.</li>
-<li>Entregue as decisões na ordem das instâncias.</li>
 </ul>
 <h2 id="replicacao-de-maquinas-de-estados-revisidata">Replicação de Máquinas de Estados Revisidata</h2>
 <p>Ativo/Ativo - Se todos os processos executam a mesma sequência de comandos, todos avançam pelos mesmos estados.</p>
@@ -1423,6 +1419,15 @@ mvn exec:java <span class="se">\\</span>
 </li>
 <li id="fn:2generalsparadox">
 <p>Esta é uma variação do problema <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:flp85">
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:CT96">
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:CHT96">
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
