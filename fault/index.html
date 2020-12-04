@@ -1192,7 +1192,7 @@ No nível da difusão atômica, mensagens são <strong>difundidas</strong> e <st
 <li>difundir &amp; entregar (<em>broadcast &amp; deliver</em>) - difusão</li>
 </ul>
 </div>
-<p><img alt="Total order multicast" src="./drawings/abcast.drawio-0.svg" /></p>
+<p><img alt="Total order multicast" src="drawings/abcast.drawio-0.svg" /></p>
 <p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:</p>
 <ul>
 <li>Ordene as instâncias de consenso.</li>
@@ -1513,7 +1513,7 @@ mvn exec:java <span class="se">\\</span>
 <p>Coordination services are notoriously hard to get right. They are especially prone to errors such as race conditions and deadlock. The motivation behind ZooKeeper is to relieve distributed applications the responsibility of implementing coordination services from scratch.</p>
 </div>
 <div class="admonition quote">
-<p class="admonition-title">Como</p>
+<p class="admonition-title">Como?</p>
 <p>ZooKeeper is a <strong>distributed</strong>, open-source <strong>coordination service for distributed applications</strong>. It exposes a <strong>simple set of primitives</strong> that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar <strong>directory tree structure of file systems*. It runs in Java and has bindings for both **Java</strong> and <strong>C</strong>.</p>
 <p>ZooKeeper allows distributed processes to coordinate with each other through a <strong>shared hierarchal namespace which is organized similarly to a standard file system</strong>. The name space consists of data registers - called <strong>znodes</strong>, in ZooKeeper parlance - and these are <strong>similar to files and directories</strong>. Unlike a typical file system, which is designed for storage, ZooKeeper data is kept <strong>in-memory</strong>, which means ZooKeeper can achieve <strong>high throughput and low latency</strong> numbers.</p>
 </div>
@@ -1666,7 +1666,7 @@ Pronto!</p>
 <p><a href="https://pathelland.substack.com/p/fail-fast-is-failing-fast">Fail Fast Is Failing… Fast!</a>&#160;<a class="footnote-backref" href="#fnref:failfastfast" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2generalsparadox">
-<p>Esta é uma variação do problema <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>Esta é uma variação do problema de coordenação de <em>gangsters</em> apresentado no em <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:impossibilidades">
 <p><a href="]https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 5 in the text">&#8617;</a></p>
