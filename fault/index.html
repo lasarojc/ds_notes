@@ -526,6 +526,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#arcaboucos-de-coordenacao" class="md-nav__link">
+    Arcabouços de Coordenação
+  </a>
+  
+    <nav class="md-nav" aria-label="Arcabouços de Coordenação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-zookeeper" class="md-nav__link">
+    Estudo de caso: Zookeeper
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -859,6 +879,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#arcaboucos-de-coordenacao" class="md-nav__link">
+    Arcabouços de Coordenação
+  </a>
+  
+    <nav class="md-nav" aria-label="Arcabouços de Coordenação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-zookeeper" class="md-nav__link">
+    Estudo de caso: Zookeeper
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1092,6 +1132,7 @@ Isto quer dizer que podemos produzir algoritmos, mas ou eles às vezes <strong>l
 <p>Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
 A <strong>confiança</strong> de Alice de que Bastião também atcaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
 Esta abordagem faria com com que o ataque funcionasse com uma <strong>certa probabilidade</strong>, mas com uma pequena probabilidade <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> de levar a um ataque fracassado, onde <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> pode ser feita <strong>tão pequena quanto se "queira"</strong>.</p>
+<p>Resultados de impossibilidade abundam na área de computação distribuída<sup id="fnref:impossibilidades"><a class="footnote-ref" href="#fn:impossibilidades">5</a></sup> e não podem nos desencorajar de continuar a buscar soluções práticas.</p>
 <h3 id="consenso">Consenso</h3>
 <p>O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
 Neste problema, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong>. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.</p>
@@ -1102,13 +1143,13 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 </ul>
 <p>Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.</p>
-<p><strong>É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong><sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">5</a></sup>.
+<p><strong>É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong><sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">6</a></sup>.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, Raft e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
 <h3 id="detectores-de-defeitos">Detectores de Defeitos</h3>
-<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">6</a></sup> introduziram o conceito de <strong>Detectores de Defeitos Não Confiáveis</strong>. 
+<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">7</a></sup> introduziram o conceito de <strong>Detectores de Defeitos Não Confiáveis</strong>. 
 Um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.</p>
 <details class="todo"><summary>Todo</summary><p>figura</p>
 </details>
@@ -1126,7 +1167,7 @@ Os detectores não confiáveis encapsulam, de certa forma, o sincronismo necess�
 <li>Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após apresentarem defeito.</li>
 <li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.</li>
 </ul>
-<p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de completude fraca e acucárias eventual fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">7</a></sup> 
+<p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de completude fraca e acucárias eventual fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">8</a></sup> 
 Este detector, conhecido como <span><span class="MathJax_Preview">\diamont W</span><script type="math/tex">\diamont W</script></span> e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
 Vários protocolos de consenso utilizam o detector equivalente, <span><span class="MathJax_Preview">\diamond S</span><script type="math/tex">\diamond S</script></span>, equivalente ao <span><span class="MathJax_Preview">\diamond W</span><script type="math/tex">\diamond W</script></span> mas com completude forte.
 Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina; um <strong>resultado errado nunca é alcançado</strong>.</p>
@@ -1138,42 +1179,97 @@ Relembrando, na difusão Totalmente Ordenada (Total Order Multicast) temos que:<
 <li>Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.</li>
 </ul>
 <p><img alt="Total order multicast" src="../time/drawings/multicast.drawio-1.svg" /></p>
-<p>Para fazermos isso, precisamos primeiro diferenciar as primitivas em vários níveis da resolução do problema.</p>
+<p>Para fazermos isso, precisamos primeiro formalizar as primitivas em vários níveis da resolução do problema.
+No nível do canal de comunicação, da rede, processos <strong>enviam</strong> e <strong>recebem</strong> mensagens.
+No nível do consenso, processos fazem <strong>propostas</strong> e <strong>aprendem</strong> um valor decidido. Para chegar a uma única decisão, várias mensagens podem ser enviadas e recebidas.
+No nível da difusão atômica, mensagens são <strong>difundidas</strong> e <strong>entregues</strong>. Se implementado sobre o consenso, para uma difusão ser bem sucedida, uma instância de consenso é necessária.</p>
+<div class="admonition note">
+<p class="admonition-title">Primitivas de comunicação</p>
 <ul>
-<li>enviar&amp;receber (<em>send&amp;receive</em>) - rede</li>
-<li>propor&amp;decidir (<em>propose&amp;decide</em>) - consenso</li>
-<li>difundir&amp;entregar (<em>broadcast&amp;deliver</em>) - difusão</li>
+<li>enviar &amp; receber (<em>send &amp; receive</em>) - rede</li>
+<li>propor &amp; decidir (<em>propose &amp; decide</em>) - consenso</li>
+<li>difundir &amp; entregar (<em>broadcast &amp; deliver</em>) - difusão</li>
 </ul>
-<p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica:</p>
+</div>
+<p><img alt="Total order multicast" src="drawings/abcast.drawio-0.svg" /></p>
+<p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:</p>
 <ul>
 <li>Ordene as instâncias de consenso.</li>
 <li>Para difundir mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, proponha a mensagem na menor instância <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> em que não tiver visto uma decisão.</li>
 <li>Se a decisão de <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> não é <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, volte para o passo anterior.</li>
 <li>Entregue as decisões na ordem das instâncias.</li>
 </ul>
+<p>No exemplo a seguir, duas mensagens, <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> e <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> foram <strong>difundidas</strong> pelas aplicações App1 e App2, respectivamente, por meio do módulo de difusão atômica junto a cada aplicação.
+O módulo de difusão determina qual a menor instância de consenso ainda não decidida, azul, em que propõem as mensagens.
+Ao final da instância de conseno, <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é decidida e é entregue pelos módulos de difusão.
+O módulo ABCast2 insiste na difusão de <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span>, propondo-a na próxima instância, vermelha, que decide <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> e leva esta mensagem a ser entregue.</p>
+<div class="mermaid">sequenceDiagram
+    participant App1
+    participant ABCast1
+    participant Cons1
+    participant Cons3
+    participant Cons2
+    participant ABCast2
+    participant App2
+
+
+    App1 --&gt;&gt;+ ABCast1: difundir m
+      App2 --&gt;&gt;+ ABCast2: difundir m'
+
+rect rgb(100,255,255)
+    ABCast1 -&gt;&gt;+ Cons1: propor m na inst 1
+    ABCast2 -&gt;&gt;+ Cons2: propor m' na inst 1
+
+
+    Cons1 -&gt;&gt;- ABCast1: decidir m
+    Cons2 -&gt;&gt;- ABCast2: decidir m
+end
+    ABCast1 --&gt;&gt;- App1: entregar m
+      ABCast2 --&gt;&gt; App2: entregar m
+
+rect rgba(255,0,0,.5)
+    ABCast2 -&gt;&gt;+ Cons2: propor m' na inst 2
+
+    Cons1 -&gt;&gt; ABCast1: decidir m'
+    Cons2 -&gt;&gt;- ABCast2: decidir m'
+end
+    ABCast1 --&gt;&gt; App1: entregar m'
+      ABCast2 --&gt;&gt;- App2: entregar m'
+</div>
+
+<p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> e depois <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span>.
+Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.</p>
 <h4 id="estudo-de-caso-do-raft">Estudo de Caso do Raft</h4>
-<p><a href="http://thesecretlivesofdata.com/raft/">The Secret lives of data</a></p>
+<p>Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
+Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
+Um mandato se estende enquanto o líder mantiver seus seguidores cientes de sua presença, o que faz pelo envio periódico de <em>heartbeats</em>.
+Atrasos na comunicação ou a falha do líder atual levam a uma suspeita de que o líder falhou, levando a nova eleição e novo mandado.
+A comunicação necessária para implementar a difusão atômica acontece em <em>piggyback</em> nos <em>heartbeats</em>.</p>
+<p>No tutorial <a href="http://thesecretlivesofdata.com/raft/">The Secret lives of data</a>, podemos ver com mais detalhes como o protocolo funciona.
+O tutorial, entretando, foge da nomenclatura padrão da área usando <em>log-replication</em> no lugar de difusão atômica (ou totalmente ordenada).</p>
 <h4 id="estudo-de-caso-paxos">Estudo de Caso: Paxos</h4>
-<ul>
+<details class="todo"><summary>Paxos</summary><ul>
 <li>Sínodo (Synod): consenso</li>
 <li>Paxos: Difusão Atômica</li>
 </ul>
+</details>
 <h2 id="replicacao-de-maquinas-de-estados-revisitada">Replicação de Máquinas de Estados Revisitada</h2>
-<p>Ativo/Ativo - Se todos os processos executam a mesma sequência de comandos, todos avançam pelos mesmos estados.</p>
-<ul>
-<li>Mesmo estado inicial</li>
-<li>Comandos determinísticos</li>
-<li>Comandos causalmente relacionados são executados em mesma ordem</li>
-</ul>
-<p>Possíveis diferentes ordens com mesmo efeito?</p>
+<p>Como colocado diversas vezes, se todos os processos executam a mesma sequência de comandos determinísticos, todos avançam pelos mesmos estados, implementando a técnica da replicação de máquinas de estados.
+Se usada em um sistema de arquivos, por exemplo, a seguinte sequência de comandos levará sempre ao estado final em que há um arquivo <code>/tmp/file2</code> e uma pasta denominada <code>/dir1</code>.</p>
 <ul>
 <li><code>touch /tmp/file1</code></li>
-<li><code>echo "teste testando" $&gt;&gt;$ /tmp/file2</code></li>
+<li><code>echo "teste testando" &gt;&gt; /tmp/file2</code></li>
 <li><code>rm /tmp/file1</code></li>
 <li><code>mkdir /dir1</code></li>
 </ul>
-<p>Diversos sistemas abstraem problemas de coordenação em sistemas distribuídos.</p>
-<p>Estudaremos alguns nas aulas seguintes.</p>
+<p>Há outras ordens dos mesmos comandos que levariam ao mesmo efeito, como a seguinte. Alguns protocolos de replicação de máquinas de estados permitem que reordenações ocorram, desde que não afetem o resultado final dos comandos. Contudo, estes protocolos são mais complexos de se implementar e por isso raramente usados.</p>
+<ul>
+<li><code>echo "teste testando" &gt;&gt; /tmp/file2</code></li>
+<li><code>mkdir /dir1</code></li>
+<li><code>touch /tmp/file1</code></li>
+<li><code>rm /tmp/file1</code></li>
+</ul>
+<p>Caso você queira implementar a replicação de máquinas de estados, tem a opção de implementar um protocolo de difusão atômica desde o zero, mas felizmente também tem a opção de usar arcabouços prontos.</p>
 <h3 id="estudo-de-caso-ratis">Estudo de caso: Ratis</h3>
 <h3 id="estudo-de-caso-atomix-copycat">Estudo de caso: Atomix Copycat</h3>
 <ul>
@@ -1405,6 +1501,161 @@ mvn exec:java <span class="se">\\</span>
 <p class="admonition-title">Exercício</p>
 <p>Uma vez executado o projeto, modifique-o para incluir uma nova operação (Command) e nova consulta (Query). </p>
 </div>
+<h2 id="arcaboucos-de-coordenacao">Arcabouços de Coordenação</h2>
+<p>Além de arcabouços para comunicação em grupo, há diversos sistemas que abstraem outros problemas de coordenação em sistemas distribuídos.</p>
+<h3 id="estudo-de-caso-zookeeper">Estudo de caso: Zookeeper</h3>
+<p>Visão Geral</p>
+<p><a href="images/zklogo.jpg">http://zookeeper.apache.org/</a></p>
+<p>Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural.</p>
+<div class="admonition quote">
+<p class="admonition-title">O quê?</p>
+<p>ZooKeeper is a <strong>centralized</strong> service for maintaining <strong>configuration</strong> information, <strong>naming</strong>, providing distributed <strong>synchronization</strong>, and providing <strong>group services</strong>. All of these kinds of services are used in some form or another by <strong>distributed applications</strong>. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them, which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management <strong>complexity</strong> when the applications are deployed.</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Por quê?</p>
+<p>Coordination services are notoriously hard to get right. They are especially prone to errors such as race conditions and deadlock. The motivation behind ZooKeeper is to relieve distributed applications the responsibility of implementing coordination services from scratch.</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Como?</p>
+<p>ZooKeeper is a <strong>distributed</strong>, open-source <strong>coordination service for distributed applications</strong>. It exposes a <strong>simple set of primitives</strong> that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar <strong>directory tree structure of file systems*. It runs in Java and has bindings for both **Java</strong> and <strong>C</strong>.</p>
+<p>ZooKeeper allows distributed processes to coordinate with each other through a <strong>shared hierarchal namespace which is organized similarly to a standard file system</strong>. The name space consists of data registers - called <strong>znodes</strong>, in ZooKeeper parlance - and these are <strong>similar to files and directories</strong>. Unlike a typical file system, which is designed for storage, ZooKeeper data is kept <strong>in-memory</strong>, which means ZooKeeper can achieve <strong>high throughput and low latency</strong> numbers.</p>
+</div>
+<p><img alt="" src="images/zknamespace.jpg" /></p>
+<p>O sistema de arquivos do Zookeeper é replicado em vários nós.</p>
+<p><img alt="" src="images/zkservice.jpg" /></p>
+<p>Os comandos para o sistema de arquivos são ordenados e entregues às réplicas pelo protocolo ZAB, Zookeeper Atomic Broadcast.</p>
+<p><img alt="" src="images/zkcomponents.jpg" /></p>
+<div class="admonition quote">
+<p class="admonition-title">Desempenho</p>
+<p>ZooKeeper is fast [...] and it performs best where reads are more common than writes, at ratios of around 10:1.</p>
+</div>
+<p><img alt="" src="images/zkperfRW_3_2.jpg" /></p>
+<p>ZNodes</p>
+<p><img alt="" src="images/zknamespace.jpg" /></p>
+<ul>
+<li>Arquivo e diretório ao mesmo tempo.</li>
+<li>São (devem ser) pequenos.</li>
+<li>Operados atomicamente: todo o dado é lido/escrito.</li>
+<li>API simples<ul>
+<li>C: create</li>
+<li>R: get</li>
+<li>U: set</li>
+<li>D: delete</li>
+<li>ls *: get children</li>
+</ul>
+</li>
+</ul>
+<p>Lab</p>
+<ul>
+<li>Download: <code>wget www-eu.apache.org/dist/zookeeper/zookeeper-3.6.2</code></li>
+<li>Unpack: <code>tar xvzf zookeeper*.tgz</code></li>
+<li>Config: <code>conf/zoo.cfg</code> <span><span class="MathJax_Preview">\Leftarrow</span><script type="math/tex">\Leftarrow</script></span> Copie o exemplo</li>
+<li><code>./bin/zkServer.sh start-foreground</code></li>
+<li><code>./bin/zkCli.sh -server 127.0.0.1:2181</code> <span><span class="MathJax_Preview">\Leftarrow</span><script type="math/tex">\Leftarrow</script></span></li>
+</ul>
+<p>Exemplo</p>
+<ul>
+<li>Stat(istics): versão, ACL, timestamps.</li>
+<li>Updates condicionais.</li>
+<li>Nós efêmeros: presentes enquanto a sessão que os criou estiver ativa.</li>
+<li>Watches: notificam clientes de mudanças no nó ou em seus filhos.</li>
+<li>Uso único.</li>
+</ul>
+<p>Durabilidade</p>
+<p>Todas as operações são colocadas em um log em disco.</p>
+<p>Receitas</p>
+<p>É possível resolver diversos problemas encontrados em sistemas distribuídos usando-se o ZooKeeper.</p>
+<ul>
+<li>Rendezvous - Ponto de encontro de processos. <ul>
+<li>Defina um zNode raiz a ser usado: /rendezvous/app1/ </li>
+<li>Cada filho de /rendezvous/app1 corresponde a um processo:<ul>
+<li>IP</li>
+<li>Porta</li>
+<li>Número de processadores</li>
+<li>...</li>
+</ul>
+</li>
+<li>Processo p ao ser iniciado:<ul>
+<li>procura /rendezvous/app1/p</li>
+<li>se achar, continua</li>
+<li>se não achar, cria /rendezvous/app1/p</li>
+</ul>
+</li>
+<li>lista os filhos de /rendezvous/app1</li>
+</ul>
+</li>
+</ul>
+<p>Como lidar com saída de processos?
+Faça todos os zNodes são efêmeros.
+Quando um nó é desconectado, o zNode correspondente será destruído.</p>
+<p>Como detectar mudanças no grupo de processos?</p>
+<p>Monitore os filhos de /rendezvous/app1<br />
+Sempre que receber notificações, refaça o cálculo do <strong><em>membership</em></strong>.</p>
+<p>Eleição de Líderes
+Rendezvous.
+Faça os zNodes sequenciais.
+Ordene os zNodes e escolha o primeiro.
+Monitore o zNode. Se ele sumir, eleja outro líder.</p>
+<p>Exclusão Mútua
+Construa uma fila usando nós efêmeros e sequenciais. O processo na cabeça da fila tem direito de acesso. Em caso de falhas, o processo é removido da cabeça da fila.</p>
+<p>Compartilhamento de Parâmetros de Configuração
+Pronto!</p>
+<p>Receitas</p>
+<ul>
+<li>Lock distribuído</li>
+<li>Filas, e.g. de prioridades</li>
+<li>Barreira</li>
+<li>Serviço de nomes</li>
+<li>Terminação em duas fases</li>
+<li>Contador atômico</li>
+</ul>
+<p><a href="http://zookeeper.apache.org/doc/trunk/recipes.html">http://zookeeper.apache.org/doc/trunk/recipes.html</a></p>
+<p>Curator</p>
+<p><img alt="" src="images/curator-logo.jpg" /></p>
+<p>Um livro de receitas implementadas em ZK.</p>
+<p><a href="http://curator.apache.org">http://curator.apache.org</a></p>
+<p>Lab</p>
+<ul>
+<li>Crie um zNode /teste</li>
+<li>
+<p>Debaixo de /teste, crie três outros, sequenciais</p>
+</li>
+<li>
+<p>Crie um zNode /teste2</p>
+</li>
+<li>Crie um zNode efêmero</li>
+<li>Conecte-se com outro cliente</li>
+<li>Coloque um watch em /teste2</li>
+<li>Desconecte o primeiro cliente</li>
+<li>Observe o evento gerado no segundo cliente</li>
+<li>Reconecte o primeiro cliente</li>
+</ul>
+<p>Multi-node</p>
+<p>Crie três arquivos, zoo1.cfg, zoo2.cfg e zoo3.cfg. Por exemplo, zoo1.cfg fica assim:</p>
+<ul>
+<li><code>dataDir=/tmp/lasaro/zoo1</code> <span><span class="MathJax_Preview">\Leftarrow</span><script type="math/tex">\Leftarrow</script></span> Diretórios distintos.</li>
+<li><code>server.1=zoo1:2888:3888</code> <span><span class="MathJax_Preview">\Leftarrow</span><script type="math/tex">\Leftarrow</script></span> Portas distintas.</li>
+<li><code>server.2=zoo2:2889:3889</code></li>
+<li><code>server.3=zoo3:2890:3890</code></li>
+<li><code>clientPort=2181</code> <span><span class="MathJax_Preview">\Leftarrow</span><script type="math/tex">\Leftarrow</script></span> Portas distintas.</li>
+</ul>
+<p>Crie diretórios e arquivos de identificação.</p>
+<ul>
+<li><code>mkdir /tmp/lasaro/zoo1</code></li>
+<li><code>echo 1 &gt; /tmp/lasaro/zoo1/myid</code></li>
+</ul>
+<p>Execute servidores.</p>
+<ul>
+<li><code>./bin/zkServer.sh start conf/zoo1.cfg</code></li>
+</ul>
+<p>Use <code>start-foreground</code> para acompanhar a execução.</p>
+<p>Lab</p>
+<ul>
+<li>Crie um znode <code>/contador</code> com valor 0</li>
+<li>Descreva como fazer para que os clientes incrementem atomicamente o valor de <code>/contador</code></li>
+</ul>
+<details class="todo"><summary>Todo</summary></details>
+<details class="todo"><summary>Todo</summary></details>
 <div class="footnote">
 <hr />
 <ol>
@@ -1420,14 +1671,17 @@ mvn exec:java <span class="se">\\</span>
 <li id="fn:2generalsparadox">
 <p>Esta é uma variação do problema <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
+<li id="fn:impossibilidades">
+<p><a href="]https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
 <li id="fn:flp85">
-<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>. Uma explicação da prova está disponível no <a href="https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/">Paper Trail</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:CT96">
-<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:CHT96">
-<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
