@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -19,13 +18,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6910b76c.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -36,8 +39,7 @@
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,7 +47,13 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -62,16 +70,18 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
       
@@ -89,27 +99,27 @@
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -124,8 +134,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -136,12 +144,14 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
@@ -155,7 +165,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Prólogo
     </a>
   </li>
@@ -167,7 +177,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
+    <a href="../intro/" class="md-nav__link">
       Introdução
     </a>
   </li>
@@ -179,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+    <a href="../basics/" class="md-nav__link">
       Fundamentos
     </a>
   </li>
@@ -201,12 +211,10 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Comunicação
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Comunicação" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Comunicação
     </a>
     
@@ -218,9 +226,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -606,7 +612,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+    <a href="../arch/" class="md-nav__link">
       Arquiteturas
     </a>
   </li>
@@ -618,7 +624,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
+    <a href="../coord/" class="md-nav__link">
       Coordenação
     </a>
   </li>
@@ -630,7 +636,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
+    <a href="../time/" class="md-nav__link">
       Tempo
     </a>
   </li>
@@ -642,7 +648,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+    <a href="../fault/" class="md-nav__link">
       Tolerância a Falhas
     </a>
   </li>
@@ -654,7 +660,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
+    <a href="../disdb/" class="md-nav__link">
       Bancos de Dados
     </a>
   </li>
@@ -666,7 +672,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+    <a href="../disfs/index.md" class="md-nav__link">
       Sistemas de Arquivos
     </a>
   </li>
@@ -678,7 +684,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
+    <a href="../tech/" class="md-nav__link">
       Tecnologias
     </a>
   </li>
@@ -690,7 +696,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
+    <a href="../projeto/" class="md-nav__link">
       Projeto
     </a>
   </li>
@@ -714,9 +720,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -1102,9 +1106,6 @@
               
                 
                 
-                  
-                
-                
                 <h1 id="comunicacao">Comunicação</h1>
 <p>O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no <strong>acesso baixo nível à rede</strong>, e todo o ganho de desempenho que isso pode trazer.
@@ -1185,7 +1186,6 @@ The document has moved
 <span class="p">&lt;/</span><span class="nt">BODY</span><span class="p">&gt;&lt;/</span><span class="nt">HTML</span><span class="p">&gt;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
 Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
 Dois padrões bem conhecidas são XML e JSON.</p>
@@ -1211,7 +1211,6 @@ A HTML, por exemplo, é uma instância de XML destinada à representação de hi
 <span class="nt">&lt;/person&gt;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma das grandes vantagens do uso de XML é a possibilidade de se formalizar o que pode ou não estar em um arquivo para um certo domínio utilizando um <a href="https://docs.microsoft.com/pt-br/dotnet/standard/data/xml/xml-document-object-model-dom">XML <em>Domain Object Model</em></a>. Há, por exemplo, modelos para representação de documentos de texto, governos eletrônicos, representação de conhecimento, <a href="http://www.xml.org/">etc</a>.
 Sua maior desvantagem é que é muito verborrágico e por vezes complicado de se usar, abrindo alas para o seu mais famoso concorrente, JSON.</p>
 <p><a href="http://json.org/">JSON</a> é o acrônimo de <em>Javascript Object Notation</em>, isto é, o formato para representação de objetos da linguagem Javascript.
@@ -1236,7 +1235,6 @@ O mesmo exemplo visto anteriormente, em XML, é representado em JSON assim:</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Em Python, por exemplo, JSON são gerados e interpretados nativamente, sem a necessidade de <em>frameworks</em> externos, facilitando seu uso.
 Mas de fato, a opção final por XML ou JSON é questão de preferência, uma vez que os dois formatos são, de fato, equivalentes na questão da representação de informação.</p>
 <p>Outros formatos, binários, oferecem vantagens no uso de espaço para armazenar e transmitir dados, e por isso são frequentemente usados como forma de <em>serialização</em> de dados em sistemas distribuídos, isto é, na transformação de TAD para sequências de bytes que seguirão "no fio".</p>
@@ -1288,7 +1286,6 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1303,7 +1300,6 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <span class="n">person</span><span class="p">.</span><span class="n">SerializeToOstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">output</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>e lê do arquivo e desserializa para hidratar um novo objeto.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1316,7 +1312,6 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;E-mail: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">person</span><span class="p">.</span><span class="n">email</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>De acordo com <em>benchmarks</em> do próprio <a href="https://developers.google.com/protocol-buffers/docs/overview">projeto</a>, a operação em XML seria mais ordens de grandeza mais lenta e ocuparia mais espaço.</p>
 <blockquote>
 <p>When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.</p>
@@ -1416,22 +1411,21 @@ Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para 
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">-2</span><span class="p">;</span>
 <span class="n">try</span> <span class="p">{</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">substring</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;teste&quot;</span><span class="p">);</span><span class="err">`</span>
 <span class="p">}</span> <span class="n">catch</span><span class="p">(</span><span class="n">CommunicationFailureException</span> <span class="n">cfe</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">log_error</span><span class="p">(</span><span class="s">&quot;Como pode substring falhar? Desespero!!!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">system_exit</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">-2</span><span class="p">)</span>
+    <span class="n">system_exit</span><span class="p">(</span><span class="mi">-2</span><span class="p">)</span>
+<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span>
     <span class="c1">//não achou</span>
 <span class="k">else</span>
     <span class="c1">//achou &quot;teste&quot; na posição x</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.</p>
 <p>Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
 Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
@@ -1546,35 +1540,29 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.33.0 https://github.com/grpc/grpc-java
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java<span class="se">\e</span>xamples
 git checkout v1.33.0
 </code></pre></div>
 </td></tr></table>
-
 <h5 id="compilando-e-executando">Compilando e executando</h5>
 <p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist
 </code></pre></div>
 </td></tr></table>
-
 <p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
 </code></pre></div>
 </td></tr></table>
-
 <p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-server
 </code></pre></div>
 </td></tr></table>
-
 <p>Agora, em <strong>um terminal distinto</strong> e a partir da mesma localização, execute o cliente, quantas vezes quiser.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-client
 </code></pre></div>
 </td></tr></table>
-
 <h5 id="o-servico">O serviço</h5>
 <p>O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
 O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <code>./src/main/proto/helloworld.proto</code>.</p>
@@ -1605,7 +1593,6 @@ service Greeter {
 }
 </code></pre></div>
 </td></tr></table>
-
 <p>No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.</p>
 <p>A mensagem <code>HelloRequest</code> tem apenas um campo denominado <code>name</code>, do tipo <code>string</code>. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.</p>
 <p>A mensagem <code>HelloReply</code> também tem um campo do tipo <code>string</code>, denominado <code>message</code>, que conterá a resposta do servidor.</p>
@@ -1661,7 +1648,6 @@ Por exemplo, para definir uma versão em português da operação <code>SayHello
 <span class="o">...</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Observe que a nova operação recebe como entrada  mensagens <code>OlaRequest</code> e <code>OlaReply</code>, que tem definições exatamente iguais a <code>HellorRequest</code> e <code>HelloReply</code>.
 Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
 Apenas reforçando, é boa prática definir <em>requests</em> e <em>responses</em> para cada método, a não ser que não haja dúvida de que serão para sempre iguais.</p>
@@ -1708,7 +1694,6 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em <code>src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java</code>, novamente se baseando no código existente e não se preocupando com "detalhes".</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -1737,7 +1722,6 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Agora sim, você pode reexecutar cliente e servidor.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1746,7 +1730,6 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 ./build/install/examples/bin/hello-world-client
 </code></pre></div>
 </td></tr></table>
-
 <p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.</p>
 <h5 id="stub-do-servidor">Stub do servidor</h5>
 <ul>
@@ -1857,26 +1840,22 @@ python3 greeter<span class="se">\_</span>server.py
 python3 greeter<span class="se">\_</span>client.py
 </code></pre></div>
 </td></tr></table>
-
 <p>Para recompilar os stubs, faça</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 -m grpc_tools.protoc -I../../protos --python_out<span class="o">=</span>. --grpc_python_out<span class="o">=</span>. ../../protos/helloworld.proto
 </code></pre></div>
 </td></tr></table>
-
 <p>Modifique o servidor</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">DigaOla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaReply</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Ola, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Modifique o cliente</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="n">DigaOla</span><span class="p">(</span><span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zelelele&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Greeter client received: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
-
 <h3 id="estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</h3>
 <p><a href="https://thrift.apache.org/">Thrift</a></p>
 <h4 id="instalacao_1">Instalação</h4>
@@ -1978,7 +1957,6 @@ python3 greeter<span class="se">\_</span>client.py
 <span class="p">}</span><span class="w">  </span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Compilação</p>
 <p><code>thrift --gen java chavevalor.thrift</code></p>
 <p><code>thrift --gen py chavevalor.thrift</code></p>
@@ -2104,7 +2082,6 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient 
 </code></pre></div>
 </td></tr></table>
-
 <h4 id="referencias">Referências</h4>
 <p><a href="http://thrift-tutorial.readthedocs.org/en/latest/index.html">Tutorial</a></p>
 <h3 id="estudo-de-caso-rpc-rmi">Estudo de Caso RPC: RMI</h3>
@@ -2155,7 +2132,6 @@ Um agente especial, denominado <em>broker</em>, gerencia a conexão, armazena e 
 brew install mosquitto <span class="c1"># MacOS</span>
 </code></pre></div>
 </td></tr></table>
-
 <h4 id="inicializando-o-servico">Inicializando o serviço</h4>
 <p>O arquivo <code>mosquito.conf</code> contém as configurações para o <em>broker</em>. 
 As configurações funcionam bem para o nosso caso. O <em>broker</em> aceita requisições na porta 1883 e <em>publishers</em> e <em>subscribers</em> também utilizam essa porta por padrão.
@@ -2163,7 +2139,6 @@ Basta iniciar o <em>broker</em> com a opção <code>-v</code> para ter mais deta
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>mosquitto -v
 </code></pre></div>
 </td></tr></table>
-
 <h4 id="publicando">Publicando</h4>
 <p>Para publicar uma mensagem, o <em>publisher</em> deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se <code>localhost:1883</code>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -2173,7 +2148,6 @@ mosquitto_pub -t sensor/temperature/1 -m <span class="m">40</span>
 mosquitto_pub -t sensor/temperature/2 -m <span class="m">32</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Caso o <em>subscriber</em> não esteja em execução, adicione a opção <code>-r</code> para que o broker retenha a mensagem.</p>
 <h4 id="consumindo">Consumindo</h4>
 <p>O consumidor funciona de maneira semelhante, informando o tópico de interesse:</p>
@@ -2182,7 +2156,6 @@ mosquitto_pub -t sensor/temperature/2 -m <span class="m">32</span>
 mosquito_pub -t sensor/temperature/+
 </code></pre></div>
 </td></tr></table>
-
 <h4 id="programando">Programando</h4>
 <p>Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
 A biblioteca pode ser baixada <a href="https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar">aqui</a>.</p>
@@ -2270,7 +2243,6 @@ A biblioteca pode ser baixada <a href="https://repo.eclipse.org/content/reposito
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <!-- Distinction from message queues
 There is a lot of confusion about the name MQTT and whether the protocol is implemented as a message queue or not. We will try to shed some light on the topic and explain the differences. In our last post, we mentioned that MQTT refers to the MQseries product from IBM and has nothing to do with “message queue“. Regardless of where the name comes from, it’s useful to understand the differences between MQTT and a traditional message queue:
 
@@ -2329,9 +2301,9 @@ If you can think of any other differences that we overlooked, we would love to h
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../basics/" title="Fundamentos" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../basics/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
@@ -2344,7 +2316,7 @@ If you can think of any other differences that we overlooked, we would love to h
           </a>
         
         
-          <a href="../arch/" title="Arquiteturas" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../arch/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -2354,7 +2326,7 @@ If you can think of any other differences that we overlooked, we would love to h
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -2377,15 +2349,15 @@ If you can think of any other differences that we overlooked, we would love to h
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
