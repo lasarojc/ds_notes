@@ -1609,16 +1609,16 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 Quanto a este respeito, podemos classificar servidores como <strong>stateful</strong> e <strong>stateless</strong>, dois termos que ouvirão frequentemente enquanto trabalhando com SD.</p>
 <p>O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
-Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> novas linhas para processar e, quando estiver pronto, requisite <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> novas linhas.
+Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span class="arithmatex">\(n\)</span> novas linhas para processar e, quando estiver pronto, requisite <span class="arithmatex">\(n\)</span> novas linhas.
 Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:</p>
 <ol>
 <li>receba requisição informando a última linha lida</li>
 <li>recalcule todas as respostas para consulta</li>
 <li>salte até a linha informada pelo cliente</li>
-<li>retorne as próximas <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> linhas para o cliente</li>
+<li>retorne as próximas <span class="arithmatex">\(n\)</span> linhas para o cliente</li>
 <li>feche o resultado da consulta.</li>
 </ol>
-<p>Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma <em>visão</em>  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
+<p>Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma <em>visão</em>  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes <span class="arithmatex">\(n\)</span> entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
 Por outro lado, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?</p>
 <p>Também a complexidade do servidor aumenta. Considere as algumas de muitas perguntas possíveis neste cenário:</p>
 <ul>
@@ -2659,7 +2659,9 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>

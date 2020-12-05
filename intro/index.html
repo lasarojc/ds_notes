@@ -1144,7 +1144,7 @@ Veja o exemplo do VMotion da VMware</p>
 <h4 id="transparencia-de-replicacao">Transparência de Replicação</h4>
 <p>A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
 Isto porquê para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.</p>
-<p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atraso</strong> entre elas de no máximo <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
+<p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atraso</strong> entre elas de no máximo <span class="arithmatex">\(X\)</span> minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
 <p>Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da <a href="https://www.allthingsdistributed.com/2008/12/eventually_consistent.html">Amazon.com</a>, que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.</p>
 <p>Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de <em>frameworks</em> de <strong>comunicação em grupo</strong>, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
@@ -1168,7 +1168,7 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
 </details>
 <p>Novamente é preciso chamar à atenção a questão dos custos desta técnica.
 Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema onde inconsistências são absolutamente caras demais para sere permitidas.
-Isto porquê manter múltiplas cópias <span><span class="MathJax_Preview">\Rightarrow</span><script type="math/tex">\Rightarrow</script></span> sincronização <span><span class="MathJax_Preview">\Rightarrow</span><script type="math/tex">\Rightarrow</script></span> custos. 
+Isto porquê manter múltiplas cópias <span class="arithmatex">\(\Rightarrow\)</span> sincronização <span class="arithmatex">\(\Rightarrow\)</span> custos. 
 Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
 Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.</p>
 <h4 id="transparencia-de-concorrencia">Transparência de Concorrência</h4>
@@ -1263,7 +1263,7 @@ Isto é, eles provêem as garantias na execução de transações conhecidas com
 5: SET Y=b
 </code></pre></div>
 </td></tr></table>
-Suponha duas instâncias desta sequência, <span><span class="MathJax_Preview">T_1</span><script type="math/tex">T_1</script></span> e <span><span class="MathJax_Preview">T_2</span><script type="math/tex">T_2</script></span>, concorrentes, em que as operações escalonadas da seguinte forma.</p>
+Suponha duas instâncias desta sequência, <span class="arithmatex">\(T_1\)</span> e <span class="arithmatex">\(T_2\)</span>, concorrentes, em que as operações escalonadas da seguinte forma.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1288,7 +1288,7 @@ Suponha duas instâncias desta sequência, <span><span class="MathJax_Preview">T
 </code></pre></div>
 </td></tr></table>
 
-<p>Ao final da execução, X terá o valor atribuído por <span><span class="MathJax_Preview">T_2</span><script type="math/tex">T_2</script></span>, mas <span><span class="MathJax_Preview">Y</span><script type="math/tex">Y</script></span> terá o valor de <span><span class="MathJax_Preview">T_1</span><script type="math/tex">T_1</script></span>. 
+<p>Ao final da execução, X terá o valor atribuído por <span class="arithmatex">\(T_2\)</span>, mas <span class="arithmatex">\(Y\)</span> terá o valor de <span class="arithmatex">\(T_1\)</span>. 
 Este escalonamento violou a <strong>consistência</strong> do banco de dados por quê as operações não foram executadas <strong>isoladamente</strong>.</p>
 <p>Tente imaginar a dificuldade de se implementar um banco de dados distribuído. 
 Isto é, um banco em que vários nós mantem os dados, participam de transações e, portanto, precisam coordenar-se para manter os dados consistentes. 
@@ -1607,7 +1607,9 @@ Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>

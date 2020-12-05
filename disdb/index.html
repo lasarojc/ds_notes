@@ -2438,14 +2438,14 @@ Novas operações de escrita devem ser armazenadas em um novo log e, no caso de 
 Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter mais do que o último log e <em>snapshot</em>, já que a recuperação do estado exigiria voltar mais atrás na reexecução de operações.</p>
 <p>Observe que, além da escrita dos logs, todos os outros acessos ao disco também são sequenciais, seja o <em>flush</em> das memtables, ou a leitura dos snapshots para recuperação e do commit log para reexecução, e já que operações de leitura são todas respondidas da memória, o sistema terá um excelente desempenho.
 Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. Isto é, se os dados não cabem em memória, <em>snapshots</em>  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.</p>
-<p>Consideremos então um cenário em que a memtable cabe apenas <em>n</em> entradas; quando a operação para adicionar <span><span class="MathJax_Preview">n+1</span><script type="math/tex">n+1</script></span>-ésima entrada à memtable é recebida, um <strong><em>flushs</em></strong> dos dados para um novo <em>snapshot</em> é feito e a memtable é <em>resetada</em>, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do <em>caminho crítico</em> da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.</p>
+<p>Consideremos então um cenário em que a memtable cabe apenas <em>n</em> entradas; quando a operação para adicionar <span class="arithmatex">\(n+1\)</span>-ésima entrada à memtable é recebida, um <strong><em>flushs</em></strong> dos dados para um novo <em>snapshot</em> é feito e a memtable é <em>resetada</em>, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do <em>caminho crítico</em> da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.</p>
 <p><img alt="https://docs.datastax.com/en/cassandra/3.0/cassandra/dml/dmlHowDataWritten.html" src="images/lsm2.png" /></p>
 <p>Neste novo fluxo, os arquivos em disco não correspondem mais a <em>snapshots</em> do banco de dados, então nos referiremos a eles como <em>stable storage tables</em>, ou <strong>sstables</strong>, em oposição às <em>memtables</em>, pelo menos por enquanto.</p>
 <h5 id="compactacoes">Compactações</h5>
 <p>Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nosso banco de dados, ele traz problemas para o fluxo de leitura.
-Digamos que a chave <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
-O primeiro problema aqui é que há vários valores antigos associados a <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, inutilmente e ocupando espaço, isto é, lixo.
-O segundo é que caso o valor associado a <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
+Digamos que a chave <span class="arithmatex">\(k\)</span> teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
+O primeiro problema aqui é que há vários valores antigos associados a <span class="arithmatex">\(k\)</span>, inutilmente e ocupando espaço, isto é, lixo.
+O segundo é que caso o valor associado a <span class="arithmatex">\(k\)</span> seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
 Para lidar com ambos os problemas, podemos <strong>compactar</strong> as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
 Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no <em>merge sort</em>, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
 A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por <em>flushs</em>, são unidas gerando sstables de nível 1 e assim sucessivamente.
@@ -2476,28 +2476,28 @@ Se algum dos índices apontados não estiver com um 1, como no caso do c, no exe
 Caso contrário, o filtro responderá que é possível que pertença.</p>
 <p>Mas quão bom é um filtro de Bloom na identificação do das sstables? Ou, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?</p>
 <ul>
-<li>o número <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;</li>
-<li>o número <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> de hashes, pois quanto mais hashes, mais bits transformados em 1; e,</li>
-<li>o número <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de bits no vetor, pois quanto menos bits, mais colisões de bits.</li>
+<li>o número <span class="arithmatex">\(n\)</span> de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;</li>
+<li>o número <span class="arithmatex">\(k\)</span> de hashes, pois quanto mais hashes, mais bits transformados em 1; e,</li>
+<li>o número <span class="arithmatex">\(m\)</span> de bits no vetor, pois quanto menos bits, mais colisões de bits.</li>
 </ul>
 <p>De forma mais precisa,</p>
 <ul>
-<li>a probabilidade de setar um certo bit na inserção de um elemento é <span><span class="MathJax_Preview">1/m</span><script type="math/tex">1/m</script></span>, e</li>
-<li>a probabilidade de não setar tal bit é <span><span class="MathJax_Preview">1 - 1/m</span><script type="math/tex">1 - 1/m</script></span>;</li>
-<li>a probabilidade de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> hashes não setarem um bit é <span><span class="MathJax_Preview">(1 - 1/m)^k</span><script type="math/tex">(1 - 1/m)^k</script></span>;</li>
-<li>a probabilidade de não setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">(1 - 1/m)^{kn}</span><script type="math/tex">(1 - 1/m)^{kn}</script></span>;</li>
-<li>a probabilidade de setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">1 - (1 - 1/m)^{kn}</span><script type="math/tex">1 - (1 - 1/m)^{kn}</script></span></li>
+<li>a probabilidade de setar um certo bit na inserção de um elemento é <span class="arithmatex">\(1/m\)</span>, e</li>
+<li>a probabilidade de não setar tal bit é <span class="arithmatex">\(1 - 1/m\)</span>;</li>
+<li>a probabilidade de <span class="arithmatex">\(k\)</span> hashes não setarem um bit é <span class="arithmatex">\((1 - 1/m)^k\)</span>;</li>
+<li>a probabilidade de não setar um bit após <span class="arithmatex">\(n\)</span> inserções é <span class="arithmatex">\((1 - 1/m)^{kn}\)</span>;</li>
+<li>a probabilidade de setar um bit após <span class="arithmatex">\(n\)</span> inserções é <span class="arithmatex">\(1 - (1 - 1/m)^{kn}\)</span></li>
 </ul>
 <p>Logo,</p>
 <ul>
-<li>a probabilidade de falso positivo <span><span class="MathJax_Preview">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</span><script type="math/tex">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</script></span>
+<li>a probabilidade de falso positivo <span class="arithmatex">\(p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k\)</span>
 O que nos permite chegar à relação</li>
-<li><span><span class="MathJax_Preview">m/n = - 1.44\log_2 p</span><script type="math/tex">m/n = - 1.44\log_2 p</script></span>, em que podemos calcular <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> em função do <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> esperado e do <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> desejado.
-E podemos também identificar o <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> ótimo para a situação, pela equação</li>
-<li><span><span class="MathJax_Preview">k = - \frac{\ln p}{\ln 2} = - \log_2 p</span><script type="math/tex">k = - \frac{\ln p}{\ln 2} = - \log_2 p</script></span></li>
+<li><span class="arithmatex">\(m/n = - 1.44\log_2 p\)</span>, em que podemos calcular <span class="arithmatex">\(m\)</span> em função do <span class="arithmatex">\(n\)</span> esperado e do <span class="arithmatex">\(p\)</span> desejado.
+E podemos também identificar o <span class="arithmatex">\(k\)</span> ótimo para a situação, pela equação</li>
+<li><span class="arithmatex">\(k = - \frac{\ln p}{\ln 2} = - \log_2 p\)</span></li>
 </ul>
 <p>Uma forma "simples" de visualizar este resultado é dada pela figura a seguir, em que o eixo Y dá a taxa de falsos positivos do filtro em função do número de elementos inseridos, indicado no eixo X, para diversas configurações, apresentadas como curvas.
-Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b = 2MB</span><script type="math/tex">m = 2^{24}b = 2MB</script></span>, após 1 milhão de inserções, tem-se probabilidade de falsos positivo <span><span class="MathJax_Preview">p = 0,0001</span><script type="math/tex">p = 0,0001</script></span>.</p>
+Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</span>, após 1 milhão de inserções, tem-se probabilidade de falsos positivo <span class="arithmatex">\(p = 0,0001\)</span>.</p>
 <h5 id="referencias">Referências</h5>
 <p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Bloom-Filter</a></p>
 <div class="admonition todo">
@@ -2593,7 +2593,7 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <li>A segunda  leitura de x em (b) retorna a</li>
 </ul>
 <h5 id="consistencia-estrita">Consistência Estrita</h5>
-<p>Qualquer leitura de um objeto <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> retorna o valor gravado em <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span> pela operação de escrita mais recente em <span><span class="MathJax_Preview">X</span><script type="math/tex">X</script></span>.</p>
+<p>Qualquer leitura de um objeto <span class="arithmatex">\(X\)</span> retorna o valor gravado em <span class="arithmatex">\(X\)</span> pela operação de escrita mais recente em <span class="arithmatex">\(X\)</span>.</p>
 <ul>
 <li>O que quer dizer "mais recente" em um sistema distribuído assíncrono?</li>
 <li>Todas as operações de escrita são instantaneamente visíveis a todos os processos  <em>tempo global</em> é respeitado.</li>
@@ -2668,31 +2668,31 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <p>Cliente pode se mover antes de sua última operação ter replicado do servidor onde estava para o novo servidor.</p>
 <h5 id="leituras-monotonicas">Leituras Monotônicas</h5>
 <p><strong>Garantia</strong></p>
-<p>Se um processo lê o valor de um item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, qualquer leitura sucessiva de <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> retornará o mesmo valor ou um mais recente.</p>
+<p>Se um processo lê o valor de um item <span class="arithmatex">\(x\)</span>, qualquer leitura sucessiva de <span class="arithmatex">\(x\)</span> retornará o mesmo valor ou um mais recente.</p>
 <ul>
 <li>Toda vez que se conecta a um servidor de email, seu cliente lê novas mensagens, caso haja.</li>
 <li>O cliente nunca esquece uma mensagem, mesmo que ainda não esteja no servidor conectado por último.</li>
-<li>WS(<span><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span>) -- operações de escrita (\emph{write set}) que levaram a variável <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> a ter o valor <span><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span>.</li>
-<li>WS(<span><span class="MathJax_Preview">x_i;x_j</span><script type="math/tex">x_i;x_j</script></span>) -- operações de escrita relativas a <span><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span> incluem operações de escrita relativas a <span><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span></li>
+<li>WS(<span class="arithmatex">\(x_i\)</span>) -- operações de escrita (\emph{write set}) que levaram a variável <span class="arithmatex">\(x\)</span> a ter o valor <span class="arithmatex">\(x_i\)</span>.</li>
+<li>WS(<span class="arithmatex">\(x_i;x_j\)</span>) -- operações de escrita relativas a <span class="arithmatex">\(x_j\)</span> incluem operações de escrita relativas a <span class="arithmatex">\(x_i\)</span></li>
 </ul>
 <p><img alt="" src="images/07-12.png" /></p>
 <h5 id="escritas-monotonicas">Escritas Monotônicas</h5>
 <p><strong>Garantia:</strong></p>
-<p>Se um processo escreve em item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então esta operação deve terminar antes que qualquer escrita sucessiva em <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> possa ser executada pelo mesmo processo.</p>
+<p>Se um processo escreve em item <span class="arithmatex">\(x\)</span>, então esta operação deve terminar antes que qualquer escrita sucessiva em <span class="arithmatex">\(x\)</span> possa ser executada pelo mesmo processo.</p>
 <ul>
 <li>Em um sistema de arquivos na rede, a escrita do conteúdo de um arquivo, em certa posição, só pode ser feita se escritas anteriores já estão registradas no arquivo, independentemente de o cliente contactar novo servidor de arquivos.</li>
 </ul>
 <p><img alt="" src="images/07-13.png" /></p>
 <h5 id="leia-suas-escritas">Leia suas Escritas</h5>
 <p><strong>Garantia:</strong></p>
-<p>Se um processo escreve em item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então leituras sucessivas no mesmo item pelo mesmo processo devem refletir tal escrita.</p>
+<p>Se um processo escreve em item <span class="arithmatex">\(x\)</span>, então leituras sucessivas no mesmo item pelo mesmo processo devem refletir tal escrita.</p>
 <ul>
 <li>Atualizar código fonte de uma página e exigir que o navegador carrega a nova versão.</li>
 </ul>
 <p><img alt="" src="images/07-14.png" /></p>
 <h5 id="escritas-seguem-leituras">Escritas seguem Leituras</h5>
 <p><strong>Garantia:</strong></p>
-<p>Se um processo lê um item <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, então escritas sucessivas no mesmo item só podem ser completadas se o mesmo reflete o valor lido anteriormente.</p>
+<p>Se um processo lê um item <span class="arithmatex">\(x\)</span>, então escritas sucessivas no mesmo item só podem ser completadas se o mesmo reflete o valor lido anteriormente.</p>
 <ul>
 <li>Só é permitido enviar uma resposta a uma mensagem se a mensagem em si é vista, independentemente do cliente ter se movimentado.</li>
 </ul>
@@ -2713,12 +2713,12 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <p><img alt="" src="images/07-17.png" /></p>
 <h3 id="sob-demanda-do-servidor">Sob demanda do Servidor</h3>
 <ul>
-<li><span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> conta acessos ao arquivo <span><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span></li>
-<li>Agrega acessos por possível réplica mais próxima (<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>)</li>
-<li>Número de acessos acima de limiar <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>, replica para <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span></li>
-<li>Número de acessos abaixo de <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>, apaga de <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span></li>
-<li><span><span class="MathJax_Preview">D &lt; R</span><script type="math/tex">D < R</script></span></li>
-<li>Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span> e <span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>), considera migrar.</li>
+<li><span class="arithmatex">\(Q\)</span> conta acessos ao arquivo <span class="arithmatex">\(F\)</span></li>
+<li>Agrega acessos por possível réplica mais próxima (<span class="arithmatex">\(P\)</span>)</li>
+<li>Número de acessos acima de limiar <span class="arithmatex">\(R\)</span>, replica para <span class="arithmatex">\(P\)</span></li>
+<li>Número de acessos abaixo de <span class="arithmatex">\(D\)</span>, apaga de <span class="arithmatex">\(P\)</span></li>
+<li><span class="arithmatex">\(D &lt; R\)</span></li>
+<li>Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre <span class="arithmatex">\(D\)</span> e <span class="arithmatex">\(R\)</span>), considera migrar.</li>
 </ul>
 <p><img alt="" src="images/07-18.png" /></p>
 <h3 id="propagacao-de-atualizacoes">Propagação de Atualizações</h3>
@@ -2754,14 +2754,14 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <p>Proativo</p>
 <ul>
 <li>Mantém réplicas consistentes</li>
-<li>Desnecessário se leitura <span><span class="MathJax_Preview">&lt;&lt;</span><script type="math/tex"><<</script></span> escrita.</li>
+<li>Desnecessário se leitura <span class="arithmatex">\(&lt;&lt;\)</span> escrita.</li>
 </ul>
 </li>
 <li>
 <p>Reativo</p>
 <ul>
 <li>Réplicas só se tornam consistentes quando necessário.</li>
-<li>Lento se leitura <span><span class="MathJax_Preview">&gt;&gt;</span><script type="math/tex">>></script></span> escrita</li>
+<li>Lento se leitura <span class="arithmatex">\(&gt;&gt;\)</span> escrita</li>
 </ul>
 </li>
 </ul>
@@ -2808,32 +2808,32 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <h4 id="checkpointing-independente">Checkpointing independente</h4>
 <p>Cada processo faz o checkpoint local independentemente, incorrendo no risco de um <em>rollback</em> em cascata.</p>
 <ul>
-<li>Seja <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span> o <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>-ésimo checkpoint do processo <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span>.</li>
-<li>Seja <span><span class="MathJax_Preview">I_i^m</span><script type="math/tex">I_i^m</script></span> o intervalo entre <span><span class="MathJax_Preview">C_i^{m-1}</span><script type="math/tex">C_i^{m-1}</script></span> e <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span>.</li>
-<li>Quando o processo <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> envia a mensagem no intervalo <span><span class="MathJax_Preview">I_i^m</span><script type="math/tex">I_i^m</script></span>, envia <span><span class="MathJax_Preview">(i,m)</span><script type="math/tex">(i,m)</script></span> em piggyback</li>
-<li>Quando o processo <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> recebe a mensagem no intervalo <span><span class="MathJax_Preview">I_j^n</span><script type="math/tex">I_j^n</script></span>, grava a dependência <span><span class="MathJax_Preview">I_i^m \rightarrow I_j^n</span><script type="math/tex">I_i^m \rightarrow I_j^n</script></span></li>
-<li>A dependência <span><span class="MathJax_Preview">I_i^m \rightarrow I_j^n</span><script type="math/tex">I_i^m \rightarrow I_j^n</script></span> é salva junto com o checkpoint <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span></li>
+<li>Seja <span class="arithmatex">\(C_i^m\)</span> o <span class="arithmatex">\(m\)</span>-ésimo checkpoint do processo <span class="arithmatex">\(p_i\)</span>.</li>
+<li>Seja <span class="arithmatex">\(I_i^m\)</span> o intervalo entre <span class="arithmatex">\(C_i^{m-1}\)</span> e <span class="arithmatex">\(C_i^m\)</span>.</li>
+<li>Quando o processo <span class="arithmatex">\(p_i\)</span> envia a mensagem no intervalo <span class="arithmatex">\(I_i^m\)</span>, envia <span class="arithmatex">\((i,m)\)</span> em piggyback</li>
+<li>Quando o processo <span class="arithmatex">\(p_j\)</span> recebe a mensagem no intervalo <span class="arithmatex">\(I_j^n\)</span>, grava a dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span></li>
+<li>A dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span> é salva junto com o checkpoint <span class="arithmatex">\(C_j^n\)</span></li>
 </ul>
 <h4 id="restricao">Restrição</h4>
 <ul>
-<li>Se o processo <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> é revertido para o estado <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span>, então o <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> não pode reverter para nenhum estado anterior a <span><span class="MathJax_Preview">C_i^m</span><script type="math/tex">C_i^m</script></span>, ou não teria enviado as mensagens recebidas por <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> 4 inclusas em <span><span class="MathJax_Preview">C_j^n</span><script type="math/tex">C_j^n</script></span>.</li>
+<li>Se o processo <span class="arithmatex">\(p_j\)</span> é revertido para o estado <span class="arithmatex">\(C_j^n\)</span>, então o <span class="arithmatex">\(p_i\)</span> não pode reverter para nenhum estado anterior a <span class="arithmatex">\(C_i^m\)</span>, ou não teria enviado as mensagens recebidas por <span class="arithmatex">\(p_j\)</span> 4 inclusas em <span class="arithmatex">\(C_j^n\)</span>.</li>
 </ul>
 <p>ou</p>
 <ul>
-<li>Se o processo <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> é revertido para o estado <span><span class="MathJax_Preview">C_i^{m-1}</span><script type="math/tex">C_i^{m-1}</script></span>, então o <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> tem que ser revertido pelo menos até <span><span class="MathJax_Preview">C_j^{n-1}</span><script type="math/tex">C_j^{n-1}</script></span>, ou incluiria mensagens ainda não enviadas por <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span>.</li>
+<li>Se o processo <span class="arithmatex">\(p_i\)</span> é revertido para o estado <span class="arithmatex">\(C_i^{m-1}\)</span>, então o <span class="arithmatex">\(p_j\)</span> tem que ser revertido pelo menos até <span class="arithmatex">\(C_j^{n-1}\)</span>, ou incluiria mensagens ainda não enviadas por <span class="arithmatex">\(p_i\)</span>.</li>
 </ul>
 <p>Como implementar a recuperação?</p>
 <h4 id="caso-patologico">Caso patológico</h4>
 <ul>
-<li><span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> e <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> no estado inicial (<span><span class="MathJax_Preview">C_i^0, C_j^0</span><script type="math/tex">C_i^0, C_j^0</script></span>)</li>
-<li><span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> manda mensagens para <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> (<span><span class="MathJax_Preview">C_i^1 \rightarrow C_j^1</span><script type="math/tex">C_i^1 \rightarrow C_j^1</script></span>)</li>
-<li><span><span class="MathJax_Preview">C_j^1</span><script type="math/tex">C_j^1</script></span></li>
-<li><span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> manda mensagens para <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> <span><span class="MathJax_Preview">C_j^2 \rightarrow C_i^1</span><script type="math/tex">C_j^2 \rightarrow C_i^1</script></span></li>
-<li><span><span class="MathJax_Preview">C_i^1</span><script type="math/tex">C_i^1</script></span></li>
-<li><span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> manda mensagens para <span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> <span><span class="MathJax_Preview">C_i^2 \rightarrow C_j^2</span><script type="math/tex">C_i^2 \rightarrow C_j^2</script></span></li>
-<li><span><span class="MathJax_Preview">C_j^2</span><script type="math/tex">C_j^2</script></span></li>
-<li><span><span class="MathJax_Preview">p_j</span><script type="math/tex">p_j</script></span> manda mensagens para <span><span class="MathJax_Preview">p_i</span><script type="math/tex">p_i</script></span> <span><span class="MathJax_Preview">C_j^3 \rightarrow C_i^2</span><script type="math/tex">C_j^3 \rightarrow C_i^2</script></span></li>
-<li><span><span class="MathJax_Preview">C_i^2</span><script type="math/tex">C_i^2</script></span></li>
+<li><span class="arithmatex">\(p_i\)</span> e <span class="arithmatex">\(p_j\)</span> no estado inicial (<span class="arithmatex">\(C_i^0, C_j^0\)</span>)</li>
+<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> (<span class="arithmatex">\(C_i^1 \rightarrow C_j^1\)</span>)</li>
+<li><span class="arithmatex">\(C_j^1\)</span></li>
+<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^2 \rightarrow C_i^1\)</span></li>
+<li><span class="arithmatex">\(C_i^1\)</span></li>
+<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> <span class="arithmatex">\(C_i^2 \rightarrow C_j^2\)</span></li>
+<li><span class="arithmatex">\(C_j^2\)</span></li>
+<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^3 \rightarrow C_i^2\)</span></li>
+<li><span class="arithmatex">\(C_i^2\)</span></li>
 <li>...</li>
 </ul>
 <h3 id="checkpointing-coordenado">Checkpointing coordenado</h3>
@@ -2873,16 +2873,16 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 </ul>
 </li>
 <li>
-<p>Um processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> que receba "snapshot" de um processo <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span></p>
+<p>Um processo <span class="arithmatex">\(p\)</span> que receba "snapshot" de um processo <span class="arithmatex">\(q\)</span></p>
 <ul>
-<li>grava estado local <span><span class="MathJax_Preview">S_p</span><script type="math/tex">S_p</script></span></li>
-<li>grava estado do canal <span><span class="MathJax_Preview">C_{q,p} =\emptyset</span><script type="math/tex">C_{q,p} =\emptyset</script></span></li>
+<li>grava estado local <span class="arithmatex">\(S_p\)</span></li>
+<li>grava estado do canal <span class="arithmatex">\(C_{q,p} =\emptyset\)</span></li>
 <li>Envia uma mensagem "snapshot" aos outros processos em cada canal de saída</li>
-<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal (excluindo <span><span class="MathJax_Preview">C_{q,p}</span><script type="math/tex">C_{q,p}</script></span>)</li>
+<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal (excluindo <span class="arithmatex">\(C_{q,p}\)</span>)</li>
 </ul>
 </li>
 <li>
-<p>Protocolo termina para o processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> quando tiver recebido marcador "snapshot" em cada um de seus canais.</p>
+<p>Protocolo termina para o processo <span class="arithmatex">\(p\)</span> quando tiver recebido marcador "snapshot" em cada um de seus canais.</p>
 </li>
 <li>O estado global consiste dos snapshots + estado em cada um dos canais.</li>
 <li>Exige canais FIFO</li>
@@ -2897,29 +2897,29 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
 <h4 id="notacao">Notação</h4>
 <ul>
 <li>
-<p><span><span class="MathJax_Preview">Hdr(m)</span><script type="math/tex">Hdr(m)</script></span></p>
+<p><span class="arithmatex">\(Hdr(m)\)</span></p>
 <ul>
-<li>Cabeçalho da mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> contendo fonte, destino, número de sequência e número de entrega.</li>
+<li>Cabeçalho da mensagem <span class="arithmatex">\(m\)</span> contendo fonte, destino, número de sequência e número de entrega.</li>
 <li>O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).</li>
-<li>A mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é estável se <span><span class="MathJax_Preview">Hdr(m)</span><script type="math/tex">Hdr(m)</script></span> estiver em memória estável.</li>
+<li>A mensagem <span class="arithmatex">\(m\)</span> é estável se <span class="arithmatex">\(Hdr(m)\)</span> estiver em memória estável.</li>
 </ul>
 </li>
 <li>
-<p><span><span class="MathJax_Preview">Dep(m)</span><script type="math/tex">Dep(m)</script></span>: o conjunto de processos a quem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> ou mensagens que dependem de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> foram entregues.</p>
+<p><span class="arithmatex">\(Dep(m)\)</span>: o conjunto de processos a quem <span class="arithmatex">\(m\)</span> ou mensagens que dependem de <span class="arithmatex">\(m\)</span> foram entregues.</p>
 </li>
-<li><span><span class="MathJax_Preview">Copy(m)</span><script type="math/tex">Copy(m)</script></span>: o conjunto de processos que tem uma cópia de <span><span class="MathJax_Preview">Hdr(m)</span><script type="math/tex">Hdr(m)</script></span> em memória volátil.</li>
+<li><span class="arithmatex">\(Copy(m)\)</span>: o conjunto de processos que tem uma cópia de <span class="arithmatex">\(Hdr(m)\)</span> em memória volátil.</li>
 </ul>
 <h3 id="orfaos">Órfãos</h3>
 <p><strong>Definição</strong></p>
-<p>Se <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> é um conjunto de processos falhos, então <span><span class="MathJax_Preview">Q\not\in C</span><script type="math/tex">Q\not\in C</script></span> é um órfão se existe uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> tal que <span><span class="MathJax_Preview">Q \in Dep(m)</span><script type="math/tex">Q \in Dep(m)</script></span> e <span><span class="MathJax_Preview">Copy(m)\subseteq C</span><script type="math/tex">Copy(m)\subseteq C</script></span>    </p>
-<p>Se os processos em <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> a receber <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> ou um mensagem causalmente dependente de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>.</p>
+<p>Se <span class="arithmatex">\(C\)</span> é um conjunto de processos falhos, então <span class="arithmatex">\(Q\not\in C\)</span> é um órfão se existe uma mensagem <span class="arithmatex">\(m\)</span> tal que <span class="arithmatex">\(Q \in Dep(m)\)</span> e <span class="arithmatex">\(Copy(m)\subseteq C\)</span>    </p>
+<p>Se os processos em <span class="arithmatex">\(C\)</span> forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou <span class="arithmatex">\(Q\)</span> a receber <span class="arithmatex">\(m\)</span> ou um mensagem causalmente dependente de <span class="arithmatex">\(m\)</span>.</p>
 <h3 id="protocolo-pessimista">Protocolo Pessimista</h3>
-<p>Para cada mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não estável, há no máximo um processo dependente em <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> (<span><span class="MathJax_Preview">Dep(m) \leq 1</span><script type="math/tex">Dep(m) \leq 1</script></span>)</p>
+<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, há no máximo um processo dependente em <span class="arithmatex">\(m\)</span> (<span class="arithmatex">\(Dep(m) \leq 1\)</span>)</p>
 <p>Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.</p>
 <p>Toda mensagem é precedida por uma escrita em disco.</p>
-<p>Para cada mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não estável, então devemos garantir que se <span><span class="MathJax_Preview">Copy(m) \subseteq C</span><script type="math/tex">Copy(m) \subseteq C</script></span>, então \emph{eventually} <span><span class="MathJax_Preview">Dep(m) \subseteq C</span><script type="math/tex">Dep(m) \subseteq C</script></span>, onde <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> é o conjunto de processos que falharam.</p>
-<p>Para garantir que <span><span class="MathJax_Preview">Dep(m) \subseteq C</span><script type="math/tex">Dep(m) \subseteq C</script></span>, fazemos um rollback de cada órfão <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> até que <span><span class="MathJax_Preview">Q \not\in Dep(m)</span><script type="math/tex">Q \not\in Dep(m)</script></span></p>
-<p>Isto é, forçamos <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> a ser recuperado mesmo que não tenha falhado.</p>
+<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, então devemos garantir que se <span class="arithmatex">\(Copy(m) \subseteq C\)</span>, então \emph{eventually} <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, onde <span class="arithmatex">\(C\)</span> é o conjunto de processos que falharam.</p>
+<p>Para garantir que <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, fazemos um rollback de cada órfão <span class="arithmatex">\(Q\)</span> até que <span class="arithmatex">\(Q \not\in Dep(m)\)</span></p>
+<p>Isto é, forçamos <span class="arithmatex">\(Q\)</span> a ser recuperado mesmo que não tenha falhado.</p>
 <h2 id="bancos-de-dados">Bancos de Dados</h2>
 <p>Falar em bancos de dados distribuídos implica falar em bancos transacionais e P2P.</p>
 <h3 id="operacoes-atomicas">Operações Atômicas</h3>
@@ -3068,7 +3068,7 @@ s = b.getSaldo() [1]
     a.setSaldo(s*0.1)
 </code></pre></div>
 </td></tr></table></p>
-<p>Conflitos: 1x3:<span><span class="MathJax_Preview">\rightarrow</span><script type="math/tex">\rightarrow</script></span>, 2x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 3x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span></p>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
 <p>Consistência -- <code>s*0.1</code> foi perdido</p>
 <p>Mova 10% do saldo de X, de Y para X.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -3086,7 +3086,7 @@ s = b.getSaldo() [1]
     a.setSaldo(saldo*0.1)
 </code></pre></div>
 </td></tr></table></p>
-<p>Conflitos: 1x3:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 2x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span>, 3x4:<span><span class="MathJax_Preview">\leftarrow</span><script type="math/tex">\leftarrow</script></span></p>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\leftarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
 <h3 id="dirty-read">Dirty Read</h3>
 <p>Saldo total?
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -3320,9 +3320,9 @@ ou aborte t2.</p>
 <h3 id="atomicidade">atomicidade</h3>
 <p>O problema...</p>
 <ul>
-<li>transação <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> acessa recursos nos resource managers (rm)</li>
-<li>terminar com sucessos <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> em todos os rm -- commit -- ou</li>
-<li>abortar <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> em todos os rm</li>
+<li>transação <span class="arithmatex">\(t\)</span> acessa recursos nos resource managers (rm)</li>
+<li>terminar com sucessos <span class="arithmatex">\(t\)</span> em todos os rm -- commit -- ou</li>
+<li>abortar <span class="arithmatex">\(t\)</span> em todos os rm</li>
 <li>ainda que enlaces de comunicação, nós e rm falhem, antes ou durante a terminação da transação.</li>
 </ul>
 <h3 id="2pc-2-phase-commit">2PC - 2 Phase Commit</h3>
@@ -3335,7 +3335,7 @@ ou aborte t2.</p>
 <li>Cliente decide quando iniciar o commit.</li>
 <li>Cada participante faz commit ou abort da transação local.<br/>
 pode retornar ok ou nok.</li>
-<li>Coordenador não começa a commit até que a <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> tenha terminado em todos os participantes e cliente tenha solicitado.</li>
+<li>Coordenador não começa a commit até que a <span class="arithmatex">\(t\)</span> tenha terminado em todos os participantes e cliente tenha solicitado.</li>
 <li>Participantes falham por parada.</li>
 </ul>
 <h4 id="1pc">1PC</h4>
@@ -3354,7 +3354,7 @@ pode retornar ok ou nok.</li>
 </ul>
 <h4 id="comprometimento">Comprometimento</h4>
 <ul>
-<li>um participante <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> está pronto para commit se tiver todos os valores modificados por <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)</li>
+<li>um participante <span class="arithmatex">\(p\)</span> está pronto para commit se tiver todos os valores modificados por <span class="arithmatex">\(t\)</span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)</li>
 <li>o coordenador não pode começar a terminação até que todos os participantes estejam prontos.</li>
 <li>se algum participante aborta, o coordenador deve abortar. </li>
 </ul>
@@ -3391,7 +3391,7 @@ pode retornar ok ou nok.</li>
 </tbody>
 </table>
 <h4 id="falha-no-participante">Falha no Participante</h4>
-<p>Participante falha no estado <span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
+<p>Participante falha no estado <span class="arithmatex">\(S\)</span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
 <p>Se está no estado</p>
 <ul>
 <li>INIT:  nem sabia que a terminação começou.  Aborta unilateralmente, pois ou já abortaram ou vão abortar.</li>
@@ -3402,22 +3402,22 @@ pode retornar ok ou nok.</li>
 <h4 id="2pc_1">2PC</h4>
 <p>Por que é difícil?</p>
 <ul>
-<li>E se <span><span class="MathJax_Preview">R_i</span><script type="math/tex">R_i</script></span> falhar depois de ter se preparado?</li>
-<li>E se <span><span class="MathJax_Preview">R_i</span><script type="math/tex">R_i</script></span> falhar mas <span><span class="MathJax_Preview">R_j</span><script type="math/tex">R_j</script></span> continuar funcionando?</li>
-<li>E se todos estiverem desligados quando <span><span class="MathJax_Preview">R_i</span><script type="math/tex">R_i</script></span> se recuperar?</li>
-<li>E se <span><span class="MathJax_Preview">R_i</span><script type="math/tex">R_i</script></span> estiver lento e parecer que a transação falhou?</li>
+<li>E se <span class="arithmatex">\(R_i\)</span> falhar depois de ter se preparado?</li>
+<li>E se <span class="arithmatex">\(R_i\)</span> falhar mas <span class="arithmatex">\(R_j\)</span> continuar funcionando?</li>
+<li>E se todos estiverem desligados quando <span class="arithmatex">\(R_i\)</span> se recuperar?</li>
+<li>E se <span class="arithmatex">\(R_i\)</span> estiver lento e parecer que a transação falhou?</li>
 </ul>
 <h4 id="falha-no-participante_1">Falha no Participante</h4>
 <ul>
 <li>READY: esperando por commit ou abort. Precisa saber se coordenador enviou global-commit our global-abort -- consulta coordenador.</li>
 </ul>
 <p><em>E se coordenador não estiver presente?</em></p>
-<p>Assumindo que participantes se conhecem, contate participante <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>   </p>
+<p>Assumindo que participantes se conhecem, contate participante <span class="arithmatex">\(Q\)</span>   </p>
 <ul>
-<li>Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em COMMIT , vai para COMMIT</li>
-<li>Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em ABORT , vai para ABORT</li>
-<li>Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em INIT , ordena que Q aborte e, se confirmado, veja passo anterior</li>
-<li>Se <span><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span> em READY , consulta outro participante.</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em COMMIT , vai para COMMIT</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em ABORT , vai para ABORT</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em INIT , ordena que Q aborte e, se confirmado, veja passo anterior</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em READY , consulta outro participante.</li>
 </ul>
 <p><em>Se todos os participantes em READY?</em>  Possivelmente o coordenador já respondeu ao cliente.</p>
 <p><em>Precisa</em> esperar pelo coordenador.</p>
@@ -3488,7 +3488,7 @@ pode retornar ok ou nok.</li>
 </tbody>
 </table>
 <h4 id="falha-no-participante_2">Falha no Participante</h4>
-<p><span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
+<p><span class="arithmatex">\(P\)</span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
 <ul>
 <li>Participantes e coordenador não distam mais que um estado.</li>
 <li>Se alguém em READY, o coordenador não mandou global-commit ainda; Aborte.</li>
@@ -3507,20 +3507,20 @@ pode retornar ok ou nok.</li>
 <p>Usa instâncias de Consenso Distribuído para votar. Se o consenso é tolerante a falhas e consistente, todos vêem o mesmo resultado na transação.</p>
 <h4 id="o-protocolo_1">O protocolo</h4>
 <ul>
-<li>Para terminar a transação <span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>, o coordenador envia request-commit a todos os participantes.</li>
-<li>Um participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> propõe seu voto na instância <span><span class="MathJax_Preview">T_P</span><script type="math/tex">T_P</script></span> de consenso.</li>
+<li>Para terminar a transação <span class="arithmatex">\(T\)</span>, o coordenador envia request-commit a todos os participantes.</li>
+<li>Um participante <span class="arithmatex">\(P\)</span> propõe seu voto na instância <span class="arithmatex">\(T_P\)</span> de consenso.</li>
 <li>
-<p>Todo participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> espera pelas decisões das instâncias de consenso <span><span class="MathJax_Preview">T_i</span><script type="math/tex">T_i</script></span> para todos os participantes <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>, inclusive si mesmo; se todas as decisões forem commit, o participante comita a transação.</p>
+<p>Todo participante <span class="arithmatex">\(P\)</span> espera pelas decisões das instâncias de consenso <span class="arithmatex">\(T_i\)</span> para todos os participantes <span class="arithmatex">\(i\)</span>, inclusive si mesmo; se todas as decisões forem commit, o participante comita a transação.</p>
 </li>
 <li>
-<p>Se cansar de esperar por <span><span class="MathJax_Preview">T_Q</span><script type="math/tex">T_Q</script></span>, o participante propõe abort em <span><span class="MathJax_Preview">T_Q</span><script type="math/tex">T_Q</script></span>.</p>
+<p>Se cansar de esperar por <span class="arithmatex">\(T_Q\)</span>, o participante propõe abort em <span class="arithmatex">\(T_Q\)</span>.</p>
 </li>
 </ul>
 <h4 id="falha-no-participante_3">Falha no Participante</h4>
 <ul>
 <li>Se o participante falha antes de votar, então alguém votará abort por ele.</li>
-<li>Se o participante <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em <span><span class="MathJax_Preview">T_P</span><script type="math/tex">T_P</script></span>; isso não é um problema pois a decisão é a mesma para todos observando a instância.</li>
-<li>Após se recuperar, o participante recupera as decisões de todas as instâncias <span><span class="MathJax_Preview">T_i</span><script type="math/tex">T_i</script></span> e termina apropriadamente.</li>
+<li>Se o participante <span class="arithmatex">\(P\)</span> falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em <span class="arithmatex">\(T_P\)</span>; isso não é um problema pois a decisão é a mesma para todos observando a instância.</li>
+<li>Após se recuperar, o participante recupera as decisões de todas as instâncias <span class="arithmatex">\(T_i\)</span> e termina apropriadamente.</li>
 </ul>
 <h2 id="log-recuperavel">Log Recuperável</h2>
 <p>Como garantir que o log poderá ser lido para recuperar o processo?</p>
@@ -3613,7 +3613,9 @@ pode retornar ok ou nok.</li>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>

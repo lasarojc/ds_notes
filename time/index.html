@@ -712,20 +712,20 @@ Neste cenário, temos novo problema:</p>
 Para uma introdução rápida, assista o seguinte vídeo.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p>Em suma, um relógio de quartzo consiste em um <strong>diapazão de quartzo</strong> cortado a laser que, devido ao <strong>efeito Piezoelétrico</strong><sup id="fnref:piezo"><a class="footnote-ref" href="#fn:piezo">2</a></sup> e sua forma particular, vibra a <span><span class="MathJax_Preview">32768 = 2^{15}</span><script type="math/tex">32768 = 2^{15}</script></span>Hz<sup id="fnref:freq"><a class="footnote-ref" href="#fn:freq">3</a></sup>, e em um contador que conta cada vibração, medindo a passagem do tempo.
+<p>Em suma, um relógio de quartzo consiste em um <strong>diapazão de quartzo</strong> cortado a laser que, devido ao <strong>efeito Piezoelétrico</strong><sup id="fnref:piezo"><a class="footnote-ref" href="#fn:piezo">2</a></sup> e sua forma particular, vibra a <span class="arithmatex">\(32768 = 2^{15}\)</span>Hz<sup id="fnref:freq"><a class="footnote-ref" href="#fn:freq">3</a></sup>, e em um contador que conta cada vibração, medindo a passagem do tempo.
 Estes relógios erram na medição do tempo em no máximo <strong>&frac12;s por dia</strong>, desde que operem dentro da faixa de 5 a 35C, mas isso também muda com a idade do cristal, a corrente elétrica passando por ele e também devido a imperfeições no cristal<sup id="fnref:quartz"><a class="footnote-ref" href="#fn:quartz">1</a></sup>.</p>
 <p>Computadores em geral usam relógios de quartzo, por serem baratos, como base de um relógio mantido em software.
 Isto é, do ponto de vista de um computador comum, o tempo é medido com base em um relógio quartzo, cujos incrementos são capturados em um contador;
-o contador gera <strong>interrupções em intervalos programados</strong> (e.g., Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz) e as interrupções causam ajustes em um <strong>relógio em software</strong>, um contador indireto <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>.</p>
+o contador gera <strong>interrupções em intervalos programados</strong> (e.g., Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz) e as interrupções causam ajustes em um <strong>relógio em software</strong>, um contador indireto <span class="arithmatex">\(C\)</span>.</p>
 <div class="admonition question">
 <p class="admonition-title">Precisão</p>
 <p>Dado a frequência padrão de 250Hz, medições de tempo menores que 4ms são altamente imprecisas.
  Como medir o tempo gasto em uma função do seu código?</p>
 </div>
-<p>Este relógio em software, <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>, que usa um relógio de quartzo, impreciso, pode marcar a passagem do tempo com erro para mais ou para menos. Embora o erro exato do relógio seja desconhecido, o mesmo é limitado probabilisticamente. 
-A taxa de erro é denominada <em>drift</em>, é representada por <span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>.</p>
-<p>Assumindo um relógio perfeito, <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>, temos que <span><span class="MathJax_Preview">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</span><script type="math/tex">1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho</script></span>.
-Assim, um <span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span> de 0.1 implica em um erro de mais ou menos 10%; a figura a seguir mostra a faixa em que <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> pode operar e que o erro em relação a <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> vai aumentando com a passagem do tempo.</p>
+<p>Este relógio em software, <span class="arithmatex">\(C\)</span>, que usa um relógio de quartzo, impreciso, pode marcar a passagem do tempo com erro para mais ou para menos. Embora o erro exato do relógio seja desconhecido, o mesmo é limitado probabilisticamente. 
+A taxa de erro é denominada <em>drift</em>, é representada por <span class="arithmatex">\(\rho\)</span>.</p>
+<p>Assumindo um relógio perfeito, <span class="arithmatex">\(t\)</span>, temos que <span class="arithmatex">\(1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho\)</span>.
+Assim, um <span class="arithmatex">\(\rho\)</span> de 0.1 implica em um erro de mais ou menos 10%; a figura a seguir mostra a faixa em que <span class="arithmatex">\(C\)</span> pode operar e que o erro em relação a <span class="arithmatex">\(t\)</span> vai aumentando com a passagem do tempo.</p>
 <p><img alt="Clock drift" src="drawings/clock_skew.drawio-0.svg" /></p>
 <p>Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. 
 Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como <strong>relógios atômicos</strong>.</p>
@@ -751,23 +751,23 @@ Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores p
 <p>Embora a resposta seja negativa, no sentido de que não é possível alcançar sincronização perfeita, nada nos impede de fazer um melhor esforço e, neste sentido, também temos que nos perguntar qual a frequência de sincronização?</p>
 <div class="admonition question">
 <p class="admonition-title">Frequência de Sincronização</p>
-<p>Como garantir que dois relógios com erro máximo igual a <span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span> não diferirão em mais que <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> unidades de tempo?</p>
+<p>Como garantir que dois relógios com erro máximo igual a <span class="arithmatex">\(\rho\)</span> não diferirão em mais que <span class="arithmatex">\(\delta\)</span> unidades de tempo?</p>
 </div>
-<details class="answer"><summary>Resposta</summary><p>Sincronize pelo menos a cada <span><span class="MathJax_Preview">\frac{\delta}{2\rho}</span><script type="math/tex">\frac{\delta}{2\rho}</script></span> segundos.</p>
+<details class="answer"><summary>Resposta</summary><p>Sincronize pelo menos a cada <span class="arithmatex">\(\frac{\delta}{2\rho}\)</span> segundos.</p>
 </details>
 <p>E se tivermos muitos relógios a serem sincronizados, o problema é mais difícil?</p>
 <div class="admonition question">
 <p class="admonition-title">Frequência de Sincronização</p>
-<p>Como garantir que dois relógios quaisquer, em um sistema com <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> relógios, todos com erro máximo igual a <span><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>, não diferirão em mais que <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> unidades de tempo?</p>
+<p>Como garantir que dois relógios quaisquer, em um sistema com <span class="arithmatex">\(n\)</span> relógios, todos com erro máximo igual a <span class="arithmatex">\(\rho\)</span>, não diferirão em mais que <span class="arithmatex">\(\delta\)</span> unidades de tempo?</p>
 </div>
-<details class="answer"><summary>Resposta</summary><p>Se todos sincronizarem com a mesma fonte, a cada <span><span class="MathJax_Preview">\frac{\delta}{2\rho}</span><script type="math/tex">\frac{\delta}{2\rho}</script></span> segundos, seja o nó n1 aquele com maior erro em relação à fonte e n2 aquele com maior erro em relação a n1. Como ambos tem um erro máximo de <span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> em relação à fonte, o erro máximo entre os dois nós é <span><span class="MathJax_Preview">2\delta</span><script type="math/tex">2\delta</script></span>. Como este erro é o dobro do desejado, basta dobrar a frequência de sincronização para cortar o erro pela metade.</p>
+<details class="answer"><summary>Resposta</summary><p>Se todos sincronizarem com a mesma fonte, a cada <span class="arithmatex">\(\frac{\delta}{2\rho}\)</span> segundos, seja o nó n1 aquele com maior erro em relação à fonte e n2 aquele com maior erro em relação a n1. Como ambos tem um erro máximo de <span class="arithmatex">\(\delta\)</span> em relação à fonte, o erro máximo entre os dois nós é <span class="arithmatex">\(2\delta\)</span>. Como este erro é o dobro do desejado, basta dobrar a frequência de sincronização para cortar o erro pela metade.</p>
 </details>
 <p>Vejamos um exemplo:</p>
 <ul>
-<li><span><span class="MathJax_Preview">\rho = 0,1</span><script type="math/tex">\rho = 0,1</script></span></li>
-<li><span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span> = 1s</li>
+<li><span class="arithmatex">\(\rho = 0,1\)</span></li>
+<li><span class="arithmatex">\(\delta\)</span> = 1s</li>
 <li>Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. </li>
-<li>Como cada nó poderia estar errando em "direções"  diferentes, após 5s, um nó poderia se adiantar em 0,5s enquanto o outro se atrasa pela mesma quantidade de tempo, somando 1s de diferença. Logo, eles tem que se sincronizar a cada 5s, i.e, <span><span class="MathJax_Preview">\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s</span><script type="math/tex">\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s</script></span></li>
+<li>Como cada nó poderia estar errando em "direções"  diferentes, após 5s, um nó poderia se adiantar em 0,5s enquanto o outro se atrasa pela mesma quantidade de tempo, somando 1s de diferença. Logo, eles tem que se sincronizar a cada 5s, i.e, <span class="arithmatex">\(\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s\)</span></li>
 </ul>
 <p>Como última parada antes de começarmos a falar sobre a sincronização em si, devemos estabelecer alguns cuidados a serem tomados no processo.</p>
 <ul>
@@ -784,7 +784,7 @@ Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores p
 Contudo, falta ainda definir o protocolo pelo qual a sincronização é feita e exatamente com quem, uma vez que simpleste UTC é muito genérico. 
 Comecemos com vetor "próximo" do UTC, os relógios atômicos em satélites GPS.</p>
 <h4 id="global-positioning-system">Global Positioning System</h4>
-<p>Receptores GPS, com seus relógios sincronizados com os dos satélites, que difundem regularmente sua posição e o instante em que a difusão é feita, determinam sua posição relativa aos satélites, em uma técnica conhecida como trilateração, que consiste em determinar a distância do receptor em termos dos eixos <span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>, <span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span> e <span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span> em relação a cada um dos satélites. </p>
+<p>Receptores GPS, com seus relógios sincronizados com os dos satélites, que difundem regularmente sua posição e o instante em que a difusão é feita, determinam sua posição relativa aos satélites, em uma técnica conhecida como trilateração, que consiste em determinar a distância do receptor em termos dos eixos <span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span> e <span class="arithmatex">\(z\)</span> em relação a cada um dos satélites. </p>
 <p>Em outras palavras, baseado na informação de um satélite, o receptor determina sua distância ao mesmo e, portanto, determina que está em uma esfera no entorno do satélite.
 Combinando a informação de 2 satélites, a posição do receptor é limitada a uma circunferência, isto é, a interseção de duas esferas. 
 Com um terceiro satélite, a posição é reduzida a dois pontos, a interseção de uma esfera e uma circunferência, sendo um no espaço e que pode ser facilmente descartado. </p>
@@ -805,32 +805,32 @@ Para estes computadores "de segundo escalão", a receita então é:</p>
 </ul>
 <p>Esta receita básica pode ser ajustada de diversas formas.</p>
 <h4 id="algoritmo-de-cristian">Algoritmo de Cristian</h4>
-<p>Assumindo que o relógio da máquina se sincronizando, <span><span class="MathJax_Preview">M_1</span><script type="math/tex">M_1</script></span>, é bom o suficiente para medir a passagem de tempo em períodos curtos, mesmo que tenha uma <em>drift</em> rate considerável em períodos mais longos, execute o seguinte protocolo para se sincronizar com <span><span class="MathJax_Preview">M_2</span><script type="math/tex">M_2</script></span>.</p>
+<p>Assumindo que o relógio da máquina se sincronizando, <span class="arithmatex">\(M_1\)</span>, é bom o suficiente para medir a passagem de tempo em períodos curtos, mesmo que tenha uma <em>drift</em> rate considerável em períodos mais longos, execute o seguinte protocolo para se sincronizar com <span class="arithmatex">\(M_2\)</span>.</p>
 <ul>
-<li><span><span class="MathJax_Preview">M_1</span><script type="math/tex">M_1</script></span> pergunta "que horas são?" - <span><span class="MathJax_Preview">t_0</span><script type="math/tex">t_0</script></span></li>
-<li><span><span class="MathJax_Preview">M_2</span><script type="math/tex">M_2</script></span> recebe pergunta - <span><span class="MathJax_Preview">t_1</span><script type="math/tex">t_1</script></span></li>
-<li><span><span class="MathJax_Preview">M_2</span><script type="math/tex">M_2</script></span> anota o valor do relógio - <span><span class="MathJax_Preview">t_s</span><script type="math/tex">t_s</script></span></li>
-<li><span><span class="MathJax_Preview">M_2</span><script type="math/tex">M_2</script></span> envia resposta - <span><span class="MathJax_Preview">t_2</span><script type="math/tex">t_2</script></span></li>
+<li><span class="arithmatex">\(M_1\)</span> pergunta "que horas são?" - <span class="arithmatex">\(t_0\)</span></li>
+<li><span class="arithmatex">\(M_2\)</span> recebe pergunta - <span class="arithmatex">\(t_1\)</span></li>
+<li><span class="arithmatex">\(M_2\)</span> anota o valor do relógio - <span class="arithmatex">\(t_s\)</span></li>
+<li><span class="arithmatex">\(M_2\)</span> envia resposta - <span class="arithmatex">\(t_2\)</span></li>
 <li>
-<p><span><span class="MathJax_Preview">M_1</span><script type="math/tex">M_1</script></span> recebe resposta - <span><span class="MathJax_Preview">t_3</span><script type="math/tex">t_3</script></span></p>
+<p><span class="arithmatex">\(M_1\)</span> recebe resposta - <span class="arithmatex">\(t_3\)</span></p>
 </li>
 <li>
-<p>Assuma <span><span class="MathJax_Preview">t_1 = t_s = t_2</span><script type="math/tex">t_1 = t_s = t_2</script></span></p>
+<p>Assuma <span class="arithmatex">\(t_1 = t_s = t_2\)</span></p>
 </li>
 <li>
-<p>Assuma <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span> como o tempo de transmissão da resposta (média da ida e da volta)</p>
+<p>Assuma <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> como o tempo de transmissão da resposta (média da ida e da volta)</p>
 </li>
-<li><span><span class="MathJax_Preview">M_1</span><script type="math/tex">M_1</script></span> ajusta relógio para <span><span class="MathJax_Preview">t_c = t_s + \frac{t_3-t_0}{2}</span><script type="math/tex">t_c = t_s + \frac{t_3-t_0}{2}</script></span></li>
+<li><span class="arithmatex">\(M_1\)</span> ajusta relógio para <span class="arithmatex">\(t_c = t_s + \frac{t_3-t_0}{2}\)</span></li>
 </ul>
-<p>Mas e a aproximação <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span>, é boa?
-Podemos estimar o erro que ela introduz na sincronização, caso as mensagens tenham tempos de ida e volta assimétricos. Apesar das diferenças no tempo de ida e volta, existe um <strong>tempo mínimo</strong> para o tráfego em cada um dos sentidos, <span><span class="MathJax_Preview">T_{min}</span><script type="math/tex">T_{min}</script></span>.
+<p>Mas e a aproximação <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span>, é boa?
+Podemos estimar o erro que ela introduz na sincronização, caso as mensagens tenham tempos de ida e volta assimétricos. Apesar das diferenças no tempo de ida e volta, existe um <strong>tempo mínimo</strong> para o tráfego em cada um dos sentidos, <span class="arithmatex">\(T_{min}\)</span>.
 A figura a seguir demonstra o erro desta técnica</p>
 <p><img alt="Erro do algoritmo de Christian" src="images/cristianerror.png" /></p>
 <p><a href="https://www.cs.rutgers.edu/~pxk/417/notes/content/05-clock-synchronization-slides.pdf">Fonte</a></p>
 <p>Observe que há dois casos extremos de erro na estimativa.
-No primeiro caso, dado um tempo de ida + volta igual a <span><span class="MathJax_Preview">T_1 - T_0</span><script type="math/tex">T_1 - T_0</script></span>, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span> é menor que o tempo de volta real.
-No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando <span><span class="MathJax_Preview">\frac{t_3-t_0}{2}</span><script type="math/tex">\frac{t_3-t_0}{2}</script></span> a ser maior que tempo de transmissão real da mensagem.
-O erro, contudo, está limitado à faixa amarela no desenho, que tem duração <span><span class="MathJax_Preview">T_1 - T_0 - 2T_{min}</span><script type="math/tex">T_1 - T_0 - 2T_{min}</script></span>. 
+No primeiro caso, dado um tempo de ida + volta igual a <span class="arithmatex">\(T_1 - T_0\)</span>, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> é menor que o tempo de volta real.
+No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> a ser maior que tempo de transmissão real da mensagem.
+O erro, contudo, está limitado à faixa amarela no desenho, que tem duração <span class="arithmatex">\(T_1 - T_0 - 2T_{min}\)</span>. 
 O erro então varia de mais ou menos metade deste valor. </p>
 <h4 id="algoritmo-de-berkeley">Algoritmo de Berkeley</h4>
 <p>Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo assume o que não há uma "fonte da verdade" do tempo, mas sim a necessidade de que todos os processos convirjam para um mesmo valor do relógio. É como nos filmes de espião em que os relógios são sincronizados; pouco importa se a bomba explodirá 10:57 ou 10:59, desde que todos concordem quando isso vai acontecer. Isso é o que chamamos de <strong>sincronização interna</strong> em vez de externa, como provido pelo algoritmo de Cristian.</p>
@@ -886,7 +886,7 @@ sequenceDiagram
 
 <p>Embora interessantes, estes algoritmos não são normalmente usados, pelo menos não em sua forma "pura", em sistemas computacionais. Em vez deles, usamos o Network Time Protocol (NTP).</p>
 <h4 id="network-time-protocol">Network Time Protocol.</h4>
-<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">5</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">6</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>s.</p>
+<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">5</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">6</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span class="arithmatex">\(\mu\)</span>s.</p>
 <p>Os diversos componentes do NTP são organizados em camadas, ou <em>estrata</em>, de forma que a informação do tempo flui da camada 0 (<em>stratum 0</em>) até a camada 15 (<em>stratum</em> 15).
 Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de <strong>tolerância a falhas</strong> à topologia.</p>
 <p><img alt="Network Time Protocol" src="images/ntp.png" /><sup id="fnref:ntpfigure"><a class="footnote-ref" href="#fn:ntpfigure">4</a></sup></p>
@@ -908,20 +908,20 @@ Os componentes não estão presos a camadas, que podem ser alteradas a medida qu
 <p>Na prática, boa parte dos dispositivos usa uma versão simplificada do NTP, o SNTP (<strong><em>Simple Network Time Protocol</em></strong>), adequada aos nós nas <strong>folhas da hierarquia</strong>. 
 O SNTP é essencialmente o algoritmo de Cristian:</p>
 <ul>
-<li><span><span class="MathJax_Preview">\delta = (t_4-t_1)-(t_2-t_3)</span><script type="math/tex">\delta = (t_4-t_1)-(t_2-t_3)</script></span></li>
-<li><span><span class="MathJax_Preview">t = \frac{(t_2-t_1)+(t3-t_4)}{2}</span><script type="math/tex">t = \frac{(t_2-t_1)+(t3-t_4)}{2}</script></span></li>
-<li><span><span class="MathJax_Preview">t_c = t_4+t</span><script type="math/tex">t_c = t_4+t</script></span></li>
+<li><span class="arithmatex">\(\delta = (t_4-t_1)-(t_2-t_3)\)</span></li>
+<li><span class="arithmatex">\(t = \frac{(t_2-t_1)+(t3-t_4)}{2}\)</span></li>
+<li><span class="arithmatex">\(t_c = t_4+t\)</span></li>
 </ul>
 <p>Por exemplo,</p>
 <ul>
-<li><span><span class="MathJax_Preview">t_1 = 1100, t_2 = 800, t_3=850, t_4=1200</span><script type="math/tex">t_1 = 1100, t_2 = 800, t_3=850, t_4=1200</script></span></li>
-<li><span><span class="MathJax_Preview">t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325</span><script type="math/tex">t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325</script></span></li>
-<li><span><span class="MathJax_Preview">t_c = 1200-325 = 875</span><script type="math/tex">t_c = 1200-325 = 875</script></span></li>
+<li><span class="arithmatex">\(t_1 = 1100, t_2 = 800, t_3=850, t_4=1200\)</span></li>
+<li><span class="arithmatex">\(t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325\)</span></li>
+<li><span class="arithmatex">\(t_c = 1200-325 = 875\)</span></li>
 </ul>
 <p>O Comitê Gestor da Internet, <a href="https://cgi.br/">CGI</a>, mantem uma excelente página sobre o NTP, com mais detalhes do que apresentado aqui, em <a href="https://ntp.br/ntp.php">NTP.br</a>.</p>
 <h4 id="ptp-precision-time-protocol">PTP - Precision Time Protocol</h4>
 <p>Mesmo com melhoria do protocolo e baratemento de dispositivos GPS, há ainda a necessidade de sincronização sub-microssegundo e barata. O <strong><em>Precision Time Protocol</em></strong>, PTP, especificação IEEE 1588<sup id="fnref:ieee1588"><a class="footnote-ref" href="#fn:ieee1588">7</a></sup> tenta cobrir este nicho.</p>
-<p>Se escrutinizarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o <em>timestamping</em> dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub <span><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> (versus ordem de <span><span class="MathJax_Preview">ms</span><script type="math/tex">ms</script></span> no NTP).
+<p>Se escrutinizarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o <em>timestamping</em> dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub <span class="arithmatex">\(\mu\)</span> (versus ordem de <span class="arithmatex">\(ms\)</span> no NTP).
 Mais detalhes sobre o protocolo estão fora do escopo deste documento, mas podem ser facilmente encontrados nos links dados.</p>
 <h3 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h3>
 <p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Uma série de problemas interessantes que podem ser resolvidos,
@@ -939,8 +939,8 @@ O problema está na ordem de execução das operações.</p>
 E se as réplicas processarem mensagens na ordem que foram enviadas, como identificado pelos seus <em>timestamps</em>?<sup id="fnref:tiebreak"><a class="footnote-ref" href="#fn:tiebreak">10</a></sup>
 Assim, se C1 foi enviado antes de C2, C1 tem um <em>timestamp</em> menor que C2 e será executada primeiro em ambas as réplicas, o que resolve nosso problema, correto?
 Parcialmente, pois ainda temos o problema de identificar que nenhuma outra mensagem ainda por ser entregue foi enviada antes. 
-Para isto, precisamos estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span>, é finito.
-Assim, ao  receber um comando com timestamp <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>, uma réplica espera até <span><span class="MathJax_Preview">t + \tau</span><script type="math/tex">t + \tau</script></span> antes de executá-lo, pois qualquer comando com <em>timestamp</em> <span><span class="MathJax_Preview">t' &lt; t</span><script type="math/tex">t' < t</script></span> deve ter sido entregue até <span><span class="MathJax_Preview">t+\tau</span><script type="math/tex">t+\tau</script></span>.</p>
+Para isto, precisamos estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span class="arithmatex">\(\tau\)</span>, é finito.
+Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span>, uma réplica espera até <span class="arithmatex">\(t + \tau\)</span> antes de executá-lo, pois qualquer comando com <em>timestamp</em> <span class="arithmatex">\(t' &lt; t\)</span> deve ter sido entregue até <span class="arithmatex">\(t+\tau\)</span>.</p>
 <p><img alt="Ordenação" src="images/ordenacao1.png" /></p>
 <p>Implementar este protocolo é muito simples:</p>
 <div class="admonition example">
@@ -949,30 +949,30 @@ Assim, ao  receber um comando com timestamp <span><span class="MathJax_Preview">
 <ul>
 <li>Quando enviar uma mensagem, aumente-a com o valor atual do relógio.</li>
 <li>Quando receber uma mensagem, coloque-a em uma fila ordenada por <em>timestamp</em>.</li>
-<li>Quando o relógio marcar um tempo maior que <span><span class="MathJax_Preview">t + \tau</span><script type="math/tex">t + \tau</script></span>, onde <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça e da fila e execute o comando correspondente.</li>
+<li>Quando o relógio marcar um tempo maior que <span class="arithmatex">\(t + \tau\)</span>, onde <span class="arithmatex">\(t\)</span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça e da fila e execute o comando correspondente.</li>
 </ul>
 <p>Embora correto, este protocolo, ou melhor, o modelo, não leva em consideração a dessincronização inerente dos relógios em um sistema distribuído. 
-Como fazê-lo, supondo uma divergência máxima de <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span><span class="MathJax_Preview">\frac{\Delta}{2*\rho}</span><script type="math/tex">\frac{\Delta}{2*\rho}</script></span>.</p>
-<p>Se <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span> é a diferença máxima entre relógios, então se uma mensagem é enviada no instante <span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>, então até <span><span class="MathJax_Preview">\Delta +t</span><script type="math/tex">\Delta +t</script></span>, outro processo, atrasado em relação ao primeiro, poderá enviar uma mensagem com timestamp <span><span class="MathJax_Preview">t' &lt; t</span><script type="math/tex">t' < t</script></span>. 
-Tal mensagem pode demorar até <span><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span> para ser entregue à réplica, ou seja, no instante <span><span class="MathJax_Preview">t + \tau + \Delta</span><script type="math/tex">t + \tau + \Delta</script></span>, do ponto de vista do primeiro cliente.</p>
-<p>Se a réplica estiver sincronizada com cliente, então se esperar até <span><span class="MathJax_Preview">t + \tau + \Delta</span><script type="math/tex">t + \tau + \Delta</script></span> para executar o comando, o fará de forma segura. 
+Como fazê-lo, supondo uma divergência máxima de <span class="arithmatex">\(\Delta\)</span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span class="arithmatex">\(\frac{\Delta}{2*\rho}\)</span>.</p>
+<p>Se <span class="arithmatex">\(\Delta\)</span> é a diferença máxima entre relógios, então se uma mensagem é enviada no instante <span class="arithmatex">\(t\)</span>, então até <span class="arithmatex">\(\Delta +t\)</span>, outro processo, atrasado em relação ao primeiro, poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span>. 
+Tal mensagem pode demorar até <span class="arithmatex">\(\tau\)</span> para ser entregue à réplica, ou seja, no instante <span class="arithmatex">\(t + \tau + \Delta\)</span>, do ponto de vista do primeiro cliente.</p>
+<p>Se a réplica estiver sincronizada com cliente, então se esperar até <span class="arithmatex">\(t + \tau + \Delta\)</span> para executar o comando, o fará de forma segura. 
 Se estiver atrasada em relação ao primeiro cliente, então acabará por esperar além do necessário, mas sem violar a corretude do sistema.</p>
-<p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará <span><span class="MathJax_Preview">t + \tau + \Delta</span><script type="math/tex">t + \tau + \Delta</script></span> antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp <span><span class="MathJax_Preview">t' &lt; t</span><script type="math/tex">t' < t</script></span> é o instante em que o relógio da réplica marcar <span><span class="MathJax_Preview">t + \Delta</span><script type="math/tex">t + \Delta</script></span>, e portanto deverá também ser recebido até que o mesmo relógio marque <span><span class="MathJax_Preview">t + \tau + \Delta</span><script type="math/tex">t + \tau + \Delta</script></span>. </p>
+<p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará <span class="arithmatex">\(t + \tau + \Delta\)</span> antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span> é o instante em que o relógio da réplica marcar <span class="arithmatex">\(t + \Delta\)</span>, e portanto deverá também ser recebido até que o mesmo relógio marque <span class="arithmatex">\(t + \tau + \Delta\)</span>. </p>
 <p><img alt="Ordenação" src="images/ordenacao2.png" /></p>
-<p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span> é o máximo de dessincronismo entre os relógios. 
+<p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span class="arithmatex">\(\Delta\)</span> é o máximo de dessincronismo entre os relógios. 
 O seguinte protocolo resolve este problema:</p>
 <div class="admonition example">
 <p class="admonition-title">Alocação de Lease</p>
-<p>Ao receber um <em>lease</em> para a janela de tempo <span><span class="MathJax_Preview">t_1</span><script type="math/tex">t_1</script></span> a <span><span class="MathJax_Preview">t_2</span><script type="math/tex">t_2</script></span></p>
+<p>Ao receber um <em>lease</em> para a janela de tempo <span class="arithmatex">\(t_1\)</span> a <span class="arithmatex">\(t_2\)</span></p>
 <ul>
-<li>espera até <span><span class="MathJax_Preview">t_1 + \Delta</span><script type="math/tex">t_1 + \Delta</script></span></li>
-<li>usa o recurso até <span><span class="MathJax_Preview">t_2</span><script type="math/tex">t_2</script></span>.</li>
+<li>espera até <span class="arithmatex">\(t_1 + \Delta\)</span></li>
+<li>usa o recurso até <span class="arithmatex">\(t_2\)</span>.</li>
 </ul>
 </div>
-<p>Se relógio estiver adiantado em relação ao cliente anterior, vai achar que é <span><span class="MathJax_Preview">t_1+\Delta</span><script type="math/tex">t_1+\Delta</script></span> enquanto o anterior acha que é <span><span class="MathJax_Preview">t_1</span><script type="math/tex">t_1</script></span>; exclusão mútua garantida.
-Se relógio estiver atrasado em relação ao cliente anterior, vai achar que é <span><span class="MathJax_Preview">t_1 - \Delta</span><script type="math/tex">t_1 - \Delta</script></span>, e continua esperando, enquanto ele acha que já é <span><span class="MathJax_Preview">t_1</span><script type="math/tex">t_1</script></span> e para de usar; exclusão mútua garantida.
-Recurso fica ocioso por <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span>, em média, a cada lease. </p>
-<p>Devido ao alto custo de se manter o recurso não utilizado, <span><span class="MathJax_Preview">\Delta</span><script type="math/tex">\Delta</script></span> deve ser feito tão pequeno quanto possível. 
+<p>Se relógio estiver adiantado em relação ao cliente anterior, vai achar que é <span class="arithmatex">\(t_1+\Delta\)</span> enquanto o anterior acha que é <span class="arithmatex">\(t_1\)</span>; exclusão mútua garantida.
+Se relógio estiver atrasado em relação ao cliente anterior, vai achar que é <span class="arithmatex">\(t_1 - \Delta\)</span>, e continua esperando, enquanto ele acha que já é <span class="arithmatex">\(t_1\)</span> e para de usar; exclusão mútua garantida.
+Recurso fica ocioso por <span class="arithmatex">\(\Delta\)</span>, em média, a cada lease. </p>
+<p>Devido ao alto custo de se manter o recurso não utilizado, <span class="arithmatex">\(\Delta\)</span> deve ser feito tão pequeno quanto possível. 
 Leia <a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google True Time e Spanner</a> para ver como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.</p>
 <details class="todo"><summary>Todo</summary><ul>
 <li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
@@ -990,22 +990,22 @@ Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante a
 Hoje é comum usar a relação <em>happened-before</em> e o vocabulário associado para falar sobre ordem de eventos em um sistema computacional, em especial um distribuído.</p>
 <h3 id="happened-before">Happened-Before</h3>
 <p>A relação <em>happened-before</em> captura a <strong>causalidade</strong> entre eventos.
-Isto é, se um evento <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> <strong>aconteceu-antes</strong> de um evento <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>, então <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> potencialmente causou <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>.
-Também podemos dizer que <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> precede <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> em uma ordem causal.</p>
-<p>O evento <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> aconteceu-antes <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>, notado como <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span>, se uma das três condições seguintes é válida:</p>
+Isto é, se um evento <span class="arithmatex">\(a\)</span> <strong>aconteceu-antes</strong> de um evento <span class="arithmatex">\(b\)</span>, então <span class="arithmatex">\(a\)</span> potencialmente causou <span class="arithmatex">\(b\)</span>.
+Também podemos dizer que <span class="arithmatex">\(a\)</span> precede <span class="arithmatex">\(b\)</span> em uma ordem causal.</p>
+<p>O evento <span class="arithmatex">\(a\)</span> aconteceu-antes <span class="arithmatex">\(b\)</span>, notado como <span class="arithmatex">\(a \rightarrow b\)</span>, se uma das três condições seguintes é válida:</p>
 <div class="admonition note">
 <p class="admonition-title">Happened-Before</p>
 <ul>
-<li>Se <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> e <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> são eventos em um mesmo processo (ou <em>thread</em>) e <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> foi executado antes de <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>.</li>
-<li>Se <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> e <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> são eventos de processos distintos e <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> é o envio de uma mensagem e <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> a sua recepção.</li>
-<li>Se há transitividade, isto é, se existe um evento <span><span class="MathJax_Preview">c</span><script type="math/tex">c</script></span> tal que <span><span class="MathJax_Preview">a \rightarrow c</span><script type="math/tex">a \rightarrow c</script></span> e <span><span class="MathJax_Preview">c \rightarrow b</span><script type="math/tex">c \rightarrow b</script></span>.</li>
+<li>Se <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são eventos em um mesmo processo (ou <em>thread</em>) e <span class="arithmatex">\(a\)</span> foi executado antes de <span class="arithmatex">\(b\)</span>.</li>
+<li>Se <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são eventos de processos distintos e <span class="arithmatex">\(a\)</span> é o envio de uma mensagem e <span class="arithmatex">\(b\)</span> a sua recepção.</li>
+<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(c\)</span> tal que <span class="arithmatex">\(a \rightarrow c\)</span> e <span class="arithmatex">\(c \rightarrow b\)</span>.</li>
 </ul>
 </div>
 <details class="todo"><summary>TODO</summary><p>Imagem somente com os eventos, sem o valor do relógio.</p>
 </details>
 <p><img alt="LC - Primeira tentativa" src="images/lc_cont.png" /></p>
-<p>Note que se <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> é falso e <span><span class="MathJax_Preview">b \rightarrow a</span><script type="math/tex">b \rightarrow a</script></span> é falso, então <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> e <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo.
-Ser concorrente quer dizer que um evento <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> não podem ter sido a causa do evento <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>, dado que os efeitos de <span><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span> não poderiam ser conhecidos pelo processo onde <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> ocorreu, quando <span><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span> ocorreu.
+<p>Note que se <span class="arithmatex">\(a \rightarrow b\)</span> é falso e <span class="arithmatex">\(b \rightarrow a\)</span> é falso, então <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo.
+Ser concorrente quer dizer que um evento <span class="arithmatex">\(a\)</span> não podem ter sido a causa do evento <span class="arithmatex">\(b\)</span>, dado que os efeitos de <span class="arithmatex">\(a\)</span> não poderiam ser conhecidos pelo processo onde <span class="arithmatex">\(b\)</span> ocorreu, quando <span class="arithmatex">\(b\)</span> ocorreu.
 O cone de luz na figura seguinte mostra esta relação entre eventos.</p>
 <p><img alt="Light-cone" src="drawings/light_cone.drawio-0.svg" /></p>
 <p>Se capturarmos a causalidade de eventos, podemos usar esta informação para ordenar o se processamento, de forma a fazer sentido.
@@ -1019,110 +1019,110 @@ Relógios lógicos permitem que sistemas capturem a relação de causalidade ent
 Lamport propôs uma tal forma, que denominou <strong>relógio lógico</strong>, mas que hoje é conhecido universalmente como <strong>relógio de Lamport</strong>.
 Estes relógios permitem associar um <em>timestamp</em> a eventos de forma a se garantir a seguinte propriedade:</p>
 <ul>
-<li>seja <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> um evento</li>
-<li>seja <span><span class="MathJax_Preview">C(e)</span><script type="math/tex">C(e)</script></span> o valor do relógio lógico quando associado a <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span></li>
-<li>se <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> então <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span></li>
+<li>seja <span class="arithmatex">\(e\)</span> um evento</li>
+<li>seja <span class="arithmatex">\(C(e)\)</span> o valor do relógio lógico quando associado a <span class="arithmatex">\(e\)</span></li>
+<li>se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span></li>
 </ul>
-<p>Mas como definir a função <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>?
+<p>Mas como definir a função <span class="arithmatex">\(C\)</span>?
 Experimentemos a seguinte definição:</p>
 <div class="admonition example">
 <p class="admonition-title">Quase Relógio de Lamport</p>
 <ul>
-<li>Seja <span><span class="MathJax_Preview">c_p</span><script type="math/tex">c_p</script></span> um contador em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> com valor inicialmente igual a 0.</li>
-<li><span><span class="MathJax_Preview">C(e) = ++c_p</span><script type="math/tex">C(e) = ++c_p</script></span> no momento em que <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> ocorreu.</li>
-<li>Usamos como <span><span class="MathJax_Preview">&lt;</span><script type="math/tex"><</script></span> a relação normal de inteiros.</li>
+<li>Seja <span class="arithmatex">\(c_p\)</span> um contador em <span class="arithmatex">\(p\)</span> com valor inicialmente igual a 0.</li>
+<li><span class="arithmatex">\(C(e) = ++c_p\)</span> no momento em que <span class="arithmatex">\(e\)</span> ocorreu.</li>
+<li>Usamos como <span class="arithmatex">\(&lt;\)</span> a relação normal de inteiros.</li>
 </ul>
 </div>
 <p>Observe que não há <strong>fonte da verdade</strong> em termos de tempo lógico, já que <strong>cada processo mantém seu próprio relógio</strong> que pode ser relacionado com relógios de outros processos.
 Veja um exemplo desta definição em ação.</p>
 <p><img alt="LC - Primeira tentativa" src="images/lc_cont.png" /></p>
-<p>É verdade neste cenário que se <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> então <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span>?<br />
-Observe com atenção os eventos <span><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span> e <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>, pois para estes, a regra não é respeitada.</p>
+<p>É verdade neste cenário que se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>?<br />
+Observe com atenção os eventos <span class="arithmatex">\(f\)</span> e <span class="arithmatex">\(k\)</span>, pois para estes, a regra não é respeitada.</p>
 <h4 id="relogio-de-lamport">Relógio de Lamport</h4>
-<p>Para que a regra <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> então <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span> seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.</p>
+<p>Para que a regra <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span> seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.</p>
 <div class="admonition example">
 <p class="admonition-title">Relógio de Lamport</p>
 <ul>
-<li>Seja <span><span class="MathJax_Preview">c_p</span><script type="math/tex">c_p</script></span> um contador em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> com valor inicialmente igual a 0.</li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
-<li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
-<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
+<li>Seja <span class="arithmatex">\(c_p\)</span> um contador em <span class="arithmatex">\(p\)</span> com valor inicialmente igual a 0.</li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p \gets c_p + 1\)</span></li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
 </ul>
 </li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
-<li><span><span class="MathJax_Preview">c_p \gets c_p + 1</span><script type="math/tex">c_p \gets c_p + 1</script></span></li>
-<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
-<li><span><span class="MathJax_Preview">C(e)</span><script type="math/tex">C(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p \gets c_p + 1\)</span></li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
+<li><span class="arithmatex">\(C(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
 </ul>
 </li>
-<li>Se o evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span><ul>
-<li><span><span class="MathJax_Preview">c_p \gets max(c_e,ts)+1</span><script type="math/tex">c_p \gets max(c_e,ts)+1</script></span>.</li>
-<li><span><span class="MathJax_Preview">C(e) \gets c_p</span><script type="math/tex">C(e) \gets c_p</script></span></li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span><ul>
+<li><span class="arithmatex">\(c_p \gets max(c_e,ts)+1\)</span>.</li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
 </ul>
 </li>
 </ul>
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
 <p><img alt="LC - Primeira tentativa" src="images/lc_lamport.png" /></p>
-<p>Neste caso, temos que para quaisquer eventos <span><span class="MathJax_Preview">a,b</span><script type="math/tex">a,b</script></span>,  se <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> então <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span>.</p>
+<p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(a,b\)</span>,  se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>.</p>
 <details class="todo"><summary>Todo</summary><p>Exemplo em que não é bom o suficiente.</p>
 </details>
-<p>Se <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span> então <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span>. Contudo, a volta não é verdade, isto é, se <span><span class="MathJax_Preview">C(a) &lt; C(b)</span><script type="math/tex">C(a) < C(b)</script></span> então <span><span class="MathJax_Preview">a \rightarrow b</span><script type="math/tex">a \rightarrow b</script></span>.
+<p>Se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>. Contudo, a volta não é verdade, isto é, se <span class="arithmatex">\(C(a) &lt; C(b)\)</span> então <span class="arithmatex">\(a \rightarrow b\)</span>.
 Esta propriedade é interessante na ordenação de eventos, pois evita que eventos concorrentes sejam ordenados.
 Entram os relógios vetoriais.</p>
 <h4 id="relogio-vetorial">Relógio Vetorial</h4>
 <p><strong>Relógios vetoriais</strong> são relógios lógicos em que cada processo mantém não apenas um contador dos seus eventos locais, mas também sua visão dos contadores dos outros processos.
-Estas visões são atualizadas a cada recepção de mensagem, de acordo com a seguinte especificação, onde assume-se que <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> processos fazem parte do sistema.</p>
+Estas visões são atualizadas a cada recepção de mensagem, de acordo com a seguinte especificação, onde assume-se que <span class="arithmatex">\(n\)</span> processos fazem parte do sistema.</p>
 <div class="admonition example">
 <p class="admonition-title">Relógio Vetorial</p>
-<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
 <ul>
-<li>Seja <span><span class="MathJax_Preview">c_p[i], 1 \leq i \leq n</span><script type="math/tex">c_p[i], 1 \leq i \leq n</script></span> inicialmente igual a 0</li>
-<li>Seja um evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span><ul>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
-<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
-<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
+<li>Seja <span class="arithmatex">\(c_p[i], 1 \leq i \leq n\)</span> inicialmente igual a 0</li>
+<li>Seja um evento <span class="arithmatex">\(e\)</span><ul>
+<li>Se <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
 </ul>
 </li>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
-<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
-<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
-<li><span><span class="MathJax_Preview">V(e)</span><script type="math/tex">V(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+<li>Se <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
+<li><span class="arithmatex">\(V(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
 </ul>
 </li>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, então<ul>
-<li><span><span class="MathJax_Preview">c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p</span><script type="math/tex">c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p</script></span></li>
-<li><span><span class="MathJax_Preview">c_p[p] \gets c_p[p] + 1</span><script type="math/tex">c_p[p] \gets c_p[p] + 1</script></span></li>
-<li><span><span class="MathJax_Preview">V(e) \gets c_p</span><script type="math/tex">V(e) \gets c_p</script></span></li>
+<li>Se <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span> de <span class="arithmatex">\(q\)</span>, então<ul>
+<li><span class="arithmatex">\(c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p\)</span></li>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<p>Uma observação interessante a ser feita aqui é que embora o algoritmo pareça indicar que cada processo precisa saber quantos mais processos existem no sistema, isto não é verdade, pois pode-se assumir que para todo processo desconhecido <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, <span><span class="MathJax_Preview">c_p[q] = 0</span><script type="math/tex">c_p[q] = 0</script></span>.</p>
-<p>Como dito, este relógio lógico tem a propriedade <span><span class="MathJax_Preview">a \rightarrow b \iff V(a) &lt; V(b)</span><script type="math/tex">a \rightarrow b \iff V(a) < V(b)</script></span>, considerando-se a seguinte definição de <span><span class="MathJax_Preview">&lt;</span><script type="math/tex"><</script></span> para vetores:</p>
+<p>Uma observação interessante a ser feita aqui é que embora o algoritmo pareça indicar que cada processo precisa saber quantos mais processos existem no sistema, isto não é verdade, pois pode-se assumir que para todo processo desconhecido <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(c_p[q] = 0\)</span>.</p>
+<p>Como dito, este relógio lógico tem a propriedade <span class="arithmatex">\(a \rightarrow b \iff V(a) &lt; V(b)\)</span>, considerando-se a seguinte definição de <span class="arithmatex">\(&lt;\)</span> para vetores:</p>
 <div class="admonition note">
 <p class="admonition-title">Comparação entre vetores</p>
 <ul>
-<li><span><span class="MathJax_Preview">v = v' \iff v[i] = v'[i], 1 \leq i \leq n</span><script type="math/tex">v = v' \iff v[i] = v'[i], 1 \leq i \leq n</script></span></li>
-<li><span><span class="MathJax_Preview">v \leq v' \iff v[i] \leq v'[i], 1 \leq i \leq n</span><script type="math/tex">v \leq v' \iff v[i] \leq v'[i], 1 \leq i \leq n</script></span></li>
-<li><span><span class="MathJax_Preview">v &lt; v' \iff v \leq v' \land v \neq V'</span><script type="math/tex">v < v' \iff v \leq v' \land v \neq V'</script></span></li>
+<li><span class="arithmatex">\(v = v' \iff v[i] = v'[i], 1 \leq i \leq n\)</span></li>
+<li><span class="arithmatex">\(v \leq v' \iff v[i] \leq v'[i], 1 \leq i \leq n\)</span></li>
+<li><span class="arithmatex">\(v &lt; v' \iff v \leq v' \land v \neq V'\)</span></li>
 </ul>
 </div>
-<p>Assim, sejam dois eventos <span><span class="MathJax_Preview">e \neq e'</span><script type="math/tex">e \neq e'</script></span>:</p>
+<p>Assim, sejam dois eventos <span class="arithmatex">\(e \neq e'\)</span>:</p>
 <ul>
-<li><span><span class="MathJax_Preview">e \rightarrow e' \iff V(e) &lt; V(e')</span><script type="math/tex">e \rightarrow e' \iff V(e) < V(e')</script></span></li>
-<li>Se <span><span class="MathJax_Preview">V(e) \not &lt; V(e')</span><script type="math/tex">V(e) \not < V(e')</script></span> e <span><span class="MathJax_Preview">V(e') \not &lt; V(e)</span><script type="math/tex">V(e') \not < V(e)</script></span>, então <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> e <span><span class="MathJax_Preview">e'</span><script type="math/tex">e'</script></span> são concorrentes.</li>
+<li><span class="arithmatex">\(e \rightarrow e' \iff V(e) &lt; V(e')\)</span></li>
+<li>Se <span class="arithmatex">\(V(e) \not &lt; V(e')\)</span> e <span class="arithmatex">\(V(e') \not &lt; V(e)\)</span>, então <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são concorrentes.</li>
 </ul>
 <p>Para entender melhor como esta definição funciona, considere a seguinte execução.
-O que quer dizer <span><span class="MathJax_Preview">c_p[q] = k</span><script type="math/tex">c_p[q] = k</script></span>, ou tomando o evendo <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> como exemplo, o que quer dizer <span><span class="MathJax_Preview">c_{P_2}[1]=2</span><script type="math/tex">c_{P_2}[1]=2</script></span>?</p>
+O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o evendo <span class="arithmatex">\(d\)</span> como exemplo, o que quer dizer <span class="arithmatex">\(c_{P_2}[1]=2\)</span>?</p>
 <p><img alt="Relógio Vetorial" src="images/lc_vc.png" /></p>
-<p>Quer dizer que <span><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> está ciente de 2 eventos locais a <span><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span>, assim com está ciente de 0 eventos em <span><span class="MathJax_Preview">P_3</span><script type="math/tex">P_3</script></span> e de que <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> é o segundo evento em <span><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span>.
-Logo, <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> pode ter sido causado por 2 eventos de <span><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span>, 1 evento de <span><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> e 0 de <span><span class="MathJax_Preview">P_3</span><script type="math/tex">P_3</script></span>.</p>
-<p>Agora compare os eventos <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> e <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>.
-<span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> e <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> são concorrentes pois embora as posições 1 e 2 de <span><span class="MathJax_Preview">V(d)</span><script type="math/tex">V(d)</script></span> sejam maiores que em <span><span class="MathJax_Preview">V(e)</span><script type="math/tex">V(e)</script></span>, a posição 3 é menor.
-Isso quer dizer que o nem <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> está ciente do evento <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> e nem <span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span> está ciente do evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>, ou melhor, que um não pode ter causado o outro.</p>
+<p>Quer dizer que <span class="arithmatex">\(P_2\)</span> está ciente de 2 eventos locais a <span class="arithmatex">\(P_1\)</span>, assim com está ciente de 0 eventos em <span class="arithmatex">\(P_3\)</span> e de que <span class="arithmatex">\(d\)</span> é o segundo evento em <span class="arithmatex">\(P_2\)</span>.
+Logo, <span class="arithmatex">\(d\)</span> pode ter sido causado por 2 eventos de <span class="arithmatex">\(P_1\)</span>, 1 evento de <span class="arithmatex">\(P_2\)</span> e 0 de <span class="arithmatex">\(P_3\)</span>.</p>
+<p>Agora compare os eventos <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>.
+<span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(d)\)</span> sejam maiores que em <span class="arithmatex">\(V(e)\)</span>, a posição 3 é menor.
+Isso quer dizer que o nem <span class="arithmatex">\(e\)</span> está ciente do evento <span class="arithmatex">\(d\)</span> e nem <span class="arithmatex">\(d\)</span> está ciente do evento <span class="arithmatex">\(e\)</span>, ou melhor, que um não pode ter causado o outro.</p>
 <p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">13</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
 <h4 id="relogios-hibridos">Relógios Híbridos</h4>
@@ -1135,25 +1135,25 @@ Como identificar se este evento problemático aconteceu antes ou depois da atual
 Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará o valor do físico.</p>
 <div class="admonition example">
 <p class="admonition-title">Relógio Híbrido Simples</p>
-<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
 <ul>
-<li><span><span class="MathJax_Preview">c_p.f</span><script type="math/tex">c_p.f</script></span> é o relógio físico de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, incrementado automaticamente</li>
-<li><span><span class="MathJax_Preview">c_p.l</span><script type="math/tex">c_p.l</script></span> é o relógio lógico de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, inicialmente 0</li>
-<li>Seja um evento <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span><ul>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é uma operação local<ul>
-<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, c_p.f)</script></span></li>
-<li><span><span class="MathJax_Preview">H(e) \gets c_p.l</span><script type="math/tex">H(e) \gets c_p.l</script></span></li>
+<li><span class="arithmatex">\(c_p.f\)</span> é o relógio físico de <span class="arithmatex">\(p\)</span>, incrementado automaticamente</li>
+<li><span class="arithmatex">\(c_p.l\)</span> é o relógio lógico de <span class="arithmatex">\(p\)</span>, inicialmente 0</li>
+<li>Seja um evento <span class="arithmatex">\(e\)</span><ul>
+<li>Se <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(H(e) \gets c_p.l\)</span></li>
 </ul>
 </li>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é o envio de uma mensagem<ul>
-<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, c_p.f)</script></span></li>
-<li><span><span class="MathJax_Preview">H(e) \gets c_p.l</span><script type="math/tex">H(e) \gets c_p.l</script></span></li>
-<li><span><span class="MathJax_Preview">H(e)</span><script type="math/tex">H(e)</script></span> é enviado com a mensagem como seu timestamp.</li>
+<li>Se <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(H(e) \gets c_p.l\)</span></li>
+<li><span class="arithmatex">\(H(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
 </ul>
 </li>
-<li>Se <span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span> é a recepção de uma mensagem com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, então<ul>
-<li><span><span class="MathJax_Preview">c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)</span><script type="math/tex">c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)</script></span></li>
-<li><span><span class="MathJax_Preview">V(e) = c_p.l</span><script type="math/tex">V(e) = c_p.l</script></span></li>
+<li>Se <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span> de <span class="arithmatex">\(q\)</span>, então<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(V(e) = c_p.l\)</span></li>
 </ul>
 </li>
 </ul>
@@ -1191,34 +1191,34 @@ Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a t
 <p class="admonition-title">Difusão Totalmente Ordenado</p>
 <ul>
 <li>
-<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
 </li>
 <li>
-<p><span><span class="MathJax_Preview">f_p</span><script type="math/tex">f_p</script></span> é uma fila de mensagens ordenadas pelo seus <em>timestamps</em>, mantida em <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p><span class="arithmatex">\(f_p\)</span> é uma fila de mensagens ordenadas pelo seus <em>timestamps</em>, mantida em <span class="arithmatex">\(p\)</span></p>
 </li>
-<li>Para difundir uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span><ul>
-<li>colocar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> na fila</li>
-<li>enviar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> para todos os demais processos</li>
+<li>Para difundir uma mensagem <span class="arithmatex">\(m\)</span><ul>
+<li>colocar <span class="arithmatex">\(m\)</span> na fila</li>
+<li>enviar <span class="arithmatex">\(m\)</span> para todos os demais processos</li>
 </ul>
 </li>
-<li>Quando uma mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é recebida<ul>
-<li>colocar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> na fila</li>
-<li>se <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> não é um ack<ul>
-<li>enviar <span><span class="MathJax_Preview">m ack</span><script type="math/tex">m ack</script></span> de volta ao remetente de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> (com <em>timestamp</em> maior que de <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>)</li>
+<li>Quando uma mensagem <span class="arithmatex">\(m\)</span> é recebida<ul>
+<li>colocar <span class="arithmatex">\(m\)</span> na fila</li>
+<li>se <span class="arithmatex">\(m\)</span> não é um ack<ul>
+<li>enviar <span class="arithmatex">\(m ack\)</span> de volta ao remetente de <span class="arithmatex">\(m\)</span> (com <em>timestamp</em> maior que de <span class="arithmatex">\(m\)</span>)</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Seja <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> a mensagem com <em>timestamp</em> ts na cabeça da fila<ul>
-<li>Se para cada processo <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, há uma mensagem <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span> com <em>timestamp</em> ts' na fila de <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> tal que <span><span class="MathJax_Preview">ts &lt; ts'</span><script type="math/tex">ts < ts'</script></span><ul>
-<li>entregar <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> para a aplicação</li>
+<li>Seja <span class="arithmatex">\(m\)</span> a mensagem com <em>timestamp</em> ts na cabeça da fila<ul>
+<li>Se para cada processo <span class="arithmatex">\(q\)</span>, há uma mensagem <span class="arithmatex">\(m'\)</span> de <span class="arithmatex">\(q\)</span> com <em>timestamp</em> ts' na fila de <span class="arithmatex">\(p\)</span> tal que <span class="arithmatex">\(ts &lt; ts'\)</span><ul>
+<li>entregar <span class="arithmatex">\(m\)</span> para a aplicação</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </div>
-<p>O objetivo deste algoritmo é de entregar mensagens na ordem de seus <em>timestamps</em>. Para isso, antes de entregar a mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de menor <em>tmestamp</em> ts conhecido atualmente por <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>, <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> espera por mensagens com <span><span class="MathJax_Preview">timestamps</span><script type="math/tex">timestamps</script></span> maiores que ts de todos os processos. Uma vez que isso aconteça, <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> sabe que nenhuma outra mensagem que chegue depois poderia ter <span><span class="MathJax_Preview">timestamp</span><script type="math/tex">timestamp</script></span> menor que ts.
+<p>O objetivo deste algoritmo é de entregar mensagens na ordem de seus <em>timestamps</em>. Para isso, antes de entregar a mensagem <span class="arithmatex">\(m\)</span> de menor <em>tmestamp</em> ts conhecido atualmente por <span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(p\)</span> espera por mensagens com <span class="arithmatex">\(timestamps\)</span> maiores que ts de todos os processos. Uma vez que isso aconteça, <span class="arithmatex">\(p\)</span> sabe que nenhuma outra mensagem que chegue depois poderia ter <span class="arithmatex">\(timestamp\)</span> menor que ts.
 Para que isto funcione, é necessário que os canais de comunicação usados sejam confiáveis (todas as mensagens enviadas são entregues) e FIFO (a primeira a ser enviada é primeira a ser recebida).</p>
 <div class="admonition exercise">
 <p class="admonition-title">Exercício - FIFO e Confiáveis</p>
@@ -1230,14 +1230,14 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 <p class="admonition-title">Difusão Causalmente Ordenada</p>
 <ul>
 <li>
-<p>Considerando o ponto de vista do processo <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span></p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
 </li>
 <li>
-<p><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> incrementa <span><span class="MathJax_Preview">c_p[p]</span><script type="math/tex">c_p[p]</script></span> somente no envio de mensagens.</p>
+<p><span class="arithmatex">\(p\)</span> incrementa <span class="arithmatex">\(c_p[p]\)</span> somente no envio de mensagens.</p>
 </li>
-<li><span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> só entrega uma mensagem recebida de <span><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>, com timestamp <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span> quando<ul>
-<li><span><span class="MathJax_Preview">ts[q] = c_p[q]+1</span><script type="math/tex">ts[q] = c_p[q]+1</script></span></li>
-<li><span><span class="MathJax_Preview">ts[k] \leq c_p[k], k \neq q</span><script type="math/tex">ts[k] \leq c_p[k], k \neq q</script></span></li>
+<li><span class="arithmatex">\(p\)</span> só entrega uma mensagem recebida de <span class="arithmatex">\(q\)</span>, com timestamp <span class="arithmatex">\(ts\)</span> quando<ul>
+<li><span class="arithmatex">\(ts[q] = c_p[q]+1\)</span></li>
+<li><span class="arithmatex">\(ts[k] \leq c_p[k], k \neq q\)</span></li>
 </ul>
 </li>
 </ul>
@@ -1245,7 +1245,7 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 <p><img alt="causal" src="images/tanenbaum-06-13.png" /></p>
 <div class="admonition exercise">
 <p class="admonition-title">Difusão Causalmente Ordenada</p>
-<p>Considere <span><span class="MathJax_Preview">c_{P_2}[0,2,2]</span><script type="math/tex">c_{P_2}[0,2,2]</script></span> e <span><span class="MathJax_Preview">ts=[1,3,0]</span><script type="math/tex">ts=[1,3,0]</script></span>, de <span><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span>. O que <span><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> está esperando? Como age ao receber mensagem com <span><span class="MathJax_Preview">ts</span><script type="math/tex">ts</script></span>?</p>
+<p>Considere <span class="arithmatex">\(c_{P_2}[0,2,2]\)</span> e <span class="arithmatex">\(ts=[1,3,0]\)</span>, de <span class="arithmatex">\(P_0\)</span>. O que <span class="arithmatex">\(P_2\)</span> está esperando? Como age ao receber mensagem com <span class="arithmatex">\(ts\)</span>?</p>
 </div>
 <p>Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
 Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de <em>timestamps</em>?
@@ -1391,7 +1391,9 @@ Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada 
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>

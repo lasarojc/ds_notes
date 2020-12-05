@@ -289,34 +289,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ariane-5" class="md-nav__link">
-    Ariane 5
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#787-dreamliner" class="md-nav__link">
-    787 Dreamliner
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#737-max" class="md-nav__link">
-    737 Max
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#subaru-suv" class="md-nav__link">
-    Subaru SUV
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#root-cause-analysis" class="md-nav__link">
     Root cause analysis
   </a>
@@ -670,34 +642,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ariane-5" class="md-nav__link">
-    Ariane 5
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#787-dreamliner" class="md-nav__link">
-    787 Dreamliner
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#737-max" class="md-nav__link">
-    737 Max
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#subaru-suv" class="md-nav__link">
-    Subaru SUV
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#root-cause-analysis" class="md-nav__link">
     Root cause analysis
   </a>
@@ -976,7 +920,7 @@
 <p>Nós escrevemos software para que resolvam problemas de espectro bem amplo, indo, do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
 Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
 Desta situação, surge a ideia de dependabilidade, isto é, de um sistema ter a propriedade de se poder depender do mesmo.</p>
-<p>Dizemos que um componente <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> depende de um componente <span><span class="MathJax_Preview">C'</span><script type="math/tex">C'</script></span> se a corretude do comportamento de <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> depende da corretude do componente <span><span class="MathJax_Preview">C'</span><script type="math/tex">C'</script></span>.
+<p>Dizemos que um componente <span class="arithmatex">\(C\)</span> depende de um componente <span class="arithmatex">\(C'\)</span> se a corretude do comportamento de <span class="arithmatex">\(C\)</span> depende da corretude do componente <span class="arithmatex">\(C'\)</span>.
 E que um componente é "dependável" (<em>dependable</em>) na medida em que outros podem depender dele.
 A dependabilidade é essencial aos componentes de sistemas distribuídos, afinal, "uma corrente é tão forte quanto seu elo mais fraco."</p>
 <p>De acordo com <a href="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf">Avizienis et al</a>, tem-se dependabilidade quando os seguintes atributos estão presentes.</p>
@@ -987,8 +931,11 @@ A dependabilidade é essencial aos componentes de sistemas distribuídos, afinal
 <li>Integridade (<em>Integrity</em>) - Tolerância a modificações.</li>
 <li>Manutenabilidade (<em>Maintainability</em>) - Facilidade de reparo.</li>
 </ul>
-<p>Em se falando de <strong>Segurança</strong>, deve-se falar também em <strong>Confidencialidade</strong> (<em>Confidentiality</em>), a garantia de que a informação somente é acessível a quem é devido.
-A combinação de <strong>Disponibilidade</strong>, <strong>Integridade</strong> e <strong>Confidencialidade</strong> é também chamada de Segurança (<em>Security</em>).</p>
+<p>Outra propriedade importante neste contexto é a </p>
+<ul>
+<li><strong>Confidencialidade</strong> (<em>Confidentiality</em>), a garantia de que a informação somente é acessível a quem é devido.</li>
+</ul>
+<p>A combinação de <strong>Disponibilidade</strong>, <strong>Integridade</strong> e <strong>Confidencialidade</strong> é também chamada de <strong>Segurança</strong> (<em>Security</em>).</p>
 <p>Mas o que significa, na prática, ser dependável e seguro (<strong>secure</strong>)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.</p>
 <h3 id="falhas-erros-e-defeitos">Falhas, Erros e Defeitos</h3>
 <p>No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as <strong>falhas</strong> (<em>defect</em>, <em>fault</em>, para alguns, falta), que é um erro no desenvolvimento do sistema, como <em>bugs</em> ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado. 
@@ -999,17 +946,19 @@ O erro pode passar despercebido, mas ainda assim é um erro.</p>
 <p>Finalmente, no terceiro nível, temos os <strong>defeitos</strong> (<em>failure</em>, para alguns, falha), um erro percebido pelo usuário. 
 Continuando o exemplo, um <em>stack overflow</em> que leva a uma falha de segmentação, leva a um defeito.</p>
 <p>Quando um componente manifesta um defeito, outros componentes que dele dependem, internalizarão entradas indevidas, uma falha externa, o que levará a seu próprio estado interno a estar errôneo e possivelmente também manifestar um defeito. 
-Esta cadeia pode levar cenários catastróficos.
-Vejamos alguns exemplos de defeitos famosos.</p>
-<h3 id="ariane-5">Ariane 5</h3>
+Esta cadeia pode levar cenários catastróficos.</p>
+<div class="admonition example">
+<p class="admonition-title">Falhas Famosas</p>
+<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Ariane 5</label><div class="tabbed-content">
 <p>O Ariane 5 foi um foguete desenvolvido pela agencia espacial européia que explodiu durante o lançamento.</p>
 <div class="admonition quote">
 <p class="admonition-title">The Explosion of the Ariane 5</p>
 <p>On June 4, 1996 an unmanned Ariane 5 rocket launched by the European Space Agency exploded just forty seconds after its lift-off [...] after a decade of development costing $7B. The destroyed rocket and its cargo were valued at $500M. [...] the failure was a software error [...] a 64 bit floating point number [...] was converted to a 16 bit signed integer. The number was larger than 32,767, the largest integer storeable in a 16 bit signed integer, and thus the conversion failed.</p>
-<p><img alt="Explosão" src="images/ariane5.jpg" /></p>
 </div>
+<p><img alt="Explosão" src="images/ariane5.jpg" /></p>
 <p>O erro gerado foi tratado como input, causando outros erros, que geraram instabilidade e que levou o sistema a se auto-destruir.</p>
-<h3 id="787-dreamliner">787 Dreamliner</h3>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">787 Dreamliner</label><div class="tabbed-content">
 <p>O avião 787 dreamliner, da Boeing, tem um problema que tornar necessário reiniciar o sistema elétrico a cada 248 dias, ou o mesmo pode ter uma pane.</p>
 <div class="admonition quote">
 <p class="admonition-title">Quote</p>
@@ -1020,16 +969,21 @@ Vejamos alguns exemplos de defeitos famosos.</p>
 <p class="admonition-title">Quote</p>
 <p><blockquote class="twitter-tweet"><p lang="en" dir="ltr">248 days == 2^31 100ths of a second.<br><br>even in 2015, our airplanes have integer overflow bugs <a href="https://t.co/6Z8d4y9gjM"><a href="https://t.co/6Z8d4y9gjM">https://t.co/6Z8d4y9gjM</a></a></p>&mdash; Fiora @ 日本語でFF14 (@FioraAeterna) <a href="https://twitter.com/FioraAeterna/status/594110518203260929?ref_src=twsrc%5Etfw">May 1, 2015</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
 </div>
-<h3 id="737-max">737 Max</h3>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">737 Max</label><div class="tabbed-content">
 <p>Neste outro caso envolvendo a Boeing, um sensor é usado para detectar se o avião estava subindo rápido demais e correndo o risco de perder sustentação, um comportamento que se verificou comum no 737 Max por causa dos grandes motores usados nele e que o diferenciam do 737 original.
 Se o risco é detectado, um sistema automatizado força o nariz do avião para baixo para corrigir o problema. 
 Contudo, no 737 Max apenas um sensor é usado e no caso de falha do mesmo, o avião é forçado para baixo e em direção ao solo, o que levou à morte de centenas de pessoas.<sup id="fnref:737max"><a class="footnote-ref" href="#fn:737max">1</a></sup></p>
-<h3 id="subaru-suv">Subaru SUV</h3>
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Subaru SUV</label><div class="tabbed-content">
 <p>Em 2018 a Subaru fez um <em>recall</em> gigante, de mais de 1 milhão de unidades de um seus modelos de SUV, porquê uma falha em um software fez com que soldagens fossem feitas incorretamente no chassis dos veículos.
 O erro era irreparável, levando a grandes prejuízos.</p>
 <p><img alt="[Recall Subaru()https://spectrum.ieee.org/riskfactor/computing/it/coding-error-leads-293-subaru-ascents-to-the-car-crusher)]" src="images/subaru.png" /></p>
 <!--Car Hack -- 2017, images/carhack, https://www.wired.com/story/car-hack-shut-down-safety-features/-->
 
+</div>
+</div>
+</div>
 <h3 id="root-cause-analysis"><em>Root cause analysis</em></h3>
 <p>Quando defeitos aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que o levou a acontecer.
 Algumas empresas publicam a <strong><em>root cause analysis</em></strong> ou a análise <em>post-mortem</em> para a comunidade como forma de compartilhar conhecimento e também por questões de transparência.
@@ -1038,7 +992,7 @@ Veja esta <a href="https://github.com/danluu/post-mortems">compilação</a> para
 <p>Falhas são um fato da vida, uma constante no desenvolvimento de sistemas. Mas se o objetivo é a dependabilidade, precisamos de formas de lidar com falhas, <strong>previnindo</strong>, <strong>removendo</strong> e <strong>tolerando</strong>-as.</p>
 <p>A <strong>prevenção de falhas</strong> acontece por meio de técnicas bem estabelecidas de engenharia.
 No caso de sistemas de software, modularização, linguagens de programação fortemente tipadas e encapsulamento são passos essencias. 
-Uso de especificações formais, testadas ou provadas corretas, são outro passo neste sentido. Por exemplo, diversas empresas usam a linguagem <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA<span><span class="MathJax_Preview">^+</span><script type="math/tex">^+</script></span></a> para verificar a corretude de seus algoritmos<sup id="fnref:tla_real"><a class="footnote-ref" href="#fn:tla_real">2</a></sup>. 
+Uso de especificações formais, testadas ou provadas corretas, são outro passo neste sentido. Por exemplo, diversas empresas usam a linguagem <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA<span class="arithmatex">\(^+\)</span></a> para verificar a corretude de seus algoritmos<sup id="fnref:tla_real"><a class="footnote-ref" href="#fn:tla_real">2</a></sup>. 
 Outras técnicas envolvidas na prevenção de falhas são análise estática, prova de teoremas, execução simbólica, teste de modelos, etc.</p>
 <p>Mesmo uma especificação correta pode produzir um sistema com falhas pois a tradução de especificações formais para código é um passo complexo.
 Testes e manutenção do sistema permitem a <strong>remoção de falhas</strong> que passarem despercebidas pelas tentativas de prevenção.</p>
@@ -1074,7 +1028,7 @@ Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a 
 Por exemplo, uma mensagem pode ser modificada, um servidor pode reiniciar-se constantemente, todos os dados podem ser apagados, ou acesso pode ser dado a quem não é devido.
 Estes defeitos podem ser causados por agentes mal intencionados, como hackers e vírus.</p>
 <h4 id="hierarquia">Hierarquia</h4>
-<p>Fail-stop <span><span class="MathJax_Preview">\subset</span><script type="math/tex">\subset</script></span> Quebra <span><span class="MathJax_Preview">\subset</span><script type="math/tex">\subset</script></span> Omissão <span><span class="MathJax_Preview">\subset</span><script type="math/tex">\subset</script></span> Temporização <span><span class="MathJax_Preview">\subset</span><script type="math/tex">\subset</script></span> Arbitrária</p>
+<p>Fail-stop <span class="arithmatex">\(\subset\)</span> Quebra <span class="arithmatex">\(\subset\)</span> Omissão <span class="arithmatex">\(\subset\)</span> Temporização <span class="arithmatex">\(\subset\)</span> Arbitrária</p>
 <h3 id="falhas-intermitentes">Falhas intermitentes</h3>
 <p>Algumas falhas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas.</p>
 <div class="admonition quote">
@@ -1164,37 +1118,37 @@ Por isso, ao enviar uma mensagem de confirmação do ataque, Bastião precisa es
 Novamente podemos apelar para uma mensagem de confirmação ou, neste caso, uma confirmação da confirmação.
 E o problema se reinicia...</p>
 <details class="question"><summary>Paradoxo dos 2 Exércitos</summary><ul>
-<li><span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> e <span><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span> devem concordar na hora do ataque.</li>
-<li><span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> ataca se estiver certo que <span><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span> atacará.</li>
-<li><span><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span> ataca se estiver certo que <span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span> atacará.</li>
+<li><span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(B\)</span> devem concordar na hora do ataque.</li>
+<li><span class="arithmatex">\(A\)</span> ataca se estiver certo que <span class="arithmatex">\(B\)</span> atacará.</li>
+<li><span class="arithmatex">\(B\)</span> ataca se estiver certo que <span class="arithmatex">\(A\)</span> atacará.</li>
 <li>A comunicação por troca de mensagens.</li>
 <li>Mensagens podem ser arbitrariamente atrasadas.</li>
 <li>Mensagens podem ser perdidas.</li>
 </ul>
 <p>Como um exército tem certeza que o outro irá atacar?</p>
 </details>
-<p>Suponhamos que <strong>há um algoritmo correto</strong> que executa uma sequência finita de troca de mensagens em que ao final tanto Alice quanto Bastião estão seguros, e corretos em sua segurança, de que o outro também atacará. Seja <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> o número máximo de mensagens trocadas. 
-Em uma execução em que todas as <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> mensagens possíveis são usadas, suponha sem perda de generalidade que Alice enviou a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>-ésima mensagem.</p>
+<p>Suponhamos que <strong>há um algoritmo correto</strong> que executa uma sequência finita de troca de mensagens em que ao final tanto Alice quanto Bastião estão seguros, e corretos em sua segurança, de que o outro também atacará. Seja <span class="arithmatex">\(n\)</span> o número máximo de mensagens trocadas. 
+Em uma execução em que todas as <span class="arithmatex">\(n\)</span> mensagens possíveis são usadas, suponha sem perda de generalidade que Alice enviou a <span class="arithmatex">\(n\)</span>-ésima mensagem.</p>
 <p><img alt="Paradoxo dos 2 Generais" src="drawings/2generals.drawio-1.svg" /></p>
-<p>Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida, é indistinguível de uma execução em que a <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>-ésima mensagem é perdida.</p>
+<p>Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida, é indistinguível de uma execução em que a <span class="arithmatex">\(n\)</span>-ésima mensagem é perdida.</p>
 <p><img alt="Paradoxo dos 2 Generais" src="drawings/2generals.drawio-2.svg" /></p>
-<p>Dado que ao final da primeira execução completa <strong>Alice ataca</strong>, no final da execução onde a mensagem <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> é perdida, Alice também deve atacar.
-Mas se o algoritmo é correto, então também <strong>Bastião ataca</strong>, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> mensagens.
-Repetindo-se o argumento mais <span><span class="MathJax_Preview">n-1</span><script type="math/tex">n-1</script></span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um <strong>absurdo</strong>. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
+<p>Dado que ao final da primeira execução completa <strong>Alice ataca</strong>, no final da execução onde a mensagem <span class="arithmatex">\(n\)</span> é perdida, Alice também deve atacar.
+Mas se o algoritmo é correto, então também <strong>Bastião ataca</strong>, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span class="arithmatex">\(n-1\)</span> mensagens.
+Repetindo-se o argumento mais <span class="arithmatex">\(n-1\)</span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um <strong>absurdo</strong>. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
 <p>Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?</p>
 <h3 id="impossibilidade">Impossibilidade</h3>
 <p>Quando dizemos que é impossível resolver um problema queremos dizer que é impossível produzir um algoritmo que <strong>sempre levará a uma resposta correta</strong>.
 Isto quer dizer que podemos produzir algoritmos, mas ou eles às vezes <strong>levarão a respostas incorretas</strong> ou eles às vezes <strong>não levarão a respostas</strong>; ambos podem ser úteis na prática.</p>
 <p>Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
 A <strong>confiança</strong> de Alice de que Bastião também atcaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
-Esta abordagem faria com com que o ataque funcionasse com uma <strong>certa probabilidade</strong>, mas com uma pequena probabilidade <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> de levar a um ataque fracassado, onde <span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span> pode ser feita <strong>tão pequena quanto se "queira"</strong>.</p>
+Esta abordagem faria com com que o ataque funcionasse com uma <strong>certa probabilidade</strong>, mas com uma pequena probabilidade <span class="arithmatex">\(P\)</span> de levar a um ataque fracassado, onde <span class="arithmatex">\(P\)</span> pode ser feita <strong>tão pequena quanto se "queira"</strong>.</p>
 <p>Resultados de impossibilidade abundam na área de computação distribuída<sup id="fnref:impossibilidades"><a class="footnote-ref" href="#fn:impossibilidades">5</a></sup> e não podem nos desencorajar de continuar a buscar soluções práticas.</p>
 <h3 id="consenso">Consenso</h3>
 <p>O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
 Neste problema, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong>. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.</p>
 <ul>
 <li>Validade: Somente um valor proposto pode ser decidido.</li>
-<li>Acordo: Se um processo decide-se por <span><span class="MathJax_Preview">v</span><script type="math/tex">v</script></span> e outro por <span><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>, então <span><span class="MathJax_Preview">v = w</span><script type="math/tex">v = w</script></span></li>
+<li>Acordo: Se um processo decide-se por <span class="arithmatex">\(v\)</span> e outro por <span class="arithmatex">\(w\)</span>, então <span class="arithmatex">\(v = w\)</span></li>
 <li>Terminação: Todo processo não <strong>defeituoso</strong> decide-se.</li>
 </ul>
 <p>Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituso se ele parou de funcionar.
@@ -1224,8 +1178,8 @@ Os detectores não confiáveis encapsulam, de certa forma, o sincronismo necess�
 <li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.</li>
 </ul>
 <p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de completude fraca e acucárias eventual fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">8</a></sup> 
-Este detector, conhecido como <span><span class="MathJax_Preview">\diamont W</span><script type="math/tex">\diamont W</script></span> e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
-Vários protocolos de consenso utilizam o detector equivalente, <span><span class="MathJax_Preview">\diamond S</span><script type="math/tex">\diamond S</script></span>, equivalente ao <span><span class="MathJax_Preview">\diamond W</span><script type="math/tex">\diamond W</script></span> mas com completude forte.
+Este detector, conhecido como <span class="arithmatex">\(\diamont W\)</span> e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
+Vários protocolos de consenso utilizam o detector equivalente, <span class="arithmatex">\(\diamond S\)</span>, equivalente ao <span class="arithmatex">\(\diamond W\)</span> mas com completude forte.
 Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina; um <strong>resultado errado nunca é alcançado</strong>.</p>
 <h3 id="difusao-totalmente-ordenada">Difusão Totalmente Ordenada</h3>
 <p>Se pudermos resolver o consenso, podemos então resolver o problema da difusão atômica e com ela implementar a replicação de máquinas de estados.
@@ -1251,14 +1205,14 @@ No nível da difusão atômica, mensagens são <strong>difundidas</strong> e <st
 <p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:</p>
 <ul>
 <li>Ordene as instâncias de consenso.</li>
-<li>Para difundir mensagem <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, proponha a mensagem na menor instância <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> em que não tiver visto uma decisão.</li>
-<li>Se a decisão de <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> não é <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>, volte para o passo anterior.</li>
+<li>Para difundir mensagem <span class="arithmatex">\(m\)</span>, proponha a mensagem na menor instância <span class="arithmatex">\(i\)</span> em que não tiver visto uma decisão.</li>
+<li>Se a decisão de <span class="arithmatex">\(i\)</span> não é <span class="arithmatex">\(m\)</span>, volte para o passo anterior.</li>
 <li>Entregue as decisões na ordem das instâncias.</li>
 </ul>
-<p>No exemplo a seguir, duas mensagens, <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> e <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> foram <strong>difundidas</strong> pelas aplicações App1 e App2, respectivamente, por meio do módulo de difusão atômica junto a cada aplicação.
+<p>No exemplo a seguir, duas mensagens, <span class="arithmatex">\(m\)</span> e <span class="arithmatex">\(m'\)</span> foram <strong>difundidas</strong> pelas aplicações App1 e App2, respectivamente, por meio do módulo de difusão atômica junto a cada aplicação.
 O módulo de difusão determina qual a menor instância de consenso ainda não decidida, azul, em que propõem as mensagens.
-Ao final da instância de conseno, <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> é decidida e é entregue pelos módulos de difusão.
-O módulo ABCast2 insiste na difusão de <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span>, propondo-a na próxima instância, vermelha, que decide <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span> e leva esta mensagem a ser entregue.</p>
+Ao final da instância de conseno, <span class="arithmatex">\(m\)</span> é decidida e é entregue pelos módulos de difusão.
+O módulo ABCast2 insiste na difusão de <span class="arithmatex">\(m'\)</span>, propondo-a na próxima instância, vermelha, que decide <span class="arithmatex">\(m'\)</span> e leva esta mensagem a ser entregue.</p>
 <div class="mermaid">sequenceDiagram
     participant App1
     participant ABCast1
@@ -1293,7 +1247,7 @@ end
       ABCast2 --&gt;&gt;- App2: entregar m'
 </div>
 
-<p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> e depois <span><span class="MathJax_Preview">m'</span><script type="math/tex">m'</script></span>.
+<p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span class="arithmatex">\(m\)</span> e depois <span class="arithmatex">\(m'\)</span>.
 Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.</p>
 <h4 id="estudo-de-caso-do-raft">Estudo de Caso do Raft</h4>
 <p>Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
@@ -1590,12 +1544,14 @@ Cada znode pode ser visto como <strong>arquivo</strong> e <strong>diretório</st
 <p><img alt="" src="images/zknamespace.jpg" /></p>
 <p>O sistema de arquivos do Zookeeper é replicado em vários nós.</p>
 <p><img alt="" src="images/zkservice.jpg" /></p>
-<p>Znodes são manipulados, essencialmente, por 4 operações
-* C: create
-* R: get
-* U: set
-* D: delete
-* ls *: get children</p>
+<p>Znodes são manipulados, essencialmente, por 4 operações</p>
+<ul>
+<li>C: create</li>
+<li>R: get</li>
+<li>U: set</li>
+<li>D: delete</li>
+<li>ls *: get children</li>
+</ul>
 <p>Znodes são lidos e escritos sempre integralmente. Isto é, não se pode escrever apenas parte do conteúdo do "arquivo". Por isso, recomenda-se que os arquivos sejam sempre pequenos, onde pequeno é relativo.</p>
 <p>Os comandos que atualizam dados, como <strong>create</strong> e <strong>delete</strong> são enviados para todas as réplicas via o protocolo ZAB, Zookeeper Atomic Broadcast, que entrega as mensagens de forma totalmente ordenada. O sistema de arquivos é, portanto, uma máquina de estados replicada.
 Já comandos de leitura são executados direto na réplica que os recebe.</p>
@@ -1746,7 +1702,7 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
 <p>Esta é uma variação do problema de coordenação de <em>gangsters</em> apresentado no em <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:impossibilidades">
-<p><a href="]https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:flp85">
 <p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>. Uma explicação da prova está disponível no <a href="https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/">Paper Trail</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 6 in the text">&#8617;</a></p>
@@ -1843,7 +1799,9 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>
