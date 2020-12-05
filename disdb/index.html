@@ -2423,7 +2423,7 @@ Por esta razão, acessos aleatórios são mais custosos que acessos sequenciais,
 Por este motivo, muitos bancos de dados, especialmente DHT pois tem seu uso focado em quantidades muito grandes de dados, gerados e acessados com grande velocidade, tentam acessar o disco sempre de forma sequencial.
 Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma <em>Log Structured Merge Tree</em>, ou LSMT.</p>
 <h3 id="log-structured-merge-tree">Log Structured Merge Tree</h3>
-<p>Uma Log Structured Merge Tree é uma forma de se armazenar dados em disco de forma de forma quase sempre sequencial, minimizando assim os o impacto da durabilidade no desempenho do sistema.
+<p>Uma <strong><em>Log Structured Merge Tree</em></strong> é uma forma de se armazenar dados em disco de forma de forma quase sempre sequencial, minimizando assim os o impacto da durabilidade no desempenho do sistema.
 Considere um banco armazenando uma pequena quantidade de dados, que cabe em memória principal.
 Na LSMT, operações de escrita são adicionadas a um <strong><em>commit log</em></strong>, em disco,  e somente então são executadas em memória principal e confirmadas para o cliente; a estrutura que armazena os dados em memória é denominada <em>memory table</em>, ou simplesmente <strong>memtable</strong>.
 Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rápida.</p>
@@ -2460,9 +2460,10 @@ Outra possibilidade é lembrar a faixa de chaves contida na tabela. Esta estrat�
 Como acelerar a identificação das sstables pertinentes? Entram em cena os filtros de <strong>Bloom</strong>.</p>
 <h3 id="filtros-de-bloom">Filtros de Bloom</h3>
 <p>De acordo com nossa fonte mais que confiável, a <a href="https://en.wikipedia.org/wiki/Bloom_filter">Wikipedia</a></p>
-<blockquote>
-<p><em>A Bloom filter is a **space-efficient*</em> <strong>probabilistic</strong> data structure, conceived by Burton Howard <em>Bloom</em> in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either <strong>"possibly in set"</strong> or <strong>"definitely not in set"</strong>.*</p>
-</blockquote>
+<div class="admonition quote">
+<p class="admonition-title">Bloom Filter</p>
+<p>A Bloom filter is a <strong><em>space-efficient probabilistic</em></strong> data structure, conceived by Burton Howard <em>Bloom</em> in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either <strong>"possibly in set"</strong> or <strong>"definitely not in set"</strong>.</p>
+</div>
 <p>Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.</p>
 <p><img alt="LSMT+Bloom Filter" src="images/bf_lsm.jpg" /></p>
 <p>Mas como exatamente construímos um filtro de Bloom?
@@ -2471,24 +2472,30 @@ Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos c
 No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções hash.</p>
 <p><img alt="By David Eppstein" src="images/bf.png" /></p>
 <p>Na <strong>consulta</strong>, cada elemento passa por pelas mesmas funções hash.
-Se algum dos índices apontados não estiver com um 1, como no caso do w, no exemplo, o elemento não pertence ao conjunto.
+Se algum dos índices apontados não estiver com um 1, como no caso do c, no exemplo, o elemento não pertence ao conjunto.
 Caso contrário, o filtro responderá que é possível que pertença.</p>
-<p>Mas quão bom é um filtro de Bloom na identificação do das sstables? Ou, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?
-* o número <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;
-* o número <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> de hashes, pois quanto mais hashes, mais bits transformados em 1; e,
-* o número <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de bits no vetor, pois quanto menos bits, mais colisões de bits.</p>
-<p>De forma mais precisa,
-* a probabilidade de setar um certo bit na inserção de um elemento é <span><span class="MathJax_Preview">1/m</span><script type="math/tex">1/m</script></span>, e
-* a probabilidade de não setar tal bit é <span><span class="MathJax_Preview">1 - 1/m</span><script type="math/tex">1 - 1/m</script></span>;
-* a probabilidade de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> hashes não setarem um bit é <span><span class="MathJax_Preview">(1 - 1/m)^k</span><script type="math/tex">(1 - 1/m)^k</script></span>;
-* a probabilidade de não setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">(1 - 1/m)^{kn}</span><script type="math/tex">(1 - 1/m)^{kn}</script></span>;
-* a probabilidade de setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">1 - (1 - 1/m)^{kn}</span><script type="math/tex">1 - (1 - 1/m)^{kn}</script></span></p>
-<p>Logo,
-* a probabilidade de falso positivo <span><span class="MathJax_Preview">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</span><script type="math/tex">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</script></span>
-O que nos permite chegar à relação
-* <span><span class="MathJax_Preview">m/n = - 1.44\log_2 p</span><script type="math/tex">m/n = - 1.44\log_2 p</script></span>, em que podemos calcular <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> em função do <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> esperado e do <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> desejado.
-E podemos também identificar o <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> ótimo para a situação, pela equação
-* <span><span class="MathJax_Preview">k = - \frac{\ln p}{\ln 2} = - \log_2 p</span><script type="math/tex">k = - \frac{\ln p}{\ln 2} = - \log_2 p</script></span></p>
+<p>Mas quão bom é um filtro de Bloom na identificação do das sstables? Ou, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?</p>
+<ul>
+<li>o número <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> de elementos no conjunto, uma vez que quanto mais elementos, mais bits  1;</li>
+<li>o número <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> de hashes, pois quanto mais hashes, mais bits transformados em 1; e,</li>
+<li>o número <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> de bits no vetor, pois quanto menos bits, mais colisões de bits.</li>
+</ul>
+<p>De forma mais precisa,</p>
+<ul>
+<li>a probabilidade de setar um certo bit na inserção de um elemento é <span><span class="MathJax_Preview">1/m</span><script type="math/tex">1/m</script></span>, e</li>
+<li>a probabilidade de não setar tal bit é <span><span class="MathJax_Preview">1 - 1/m</span><script type="math/tex">1 - 1/m</script></span>;</li>
+<li>a probabilidade de <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> hashes não setarem um bit é <span><span class="MathJax_Preview">(1 - 1/m)^k</span><script type="math/tex">(1 - 1/m)^k</script></span>;</li>
+<li>a probabilidade de não setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">(1 - 1/m)^{kn}</span><script type="math/tex">(1 - 1/m)^{kn}</script></span>;</li>
+<li>a probabilidade de setar um bit após <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> inserções é <span><span class="MathJax_Preview">1 - (1 - 1/m)^{kn}</span><script type="math/tex">1 - (1 - 1/m)^{kn}</script></span></li>
+</ul>
+<p>Logo,</p>
+<ul>
+<li>a probabilidade de falso positivo <span><span class="MathJax_Preview">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</span><script type="math/tex">p = (1 - (1 - 1/m)^{kn})^k \approx (1 - e^{-kn/m})^k</script></span>
+O que nos permite chegar à relação</li>
+<li><span><span class="MathJax_Preview">m/n = - 1.44\log_2 p</span><script type="math/tex">m/n = - 1.44\log_2 p</script></span>, em que podemos calcular <span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span> em função do <span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> esperado e do <span><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> desejado.
+E podemos também identificar o <span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> ótimo para a situação, pela equação</li>
+<li><span><span class="MathJax_Preview">k = - \frac{\ln p}{\ln 2} = - \log_2 p</span><script type="math/tex">k = - \frac{\ln p}{\ln 2} = - \log_2 p</script></span></li>
+</ul>
 <p>Uma forma "simples" de visualizar este resultado é dada pela figura a seguir, em que o eixo Y dá a taxa de falsos positivos do filtro em função do número de elementos inseridos, indicado no eixo X, para diversas configurações, apresentadas como curvas.
 Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b = 2MB</span><script type="math/tex">m = 2^{24}b = 2MB</script></span>, após 1 milhão de inserções, tem-se probabilidade de falsos positivo <span><span class="MathJax_Preview">p = 0,0001</span><script type="math/tex">p = 0,0001</script></span>.</p>
 <h5 id="referencias">Referências</h5>
@@ -2501,6 +2508,7 @@ Por exemplo, com um filtro com <span><span class="MathJax_Preview">m = 2^{24}b =
 <li><a href="https://adambcomer.com/blog/simple-database/motivation-design.html">https://adambcomer.com/blog/simple-database/motivation-design.html</a></li>
 <li><a href="https://adambcomer.com/blog/simple-database/memtable.html">https://adambcomer.com/blog/simple-database/memtable.html</a></li>
 <li><a href="https://adambcomer.com/blog/simple-database/wal.html">https://adambcomer.com/blog/simple-database/wal.html</a></li>
+<li><a href="https://www.jasondavies.com/bloomfilter/">https://www.jasondavies.com/bloomfilter/</a></li>
 </ul>
 </li>
 </ul>
