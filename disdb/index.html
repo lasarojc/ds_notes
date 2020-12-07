@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -19,13 +18,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6910b76c.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -36,8 +39,7 @@
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,7 +47,13 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -62,16 +70,18 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
       
@@ -89,27 +99,27 @@
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -124,8 +134,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -136,12 +144,14 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
@@ -155,7 +165,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Prólogo
     </a>
   </li>
@@ -167,7 +177,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
+    <a href="../intro/" class="md-nav__link">
       Introdução
     </a>
   </li>
@@ -179,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+    <a href="../basics/" class="md-nav__link">
       Fundamentos
     </a>
   </li>
@@ -191,7 +201,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
+    <a href="../comm/" class="md-nav__link">
       Comunicação
     </a>
   </li>
@@ -203,7 +213,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+    <a href="../arch/" class="md-nav__link">
       Arquiteturas
     </a>
   </li>
@@ -215,7 +225,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
+    <a href="../coord/" class="md-nav__link">
       Coordenação
     </a>
   </li>
@@ -227,7 +237,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
+    <a href="../time/" class="md-nav__link">
       Tempo
     </a>
   </li>
@@ -239,7 +249,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+    <a href="../fault/" class="md-nav__link">
       Tolerância a Falhas
     </a>
   </li>
@@ -261,12 +271,10 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Bancos de Dados
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Bancos de Dados" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Bancos de Dados
     </a>
     
@@ -278,17 +286,546 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#nosql" class="md-nav__link">
-    NoSQL
+  <a href="#bancos-de-dados" class="md-nav__link">
+    Bancos de Dados
   </a>
+  
+    <nav class="md-nav" aria-label="Bancos de Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operacoes-atomicas" class="md-nav__link">
+    Operações Atômicas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conjuntos-de-operacoes" class="md-nav__link">
+    Conjuntos de Operações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memoria-estavel" class="md-nav__link">
+    Memória Estável
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-banco" class="md-nav__link">
+    O Banco
+  </a>
+  
+    <nav class="md-nav" aria-label="O Banco">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transacao" class="md-nav__link">
+    Transação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transacao_1" class="md-nav__link">
+    Transação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execucao-concorrente" class="md-nav__link">
+    Execução Concorrente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execucao-concorrente_1" class="md-nav__link">
+    Execução Concorrente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solucao" class="md-nav__link">
+    Solução?!
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalencia-serial" class="md-nav__link">
+    Equivalência Serial
+  </a>
+  
+    <nav class="md-nav" aria-label="Equivalência Serial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#concorrencia" class="md-nav__link">
+    Concorrência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalencia-serial_1" class="md-nav__link">
+    Equivalência Serial
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lost-update" class="md-nav__link">
+    Lost Update
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dirty-read" class="md-nav__link">
+    Dirty Read
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aborto-em-cascata" class="md-nav__link">
+    Aborto em Cascata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dirty-read_1" class="md-nav__link">
+    Dirty Read
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transacoes" class="md-nav__link">
+    Transações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escrita-prematura" class="md-nav__link">
+    Escrita Prematura
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-execution" class="md-nav__link">
+    Strict Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-concorrencia" class="md-nav__link">
+    Controle de Concorrência
+  </a>
+  
+    <nav class="md-nav" aria-label="Controle de Concorrência">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como" class="md-nav__link">
+    Como
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locks" class="md-nav__link">
+    Locks
+  </a>
+  
+    <nav class="md-nav" aria-label="Locks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strict-two-phase-locking" class="md-nav__link">
+    Strict Two Phase Locking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-write-locks" class="md-nav__link">
+    Read-Write Locks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lock-por-que-evitar" class="md-nav__link">
+    Lock -- por que evitar?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abordagem-mais-otimista" class="md-nav__link">
+    Abordagem mais otimista?
+  </a>
+  
+    <nav class="md-nav" aria-label="Abordagem mais otimista?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abordagem-otimista" class="md-nav__link">
+    Abordagem otimista
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacao" class="md-nav__link">
+    Validação
+  </a>
+  
+    <nav class="md-nav" aria-label="Validação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backward-validation" class="md-nav__link">
+    Backward validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward-validation" class="md-nav__link">
+    Forward validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestamping" class="md-nav__link">
+    Timestamping
+  </a>
+  
+    <nav class="md-nav" aria-label="Timestamping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar" class="md-nav__link">
+    Como implementar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar-escrita" class="md-nav__link">
+    Como implementar -- escrita
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar-leitura" class="md-nav__link">
+    como implementar -- leitura
+  </a>
+  
+    <nav class="md-nav" aria-label="como implementar -- leitura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bancos-de-dados-distribuidos_1" class="md-nav__link">
+    Bancos de dados distribuídos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bancos-de-dados-transacionais-distribuidos" class="md-nav__link">
+    bancos de dados transacionais distribuídos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transacao-distribuida" class="md-nav__link">
+    Transação distribuída
+  </a>
+  
+    <nav class="md-nav" aria-label="Transação distribuída">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#papeis" class="md-nav__link">
+    Papéis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comprometimento-distribuido" class="md-nav__link">
+    Comprometimento distribuído
+  </a>
+  
+    <nav class="md-nav" aria-label="Comprometimento distribuído">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomicidade" class="md-nav__link">
+    atomicidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc-2-phase-commit" class="md-nav__link">
+    2PC - 2 Phase Commit
+  </a>
+  
+    <nav class="md-nav" aria-label="2PC - 2 Phase Commit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#premissas" class="md-nav__link">
+    Premissas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1pc" class="md-nav__link">
+    1PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc" class="md-nav__link">
+    2PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprometimento" class="md-nav__link">
+    Comprometimento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc-o-protocolo" class="md-nav__link">
+    2PC -- o protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc_1" class="md-nav__link">
+    2PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_1" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-coordenador" class="md-nav__link">
+    Falha no Coordenador
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recuperacao-do-coordenador" class="md-nav__link">
+    Recuperação do Coordenador
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otimizacoes" class="md-nav__link">
+    Otimizações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coleta-de-lixo" class="md-nav__link">
+    Coleta de Lixo
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pc" class="md-nav__link">
+    3-PC
+  </a>
+  
+    <nav class="md-nav" aria-label="3-PC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-protocolo" class="md-nav__link">
+    O Protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_2" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3pc-x-2pc" class="md-nav__link">
+    3PC x 2PC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paxos-commit" class="md-nav__link">
+    Paxos-Commit
+  </a>
+  
+    <nav class="md-nav" aria-label="Paxos-Commit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-protocolo_1" class="md-nav__link">
+    O protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_3" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-recuperavel" class="md-nav__link">
+    Log Recuperável
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Recuperável">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disco-duplicado" class="md-nav__link">
+    Disco Duplicado
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -329,7 +866,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
+  <a href="#referencias_1" class="md-nav__link">
     Referências
   </a>
   
@@ -488,7 +1025,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#transacoes" class="md-nav__link">
+  <a href="#transacoes_1" class="md-nav__link">
     Transações
   </a>
   
@@ -768,544 +1305,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados" class="md-nav__link">
-    Bancos de Dados
-  </a>
-  
-    <nav class="md-nav" aria-label="Bancos de Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#operacoes-atomicas" class="md-nav__link">
-    Operações Atômicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#conjuntos-de-operacoes" class="md-nav__link">
-    Conjuntos de Operações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#memoria-estavel" class="md-nav__link">
-    Memória Estável
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#o-banco" class="md-nav__link">
-    O Banco
-  </a>
-  
-    <nav class="md-nav" aria-label="O Banco">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transacao" class="md-nav__link">
-    Transação
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transacao_1" class="md-nav__link">
-    Transação
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#execucao-concorrente" class="md-nav__link">
-    Execução Concorrente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#execucao-concorrente_1" class="md-nav__link">
-    Execução Concorrente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#solucao" class="md-nav__link">
-    Solução?!
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#equivalencia-serial" class="md-nav__link">
-    Equivalência Serial
-  </a>
-  
-    <nav class="md-nav" aria-label="Equivalência Serial">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#concorrencia" class="md-nav__link">
-    Concorrência
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#equivalencia-serial_1" class="md-nav__link">
-    Equivalência Serial
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lost-update" class="md-nav__link">
-    Lost Update
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dirty-read" class="md-nav__link">
-    Dirty Read
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aborto-em-cascata" class="md-nav__link">
-    Aborto em Cascata
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dirty-read_1" class="md-nav__link">
-    Dirty Read
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transacoes_1" class="md-nav__link">
-    Transações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escrita-prematura" class="md-nav__link">
-    Escrita Prematura
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#strict-execution" class="md-nav__link">
-    Strict Execution
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#controle-de-concorrencia" class="md-nav__link">
-    Controle de Concorrência
-  </a>
-  
-    <nav class="md-nav" aria-label="Controle de Concorrência">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#como" class="md-nav__link">
-    Como
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#locks" class="md-nav__link">
-    Locks
-  </a>
-  
-    <nav class="md-nav" aria-label="Locks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#strict-two-phase-locking" class="md-nav__link">
-    Strict Two Phase Locking
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read-write-locks" class="md-nav__link">
-    Read-Write Locks
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lock-por-que-evitar" class="md-nav__link">
-    Lock -- por que evitar?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abordagem-mais-otimista" class="md-nav__link">
-    Abordagem mais otimista?
-  </a>
-  
-    <nav class="md-nav" aria-label="Abordagem mais otimista?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#abordagem-otimista" class="md-nav__link">
-    Abordagem otimista
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validacao" class="md-nav__link">
-    Validação
-  </a>
-  
-    <nav class="md-nav" aria-label="Validação">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#backward-validation" class="md-nav__link">
-    Backward validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forward-validation" class="md-nav__link">
-    Forward validation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#timestamping" class="md-nav__link">
-    Timestamping
-  </a>
-  
-    <nav class="md-nav" aria-label="Timestamping">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar" class="md-nav__link">
-    Como implementar
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar-escrita" class="md-nav__link">
-    Como implementar -- escrita
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar-leitura" class="md-nav__link">
-    como implementar -- leitura
-  </a>
-  
-    <nav class="md-nav" aria-label="como implementar -- leitura">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#referencias_1" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados-distribuidos_1" class="md-nav__link">
-    Bancos de dados distribuídos
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados-transacionais-distribuidos" class="md-nav__link">
-    bancos de dados transacionais distribuídos
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transacao-distribuida" class="md-nav__link">
-    Transação distribuída
-  </a>
-  
-    <nav class="md-nav" aria-label="Transação distribuída">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#papeis" class="md-nav__link">
-    Papéis
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comprometimento-distribuido" class="md-nav__link">
-    Comprometimento distribuído
-  </a>
-  
-    <nav class="md-nav" aria-label="Comprometimento distribuído">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#atomicidade" class="md-nav__link">
-    atomicidade
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc-2-phase-commit" class="md-nav__link">
-    2PC - 2 Phase Commit
-  </a>
-  
-    <nav class="md-nav" aria-label="2PC - 2 Phase Commit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#premissas" class="md-nav__link">
-    Premissas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1pc" class="md-nav__link">
-    1PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc" class="md-nav__link">
-    2PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#comprometimento" class="md-nav__link">
-    Comprometimento
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc-o-protocolo" class="md-nav__link">
-    2PC -- o protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc_1" class="md-nav__link">
-    2PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_1" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-coordenador" class="md-nav__link">
-    Falha no Coordenador
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recuperacao-do-coordenador" class="md-nav__link">
-    Recuperação do Coordenador
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#otimizacoes" class="md-nav__link">
-    Otimizações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coleta-de-lixo" class="md-nav__link">
-    Coleta de Lixo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-pc" class="md-nav__link">
-    3-PC
-  </a>
-  
-    <nav class="md-nav" aria-label="3-PC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#o-protocolo" class="md-nav__link">
-    O Protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_2" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3pc-x-2pc" class="md-nav__link">
-    3PC x 2PC
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#paxos-commit" class="md-nav__link">
-    Paxos-Commit
-  </a>
-  
-    <nav class="md-nav" aria-label="Paxos-Commit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#o-protocolo_1" class="md-nav__link">
-    O protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_3" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-recuperavel" class="md-nav__link">
-    Log Recuperável
-  </a>
-  
-    <nav class="md-nav" aria-label="Log Recuperável">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#disco-duplicado" class="md-nav__link">
-    Disco Duplicado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1319,7 +1318,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+    <a href="../disfs/index.md" class="md-nav__link">
       Sistemas de Arquivos
     </a>
   </li>
@@ -1331,7 +1330,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
+    <a href="../tech/" class="md-nav__link">
       Tecnologias
     </a>
   </li>
@@ -1343,7 +1342,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
+    <a href="../projeto/" class="md-nav__link">
       Projeto
     </a>
   </li>
@@ -1367,17 +1366,546 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#nosql" class="md-nav__link">
-    NoSQL
+  <a href="#bancos-de-dados" class="md-nav__link">
+    Bancos de Dados
   </a>
+  
+    <nav class="md-nav" aria-label="Bancos de Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operacoes-atomicas" class="md-nav__link">
+    Operações Atômicas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conjuntos-de-operacoes" class="md-nav__link">
+    Conjuntos de Operações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memoria-estavel" class="md-nav__link">
+    Memória Estável
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-banco" class="md-nav__link">
+    O Banco
+  </a>
+  
+    <nav class="md-nav" aria-label="O Banco">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transacao" class="md-nav__link">
+    Transação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transacao_1" class="md-nav__link">
+    Transação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execucao-concorrente" class="md-nav__link">
+    Execução Concorrente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execucao-concorrente_1" class="md-nav__link">
+    Execução Concorrente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solucao" class="md-nav__link">
+    Solução?!
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalencia-serial" class="md-nav__link">
+    Equivalência Serial
+  </a>
+  
+    <nav class="md-nav" aria-label="Equivalência Serial">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#concorrencia" class="md-nav__link">
+    Concorrência
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalencia-serial_1" class="md-nav__link">
+    Equivalência Serial
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lost-update" class="md-nav__link">
+    Lost Update
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dirty-read" class="md-nav__link">
+    Dirty Read
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aborto-em-cascata" class="md-nav__link">
+    Aborto em Cascata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dirty-read_1" class="md-nav__link">
+    Dirty Read
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transacoes" class="md-nav__link">
+    Transações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escrita-prematura" class="md-nav__link">
+    Escrita Prematura
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-execution" class="md-nav__link">
+    Strict Execution
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controle-de-concorrencia" class="md-nav__link">
+    Controle de Concorrência
+  </a>
+  
+    <nav class="md-nav" aria-label="Controle de Concorrência">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como" class="md-nav__link">
+    Como
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locks" class="md-nav__link">
+    Locks
+  </a>
+  
+    <nav class="md-nav" aria-label="Locks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strict-two-phase-locking" class="md-nav__link">
+    Strict Two Phase Locking
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read-write-locks" class="md-nav__link">
+    Read-Write Locks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lock-por-que-evitar" class="md-nav__link">
+    Lock -- por que evitar?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abordagem-mais-otimista" class="md-nav__link">
+    Abordagem mais otimista?
+  </a>
+  
+    <nav class="md-nav" aria-label="Abordagem mais otimista?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abordagem-otimista" class="md-nav__link">
+    Abordagem otimista
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacao" class="md-nav__link">
+    Validação
+  </a>
+  
+    <nav class="md-nav" aria-label="Validação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backward-validation" class="md-nav__link">
+    Backward validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forward-validation" class="md-nav__link">
+    Forward validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timestamping" class="md-nav__link">
+    Timestamping
+  </a>
+  
+    <nav class="md-nav" aria-label="Timestamping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar" class="md-nav__link">
+    Como implementar
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar-escrita" class="md-nav__link">
+    Como implementar -- escrita
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-implementar-leitura" class="md-nav__link">
+    como implementar -- leitura
+  </a>
+  
+    <nav class="md-nav" aria-label="como implementar -- leitura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bancos-de-dados-distribuidos_1" class="md-nav__link">
+    Bancos de dados distribuídos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bancos-de-dados-transacionais-distribuidos" class="md-nav__link">
+    bancos de dados transacionais distribuídos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transacao-distribuida" class="md-nav__link">
+    Transação distribuída
+  </a>
+  
+    <nav class="md-nav" aria-label="Transação distribuída">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#papeis" class="md-nav__link">
+    Papéis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comprometimento-distribuido" class="md-nav__link">
+    Comprometimento distribuído
+  </a>
+  
+    <nav class="md-nav" aria-label="Comprometimento distribuído">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atomicidade" class="md-nav__link">
+    atomicidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc-2-phase-commit" class="md-nav__link">
+    2PC - 2 Phase Commit
+  </a>
+  
+    <nav class="md-nav" aria-label="2PC - 2 Phase Commit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#premissas" class="md-nav__link">
+    Premissas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1pc" class="md-nav__link">
+    1PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc" class="md-nav__link">
+    2PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comprometimento" class="md-nav__link">
+    Comprometimento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc-o-protocolo" class="md-nav__link">
+    2PC -- o protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2pc_1" class="md-nav__link">
+    2PC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_1" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-coordenador" class="md-nav__link">
+    Falha no Coordenador
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recuperacao-do-coordenador" class="md-nav__link">
+    Recuperação do Coordenador
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otimizacoes" class="md-nav__link">
+    Otimizações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coleta-de-lixo" class="md-nav__link">
+    Coleta de Lixo
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-pc" class="md-nav__link">
+    3-PC
+  </a>
+  
+    <nav class="md-nav" aria-label="3-PC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-protocolo" class="md-nav__link">
+    O Protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_2" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3pc-x-2pc" class="md-nav__link">
+    3PC x 2PC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paxos-commit" class="md-nav__link">
+    Paxos-Commit
+  </a>
+  
+    <nav class="md-nav" aria-label="Paxos-Commit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-protocolo_1" class="md-nav__link">
+    O protocolo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falha-no-participante_3" class="md-nav__link">
+    Falha no Participante
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#log-recuperavel" class="md-nav__link">
+    Log Recuperável
+  </a>
+  
+    <nav class="md-nav" aria-label="Log Recuperável">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#disco-duplicado" class="md-nav__link">
+    Disco Duplicado
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1418,7 +1946,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
+  <a href="#referencias_1" class="md-nav__link">
     Referências
   </a>
   
@@ -1577,7 +2105,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#transacoes" class="md-nav__link">
+  <a href="#transacoes_1" class="md-nav__link">
     Transações
   </a>
   
@@ -1857,544 +2385,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados" class="md-nav__link">
-    Bancos de Dados
-  </a>
-  
-    <nav class="md-nav" aria-label="Bancos de Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#operacoes-atomicas" class="md-nav__link">
-    Operações Atômicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#conjuntos-de-operacoes" class="md-nav__link">
-    Conjuntos de Operações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#memoria-estavel" class="md-nav__link">
-    Memória Estável
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#o-banco" class="md-nav__link">
-    O Banco
-  </a>
-  
-    <nav class="md-nav" aria-label="O Banco">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transacao" class="md-nav__link">
-    Transação
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transacao_1" class="md-nav__link">
-    Transação
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#execucao-concorrente" class="md-nav__link">
-    Execução Concorrente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#execucao-concorrente_1" class="md-nav__link">
-    Execução Concorrente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#solucao" class="md-nav__link">
-    Solução?!
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#equivalencia-serial" class="md-nav__link">
-    Equivalência Serial
-  </a>
-  
-    <nav class="md-nav" aria-label="Equivalência Serial">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#concorrencia" class="md-nav__link">
-    Concorrência
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#equivalencia-serial_1" class="md-nav__link">
-    Equivalência Serial
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lost-update" class="md-nav__link">
-    Lost Update
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dirty-read" class="md-nav__link">
-    Dirty Read
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#aborto-em-cascata" class="md-nav__link">
-    Aborto em Cascata
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dirty-read_1" class="md-nav__link">
-    Dirty Read
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#transacoes_1" class="md-nav__link">
-    Transações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escrita-prematura" class="md-nav__link">
-    Escrita Prematura
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#strict-execution" class="md-nav__link">
-    Strict Execution
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#controle-de-concorrencia" class="md-nav__link">
-    Controle de Concorrência
-  </a>
-  
-    <nav class="md-nav" aria-label="Controle de Concorrência">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#como" class="md-nav__link">
-    Como
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#locks" class="md-nav__link">
-    Locks
-  </a>
-  
-    <nav class="md-nav" aria-label="Locks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#strict-two-phase-locking" class="md-nav__link">
-    Strict Two Phase Locking
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read-write-locks" class="md-nav__link">
-    Read-Write Locks
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lock-por-que-evitar" class="md-nav__link">
-    Lock -- por que evitar?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#abordagem-mais-otimista" class="md-nav__link">
-    Abordagem mais otimista?
-  </a>
-  
-    <nav class="md-nav" aria-label="Abordagem mais otimista?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#abordagem-otimista" class="md-nav__link">
-    Abordagem otimista
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validacao" class="md-nav__link">
-    Validação
-  </a>
-  
-    <nav class="md-nav" aria-label="Validação">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#backward-validation" class="md-nav__link">
-    Backward validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#forward-validation" class="md-nav__link">
-    Forward validation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#timestamping" class="md-nav__link">
-    Timestamping
-  </a>
-  
-    <nav class="md-nav" aria-label="Timestamping">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar" class="md-nav__link">
-    Como implementar
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar-escrita" class="md-nav__link">
-    Como implementar -- escrita
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#como-implementar-leitura" class="md-nav__link">
-    como implementar -- leitura
-  </a>
-  
-    <nav class="md-nav" aria-label="como implementar -- leitura">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#referencias_1" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados-distribuidos_1" class="md-nav__link">
-    Bancos de dados distribuídos
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados-transacionais-distribuidos" class="md-nav__link">
-    bancos de dados transacionais distribuídos
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transacao-distribuida" class="md-nav__link">
-    Transação distribuída
-  </a>
-  
-    <nav class="md-nav" aria-label="Transação distribuída">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#papeis" class="md-nav__link">
-    Papéis
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#comprometimento-distribuido" class="md-nav__link">
-    Comprometimento distribuído
-  </a>
-  
-    <nav class="md-nav" aria-label="Comprometimento distribuído">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#atomicidade" class="md-nav__link">
-    atomicidade
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc-2-phase-commit" class="md-nav__link">
-    2PC - 2 Phase Commit
-  </a>
-  
-    <nav class="md-nav" aria-label="2PC - 2 Phase Commit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#premissas" class="md-nav__link">
-    Premissas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#1pc" class="md-nav__link">
-    1PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc" class="md-nav__link">
-    2PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#comprometimento" class="md-nav__link">
-    Comprometimento
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc-o-protocolo" class="md-nav__link">
-    2PC -- o protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2pc_1" class="md-nav__link">
-    2PC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_1" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-coordenador" class="md-nav__link">
-    Falha no Coordenador
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recuperacao-do-coordenador" class="md-nav__link">
-    Recuperação do Coordenador
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#otimizacoes" class="md-nav__link">
-    Otimizações
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coleta-de-lixo" class="md-nav__link">
-    Coleta de Lixo
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-pc" class="md-nav__link">
-    3-PC
-  </a>
-  
-    <nav class="md-nav" aria-label="3-PC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#o-protocolo" class="md-nav__link">
-    O Protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_2" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3pc-x-2pc" class="md-nav__link">
-    3PC x 2PC
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#paxos-commit" class="md-nav__link">
-    Paxos-Commit
-  </a>
-  
-    <nav class="md-nav" aria-label="Paxos-Commit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#o-protocolo_1" class="md-nav__link">
-    O protocolo
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falha-no-participante_3" class="md-nav__link">
-    Falha no Participante
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#log-recuperavel" class="md-nav__link">
-    Log Recuperável
-  </a>
-  
-    <nav class="md-nav" aria-label="Log Recuperável">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#disco-duplicado" class="md-nav__link">
-    Disco Duplicado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2408,11 +2398,627 @@
               
                 
                 
-                  
-                
-                
                 <h1 id="bancos-de-dados-distribuidos">Bancos de Dados Distribuídos</h1>
-<h2 id="nosql">NoSQL</h2>
+<h2 id="bancos-de-dados">Bancos de Dados</h2>
+<p>Falar em bancos de dados distribuídos implica falar em bancos transacionais e P2P.</p>
+<h3 id="operacoes-atomicas">Operações Atômicas</h3>
+<p>Falar em bancos de dados distribuídos implica falar em bancos Relacionais/Transactionais e P2P.</p>
+<p>Falar em bancos transacionais, implica falar ACID!</p>
+<ul>
+<li>Atomicidade -- Todas as operações ou nenhuma.</li>
+<li>Consistência -- Os dados transitam de estado válido para estado válido.</li>
+<li>Isolamento -- Transações não interferem umas nas outras.</li>
+<li>Durabilidade -- Efeitos não são esquecidos.</li>
+</ul>
+<p>No modelo de Máquinas de Estados Replicadas, operações são enviadas para as réplicas, que as executam em ordem, deterministicamente e também <em>atomicamente</em>. Isto é, cada operação é ou executada independentemente das outras e por completo, ou não é executada.</p>
+<h3 id="conjuntos-de-operacoes">Conjuntos de Operações</h3>
+<p>Mesmo com Operações Atômicas, frequentemente queremos/precisamos agrupar operações tal que</p>
+<ul>
+<li><em>todas ou nenhuma</em> sejam executadas</li>
+<li>mesmo na presença de falhas.</li>
+</ul>
+<p><em>Atomicidade</em></p>
+<h3 id="memoria-estavel">Memória Estável</h3>
+<p>Para que os efeitos de operações não sejam esquecidos, eles precisam ser armazenados em <em>memória estável</em> como</p>
+<ul>
+<li>HD -- Hard Drives</li>
+<li>SSD -- Solid State Drives</li>
+<li>NVRAM -- Non Volatile RAM</li>
+</ul>
+<p><em>Durabilidade</em></p>
+<h3 id="o-banco">O Banco</h3>
+<p>Conta C</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>C.getSaldo()
+C.setSaldo(montante)
+</code></pre></div>
+</td></tr></table>
+<h4 id="transacao">Transação</h4>
+<p>Mova 10% do saldo de B, de A para B.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1: a -&gt; b
+sB = b.getSaldo()
+     b.setSaldo(sB*1.1)
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+</code></pre></div>
+</td></tr></table></p>
+<h4 id="transacao_1">Transação</h4>
+<p>Qual o saldo total das contas?
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T2: a + b
+sA = a.getSaldo()
+sB = b.getSaldo()
+sT = sA + sB
+</code></pre></div>
+</td></tr></table></p>
+<h4 id="execucao-concorrente">Execução Concorrente</h4>
+<p>Execução concorrente de T1 e T2?
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1                           T2
+sB = b.getSaldo()            
+                             sA = a.getSaldo()
+     b.setSaldo(sB*1.1) .    
+                             sB = b.getSaldo()
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1) 
+                             sT = sA+sB
+</code></pre></div>
+</td></tr></table></p>
+<p>Dados não finais "vazaram". <em>Dirty Read</em>. </p>
+<p>Falta <em>Isolamento</em>.</p>
+<p>Pode levar a mais que um resultado errado. Pode deixar o BD em estado inválido.</p>
+<h4 id="execucao-concorrente_1">Execução Concorrente</h4>
+<p>Mova 10% do saldo de B, de A para B.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1                       T1
+sB = b.getSaldo()
+                          sB = b.getSaldo()
+                               b.setSaldo(sB*1.1)
+     b.setSaldo(sB*1.1)                                        
+                          sA = a.getSaldo()                          
+                               a.setSaldo(sA-sB*0.1)
+sA = a.getSaldo()                          
+     a.setSaldo(sA-sB*0.1)
+</code></pre></div>
+</td></tr></table></p>
+<p><code>sB*0.1</code>  foi perdido. <em>Lost Update</em></p>
+<p>Perdeu <em>Consistência</em></p>
+<h4 id="solucao">Solução?!</h4>
+<p>Para garantir Isolamento</p>
+<ul>
+<li>Execuções dos conjuntos não podem se sobrepor.</li>
+<li>Execute um conjunto de operações por vez, serialmente!</li>
+<li>Garantirá também Consistência</li>
+</ul>
+<p><em>Que tal?</em></p>
+<p>Limite a concorrência de transações.</p>
+<h2 id="equivalencia-serial">Equivalência Serial</h2>
+<h3 id="concorrencia">Concorrência</h3>
+<p>Além de ACID, queremos o máximo de <em>concorrência</em> para garantir o melhor <em>desempenho</em>.</p>
+<p>Queremos uma execução das transações semelhante à serial, mas com o desempenho de concorrente.</p>
+<p>Não queremos uma execução serial, mas uma <em>Equivalência Serial</em>, isto é, que os efeitos das transações, executadas concorrentemente, sejam equivalentes aos de alguma execução serial destas transações.</p>
+<h3 id="equivalencia-serial_1">Equivalência Serial</h3>
+<p>Preocupe-se com Operações Conflitantes</p>
+<ul>
+<li>Transações diferentes</li>
+<li>Uma é escrita</li>
+<li>Mesmo dado</li>
+</ul>
+<p>Duas execuções (de transações) são equivalentes se</p>
+<ul>
+<li>as transações tem as mesmas operações</li>
+<li>quaisquer duas operações conflitantes são executadas na mesma ordem nas duas execuções</li>
+</ul>
+<p>Uma execução tem Equivalência Serial se é equivalente a alguma execução serial das transações.</p>
+<p>Escalone operações concorrentemente, de forma a obter o melhor desempenho, mas de forma a manter Equivalência Serial.</p>
+<p>Esta definição difícil de ser testada. Algo mais simples?</p>
+<ul>
+<li>Como demonstrar Equivalência Serial? </li>
+<li>Tenho que testar todas as execuções seriais e ver se uma casa com o que planejo fazer?</li>
+<li>É caro fazer este planejamento. É mais eficiente garantir por construção.</li>
+</ul>
+<p>Simplificação: A execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.</p>
+<h3 id="lost-update">Lost Update</h3>
+<p>Mova 10% do saldo de X, de Y para X.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                     c -&gt; b
+s = b.getSaldo() [1]
+                           [2]s = b.getSaldo()
+                           [3]    b.setSaldo(s*1.1)
+    b.setSaldo(s*1.1)[4]                                        
+                                  c.setSaldo(s*0.1)
+    a.setSaldo(s*0.1)
+</code></pre></div>
+</td></tr></table></p>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
+<p>Consistência -- <code>s*0.1</code> foi perdido</p>
+<p>Mova 10% do saldo de X, de Y para X.
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                    c -&gt; b
+                          [2] s = b.getSaldo()
+                          [3]     b.setSaldo(s*1.1)
+s = b.getSaldo() [1]
+    b.setSaldo(s*1.1)[4]                                        
+                                  c.setSaldo(s*0.1)
+    a.setSaldo(saldo*0.1)
+</code></pre></div>
+</td></tr></table></p>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\leftarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
+<h3 id="dirty-read">Dirty Read</h3>
+<p>Saldo total?
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                  a -&gt; b
+s = b.getSaldo()
+    b.setSaldo(s*1.1)
+    b.setSaldo(s*1.1)                                        
+    a.saque(s*0.1)
+                        s = b.getSaldo()
+                            b.setSaldo(s*1.1)
+                            b.setSaldo(s*1.1)                                        
+                            a.saque(s*0.1)
+</code></pre></div>
+</td></tr></table>
+ Tem Equivalência Serial.</p>
+<p>Exceto se
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>abortTransaction()
+</code></pre></div>
+</td></tr></table>
+Nenhuma transação que fez uma dirty read pode comitar. Logo, aborte a transação da direita.</p>
+<h3 id="aborto-em-cascata">Aborto em Cascata</h3>
+<p>T1 faz uma escrita. T2 lê o que T1 escreveu e faz outra escrita. T3 lê o que T2 escreveu e faz outra escrita. T4 lê o que... <em>T1 aborta</em>.</p>
+<h3 id="dirty-read_1">Dirty Read</h3>
+<p>Como lidar?</p>
+<ul>
+<li>Suspenda a transação quando esta fizer dirty read.</li>
+<li>Se transação foi abortada, todas as suspensas (que leram dela) devem ser abortadas.</li>
+<li>Repita passo anterior.</li>
+</ul>
+<p>E se evitarmos dirty reads em vez de tratarmos?</p>
+<ul>
+<li>Suspenda antes de fazer dirty read.</li>
+<li>Quando transação for terminada, continue execução.</li>
+</ul>
+<p>Abordagem leva a menor concorrência.</p>
+<p>Para nos permitir identificar transações, vamos usar o seguinte framework para operá-las.</p>
+<h3 id="transacoes">Transações</h3>
+<ul>
+<li><code>beginTransaction(</code>)</li>
+<li>operações</li>
+<li><code>commitTransaction(): Ok/NOk</code></li>
+<li><code>abortTransaction()</code></li>
+</ul>
+<h3 id="escrita-prematura">Escrita Prematura</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Saldo inicial: 100
+
+a.setSaldo(105)
+                   a.setSaldo(110)  
+                   commitTransaction()
+abortTransaction()
+</code></pre></div>
+</td></tr></table>
+<p>A transação da direita não le, apenas escreve. O resultado?  O saldo volta para 100.</p>
+<h3 id="strict-execution">Strict Execution</h3>
+<ul>
+<li>Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas sejam commitadas ou abortadas.</li>
+<li>Execução estrita garante Isolamento.</li>
+<li>Como implementar eficientemente?</li>
+</ul>
+<h2 id="controle-de-concorrencia">Controle de Concorrência</h2>
+<h3 id="como">Como</h3>
+<ul>
+<li>locks (pessimista): simples, mas problemático</li>
+<li>multi-versão (otimista): custo se há muitos conflitos</li>
+<li>timestamp: <em>time</em> é algo complicado</li>
+</ul>
+<h3 id="locks">Locks</h3>
+<p>Tranque todos os objetos para que outras transações não consigam ler ou escrevê-los. Destranque quando não mais necessários.</p>
+<p>Sofre de dirty reads e escritas prematuras.</p>
+<h4 id="strict-two-phase-locking">Strict Two Phase Locking</h4>
+<ul>
+<li>tranque quando necessário</li>
+<li>destranque ao final da transação</li>
+<li>termine a transação</li>
+</ul>
+<p>Como aumentar a concorrência?</p>
+<h3 id="read-write-locks">Read-Write Locks</h3>
+<ul>
+<li>dois níveis de acesso</li>
+<li>múltiplos leitores</li>
+<li>único escritor</li>
+<li>reads por ser transformados em locks</li>
+<li>writes <em>não</em> podem se transformados em reads (violaria Strict Two-Phase Locking)</li>
+</ul>
+<!--
+### variantes
+
+* two-version locking (read/write/commit)
+%   similar idea but now with: read, write and commit locks.
+%   
+%       * a read lock is allowed unless a commit lock is taken.
+%       * one write lock is allowed if no commit lock is taken (i.e. even if read locks are taken)
+%       * written values are held local to the transaction and are not visible before commit.
+%       * a write lock can be promoted to a commit lock if there are no read locks.
+%       * when a transaction commits it tries to promote write locks to commit locks.
+%   
+* lock hierárquico (granularidades variadas)
+%   locks of mixed granularity.
+%   
+%       * small locks increase concurrency
+%       * large locks decrease overhead
+%   
+-->
+
+<h3 id="lock-por-que-evitar">Lock -- por que evitar?</h3>
+<ul>
+<li>pessimista</li>
+<li>overhead mesmo se não há conflitos</li>
+<li>ou restritivo ou risco de deadlock</li>
+<li>lock liberado somente no final, para evitar dirty reads/escrita prematura.</li>
+</ul>
+<h3 id="abordagem-mais-otimista">Abordagem mais otimista?</h3>
+<ul>
+<li>modifique uma cópia privada dos dados</li>
+<li>na hora de terminar a transação, verifique se nenhuma transação modificou o dado, isto é, se a cópia privada ainda é válida</li>
+<li>substitua a cópia pública pela privada</li>
+</ul>
+<p>Esta técnica é conhecida como <em>deferred update</em>, pois o update dos dados só ocorre no final, se a validação passar.</p>
+<h4 id="abordagem-otimista">Abordagem otimista</h4>
+<ul>
+<li>baixo overhead, se não houver conflitos</li>
+<li>validação é rápida</li>
+<li>update é simples</li>
+</ul>
+<p>Se houver muitos conflitos, o trabalho da transação é todo desperdiçado.</p>
+<h3 id="validacao">Validação</h3>
+<p>read e write sets de quaisquer transações concorrentes deve ser disjuntos.</p>
+<ul>
+<li>t1 não deve ler dados escritos por t2</li>
+<li>t2 não deve ler dados escritos por t1</li>
+<li>t1/t2 não deve escrever dados escritos por t2/t1</li>
+</ul>
+<p><img alt="" src="images/trans_validation.png" /></p>
+<h4 id="backward-validation">Backward validation</h4>
+<ul>
+<li>t1: transação sendo validada</li>
+<li>t2: transação já comitada.</li>
+<li>t1 não deve ler dados escritos por t2</li>
+</ul>
+<p>Em caso de não validação, aborte t1</p>
+<p><img alt="" src="images/trans_validation.png" /></p>
+<h4 id="forward-validation">Forward validation</h4>
+<ul>
+<li>t1: transação sendo validada</li>
+<li>t2: transação ainda em execução</li>
+<li>t2 não deve ler dados escritos por t1</li>
+</ul>
+<p>Em caso de não validação, aborte t1, possivelmente nunca terminando uma transação.<br/>
+ou aborte t2.</p>
+<p><img alt="" src="images/trans_validation.png" /></p>
+<h3 id="timestamping">Timestamping</h3>
+<ul>
+<li>transação recebe um <em>timestamp</em> no início</li>
+<li>operações são validadas na execução<ul>
+<li>leia somente se nenhuma transação com maior timestamp tiver escrito e comitado</li>
+<li>escreva somente se nenhuma transação com maior timestamp tiver lido e comitado</li>
+</ul>
+</li>
+<li>transações "executam na ordem do timestamp"</li>
+</ul>
+<p>Como implementar?</p>
+<h4 id="como-implementar">Como implementar</h4>
+<ul>
+<li>objetos tem valores <em>tentativos</em>, não comitados</li>
+<li>objetos tem versões em que foram escritos</li>
+<li>em que foram comitados</li>
+<li>e em que foram lidos</li>
+</ul>
+<p><img alt="" src="images/timestamp1.png" /></p>
+<ul>
+<li>consistência é testado na execução da operação</li>
+</ul>
+<h4 id="como-implementar-escrita">Como implementar -- escrita</h4>
+<ul>
+<li>escritas tem sucesso somente se versão sendo escrita é maior que versões lidas</li>
+<li>se versão sendo escrita é menor que versão já escrita, ignore e continue</li>
+</ul>
+<p><img alt="" src="images/timestamp1.png" /></p>
+<h3 id="como-implementar-leitura">como implementar -- leitura</h3>
+<ul>
+<li>leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada</li>
+<li>leitura com versão v é suspensa se maior versão é não comitada e menor que v</li>
+</ul>
+<p><img alt="" src="images/timestamp2.png" /></p>
+<ul>
+<li>leitura com versão v é abortada se maior versão comitada é maior que v
+<img alt="" src="images/timestamp3.png" /></li>
+</ul>
+<h4 id="referencias">Referências</h4>
+<p>Inspirado nas notas de aula de johan montelius e vladimir vlassov, da disciplina id2201 distributed systems, kth royal institute of technology. imagens copiadas descaradamente de seus slides.</p>
+<p>Também aqui, <a href="https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf">https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf</a></p>
+<h2 id="bancos-de-dados-distribuidos_1">Bancos de dados distribuídos</h2>
+<h2 id="bancos-de-dados-transacionais-distribuidos">bancos de dados transacionais distribuídos</h2>
+<p>Agora que relembramos como transações funcionam e temos uma noção de como podem ser implementadas em um sistema centralizado, vamos tentar entender como fazê-lo em um sistema distribuído.</p>
+<ul>
+<li>múltiplos servidores</li>
+<li>transações em cada servidor</li>
+<li>transações distribuídas</li>
+<li>como obter equivalência serial em transações distribuídas</li>
+</ul>
+<h2 id="transacao-distribuida">Transação distribuída</h2>
+<ul>
+<li><code>begintransaction(): tid</code> (transaction id)</li>
+<li><code>operation(tid,op)</code></li>
+<li><code>endtransaction(tid): ok/nok</code></li>
+<li><code>aborttransaction(tid)</code></li>
+</ul>
+<h3 id="papeis">Papéis</h3>
+<ul>
+<li>cliente</li>
+<li>servidor: <em>resource managers</em></li>
+<li>servidor: <em>transaction monitor/manager</em></li>
+</ul>
+<p><img alt="" src="images/01-10.png" /></p>
+<p>Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.</p>
+<p>O grande problema no bd distribuído é garantir o <em>acordo</em> na terminação.</p>
+<h2 id="comprometimento-distribuido">Comprometimento distribuído</h2>
+<h3 id="atomicidade">atomicidade</h3>
+<p>O problema...</p>
+<ul>
+<li>transação <span class="arithmatex">\(t\)</span> acessa recursos nos resource managers (rm)</li>
+<li>terminar com sucessos <span class="arithmatex">\(t\)</span> em todos os rm -- commit -- ou</li>
+<li>abortar <span class="arithmatex">\(t\)</span> em todos os rm</li>
+<li>ainda que enlaces de comunicação, nós e rm falhem, antes ou durante a terminação da transação.</li>
+</ul>
+<h3 id="2pc-2-phase-commit">2PC - 2 Phase Commit</h3>
+<ul>
+<li>participante -- resource manager "tocados" pela transação</li>
+<li>coordenador -- transaction manager</li>
+</ul>
+<h4 id="premissas">Premissas</h4>
+<ul>
+<li>Cliente decide quando iniciar o commit.</li>
+<li>Cada participante faz commit ou abort da transação local.<br/>
+pode retornar ok ou nok.</li>
+<li>Coordenador não começa a commit até que a <span class="arithmatex">\(t\)</span> tenha terminado em todos os participantes e cliente tenha solicitado.</li>
+<li>Participantes falham por parada.</li>
+</ul>
+<h4 id="1pc">1PC</h4>
+<ul>
+<li>cliente envia <code>endtransaction(tid)</code> para o coordenador</li>
+<li>coordenador envia mensagem para participantes "comitarem" </li>
+<li>e se um participante retornar nok? % enquanto outros retornam ok?</li>
+<li>e se um participante não responder?</li>
+</ul>
+<h4 id="2pc">2PC</h4>
+<ul>
+<li>cliente envia <code>endtransaction(tid)</code> para o coordenador</li>
+<li>coordenador envia mensagem para participantes se prepararem para terminar</li>
+<li>coordenador espera que todos se preparem ou digam se não podem</li>
+<li>coordenador envia <em>ordem</em> de terminação</li>
+</ul>
+<h4 id="comprometimento">Comprometimento</h4>
+<ul>
+<li>um participante <span class="arithmatex">\(p\)</span> está pronto para commit se tiver todos os valores modificados por <span class="arithmatex">\(t\)</span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)</li>
+<li>o coordenador não pode começar a terminação até que todos os participantes estejam prontos.</li>
+<li>se algum participante aborta, o coordenador deve abortar. </li>
+</ul>
+<p>Problema de acordo, mas não igual ao consenso.</p>
+<h4 id="2pc-o-protocolo">2PC -- o protocolo</h4>
+<ul>
+<li>
+<p>fase 1</p>
+<ul>
+<li>a: coordenador envia vote-request para participantes.</li>
+<li>b: participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.</li>
+</ul>
+</li>
+<li>
+<p>fase 2</p>
+<ul>
+<li>a: coordenador coleta votos de todos os processos; se forem todos vote-commit, envia global-commit para os participantes e ok para o cliente</li>
+<li>b: participantes esperam por global-commit ou global-abort</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Coordenador</strong></th>
+<th><strong>Participante</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="images/08-18a.png" /></td>
+<td><img alt="" src="images/08-18b.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="falha-no-participante">Falha no Participante</h4>
+<p>Participante falha no estado <span class="arithmatex">\(S\)</span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
+<p>Se está no estado</p>
+<ul>
+<li>INIT:  nem sabia que a terminação começou.  Aborta unilateralmente, pois ou já abortaram ou vão abortar.</li>
+<li>ABORT: havia votado abort ou recebido global-abort -- continua protocolo.</li>
+<li>COMMIT: estava pronto para terminar a transação com sucesso -- continua protocolo.</li>
+<li>READY:  estava esperando por commit ou abort.  Precisa saber se coordenador enviou global-commit ou global-abort -- consulta coordenador.</li>
+</ul>
+<h4 id="2pc_1">2PC</h4>
+<p>Por que é difícil?</p>
+<ul>
+<li>E se <span class="arithmatex">\(R_i\)</span> falhar depois de ter se preparado?</li>
+<li>E se <span class="arithmatex">\(R_i\)</span> falhar mas <span class="arithmatex">\(R_j\)</span> continuar funcionando?</li>
+<li>E se todos estiverem desligados quando <span class="arithmatex">\(R_i\)</span> se recuperar?</li>
+<li>E se <span class="arithmatex">\(R_i\)</span> estiver lento e parecer que a transação falhou?</li>
+</ul>
+<h4 id="falha-no-participante_1">Falha no Participante</h4>
+<ul>
+<li>READY: esperando por commit ou abort. Precisa saber se coordenador enviou global-commit our global-abort -- consulta coordenador.</li>
+</ul>
+<p><em>E se coordenador não estiver presente?</em></p>
+<p>Assumindo que participantes se conhecem, contate participante <span class="arithmatex">\(Q\)</span>   </p>
+<ul>
+<li>Se <span class="arithmatex">\(Q\)</span> em COMMIT , vai para COMMIT</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em ABORT , vai para ABORT</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em INIT , ordena que Q aborte e, se confirmado, veja passo anterior</li>
+<li>Se <span class="arithmatex">\(Q\)</span> em READY , consulta outro participante.</li>
+</ul>
+<p><em>Se todos os participantes em READY?</em>  Possivelmente o coordenador já respondeu ao cliente.</p>
+<p><em>Precisa</em> esperar pelo coordenador.</p>
+<h4 id="falha-no-coordenador">Falha no Coordenador</h4>
+<p>O problema principal é: e se ninguém ouviu a decisão final do coordenador?</p>
+<p>Neste caso, o protocolo não pode continuar, enquanto o coordenador não retornar, pois se os RM abortarem, podem estar contradizendo algo dito ao cliente, por exemplo, "Sim, ATM, pode entregar o dinheiro", ou executando um comando que o cliente vê como anulado, como "Reenvie o pedido de mais 27 carros à fábrica."</p>
+<h4 id="recuperacao-do-coordenador">Recuperação do Coordenador</h4>
+<p>Ao se recuperar, o coordenador:</p>
+<ul>
+<li>sabe se começou a terminação de alguma transação</li>
+<li>sabe se já enviou alguma resposta final para as transações inacabadas</li>
+<li>sabe se já recebeu a confirmação de todos os participantes (se transação não estiver em aberto)</li>
+<li>reenvia a última mensagem das transações em aberto.</li>
+</ul>
+<h4 id="otimizacoes">Otimizações</h4>
+<ul>
+<li>
+<p>Participantes "somente-leitura"</p>
+<ul>
+<li>Não se importa com a decisão; termina após fase 1.</li>
+<li>Responde com vote-commit-ro</li>
+</ul>
+</li>
+<li>
+<p>Abort presumido</p>
+<ul>
+<li>Se ocorrer timeout, coordenador envia global-abort a todos e esquece transação</li>
+<li>Se questionado, responde com global-abort.</li>
+</ul>
+</li>
+<li>
+<p>Transferência de coordenação</p>
+<ul>
+<li>se houver somente um participante...</li>
+<li>vote-request-transfer</li>
+<li>participante responde com global-commit/global-abort</li>
+</ul>
+</li>
+</ul>
+<h4 id="coleta-de-lixo">Coleta de Lixo</h4>
+<p>Mesmo quando somente um participante falha...</p>
+<p>Após receber decisão, o participante pode concluir e esquecer a transação. </p>
+<p>Mas e se o participante falho precisar se recuperar e todos os outros envolvidos tiverem esquecido a transação?</p>
+<p>Coleta de lixo só pode ser feita quando todos tiverem confirmado a execução da transação e, por isso, Fase 2b é necessária.</p>
+<h3 id="3-pc">3-PC</h3>
+<p>Estende o protocolo para permitir contornar  falha do coordenador.</p>
+<h4 id="o-protocolo">O Protocolo</h4>
+<ul>
+<li>Fase 1a -- Coordenador envia vote-request para participantes.</li>
+<li>Fase 1b -- Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.</li>
+<li>Fase 2a -- Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia <em>prepare-commit</em> para os participantes; se não, global-abort e para.</li>
+<li>Fase 2b -- Participantes esperam por prepare-commit ou global-abort; se o primeiro, <em>respondem com ready-commit</em>; se o segundo, param.</li>
+<li>Fase 3a -- coordenador espera por ready-commit de todos e então envia global-commit.</li>
+<li>Fase 3b -- participantes esperam por global-commit.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Coordenador</th>
+<th>Participante</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="images/08-22a.png" /></td>
+<td><img alt="" src="images/08-22b.png" /></td>
+</tr>
+</tbody>
+</table>
+<h4 id="falha-no-participante_2">Falha no Participante</h4>
+<p><span class="arithmatex">\(P\)</span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
+<ul>
+<li>Participantes e coordenador não distam mais que um estado.</li>
+<li>Se alguém em READY, o coordenador não mandou global-commit ainda; Aborte.</li>
+<li>Se <em>todos</em> em PRE-COMMIT, é possível comitar, comite.</li>
+<li>A execução dos passos anteriores tem que anular o poder do coordenador.</li>
+</ul>
+<p><em>Se todos os participantes em READY?</em></p>
+<h4 id="3pc-x-2pc">3PC x 2PC</h4>
+<ul>
+<li>3PC -- Aumenta disponibilidade</li>
+<li>2PC -- Falha do coordenador é "corner case"</li>
+<li>3PC -- Aumenta o custo do "caminho feliz" e por isso não é usado na prática</li>
+<li>Nenhum escala e não usá-los é uma das razões para o surgimento dos sistemas NoSQL</li>
+</ul>
+<h3 id="paxos-commit">Paxos-Commit</h3>
+<p>Usa instâncias de Consenso Distribuído para votar. Se o consenso é tolerante a falhas e consistente, todos vêem o mesmo resultado na transação.</p>
+<h4 id="o-protocolo_1">O protocolo</h4>
+<ul>
+<li>Para terminar a transação <span class="arithmatex">\(T\)</span>, o coordenador envia request-commit a todos os participantes.</li>
+<li>Um participante <span class="arithmatex">\(P\)</span> propõe seu voto na instância <span class="arithmatex">\(T_P\)</span> de consenso.</li>
+<li>
+<p>Todo participante <span class="arithmatex">\(P\)</span> espera pelas decisões das instâncias de consenso <span class="arithmatex">\(T_i\)</span> para todos os participantes <span class="arithmatex">\(i\)</span>, inclusive si mesmo; se todas as decisões forem commit, o participante comita a transação.</p>
+</li>
+<li>
+<p>Se cansar de esperar por <span class="arithmatex">\(T_Q\)</span>, o participante propõe abort em <span class="arithmatex">\(T_Q\)</span>.</p>
+</li>
+</ul>
+<h4 id="falha-no-participante_3">Falha no Participante</h4>
+<ul>
+<li>Se o participante falha antes de votar, então alguém votará abort por ele.</li>
+<li>Se o participante <span class="arithmatex">\(P\)</span> falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em <span class="arithmatex">\(T_P\)</span>; isso não é um problema pois a decisão é a mesma para todos observando a instância.</li>
+<li>Após se recuperar, o participante recupera as decisões de todas as instâncias <span class="arithmatex">\(T_i\)</span> e termina apropriadamente.</li>
+</ul>
+<h2 id="log-recuperavel">Log Recuperável</h2>
+<p>Como garantir que o log poderá ser lido para recuperar o processo?</p>
+<h3 id="disco-duplicado">Disco Duplicado</h3>
+<p><img alt="" src="images/08-23.png" /></p>
+<ul>
+<li>Dois discos iguais?</li>
+<li>Dados diferentes, mas ambos bons?</li>
+<li>Um bom outro estragado?</li>
+<li>Ambos estragados?</li>
+</ul>
+<!-- ## NoSQL -->
+
 <h2 id="estruturas-de-dados-para-sd">Estruturas de Dados para SD</h2>
 <p>Qualquer que seja a escolha de algoritmo para fazer o particionamento dos dados entre servidores, sobra ainda a questão de como manipular os dados dentro do servidor.
 Idealmente, toda operação seria executada a partir da memória principal, tendo assim a menor latência possível.
@@ -2498,7 +3104,7 @@ E podemos também identificar o <span class="arithmatex">\(k\)</span> ótimo par
 </ul>
 <p>Uma forma "simples" de visualizar este resultado é dada pela figura a seguir, em que o eixo Y dá a taxa de falsos positivos do filtro em função do número de elementos inseridos, indicado no eixo X, para diversas configurações, apresentadas como curvas.
 Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</span>, após 1 milhão de inserções, tem-se probabilidade de falsos positivo <span class="arithmatex">\(p = 0,0001\)</span>.</p>
-<h5 id="referencias">Referências</h5>
+<h5 id="referencias_1">Referências</h5>
 <p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Bloom-Filter</a></p>
 <div class="admonition todo">
 <p class="admonition-title">TODO</p>
@@ -2632,7 +3238,7 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 <h5 id="variaveis-de-sincronizacao">Variáveis de sincronização</h5>
 <p><img alt="" src="images/weaka.png" /></p>
 <p><img alt="" src="images/weakb.png" /></p>
-<p>Materializando variáveis de sincronização na forma de \emph{locks</p>
+<p>Materializando variáveis de sincronização na forma de <em>locks</em></p>
 <h5 id="consistencia-de-entrada">Consistência de Entrada</h5>
 <ul>
 <li>Lock de leitura só retorna quando todas as mudanças guardadas por aquele lock tiverem sido executadas no processo.</li>
@@ -2640,7 +3246,7 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 <li>Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.</li>
 </ul>
 <p><img alt="" src="images/07-10.png" /></p>
-<h5 id="transacoes">Transações</h5>
+<h5 id="transacoes_1">Transações</h5>
 <p>Tornam o trancamento/destrancamento de variáveis transparente.</p>
 <h4 id="modelos-centrados-nos-clientes">Modelos Centrados nos Clientes</h4>
 <p><strong>Ideia básica</strong></p>
@@ -2672,7 +3278,7 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 <ul>
 <li>Toda vez que se conecta a um servidor de email, seu cliente lê novas mensagens, caso haja.</li>
 <li>O cliente nunca esquece uma mensagem, mesmo que ainda não esteja no servidor conectado por último.</li>
-<li>WS(<span class="arithmatex">\(x_i\)</span>) -- operações de escrita (\emph{write set}) que levaram a variável <span class="arithmatex">\(x\)</span> a ter o valor <span class="arithmatex">\(x_i\)</span>.</li>
+<li>WS(<span class="arithmatex">\(x_i\)</span>) -- operações de escrita (<em>write set</em>) que levaram a variável <span class="arithmatex">\(x\)</span> a ter o valor <span class="arithmatex">\(x_i\)</span>.</li>
 <li>WS(<span class="arithmatex">\(x_i;x_j\)</span>) -- operações de escrita relativas a <span class="arithmatex">\(x_j\)</span> incluem operações de escrita relativas a <span class="arithmatex">\(x_i\)</span></li>
 </ul>
 <p><img alt="" src="images/07-12.png" /></p>
@@ -2917,621 +3523,9 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
 <p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, há no máximo um processo dependente em <span class="arithmatex">\(m\)</span> (<span class="arithmatex">\(Dep(m) \leq 1\)</span>)</p>
 <p>Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.</p>
 <p>Toda mensagem é precedida por uma escrita em disco.</p>
-<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, então devemos garantir que se <span class="arithmatex">\(Copy(m) \subseteq C\)</span>, então \emph{eventually} <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, onde <span class="arithmatex">\(C\)</span> é o conjunto de processos que falharam.</p>
+<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, então devemos garantir que se <span class="arithmatex">\(Copy(m) \subseteq C\)</span>, então <em>eventually</em> <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, onde <span class="arithmatex">\(C\)</span> é o conjunto de processos que falharam.</p>
 <p>Para garantir que <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, fazemos um rollback de cada órfão <span class="arithmatex">\(Q\)</span> até que <span class="arithmatex">\(Q \not\in Dep(m)\)</span></p>
 <p>Isto é, forçamos <span class="arithmatex">\(Q\)</span> a ser recuperado mesmo que não tenha falhado.</p>
-<h2 id="bancos-de-dados">Bancos de Dados</h2>
-<p>Falar em bancos de dados distribuídos implica falar em bancos transacionais e P2P.</p>
-<h3 id="operacoes-atomicas">Operações Atômicas</h3>
-<p>Falar em bancos de dados distribuídos implica falar em bancos Relacionais/Transactionais e P2P.</p>
-<p>Falar em bancos transacionais, implica falar ACID!
-* Atomicidade -- Todas as operações ou nenhuma.
-* Consistência -- Os dados transitam de estado válido para estado válido.
-* Isolamento -- Transações não interferem umas nas outras.
-* Durabilidade -- Efeitos não são esquecidos.</p>
-<p>No modelo de Máquinas de Estados Replicadas, operações são enviadas para as réplicas, que as executam em ordem, deterministicamente e também <em>atomicamente</em>. Isto é, cada operação é ou executada independentemente das outras e por completo, ou não é executada.</p>
-<h3 id="conjuntos-de-operacoes">Conjuntos de Operações</h3>
-<p>Mesmo com Operações Atômicas, frequentemente queremos/precisamos agrupar operações tal que
-* <em>todas ou nenhuma</em> sejam executadas
-* mesmo na presença de falhas.</p>
-<p><em>Atomicidade</em></p>
-<h3 id="memoria-estavel">Memória Estável</h3>
-<p>Para que os efeitos de operações não sejam esquecidos, eles precisam ser armazenados em \emph{memória estável} como
-* HD -- Hard Drives
-* SSD -- Solid State Drives
-* NVRAM -- Non Volatile RAM</p>
-<p><em>Durabilidade</em></p>
-<h3 id="o-banco">O Banco</h3>
-<p>Conta C</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>C.getSaldo()
-C.setSaldo(montante)
-</code></pre></div>
-</td></tr></table>
-
-<h4 id="transacao">Transação</h4>
-<p>Mova 10% do saldo de A, de B para A.
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1: a -&gt; b
-sB = b.getSaldo()
-     b.setSaldo(sB*1.1)
-sA = a.getSaldo()                          
-     a.setSaldo(sA-sB*0.1)
-</code></pre></div>
-</td></tr></table></p>
-<h4 id="transacao_1">Transação</h4>
-<p>Qual o saldo total das contas?
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T2: a + b
-sA = a.getSaldo()
-sB = b.getSaldo()
-sT = sA + sB
-</code></pre></div>
-</td></tr></table></p>
-<h4 id="execucao-concorrente">Execução Concorrente</h4>
-<p>Execução concorrente de T1 e T2?
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1                           T2
-sB = b.getSaldo()            
-                             sA = a.getSaldo()
-     b.setSaldo(sB*1.1) .    
-                             sB = b.getSaldo()
-sA = a.getSaldo()                          
-     a.setSaldo(sA-sB*0.1) 
-                             sT = sA+sB
-</code></pre></div>
-</td></tr></table></p>
-<p>Dados não finais "vazaram". <em>Dirty Read</em>. </p>
-<p>Falta <em>Isolamento</em>.</p>
-<p>Pode levar a mais que um resultado errado. Pode deixar o BD em estado inválido.</p>
-<h4 id="execucao-concorrente_1">Execução Concorrente</h4>
-<p>Mova 10\% do saldo de A, de B para A.
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>T1                       T1
-sB = b.getSaldo()
-                          sB = b.getSaldo()
-                               b.setSaldo(sB*1.1)
-     b.setSaldo(sB*1.1)                                        
-                          sA = a.getSaldo()                          
-                               a.setSaldo(sA-sB*0.1)
-sA = a.getSaldo()                          
-     a.setSaldo(sA-sB*0.1)
-</code></pre></div>
-</td></tr></table></p>
-<p><code>sB*0.1</code>  foi perdido. <em>Lost Update</em></p>
-<p>Perdeu <em>Consistência</em></p>
-<h4 id="solucao">Solução?!</h4>
-<p>Para garantir Isolamento
-* Execuções dos conjuntos não podem se sobrepor.
-* Execute um conjunto de operações por vez, serialmente!
-* Garantirá também Consistência</p>
-<p><em>Que tal?</em></p>
-<p>Limite a concorrência de transações.</p>
-<h2 id="equivalencia-serial">Equivalência Serial</h2>
-<h3 id="concorrencia">Concorrência</h3>
-<p>Além de ACID, queremos o máximo de \emph{concorrência} para garantir o melhor \emph{desempenho}.</p>
-<p>Queremos uma execução das transações semelhante à serial, mas com o desempenho de concorrente.</p>
-<p>Não queremos uma execução serial, mas uma \alert{Equivalência Serial}, isto é, que os efeitos das transações, executadas concorrentemente, sejam equivalentes aos de alguma execução serial destas transações.</p>
-<h3 id="equivalencia-serial_1">Equivalência Serial</h3>
-<p>Preocupe-se com Operações Conflitantes</p>
-<ul>
-<li>Transações diferentes</li>
-<li>Uma é escrita</li>
-<li>Mesmo dado</li>
-</ul>
-<p>Duas execuções (de transações) são equivalentes se</p>
-<ul>
-<li>as transações tem as mesmas operações</li>
-<li>quaisquer duas operações conflitantes são executadas na mesma ordem nas duas execuções</li>
-</ul>
-<p>Uma execução tem Equivalência Serial se é equivalente a alguma execução serial das transações.</p>
-<p>Escalone operações concorrentemente, de forma a obter o melhor desempenho, mas de forma a manter Equivalência Serial.</p>
-<p>Esta definição difícil de ser testada. Algo mais simples?</p>
-<ul>
-<li>Como demonstrar Equivalência Serial? </li>
-<li>Tenho que testar todas as execuções seriais e ver se uma casa com o que planejo fazer?</li>
-<li>É caro fazer este planejamento. É mais eficiente garantir por construção.</li>
-</ul>
-<p>Simplificação: A execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.</p>
-<h3 id="lost-update">Lost Update</h3>
-<p>Mova 10% do saldo de X, de Y para X.
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                     c -&gt; b
-s = b.getSaldo() [1]
-                           [2]s = b.getSaldo()
-                           [3]    b.setSaldo(s*1.1)
-    b.setSaldo(s*1.1)[4]                                        
-                                  c.setSaldo(s*0.1)
-    a.setSaldo(s*0.1)
-</code></pre></div>
-</td></tr></table></p>
-<p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
-<p>Consistência -- <code>s*0.1</code> foi perdido</p>
-<p>Mova 10% do saldo de X, de Y para X.
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                    c -&gt; b
-                          [2] s = b.getSaldo()
-                          [3]     b.setSaldo(s*1.1)
-s = b.getSaldo() [1]
-    b.setSaldo(s*1.1)[4]                                        
-                                  c.setSaldo(s*0.1)
-    a.setSaldo(saldo*0.1)
-</code></pre></div>
-</td></tr></table></p>
-<p>Conflitos: 1x3:<span class="arithmatex">\(\leftarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
-<h3 id="dirty-read">Dirty Read</h3>
-<p>Saldo total?
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>a -&gt; b                  a -&gt; b
-s = b.getSaldo()
-    b.setSaldo(s*1.1)
-    b.setSaldo(s*1.1)                                        
-    a.saque(s*0.1)
-                        s = b.getSaldo()
-                            b.setSaldo(s*1.1)
-                            b.setSaldo(s*1.1)                                        
-                            a.saque(s*0.1)
-</code></pre></div>
-</td></tr></table>
- Tem Equivalência Serial.</p>
-<p>Exceto se
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>abortTransaction()
-</code></pre></div>
-</td></tr></table>
-Nenhuma transação que fez uma dirty read pode comitar. Logo, aborte a transação da direita.</p>
-<h3 id="aborto-em-cascata">Aborto em Cascata</h3>
-<p>T1 faz uma escrita. T2 lê o que T1 escreveu e faz outra escrita. T3 lê o que T2 escreveu e faz outra escrita. T4 lê o que... \alert{T1 aborta.</p>
-<h3 id="dirty-read_1">Dirty Read</h3>
-<p>Como lidar?</p>
-<ul>
-<li>Suspenda a transação quando esta fizer dirty read.</li>
-<li>Se transação foi abortada, todas as suspensas (que leram dela) devem ser abortadas.</li>
-<li>Repita passo anterior.</li>
-</ul>
-<p>E se evitarmos dirty reads em vez de tratarmos?</p>
-<ul>
-<li>Suspenda antes de fazer dirty read.</li>
-<li>Quando transação for terminada, continue execução.</li>
-</ul>
-<p>Abordagem leva a menor concorrência.</p>
-<p>Para nos permitir identificar transações, vamos usar o seguinte framework para operá-las.</p>
-<h3 id="transacoes_1">Transações</h3>
-<ul>
-<li>beginTransaction()</li>
-<li>operações</li>
-<li>commitTransaction(): Ok/NOk</li>
-<li>abortTransaction()</li>
-</ul>
-<h3 id="escrita-prematura">Escrita Prematura</h3>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Saldo inicial: 100
-
-a.setSaldo(105)
-                   a.setSaldo(110)  
-                   commitTransaction()
-abortTransaction()
-</code></pre></div>
-</td></tr></table>
-
-<p>A transação da direita não le, apenas escreve. O resultado?  O saldo volta para 100.</p>
-<h3 id="strict-execution">Strict Execution</h3>
-<ul>
-<li>Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas sejam commitadas ou abortadas.</li>
-<li>Execução estrita garante Isolamento.</li>
-<li>Como implementar eficientemente?</li>
-</ul>
-<h2 id="controle-de-concorrencia">Controle de Concorrência</h2>
-<h3 id="como">Como</h3>
-<ul>
-<li>locks (pessimista): simples, mas problemático</li>
-<li>multi-versão (otimista): custo se há muitos conflitos</li>
-<li>timestamp: \alert{time} é algo complicado</li>
-</ul>
-<h3 id="locks">Locks</h3>
-<p>Tranque todos os objetos para que outras transações não consigam ler ou escrevê-los. Destranque quando não mais necessários.</p>
-<p>Sofre de dirty reads e escritas prematuras.</p>
-<h4 id="strict-two-phase-locking">Strict Two Phase Locking</h4>
-<ul>
-<li>tranque quando necessário</li>
-<li>destranque ao final da transação</li>
-<li>termine a transação</li>
-</ul>
-<p>Como aumentar a concorrência?</p>
-<h3 id="read-write-locks">Read-Write Locks</h3>
-<ul>
-<li>dois níveis de acesso</li>
-<li>múltiplos leitores</li>
-<li>único escritor</li>
-<li>reads por ser transformados em locks</li>
-<li>writes \alert{não} podem se transformados em reads (violaria Strict Two-Phase Locking)</li>
-</ul>
-<!--
-### variantes
-
-* two-version locking (read/write/commit)
-%   similar idea but now with: read, write and commit locks.
-%   
-%       * a read lock is allowed unless a commit lock is taken.
-%       * one write lock is allowed if no commit lock is taken (i.e. even if read locks are taken)
-%       * written values are held local to the transaction and are not visible before commit.
-%       * a write lock can be promoted to a commit lock if there are no read locks.
-%       * when a transaction commits it tries to promote write locks to commit locks.
-%   
-* lock hierárquico (granularidades variadas)
-%   locks of mixed granularity.
-%   
-%       * small locks increase concurrency
-%       * large locks decrease overhead
-%   
--->
-
-<h3 id="lock-por-que-evitar">Lock -- por que evitar?</h3>
-<ul>
-<li>pessimista</li>
-<li>overhead mesmo se não há conflitos</li>
-<li>ou restritivo ou risco de deadlock</li>
-<li>lock liberado somente no final, para evitar dirty reads/escrita prematura.</li>
-</ul>
-<h3 id="abordagem-mais-otimista">Abordagem mais otimista?</h3>
-<ul>
-<li>modifique uma cópia privada dos dados</li>
-<li>na hora de terminar a transação, verifique se nenhuma transação modificou o dado, isto é, se a cópia privada ainda é válida</li>
-<li>substitua a cópia pública pela privada</li>
-</ul>
-<p>Esta técnica é conhecida como <em>deferred update</em>, pois o update dos dados só ocorre no final, se a validação passar.</p>
-<h4 id="abordagem-otimista">Abordagem otimista</h4>
-<ul>
-<li>baixo overhead, se não houver conflitos</li>
-<li>validação é rápida</li>
-<li>update é simples</li>
-</ul>
-<p>Se houver muitos conflitos, o trabalho da transação é todo desperdiçado.</p>
-<h3 id="validacao">Validação</h3>
-<p>read e write sets de quaisquer transações concorrentes deve ser disjuntos.</p>
-<ul>
-<li>t1 não deve ler dados escritos por t2</li>
-<li>t2 não deve ler dados escritos por t1</li>
-<li>t1/t2 não deve escrever dados escritos por t2/t1</li>
-</ul>
-<p><img alt="" src="images/trans_validation.png" /></p>
-<h4 id="backward-validation">Backward validation</h4>
-<ul>
-<li>t1: transação sendo validada</li>
-<li>t2: transação já comitada.</li>
-<li>t1 não deve ler dados escritos por t2</li>
-</ul>
-<p>Em caso de não validação, aborte t1</p>
-<p><img alt="" src="images/trans_validation.png" /></p>
-<h4 id="forward-validation">Forward validation</h4>
-<ul>
-<li>t1: transação sendo validada</li>
-<li>t2: transação ainda em execução</li>
-<li>t2 não deve ler dados escritos por t1</li>
-</ul>
-<p>Em caso de não validação, aborte t1, possivelmente nunca terminando uma transação.<br/>
-ou aborte t2.</p>
-<p><img alt="" src="images/trans_validation.png" /></p>
-<h3 id="timestamping">Timestamping</h3>
-<ul>
-<li>transação recebe um <em>timestamp</em> no início</li>
-<li>operações são validadas na execução<ul>
-<li>leia somente se nenhuma transação com maior timestamp tiver escrito e comitado</li>
-<li>escreva somente se nenhuma transação com maior timestamp tiver lido e comitado</li>
-</ul>
-</li>
-<li>transações "executam na ordem do timestamp"</li>
-</ul>
-<p>Como implementar?</p>
-<h4 id="como-implementar">Como implementar</h4>
-<ul>
-<li>objetos tem valores <em>tentativos</em>, não comitados</li>
-<li>objetos tem versões em que foram escritos</li>
-<li>em que foram comitados</li>
-<li>e em que foram lidos</li>
-</ul>
-<p><img alt="" src="images/timestamp1.png" /></p>
-<ul>
-<li>consistência é testado na execução da operação</li>
-</ul>
-<h4 id="como-implementar-escrita">Como implementar -- escrita</h4>
-<ul>
-<li>escritas tem sucesso somente se versão sendo escrita é maior que versões lidas</li>
-<li>se versão sendo escrita é menor que versão já escrita, ignore e continue</li>
-</ul>
-<p><img alt="" src="images/timestamp1.png" /></p>
-<h3 id="como-implementar-leitura">como implementar -- leitura</h3>
-<ul>
-<li>leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada</li>
-<li>leitura com versão v é suspensa se maior versão é não comitada e menor que v</li>
-</ul>
-<p><img alt="" src="images/timestamp2.png" /></p>
-<ul>
-<li>leitura com versão v é abortada se maior versão comitada é maior que v
-<img alt="" src="images/timestamp3.png" /></li>
-</ul>
-<h4 id="referencias_1">Referências</h4>
-<p>Inspirado nas notas de aula de johan montelius e vladimir vlassov, da disciplina id2201 distributed systems, kth royal institute of technology. imagens copiadas descaradamente de seus slides.</p>
-<p>Também aqui, <a href="https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf">https://www.cs.ucy.ac.cy/~dzeina/courses/epl446/lectures/16.pdf</a></p>
-<h2 id="bancos-de-dados-distribuidos_1">Bancos de dados distribuídos</h2>
-<h2 id="bancos-de-dados-transacionais-distribuidos">bancos de dados transacionais distribuídos</h2>
-<p>Agora que relembramos como transações funcionam e temos uma noção de como podem ser implementadas em um sistema centralizado, vamos tentar entender como fazê-lo em um sistema distribuído.</p>
-<ul>
-<li>múltiplos servidores</li>
-<li>transações em cada servidor</li>
-<li>transações distribuídas</li>
-<li>como obter equivalência serial em transações distribuídas</li>
-</ul>
-<h2 id="transacao-distribuida">Transação distribuída</h2>
-<ul>
-<li>begintransaction(): tid (transaction id)</li>
-<li>operation(tid,op)</li>
-<li>endtransaction(tid): ok/nok</li>
-<li>aborttransaction(tid)</li>
-</ul>
-<h3 id="papeis">Papéis</h3>
-<ul>
-<li>cliente</li>
-<li>servidor: <em>resource managers</em></li>
-<li>servidor: <em>transaction monitor/manager</em></li>
-</ul>
-<p><img alt="" src="images/01-10.png" /></p>
-<p>Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.</p>
-<p>O grande problema no bd distribuído é garantir o <em>acordo</em> na terminação.</p>
-<h2 id="comprometimento-distribuido">Comprometimento distribuído</h2>
-<h3 id="atomicidade">atomicidade</h3>
-<p>O problema...</p>
-<ul>
-<li>transação <span class="arithmatex">\(t\)</span> acessa recursos nos resource managers (rm)</li>
-<li>terminar com sucessos <span class="arithmatex">\(t\)</span> em todos os rm -- commit -- ou</li>
-<li>abortar <span class="arithmatex">\(t\)</span> em todos os rm</li>
-<li>ainda que enlaces de comunicação, nós e rm falhem, antes ou durante a terminação da transação.</li>
-</ul>
-<h3 id="2pc-2-phase-commit">2PC - 2 Phase Commit</h3>
-<ul>
-<li>participante -- resource manager "tocados" pela transação</li>
-<li>coordenador -- transaction manager</li>
-</ul>
-<h4 id="premissas">Premissas</h4>
-<ul>
-<li>Cliente decide quando iniciar o commit.</li>
-<li>Cada participante faz commit ou abort da transação local.<br/>
-pode retornar ok ou nok.</li>
-<li>Coordenador não começa a commit até que a <span class="arithmatex">\(t\)</span> tenha terminado em todos os participantes e cliente tenha solicitado.</li>
-<li>Participantes falham por parada.</li>
-</ul>
-<h4 id="1pc">1PC</h4>
-<ul>
-<li>cliente envia \verb|endtransaction(tid)| para o coordenador</li>
-<li>coordenador envia mensagem para participantes "comitarem" </li>
-<li>e se um participante retornar nok? % enquanto outros retornam ok?</li>
-<li>e se um participante não responder?</li>
-</ul>
-<h4 id="2pc">2PC</h4>
-<ul>
-<li>cliente envia <code>endtransaction(tid)</code> para o coordenador</li>
-<li>coordenador envia mensagem para participantes se prepararem para terminar</li>
-<li>coordenador espera que todos se preparem ou digam se não podem</li>
-<li>coordenador envia <em>ordem</em> de terminação</li>
-</ul>
-<h4 id="comprometimento">Comprometimento</h4>
-<ul>
-<li>um participante <span class="arithmatex">\(p\)</span> está pronto para commit se tiver todos os valores modificados por <span class="arithmatex">\(t\)</span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)</li>
-<li>o coordenador não pode começar a terminação até que todos os participantes estejam prontos.</li>
-<li>se algum participante aborta, o coordenador deve abortar. </li>
-</ul>
-<p>Problema de acordo, mas não igual ao consenso.</p>
-<h4 id="2pc-o-protocolo">2PC -- o protocolo</h4>
-<ul>
-<li>
-<p>fase 1</p>
-<ul>
-<li>a: coordenador envia vote-request para participantes.</li>
-<li>b: participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.</li>
-</ul>
-</li>
-<li>
-<p>fase 2</p>
-<ul>
-<li>a: coordenador coleta votos de todos os processos; se forem todos vote-commit, envia global-commit para os participantes e ok para o cliente</li>
-<li>b: participantes esperam por global-commit ou global-abort</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th><strong>Coordenador</strong></th>
-<th><strong>Participante</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img alt="" src="images/08-18a.png" /></td>
-<td><img alt="" src="images/08-18b.png" /></td>
-</tr>
-</tbody>
-</table>
-<h4 id="falha-no-participante">Falha no Participante</h4>
-<p>Participante falha no estado <span class="arithmatex">\(S\)</span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
-<p>Se está no estado</p>
-<ul>
-<li>INIT:  nem sabia que a terminação começou.  Aborta unilateralmente, pois ou já abortaram ou vão abortar.</li>
-<li>ABORT: havia votado abort ou recebido global-abort -- continua protocolo.</li>
-<li>COMMIT: estava pronto para terminar a transação com sucesso -- continua protocolo.</li>
-<li>READY:  estava esperando por commit ou abort.  Precisa saber se coordenador enviou global-commit ou global-abort -- consulta coordenador.</li>
-</ul>
-<h4 id="2pc_1">2PC</h4>
-<p>Por que é difícil?</p>
-<ul>
-<li>E se <span class="arithmatex">\(R_i\)</span> falhar depois de ter se preparado?</li>
-<li>E se <span class="arithmatex">\(R_i\)</span> falhar mas <span class="arithmatex">\(R_j\)</span> continuar funcionando?</li>
-<li>E se todos estiverem desligados quando <span class="arithmatex">\(R_i\)</span> se recuperar?</li>
-<li>E se <span class="arithmatex">\(R_i\)</span> estiver lento e parecer que a transação falhou?</li>
-</ul>
-<h4 id="falha-no-participante_1">Falha no Participante</h4>
-<ul>
-<li>READY: esperando por commit ou abort. Precisa saber se coordenador enviou global-commit our global-abort -- consulta coordenador.</li>
-</ul>
-<p><em>E se coordenador não estiver presente?</em></p>
-<p>Assumindo que participantes se conhecem, contate participante <span class="arithmatex">\(Q\)</span>   </p>
-<ul>
-<li>Se <span class="arithmatex">\(Q\)</span> em COMMIT , vai para COMMIT</li>
-<li>Se <span class="arithmatex">\(Q\)</span> em ABORT , vai para ABORT</li>
-<li>Se <span class="arithmatex">\(Q\)</span> em INIT , ordena que Q aborte e, se confirmado, veja passo anterior</li>
-<li>Se <span class="arithmatex">\(Q\)</span> em READY , consulta outro participante.</li>
-</ul>
-<p><em>Se todos os participantes em READY?</em>  Possivelmente o coordenador já respondeu ao cliente.</p>
-<p><em>Precisa</em> esperar pelo coordenador.</p>
-<h4 id="falha-no-coordenador">Falha no Coordenador</h4>
-<p>O problema principal é: e se ninguém ouviu a decisão final do coordenador?</p>
-<p>Neste caso, o protocolo não pode continuar, enquanto o coordenador não retornar, pois se os RM abortarem, podem estar contradizendo algo dito ao cliente, por exemplo, "Sim, ATM, pode entregar o dinheiro", ou executando um comando que o cliente vê como anulado, como "Reenvie o pedido de mais 27 carros à fábrica."</p>
-<h4 id="recuperacao-do-coordenador">Recuperação do Coordenador</h4>
-<p>Ao se recuperar, o coordenador:</p>
-<ul>
-<li>sabe se começou a terminação de alguma transação</li>
-<li>sabe se já enviou alguma resposta final para as transações inacabadas</li>
-<li>sabe se já recebeu a confirmação de todos os participantes (se transação não estiver em aberto)</li>
-<li>reenvia a última mensagem das transações em aberto.</li>
-</ul>
-<h4 id="otimizacoes">Otimizações</h4>
-<ul>
-<li>
-<p>Participantes "somente-leitura"</p>
-<ul>
-<li>Não se importa com a decisão; termina após fase 1.</li>
-<li>Responde com vote-commit-ro</li>
-</ul>
-</li>
-<li>
-<p>Abort presumido</p>
-<ul>
-<li>Se ocorrer timeout, coordenador envia global-abort a todos e esquece transação</li>
-<li>Se questionado, responde com global-abort.</li>
-</ul>
-</li>
-<li>
-<p>Transferência de coordenação</p>
-<ul>
-<li>se houver somente um participante...</li>
-<li>vote-request-transfer</li>
-<li>participante responde com global-commit/global-abort</li>
-</ul>
-</li>
-</ul>
-<h4 id="coleta-de-lixo">Coleta de Lixo</h4>
-<p>Mesmo quando somente um participante falha...</p>
-<p>Após receber decisão, o participante pode concluir e esquecer a transação. </p>
-<p>Mas e se o participante falho precisar se recuperar e todos os outros envolvidos tiverem esquecido a transação?</p>
-<p>Coleta de lixo só pode ser feita quando todos tiverem confirmado a execução da transação e, por isso, Fase 2b é necessária.</p>
-<h3 id="3-pc">3-PC</h3>
-<p>Estende o protocolo para permitir contornar  falha do coordenador.</p>
-<h4 id="o-protocolo">O Protocolo</h4>
-<ul>
-<li>Fase 1a -- Coordenador envia vote-request para participantes.</li>
-<li>Fase 1b -- Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.</li>
-<li>Fase 2a -- Coordenador coleta votos de todos os processos; se forem todos vote-commit, envia \alert{prepare-commit} para os participantes; se não, global-abort e para.</li>
-<li>Fase 2b -- Participantes esperam por prepare-commit ou global-abort; se o primeiro, \alert{respondem com ready-commit}; se o segundo, param.</li>
-<li>Fase 3a -- coordenador espera por ready-commit de todos e então envia global-commit.</li>
-<li>Fase 3b -- participantes esperam por global-commit.</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Coordenador</th>
-<th>Participante</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img alt="" src="images/08-22a.png" /></td>
-<td><img alt="" src="images/08-22b.png" /></td>
-</tr>
-</tbody>
-</table>
-<h4 id="falha-no-participante_2">Falha no Participante</h4>
-<p><span class="arithmatex">\(P\)</span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
-<ul>
-<li>Participantes e coordenador não distam mais que um estado.</li>
-<li>Se alguém em READY, o coordenador não mandou global-commit ainda; Aborte.</li>
-<li>Se <em>todos</em> em PRE-COMMIT, é possível comitar, comite.</li>
-<li>A execução dos passos anteriores tem que anular o poder do coordenador.</li>
-</ul>
-<p><em>Se todos os participantes em READY?</em></p>
-<h4 id="3pc-x-2pc">3PC x 2PC</h4>
-<ul>
-<li>3PC -- Aumenta disponibilidade</li>
-<li>2PC -- Falha do coordenador é "corner case"</li>
-<li>3PC -- Aumenta o custo do "caminho feliz" e por isso não é usado na prática</li>
-<li>Nenhum escala e não usá-los é uma das razões para o surgimento dos sistemas NoSQL</li>
-</ul>
-<h3 id="paxos-commit">Paxos-Commit</h3>
-<p>Usa instâncias de Consenso Distribuído para votar. Se o consenso é tolerante a falhas e consistente, todos vêem o mesmo resultado na transação.</p>
-<h4 id="o-protocolo_1">O protocolo</h4>
-<ul>
-<li>Para terminar a transação <span class="arithmatex">\(T\)</span>, o coordenador envia request-commit a todos os participantes.</li>
-<li>Um participante <span class="arithmatex">\(P\)</span> propõe seu voto na instância <span class="arithmatex">\(T_P\)</span> de consenso.</li>
-<li>
-<p>Todo participante <span class="arithmatex">\(P\)</span> espera pelas decisões das instâncias de consenso <span class="arithmatex">\(T_i\)</span> para todos os participantes <span class="arithmatex">\(i\)</span>, inclusive si mesmo; se todas as decisões forem commit, o participante comita a transação.</p>
-</li>
-<li>
-<p>Se cansar de esperar por <span class="arithmatex">\(T_Q\)</span>, o participante propõe abort em <span class="arithmatex">\(T_Q\)</span>.</p>
-</li>
-</ul>
-<h4 id="falha-no-participante_3">Falha no Participante</h4>
-<ul>
-<li>Se o participante falha antes de votar, então alguém votará abort por ele.</li>
-<li>Se o participante <span class="arithmatex">\(P\)</span> falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em <span class="arithmatex">\(T_P\)</span>; isso não é um problema pois a decisão é a mesma para todos observando a instância.</li>
-<li>Após se recuperar, o participante recupera as decisões de todas as instâncias <span class="arithmatex">\(T_i\)</span> e termina apropriadamente.</li>
-</ul>
-<h2 id="log-recuperavel">Log Recuperável</h2>
-<p>Como garantir que o log poderá ser lido para recuperar o processo?</p>
-<h3 id="disco-duplicado">Disco Duplicado</h3>
-<p><img alt="" src="images/08-23.png" /></p>
-<ul>
-<li>Dois discos iguais?</li>
-<li>Dados diferentes, mas ambos bons?</li>
-<li>Um bom outro estragado?</li>
-<li>Ambos estragados?</li>
-</ul>
                 
               
               
@@ -3550,9 +3544,9 @@ pode retornar ok ou nok.</li>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../fault/" title="Tolerância a Falhas" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../fault/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
@@ -3565,7 +3559,7 @@ pode retornar ok ou nok.</li>
           </a>
         
         
-          <a href="../tech/" title="Tecnologias" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tech/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -3575,7 +3569,7 @@ pode retornar ok ou nok.</li>
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -3598,15 +3592,15 @@ pode retornar ok ou nok.</li>
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
