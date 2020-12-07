@@ -406,8 +406,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detectores-de-defeitos" class="md-nav__link">
-    Detectores de Defeitos
+  <a href="#detectores-de-defeitos-de-defeito-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos de Defeito não Confiáveis
   </a>
   
 </li>
@@ -455,43 +455,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#estudo-de-caso-copycat" class="md-nav__link">
+    Estudo de caso: Copycat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#estudo-de-caso-ratis" class="md-nav__link">
     Estudo de caso: Ratis
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#estudo-de-caso-atomix" class="md-nav__link">
-    Estudo de caso: Atomix
-  </a>
-  
-    <nav class="md-nav" aria-label="Estudo de caso: Atomix">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lambda" class="md-nav__link">
-    Lambda
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#future" class="md-nav__link">
-    Future
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#atomix-raft" class="md-nav__link">
-    Atomix-Raft
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -533,6 +506,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-etcd" class="md-nav__link">
+    Estudo de caso: Etcd
+  </a>
   
 </li>
         
@@ -759,8 +739,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detectores-de-defeitos" class="md-nav__link">
-    Detectores de Defeitos
+  <a href="#detectores-de-defeitos-de-defeito-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos de Defeito não Confiáveis
   </a>
   
 </li>
@@ -808,43 +788,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#estudo-de-caso-copycat" class="md-nav__link">
+    Estudo de caso: Copycat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#estudo-de-caso-ratis" class="md-nav__link">
     Estudo de caso: Ratis
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#estudo-de-caso-atomix" class="md-nav__link">
-    Estudo de caso: Atomix
-  </a>
-  
-    <nav class="md-nav" aria-label="Estudo de caso: Atomix">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lambda" class="md-nav__link">
-    Lambda
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#future" class="md-nav__link">
-    Future
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#atomix-raft" class="md-nav__link">
-    Atomix-Raft
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -886,6 +839,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-etcd" class="md-nav__link">
+    Estudo de caso: Etcd
+  </a>
   
 </li>
         
@@ -1158,16 +1118,11 @@ Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a f
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, Raft e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
-<h3 id="detectores-de-defeitos">Detectores de Defeitos</h3>
-<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">7</a></sup> introduziram o conceito de <strong>Detectores de Defeitos Não Confiáveis</strong>. 
+<h3 id="detectores-de-defeitos-de-defeito-nao-confiaveis">Detectores de Defeitos de Defeito não Confiáveis</h3>
+<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">7</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong>. 
 Um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.</p>
-<details class="todo"><summary>Todo</summary><p>figura</p>
+<details class="todo"><summary>Todo</summary><p>figura igual à da dissertação.</p>
 </details>
-<p>Os detectores de defeitos <strong>não podem ser implementados em sistemas totalmente assíncronos</strong>. 
-Em ambientes parcialmente síncronos, nos quais os processos dispõem de <strong>temporizadores</strong> precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um <strong>limite de tempo</strong> para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
-Esta determinação é por certo imprecisa, e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
-Entretanto, a despeito desta incerteza, a informação provida por estes detectores já é suficiente para que se alcance o consenso, salvo a restrição de que a maioria dos processos não sofra defeitos e que os mesmos provejam certas propriedades mínimas, descritas adiante. 
-Os detectores não confiáveis encapsulam, de certa forma, o sincronismo necessário à resolução do consenso.</p>
 <p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:</p>
 <ul>
 <li>Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.</li>
@@ -1177,10 +1132,22 @@ Os detectores não confiáveis encapsulam, de certa forma, o sincronismo necess�
 <li>Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após apresentarem defeito.</li>
 <li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.</li>
 </ul>
-<p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de completude fraca e acucárias eventual fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">8</a></sup> 
-Este detector, conhecido como <span class="arithmatex">\(\diamont W\)</span> e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
-Vários protocolos de consenso utilizam o detector equivalente, <span class="arithmatex">\(\diamond S\)</span>, equivalente ao <span class="arithmatex">\(\diamond W\)</span> mas com completude forte.
-Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina; um <strong>resultado errado nunca é alcançado</strong>.</p>
+<p>Um detector ideal seria um com Completude Forte e Precisão Forte, pois detectaria somente processos defeituosos e todos os processos defeituosos.
+Este detector é conhecido como <span class="arithmatex">\(P\)</span> ou <em>Perfect</em>.
+Infelizmente os detectores perfeitos só podem ser implementados em sistemas síncronos, onde se pode confiar que a falta de uma mensagem implica em que a mensagem não será entregue por quê o remetente deve ser defeituros.
+Assim, é preciso se focar em detectores não perfeitos ou <strong>não confiáveis</strong>.</p>
+<p>Em ambientes <strong>parcialemnte síncronos</strong>, ou seja, assíncronos aumentados com algum tipo de sincronia, já possível implementar detectores não confiáveis.
+Por exemplo, se os processos dispõem de <strong>temporizadores</strong> precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um <strong>limite de tempo</strong> para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
+Esta determinação é por certo imprecisa, e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
+Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso, salvo uma restrição de que a maioria dos processos não sofra defeitos.</p>
+<div class="admonition todo">
+<p class="admonition-title">Maioria</p>
+<p>Adicionar prova.</p>
+</div>
+<p>Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">8</a></sup> 
+Este detector, conhecido como <span class="arithmatex">\(\Diamond W\)</span>, ou <em>Eventual Weak</em>, e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
+Vários protocolos de consenso utilizam o detector equivalente, <span class="arithmatex">\(\Diamond S\)</span>, equivalente ao <span class="arithmatex">\(\Diamond W\)</span> mas com completude forte.
+Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um <strong>resultado errado nunca é alcançado</strong>.</p>
 <h3 id="difusao-totalmente-ordenada">Difusão Totalmente Ordenada</h3>
 <p>Se pudermos resolver o consenso, podemos então resolver o problema da difusão atômica e com ela implementar a replicação de máquinas de estados.
 Relembrando, na difusão Totalmente Ordenada (Total Order Multicast) temos que:</p>
@@ -1284,22 +1251,15 @@ Contudo, estes protocolos são mais complexos de se implementar e por isso raram
 <p>Caso você queira implementar a replicação de máquinas de estados ou qualquer outro solução que possa ser construída sobre primitivas de comunicação em grupo, você tem a opção de implementar um protocolo de difusão atômica desde o zero.
 A tarefa, contudo, é ingrata.<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">9</a></sup>
 Felizmente também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenaç!ao coordenação comuns em sistemas distribuídos.</p>
-<h4 id="estudo-de-caso-ratis">Estudo de caso: Ratis</h4>
-<div class="admonition todo">
-<p class="admonition-title">Todo</p>
-</div>
-<h4 id="estudo-de-caso-atomix">Estudo de caso: Atomix</h4>
+<h4 id="estudo-de-caso-copycat">Estudo de caso: Copycat</h4>
+<p><a href="http://atomix.io/copycat/">Copycat </a> é um arcabouço de replicação de máquinas de estados implementada pela <a href="http://atomix.io/">Página Web</a>Atomix.
+Na base do Copycat está uma implementação do Raft.
+Sobre o Raft, uma API simples permite a criação de máquinas de estados replicadas usando uma API simples mas moderna, com uso pesado de <strong>lambdas</strong>, <strong>futures</strong>, e do estilo <strong>fluent</strong> de encadeamento de invocações.</p>
+<div class="admonition note">
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Lambda</label><div class="tabbed-content">
 <ul>
-<li>Framework de replicação de máquinas de estados implementada pela Atomix. </li>
-<li>Implementação do Raft</li>
-<li>API simples</li>
-<li>Java 8 (lambdas e futures)</li>
-<li><a href="http://atomix.io/copycat/">Página Web</a></li>
+<li>Classe com um único método.</li>
 </ul>
-<h5 id="lambda">Lambda</h5>
-<ul>
-<li>
-<p>Classe com um único método.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1316,10 +1276,11 @@ Felizmente também tem a opção de usar arcabouços prontos tanto para para com
 
 <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Tarefa</span><span class="p">()).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-<li>
-<p>Classe anônima - uso único
+</td></tr></table>
+
+<ul>
+<li>Classe anônima - uso único</li>
+</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1332,50 +1293,53 @@ Felizmente também tem a opção de usar arcabouços prontos tanto para para com
   <span class="p">}</span>   
 <span class="p">}).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-<li>
-<p>Lambda
+</td></tr></table>
+
+<ul>
+<li>Lambda</li>
+</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
 4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">new</span> <span class="n">Thread</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
-                     <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-                       <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Bem vindo a um loop infinito&quot;</span><span class="p">);</span>
-                   <span class="p">}).</span><span class="na">start</span><span class="p">();</span>
+                <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+                  <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Bem vindo a um loop infinito&quot;</span><span class="p">);</span>
+              <span class="p">}).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-<li>
-<p>Encadeamento (fluent)
+</td></tr></table>
+
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Fluent</label><div class="tabbed-content">
+<ul>
+<li>Encadeamento</li>
+</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>   <span class="n">Collection</span><span class="o">&lt;</span><span class="n">Pessoa</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">...;</span>
-   <span class="n">c</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
-    <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="p">.</span><span class="na">idade</span> <span class="o">&gt;</span> <span class="mi">33</span><span class="p">)</span>
-    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Pessoa</span><span class="p">::</span><span class="n">sobrenomeNome</span><span class="p">)</span><span class="c1">//.map(p -&gt; p.sobrenomeNome())</span>
-    <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="n">Collection</span><span class="o">&lt;</span><span class="n">Pessoa</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">...;</span>
+    <span class="n">c</span><span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+      <span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="p">.</span><span class="na">idade</span> <span class="o">&gt;</span> <span class="mi">33</span><span class="p">)</span>
+      <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Pessoa</span><span class="p">::</span><span class="n">sobrenomeNome</span><span class="p">)</span><span class="c1">//.map(p -&gt; p.sobrenomeNome())</span>
+      <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-</ul>
-<h5 id="future">Future</h5>
+</td></tr></table>
+
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Future</label><div class="tabbed-content">
 <ul>
-<li>
-<p>Promessa de computação e resultado.
+<li>Promessa de computação e resultado.</li>
+</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">ExecutorService</span> <span class="n">executor</span> <span class="o">=</span> <span class="n">Executors</span><span class="p">.</span><span class="na">newSingleThreadExecutor</span><span class="p">();</span>
 <span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">futFib</span> <span class="o">=</span> <span class="n">executor</span><span class="p">.</span><span class="na">submit</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">217</span><span class="p">)};</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-<li>
-<p>Quando será executado?  Em algum momento.</p>
-</li>
-<li>
-<p>Como pegar o resultado? 
+</td></tr></table>
+
+<ul>
+<li>Quando será executado?  Em algum momento.    </li>
+<li>Como pegar o resultado? </li>
+</ul>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1384,33 +1348,46 @@ Felizmente também tem a opção de usar arcabouços prontos tanto para para com
 
 <span class="kt">int</span> <span class="n">fib217</span> <span class="o">=</span> <span class="n">futFib</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
 </code></pre></div>
-</td></tr></table></p>
-</li>
-<li>
-<p>Em qual thread?  Em algum thread. Depende do Executor Service usado.  </p>
-</li>
-</ul>
-<h5 id="atomix-raft">Atomix-Raft</h5>
+</td></tr></table>
+
 <ul>
-<li>
-<p>Versão &gt;= 2 do copycat</p>
-<ul>
-<li>Melhor desempenho</li>
-<li>Documentação ruim</li>
-<li><a href="https://github.com/atomix/atomix">https://github.com/atomix/atomix</a></li>
+<li>Em qual thread?  Em algum thread. Depende do Executor Service usado.  </li>
 </ul>
-</li>
-<li>
-<p>Versão 1.1.4</p>
+</div>
+</div>
+</div>
+<p>Há várias versões do Copycat disponíveis, com vantagens e desvantagens.</p>
+<div class="admonition note">
+<p class="admonition-title">Versões</p>
+<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Versão 1.1.4</label><div class="tabbed-content">
 <ul>
 <li>Baseado em <a href="http://atomix.io/copycat/docs/getting-started/">http://atomix.io/copycat/docs/getting-started/</a> e <a href="https://www.baeldung.com/atomix">https://www.baeldung.com/atomix</a></li>
 <li>Código funcional em <a href="https://github.com/pluxos/atomix_labs">https://github.com/pluxos/atomix_labs</a></li>
+<li>Documentação oficial removida</li>
 </ul>
-</li>
-<li>
-<p>Clone e compile o projeto}</p>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Versão &gt;= 2</label><div class="tabbed-content">
 <ul>
-<li>Instale dependências: git, maven e JDK &gt;= 1.8 (lembre-se que gRPC precisa de JDK &lt;= 1.8)</li>
+<li>Melhor desempenho</li>
+<li>Documentação ruim ou inexistente</li>
+<li><a href="https://github.com/atomix/atomix">https://github.com/atomix/atomix</a></li>
+</ul>
+</div>
+<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Versão 3</label><div class="tabbed-content">
+<ul>
+<li>em Go</li>
+<li>evolução rápida</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Aqui usaremos a versão 1.1.4, que apesar de antiga, é a melhor documentada atualmente, pelo tutorial referenciado acima.</p>
+<ul>
+<li>Clone e compile o projeto<ul>
+<li>Instale dependências:</li>
+<li>git</li>
+<li>maven </li>
+<li>JDK &gt;= 1.8</li>
 <li><code>git clone https://github.com/pluxos/atomix_labs</code></li>
 <li><code>cd atomix_labs</code></li>
 <li><code>cd replication</code></li>
@@ -1419,7 +1396,7 @@ Felizmente também tem a opção de usar arcabouços prontos tanto para para com
 </ul>
 </li>
 </ul>
-<p>Resultado esperado.</p>
+<p>Você deve ver uma saída semelhante à seguinte, o que quer dizer que seu código está compilando perfeitamente.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1440,29 +1417,29 @@ Felizmente também tem a opção de usar arcabouços prontos tanto para para com
 </code></pre></div>
 </td></tr></table>
 
-<p>Explore o projeto na pasta/URL <a href="https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine">https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine</a>)
-Há três pastas. Analise-as nesta ordem</p>
+<p>Antes de começar a escrever suas prórpia máquinas de estado, familiarize-se com a estrutura do projeto em <a href="https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine">https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine</a></p>
+<p>Observe que há três pastas: </p>
 <ul>
-<li>type - tipos dos dados mantidos pela replica (Edge e Vertex)<br />
+<li><code>type</code> - tipos dos dados mantidos pela replica (Edge e Vertex)<br />
    Os tipos são serializable para que o Java saiba como transformá-los em bytes.</li>
-<li>command - estruturas que contêm informações para modificar os tipos<br />
+<li><code>command</code> - estruturas que contêm informações para modificar os tipos<br />
     Os comandos serão enviadas do cliente para o cluster e são naturalmente serializable.</li>
-<li>client - cria comandos e os envia para serem executados no cluster<br />
+<li><code>client</code> - cria comandos e os envia para serem executados no cluster<br />
     Respostas podem ser esperadas síncrona ou assincronamente.</li>
-<li>server - recebe os comandos na ordem definida pelo Raft e os executa</li>
+<li><code>server</code> - recebe os comandos na ordem definida pelo Raft e os executa</li>
 </ul>
 <p>O projeto foi construído seguindo as instruções no tutorial mencionado antes, saltando-se a parte dos snapshots, isto é:</p>
 <ul>
 <li>crie um projeto maven<br />
     eclipse tem template para isso</li>
-<li>adicione dependências no pom.xml<br />
+<li>adicione dependências no <code>pom.xml</code><br />
     como so criei um projeto, coloquei as dependências tanto do cliente quando do servidor</li>
-<li>defina Command que modifiquem o estado das réplicas</li>
-<li>defina Queries que consultem o estado das réplicas</li>
+<li>defina <code>Command</code> que modifiquem o estado das réplicas</li>
+<li>defina <code>Queries</code> que consultem o estado das réplicas</li>
 <li>implemente a réplica para lidar com os comandos</li>
 <li>implemente o cliente para emitir comandos</li>
 </ul>
-<p>Para executar um servidor, você precisa passar como parâmetro</p>
+<p>Para executar um servidor, você precisa passar diversos parâmetros</p>
 <ul>
 <li>identificador do processo (inteiro)</li>
 <li>IP do processo com identificador 0</li>
@@ -1471,8 +1448,9 @@ Há três pastas. Analise-as nesta ordem</p>
 <li>porta do processo com identificar 1</li>
 <li>...</li>
 </ul>
-<p>Sabendo seu identificador, o servidor sabe em qual porta escutar e em quais IP/porta se conectar.</p>
-<p>Execute três servidores. Usando o maven, da linha de comando, fica assim:</p>
+<p>Sabendo seu identificador, o servidor sabe em qual porta escutar e em quais IP/porta se conectar para se comunicar com os outros servidores.</p>
+<p>Para testar o projeto, execute três servidores, em três terminais distintos. 
+Usando o maven, da linha de comando, basta executar os seguintes comandos[^\]:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1497,29 +1475,522 @@ mvn exec:java <span class="se">\\</span>
 </code></pre></div>
 </td></tr></table>
 
-<p>O cliente não precisa de um identificador, apenas dos pares IP/porta dos servidores.</p>
-<ul>
-<li>IP do processo com identificador 0</li>
-<li>porta do processo com identificar 0</li>
-<li>IP do processo com identificador 1</li>
-<li>porta do processo com identificar 1</li>
-<li>...</li>
-</ul>
-<p>Para executá-lo, use o comando</p>
+<p>O cliente não precisa de um identificador, apenas dos pares IP/porta dos servidores.
+Por exemplo, use o comando:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>mvn exec:java 
-  -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;atomix_lab.state_machine.client.GraphClient&quot;</span>
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>mvn exec:java <span class="se">\\</span>
+  -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;atomix_lab.state_machine.client.GraphClient&quot;</span> <span class="se">\\</span>
   -Dexec.args<span class="o">=</span><span class="s2">&quot;127.0.0.1 5000 127.0.0.1 5001 127.0.0.1 5002&quot;</span>
 </code></pre></div>
 </td></tr></table>
 
 <div class="admonition exercise">
 <p class="admonition-title">Exercício</p>
-<p>Uma vez executado o projeto, modifique-o para incluir uma nova operação (Command) e nova consulta (Query). </p>
+<p>Uma vez executado o projeto, modifique-o para incluir uma nova operação (<code>Command</code>) e nova consulta (<code>Query</code>), de sua escolha.</p>
 </div>
+<h4 id="estudo-de-caso-ratis">Estudo de caso: Ratis</h4>
+<p><a href="https://ratis.incubator.apache.org/">Ratis</a> é um arcabouço de coordenação atualmente encubado como um projeto no <a href="https://apache.org">Apache</a>.
+Embora mal documentado, o projeto tem alguns exemplos que demonstram como usar abstrações já implementadas. 
+A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis para implementar uma máquina de estados replicada.</p>
+<p>Crie um novo projeto Maven com o nome <code>ChaveValor</code> (eu estou usando IntelliJ, mas as instruções devem ser semelhantes para Eclipse).</p>
+<p><img alt="Novo Projeto Maven" src="images/newmaven.png" /></p>
+<p>Abra o arquivo <code>pom.xml</code> do seu projeto e adicione o seguinte trecho, com as dependências do projeto, incluindo o próprio Ratis.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">&lt;dependencies&gt;</span>
+    <span class="c">&lt;!-- https://mvnrepository.com/artifact/org.apache.ratis/ratis-server --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>ratis-server<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="c">&lt;!-- https://mvnrepository.com/artifact/org.apache.ratis/ratis-netty --&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>ratis-netty<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>ratis-grpc<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>com.beust<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>jcommander<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.78<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.slf4j<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>slf4j-api<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.7.25<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.slf4j<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>slf4j-log4j12<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.7.25<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>compile<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>log4j<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>log4j<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.2.17<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Adicione também o plugin Maven e o plugin para gerar um <code>.jar</code> com todas as dependências. Observe que estou usando Java 14, mas você pode mudar para a sua versão.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${maven.compiler.version}<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;source&gt;</span>14<span class="nt">&lt;/source&gt;</span>
+                <span class="nt">&lt;target&gt;</span>14<span class="nt">&lt;/target&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;executions&gt;</span>
+                <span class="nt">&lt;execution&gt;</span>
+                    <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+                    <span class="nt">&lt;goals&gt;</span>
+                        <span class="nt">&lt;goal&gt;</span>single<span class="nt">&lt;/goal&gt;</span>
+                    <span class="nt">&lt;/goals&gt;</span>
+                <span class="nt">&lt;/execution&gt;</span>
+            <span class="nt">&lt;/executions&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;descriptorRefs&gt;</span>
+                    <span class="nt">&lt;descriptorRef&gt;</span>jar-with-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+                <span class="nt">&lt;/descriptorRefs&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Crie uma nova classe denominada <code>Cliente</code> no arquivo <code>Cliente.java</code>.
+Nesta classe, iremos criar um objeto <code>RaftClient</code> que será usado para enviar operações para os servidores. 
+Esta classe é importada juntamente com outras várias dependências, adicionadas no <code>pom.xml</code>, que devemos instanciar antes do <code>RaftClient</code>.</p>
+<p>Neste exemplo eu coloco praticamente todos os parâmetros de configuração do Ratis <em>hardcoded</em> para simplificar o código.
+Obviamente que voce deveria ser estes parâmetros como argumentos para o programa ou de um arquivo de configuração.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.ratis.client.RaftClient</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.conf.Parameters</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.conf.RaftProperties</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.grpc.GrpcFactory</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.thirdparty.com.google.protobuf.ByteString</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.net.InetSocketAddress</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.charset.Charset</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Cliente</span>
+<span class="p">{</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>O campo <code>raftGroupId</code> identifica um cluster Ratis; isso quer dizer que um memsmo processo pode participar de vários <em>clusters</em>, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um <a href="https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal">UUID</a>.</p>
+<p><code>id2addr</code> é um mapa do identificador de cada processo no cluster, um <code>RaftPeerId</code>, para seu endereço IP + Porta.
+Aqui usei vários IP que correspondem à própria máquina, mas se estivesse executando em máquinas distintas, deveria usar o IP de cada máquina.
+O campo <code>raftGroup</code> é uma referência a todos os servidores, associados ao identificador do grupo, <code>raftGroupId</code>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
+    <span class="p">{</span>
+        <span class="n">String</span> <span class="n">raftGroupId</span> <span class="o">=</span> <span class="s">&quot;raft_group____um&quot;</span><span class="p">;</span> <span class="c1">// 16 caracteres.</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.2&quot;</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.3&quot;</span><span class="p">,</span> <span class="mi">1002</span><span class="p">)));</span>
+
+        <span class="kd">final</span> <span class="n">RaftGroup</span> <span class="n">raftGroup</span> <span class="o">=</span> <span class="n">RaftGroup</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">RaftGroupId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="n">raftGroupId</span><span class="p">)),</span> <span class="n">id2addr</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Uma vez criado o grupo, criamos o cliente usando a fábrica retornada por <code>RaftClient.newBuilder()</code>.
+A fábrica deve ser configurada com os dados do grupo e o tipo de transporte, neste caso gRPC.
+Também é necessário o identificador do processo que está se conectando ao grupo; neste caso, usamos um identificador aleatório qualquer, diferente do que faremos com os servidores.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="n">RaftProperties</span> <span class="n">raftProperties</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RaftProperties</span><span class="p">();</span>
+
+        <span class="n">RaftClient</span> <span class="n">client</span> <span class="o">=</span> <span class="n">RaftClient</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+                                      <span class="p">.</span><span class="na">setProperties</span><span class="p">(</span><span class="n">raftProperties</span><span class="p">)</span>
+                                      <span class="p">.</span><span class="na">setRaftGroup</span><span class="p">(</span><span class="n">raftGroup</span><span class="p">)</span>
+                                      <span class="p">.</span><span class="na">setClientRpc</span><span class="p">(</span><span class="k">new</span> <span class="n">GrpcFactory</span><span class="p">(</span><span class="k">new</span> <span class="n">Parameters</span><span class="p">())</span>
+                                      <span class="p">.</span><span class="na">newRaftClientRpc</span><span class="p">(</span><span class="n">ClientId</span><span class="p">.</span><span class="na">randomId</span><span class="p">(),</span> <span class="n">raftProperties</span><span class="p">))</span>
+                                      <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Uma vez criado o cliente, podemos fazer invocações de operações nos servidores. Cada operação será invocada em todos os servidores, na mesma ordem.
+Este protótipo suporta duas operações, <code>add</code> e <code>get</code>. A operação <code>add</code> é codificada como uma <code>String</code>, <code>add:k:v</code>, onde <code>k</code> e <code>v</code> são do tipo <code>String</code>. <code>add:k:v</code> adiciona uma entrada em um mapa implementado pelo nosso servidor com chave <code>k</code> e valor <code>v</code>.
+Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à chave <code>k</code>, se presente no mapa.</p>
+<p>O método <code>RaftClient.send</code> envia uma versão codificada no formato interno do Ratis para as réplicas e retorna um objeto <code>RaftClientReply</code>, que pode ser usado para pegar a resposta da operação. O código é auto explicativo.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="c1">//Escreva e depois leia</span>
+        <span class="n">RaftClientReply</span> <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;add:k1:lala&quot;</span><span class="p">));</span>
+        <span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k1=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+
+        <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;add:k2:lele&quot;</span><span class="p">));</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k2=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+
+        <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;get:k1&quot;</span><span class="p">));</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k1=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Um vez criado o cliente, crie a classe <code>Servidor</code>, no arquivo <code>Servidor.java</code>; a parte inicial do código é semelhante à do cliente.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.ratis.conf.RaftProperties</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.grpc.GrpcConfigKeys</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftGroup</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftGroupId</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftPeer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftPeerId</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.server.RaftServer</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.server.RaftServerConfigKeys</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.thirdparty.com.google.protobuf.ByteString</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.ratis.util.LifeCycle</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.net.InetSocketAddress</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="p">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Servidor</span>
+<span class="p">{</span>
+
+    <span class="c1">//Parametros: myId</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">InterruptedException</span>
+    <span class="p">{</span>
+        <span class="n">String</span> <span class="n">raftGroupId</span> <span class="o">=</span> <span class="s">&quot;raft_group____um&quot;</span><span class="p">;</span> <span class="c1">// 16 caracteres.</span>
+
+        <span class="c1">//Setup for node all nodes.</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.2&quot;</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.3&quot;</span><span class="p">,</span> <span class="mi">1002</span><span class="p">)));</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>A primeira diferença vem na necessidade de identificar o servidor dentro do conjunto de servidores, o que é feito com um <code>RaftPeerId</code>.
+Como cada servidor deve usar um identificador único, do conjunto pré-determinado em <code>id2addr</code>, o identificador é passado como argumento para o programa, obrigatoriamente.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="c1">//Setup for this node.</span>
+        <span class="n">RaftPeerId</span> <span class="n">myId</span> <span class="o">=</span> <span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="n">id2addr</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">anyMatch</span><span class="p">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="p">.</span><span class="na">getId</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">myId</span><span class="p">)))</span>
+        <span class="p">{</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Identificador &quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">&quot; é inválido.&quot;</span><span class="p">);</span>
+            <span class="n">System</span><span class="p">.</span><span class="na">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Encare a sessão seguinte como uma receita, mas observe que o método <code>RaftServerConfigKeys.setStorageDir</code> recebe o nome de uma pasta como argumento, que será usada para armazenar o estado da máquina de estados.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="n">RaftProperties</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RaftProperties</span><span class="p">();</span>
+        <span class="n">properties</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="n">GrpcConfigKeys</span><span class="p">.</span><span class="na">OutputStream</span><span class="p">.</span><span class="na">RETRY_TIMES_KEY</span><span class="p">,</span> <span class="n">Integer</span><span class="p">.</span><span class="na">MAX_VALUE</span><span class="p">);</span>
+        <span class="n">GrpcConfigKeys</span><span class="p">.</span><span class="na">Server</span><span class="p">.</span><span class="na">setPort</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+        <span class="n">RaftServerConfigKeys</span><span class="p">.</span><span class="na">setStorageDir</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="n">Collections</span><span class="p">.</span><span class="na">singletonList</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span> <span class="o">+</span> <span class="n">myId</span><span class="p">)));</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>A máquina de estados em si é especificada no próximo excerto, em <code>setStateMachine</code>, que veremos a seguir.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="c1">//Join the group of processes.</span>
+        <span class="kd">final</span> <span class="n">RaftGroup</span> <span class="n">raftGroup</span> <span class="o">=</span> <span class="n">RaftGroup</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">RaftGroupId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="n">raftGroupId</span><span class="p">)),</span> <span class="n">id2addr</span><span class="p">);</span>
+        <span class="n">RaftServer</span> <span class="n">raftServer</span> <span class="o">=</span> <span class="n">RaftServer</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">setServerId</span><span class="p">(</span><span class="n">myId</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">setStateMachine</span><span class="p">(</span><span class="k">new</span> <span class="n">MaquinaDeEstados</span><span class="p">()).</span><span class="na">setProperties</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">setGroup</span><span class="p">(</span><span class="n">raftGroup</span><span class="p">)</span>
+                <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+        <span class="n">raftServer</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Uma vez iniciado o servidor, basta esperar que ele termine antes de sair do programa.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="k">for</span><span class="p">(;</span> <span class="n">raftServer</span><span class="p">.</span><span class="na">getLifeCycleState</span><span class="p">()</span> <span class="o">!=</span> <span class="n">LifeCycle</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">CLOSED</span><span class="p">;)</span> <span class="p">{</span>
+            <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Vamos agora para a definição da classe <code>MaquinaDeEstados</code>, no arquivo <code>MaquinaDeEstados.java</code>.
+Esta classe deve implementar a interface <code>org.apache.ratis.statemachine.StateMachine</code> e seus vários métodos ou, mais simples, estende <code>org.apache.ratis.statemachine.impl.BaseStateMachine</code>, a abordagem que usaremos aqui.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MaquinaDeEstados</span> <span class="kd">extends</span> <span class="n">BaseStateMachine</span>
+<span class="p">{</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Por enquanto, ignoraremos o armazenamento do estado em disco, mantendo-o simplesmente em memória no campo <code>key2values</code>, e simplesmente implementaremos o processamento de comandos, começando pela implementação do método <code>query</code>.</p>
+<p>Este método é reponsável por implementar operações que não alteram o estado da máquina de estados. A única <code>query</code> no nosso sistema é o <code>get</code>.
+No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado em quebrado em operação (<code>get</code>) e chave , usando <code>:</code> como delimitador.
+Recuperado o valor associado à chave, o mesmo é colocado em um <code>CompletableFuture</code> e retornado.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">key2values</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ConcurrentHashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="nf">query</span><span class="p">(</span><span class="n">Message</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">opKey</span><span class="o">[]</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">key2values</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">opKey</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+
+        <span class="n">LOG</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;{}: {} = {}&quot;</span><span class="p">,</span> <span class="n">opKey</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">opKey</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">completedFuture</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">result</span><span class="p">));</span>
+    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>O método <code>applyTransaction</code> implementa operações que alteram o estado, como <code>add</code>. Da mesma forma que em get, a operação deve ser recuperada em quebrada em operação (<code>add</code>), chave e valor, usando <code>:</code> como delimitador.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="nf">applyTransaction</span><span class="p">(</span><span class="n">TransactionContext</span> <span class="n">trx</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">final</span> <span class="n">RaftProtos</span><span class="p">.</span><span class="na">LogEntryProto</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">trx</span><span class="p">.</span><span class="na">getLogEntry</span><span class="p">();</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">opKeyValue</span><span class="o">[]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">.</span><span class="na">getStateMachineLogEntry</span><span class="p">().</span><span class="na">getLogData</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+
+        <span class="n">key2values</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">opKeyValue</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
+
+        <span class="kd">final</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">completedFuture</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">));</span>
+
+        <span class="kd">final</span> <span class="n">RaftProtos</span><span class="p">.</span><span class="na">RaftPeerRole</span> <span class="n">role</span> <span class="o">=</span> <span class="n">trx</span><span class="p">.</span><span class="na">getServerRole</span><span class="p">();</span>
+        <span class="n">LOG</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{}:{} {} {}={}&quot;</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">getId</span><span class="p">(),</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Pronto, você já tem uma máquina de estados replicada, bastando agora apenas compilá-la e executá-la.
+Para compilar, de raiz do projeto digite <code>mvn package</code> seguido de enter. A primeira vez que faz isso pode demorar um pouco.
+Ao final da execução do comando você deveria ver algo semelhante ao seguinte</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>...
+INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> BUILD SUCCESS
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Total time:  <span class="m">4</span>.793 s
+<span class="o">[</span>INFO<span class="o">]</span> Finished at: <span class="m">2020</span>-12-06T23:06:32-03:00
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+</code></pre></div>
+</td></tr></table>
+
+<p>Então, em três terminais diferentes, execute os seguintes comandos:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p1
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p2
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p3
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente
+</code></pre></div>
+</td></tr></table>
+
+<details class="todo"><summary>Exerício</summary><ul>
+<li>Adicionar operações</li>
+<li>Passar operação como parâmetro do cliente.</li>
+</ul>
+</details>
 <h4 id="estudo-de-caso-zookeeper">Estudo de caso: Zookeeper</h4>
-<p>Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural, foi criado o <a href="http://zookeeper.apache.org/">Zookeeper</a></p>
+<p>Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural, foi criado o <a href="http://zookeeper.apache.org/">Zookeeper</a>.</p>
 <p><img alt="http://zookeeper.apache.org/" src="images/zklogo.jpeg" /></p>
 <h5 id="visao-geral">Visão Geral</h5>
 <div class="admonition quote">
@@ -1685,7 +2156,9 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
 <li>Contador atômico</li>
 </ul>
 <p>Além destas, outro projeto, o <a href="http://curator.apache.org">Curator</a> se dedica apenas a colecionar implementações corretas de receitas para o Zookeeper.</p>
-<details class="todo"><summary>Todo</summary></details>
+<h4 id="estudo-de-caso-etcd">Estudo de caso: Etcd</h4>
+<details class="todo"><summary>Todo</summary><p>descrever o <a href="https://etcd.io/">etcd</a></p>
+</details>
 <div class="footnote">
 <hr />
 <ol>
@@ -1715,6 +2188,10 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
 </li>
 <li id="fn:paxosmade">
 <p>Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em <a href="https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf">Paxos Made Live - An Engineering Perspective</a>.&#160;<a class="footnote-backref" href="#fnref:paxosmade" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:\\">
+<p>O <code>\\</code> no final da linha é só para mostrar que o comando continua na próxima e facilitar a visualização. 
+Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class="footnote-backref" href="#fnref:\\" title="Jump back to footnote 10 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
