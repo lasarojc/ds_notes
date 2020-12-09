@@ -1679,9 +1679,10 @@ Obviamente que voce deveria ser estes parâmetros como argumentos para o program
 </td></tr></table>
 
 <p>O campo <code>raftGroupId</code> identifica um cluster Ratis; isso quer dizer que um memsmo processo pode participar de vários <em>clusters</em>, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um <a href="https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal">UUID</a>.</p>
-<p><code>id2addr</code> é um mapa do identificador de cada processo no cluster, um <code>RaftPeerId</code>, para seu endereço IP + Porta.
-Aqui usei vários IP que correspondem à própria máquina, mas se estivesse executando em máquinas distintas, deveria usar o IP de cada máquina.
-O campo <code>raftGroup</code> é uma referência a todos os servidores, associados ao identificador do grupo, <code>raftGroupId</code>.</p>
+<p><code>id2addr</code> é um mapa do identificador de cada processo no cluster para seu endereço IP + Porta.
+Aqui usei várias portas distintas porquê todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IP distintos, poderia usar a mesma porta em todos.</p>
+<p><code>addresses</code> é uma lista de <code>RaftPeer</code> construída a parti de <code>id2addr</code>.</p>
+<p>O campo <code>raftGroup</code> é uma referência a todos os servidores, associados ao identificador do grupo, <code>raftGroupId</code>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1691,16 +1692,26 @@ O campo <code>raftGroup</code> é uma referência a todos os servidores, associa
  7
  8
  9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span>
     <span class="p">{</span>
         <span class="n">String</span> <span class="n">raftGroupId</span> <span class="o">=</span> <span class="s">&quot;raft_group____um&quot;</span><span class="p">;</span> <span class="c1">// 16 caracteres.</span>
 
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)));</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.2&quot;</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)));</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.3&quot;</span><span class="p">,</span> <span class="mi">1002</span><span class="p">)));</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">InetSocketAddress</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">3500</span><span class="p">));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">4000</span><span class="p">));</span>
 
-        <span class="kd">final</span> <span class="n">RaftGroup</span> <span class="n">raftGroup</span> <span class="o">=</span> <span class="n">RaftGroup</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">RaftGroupId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="n">raftGroupId</span><span class="p">)),</span> <span class="n">id2addr</span><span class="p">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">addresses</span> <span class="o">=</span> <span class="n">id2addr</span><span class="p">.</span><span class="na">entrySet</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+                <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getKey</span><span class="p">()),</span> <span class="n">e</span><span class="p">.</span><span class="na">getValue</span><span class="p">()))</span>
+                <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+
+        <span class="kd">final</span> <span class="n">RaftGroup</span> <span class="n">raftGroup</span> <span class="o">=</span> <span class="n">RaftGroup</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">RaftGroupId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="n">raftGroupId</span><span class="p">)),</span> <span class="n">addresses</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1728,7 +1739,10 @@ Também é necessário o identificador do processo que está se conectando ao gr
 <p>Uma vez criado o cliente, podemos fazer invocações de operações nos servidores. Cada operação será invocada em todos os servidores, na mesma ordem.
 Este protótipo suporta duas operações, <code>add</code> e <code>get</code>. A operação <code>add</code> é codificada como uma <code>String</code>, <code>add:k:v</code>, onde <code>k</code> e <code>v</code> são do tipo <code>String</code>. <code>add:k:v</code> adiciona uma entrada em um mapa implementado pelo nosso servidor com chave <code>k</code> e valor <code>v</code>.
 Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à chave <code>k</code>, se presente no mapa.</p>
-<p>O método <code>RaftClient.send</code> envia uma versão codificada no formato interno do Ratis para as réplicas e retorna um objeto <code>RaftClientReply</code>, que pode ser usado para pegar a resposta da operação. O código é auto explicativo.</p>
+<p>O método <code>RaftClient::send</code> é usado para enviar modificações para as réplicas e deve, necessariament, passar pelo protocolo Raft.
+Já o método <code>RaftClient::sendReadOnly</code> é usado para enviar consultas a qualquer das réplicas.
+Ambos os métodos codificam o comando sendo enviado (<code>add:k:v</code> ou <code>get:k</code>) no formato interno do Ratis para as réplicas e retorna um objeto <code>RaftClientReply</code>, que pode ser usado para pegar a resposta da operação. 
+O código é auto explicativo.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1742,18 +1756,30 @@ Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="c1">//Escreva e depois leia</span>
-        <span class="n">RaftClientReply</span> <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;add:k1:lala&quot;</span><span class="p">));</span>
-        <span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k1=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="n">RaftClientReply</span> <span class="n">getValue</span><span class="p">;</span>
+        <span class="n">String</span> <span class="n">response</span><span class="p">;</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">){</span>
+            <span class="k">case</span> <span class="s">&quot;add&quot;</span><span class="p">:</span>
+                <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;add:&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">));</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Resposta:&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s">&quot;get&quot;</span><span class="p">:</span>
+                <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">sendReadOnly</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;get:&quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">));</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Resposta:&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="k">default</span><span class="p">:</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;comando inválido&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;add:k2:lele&quot;</span><span class="p">));</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k2=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
-
-        <span class="n">getValue</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;get:k1&quot;</span><span class="p">));</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">getValue</span><span class="p">.</span><span class="na">getMessage</span><span class="p">().</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">());</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;k1=&quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+        <span class="n">client</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -1791,7 +1817,12 @@ Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à
 29
 30
 31
-32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.ratis.conf.RaftProperties</span><span class="p">;</span>
+32
+33
+34
+35
+36
+37</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.ratis.conf.RaftProperties</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.ratis.grpc.GrpcConfigKeys</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftGroup</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">org.apache.ratis.protocol.RaftGroupId</span><span class="p">;</span>
@@ -1819,10 +1850,15 @@ Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à
         <span class="n">String</span> <span class="n">raftGroupId</span> <span class="o">=</span> <span class="s">&quot;raft_group____um&quot;</span><span class="p">;</span> <span class="c1">// 16 caracteres.</span>
 
         <span class="c1">//Setup for node all nodes.</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)));</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.2&quot;</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)));</span>
-        <span class="n">id2addr</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">),</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.3&quot;</span><span class="p">,</span> <span class="mi">1002</span><span class="p">)));</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="n">InetSocketAddress</span><span class="o">&gt;</span> <span class="n">id2addr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p1&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">3000</span><span class="p">));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p2&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">3500</span><span class="p">));</span>
+        <span class="n">id2addr</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;p3&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="n">InetSocketAddress</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">4000</span><span class="p">));</span>
+
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">RaftPeer</span><span class="o">&gt;</span> <span class="n">addresses</span> <span class="o">=</span> <span class="n">id2addr</span><span class="p">.</span><span class="na">entrySet</span><span class="p">()</span>
+                                          <span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+                                          <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">RaftPeer</span><span class="p">(</span><span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">getKey</span><span class="p">()),</span> <span class="n">e</span><span class="p">.</span><span class="na">getValue</span><span class="p">()))</span>
+                                          <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
 </code></pre></div>
 </td></tr></table>
 
@@ -1838,7 +1874,7 @@ Como cada servidor deve usar um identificador único, do conjunto pré-determina
 8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="c1">//Setup for this node.</span>
         <span class="n">RaftPeerId</span> <span class="n">myId</span> <span class="o">=</span> <span class="n">RaftPeerId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="n">id2addr</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">anyMatch</span><span class="p">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="p">.</span><span class="na">getId</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">myId</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">addresses</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">noneMatch</span><span class="p">(</span><span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="p">.</span><span class="na">getId</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">myId</span><span class="p">)))</span>
         <span class="p">{</span>
             <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Identificador &quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">+</span> <span class="s">&quot; é inválido.&quot;</span><span class="p">);</span>
             <span class="n">System</span><span class="p">.</span><span class="na">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
@@ -1846,7 +1882,9 @@ Como cada servidor deve usar um identificador único, do conjunto pré-determina
 </code></pre></div>
 </td></tr></table>
 
-<p>Encare a sessão seguinte como uma receita, mas observe que o método <code>RaftServerConfigKeys.setStorageDir</code> recebe o nome de uma pasta como argumento, que será usada para armazenar o estado da máquina de estados.</p>
+<p>Encare a seção seguinte como uma receita, mas observe que o método <code>RaftServerConfigKeys.setStorageDir</code> recebe o nome de uma pasta como argumento, que será usada para armazenar o estado da máquina de estados.
+Se você executar o servidor múltiplas vezes, a cada nova execução o estado anterior do sistema será recuperado desta pasta.
+Para <strong>limpar</strong> o estado, apague as pastas de cada servidor.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -1881,7 +1919,7 @@ Como cada servidor deve usar um identificador único, do conjunto pré-determina
 2
 3
 4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="k">for</span><span class="p">(;</span> <span class="n">raftServer</span><span class="p">.</span><span class="na">getLifeCycleState</span><span class="p">()</span> <span class="o">!=</span> <span class="n">LifeCycle</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">CLOSED</span><span class="p">;)</span> <span class="p">{</span>
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="k">while</span><span class="p">(</span><span class="n">raftServer</span><span class="p">.</span><span class="na">getLifeCycleState</span><span class="p">()</span> <span class="o">!=</span> <span class="n">LifeCycle</span><span class="p">.</span><span class="na">State</span><span class="p">.</span><span class="na">CLOSED</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -1898,7 +1936,7 @@ Esta classe deve implementar a interface <code>org.apache.ratis.statemachine.Sta
 </td></tr></table>
 
 <p>Por enquanto, ignoraremos o armazenamento do estado em disco, mantendo-o simplesmente em memória no campo <code>key2values</code>, e simplesmente implementaremos o processamento de comandos, começando pela implementação do método <code>query</code>.</p>
-<p>Este método é reponsável por implementar operações que não alteram o estado da máquina de estados. A única <code>query</code> no nosso sistema é o <code>get</code>.
+<p>Este método é reponsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método <code>RaftClient::sendReadOnly</code>. A única <code>query</code> no nosso sistema é o <code>get</code>.
 No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado em quebrado em operação (<code>get</code>) e chave , usando <code>:</code> como delimitador.
 Recuperado o valor associado à chave, o mesmo é colocado em um <code>CompletableFuture</code> e retornado.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1914,8 +1952,8 @@ Recuperado o valor associado à chave, o mesmo é colocado em um <code>Completab
 
     <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="nf">query</span><span class="p">(</span><span class="n">Message</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">final</span> <span class="n">String</span> <span class="n">opKey</span><span class="o">[]</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
-        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">key2values</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">opKey</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
+        <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">opKey</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getContent</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">opKey</span><span class="o">[</span><span class="mi">0</span><span class="o">]+</span> <span class="s">&quot;:&quot;</span><span class="o">+</span> <span class="n">key2values</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">opKey</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">);</span>
 
         <span class="n">LOG</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;{}: {} = {}&quot;</span><span class="p">,</span> <span class="n">opKey</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">opKey</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
         <span class="k">return</span> <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">completedFuture</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">result</span><span class="p">));</span>
@@ -1923,7 +1961,8 @@ Recuperado o valor associado à chave, o mesmo é colocado em um <code>Completab
 </code></pre></div>
 </td></tr></table>
 
-<p>O método <code>applyTransaction</code> implementa operações que alteram o estado, como <code>add</code>. Da mesma forma que em get, a operação deve ser recuperada em quebrada em operação (<code>add</code>), chave e valor, usando <code>:</code> como delimitador.</p>
+<p>O método <code>applyTransaction</code> implementa operações que alteram o estado, como <code>add</code>, enviadas com o método <code>RaftClient::send</code>. 
+Da mesma forma que em <code>get</code>, a operação deve ser recuperada em quebrada em operação (<code>add</code>), chave e valor, usando <code>:</code> como delimitador.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1940,11 +1979,11 @@ Recuperado o valor associado à chave, o mesmo é colocado em um <code>Completab
 14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>    <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="nf">applyTransaction</span><span class="p">(</span><span class="n">TransactionContext</span> <span class="n">trx</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">final</span> <span class="n">RaftProtos</span><span class="p">.</span><span class="na">LogEntryProto</span> <span class="n">entry</span> <span class="o">=</span> <span class="n">trx</span><span class="p">.</span><span class="na">getLogEntry</span><span class="p">();</span>
-        <span class="kd">final</span> <span class="n">String</span> <span class="n">opKeyValue</span><span class="o">[]</span> <span class="o">=</span> <span class="n">entry</span><span class="p">.</span><span class="na">getStateMachineLogEntry</span><span class="p">().</span><span class="na">getLogData</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
+        <span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">opKeyValue</span> <span class="o">=</span> <span class="n">entry</span><span class="p">.</span><span class="na">getStateMachineLogEntry</span><span class="p">().</span><span class="na">getLogData</span><span class="p">().</span><span class="na">toString</span><span class="p">(</span><span class="n">Charset</span><span class="p">.</span><span class="na">defaultCharset</span><span class="p">()).</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">);</span>
 
-        <span class="n">key2values</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">opKeyValue</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
+        <span class="kd">final</span> <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">0</span><span class="o">]+</span> <span class="s">&quot;:&quot;</span><span class="o">+</span> <span class="n">key2values</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">opKeyValue</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
 
-        <span class="kd">final</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">completedFuture</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">));</span>
+        <span class="kd">final</span> <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">Message</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">completedFuture</span><span class="p">(</span><span class="n">Message</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">result</span><span class="p">));</span>
 
         <span class="kd">final</span> <span class="n">RaftProtos</span><span class="p">.</span><span class="na">RaftPeerRole</span> <span class="n">role</span> <span class="o">=</span> <span class="n">trx</span><span class="p">.</span><span class="na">getServerRole</span><span class="p">();</span>
         <span class="n">LOG</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;{}:{} {} {}={}&quot;</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">getId</span><span class="p">(),</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span> <span class="n">opKeyValue</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">);</span>
@@ -1955,7 +1994,8 @@ Recuperado o valor associado à chave, o mesmo é colocado em um <code>Completab
 </td></tr></table>
 
 <p>Pronto, você já tem uma máquina de estados replicada, bastando agora apenas compilá-la e executá-la.
-Para compilar, de raiz do projeto digite <code>mvn package</code> seguido de enter. A primeira vez que faz isso pode demorar um pouco.
+Para compilar, de raiz do projeto execute o comando <code>mvn package</code>. 
+A primeira vez que faz isso pode demorar um pouco pois várias dependências são baixadas da Internet.
 Ao final da execução do comando você deveria ver algo semelhante ao seguinte</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1974,16 +2014,33 @@ INFO<span class="o">]</span> ---------------------------------------------------
 </td></tr></table>
 
 <p>Então, em três terminais diferentes, execute os seguintes comandos:</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p1
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p2
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p3
-java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente
+<span class="sb">````</span>
+
+Para executar o cliente, em um outro terminal, faça, por exemplo,
+
+<span class="sb">```</span>bash
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k1 testek1
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get k1
+
+java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2 testek2
 </code></pre></div>
 </td></tr></table>
 
+<p>Todo o código está disponível no <a href="https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor">Github</a></p>
 <details class="todo"><summary>Exerício</summary><ul>
 <li>Adicionar operações</li>
 <li>Passar operação como parâmetro do cliente.</li>
