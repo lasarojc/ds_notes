@@ -422,6 +422,46 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
 </li>
 </ul>
 </li>
+<li>
+<p>Etapa 2 - Tolerância a Falhas</p>
+<ul>
+<li>Objetivos <ul>
+<li>Replicar o servidor para obter tolerância a falhas.</li>
+</ul>
+</li>
+<li>Desafios<ul>
+<li>Certificar-se de que o servidor é uma máquina de estados determinística</li>
+<li>Compreender o uso de Difusão Atômica em nível teórico</li>
+<li>Compreender o uso de Difusão Atômica em nível prático (Via <a href="https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis">Ratis</a>)</li>
+<li>Aplicar difusão atômica na replicação do servidor</li>
+</ul>
+</li>
+<li>Servidor<ul>
+<li>A API permanece a mesma e implementada via gRPC.</li>
+<li>Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).<br />
+<img alt="Arquitetura Etapa 2" src="drawings/abcast.drawio-0.svg" /></li>
+<li>Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.</li>
+</ul>
+</li>
+<li>Cliente<ul>
+<li>Sem alteração.</li>
+</ul>
+</li>
+<li>Testes<ul>
+<li>O mesmo <em>framework</em> de testes deve continuar funcional</li>
+</ul>
+</li>
+<li>Comunicação<ul>
+<li>Entre cliente e servidor, usar gRPC</li>
+<li>Entre servidores, usar Ratis</li>
+</ul>
+</li>
+<li>Apresentação<ul>
+<li>Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <!--
 * Etapa 2 - P2P
@@ -435,51 +475,6 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
         * Roteamento no anel
         * Bootstrap dos processos
         * Log Structured Merge Tree -->
-
-<ul>
-<li>Etapa 2 - Tolerância a Falhas<ul>
-<li>Objetivos <ul>
-<li>Replicar o servidor para obter tolerância a falhas.</li>
-</ul>
-</li>
-<li>Desafios<ul>
-<li>Certificar-se de que o servidor é uma máquina de estados determinística</li>
-<li>Compreender o uso de Difusão Atômica em nível teórico</li>
-<li>Compreender o uso de Difusão Atômica em nível prático (Via <a href="https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis">Ratis</a>)</li>
-<li>Aplicar difusão atômica na replicação do servidor</li>
-</ul>
-</li>
-<li>
-<p>Servidor</p>
-<ul>
-<li>A API permanece a mesma e implementada via gRPC.</li>
-<li>Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).</li>
-</ul>
-<p><img alt="Arquitetura Etapa 2" src="drawings/abcast.drawio-0.svg" /></p>
-<ul>
-<li>Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.<ul>
-<li>Cliente</li>
-</ul>
-</li>
-<li>Sem alteração.<ul>
-<li>Testes</li>
-</ul>
-</li>
-<li>O mesmo <em>framework</em> de testes deve continuar funcional<ul>
-<li>Comunicação</li>
-</ul>
-</li>
-<li>Entre cliente e servidor, usar gRPC</li>
-<li>Entre servidores, usar Ratis<ul>
-<li>Apresentação</li>
-</ul>
-</li>
-<li>Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
                 
               
               
