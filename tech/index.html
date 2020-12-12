@@ -314,39 +314,6 @@
     Como sincronizar duas máquinas?
   </a>
   
-    <nav class="md-nav" aria-label="Como sincronizar duas máquinas?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#merkle-trees" class="md-nav__link">
-    Merkle Trees
-  </a>
-  
-    <nav class="md-nav" aria-label="Merkle Trees">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rabin-fingerprint" class="md-nav__link">
-    Rabin Fingerprint
-  </a>
-  
 </li>
       
         <li class="md-nav__item">
@@ -418,39 +385,6 @@
     Como sincronizar duas máquinas?
   </a>
   
-    <nav class="md-nav" aria-label="Como sincronizar duas máquinas?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#merkle-trees" class="md-nav__link">
-    Merkle Trees
-  </a>
-  
-    <nav class="md-nav" aria-label="Merkle Trees">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rabin-fingerprint" class="md-nav__link">
-    Rabin Fingerprint
-  </a>
-  
 </li>
       
         <li class="md-nav__item">
@@ -490,44 +424,49 @@
                 
                 
                 <h1 id="tecnologias">Tecnologias</h1>
+<p>O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e interessantes na área de sistemas distribuídos.</p>
 <h2 id="como-sincronizar-duas-maquinas">Como sincronizar duas máquinas?</h2>
 <ul>
-<li>Produza um hash dos arquivos</li>
-<li>Troque hashes</li>
+<li>Abordagem 1</li>
+<li>Copie os arquivos da fonte para o destino</li>
+<li>Abordagem 2</li>
+<li>Produza um hash do arquivo</li>
+<li>Troque o hash com a outra máquina</li>
 <li>Se hashes iguais, pronto.</li>
-<li>Se hashes diferentes, volte para o slide anterior.</li>
-</ul>
-<h3 id="merkle-trees">Merkle Trees</h3>
-<ul>
+<li>Se hashes diferentes, copie o arquivo para a outra máquina.</li>
+<li>Abordagem 3 - Merkle Tree</li>
 <li>Divida o arquivo em blocos de mesmo tamanho</li>
 <li>Faça um hash de cada bloco</li>
 <li>Se mais de um hash gerado, <ul>
-<li>Concatene os hashes em um arquivo</li>
-<li>Volte para o primeiro item</li>
+<li>Concatene hashes duas a duas; cada concatenação resulta em um novo bloco.<ul>
+<li>Repita o processo; os hashes resultantes correspondem a uma árvore<br />
+<img alt="By Azaghal" src="./images/merkle_tree.png" /></li>
 </ul>
 </li>
 </ul>
-<p><img alt="By Azaghal" src="./images/merkle_tree.png" /></p>
-<ul>
+</li>
 <li>Troque hashes da raiz.</li>
 <li>Se hashes iguais, pronto.</li>
-<li>Se hashes diferentes \pause compare subárvore.</li>
+<li>Se hashes diferentes troque hashes das raizes das subárvores e execute recursivamente.</li>
 </ul>
+<div class="admonition question">
 <p>Se a única mudança no arquivo foi a adição de um byte no começo do arquivo?</p>
-<h4 id="referencias">Referências</h4>
+<p>!!!todo "figura"
+     Descrever deslocamento de blocos com imagem.</p>
+</div>
 <p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Merkle Trees</a></p>
-<h2 id="rabin-fingerprint">Rabin Fingerprint</h2>
+<p>A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, , somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor.</p>
+<p>O problema desta abordagem é que não é genérico: qual o correspondente em uma imagem ou um áudio ou em um arquivo <code>tgz</code>?</p>
+<div class="admonition todo">
+<p class="admonition-title">Rabin Fingerprint</p>
 <p><a href="https://en.wikipedia.org/wiki/Rolling_hash">Rolling Hash</a></p>
+</div>
 <h2 id="blockchain">Blockchain</h2>
-<p>\subsection{Introdução}
-<script type="math/tex; mode=display">\begin{frame}{Mercado}
-    \begin{itemize}
-        \item Clientes, consumidores, fornecedores, vendedores
-        \item Bens, serviços, contratos
-        \item Mercado público (feira livre, supermercados) e Privado (supply chain)
-    \end{itemize}
-\end{frame}</script>
-</p>
+<p>Introdução</p>
+<p>Interações multipartido são complicadas de se rastrear e auditar. Por exemplo, em uma cadeia de fornecimento (<em>supply chain</em>), temos, em vários níveis, <strong>Clientes</strong>, <strong>Vendedores</strong> e <strong>Fornecedores</strong>, que estabelecem <strong>contratos</strong> de bens e serviços.
+A um consumidor seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte for feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. Essencialmente, quer saber como o bem "bananas" foi transferido de mão em mão até chegar à feira livre.</p>
+<p>Diversos outros exemplos de <strong>bem</strong> são interessantes, alguns tangíveis, como uma <strong>casa</strong> ou um <strong>carro</strong>, e outros intangíveis, como uma <strong>patente</strong> ou um <strong>empréstimo</strong>. Algunsi
+ou  uma <strong>ação</strong>.:w</p>
 <div class="arithmatex">\[\begin{frame}{Asset -- Bem}
     Tudo que tem valor e pode pertencer a alguém.
     \begin{itemize}
