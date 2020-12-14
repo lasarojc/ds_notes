@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en" class="no-js">
   <head>
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.6">
     
     
       
@@ -19,13 +18,17 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6910b76c.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.196e0c26.min.css">
+        
       
     
     
     
       
+        
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
@@ -36,8 +39,7 @@
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,7 +47,13 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -62,16 +70,18 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
       
@@ -89,27 +99,27 @@
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -124,8 +134,6 @@
     
     <div class="md-container" data-md-component="container">
       
-        
-      
       
         
       
@@ -136,12 +144,14 @@
               <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
@@ -155,7 +165,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
+    <a href=".." class="md-nav__link">
       Prólogo
     </a>
   </li>
@@ -167,7 +177,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
+    <a href="../intro/" class="md-nav__link">
       Introdução
     </a>
   </li>
@@ -179,7 +189,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
+    <a href="../basics/" class="md-nav__link">
       Fundamentos
     </a>
   </li>
@@ -191,7 +201,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
+    <a href="../comm/" class="md-nav__link">
       Comunicação
     </a>
   </li>
@@ -203,7 +213,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
+    <a href="../arch/" class="md-nav__link">
       Arquiteturas
     </a>
   </li>
@@ -215,7 +225,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
+    <a href="../coord/" class="md-nav__link">
       Coordenação
     </a>
   </li>
@@ -227,7 +237,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
+    <a href="../time/" class="md-nav__link">
       Tempo
     </a>
   </li>
@@ -239,7 +249,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
+    <a href="../fault/" class="md-nav__link">
       Tolerância a Falhas
     </a>
   </li>
@@ -251,7 +261,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
+    <a href="../disdb/" class="md-nav__link">
       Bancos de Dados
     </a>
   </li>
@@ -263,7 +273,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../disfs/index.md" title="Sistemas de Arquivos" class="md-nav__link">
+    <a href="../disfs/" class="md-nav__link">
       Sistemas de Arquivos
     </a>
   </li>
@@ -285,12 +295,10 @@
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
         Tecnologias
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
+        <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Tecnologias" class="md-nav__link md-nav__link--active">
+    <a href="./" class="md-nav__link md-nav__link--active">
       Tecnologias
     </a>
     
@@ -302,9 +310,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -321,7 +327,14 @@
     Blockchain
   </a>
   
-    <nav class="md-nav" aria-label="Blockchain">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-small-piece-of-big-data" class="md-nav__link">
+    A Small Piece of Big Data
+  </a>
+  
+    <nav class="md-nav" aria-label="A Small Piece of Big Data">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -349,7 +362,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
+    <a href="../projeto/" class="md-nav__link">
       Projeto
     </a>
   </li>
@@ -373,9 +386,7 @@
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
@@ -392,7 +403,14 @@
     Blockchain
   </a>
   
-    <nav class="md-nav" aria-label="Blockchain">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-small-piece-of-big-data" class="md-nav__link">
+    A Small Piece of Big Data
+  </a>
+  
+    <nav class="md-nav" aria-label="A Small Piece of Big Data">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -418,9 +436,6 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                
-                  
                 
                 
                 <h1 id="tecnologias">Tecnologias</h1>
@@ -462,41 +477,19 @@
 <p><a href="https://en.wikipedia.org/wiki/Rolling_hash">Rolling Hash</a></p>
 </div>
 <h2 id="blockchain">Blockchain</h2>
-<p>Introdução</p>
 <p>Interações multipartido são complicadas de se rastrear e auditar. Por exemplo, em uma cadeia de fornecimento (<em>supply chain</em>), temos, em vários níveis, <strong>Clientes</strong>, <strong>Vendedores</strong> e <strong>Fornecedores</strong>, que estabelecem <strong>contratos</strong> de bens e serviços.
 A um consumidor seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte for feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. Essencialmente, quer saber como o bem "bananas" foi transferido de mão em mão até chegar à feira livre.</p>
-<p>Diversos outros exemplos de <strong>bem</strong> são interessantes, alguns tangíveis, como uma <strong>casa</strong> ou um <strong>carro</strong>, e outros intangíveis, como uma <strong>patente</strong> ou um <strong>empréstimo</strong>. Algunsi
-ou  uma <strong>ação</strong>.:w</p>
-<div class="arithmatex">\[\begin{frame}{Asset -- Bem}
-    Tudo que tem valor e pode pertencer a alguém.
-    \begin{itemize}
-        \item Casa, empréstimo (tangível e intangível)
-        \item Patente
-        \item Ação
-        \item Dinheiro -- é anônimo
-    \end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}{Ledger}
-    Livro registro</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>\begin{itemize}
-    \item 1000 reais pagos ao funcionário F
-    \item Carro X vendido ao João por 50k
-    \item Cada entidade mantém o seu, privadamente.
-    \item Ineficiente -- retrabalho e lento
-    \item Caro -- Retrabalho
-    \item Vulnerável -- hack, erros, e modificações maliciosas
-\end{itemize}
-</code></pre></div>
-</td></tr></table>
-
-<p>\end{frame}</p>
+<p>Há diversos tipos de <strong>bens</strong>, alguns tangíveis (e.g., <strong>casa</strong>) e outros intangíveis (e.g., <strong>patente</strong>),  alguns associados a um nome (e.g., <strong>promissória</strong>) e outros ao portador (e.g., <strong>dinheiro "vivo"</strong>).
+A transferência destes bens acontece via um registro (e.g., <strong>casa</strong>, <strong>ação</strong>) ou diretamente entre os envolvidos na transação (<strong>dinheiro</strong>).
+Registros são feitos um <strong>"livro razão"</strong>.</p>
+<ul>
+<li>1000 reais pagos ao funcionário F</li>
+<li>Carro X vendido ao João por 50k</li>
+<li>Cada entidade mantém o seu, privadamente.</li>
+<li>Ineficiente -- retrabalho e lento</li>
+<li>Caro -- Retrabalho</li>
+<li>Vulnerável -- hack, erros, e modificações maliciosas</li>
+</ul>
 <div class="arithmatex">\[\begin{frame}{Blockchain}
 Ledger distribuído e centralizado
     \begin{itemize}
@@ -530,99 +523,81 @@ Primeira aplicação da blockchain
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Verificável, assinável e \emph{executável}.
 </code></pre></div>
 </td></tr></table>
-
 <p>\end{frame}</p>
 <p>\frame{}</p>
 <p><a href="https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/">https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/</a></p>
 <div class="arithmatex">\[\begin{frame}{Bitcoin}
 \includegraphics[width=\textwidth]{images/bitcoin_jun_2018}
 \end{frame}\]</div>
-<p>
-<script type="math/tex; mode=display">\begin{frame}{Bitcoin}
-\includegraphics[width=\textwidth]{images/bitcoin_dec_2018}
-\end{frame}</script>\section{A Small Piece of Big Data}</p>
-<p>\subsection{Introdução}</p>
-<p>\frame{
-    <script type="math/tex; mode=display">\begin{block}{Big-Data}
-``Big data is a term for data sets that are so large or complex that traditional data processing application software is inadequate to deal with them.''
-    \end{block}</script>
-</p>
-<p>Ciclo convencional:
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Coleta
-    \item Armazenamento
-    \item Análise
-    \item Consulta
-    \item Compartilhamento
-    \item Visualização
-    \item Atualização
-    \item ...
-\end{itemize}</script>
-</p>
-<p>\href{<a href="https://en.wikipedia.org/wiki/Big_data}{Fonte">https://en.wikipedia.org/wiki/Big_data}{Fonte</a>}
-}</p>
-<div class="arithmatex">\[\begin{frame}{Áreas}
-Grandes massas de dados:
-\begin{itemize}
-    \item Propaganda
-    \item Astronomia
-    \item Ciência
-    \item e-governos
-    \item meteorologia
-    \item \emph{genomics}
-    \item ...
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Dados}
-\begin{itemize}
-    \item Internet das coisas
-    \item sensoriamento remoto
-    \item suas fotos
-    \item logs de software
-    \item RFID
-    \item redes de sensores
-    \item ...
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{O quê?}
-    Quão grande é ``big'' o suficiente? \pause Depende dos dados, ferramentas, e capacidade de manipulá-los. \pause Uma vez dado um passo, o alvo passa a ser o próximo passo. \pause Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.
-\end{frame}\]</div>
-<p>\begin{frame}{O quê?}
-<script type="math/tex; mode=display">\begin{block}{Gartner, 2012}
-Big data is high volume, high velocity, and/or high variety information assets that require new forms of processing to enable enhanced decision making, insight discovery and process optimization.
-\end{block}</script>
-</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Volume: incapacidade de armazenar todos os dados; apenas observe e guarde conclusões
-    \item Velocidade: dados passando em ``tempo real''
-    \item Variedade: imagens, vídeos, áudio, temperatura,...
-    \pause
-    \item Machine learning para automação de extração de informação, por exemplo, detecção de padrões, sem se preocupar com o porquê dos mesmos.
-\end{itemize}</script>
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Como lidar?}
-\begin{itemize}
-    \item Bancos de dados colunares
-    \item Stream DBs
-    \item ...
-    \item \alert{MapReduce}
-\end{itemize}
-\end{frame}\]</div>
-<p>\subsection{Google FS}</p>
-<div class="arithmatex">\[\begin{frame}{Google FS}
-\begin{itemize}
-    \item Google, 2003
-    \item File System
-    \item Dados recuperados da Internet usados em consultas
-    \item Milhões de arquivos de múltiplos GB
-    \item Chunks de 64MB (``blocos do disco'')
-    \item Operações comuns são appends ou reads
-    \item Servidores/discos/memórias estão sempre falhando
-    \item Centenas de clientes concorrentes no mesmo arquivo
-\end{itemize}
-\includegraphics[width=.6\textwidth]{images/gfs3}
-\end{frame}\]</div>
+<p>\begin{frame}{Bitcoin}
+\includegraphics[width=\textwidth]{images/bitcoin_dec_2018}</p>
+<h2 id="a-small-piece-of-big-data">A Small Piece of Big Data</h2>
+<div class="admonition quote">
+<p class="admonition-title"><a href="https://en.wikipedia.org/wiki/Big_data">Big-Data</a></p>
+<p>Big data is a term for data sets that are so large or complex that traditional data processing application software is inadequate to deal with them.</p>
+</div>
+<p>Ciclo convencional:</p>
+<ul>
+<li>Coleta</li>
+<li>Armazenamento</li>
+<li>Análise</li>
+<li>Consulta</li>
+<li>Compartilhamento</li>
+<li>Visualização</li>
+<li>Atualização
+...</li>
+</ul>
+<p>Áreas</p>
+<p>Grandes massas de dados:</p>
+<ul>
+<li>Propaganda</li>
+<li>Astronomia</li>
+<li>Ciência</li>
+<li>e-governos</li>
+<li>meteorologia</li>
+<li>genomics</li>
+</ul>
+<p>Dados
+Internet das coisas
+sensoriamento remoto
+suas fotos
+logs de software
+RFID
+redes de sensores
+...</p>
+<p>Quão grande é ``big'' o suficiente? 
+Depende dos dados, ferramentas, e capacidade de manipulá-los. 
+Uma vez dado um passo, o alvo passa a ser o próximo passo. 
+Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
+<div class="admonition quote">
+<p class="admonition-title">Gartner, 2012</p>
+<p>Big data is high volume, high velocity, and/or high variety information assets that require new forms of processing to enable enhanced decision making, insight discovery and process optimization.</p>
+<ul>
+<li>Volume: incapacidade de armazenar todos os dados; apenas observe e guarde conclusões</li>
+<li>Velocidade: dados passando em ``tempo real''</li>
+<li>Variedade: imagens, vídeos, áudio, temperatura,...</li>
+<li>Machine learning para automação de extração de informação, por exemplo, detecção de padrões, sem se preocupar com o porquê dos mesmos.</li>
+</ul>
+</div>
+<p>Como lidar?</p>
+<ul>
+<li>Bancos de dados colunares</li>
+<li>Stream DBs</li>
+<li>MapReduce</li>
+<li>...</li>
+</ul>
+<p>Google FS</p>
+<ul>
+<li>Google, 2003</li>
+<li>File System</li>
+<li>Dados recuperados da Internet usados em consultas</li>
+<li>Milhões de arquivos de múltiplos GB</li>
+<li>Chunks de 64MB (``blocos do disco'')</li>
+<li>Operações comuns são appends ou reads</li>
+<li>Servidores/discos/memórias estão sempre falhando</li>
+<li>Centenas de clientes concorrentes no mesmo arquivo</li>
+</ul>
+<p>\includegraphics[width=.6\textwidth]{images/gfs3}</p>
 <p>\begin{frame}{Google FS}
 \includegraphics[width=.7\textwidth]{images/gfs2}</p>
 <div class="arithmatex">\[\begin{itemize}
@@ -1101,7 +1076,6 @@ import java.util.Properties;</p>
  System.out.println(&quot;Key = &quot; + record.key() + &quot; Value = &quot; + record.value());
 </code></pre></div>
 </td></tr></table>
-
 <p>}
   } catch (Exception ex) {
    ex.printStackTrace();
@@ -1178,7 +1152,6 @@ Problema pode ser mudado para:</p>
 * Comandante pode ser traidor.
 </code></pre></div>
 </td></tr></table>
-
 <p>Generais e Tenentes}
 Suponha 3 exércitos. \
 Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\
@@ -1195,7 +1168,6 @@ Só há solução se mais de <span class="arithmatex">\(\frac{2}{3}\)</span> dos
 * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
 </code></pre></div>
 </td></tr></table>
-
 <p>4/0}
 General manda ordens.</p>
 <p>Ausência de ordem = Retirada</p>
@@ -1214,7 +1186,6 @@ General manda ordens.</p>
 * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
 </code></pre></div>
 </td></tr></table>
-
 <p>É possível detectar inconsistências e processos bizantinos.</p>
 <p>%<a href="http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf">http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf</a>
 \section{Outros tópicos}</p>
@@ -1260,7 +1231,6 @@ Gerenciamento de Grupo/Group Membership e Comunicação em Grupo</p>
         * Atomic Multicast
 </code></pre></div>
 </td></tr></table>
-
 <p>Visão de Grupo}</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1271,7 +1241,6 @@ Gerenciamento de Grupo/Group Membership e Comunicação em Grupo</p>
 * Entrada e saída de processos muda a visão.
 </code></pre></div>
 </td></tr></table>
-
 <p>Eventos}</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1280,7 +1249,6 @@ Gerenciamento de Grupo/Group Membership e Comunicação em Grupo</p>
 * Checkpoint
 </code></pre></div>
 </td></tr></table>
-
 <p>Visões}
 \includegraphics[width=.7\textwidth]{images/vc}</p>
 <p>Fonte: \href{<a href="https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul">https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul</a> Krzyzanowski}</p>
@@ -1295,7 +1263,6 @@ Deve satisfazer</p>
 * Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.
 </code></pre></div>
 </td></tr></table>
-
 <p>A troca de Visão é uma barreira.</p>
 <p>ISIS Toolkit}
     Sistema de Sincronismo Virtual tolerante a falhas desenvolvido por Ken Birman, Cornell University (\url{<a href="http://www.cs.cornell.edu/Info/Projects/Isis/">http://www.cs.cornell.edu/Info/Projects/Isis/</a>})\
@@ -1315,7 +1282,6 @@ Deve satisfazer</p>
 * Totem, ISIS, Horus, Transis (Partições), \alert{Spread}, \alert{Ensamble}, \alert{JGroups}, Appia, QuickSilver, vSynch (née ISIS 2)
 </code></pre></div>
 </td></tr></table>
-
 <p>Difusão Totalmente Ordenada}</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1332,7 +1298,6 @@ Deve satisfazer</p>
 * Validade: Somente mensagens difundidas são entregues.
 </code></pre></div>
 </td></tr></table>
-
 <p>E se mandarmos mensagens do tipo ``A partir da entrega desta mensagem, o grupo de processos é <span class="arithmatex">\(G\)</span>.''</p>
 <p>Sincronismo Virtual}
 Deve satisfazer</p>
@@ -1365,7 +1330,6 @@ Se um processo não recebe uma mensagem comum que foi entregue pelos outros, ent
 Caso contrário, não haveria porquê trocar os processos
 </code></pre></div>
 </td></tr></table>
-
 <p>State Transfer}
 \includegraphics[width=.7\textwidth]{images/state_transfer}</p>
 <p>\href{<a href="http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building">http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building</a> Secure and Reliable Network Applications}</p>
@@ -1401,22 +1365,22 @@ E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões indep
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../disdb/" title="Bancos de Dados" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../disfs/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Bancos de Dados
+                Sistemas de Arquivos
               </div>
             </div>
           </a>
         
         
-          <a href="../projeto/" title="Projeto" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../projeto/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
@@ -1426,7 +1390,7 @@ E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões indep
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -1449,15 +1413,15 @@ E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões indep
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.fd16492e.min.js"></script>
+      <script src="../assets/javascripts/bundle.7836ba4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
