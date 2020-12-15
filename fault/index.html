@@ -1115,7 +1115,7 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 Um processo que não é defeituoso é um processo correto.</p>
 <p><strong>É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong><sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">6</a></sup>.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
-Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, Raft e <a href="http://paxos.systems/index.html">Paxos</a></p>
+Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, <a href="https://raft.github.io/">Raft</a> e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
 <h3 id="detectores-de-defeitos-de-defeito-nao-confiaveis">Detectores de Defeitos de Defeito não Confiáveis</h3>

@@ -1160,8 +1160,7 @@ No algoritmo seguinte, permitimos que os processos conheçam seus identificadore
 <p>Este algoritmo envia até <span class="arithmatex">\(n^2\)</span> mensagens, se todos iniciarem a eleição ao mesmo tempo, e as mensagens crescem até o tamanho <span class="arithmatex">\(n\)</span>.
 O algoritmo de Chang e Robert<sup id="fnref:changrobert"><a class="footnote-ref" href="#fn:changrobert">2</a></sup> limita o tamanho das mensagens ao pré-selecionar candidatos viáveis.</p>
 <div class="admonition note">
-<p class="admonition-title">Algoritmo de Chang e Robert</p>
-<ul>
+<p class="admonition-title">Algoritmo de Chang e Robert<ul>
 <li>Organize os nós em um anel lógico</li>
 <li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto:<ul>
 <li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita</li>
@@ -1176,13 +1175,10 @@ O algoritmo de Chang e Robert<sup id="fnref:changrobert"><a class="footnote-ref"
 <li>Envia <span class="arithmatex">\((q)\)</span> para a direita.</li>
 </ul>
 </li>
-<li>Senão e se <span class="arithmatex">\(q &lt; p\)</span> <ul>
-<li>Envia <span class="arithmatex">\((p)\)</span> para a direita.</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+</p>
 </div>
 <p>Neste algoritmo, todas as mensagens tem tamanho <span class="arithmatex">\(O(1)\)</span> e somente uma mensagem dá uma volta completa do anel; todas as outras são descartadas no meio do caminho.
 Apesar disso, pode-se demonstrar que o pior caso em termos de número de mensagens do algoritmo até que alguém se declare líder é <span class="arithmatex">\(O(n^2)\)</span>.</p>
@@ -1200,18 +1196,19 @@ Ele faz isso em rodadas, comparando identificadores com outros processos ativos 
 <ul>
 <li>Organize os nós em um anel lógico</li>
 <li>Ativo <span class="arithmatex">\(\gets 1\)</span></li>
-<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto:<ul>
+<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto e se Ativo$ = 1$:<ul>
 <li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
 </ul>
 </li>
-<li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(q\)</span> e <span class="arithmatex">\(r\)</span>, uma de cada lado:<ul>
+<li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>, da esquerda e da direita, respectivamente:<ul>
 <li>Se Ativo <span class="arithmatex">\(=1\)</span><ul>
-<li>Se <span class="arithmatex">\(max(q,r) &lt; p\)</span><ul>
-<li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
+<li>Se <span class="arithmatex">\(max(e,d) &lt; p\)</span><ul>
+<li>Envia mensagem <span class="arithmatex">\(p\)</span> à direita e à esquerda</li>
 </ul>
 </li>
 <li>Se <span class="arithmatex">\(max(q,r) &gt; p\)</span><ul>
 <li>Ativo <span class="arithmatex">\(\gets 0\)</span></li>
+<li>Envia mensagem <span class="arithmatex">\(-p\)</span> à direita e à esquerda</li>
 </ul>
 </li>
 <li>Se <span class="arithmatex">\(max(q,r) = p\)</span><ul>
@@ -1231,7 +1228,7 @@ Ele faz isso em rodadas, comparando identificadores com outros processos ativos 
 <p>No exemplo na figura, os nós brancos são ativos e os amarelos inativos. 
 Observe o papel do nó no centro, supondo que tem o maior identificador entre todos os processos. 
 Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
-Na segunda rodada, as mensagens são repassadas para os vizihos dos vizinhos, que também se inativam.</p>
+Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, que também se inativam.</p>
 <p><img alt="Algoritmo de Franklin" src="drawings/leaderelection.drawio-0.svg" /></p>
 <p>Observe o seguinte:</p>
 <ul>
