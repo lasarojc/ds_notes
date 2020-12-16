@@ -941,7 +941,7 @@ Assim, se C1 foi enviado antes de C2, C1 tem um <em>timestamp</em> menor que C2 
 Parcialmente, pois ainda temos o problema de identificar que nenhuma outra mensagem ainda por ser entregue foi enviada antes. 
 Para isto, precisamos estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span class="arithmatex">\(\tau\)</span>, é finito.
 Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span>, uma réplica espera até <span class="arithmatex">\(t + \tau\)</span> antes de executá-lo, pois qualquer comando com <em>timestamp</em> <span class="arithmatex">\(t' &lt; t\)</span> deve ter sido entregue até <span class="arithmatex">\(t+\tau\)</span>.</p>
-<p><img alt="Ordenação" src="images/ordenacao1.png" /></p>
+<p><img alt="Ordenação" src="drawings/tau.drawio-0.svg" /></p>
 <p>Implementar este protocolo é muito simples:</p>
 <div class="admonition example">
 <p class="admonition-title">Ordenação de Mensagens por Timestamp</p>
@@ -949,7 +949,7 @@ Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span
 <ul>
 <li>Quando enviar uma mensagem, aumente-a com o valor atual do relógio.</li>
 <li>Quando receber uma mensagem, coloque-a em uma fila ordenada por <em>timestamp</em>.</li>
-<li>Quando o relógio marcar um tempo maior que <span class="arithmatex">\(t + \tau\)</span>, onde <span class="arithmatex">\(t\)</span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça e da fila e execute o comando correspondente.</li>
+<li>Quando o relógio marcar um tempo maior que <span class="arithmatex">\(t + \tau\)</span>, onde <span class="arithmatex">\(t\)</span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça da fila e execute o comando correspondente.</li>
 </ul>
 <p>Embora correto, este protocolo, ou melhor, o modelo, não leva em consideração a dessincronização inerente dos relógios em um sistema distribuído. 
 Como fazê-lo, supondo uma divergência máxima de <span class="arithmatex">\(\Delta\)</span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span class="arithmatex">\(\frac{\Delta}{2*\rho}\)</span>.</p>
@@ -958,7 +958,7 @@ Tal mensagem pode demorar até <span class="arithmatex">\(\tau\)</span> para ser
 <p>Se a réplica estiver sincronizada com cliente, então se esperar até <span class="arithmatex">\(t + \tau + \Delta\)</span> para executar o comando, o fará de forma segura. 
 Se estiver atrasada em relação ao primeiro cliente, então acabará por esperar além do necessário, mas sem violar a corretude do sistema.</p>
 <p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará <span class="arithmatex">\(t + \tau + \Delta\)</span> antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span> é o instante em que o relógio da réplica marcar <span class="arithmatex">\(t + \Delta\)</span>, e portanto deverá também ser recebido até que o mesmo relógio marque <span class="arithmatex">\(t + \tau + \Delta\)</span>. </p>
-<p><img alt="Ordenação" src="images/ordenacao2.png" /></p>
+<p><img alt="Ordenação" src="drawings/tau.drawio-1.svg" /></p>
 <p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span class="arithmatex">\(\Delta\)</span> é o máximo de dessincronismo entre os relógios. 
 O seguinte protocolo resolve este problema:</p>
 <div class="admonition example">
