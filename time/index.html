@@ -945,12 +945,12 @@ Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span
 <p>Implementar este protocolo é muito simples:</p>
 <div class="admonition example">
 <p class="admonition-title">Ordenação de Mensagens por Timestamp</p>
-</div>
 <ul>
 <li>Quando enviar uma mensagem, aumente-a com o valor atual do relógio.</li>
 <li>Quando receber uma mensagem, coloque-a em uma fila ordenada por <em>timestamp</em>.</li>
 <li>Quando o relógio marcar um tempo maior que <span class="arithmatex">\(t + \tau\)</span>, onde <span class="arithmatex">\(t\)</span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça da fila e execute o comando correspondente.</li>
 </ul>
+</div>
 <p>Embora correto, este protocolo, ou melhor, o modelo, não leva em consideração a dessincronização inerente dos relógios em um sistema distribuído. 
 Como fazê-lo, supondo uma divergência máxima de <span class="arithmatex">\(\Delta\)</span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span class="arithmatex">\(\frac{\Delta}{2*\rho}\)</span>.</p>
 <p>Se <span class="arithmatex">\(\Delta\)</span> é a diferença máxima entre relógios, então se uma mensagem é enviada no instante <span class="arithmatex">\(t\)</span>, então até <span class="arithmatex">\(\Delta +t\)</span>, outro processo, atrasado em relação ao primeiro, poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span>. 
