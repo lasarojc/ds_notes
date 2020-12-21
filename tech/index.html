@@ -317,6 +317,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rabin-fingerprinting" class="md-nav__link">
+    Rabin Fingerprinting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#blockchain" class="md-nav__link">
     Blockchain
   </a>
@@ -328,18 +335,12 @@
     A Small Piece of Big Data
   </a>
   
-    <nav class="md-nav" aria-label="A Small Piece of Big Data">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#estudo-de-caso-kafka" class="md-nav__link">
+    Estudo de caso: Kafka
+  </a>
   
 </li>
       
@@ -395,6 +396,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rabin-fingerprinting" class="md-nav__link">
+    Rabin Fingerprinting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#blockchain" class="md-nav__link">
     Blockchain
   </a>
@@ -406,18 +414,12 @@
     A Small Piece of Big Data
   </a>
   
-    <nav class="md-nav" aria-label="A Small Piece of Big Data">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#estudo-de-caso-kafka" class="md-nav__link">
+    Estudo de caso: Kafka
+  </a>
   
 </li>
       
@@ -438,99 +440,74 @@
                 
                 
                 <h1 id="tecnologias">Tecnologias</h1>
-<p>O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e interessantes na área de sistemas distribuídos.</p>
+<p>O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e interessantes na área de sistemas distribuídos. Não espere então que as várias seções sejam conexas umas com as outras.</p>
 <h2 id="como-sincronizar-duas-maquinas">Como sincronizar duas máquinas?</h2>
 <ul>
-<li>Abordagem 1</li>
+<li>Abordagem 1<ul>
 <li>Copie os arquivos da fonte para o destino</li>
-<li>Abordagem 2</li>
+</ul>
+</li>
+<li>Abordagem 2<ul>
 <li>Produza um hash do arquivo</li>
 <li>Troque o hash com a outra máquina</li>
 <li>Se hashes iguais, pronto.</li>
 <li>Se hashes diferentes, copie o arquivo para a outra máquina.</li>
-<li>Abordagem 3 - Merkle Tree</li>
+</ul>
+</li>
+<li>Abordagem 3 - Merkle Tree<sup id="fnref:madsmt"><a class="footnote-ref" href="#fn:madsmt">1</a></sup><ul>
 <li>Divida o arquivo em blocos de mesmo tamanho</li>
 <li>Faça um hash de cada bloco</li>
 <li>Se mais de um hash gerado, <ul>
-<li>Concatene hashes duas a duas; cada concatenação resulta em um novo bloco.<ul>
+<li>Concatene hashes duas a duas; cada concatenação resulta em um novo bloco.</li>
 <li>Repita o processo; os hashes resultantes correspondem a uma árvore<br />
-<img alt="By Azaghal" src="./images/merkle_tree.png" /></li>
+<img alt="Merkle Tree" src="drawings/merkle.drawio-0.svg" /></li>
 </ul>
 </li>
-</ul>
-</li>
-<li>Troque hashes da raiz.</li>
+<li>Troque hashes da raiz.<ul>
 <li>Se hashes iguais, pronto.</li>
-<li>Se hashes diferentes troque hashes das raizes das subárvores e execute recursivamente.</li>
+<li>Se hashes diferentes troque hashes das raizes das subárvores e execute recursivamente.
+<img alt="Merkle Tree" src="drawings/merkle.drawio-1.svg" /></li>
 </ul>
-<div class="admonition question">
-<p>Se a única mudança no arquivo foi a adição de um byte no começo do arquivo?</p>
-<p>!!!todo "figura"
-     Descrever deslocamento de blocos com imagem.</p>
-</div>
-<p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Merkle Trees</a></p>
-<p>A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, , somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor.</p>
-<p>O problema desta abordagem é que não é genérico: qual o correspondente em uma imagem ou um áudio ou em um arquivo <code>tgz</code>?</p>
+</li>
+</ul>
+</li>
+</ul>
+<details class="question"><summary>Se um byte é adicionado no meio do arquivo?</summary><p><img alt="Merkle Tree" src="drawings/merkle.drawio-2.svg" /></p>
+</details>
+<p>A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, , somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor. Mas esta abordagem não é genérica, pois qual o correspondente em uma imagem ou um áudio ou em um arquivo <code>tgz</code>?</p>
+<h2 id="rabin-fingerprinting">Rabin Fingerprinting</h2>
 <div class="admonition todo">
 <p class="admonition-title">Rabin Fingerprint</p>
 <p><a href="https://en.wikipedia.org/wiki/Rolling_hash">Rolling Hash</a></p>
 </div>
 <h2 id="blockchain">Blockchain</h2>
-<p>Interações multipartido são complicadas de se rastrear e auditar. Por exemplo, em uma cadeia de fornecimento (<em>supply chain</em>), temos, em vários níveis, <strong>Clientes</strong>, <strong>Vendedores</strong> e <strong>Fornecedores</strong>, que estabelecem <strong>contratos</strong> de bens e serviços.
-A um consumidor seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte for feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. Essencialmente, quer saber como o bem "bananas" foi transferido de mão em mão até chegar à feira livre.</p>
-<p>Há diversos tipos de <strong>bens</strong>, alguns tangíveis (e.g., <strong>casa</strong>) e outros intangíveis (e.g., <strong>patente</strong>),  alguns associados a um nome (e.g., <strong>promissória</strong>) e outros ao portador (e.g., <strong>dinheiro "vivo"</strong>).
-A transferência destes bens acontece via um registro (e.g., <strong>casa</strong>, <strong>ação</strong>) ou diretamente entre os envolvidos na transação (<strong>dinheiro</strong>).
-Registros são feitos um <strong>"livro razão"</strong>.</p>
+<p>Uma cadeia de fornecimento (<em>supply chain</em>), temos, em vários níveis, <strong>Clientes</strong>, <strong>Vendedores</strong> e <strong>Fornecedores</strong>, que estabelecem <strong>contratos</strong> de bens e serviços.
+A um consumidor seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte foi feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. Essencialmente, seria interessante rastrear como o bem "bananas" foi transferido de mão em mão até chegar à feira livre. 
+Há diversos tipos de <strong>bens</strong>, tangíveis (e.g., <strong>casa</strong>) e intangíveis (e.g., <strong>patente</strong>),  nominais (e.g., <strong>promissória</strong>) e ao portador (e.g., <strong>dinheiro "vivo"</strong>), etc.</p>
+<p>As interações multipartido podem ser registradas em <strong>livros razão</strong> mantidos pelos independentemente pelos participantes, registrando cada troca bens envolvendo o participante responsável.
+Esta abordagem <strong>dificilmente permitiria aos participantes ou auditores reconstruir todo o trajeto</strong>, que dirá um consumidor na ponta, além ser <strong>suscetível a modificações</strong>, intencionais ou não.</p>
+<p><strong><em>Blockchains</em></strong> provêem um "livro razão" <strong>incorruptível</strong>, <strong>decentralizado</strong> e "facilmente" auditável.
+Desde que Nakamoto introduziu a primeira <em>blockchain</em><sup id="fnref:nakamoto"><a class="footnote-ref" href="#fn:nakamoto">2</a></sup>, destinada a "rastrear" a troca de uma moeda digital, a <a href="https://bitcoin.org">bitcoin</a>, <a href="https://medium.com/wikidlt/a-complete-list-of-blockchain-platforms-2020-49cf01ee6688">diversas outras <em>blockchains</em></a> foram desenvolvidas, para diferentes usos e com diferentes funcionalidades.</p>
+<p>Algumas características comuns, ou pelo menos desejáveis, das <em>blockchains</em> são</p>
 <ul>
-<li>1000 reais pagos ao funcionário F</li>
-<li>Carro X vendido ao João por 50k</li>
-<li>Cada entidade mantém o seu, privadamente.</li>
-<li>Ineficiente -- retrabalho e lento</li>
-<li>Caro -- Retrabalho</li>
-<li>Vulnerável -- hack, erros, e modificações maliciosas</li>
+<li>Decentralizado - Replicado usando P2P e não facilmente subjugável. (Hyperledger, da IBM, não é.)</li>
+<li>Consenso - acordo na transação</li>
+<li>Proveniência - todo o histórico de um bem é mantido na <em>blockchain</em></li>
+<li>Imutabilidade - entradas não podem ser alteradas</li>
+<li>Finalidade - entradas não podem ser refutadas</li>
 </ul>
-<div class="arithmatex">\[\begin{frame}{Blockchain}
-Ledger distribuído e centralizado
-    \begin{itemize}
-        \item Replicado usando P2P
-        \item Só envolvidos tem acesso ao registro
-        \item Consenso -- acordo na transação
-        \item Proveniência -- todo o histórico de um asset é mantido na blockchain.
-        \item Imutabilidade -- entradas não podem ser alteradas
-        \item Finalidade -- entradas não podem ser refutadas
-    \end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Bitcoin}
-Primeira aplicação da blockchain
-\begin{itemize}
-    \item Bitcoin
-    \begin{itemize}
-        \item Moeda é o asset
-        \item Anonimidade
-        \item Proof of work
-    \end{itemize}
-    \item Negócios  
-    \begin{itemize}
-        \item Qualquer coisa é asset
-        \item Identificação das partes
-        \item Selective endorsement
-    \end{itemize}
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}{Smart Contracts}
-    Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>Verificável, assinável e \emph{executável}.
-</code></pre></div>
-</td></tr></table>
-
-<p>\end{frame}</p>
-<p>\frame{}</p>
-<p><a href="https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/">https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/</a></p>
-<div class="arithmatex">\[\begin{frame}{Bitcoin}
-\includegraphics[width=\textwidth]{images/bitcoin_jun_2018}
-\end{frame}\]</div>
-<p>\begin{frame}{Bitcoin}
-\includegraphics[width=\textwidth]{images/bitcoin_dec_2018}</p>
+<p>Além disso, no mundo dos negócios, é interessante que possa usar a <strong>blockchain</strong> para diferentes tipos de bens (na <em>bitcoin</em>, só a <em>bitcoin</em>), que as partes sejam <strong>identificáveis</strong> (na <em>bitcoin</em>, os usuários são anônimos), e que não gaste muito energia (<em>bitcoin</em> usa <em>proof-of-work</em>, que gasta muita, muita energia).</p>
+<p>Vejamos um <a href="https://andersbrownworth.com/blockchain/">exemplo de como uma blockchain funciona</a>.</p>
+<p>Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."</p>
+<p>Se quiser saber mais, consulte esta pequena <a href="https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/">lista</a> artigos sobre <em>blockchain</em>.</p>
+<p><img alt="" src="images/bitcoin_jun_2018.png" /></p>
+<details class="todo"><summary>Todo</summary><ul>
+<li>Smart-contracts</li>
+<li>proof-of-stake</li>
+<li>grupos pequenos como certificadores.</li>
+</ul>
+</details>
+<hr />
 <h2 id="a-small-piece-of-big-data">A Small Piece of Big Data</h2>
 <div class="admonition quote">
 <p class="admonition-title"><a href="https://en.wikipedia.org/wiki/Big_data">Big-Data</a></p>
@@ -597,720 +574,141 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Servidores/discos/memórias estão sempre falhando</li>
 <li>Centenas de clientes concorrentes no mesmo arquivo</li>
 </ul>
-<p>\includegraphics[width=.6\textwidth]{images/gfs3}</p>
-<p>\begin{frame}{Google FS}
-\includegraphics[width=.7\textwidth]{images/gfs2}</p>
-<div class="arithmatex">\[\begin{itemize}
-\item Clusters de nós ``comuns''
-\item Master node: metadata
-\item Chunk servers: data
-\item Permite usar um cluster como um único HD elástico na rede.
-\end{itemize}\]</div>
-<p>\href{<a href="https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html}{Fonte">https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html}{Fonte</a>}
-\end{frame}</p>
-<p>\begin{frame}{Google FS}
-\includegraphics[width=.7\textwidth]{images/gfs5}</p>
-<div class="arithmatex">\[\begin{itemize}
-    \item Apps recebem \emph{leases} de acesso direto aos dados
-    \item Atomic commitment garante consistência entre réplicas
-\end{itemize}\]</div>
-<p>\href{<a href="http://google-file-system.wikispaces.asu.edu/}{Fonte">http://google-file-system.wikispaces.asu.edu/}{Fonte</a>}
-\end{frame}</p>
-<p>\begin{frame}[fragile,allowframebreaks]{Google FS: Consistência }
-\includegraphics[width=\textwidth]{images/gfs6}</p>
-<p>\framebreak
-<script type="math/tex; mode=display">\begin{enumerate}
-\item Application sends the file name and data to the GFS client.
-\item GFS Client send the file name and chunk index to master
-\item Master sends the identity of the primary and other secondary replicas to the client.
-\item Client caches this information. Client contacts master again only when primary is unreachable or it sends a reply saying it does not holds the lease anymore.
-\item Considering the network topology the client sends the data to all the replicas.This improves performance. GFS separates data flow from the control flow. Replicas store the data in their LRU buffers till it is used.
-\item After all replicas receiving of the data, client sends write request to the primary. Primary decides the mutation order. It applies this order to its local copy.
-\item Primary sends the write request to all the secondary replicas. They perform write according to serial order decided by the primary.
-\item After completing the operation all secondary acknowledge primary.
-\item Primary replies the client about completion of the operation. In case of the errors that is when some of the secondary fail to write client request is supposed to be fail.This leaves modified chunk inconsistent. \item Client handles this by retrying the failed mutation. 
-\end{enumerate}</script>
-</p>
-<p>\href{<a href="http://google-file-system.wikispaces.asu.edu/}{Fonte">http://google-file-system.wikispaces.asu.edu/}{Fonte</a>}
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Map Reduce}
-\begin{itemize}
-    \item Google, 2004
-    \item Processamento distribuído
-    \item Processa arquivos no Google FS
-\end{itemize}
-\includegraphics[width=.6\textwidth]{images/gfs4}
-\end{frame}\]</div>
-<p>\frame{\alert{leases?}}</p>
-<div class="arithmatex">\[\begin{frame}{Chubby}
-    \begin{itemize}
-        \item Google, 2006
-    \end{itemize}
-    \includegraphics[width=.6\textwidth]{images/chubby1}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Hadoop}
-\begin{itemize}
-    \item HDFS: Hadoop Distributed File System
-    \item Map Reduce
-    \item Yahoo!
-    \item Open source em 2011, 1.0.0
-    \item 2012, 2.0.0,
-    \item 2017, 3.0.0
-    \item nov 2018, 2.9.2
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Hadoop Ecosystem}
-\begin{itemize}
-    \item Hive: data warehouse
-    \item Spark: 
-    \item Kafka
-    \item Yarn
-    \item Pig: linguagem para especificação de data flow.
-    \item HBase: banco de dados estruturado
-    \item Sqoop
-    \item Flume
-    \item Oozie
-    \item Avro: serialização
-    \item Mahout: machine learning
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{HDFS}
-\begin{itemize}
-    \item Distribuído
-    \item Escalável
-    \item Cost effective
-    \item Tolerante a falhas
-    \item Alta vazão
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Arquitetura}
-\begin{itemize}
-    \item Rack e rack failure
-    \item Top of rack switch
-    \item Core switch
-    \item Name Node: nomes das pastas e arquivos
-    \item Data Node: conteúdo dos arquivos
-    \item Cliente
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Arquitetura}
-\begin{itemize}
-    \item Crie arquivo: cliente -&gt; name node
-    \item Escreva um block (e.g., 128MB): cliente
-    \item Aloque block: cliente -&gt; name node
-    \item Salve os dados: cliente -&gt; data node
-    \item Heartbeat block report: data node -&gt; name node
-    \item Dados são replicados (RF configurado por arquivo): Data node -&gt; data node
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}{Name node}
-Dados em memory e edit log.</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Name node é um SPOF? 
-    \item Quorum Journal Manager replica edit log.
-    \item Standby Name Node
-    \item Zookeeper usado para decidir quem é o líder
-    \item Secondary Name Node replica checkpoint da imagem em memória.
-\end{itemize}</script>
-\end{frame}</p>
-<p>\subsection{MapReduce}
-<script type="math/tex; mode=display">\begin{frame}{MapReduce}
-    \begin{itemize}
-        \item Programação funcional
-        \item Map: (map length (() (a) (a b c)) = (0 1 3))
-        \item Fold/Reduce: (reduce + (1 2 3)) = 6
-    \end{itemize}
-\end{frame}</script>
-</p>
-<div class="arithmatex">\[\begin{frame}{MapReduce}
-    \begin{itemize}
-        \item Não há dependência entre os dados
-        \item Dados divididos em \emph{shards}
-        \item Execução paralela e distribuída
-        \item Trabalhador recebe um shard
-        \item Mestre agrega valores
-        \item Milhares de processos
-        \item Petabytes de dados
-    \end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{MapReduce}
-    \begin{itemize}
-        \item Shards são arquivos do GFS/HDFS/EC2
-        \item Função mapeada a cada shard
-        \item Resultado é lista de chaves e valores
-        \item Agregação acontece por chaves
-        \item Resultado são arquivos no GFS/HDFS/EC2
-    \end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{MapReduce}
-    \includegraphics[width=.8\textwidth]{images/mapreduce1}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{MapReduce}
-    \includegraphics[width=.8\textwidth]{images/mapreduce2}
-\end{frame}\]</div>
-<p>\subsection{Laboratório}</p>
-<p>\begin{frame}[fragile]{Exemplo}
-\begin{lstlisting}[language=java]
-import ...</p>
-<p>public class WordCount 
-{
- public static class TokenizerMapper 
- extends Mapper<Object, Text, Text, IntWritable>
- {
-  private final static IntWritable one = new IntWritable(1);
-  private Text word = new Text();</p>
-<p>public void map(Object key, Text value, Context context) 
-   throws IOException, InterruptedException 
-  {
-   StringTokenizer itr = new StringTokenizer(value.toString());
-   while (itr.hasMoreTokens()) 
-   {
-    word.set(itr.nextToken());
-    context.write(word, one);
-   }
-  } 
- }
-...
-\end{lstlisting}
-\end{frame}</p>
-<p>\begin{frame}[fragile]{Exemplo}
-\begin{lstlisting}[language=java]
-...
- public static class IntSumReducer 
-  extends Reducer<Text,IntWritable,Text,IntWritable> 
- { 
-  private IntWritable result = new IntWritable();
-  public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException 
-  {
-   int sum = 0;
-   for (IntWritable val : values) 
-    sum += val.get();
-   result.set(sum);
-   context.write(key, result);
-  }
- }</p>
-<p>public static void main(String[] args) throws Exception 
- {
-  ...
- }
-}</p>
-<p>\end{lstlisting}
-\href{<a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0}{Fonte">https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0}{Fonte</a>}
-\end{frame}</p>
-<p>\frame{\url{<a href="https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v">https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v</a>}}</p>
-<p>\section{Estudo de caso: Kafka}</p>
-<p>\subsection{Introdução}</p>
-<div class="arithmatex">\[\begin{frame}
-\includegraphics[width=\textwidth]{images/kafka0}
-\end{frame}\]</div>
-<p>\begin{frame}{Apache Kafka}</p>
-<p>``Kafka is a distributed streaming platform.''</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item LinkedIn
-    \item OpenSource em 2011
-    \item Projeto Apache em ????
-\end{itemize}</script>
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{O quê?}
-\includegraphics[width=.6\textwidth]{images/kafka1}
-\end{frame}\]</div>
-<p>\begin{frame}{Usos}
-\includegraphics[width=\textwidth]{images/kafka2}</p>
-<p>\pause record ~= message</p>
-<p>\pause
-<script type="math/tex; mode=display">\begin{block}{Enterprise Messaging System}
-    Producers x Message Broker x Consumers
-\end{block}</script>
-\end{frame}</p>
-<p>\begin{frame}{Componentes}
-\includegraphics[width=\textwidth]{images/kafka3}</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Produtores: enviam dados/mensagens/records (array de bytes)
-    \item Consumidores: recebem dados
-    \item Cluster/Broker: distribuído e tolerantes a falhas.
-    \item Conectores: integração simplificada com outras aplicações 
-    \item Stream processors: spark ou outros frameworks; transformam dados
-\end{itemize}</script>
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Apache Kafka}
-\begin{itemize}
-    \item Brokers
-    \item Cluster de brokers
-    \item Distribuído
-    \item Tolerante a falhas
-    \item Desacoplamento espacial
-    \item Desacoplamento temporal
-    \item Tópicos, não endereços
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Tópicos}
-\begin{itemize}
-    \item Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
-    \item Quantidade pode ser imensa.
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Partição}
-\begin{itemize}
-    \item Subdivisões de tópicos
-    \item Número de partições é definido por usuário
-    \item Cada partição está associada a um único servidor
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}{Offset}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Índice de uma mensagem em uma partição
-    \item Índices atribuídos na ordem de chegada
-    \item Offsets são locais às partições
-    \item Mensagens são unicamente identificadas por (tópico, partição, índice)
-\end{itemize}</script>
-</p>
-<p>\includegraphics[width=.6\textwidth]{images/kafka4}</p>
-<p>\end{frame}</p>
-<p>\begin{frame}{Consumer group}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Carga pode ser muito grande para um consumidor
-    \item Compartilham o processamento de um tópico
-    \item Cada mensagem é processada por um membro do grupo
-    \item A mesma mensagem pode ser processada por múltiplos grupos
-    \item Número de consumidores <span class="arithmatex">\(\leq\)</span> partições no tópico
-    \item Máximo de dois consumidores por partição (mantem pos. de cada um)
-\end{itemize}</script>
-</p>
-<p>\includegraphics[width=.6\textwidth]{images/kafka5}
-\end{frame}</p>
-<p>\subsection{Quickstart}</p>
-<p>\begin{frame}{Baixar e Executar}
-Siga o tutorial em \url{<a href="http://kafka.apache.org/quickstart">http://kafka.apache.org/quickstart</a>}, até o passo 5.</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Baixe e descompacte
-    \item Rode o zookeeper (Terminal 1)
-    \item Rode o Kafka (Terminal 2)
-    \item Crie um tópico (Terminal 3)\\
-        Mais de uma partição em um servidor
-    \item \alert{Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?}
-    \item Liste os tópicos criados
-    \item Envie algumas mensagens
-    \item Inicie um consumidor (Terminal 4)
-\end{itemize}</script>
-\end{frame}</p>
-<p>\subsection{Tolerância a Falhas}
-<script type="math/tex; mode=display">\begin{frame}{O quê?}
-Manter dados/serviços disponíveis a despeito de falhas.
-\end{frame}</script>
-</p>
-<div class="arithmatex">\[\begin{frame}{Replicação}
-No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Líder e Seguidor}
-\begin{itemize}
-    \item Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
-    \item Consumidor conversa com líder. Líder envia dados ao consumidor.
-    \item Líder replica dados para seguidores.
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}{Replicar}
-Passo 6  ensina a criar um sistema com múltiplos brokers.</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Identificador
-    \item Porta (mesmo servidor)
-    \item \alert{Log directory}
-\end{itemize}</script>
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Replicar}
-\begin{itemize}
-    \item Crie um novo tópico, com RF = 3 e duas partições
-    \item \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic &lt;topico&gt;|
-    \item Lista de réplicas
-    \item Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Zookeeper}
-\begin{itemize}
-    \item Permite que nós do cluster se descubram
-    \item Elege líder
-\end{itemize}
-\end{frame}\]</div>
-<div class="arithmatex">\[\begin{frame}{Armazenamento}
-\begin{itemize}
-    \item Dado deve ser removido depois de um tempo de ``retenção''
-    \item Pode definir retenção por tamanho (por partição, não tópico)
-\end{itemize}
-\end{frame}\]</div>
-<p>\subsection{Produtor}</p>
-<div class="arithmatex">\[\begin{frame}{Produtor}
-\begin{itemize}
-    \item Produtor envia mensagens para os brokers
-    \item Producer API
-    \item \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}[fragile]{SimpleProducer.java}
-\begin{lstlisting}[language=Java]
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import java.util.Properties;</p>
-<p>public class SimpleProducer {
- public static void main(String[] args) {
-  String topicName = "SimpleProducerTopic";
-  String key = "Chave";
-  String value = "Valor";
-  Properties props = new Properties();
-  props.put("bootstrap.servers", "localhost:9092, localhost:9093");
-  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");</p>
-<p>Producer<String, String> producer = new KafkaProducer<String, String>(props);</p>
-<p>ProducerRecord<String, String> record = new ProducerRecord<String, String>(topicName, key, value);</p>
-<p>producer.send(record);
-  producer.close();</p>
-<p>System.out.println("SimpleProducer Completed.");
- }
-}</p>
-<p>\end{lstlisting}
-\end{frame}</p>
-<p>\begin{frame}{Workflow}
-\includegraphics[width=.8\textwidth]{images/kafka6}</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Particionador default
-    \begin{itemize}
-        \item Partition
-        \item Hash da ``chave''
-        \item Round robin
-    \end{itemize}</script>
-    \item Retry automático
-\end{itemize}
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Fire and Forget}
-Envia a mensagem e não se importa com o resultado.
-\end{frame}\]</div>
-<p>\begin{frame}[fragile]{Synchronous Call}
-Envia a mensagem e espera para saber se foi entregue ou não.</p>
-<p>
-<script type="math/tex; mode=display">\begin{lstlisting}[language=Java]
-try{
- RecordMetadata metadata = producer.send(record).get();
- System.out.println("Message is sent to Partition no " + metadata.partition() + " and offset " + metadata.offset());
- System.out.println("SynchronousProducer Completed with success.");
-}catch (Exception e) {
- e.printStackTrace();
- System.out.println("SynchronousProducer failed with an exception");
-}finally{
- producer.close();
-}
-\end{lstlisting}</script>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Future
-\end{itemize}</script>
-\end{frame}</p>
-<p>\begin{frame}[fragile]{Callback}
-Envia a mensagem e é invocado depois de receber um ACK</p>
-<p>\begin{lstlisting}[language=Java]
-producer.send(record, new MyProducerCallback());</p>
-<p>...</p>
-<p>class MyProducerCallback implements Callback{
- @Override
- public  void onCompletion(RecordMetadata recordMetadata, Exception e) {
-  if (e != null)
-   System.out.println("AsynchronousProducer failed with an exception");
-  else
-   System.out.println("AsynchronousProducer call Success:");
- }
-}
-\end{lstlisting}
-<script type="math/tex; mode=display">\begin{itemize}
-    \item max.in.flight.requests.per.connection
-\end{itemize}</script>
-\end{frame}</p>
-<p>\begin{frame}{Default Partitioner}
-\includegraphics[width=.8\textwidth]{images/kafka6}</p>
-<div class="arithmatex">\[\begin{itemize}
-    \item Partition
-    \item Hash da ``chave'' \% \#partition
-    \item Round robin
-\end{itemize}\]</div>
-<p>\href{<a href="https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo">https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo</a> de Custom Partitioner}
-\end{frame}</p>
-<p>\subsection{Consumidor}</p>
-<div class="arithmatex">\[\begin{frame}{Consumer Groups}
-\begin{itemize}
-    \item Múltiplos consumidores processam dados em paralelo
-    \item Grupo de consumidores de tópicos
-    \item Grupo pertence à mesma aplicação
-    \includegraphics[width=.6\textwidth]{images/kafka7}
-    \item Duplicate reads? Consumidores não compartilham partições
-    \item Group coordinator (broker eleito): lista de consumidores
-    \item Group líder: rebalanceamento
-\end{itemize}
-\end{frame}\]</div>
-<p>\begin{frame}[fragile, allowframebreaks]{Consumer}
-\begin{lstlisting}[language=Java]
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
-<p>import java.io.IOException;
-import java.util.Arrays;
-import java.util.Properties;</p>
-<p>public class SimpleConsumer {
- public static void main(String[] args) throws IOException {
-  String topicName = "SimpleProducerTopic";
-  String groupName = "SupplierTopicGroup";</p>
-<p>Properties props = new Properties();
-  props.put("bootstrap.servers", "localhost:9092,localhost:9093");
-  props.put("group.id", groupName);
-  props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</p>
-<p>KafkaConsumer<String, String> consumer = null;</p>
-<p>try {
-   consumer = new KafkaConsumer<String, String>(props);
-   consumer.subscribe(Arrays.asList(topicName));</p>
-<p>while (true) {
-    ConsumerRecords<String,String> records = consumer.poll(100);</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>for (ConsumerRecord&lt;String, String&gt; record: records)
- System.out.println(&quot;Key = &quot; + record.key() + &quot; Value = &quot; + record.value());
-</code></pre></div>
-</td></tr></table>
-
-<p>}
-  } catch (Exception ex) {
-   ex.printStackTrace();
-  } finally {
-   consumer.close();
-  }
- }
-}
-\end{lstlisting}</p>
-<p>
-<script type="math/tex; mode=display">\begin{itemize}
-    \item Se não definir grupo, será novo grupo, e lerá todas as mensagens disponíveis
-\end{itemize}</script>
-\end{frame}</p>
-<div class="arithmatex">\[\begin{frame}{Poll}
-\begin{itemize}
-    \item poll também envia hearbeat
-    \item executar a cada 3s, no mínimo 
-    \item Current offset: a cada poll, broker incrementa current offset
-    \item Commited offset: o consumidor informa quais índices foram processados
-    \begin{itemize}
-        \item Auto Commit
-        \begin{itemize}
-            \item enable.auto.commit
-            \item auto.commit.interval.ms
-            \item Pode causar reprocessamento de mensagens
-        \end{itemize}
-        \item Manual Commit
-        \begin{itemize}
-            \item CommitSync
-            \item CommitAsync
-        \end{itemize}
-    \end{itemize}
-\end{itemize}
-\end{frame}\]</div>
-<p>\subsection{Arquitetura}
-%\begin{frame}{Líder}</p>
-<p>%\end{frame}</p>
-<p>%mensagens são ack depois de copiadas para todas as réplicas
-%replicas lentas são removidas se lentas ou falhas
-%at least once, at most once, exactly one (nao suportado)
-%rolling upgrade
-%tls security
-%rest
-%CRUD</p>
-<p>\subsection{Data Streams}
-\subsection{Connectors}</p>
-<p>%<script type="math/tex; mode=display">\begin{frame}{Data streams}
-%\begin{itemize}
-%   \item 
-%\end{itemize}
-%\end{frame}</script>
-</p>
-<h3 id="_1"></h3>
-<p>Serviços de Coordenação</p>
+<p><img alt="" src="images/gfs3.png" /></p>
+<p><img alt="" src="images/gfs2.png" /></p>
 <ul>
-<li>Zookeeper</li>
-<li>Atomix</li>
-<li>OpenReplica</li>
+<li>Clusters de nós ``comuns''</li>
+<li>Master node: metadata</li>
+<li>Chunk servers: data</li>
+<li>Permite usar um cluster como um único HD elástico na rede.</li>
 </ul>
-<p>\subsection{Falhas Bizantinas}</p>
-<p>Uma história de três exércitos -- Versão 2}
-Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.</p>
-<p>Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.</p>
-<p>Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.</p>
-<p>Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.</p>
-<p>Fonte: \href{<a href="http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport">http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport</a>, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}</p>
-<p>Generais e Tenentes}
-Problema pode ser mudado para:</p>
+<p><a href="https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html">Fonte</a></p>
+<p><img alt="" src="images/gfs3.png" /></p>
+<ul>
+<li>Apps recebem \emph{leases} de acesso direto aos dados</li>
+<li>Atomic commitment garante consistência entre réplicas</li>
+</ul>
+<p><a href="http://google-file-system.wikispaces.asu.edu/">Fonte</a></p>
+<ul>
+<li>
+<p>Consistência 
+<img alt="" src="images/gfs6.png" /></p>
+</li>
+<li>
+<p>Application sends the file name and data to the GFS client.</p>
+</li>
+<li>GFS Client send the file name and chunk index to master</li>
+<li>Master sends the identity of the primary and other secondary replicas to the client.</li>
+<li>Client caches this information. Client contacts master again only when primary is unreachable or it sends a reply saying it does not holds the lease anymore.</li>
+<li>Considering the network topology the client sends the data to all the replicas.This improves performance. GFS separates data flow from the control flow. Replicas store the data in their LRU buffers till it is used.</li>
+<li>After all replicas receiving of the data, client sends write request to the primary. Primary decides the mutation order. It applies this order to its local copy.</li>
+<li>Primary sends the write request to all the secondary replicas. They perform write according to serial order decided by the primary.</li>
+<li>After completing the operation all secondary acknowledge primary.</li>
+<li>Primary replies the client about completion of the operation. In case of the errors that is when some of the secondary fail to write client request is supposed to be fail.This leaves modified chunk inconsistent. </li>
+<li>Client handles this by retrying the failed mutation. </li>
+</ul>
+<p><a href="http://google-file-system.wikispaces.asu.edu/">Fonte</a></p>
+<p>Map Reduce</p>
+<ul>
+<li>Google, 2004</li>
+<li>Processamento distribuído</li>
+<li>Processa arquivos no Google FS</li>
+</ul>
+<p><img alt="" src="images/gfs4.png" /></p>
+<p>Chubby</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Comandante envia ordem.
-* Todos os tenentes leais executam ordem recebida.
-* Comandante pode ser traidor.
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>*  Google, 2006
+![](images/chubby1.png)
 </code></pre></div>
 </td></tr></table>
 
-<p>Generais e Tenentes}
-Suponha 3 exércitos. \
-Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\
-Ou \
-Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.</p>
-<p>E se os tenentes trocarem informações?</p>
-<p>Como diferenciar casos em que Comandante ou Tenente é traidor?</p>
-<p>Generais e Tenentes}
-Só há solução se mais de <span class="arithmatex">\(\frac{2}{3}\)</span> dos Generais/Tenentes são leais.</p>
-<p>%<a href="http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5">http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5</a></p>
-<p>Comunicação}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Toda mensagem enviada é entregue corretamente.
-* A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
-</code></pre></div>
-</td></tr></table>
-
-<p>4/0}
-General manda ordens.</p>
-<p>Ausência de ordem = Retirada</p>
-<p>Tenente repassa ordens</p>
-<p>Maioria de comandos é comando a ser seguido</p>
-<p>4/0}
-General manda ordens.</p>
-<p>Ausência de ordem = Retirada</p>
-<p>Tenente repassa ordens</p>
-<p>Maioria de comandos é comando a ser seguido</p>
-<p>Comunicação}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Toda mensagem enviada é entregue corretamente.
-* Toda mensagem é assinada.
-* A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
-</code></pre></div>
-</td></tr></table>
-
-<p>É possível detectar inconsistências e processos bizantinos.</p>
-<p>%<a href="http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf">http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf</a>
-\section{Outros tópicos}</p>
-<p>%TODO \subsection{Detectores de Falhas}</p>
-<p>\subsection{Reconfiguração}</p>
-<p>Reconfiguração da Aplicação}
-Na segunda entrega do projeto, você distribuiu a carga do seu banco de dados entre vários nós. Caso um nó falhe, parte dos seus dados será perdida.</p>
-<p>Para corrigir esta deficiência, na terceira entrega, cada nó será replicado em três vias e, assim, caso um nó falhe, outros dois continuarão a manter o dado.</p>
-<p>Reconfiguração da Aplicação}
-Ainda assim, há problemas. E se mais de um, de um mesmo conjunto de réplicas, falhar? </p>
-<p>Embora seja pequena a probabilidade de dois nós de um mesmo grupo falharem em instantes próximos, dado tempo suficiente, qualquer evento com probabilidade diferente de 0 acontecerá.</p>
-<p>Precisamos de uma forma de trocar nós da aplicação que falharam por novos nós. </p>
-<p>Este é problema denominado Pertinência de Grupo ou \emph{Group Membership}</p>
-<p>Group Membership}
-Para não correr o risco, retire o processo falhos do grupo e coloque outro no lugar!</p>
-<p>I.e., mude a visão que o sistema de quem é o grupo.</p>
-<p>Visões}
-\includegraphics[width=.7\textwidth]{images/vc}</p>
-<p>Fonte: \href{<a href="https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul">https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul</a> Krzyzanowski}</p>
-<p><span class="arithmatex">\(G\)</span> é o grupo de processos participando do sistema, é a Visão do Sistema.</p>
-<p>Inicialmente, <span class="arithmatex">\(G\)</span> consiste de apenas o processo <span class="arithmatex">\(p\)</span>, como o processo que cria o cluster no Atomix. Na sequência, outros processo vão se unindo ao grupo através de View Changes. Uma vez que <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> estão no grupo, inicia-se a comunicação entre eles. Quando <span class="arithmatex">\(r, s\)</span> e <span class="arithmatex">\(t\)</span> aparecem, também entram no grupo por meio de uma nova visão.</p>
-<p>Finalmente, quando ambos <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> falham, os outros processo os excluem da visão, e continuam funcionando normalmente.</p>
-<p>Impossibilidade de Detecção de Falhas}
-Em um sistema distribuído assíncrono, é impossível distinguir com toda certeza um processo falho (parou de funcionar) de um que está lento.</p>
-<p>Como decidir se mudar ou não de visão?</p>
-<p>Ou aceita a imprecisão e muda quando suspeitar de uma falha, ou corre o risco de ficar esperando \emph{ad eternum} e não mudar, mesmo quando uma falha aconteceu.</p>
-<p>Uma ``solução''!}
-Quando suspeitar de falha, reporte suspeita a outros processos, que também passarão a suspeitar.</p>
-<p>Tome decisão baseado na suspeita, isto é, troque de visão quando houver suspeita.</p>
-<p>Pague o preço de uma suspeita errada, isto é, quando um processo for removido da visão indevidamente, adicione-o novamente.</p>
-<p>Sincronismos Virtual}
-Gerenciamento de Grupo/Group Membership e Comunicação em Grupo</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Processos se unem ao grupo
-* Processos saem do grupo
-* Processos enviam mensagens para o grupo
-* Diferentes ordenações
-
-        * Atomic Multicast
-</code></pre></div>
-</td></tr></table>
-
-<p>Visão de Grupo}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Visão: conjunto de processos no sistema.
-* Multicast feito para processos na visão.
-* Visão é consistente entre os processos.
-* Entrada e saída de processos muda a visão.
-</code></pre></div>
-</td></tr></table>
-
-<p>Eventos}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Mensagem
-* Mudança de Visão
-* Checkpoint
-</code></pre></div>
-</td></tr></table>
-
-<p>Visões}
-\includegraphics[width=.7\textwidth]{images/vc}</p>
-<p>Fonte: \href{<a href="https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul">https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul</a> Krzyzanowski}</p>
-<p>Sincronismo Virtual}
-Deve satisfazer</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.
-* Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.
-* Se um processo não recebe a mensagem, ele não estará na próxima visão.
-* Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.
-</code></pre></div>
-</td></tr></table>
-
-<p>A troca de Visão é uma barreira.</p>
-<p>ISIS Toolkit}
-    Sistema de Sincronismo Virtual tolerante a falhas desenvolvido por Ken Birman, Cornell University (\url{<a href="http://www.cs.cornell.edu/Info/Projects/Isis/">http://www.cs.cornell.edu/Info/Projects/Isis/</a>})\
-    ISIS: An Environment for Constructing Fault-Tolerant Distributed Systems. Kenneth Birman, D. Skeen, A. El Abbadi, W. C. Dietrich and T. Raeuchle. May 1983.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* 100.000&#39;s/s
-* Em uso até 2009
-* NY Stock Exchange
-* Swiss Exchange
-* US Navy
-* Precursos de sistemas como Zookeeker
-* Totem, ISIS, Horus, Transis (Partições), \alert{Spread}, \alert{Ensamble}, \alert{JGroups}, Appia, QuickSilver, vSynch (née ISIS 2)
-</code></pre></div>
-</td></tr></table>
-
-<p>Difusão Totalmente Ordenada}</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Corretude: Se um processo $p$ envia uma mensagem $m$ para processos no grupo $G$, então se $p$ não falha, todos os processos corretos em $G$ recebem a mensagem.
-
-* Acordo: Se um processo correto em $G$ recebe uma mensagem $m$, então todo processo correto em $G$ recebe $m$
-
-* Ordenação: Se um processo recebe mensagem $m$ e depois $n$, então qualquer processo que receba a mensagem $n$ deve primeiro receber $m$
-
-* Validade: Somente mensagens difundidas são entregues.
-</code></pre></div>
-</td></tr></table>
-
-<p>E se mandarmos mensagens do tipo ``A partir da entrega desta mensagem, o grupo de processos é <span class="arithmatex">\(G\)</span>.''</p>
-<p>Sincronismo Virtual}
-Deve satisfazer</p>
+<p>Hadoop</p>
+<ul>
+<li>HDFS: Hadoop Distributed File System</li>
+<li>Map Reduce</li>
+<li>Yahoo!</li>
+<li>Open source em 2011, 1.0.0</li>
+<li>2012, 2.0.0,</li>
+<li>2017, 3.0.0</li>
+<li>nov 2018, 2.9.2</li>
+</ul>
+<p>Ecosistema</p>
+<ul>
+<li>Hive: data warehouse</li>
+<li>Spark: </li>
+<li>Kafka</li>
+<li>Yarn</li>
+<li>Pig: linguagem para especificação de data flow.</li>
+<li>HBase: banco de dados estruturado</li>
+<li>Sqoop</li>
+<li>Flume</li>
+<li>Oozie</li>
+<li>Avro: serialização</li>
+<li>Mahout: machine learning</li>
+</ul>
+<p>HDFS</p>
+<ul>
+<li>Distribuído</li>
+<li>Escalável</li>
+<li>Cost effective</li>
+<li>Tolerante a falhas</li>
+<li>Alta vazão</li>
+</ul>
+<p>Arquitetura</p>
+<ul>
+<li>Rack e rack failure</li>
+<li>Top of rack switch</li>
+<li>Core switch</li>
+<li>Name Node: nomes das pastas e arquivos</li>
+<li>Data Node: conteúdo dos arquivos</li>
+<li>Cliente</li>
+</ul>
+<p>Arquitetura</p>
+<ul>
+<li>Crie arquivo: cliente -&gt; name node</li>
+<li>Escreva um block (e.g., 128MB): cliente</li>
+<li>Aloque block: cliente -&gt; name node</li>
+<li>Salve os dados: cliente -&gt; data node</li>
+<li>Heartbeat block report: data node -&gt; name node</li>
+<li>Dados são replicados (RF configurado por arquivo): Data node -&gt; data node</li>
+</ul>
+<p>Name node</p>
+<p>Dados em memory e edit log.</p>
+<ul>
+<li>Name node é um SPOF? </li>
+<li>Quorum Journal Manager replica edit log.</li>
+<li>Standby Name Node</li>
+<li>Zookeeper usado para decidir quem é o líder</li>
+<li>Secondary Name Node replica checkpoint da imagem em memória.</li>
+</ul>
+<p>MapReduce</p>
+<ul>
+<li>Programação funcional</li>
+<li>Map: (map length (() (a) (a b c)) = (0 1 3))</li>
+<li>Fold/Reduce: (reduce + (1 2 3)) = 6</li>
+</ul>
+<p>MapReduce</p>
+<ul>
+<li>Não há dependência entre os dados</li>
+<li>Dados divididos em \emph{shards}</li>
+<li>Execução paralela e distribuída</li>
+<li>Trabalhador recebe um shard</li>
+<li>Mestre agrega valores</li>
+<li>Milhares de processos</li>
+<li>Petabytes de dados</li>
+</ul>
+<p>MapReduce</p>
+<ul>
+<li>Shards são arquivos do GFS/HDFS/EC2</li>
+<li>Função mapeada a cada shard</li>
+<li>Resultado é lista de chaves e valores</li>
+<li>Agregação acontece por chaves</li>
+<li>Resultado são arquivos no GFS/HDFS/EC2</li>
+</ul>
+<p>MapReduce</p>
+<p><img alt="" src="images/mapreduce1.png" /></p>
+<p><img alt="" src="images/mapreduce2.png" /></p>
+<p>Exemplo
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1324,40 +722,165 @@ Deve satisfazer</p>
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.\\
-Mensagens de troca de visão podem incrementar um contador\\
-Mensagens normais carregam o valor atual do contador\\
-Mensagem descartada se valor na mensagem é maior contador no destinatário
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">...</span>
 
-* Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.\\
-Pela difusão, se a mensagem de troca for entregue para um processo, será entregue para todos os corretos, na mesma ordem
-Se mensagem comum for entregue antes para algum, será entregue ante para todos.
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WordCount</span> 
+<span class="p">{</span>
+ <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">TokenizerMapper</span> 
+ <span class="kd">extends</span> <span class="n">Mapper</span><span class="o">&lt;</span><span class="n">Object</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">IntWritable</span><span class="o">&gt;</span>
+ <span class="p">{</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kd">static</span> <span class="n">IntWritable</span> <span class="n">one</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntWritable</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="kd">private</span> <span class="n">Text</span> <span class="n">word</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Text</span><span class="p">();</span>
 
-* Se um processo não recebe a mensagem, ele não estará na próxima visão.\\
-Se um processo não recebe uma mensagem comum que foi entregue pelos outros, então ele não troca de visão.
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">map</span><span class="p">(</span><span class="n">Object</span> <span class="n">key</span><span class="p">,</span> <span class="n">Text</span> <span class="n">value</span><span class="p">,</span> <span class="n">Context</span> <span class="n">context</span><span class="p">)</span> 
+   <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">InterruptedException</span> 
+  <span class="p">{</span>
+   <span class="n">StringTokenizer</span> <span class="n">itr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringTokenizer</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="na">hasMoreTokens</span><span class="p">())</span> 
+   <span class="p">{</span>
+    <span class="n">word</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">itr</span><span class="p">.</span><span class="na">nextToken</span><span class="p">());</span>
+    <span class="n">context</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">one</span><span class="p">);</span>
+   <span class="p">}</span>
+  <span class="p">}</span> 
+ <span class="p">}</span>
+<span class="p">...</span>
+</code></pre></div>
+</td></tr></table></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
+ <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">IntSumReducer</span> 
+  <span class="kd">extends</span> <span class="n">Reducer</span><span class="o">&lt;</span><span class="n">Text</span><span class="p">,</span><span class="n">IntWritable</span><span class="p">,</span><span class="n">Text</span><span class="p">,</span><span class="n">IntWritable</span><span class="o">&gt;</span> 
+ <span class="p">{</span> 
+  <span class="kd">private</span> <span class="n">IntWritable</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IntWritable</span><span class="p">();</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">Text</span> <span class="n">key</span><span class="p">,</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">IntWritable</span><span class="o">&gt;</span> <span class="n">values</span><span class="p">,</span> <span class="n">Context</span> <span class="n">context</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span><span class="p">,</span> <span class="n">InterruptedException</span> 
+  <span class="p">{</span>
+   <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="k">for</span> <span class="p">(</span><span class="n">IntWritable</span> <span class="n">val</span> <span class="p">:</span> <span class="n">values</span><span class="p">)</span> 
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">val</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
+   <span class="n">result</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">sum</span><span class="p">);</span>
+   <span class="n">context</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">result</span><span class="p">);</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
 
-* Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.\\
-Caso contrário, não haveria porquê trocar os processos
+ <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> 
+ <span class="p">{</span>
+  <span class="p">...</span>
+ <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
 
-<p>State Transfer}
-\includegraphics[width=.7\textwidth]{images/state_transfer}</p>
-<p>\href{<a href="http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building">http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building</a> Secure and Reliable Network Applications}</p>
-<p>Difusão Atômica <span class="arithmatex">\(\equiv\)</span> Sincronismo Virtual?}
-Seria uma boa aproximação, mas que poderia ser relaxada. </p>
-<p>Em certas aplicações, FIFO ou Causal seriam suficientes dentro da visão, desde que a mensagem de mudança da visão seja totalmente ordenada com as comuns.</p>
-<p>Particionamento}
-E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões independentes?</p>
-<p>\emph{Primary Partition Model} -- Somente a partição primária pode mudar de visão.</p>
-<p>Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.</p>
-<p>Extended Virtual Synchrony}
-\emph{Primary Partition Model} -- Não é adequado a uma rede geograficamente distribuída (Internet scale).</p>
-<p>Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.</p>
-<p>É possível que no trabalho dois, alguns de vocês tenham tentado gerar locks do sistema para manipular objetos distribuídos no sistema. Esse locks são perigosos por quê processos pode travar/quebrar/falhar e nunca liberarem os locks. O uso de um algoritmo VS poderia ser usado para resolver o problema.\right </p>
-<p><a href="https://asafdav2.github.io/2017/swim-protocol/">Swim</a></p>
-<p><a href="http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf">http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf</a></p>
-<details class="todo"><summary>Todo</summary></details>
+<p><a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0">Fonte</a></p>
+<p><a href="https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v">https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v</a></p>
+<h2 id="estudo-de-caso-kafka">Estudo de caso: Kafka</h2>
+<p>![](images/kafka0.png</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Kafka is a distributed streaming platform.</p>
+</div>
+<ul>
+<li>LinkedIn</li>
+<li>OpenSource em 2011</li>
+<li>Projeto Apache em ????</li>
+</ul>
+<p><img alt="" src="images/kafka1.png" /></p>
+<p><img alt="" src="images/kafka2.png" /></p>
+<p>Producers x Message Broker x Consumers</p>
+<p><img alt="" src="images/kafka3.png" /></p>
+<ul>
+<li>Produtores: enviam dados/mensagens/records (array de bytes)</li>
+<li>Consumidores: recebem dados</li>
+<li>Cluster/Broker: distribuído e tolerantes a falhas.</li>
+<li>Conectores: integração simplificada com outras aplicações </li>
+<li>Stream processors: spark ou outros frameworks; transformam dados</li>
+</ul>
+<p>Brokers</p>
+<ul>
+<li>Cluster de brokers</li>
+<li>Distribuído</li>
+<li>Tolerante a falhas</li>
+<li>Desacoplamento espacial</li>
+<li>Desacoplamento temporal</li>
+<li>Tópicos, não endereços</li>
+</ul>
+<p>Tópicos</p>
+<ul>
+<li>Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT</li>
+<li>Quantidade pode ser imensa.</li>
+</ul>
+<p>Partição</p>
+<ul>
+<li>Subdivisões de tópicos</li>
+<li>Número de partições é definido por usuário</li>
+<li>Cada partição está associada a um único servidor</li>
+</ul>
+<p>Offset</p>
+<ul>
+<li>Índice de uma mensagem em uma partição</li>
+<li>Índices atribuídos na ordem de chegada</li>
+<li>Offsets são locais às partições</li>
+<li>Mensagens são unicamente identificadas por (tópico, partição, índice)</li>
+</ul>
+<p><img alt="" src="images/kafka4.png" /></p>
+<p>Consumer group</p>
+<ul>
+<li>Carga pode ser muito grande para um consumidor</li>
+<li>Compartilham o processamento de um tópico</li>
+<li>Cada mensagem é processada por um membro do grupo</li>
+<li>A mesma mensagem pode ser processada por múltiplos grupos</li>
+<li>Número de consumidores <span class="arithmatex">\(\leq\)</span> partições no tópico</li>
+<li>Máximo de dois consumidores por partição (mantem pos. de cada um)</li>
+</ul>
+<p><img alt="" src="images/kafka5.png" /></p>
+<p>Siga o <a href="http://kafka.apache.org/quickstart">tutorial</a>, até o passo 5.</p>
+<ul>
+<li>Baixe e descompacte</li>
+<li>Rode o zookeeper (Terminal 1)</li>
+<li>Rode o Kafka (Terminal 2)</li>
+<li>Crie um tópico (Terminal 3) - 
+        Mais de uma partição em um servidor</li>
+<li>Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?</li>
+<li>Liste os tópicos criados</li>
+<li>Envie algumas mensagens</li>
+<li>Inicie um consumidor (Terminal 4)</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:madsmt">
+<p><a href="http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees">Modern Algorithms and Data Structures: Merkle Trees</a>&#160;<a class="footnote-backref" href="#fnref:madsmt" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:nakamoto">
+<p><a href="https://bitcoin.org/bitcoin.pdf">Bitcoin: A Peer-to-Peer Electronic Cash System</a>&#160;<a class="footnote-backref" href="#fnref:nakamoto" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
                 
               
               
