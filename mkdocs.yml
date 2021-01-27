@@ -1,0 +1,66 @@
+site_name: Notas em Sistemas Distribuídos
+nav:
+        - Prólogo: index.md
+        - Introdução: intro/index.md
+        - Fundamentos: basics/index.md
+        - Comunicação: comm/index.md
+        - Arquiteturas: arch/index.md
+        - Coordenação: coord/index.md
+        - Tempo: time/index.md
+        - Tolerância a Falhas: fault/index.md
+        - Bancos de Dados: disdb/index.md
+        - Sistemas de Arquivos: disfs/index.md
+        - Tecnologias: tech/index.md
+        - Projeto: projeto/index.md
+
+theme:
+        name: material #readthedocs
+        custom_dir: overrides
+
+plugins:
+        - search
+        - drawio-exporter:
+                cache_dir: 'drawio-exporter'
+                drawio_executable: null
+                drawio_args: []
+                format: svg
+                sources: '*.drawio'
+
+markdown_extensions:
+        - toc:
+            toc_depth: 5
+        - mdx_math
+        - admonition
+        - footnotes
+        - pymdownx.arithmatex:
+               generic: true
+        - pymdownx.betterem:
+               smart_enable: all
+        - pymdownx.caret
+        - pymdownx.critic
+        - pymdownx.details
+        - pymdownx.emoji:
+            emoji_index: !!python/name:materialx.emoji.twemoji
+            emoji_generator: !!python/name:materialx.emoji.to_svg
+        - pymdownx.highlight:
+             linenums: true
+        - pymdownx.inlinehilite
+        - pymdownx.magiclink
+        - pymdownx.mark
+        - pymdownx.smartsymbols
+        - pymdownx.superfences:
+              custom_fences:
+                   - name: mermaid
+                     class: mermaid
+                     format: !!python/name:pymdownx.superfences.fence_div_format
+        - pymdownx.tasklist:
+            custom_checkbox: true
+        - pymdownx.tabbed
+        - pymdownx.tilde
+
+extra_javascript:
+        - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
+        - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+        - javascripts/mathjaxhelper.js
+
+google_analytics: ['G-PJX835H7DP', 'lasarojc.github.org/dsnotes']
