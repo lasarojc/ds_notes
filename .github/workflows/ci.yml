@@ -15,4 +15,7 @@ jobs:
       - run: pip install mkdocs-material
       - run: pip install mkdocs-drawio-exporter
       - run: pip install python-markdown-math
+      - run: sudo apt update
+      - run: sudo apt install snapd
+      - run: sudo snap install drawio
       - run: mkdocs gh-deploy --force
