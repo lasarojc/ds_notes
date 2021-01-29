@@ -16,7 +16,7 @@ jobs:
       - run: pip install python-markdown-math
       - run: sudo apt update
       - run: wget https://github.com/jgraph/drawio-desktop/releases/download/v14.1.8/draw.io-amd64-14.1.8.deb
-      -run sudo dpkg -i draw.io-amd64-14.1.8.deb
+      - run sudo dpkg -i draw.io-amd64-14.1.8.deb
 #      - run: sudo apt install snapd
 #      - run: sudo snap install drawio
       - run: mkdocs gh-deploy --force
