@@ -22,7 +22,8 @@ plugins:
         - drawio-exporter:
                 cache_dir: 'drawio-exporter'
                 drawio_executable: null
-                drawio_args: []
+                drawio_args:
+                    - --no-sandbox
                 format: svg
                 sources: '*.drawio'
 
