@@ -2,6 +2,11 @@
 
 ## Por quê ler estas notas?
 
+
+???sideslide "Por quê?"
+    * Competitividade
+    * Área extremamente ativa
+
 As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e tem atraído mais e mais profissionais, mais ou menos qualificados, tornando este **mercado cada vez mais competitivo**.
 Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é um dos tópicos mais quentes e ter conhecimentos específicos desta subárea pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
 Se estiver pensando que sou louco, que uma área sobre a qual talvez você nunca tenha ouvido falar até agora não pode ser mais quente que áreas como

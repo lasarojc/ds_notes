@@ -1,6 +1,6 @@
 site_name: Notas em Sistemas Distribuídos
 nav:
-        - Prólogo: index.md
+        - Prefácio: index.md
         - Introdução: intro/index.md
         - Fundamentos: basics/index.md
         - Comunicação: comm/index.md
@@ -14,7 +14,9 @@ nav:
         - Projeto: projeto/index.md
 
 theme:
-        name: material #readthedocs
+        name: material
+        palette:
+            scheme: slate
         custom_dir: overrides
 
 plugins:
