@@ -1,8 +1,6 @@
 
-
-
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="pt" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -19,25 +18,34 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
       
     
     
     
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
     
     
     
+      <link rel="stylesheet" href="../css/extra.css">
+    
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,8 +53,17 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -54,7 +71,7 @@
       
         
         <a href="#introducao" class="md-skip">
-          Skip to content
+          Ir para o conteúdo
         </a>
       
     </div>
@@ -62,54 +79,58 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Notas em Sistemas Distribuídos
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Introdução
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -119,12 +140,23 @@
 </div>
     
     
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
 </header>
     
     <div class="md-container" data-md-component="container">
-      
-        
       
       
         
@@ -133,19 +165,38 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
   </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -153,12 +204,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
-      Prólogo
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
 
     
       
@@ -166,38 +220,36 @@
       
 
   
-
-
-  <li class="md-nav__item md-nav__item--active">
+  
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Introdução
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Introdução
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Introdução" class="md-nav__link md-nav__link--active">
-      Introdução
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -450,128 +502,159 @@
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
-      Fundamentos
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
-      Comunicação
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basics/" class="md-nav__link">
+        Fundamentos
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
-      Arquiteturas
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
-      Coordenação
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
-      Tempo
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
-      Tolerância a Falhas
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
-      Bancos de Dados
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../disfs/" title="Sistemas de Arquivos" class="md-nav__link">
-      Sistemas de Arquivos
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
-      Tecnologias
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
 
     
       
       
       
 
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fault/" class="md-nav__link">
+        Tolerância a Falhas
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
-      Projeto
-    </a>
-  </li>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -581,21 +664,20 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -856,18 +938,24 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                
-                  
-                
-                
-                <h1 id="introducao">Introdução</h1>
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="introducao">Introdução</h1>
 <p>Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.</p>
 <h2 id="o-que-sao-sistemas-distribuidos">O quê são Sistemas Distribuídos?</h2>
-<p>Para entendermos o que é um Sistema Distribuído, talvez seja mais fácil por um sistema não-distribuído ou, como os denominaremos aqui, sistema monolítico<sup id="fnref:centr"><a class="footnote-ref" href="#fn:centr">1</a></sup>.</p>
-<p>Pense na maioria das aplicações que desenvolveu no curso até agora.
-Mesmo que use diferentes bibliotecas e <em>frameworks</em>, toda a lógica de negócio, armazenamento e interface com usuário está contida em um mesmo executável e, quando executado, em um único processo. 
-Quando começou a programar este tipo de aplicação, o trabalho era basicamente colar blocos que se encaixavam perfeitamente, como Lego <img alt="®" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/ae.svg" title=":registered:" />, bastando importar a biblioteca correta e invocar suas funções.</p>
+<p>Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
+Estes são os sistems que, mesmo que usem diferentes bibliotecas e <em>frameworks</em>, contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário, e por isso os denominaremos <strong>monolítico</strong>.<sup id="fnref:centr"><a class="footnote-ref" href="#fn:centr">1</a></sup></p>
+<p>O desenvolvimento destes sistemas consistem em  basicamente colar blocos que se encaixavam perfeitamente, como Lego <img alt="®" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/ae.svg" title=":registered:" />, bastando importar a biblioteca correta e invocar suas funções.</p>
 <p><img alt="Lego Rainbow" src="images/lego0.jpg" /></p>
 <p>O cenário deve ter mudado um pouco no decorrer do curso e com o início de sua atividade profissional, quando passou a usar muito mais bibliotecas de muitos desenvolvedores diferentes, em equipes com várias pessoas, aumentando consideravelmente a complexidade do desenvolvimento; o resultado, contudo, continua sendo um artefato só. </p>
 <p><img alt="Lego Hell" src="images/lego3.jpg" /></p>
@@ -895,14 +983,10 @@ Neste contexto, uma definição mais cínica mas definitivamente realista é a d
 <p>Aqui diremos que um sistema é bom se está sempre funcional, com bom desempenho e é de baixo custo.
 Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas; bom desempenho implica que  respostas "rápidas" são dadas para o usuário; baixo custo implica não gastar mais que o necessário para realizar a tarefa para a qual foi construído.</p>
 <p>Enquanto ainda subjetiva, nossa definção já nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar tais sistemas.
-Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos:
-Alguns exemplos óbvios são</p>
-<ul>
-<li><a href="https://www.amazon.com">Amazon.com</a>,</li>
-<li><a href="https://www.facebook.com">Facebook</a>, e</li>
-<li><a href="https://www.gmail.com">GMail</a>.</li>
-</ul>
-<p>Estes sistemas rodam em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>, estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc. Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.</p>
+Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que por seu sucesso devem ser bons sistemas distribuídos.
+Alguns exemplos óbvios são <a href="https://www.amazon.com">Amazon.com</a>, <a href="https://www.facebook.com">Facebook</a>, e <a href="https://www.gmail.com">GMail</a>.</p>
+<p>Estes sistemas rodam em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>, estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc<sup id="fnref:failures"><a class="footnote-ref" href="#fn:failures">3</a></sup>[. 
+Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.</p>
 <p>Enquanto a primeira vista possa se pensar que as técnicas usadas na construção destes sistemas devem ser muito especializadas e fora da realidade dos sistemas que nós desenvolvemos, a verdade não poderia ser mais longe disto.
 O fato é que computadores individuais tem capacidade limitada de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.</p>
 <p><img alt="Data Growth" src="images/datagrowth.jpg" /></p>
@@ -961,7 +1045,7 @@ Implementar estas abstrações em si já é uma tarefa complicada, pois é preci
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
 Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup></p>
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">4</a></sup></p>
 <p>Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 Com sistemas distribuídos, não é diferente, e no caso da comunicação entre componentes distribuídos, a solução normalmente é usar um <strong>middleware</strong>.</p>
 <h3 id="middleware">Middleware</h3>
@@ -972,7 +1056,7 @@ Com sistemas distribuídos, não é diferente, e no caso da comunicação entre 
 <p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, entre, o <em>software</em> e o <em>hardware</em>. 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
 Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular <em>hardware</em> real, mas também pode encapsular outra abstração de <em>hardware</em>, por exemplo, uma máquina virtual ou contêiner.</p>
-<p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">4</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
+<p>A figura seguinte <sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">5</a></sup>  mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
 <p><img alt="Middleware" src="images/01-01.png" /></p>
 <p>Com este cenário em mente, é importante entender o que diz <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a> quando afirma que as principais funções do <em>middleware</em> são:</p>
 <ul>
@@ -994,7 +1078,7 @@ Vejamos cada uma destas separadamente.</p>
 Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.</p>
 <p><img alt="IEEE Floating Point" src="images/float_point.jpg" /></p>
 <div class="admonition note">
-<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">5</a></sup></p>
+<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">6</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1038,7 +1122,7 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 </table>
 </div>
 <div class="admonition note">
-<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">6</a></sup></p>
+<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">7</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1078,7 +1162,7 @@ Cada computador tem uma arquitetura e uma forma de representar seus dados. Por e
 É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão a arquitura "nativa" do host ou um padrão intermediário, definido pelo <em>middleware</em>.</p>
 <p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
 No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com o mesmo.
-Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">7</a></sup>.
+Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">8</a></sup>.
 Como transferir strings entre duas plataforms?  Não fazê-lo? Simplificar a string Java?  Estender a string C?  </p>
 <div class="admonition note">
 <p class="admonition-title">Transparência de Acesso</p>
@@ -1109,7 +1193,7 @@ A esta transparência é essencial uma boa distribuição do serviço, sobre uma
 </ul>
 <p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
 Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
-Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">8</a></sup>.
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">9</a></sup>.
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
 <p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
 <ul>
@@ -1163,7 +1247,6 @@ Esta técnica funciona se os serviços forem máquinas de estado determinística
     e3 --&gt; e2
     e1 --&gt; en
     e3 --&gt; en</div>
-
 <details class="todo"><summary>Todo</summary><p>Figura com state machine replication</p>
 </details>
 <p>Novamente é preciso chamar à atenção a questão dos custos desta técnica.
@@ -1287,7 +1370,6 @@ Suponha duas instâncias desta sequência, <span class="arithmatex">\(T_1\)</spa
 10:SET Y=b
 </code></pre></div>
 </td></tr></table>
-
 <p>Ao final da execução, X terá o valor atribuído por <span class="arithmatex">\(T_2\)</span>, mas <span class="arithmatex">\(Y\)</span> terá o valor de <span class="arithmatex">\(T_1\)</span>. 
 Este escalonamento violou a <strong>consistência</strong> do banco de dados por quê as operações não foram executadas <strong>isoladamente</strong>.</p>
 <p>Tente imaginar a dificuldade de se implementar um banco de dados distribuído. 
@@ -1306,7 +1388,6 @@ Se qualquer destas três relações não for corretamente consultada e alterada,
   C --&gt;|Resposta| B
   D --&gt;|Resposta| B
   E --&gt;|Resposta| B</div>
-
 <p>Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
@@ -1393,7 +1474,6 @@ Este tipo de sistema, embora possa ser pensando como infraestrutura para outros 
 <p>Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como componentes se conectam, por meio de conectores, para implementar a solução para um problema.</p>
 <div class="mermaid">graph LR
     A[Componente 1] --&gt; C{Conector} --&gt; B(Componente 2)</div>
-
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.</p>
@@ -1425,7 +1505,6 @@ Assim, geralmente a comunicação entre cliente e servidor segue o seguinte esqu
     activate Cliente
     note left of Servidor: Espera pela requisição
     deactivate Cliente</div>
-
 <p>Observe que o cliente fica inativo enquanto espera a resposta e que o servidor fica inativo enquanto espera outras requisições.
 Para minimizar os períodos de inatividade, o cliente pode usar o socket assíncronamente, o que não é exatamente simples, ou usar múltiplos threads, para que continue operando mesmo enquanto um thread estiver bloqueado esperando a resposta do servidor.</p>
 <p>No lado do servidor, o minimização da ociosidade é feita pelo uso de múltiplos clientes, concorrentes, e também pelo uso de múltiplos threads.
@@ -1470,7 +1549,6 @@ Podemos dizer que também este é híbrido.</p>
   C --&gt;|Resposta| B
   D --&gt;|Resposta| B
   E --&gt;|Resposta| B</div>
-
 <h3 id="sistemas-multi-camadas">Sistemas multi-camadas</h3>
 <p>Outra forma de hibridismo que podemos citar é quando um componente haje tanto como cliente quanto como servidor. 
 Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>tiers</em>).</p>
@@ -1501,33 +1579,38 @@ Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a
 <hr />
 <ol>
 <li id="fn:centr">
-<p>Muitos se referem a sistemas não-distribuídos como <strong>centralizados</strong> mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso é em acordo como o oposto a distribuído.&#160;<a class="footnote-backref" href="#fnref:centr" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Muitos se referem a sistemas não-distribuídos como <strong>centralizados</strong> mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso está de acordo com o uso que fazemos aqui.&#160;<a class="footnote-backref" href="#fnref:centr" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:embed">
 <p>Escolhemos aqui ignorar o argumento muito plausível de que um algoritmo distribuído poderia ser executado entre, por exemplo, diversos chips em uma mesma placa.&#160;<a class="footnote-backref" href="#fnref:embed" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
+<li id="fn:failures">
+<p><a href="http://people.iiis.tsinghua.edu.cn/~weixu/Krvdro9c/dsn17-wang.pdf">What Can We Learn from Four Years of Data Center Hardware Failures?</a>&#160;<a class="footnote-backref" href="#fnref:failures" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
 <li id="fn:ogros">
-<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:0101">
-<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>Capítulo 1, Figura 1, Distributed Systems: Principles and Paradigms&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:IEEEFP">
-<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:IBMFP">
-<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:stringjava">
-<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 <li id="fn:stadia">
-<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
-                
-              
+
+  <!-- Last update of source file -->
+
+
               
                 
 
@@ -1544,32 +1627,32 @@ Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href=".." title="Prólogo" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Previous
+                  Anterior
                 </span>
-                Prólogo
+                Prefácio
               </div>
             </div>
           </a>
         
         
-          <a href="../basics/" title="Fundamentos" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../basics/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Próximo
                 </span>
                 Fundamentos
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -1592,15 +1675,15 @@ Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

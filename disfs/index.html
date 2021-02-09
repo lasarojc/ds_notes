@@ -1,8 +1,6 @@
 
-
-
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="pt" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -19,25 +18,34 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
       
     
     
     
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
     
     
     
+      <link rel="stylesheet" href="../css/extra.css">
+    
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,8 +53,17 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -54,7 +71,7 @@
       
         
         <a href="#sistemas-de-arquivos-distribuidos" class="md-skip">
-          Skip to content
+          Ir para o conteúdo
         </a>
       
     </div>
@@ -62,54 +79,58 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Notas em Sistemas Distribuídos
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Sistemas de Arquivos
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -119,12 +140,23 @@
 </div>
     
     
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
 </header>
     
     <div class="md-container" data-md-component="container">
-      
-        
       
       
         
@@ -133,19 +165,38 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
   </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -153,108 +204,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
-      Prólogo
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
-      Introdução
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
-      Fundamentos
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
-      Comunicação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
-      Arquiteturas
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
-      Coordenação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
-      Tempo
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
-      Tolerância a Falhas
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
-      Bancos de Dados
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
 
     
       
@@ -262,38 +220,156 @@
       
 
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
       
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basics/" class="md-nav__link">
+        Fundamentos
+      </a>
+    </li>
+  
+
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
+
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fault/" class="md-nav__link">
+        Tolerância a Falhas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Sistemas de Arquivos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Sistemas de Arquivos
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Sistemas de Arquivos" class="md-nav__link md-nav__link--active">
-      Sistemas de Arquivos
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -314,32 +390,39 @@
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
-      Tecnologias
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
-      Projeto
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -349,21 +432,20 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -392,19 +474,28 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                
-                  
-                
-                
-                <h1 id="sistemas-de-arquivos-distribuidos">Sistemas de Arquivos Distribuídos</h1>
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="sistemas-de-arquivos-distribuidos">Sistemas de Arquivos Distribuídos</h1>
 <p>Em construção.</p>
 <h2 id="leitura">Leitura</h2>
 <p><a href="files/dsdc-coulouris-ch12.pdf">Conceitos básicos</a></p>
 <h2 id="google-file-system">Google File System</h2>
 <p><a href="https://research.google/pubs/pub51.pdf">Google file system</a></p>
-                
-              
+
+  <!-- Last update of source file -->
+
+
               
                 
 
@@ -421,14 +512,14 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../disdb/" title="Bancos de Dados" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../disdb/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Previous
+                  Anterior
                 </span>
                 Bancos de Dados
               </div>
@@ -436,17 +527,17 @@
           </a>
         
         
-          <a href="../tech/" title="Tecnologias" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../tech/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Próximo
                 </span>
                 Tecnologias
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -469,15 +560,15 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

@@ -1,8 +1,6 @@
 
-
-
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="pt" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -19,25 +18,34 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
       
     
     
     
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
     
     
     
+      <link rel="stylesheet" href="../css/extra.css">
+    
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,8 +53,17 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -54,7 +71,7 @@
       
         
         <a href="#fundamentos" class="md-skip">
-          Skip to content
+          Ir para o conteúdo
         </a>
       
     </div>
@@ -62,54 +79,58 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Notas em Sistemas Distribuídos
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Fundamentos
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -119,12 +140,23 @@
 </div>
     
     
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
 </header>
     
     <div class="md-container" data-md-component="container">
-      
-        
       
       
         
@@ -133,19 +165,38 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
   </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -153,24 +204,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
-      Prólogo
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
-      Introdução
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
 
     
       
@@ -178,38 +220,51 @@
       
 
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
       
+      
+      
+
+  
+  
     
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Fundamentos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Fundamentos
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Fundamentos" class="md-nav__link md-nav__link--active">
-      Fundamentos
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -440,116 +495,144 @@
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
-      Comunicação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
-      Arquiteturas
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
-      Coordenação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
-      Tempo
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../fault/" title="Tolerância a Falhas" class="md-nav__link">
-      Tolerância a Falhas
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
-      Bancos de Dados
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../disfs/" title="Sistemas de Arquivos" class="md-nav__link">
-      Sistemas de Arquivos
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
-      Tecnologias
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
 
     
       
       
       
 
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fault/" class="md-nav__link">
+        Tolerância a Falhas
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
-      Projeto
-    </a>
-  </li>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -559,21 +642,20 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -812,12 +894,19 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                
-                  
-                
-                
-                <h1 id="fundamentos">Fundamentos</h1>
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="fundamentos">Fundamentos</h1>
 <p>A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
 No mundo de hoje, isto quer dizer que os <em>hosts</em> dos componentes devem possuir interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
 Além do canal, é também necessário que se estabeleça um <strong>protocolo de comunicação</strong>, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.</p>
@@ -1001,21 +1090,17 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
    <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                                    <span class="c1"># Close the connection</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Para executá-lo, execute o seguinte comando em um terminal. </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python server.py
 </code></pre></div>
 </td></tr></table>
-
 <p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir. <sup id="fnref:telnet"><a class="footnote-ref" href="#fn:telnet">3</a></sup></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet localhost <span class="m">12345</span>
 </code></pre></div>
 </td></tr></table>
-
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>netcat localhost <span class="m">12345</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>No segundo terminal a mensagem 
 <code>Thank you for connecting</code>
 será impressa, enquanto no primeiro veremos algo como 
@@ -1082,7 +1167,6 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 <span class="o">...</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?</p>
 <p>Modifiquemos o cliente agora, para que tenha dois <code>recv</code>, assim.
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -1285,7 +1369,6 @@ Criemos um programa que <strong>criar Socket UDP</strong>, <strong>associa-o a u
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Instancie múltiplos processos deste, na mesma máquina e em máquinas distintas.
 Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1331,7 +1414,6 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
@@ -1375,7 +1457,6 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
     <span class="nb">print</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">10240</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Implemente e teste o seguinte <strong>sender</strong>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1394,7 +1475,6 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="p">(</span><span class="n">MCAST_GRP</span><span class="p">,</span> <span class="n">MCAST_PORT</span><span class="p">))</span>
 </code></pre></div>
 </td></tr></table>
-
 </div>
 <h3 id="referencias">Referências</h3>
 <ul>
@@ -1433,7 +1513,6 @@ Este cenário, apresentado na figura a seguir, mostra que apesar do uso de proce
     note right of Cliente2: Ativo processando resposta (2)
     deactivate Cliente
   deactivate Cliente2</div>
-
 <p>Este modelo de sincronização entre as partes comunicantes é um exemplo de <strong>E/S bloqueante</strong>. O principal ponto positivo desta estratégia é a <strong>simplicidade do código</strong> e o principal ponto negativo é a <strong>limitação do paralelismo</strong> no uso de recursos, uma das razões de ser da computação distribuída.</p>
 <p>Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, temos então que pensar em termos de eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).</p>
@@ -1587,7 +1666,6 @@ Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte p
 <span class="p">...</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
 Não exatamente, pois mesmo este código simplíssimo podemos sofrer de <a href="https://dzone.com/articles/false-sharing">falso compartilhamento</a>.
 Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto <code>X</code> quanto <code>Y</code> no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.</p>
@@ -1717,7 +1795,6 @@ Observe contudo que <code>void *</code> pode ser tratado como um blob para masca
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Um <em>thread</em>  é criado pela função <code>pthread_create</code>, que coloca em um <code>pthread_t</code> um <em>handle</em> para o <em>thread</em>.
 A função recebe como parâmetros opções para configuração, a função de entrada, e o parâmetro do tipo <code>void *</code>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1753,7 +1830,6 @@ A função recebe como parâmetros opções para configuração, a função de e
     <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from the main thread</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>O <em>handle</em> do <em>thread</em> deve ser alocado previamente à função de criação e liberado após o fim da execução do <em>thread</em>.
 É possível esperar pelo fim da execução usando o <code>pthread_join</code>, que recebe como parâmetro o <em>handle</em> do <em>thread</em> e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo <code>void **</code>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -1765,7 +1841,6 @@ A função recebe como parâmetros opções para configuração, a função de e
     <span class="n">free</span><span class="p">(</span><span class="n">thread_handles</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Para executar um programa PThread, compile com
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>gcc -pthread teste.c -o teste
 </code></pre></div>
@@ -1841,7 +1916,6 @@ O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envó
    <span class="k">pass</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Já o próximo exemplo usa o pacote <code>threading</code> e uma abordagem orientada a objetos. Observe que há momentos distintos no ciclo de vida do thread em que acontece a criação e o início da execução.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -1914,7 +1988,6 @@ O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envó
 <span class="nb">print</span> <span class="s2">&quot;Exiting Main Thread&quot;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma consequência desta divisão é que um mesmo objeto do tipo <code>Thread</code> pode ser reciclado e executado várias vezes.</p>
 <div class="admonition tip">
 <p class="admonition-title">Leia mais</p>
@@ -1951,7 +2024,6 @@ Java também provê diversas estruturas para comunicação e coordenação de th
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 </div>
 <div class="admonition example">
 <p class="admonition-title"><em>Runnable</em></p>
@@ -1976,7 +2048,6 @@ Java também provê diversas estruturas para comunicação e coordenação de th
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 </div>
 <p>Observe que nos dois exemplos, um método <code>run()</code> é implementado com o código a ser executado pelo <em>thread</em>. Em nenhum dos exemplos, contudo, o método é invocado diretamente. 
 Em vez disto, o método <code>start()</code>, sim, é invocado. Isto ocorre porquê antes de executar as instruções definidas pelo pelo programador no método <code>run()</code>,
@@ -2021,7 +2092,6 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Observe que a chamada a <code>sleep()</code> está dentro de um bloco <code>try/catch</code>. Isto é necessário pois é permitido à JVM acordar o <em>thread</em> em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o <em>thread</em>, ao acordar, verifique se já dormiu o suficiente.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -2070,7 +2140,6 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Quando um <em>thread</em> está sendo executado, outros podem ter que esperar até que complete. Por exemplo, no caso de um navegador
 Web, o <em>thread</em> que faz a renderização da página não pode começar a trabalhar enquanto o <em>thread</em>  que solicitou o HTML
 do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de esperar por outro usando o método <code>join()</code>.</p>
@@ -2145,7 +2214,6 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Invocar <code>t.join()</code> fará com que o <em>thread</em> corrente, neste caso o principal, espere indefinidamente até que <code>t</code> termine de executar.
 Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
 Caso a espera termine por causa de um <em>timeout</em>, é possível testar o estado atual do thread com <code>Thread.isAlive()</code>.</p>
@@ -2184,7 +2252,6 @@ Caso a espera termine por causa de um <em>timeout</em>, é possível testar o es
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <ul>
 <li>Instancie um programa que gere 10 <em>threads</em>. </li>
 <li>Todos os <em>threads</em> devem compartilhar <strong>uma mesma instância</strong> de <code>Counter</code></li>
@@ -2211,7 +2278,6 @@ Caso a espera termine por causa de um <em>timeout</em>, é possível testar o es
 <span class="n">e</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Executors normalmente implementam <em>thread pools</em>, que podem ser de diferentes tipos. 
 O mais simples é o de tamanho fixo em que há um número inicial de <em>threads</em> criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.</p>
 <p><code class="highlight"><span class="n">Executor</span> <span class="n">e</span> <span class="o">=</span> <span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">concurrent</span><span class="p">.</span><span class="na">Executors</span><span class="p">.</span><span class="na">newFixedThreadPool</span><span class="p">();</span></code></p>
@@ -2232,7 +2298,6 @@ else
   invoke the two pieces and wait for the results
 </code></pre></div>
 </td></tr></table>
-
 <h4 id="coordenacao">Coordenação</h4>
 <p>Como visto no exercício anterior, a execução de <em>threads</em> é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. </p>
 <p>Há várias astrações que podem ser usadas para coordenar as operações de <em>threads</em>, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são <em>locks</em>, variáveis de condição e semáforos.</p>
@@ -2271,7 +2336,6 @@ Observe a classe a seguir, que modifica o contador do exercício anterior.</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Caso dois <em>threads</em> invoquem os métodos <code>increment</code> e <code>decrement</code> ao mesmo tempo, por exemplo, a JVM fará com que um dos <em>threads</em> pare sua execução até que o outro tenha completado a invocação.
 Isto não quer dizer que executar o exercício anterior com esta versão do contador levará a saídas com incrementos completamente sequenciais, pois um <em>thread</em>  poderia parar de ser executado logo após incrementar o contador, depois de terminado o método <code>increment</code>, e só voltar a executar depois que outro tenha incrementado e impresso na tela o valor obtido. 
 O que quer dizer é que, mesmo que saídas estranhas existam, cada método foi executada integralmente antes da operação seguinte.</p>
@@ -2306,7 +2370,6 @@ Por isso, é essencial que o <code>synchronized</code> seja o mais limitado poss
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Neste caso, blocos sincronizados <strong>no mesmo objeto</strong>, não são executados concorrentemente, mas outros blocos sim.</p>
 <div class="admonition question">
 <p class="admonition-title">Exercício: bloco synchronized</p>
@@ -2354,7 +2417,6 @@ Por isso, é essencial que o <code>synchronized</code> seja o mais limitado poss
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 </details>
 </div>
 <h6>Sinalização</h6>
@@ -2391,7 +2453,6 @@ Usando estas variáveis, é possível coordenar <em>threads</em>, como no exempl
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Embora correta, esta abordagem, conhecida como <strong>espera ocupada</strong>, não é eficiente pois desperdiça computação.
 Felizmente, em Java, todos os objetos implementam os métodos <code>wait</code> e <code>notify/notifyAll</code>, que podem ser usados para sincronizar eficientemente <em>threads</em>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -2437,7 +2498,6 @@ Felizmente, em Java, todos os objetos implementam os métodos <code>wait</code> 
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Neste exemplo a execução da função <code>espereCondicao</code> é "pausada" por <code class="highlight"><span class="n">synch</span><span class="p">.</span><span class="na">wait</span><span class="p">()</span></code> até que uma notificação seja enviada via <code class="highlight"><span class="n">sync</span><span class="p">.</span><span class="na">notifiyAll</span><span class="p">()</span></code>, na função <code class="highlight"><span class="n">satisfacaCondicao</span><span class="p">()</span></code>.
 Observe que estas operações só podem ocorrer dentro de blocos sincronizados na variável usada na sinalização.</p>
 <h6><em>Locks</em></h6>
@@ -2459,11 +2519,9 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
   <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Como bem sabido, o uso dos "locks" em ordens diferentes pode levar a um <em>deadlock</em> pois um ciclo de dependências pode ser formado entre locks, detentores de locks e interessados em locks. O grafo de dependência seguinte exemplifica o cenário, em que o <em>thread</em> T1 obteve o lock2 e tenta obter o lock1, e o <em>thread</em> T2 obteve o lock1 e tenta obter o lock2.</p>
 <div class="mermaid">graph LR
       T1 --&gt; lock1 --&gt; T2 --&gt; lock2 --&gt; T1</div>
-
 <h6>Estruturas <em>thread-safe</em></h6>
 <p>Finalmente, Java também disponibiliza estruturas de dados que podem ser acessadas concorrentemente por múltiplos <em>threads</em> sem risco de corrupção, denominadas <em>thread-safe</em>.</p>
 <ul>
@@ -2508,7 +2566,6 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <h6>ThreadLocal</h6>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2529,7 +2586,6 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <div class="admonition tip">
 <p class="admonition-title">Leia mais</p>
 <p>Para aprender mais, muito mais sobre concorrência em Java, ótimas referências são:</p>
@@ -2578,8 +2634,10 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 </li>
 </ol>
 </div>
-                
-              
+
+  <!-- Last update of source file -->
+
+
               
                 
 
@@ -2596,14 +2654,14 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../intro/" title="Introdução" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../intro/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Previous
+                  Anterior
                 </span>
                 Introdução
               </div>
@@ -2611,17 +2669,17 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
           </a>
         
         
-          <a href="../comm/" title="Comunicação" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../comm/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Próximo
                 </span>
                 Comunicação
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -2644,15 +2702,15 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

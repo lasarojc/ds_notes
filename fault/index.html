@@ -1,8 +1,6 @@
 
-
-
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="pt" class="no-js">
   <head>
     
       <meta charset="utf-8">
@@ -10,8 +8,9 @@
       
       
       
+      
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.8">
     
     
       
@@ -19,25 +18,34 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.a676eddb.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.cb6bc1d0.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#000000">
+        
       
     
     
     
       
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
       
     
     
     
+      <link rel="stylesheet" href="../css/extra.css">
+    
     
       
         
-<link rel="preconnect dns-prefetch" href="https://www.google-analytics.com">
-<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview")})</script>
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}),document.addEventListener("DOMContentSwitch",function(){ga("send","pageview",document.location.pathname)})</script>
 <script async src="https://www.google-analytics.com/analytics.js"></script>
       
     
@@ -45,8 +53,17 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="black" data-md-color-accent="">
+      
+        <script>matchMedia("(prefers-color-scheme: dark)").matches&&document.body.setAttribute("data-md-color-scheme","slate")</script>
+      
   
+    
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
@@ -54,7 +71,7 @@
       
         
         <a href="#tolerancia-a-falhas" class="md-skip">
-          Skip to content
+          Ir para o conteúdo
         </a>
       
     </div>
@@ -62,54 +79,58 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid" aria-label="Header">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-header-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
     <div class="md-header-nav__title" data-md-component="header-title">
-      
-        <div class="md-header-nav__ellipsis">
-          <span class="md-header-nav__topic md-ellipsis">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             Notas em Sistemas Distribuídos
           </span>
-          <span class="md-header-nav__topic md-ellipsis">
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
             
               Tolerância a Falhas
             
           </span>
         </div>
-      
+      </div>
     </div>
     
       <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
       </label>
       <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
       </button>
     </form>
     <div class="md-search__output">
       <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Type to start searching
+            Initializing search
           </div>
           <ol class="md-search-result__list"></ol>
         </div>
@@ -119,12 +140,23 @@
 </div>
     
     
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
   </nav>
 </header>
     
     <div class="md-container" data-md-component="container">
-      
-        
       
       
         
@@ -133,19 +165,38 @@
         <div class="md-main__inner md-grid">
           
             
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
 
     </a>
     Notas em Sistemas Distribuídos
   </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -153,84 +204,15 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href=".." title="Prólogo" class="md-nav__link">
-      Prólogo
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../intro/" title="Introdução" class="md-nav__link">
-      Introdução
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../basics/" title="Fundamentos" class="md-nav__link">
-      Fundamentos
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../comm/" title="Comunicação" class="md-nav__link">
-      Comunicação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../arch/" title="Arquiteturas" class="md-nav__link">
-      Arquiteturas
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../coord/" title="Coordenação" class="md-nav__link">
-      Coordenação
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../time/" title="Tempo" class="md-nav__link">
-      Tempo
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
 
     
       
@@ -238,38 +220,126 @@
       
 
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
       
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../basics/" class="md-nav__link">
+        Fundamentos
+      </a>
+    </li>
+  
+
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
+
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tolerância a Falhas
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Tolerância a Falhas
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Tolerância a Falhas" class="md-nav__link md-nav__link--active">
-      Tolerância a Falhas
-    </a>
-    
+      </a>
       
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -518,6 +588,20 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-kafka" class="md-nav__link">
+    Estudo de caso: Kafka
+  </a>
   
 </li>
         
@@ -529,56 +613,69 @@
     </ul>
   
 </nav>
-    
-  </li>
+      
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../disdb/" title="Bancos de Dados" class="md-nav__link">
-      Bancos de Dados
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../disfs/" title="Sistemas de Arquivos" class="md-nav__link">
-      Sistemas de Arquivos
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
 
     
       
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../tech/" title="Tecnologias" class="md-nav__link">
-      Tecnologias
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
 
     
       
       
       
 
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
 
-  <li class="md-nav__item">
-    <a href="../projeto/" title="Projeto" class="md-nav__link">
-      Projeto
-    </a>
-  </li>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
 
     
   </ul>
@@ -588,21 +685,20 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
     
   
   
     <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
+      <span class="md-nav__icon md-icon"></span>
+      Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
       
@@ -851,6 +947,20 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-kafka" class="md-nav__link">
+    Estudo de caso: Kafka
+  </a>
   
 </li>
         
@@ -870,12 +980,19 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                
-                  
-                
-                
-                <h1 id="tolerancia-a-falhas">Tolerância a Falhas</h1>
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="tolerancia-a-falhas">Tolerância a Falhas</h1>
 <h2 id="dependabilidade">Dependabilidade</h2>
 <p>Nós escrevemos software para que resolvam problemas de espectro bem amplo, indo, do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
 Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
@@ -940,7 +1057,6 @@ Contudo, no 737 Max apenas um sensor é usado e no caso de falha do mesmo, o avi
 O erro era irreparável, levando a grandes prejuízos.</p>
 <p><img alt="[Recall Subaru()https://spectrum.ieee.org/riskfactor/computing/it/coding-error-leads-293-subaru-ascents-to-the-car-crusher)]" src="images/subaru.png" /></p>
 <!--Car Hack -- 2017, images/carhack, https://www.wired.com/story/car-hack-shut-down-safety-features/-->
-
 </div>
 </div>
 </div>
@@ -1027,8 +1143,8 @@ Dependendo dos efeitos e tratamentos.
 * Fail fast - para o fluxo de defeitos (e possível reinício)
 ![Cadeia de supervisão](images/httpatomoreillycomsourceoreillyimages300817.jpg)
 
-* Robusto -- erros não atrapalham execução (tratamento de exceções)
-* Quebradiço (*brittle*) -- não resiliente a falhas
+* Robusto - erros não atrapalham execução (tratamento de exceções)
+* Quebradiço (*brittle*) - não resiliente a falhas
 -->
 
 <h3 id="redundancia-de-processos">Redundância de Processos</h3>
@@ -1213,7 +1329,6 @@ end
     ABCast1 --&gt;&gt; App1: entregar m'
       ABCast2 --&gt;&gt;- App2: entregar m'
 </div>
-
 <p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span class="arithmatex">\(m\)</span> e depois <span class="arithmatex">\(m'\)</span>.
 Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.</p>
 <h4 id="estudo-de-caso-do-raft">Estudo de Caso do Raft</h4>
@@ -1248,9 +1363,8 @@ Contudo, estes protocolos são mais complexos de se implementar e por isso raram
 <li><code>rm /tmp/file1</code></li>
 </ul>
 <h3 id="arcaboucos-para-coordenacao">Arcabouços para coordenação</h3>
-<p>Caso você queira implementar a replicação de máquinas de estados ou qualquer outro solução que possa ser construída sobre primitivas de comunicação em grupo, você tem a opção de implementar um protocolo de difusão atômica desde o zero.
-A tarefa, contudo, é ingrata.<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">9</a></sup>
-Felizmente também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenaç!ao coordenação comuns em sistemas distribuídos.</p>
+<p>Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema<sup id="fnref:cons_core"><a class="footnote-ref" href="#fn:cons_core">10</a></sup>.
+Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">9</a></sup>. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.</p>
 <h4 id="estudo-de-caso-copycat">Estudo de caso: Copycat</h4>
 <p><a href="http://atomix.io/copycat/">Copycat </a> é um arcabouço de replicação de máquinas de estados implementada pela <a href="http://atomix.io/">Página Web</a>Atomix.
 Na base do Copycat está uma implementação do Raft.
@@ -1277,7 +1391,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
 <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Tarefa</span><span class="p">()).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 <ul>
 <li>Classe anônima - uso único</li>
 </ul>
@@ -1294,7 +1407,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
 <span class="p">}).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 <ul>
 <li>Lambda</li>
 </ul>
@@ -1307,7 +1419,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
               <span class="p">}).</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 </div>
 <input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Fluent</label><div class="tabbed-content">
 <ul>
@@ -1324,7 +1435,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
       <span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">s</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
 </code></pre></div>
 </td></tr></table>
-
 </div>
 <input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Future</label><div class="tabbed-content">
 <ul>
@@ -1335,7 +1445,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
 <span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">futFib</span> <span class="o">=</span> <span class="n">executor</span><span class="p">.</span><span class="na">submit</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="mi">217</span><span class="p">)};</span>
 </code></pre></div>
 </td></tr></table>
-
 <ul>
 <li>Quando será executado?  Em algum momento.    </li>
 <li>Como pegar o resultado? </li>
@@ -1349,7 +1458,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
 <span class="kt">int</span> <span class="n">fib217</span> <span class="o">=</span> <span class="n">futFib</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 <ul>
 <li>Em qual thread?  Em algum thread. Depende do Executor Service usado.  </li>
 </ul>
@@ -1416,7 +1524,6 @@ Sobre o Raft, uma API simples permite a criação de máquinas de estados replic
 <span class="o">[</span>INFO<span class="o">]</span> ---------------------------------------
 </code></pre></div>
 </td></tr></table>
-
 <p>Antes de começar a escrever suas prórpia máquinas de estado, familiarize-se com a estrutura do projeto em <a href="https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine">https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine</a></p>
 <p>Observe que há três pastas: </p>
 <ul>
@@ -1474,7 +1581,6 @@ mvn exec:java <span class="se">\\</span>
   -Dexec.args<span class="o">=</span><span class="s2">&quot;2 127.0.0.1 5000 127.0.0.1 5001 127.0.0.1 5002&quot;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>O cliente não precisa de um identificador, apenas dos pares IP/porta dos servidores.
 Por exemplo, use o comando:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -1484,7 +1590,6 @@ Por exemplo, use o comando:</p>
   -Dexec.args<span class="o">=</span><span class="s2">&quot;127.0.0.1 5000 127.0.0.1 5001 127.0.0.1 5002&quot;</span>
 </code></pre></div>
 </td></tr></table>
-
 <div class="admonition exercise">
 <p class="admonition-title">Exercício</p>
 <p>Uma vez executado o projeto, modifique-o para incluir uma nova operação (<code>Command</code>) e nova consulta (<code>Query</code>), de sua escolha.</p>
@@ -1579,7 +1684,6 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
 <span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Adicione também o plugin Maven e o plugin para gerar um <code>.jar</code> com todas as dependências. Observe que estou usando Java 14, mas você pode mudar para a sua versão.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -1640,7 +1744,6 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
 <span class="nt">&lt;/build&gt;</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Crie uma nova classe denominada <code>Cliente</code> no arquivo <code>Cliente.java</code>.
 Nesta classe, iremos criar um objeto <code>RaftClient</code> que será usado para enviar operações para os servidores. 
 Esta classe é importada juntamente com outras várias dependências, adicionadas no <code>pom.xml</code>, que devemos instanciar antes do <code>RaftClient</code>.</p>
@@ -1677,7 +1780,6 @@ Obviamente que voce deveria ser estes parâmetros como argumentos para o program
 <span class="p">{</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>O campo <code>raftGroupId</code> identifica um cluster Ratis; isso quer dizer que um memsmo processo pode participar de vários <em>clusters</em>, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um <a href="https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal">UUID</a>.</p>
 <p><code>id2addr</code> é um mapa do identificador de cada processo no cluster para seu endereço IP + Porta.
 Aqui usei várias portas distintas porquê todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IP distintos, poderia usar a mesma porta em todos.</p>
@@ -1714,7 +1816,6 @@ Aqui usei várias portas distintas porquê todos os processos estão rodando na 
         <span class="kd">final</span> <span class="n">RaftGroup</span> <span class="n">raftGroup</span> <span class="o">=</span> <span class="n">RaftGroup</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">RaftGroupId</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFromUtf8</span><span class="p">(</span><span class="n">raftGroupId</span><span class="p">)),</span> <span class="n">addresses</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma vez criado o grupo, criamos o cliente usando a fábrica retornada por <code>RaftClient.newBuilder()</code>.
 A fábrica deve ser configurada com os dados do grupo e o tipo de transporte, neste caso gRPC.
 Também é necessário o identificador do processo que está se conectando ao grupo; neste caso, usamos um identificador aleatório qualquer, diferente do que faremos com os servidores.</p>
@@ -1735,7 +1836,6 @@ Também é necessário o identificador do processo que está se conectando ao gr
                                       <span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma vez criado o cliente, podemos fazer invocações de operações nos servidores. Cada operação será invocada em todos os servidores, na mesma ordem.
 Este protótipo suporta duas operações, <code>add</code> e <code>get</code>. A operação <code>add</code> é codificada como uma <code>String</code>, <code>add:k:v</code>, onde <code>k</code> e <code>v</code> são do tipo <code>String</code>. <code>add:k:v</code> adiciona uma entrada em um mapa implementado pelo nosso servidor com chave <code>k</code> e valor <code>v</code>.
 Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à chave <code>k</code>, se presente no mapa.</p>
@@ -1784,7 +1884,6 @@ O código é auto explicativo.</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Um vez criado o cliente, crie a classe <code>Servidor</code>, no arquivo <code>Servidor.java</code>; a parte inicial do código é semelhante à do cliente.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -1861,7 +1960,6 @@ O código é auto explicativo.</p>
                                           <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>A primeira diferença vem na necessidade de identificar o servidor dentro do conjunto de servidores, o que é feito com um <code>RaftPeerId</code>.
 Como cada servidor deve usar um identificador único, do conjunto pré-determinado em <code>id2addr</code>, o identificador é passado como argumento para o programa, obrigatoriamente.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -1881,7 +1979,6 @@ Como cada servidor deve usar um identificador único, do conjunto pré-determina
         <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Encare a seção seguinte como uma receita, mas observe que o método <code>RaftServerConfigKeys.setStorageDir</code> recebe o nome de uma pasta como argumento, que será usada para armazenar o estado da máquina de estados.
 Se você executar o servidor múltiplas vezes, a cada nova execução o estado anterior do sistema será recuperado desta pasta.
 Para <strong>limpar</strong> o estado, apague as pastas de cada servidor.</p>
@@ -1894,7 +1991,6 @@ Para <strong>limpar</strong> o estado, apague as pastas de cada servidor.</p>
         <span class="n">RaftServerConfigKeys</span><span class="p">.</span><span class="na">setStorageDir</span><span class="p">(</span><span class="n">properties</span><span class="p">,</span> <span class="n">Collections</span><span class="p">.</span><span class="na">singletonList</span><span class="p">(</span><span class="k">new</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;/tmp/&quot;</span> <span class="o">+</span> <span class="n">myId</span><span class="p">)));</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>A máquina de estados em si é especificada no próximo excerto, em <code>setStateMachine</code>, que veremos a seguir.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1913,7 +2009,6 @@ Para <strong>limpar</strong> o estado, apague as pastas de cada servidor.</p>
         <span class="n">raftServer</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Uma vez iniciado o servidor, basta esperar que ele termine antes de sair do programa.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -1926,7 +2021,6 @@ Para <strong>limpar</strong> o estado, apague as pastas de cada servidor.</p>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Vamos agora para a definição da classe <code>MaquinaDeEstados</code>, no arquivo <code>MaquinaDeEstados.java</code>.
 Esta classe deve implementar a interface <code>org.apache.ratis.statemachine.StateMachine</code> e seus vários métodos ou, mais simples, estende <code>org.apache.ratis.statemachine.impl.BaseStateMachine</code>, a abordagem que usaremos aqui.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
@@ -1934,7 +2028,6 @@ Esta classe deve implementar a interface <code>org.apache.ratis.statemachine.Sta
 <span class="p">{</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Por enquanto, ignoraremos o armazenamento do estado em disco, mantendo-o simplesmente em memória no campo <code>key2values</code>, e simplesmente implementaremos o processamento de comandos, começando pela implementação do método <code>query</code>.</p>
 <p>Este método é reponsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método <code>RaftClient::sendReadOnly</code>. A única <code>query</code> no nosso sistema é o <code>get</code>.
 No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado em quebrado em operação (<code>get</code>) e chave , usando <code>:</code> como delimitador.
@@ -1960,7 +2053,6 @@ Recuperado o valor associado à chave, o mesmo é colocado em um <code>Completab
     <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>O método <code>applyTransaction</code> implementa operações que alteram o estado, como <code>add</code>, enviadas com o método <code>RaftClient::send</code>. 
 Da mesma forma que em <code>get</code>, a operação deve ser recuperada em quebrada em operação (<code>add</code>), chave e valor, usando <code>:</code> como delimitador.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1992,7 +2084,6 @@ Da mesma forma que em <code>get</code>, a operação deve ser recuperada em queb
     <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-
 <p>Pronto, você já tem uma máquina de estados replicada, bastando agora apenas compilá-la e executá-la.
 Para compilar, de raiz do projeto execute o comando <code>mvn package</code>. 
 A primeira vez que faz isso pode demorar um pouco pois várias dependências são baixadas da Internet.
@@ -2012,7 +2103,6 @@ INFO<span class="o">]</span> ---------------------------------------------------
 <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
 </code></pre></div>
 </td></tr></table>
-
 <p>Então, em três terminais diferentes, execute os seguintes comandos:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2021,7 +2111,6 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p2
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Servidor p3
 </code></pre></div>
 </td></tr></table>
-
 <p>Para executar o cliente, em um outro terminal, faça, por exemplo,</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2032,7 +2121,6 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get k1
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2 testek2
 </code></pre></div>
 </td></tr></table>
-
 <p>Todo o código está disponível no <a href="https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor">Github</a></p>
 <details class="todo"><summary>Exerício</summary><ul>
 <li>Adicionar operações</li>
@@ -2211,77 +2299,66 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
 </details>
 <details class="todo"><summary>Todo</summary><p>falhas bizantinas</p>
 </details>
-<!--
+<p>&lt;!--
 \subsection{Tolerância a Falhas}
-\begin{frame}{O quê?}
+<script type="math/tex; mode=display">\begin{frame}{O quê?}
 Manter dados/serviços disponíveis a despeito de falhas.
-\end{frame}
-
-\begin{frame}{Replicação}
+\end{frame}</script>
+</p>
+<div class="arithmatex">\[\begin{frame}{Replicação}
 No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
-\end{frame}
-
-\begin{frame}{Líder e Seguidor}
+\end{frame}\]</div>
+<div class="arithmatex">\[\begin{frame}{Líder e Seguidor}
 \begin{itemize}
 *  Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
 *  Consumidor conversa com líder. Líder envia dados ao consumidor.
 *  Líder replica dados para seguidores.
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Replicar}
-Passo 6  ensina a criar um sistema com múltiplos brokers.
-
-\begin{itemize}
+\end{frame}\]</div>
+<p>\begin{frame}{Replicar}
+Passo 6  ensina a criar um sistema com múltiplos brokers.</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
 *  Identificador
 *  Porta (mesmo servidor)
 *  \alert{Log directory}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Replicar}
+\end{itemize}</script>
+\end{frame}</p>
+<div class="arithmatex">\[\begin{frame}{Replicar}
 \begin{itemize}
 *  Crie um novo tópico, com RF = 3 e duas partições
-*  \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic <topico>|
+*  \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic &lt;topico&gt;|
 *  Lista de réplicas
 *  Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
 \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Zookeeper}
+\end{frame}\]</div>
+<div class="arithmatex">\[\begin{frame}{Zookeeper}
 \begin{itemize}
 *  Permite que nós do cluster se descubram
 *  Elege líder
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Armazenamento}
+\end{frame}\]</div>
+<div class="arithmatex">\[\begin{frame}{Armazenamento}
 \begin{itemize}
 *  Dado deve ser removido depois de um tempo de ``retenção''
 *  Pode definir retenção por tamanho (por partição, não tópico)
 \end{itemize}
-\end{frame}
-
-
-\subsection{Produtor}
-
-\begin{frame}{Produtor}
+\end{frame}\]</div>
+<p>\subsection{Produtor}</p>
+<div class="arithmatex">\[\begin{frame}{Produtor}
 \begin{itemize}
 *  Produtor envia mensagens para os brokers
 *  Producer API
 *  \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
 \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{SimpleProducer.java}
+\end{frame}\]</div>
+<p>\begin{frame}[fragile]{SimpleProducer.java}
 \begin{lstlisting}[language=Java]
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import java.util.Properties;
-
-public class SimpleProducer {
+import java.util.Properties;</p>
+<p>public class SimpleProducer {
  public static void main(String[] args) {
   String topicName = "SimpleProducerTopic";
   String key = "Chave";
@@ -2289,45 +2366,36 @@ public class SimpleProducer {
   Properties props = new Properties();
   props.put("bootstrap.servers", "localhost:9092, localhost:9093");
   props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-
-  Producer<String, String> producer = new KafkaProducer<String, String>(props);
-
-  ProducerRecord<String, String> record = new ProducerRecord<String, String>(topicName, key, value);
-
-  producer.send(record);
-  producer.close();
-
-  System.out.println("SimpleProducer Completed.");
+  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");</p>
+<p>Producer<String, String> producer = new KafkaProducer<String, String>(props);</p>
+<p>ProducerRecord<String, String> record = new ProducerRecord<String, String>(topicName, key, value);</p>
+<p>producer.send(record);
+  producer.close();</p>
+<p>System.out.println("SimpleProducer Completed.");
  }
-}
-
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}{Workflow}
-\includegraphics[width=.8\textwidth]{images/kafka6}
-
-\begin{itemize}
+}</p>
+<p>\end{lstlisting}
+\end{frame}</p>
+<p>\begin{frame}{Workflow}
+\includegraphics[width=.8\textwidth]{images/kafka6}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
 *  Particionador default
     \begin{itemize}
     *  Partition
     *  Hash da ``chave''
     *  Round robin
-    \end{itemize}
+    \end{itemize}</script>
 *  Retry automático
 \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Fire and Forget}
+\end{frame}</p>
+<div class="arithmatex">\[\begin{frame}{Fire and Forget}
 Envia a mensagem e não se importa com o resultado.
-\end{frame}
-
-\begin{frame}[fragile]{Synchronous Call}
-Envia a mensagem e espera para saber se foi entregue ou não.
-
-\begin{lstlisting}[language=Java]
+\end{frame}\]</div>
+<p>\begin{frame}[fragile]{Synchronous Call}
+Envia a mensagem e espera para saber se foi entregue ou não.</p>
+<p>
+<script type="math/tex; mode=display">\begin{lstlisting}[language=Java]
 try{
  RecordMetadata metadata = producer.send(record).get();
  System.out.println("Message is sent to Partition no " + metadata.partition() + " and offset " + metadata.offset());
@@ -2338,21 +2406,17 @@ try{
 }finally{
  producer.close();
 }
-\end{lstlisting}
-\begin{itemize}
+\end{lstlisting}</script>
+<script type="math/tex; mode=display">\begin{itemize}
 *  Future
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Callback}
-Envia a mensagem e é invocado depois de receber um ACK
-
-\begin{lstlisting}[language=Java]
-producer.send(record, new MyProducerCallback());
-
-...
-
-class MyProducerCallback implements Callback{
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}[fragile]{Callback}
+Envia a mensagem e é invocado depois de receber um ACK</p>
+<p>\begin{lstlisting}[language=Java]
+producer.send(record, new MyProducerCallback());</p>
+<p>...</p>
+<p>class MyProducerCallback implements Callback{
  @Override
  public  void onCompletion(RecordMetadata recordMetadata, Exception e) {
   if (e != null)
@@ -2362,27 +2426,21 @@ class MyProducerCallback implements Callback{
  }
 }
 \end{lstlisting}
-\begin{itemize}
+<script type="math/tex; mode=display">\begin{itemize}
 *  max.in.flight.requests.per.connection
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Default Partitioner}
-\includegraphics[width=.8\textwidth]{images/kafka6}
-
-\begin{itemize}
+\end{itemize}</script>
+\end{frame}</p>
+<p>\begin{frame}{Default Partitioner}
+\includegraphics[width=.8\textwidth]{images/kafka6}</p>
+<div class="arithmatex">\[\begin{itemize}
 *  Partition
 *  Hash da ``chave'' \% \#partition
 *  Round robin
-\end{itemize}
-
-\href{https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo de Custom Partitioner}
-\end{frame}
-
-\subsection{Consumidor}
-
-\begin{frame}{Consumer Groups}
+\end{itemize}\]</div>
+<p>\href{<a href="https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo">https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo</a> de Custom Partitioner}
+\end{frame}</p>
+<p>\subsection{Consumidor}</p>
+<div class="arithmatex">\[\begin{frame}{Consumer Groups}
 \begin{itemize}
 *  Múltiplos consumidores processam dados em paralelo
 *  Grupo de consumidores de tópicos
@@ -2392,41 +2450,36 @@ class MyProducerCallback implements Callback{
 *  Group coordinator (broker eleito): lista de consumidores
 *  Group líder: rebalanceamento
 \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile, allowframebreaks]{Consumer}
+\end{frame}\]</div>
+<p>\begin{frame}[fragile, allowframebreaks]{Consumer}
 \begin{lstlisting}[language=Java]
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-
-import java.io.IOException;
+import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.io.IOException;
 import java.util.Arrays;
-import java.util.Properties;
-
-public class SimpleConsumer {
+import java.util.Properties;</p>
+<p>public class SimpleConsumer {
  public static void main(String[] args) throws IOException {
   String topicName = "SimpleProducerTopic";
-  String groupName = "SupplierTopicGroup";
-
-  Properties props = new Properties();
+  String groupName = "SupplierTopicGroup";</p>
+<p>Properties props = new Properties();
   props.put("bootstrap.servers", "localhost:9092,localhost:9093");
   props.put("group.id", groupName);
   props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-
-  KafkaConsumer<String, String> consumer = null;
-
-  try {
+  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</p>
+<p>KafkaConsumer<String, String> consumer = null;</p>
+<p>try {
    consumer = new KafkaConsumer<String, String>(props);
-   consumer.subscribe(Arrays.asList(topicName));
-
-   while (true) {
-    ConsumerRecords<String,String> records = consumer.poll(100);
-
-    for (ConsumerRecord<String, String> record: records)
-     System.out.println("Key = " + record.key() + " Value = " + record.value());
-   }
+   consumer.subscribe(Arrays.asList(topicName));</p>
+<p>while (true) {
+    ConsumerRecords<String,String> records = consumer.poll(100);</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>for (ConsumerRecord&lt;String, String&gt; record: records)
+ System.out.println(&quot;Key = &quot; + record.key() + &quot; Value = &quot; + record.value());
+</code></pre></div>
+</td></tr></table>
+<p>}
   } catch (Exception ex) {
    ex.printStackTrace();
   } finally {
@@ -2434,15 +2487,13 @@ public class SimpleConsumer {
   }
  }
 }
-\end{lstlisting}
-
-\begin{itemize}
+\end{lstlisting}</p>
+<p>
+<script type="math/tex; mode=display">\begin{itemize}
 *  Se não definir grupo, será novo grupo, e lerá todas as mensagens disponíveis
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Poll}
+\end{itemize}</script>
+\end{frame}</p>
+<div class="arithmatex">\[\begin{frame}{Poll}
 \begin{itemize}
 *  poll também envia hearbeat
 *  executar a cada 3s, no mínimo    
@@ -2462,333 +2513,230 @@ public class SimpleConsumer {
         \end{itemize}
     \end{itemize}
 \end{itemize}
-\end{frame}
-
-
-\subsection{Arquitetura}
-%\begin{frame}{Líder}
-
-%\end{frame}
-
-%mensagens são ack depois de copiadas para todas as réplicas
+\end{frame}\]</div>
+<p>\subsection{Arquitetura}
+%\begin{frame}{Líder}</p>
+<p>%\end{frame}</p>
+<p>%mensagens são ack depois de copiadas para todas as réplicas
 %replicas lentas são removidas se lentas ou falhas
 %at least once, at most once, exactly one (nao suportado)
 %rolling upgrade
 %tls security
 %rest
-%CRUD
-
-
-
-
-
-
-
-
-
-
-
-
-### Falhas Bizantinas 
-
-Uma história de três exércitos -- Versão 2}
-Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.
-
-Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.
-
-Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.
-
-Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.
-
-Fonte: \href{http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}
-
-
-Generais e Tenentes
-Problema pode ser mudado para:
-
-    * Comandante envia ordem.
-    * Todos os tenentes leais executam ordem recebida.
-    * Comandante pode ser traidor.
-
-
-
-
-Generais e Tenentes
-Suponha 3 exércitos. \\
-Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\\
-Ou \\
-Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.
-
- E se os tenentes trocarem informações?
-
- Como diferenciar casos em que Comandante ou Tenente é traidor?
-
-
-
-
-
-Generais e Tenentes
-Só há solução se mais de $\frac{2}{3}$ dos Generais/Tenentes são leais.
-
-
-%http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5
-
-Comunicação}
-
-    * Toda mensagem enviada é entregue corretamente.
-    * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
-
-
-
-
-4/0}
-General manda ordens.
-
-Ausência de ordem = Retirada
-
-Tenente repassa ordens
-
-Maioria de comandos é comando a ser seguido
-
-
-
-4/0}
-General manda ordens.
-
-Ausência de ordem = Retirada
-
-Tenente repassa ordens
-
-Maioria de comandos é comando a ser seguido
-
-
-
-Comunicação}
-
-    * Toda mensagem enviada é entregue corretamente.
-    * Toda mensagem é assinada.
-    * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
-
-
- É possível detectar inconsistências e processos bizantinos.
-
-
-
-%http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf
-\section{Outros tópicos}
-
-%TODO \subsection{Detectores de Falhas}
-
-
-
-
-\subsection{Reconfiguração}
-
-Reconfiguração da Aplicação}
-Na segunda entrega do projeto, você distribuiu a carga do seu banco de dados entre vários nós. Caso um nó falhe, parte dos seus dados será perdida.
-
-Para corrigir esta deficiência, na terceira entrega, cada nó será replicado em três vias e, assim, caso um nó falhe, outros dois continuarão a manter o dado.
-
-
-
-Reconfiguração da Aplicação}
-Ainda assim, há problemas. E se mais de um, de um mesmo conjunto de réplicas, falhar? 
-
- Embora seja pequena a probabilidade de dois nós de um mesmo grupo falharem em instantes próximos, dado tempo suficiente, qualquer evento com probabilidade diferente de 0 acontecerá.
-
- Precisamos de uma forma de trocar nós da aplicação que falharam por novos nós. 
-
-Este é problema denominado Pertinência de Grupo ou \emph{Group Membership}
-
-
-
-Group Membership}
-Para não correr o risco, retire o processo falhos do grupo e coloque outro no lugar!
-
-I.e., mude a visão que o sistema de quem é o grupo.
-
-
-
-
-Visões}
-\includegraphics[width=.7\textwidth]{images/vc}
-
-Fonte: \href{https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul Krzyzanowski}
-
-$G$ é o grupo de processos participando do sistema, é a Visão do Sistema.
-
-
-Inicialmente, $G$ consiste de apenas o processo $p$, como o processo que cria o cluster no Atomix. Na sequência, outros processo vão se unindo ao grupo através de View Changes. Uma vez que $p$ e $q$ estão no grupo, inicia-se a comunicação entre eles. Quando $r, s$ e $t$ aparecem, também entram no grupo por meio de uma nova visão.
-
-Finalmente, quando ambos $p$ e $q$ falham, os outros processo os excluem da visão, e continuam funcionando normalmente.
-
-
-Impossibilidade de Detecção de Falhas}
-Em um sistema distribuído assíncrono, é impossível distinguir com toda certeza um processo falho (parou de funcionar) de um que está lento.
-
- Como decidir se mudar ou não de visão?
-
-
-Ou aceita a imprecisão e muda quando suspeitar de uma falha, ou corre o risco de ficar esperando \emph{ad eternum} e não mudar, mesmo quando uma falha aconteceu.
-
-Uma ``solução''!}
-Quando suspeitar de falha, reporte suspeita a outros processos, que também passarão a suspeitar.
-
-Tome decisão baseado na suspeita, isto é, troque de visão quando houver suspeita.
-
-Pague o preço de uma suspeita errada, isto é, quando um processo for removido da visão indevidamente, adicione-o novamente.
-
-
-
-Sincronismos Virtual}
-Gerenciamento de Grupo/Group Membership e Comunicação em Grupo
-
-    * Processos se unem ao grupo
-    * Processos saem do grupo
-    * Processos enviam mensagens para o grupo
-    * Diferentes ordenações
-
-            * Atomic Multicast
-
-
-
-
-Visão de Grupo}
-
-    * Visão: conjunto de processos no sistema.
-    * Multicast feito para processos na visão.
-    * Visão é consistente entre os processos.
-    * Entrada e saída de processos muda a visão.
-
-
-
-Eventos}
-
-    * Mensagem
-    * Mudança de Visão
-    * Checkpoint
-
-
-
-Visões}
-\includegraphics[width=.7\textwidth]{images/vc}
-
-Fonte: \href{https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul Krzyzanowski}
-
-
-Sincronismo Virtual}
-Deve satisfazer
-
-    * Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.
-    * Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.
-    * Se um processo não recebe a mensagem, ele não estará na próxima visão.
-    * Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.
-
-
-A troca de Visão é uma barreira.
-
-
-ISIS Toolkit}
-    Sistema de Sincronismo Virtual tolerante a falhas desenvolvido por Ken Birman, Cornell University (\url{http://www.cs.cornell.edu/Info/Projects/Isis/})\\
-    ISIS: An Environment for Constructing Fault-Tolerant Distributed Systems. Kenneth Birman, D. Skeen, A. El Abbadi, W. C. Dietrich and T. Raeuchle. May 1983.
-
-
-    * 100.000's/s
-    * Em uso até 2009
-    * NY Stock Exchange
-    * Swiss Exchange
-    * US Navy
-    * Precursos de sistemas como Zookeeker
-    * Totem, ISIS, Horus, Transis (Partições), \alert{Spread}, \alert{Ensamble}, \alert{JGroups}, Appia, QuickSilver, vSynch (née ISIS 2)
-
-
-
-Difusão Totalmente Ordenada}
-
-    * Corretude: Se um processo $p$ envia uma mensagem $m$ para processos no grupo $G$, então se $p$ não falha, todos os processos corretos em $G$ recebem a mensagem.
-
-    * Acordo: Se um processo correto em $G$ recebe uma mensagem $m$, então todo processo correto em $G$ recebe $m$
-
-    * Ordenação: Se um processo recebe mensagem $m$ e depois $n$, então qualquer processo que receba a mensagem $n$ deve primeiro receber $m$
-
-    * Validade: Somente mensagens difundidas são entregues.
-
-
-E se mandarmos mensagens do tipo ``A partir da entrega desta mensagem, o grupo de processos é $G$.''
-
-
-Sincronismo Virtual}
-Deve satisfazer
-
-    * Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.\\
-    Mensagens de troca de visão podem incrementar um contador\\
-    Mensagens normais carregam o valor atual do contador\\
-    Mensagem descartada se valor na mensagem é maior contador no destinatário
-
-    * Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.\\
-    Pela difusão, se a mensagem de troca for entregue para um processo, será entregue para todos os corretos, na mesma ordem
-    Se mensagem comum for entregue antes para algum, será entregue ante para todos.
-
-    * Se um processo não recebe a mensagem, ele não estará na próxima visão.\\
-    Se um processo não recebe uma mensagem comum que foi entregue pelos outros, então ele não troca de visão.
-
-    * Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.\\
-    Caso contrário, não haveria porquê trocar os processos
-
-
-
-State Transfer}
-\includegraphics[width=.7\textwidth]{images/state_transfer}
-
-
-\href{http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building Secure and Reliable Network Applications}
-
-
-
-Difusão Atômica $\equiv$ Sincronismo Virtual?}
-Seria uma boa aproximação, mas que poderia ser relaxada. 
-
-Em certas aplicações, FIFO ou Causal seriam suficientes dentro da visão, desde que a mensagem de mudança da visão seja totalmente ordenada com as comuns.
-
-
-
-Particionamento}
-E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões independentes?
-
- \emph{Primary Partition Model} -- Somente a partição primária pode mudar de visão.
-
- Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.
-
-
-
-Extended Virtual Synchrony}
-\emph{Primary Partition Model} -- Não é adequado a uma rede geograficamente distribuída (Internet scale).
-
- Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.
-
-
-É possível que no trabalho dois, alguns de vocês tenham tentado gerar locks do sistema para manipular objetos distribuídos no sistema. Esse locks são perigosos por quê processos pode travar/quebrar/falhar e nunca liberarem os locks. O uso de um algoritmo VS poderia ser usado para resolver o problema.\right 
-
-
-
-
-[Swim](https://asafdav2.github.io/2017/swim-protocol/)
-
-
-
-
-http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
-
-
-
-
-
-### Estudo de caso: Kafka
-???todo
->
-
-
-
+%CRUD</p>
+<h3 id="falhas-bizantinas">Falhas Bizantinas</h3>
+<p>Uma história de três exércitos -- Versão 2}
+Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.</p>
+<p>Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.</p>
+<p>Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.</p>
+<p>Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.</p>
+<p>Fonte: \href{<a href="http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport">http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport</a>, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}</p>
+<p>Generais e Tenentes
+Problema pode ser mudado para:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Comandante envia ordem.
+* Todos os tenentes leais executam ordem recebida.
+* Comandante pode ser traidor.
+</code></pre></div>
+</td></tr></table>
+<p>Generais e Tenentes
+Suponha 3 exércitos. \
+Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\
+Ou \
+Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.</p>
+<p>E se os tenentes trocarem informações?</p>
+<p>Como diferenciar casos em que Comandante ou Tenente é traidor?</p>
+<p>Generais e Tenentes
+Só há solução se mais de <span class="arithmatex">\(\frac{2}{3}\)</span> dos Generais/Tenentes são leais.</p>
+<p>%<a href="http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5">http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5</a></p>
+<p>Comunicação}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Toda mensagem enviada é entregue corretamente.
+* A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+</code></pre></div>
+</td></tr></table>
+<p>4/0}
+General manda ordens.</p>
+<p>Ausência de ordem = Retirada</p>
+<p>Tenente repassa ordens</p>
+<p>Maioria de comandos é comando a ser seguido</p>
+<p>4/0}
+General manda ordens.</p>
+<p>Ausência de ordem = Retirada</p>
+<p>Tenente repassa ordens</p>
+<p>Maioria de comandos é comando a ser seguido</p>
+<p>Comunicação}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Toda mensagem enviada é entregue corretamente.
+* Toda mensagem é assinada.
+* A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+</code></pre></div>
+</td></tr></table>
+<p>É possível detectar inconsistências e processos bizantinos.</p>
+<p>%<a href="http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf">http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf</a>
+\section{Outros tópicos}</p>
+<p>%TODO \subsection{Detectores de Falhas}</p>
+<p>\subsection{Reconfiguração}</p>
+<p>Reconfiguração da Aplicação}
+Na segunda entrega do projeto, você distribuiu a carga do seu banco de dados entre vários nós. Caso um nó falhe, parte dos seus dados será perdida.</p>
+<p>Para corrigir esta deficiência, na terceira entrega, cada nó será replicado em três vias e, assim, caso um nó falhe, outros dois continuarão a manter o dado.</p>
+<p>Reconfiguração da Aplicação}
+Ainda assim, há problemas. E se mais de um, de um mesmo conjunto de réplicas, falhar? </p>
+<p>Embora seja pequena a probabilidade de dois nós de um mesmo grupo falharem em instantes próximos, dado tempo suficiente, qualquer evento com probabilidade diferente de 0 acontecerá.</p>
+<p>Precisamos de uma forma de trocar nós da aplicação que falharam por novos nós. </p>
+<p>Este é problema denominado Pertinência de Grupo ou \emph{Group Membership}</p>
+<p>Group Membership}
+Para não correr o risco, retire o processo falhos do grupo e coloque outro no lugar!</p>
+<p>I.e., mude a visão que o sistema de quem é o grupo.</p>
+<p>Visões}
+\includegraphics[width=.7\textwidth]{images/vc}</p>
+<p>Fonte: \href{<a href="https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul">https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul</a> Krzyzanowski}</p>
+<p><span class="arithmatex">\(G\)</span> é o grupo de processos participando do sistema, é a Visão do Sistema.</p>
+<p>Inicialmente, <span class="arithmatex">\(G\)</span> consiste de apenas o processo <span class="arithmatex">\(p\)</span>, como o processo que cria o cluster no Atomix. Na sequência, outros processo vão se unindo ao grupo através de View Changes. Uma vez que <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> estão no grupo, inicia-se a comunicação entre eles. Quando <span class="arithmatex">\(r, s\)</span> e <span class="arithmatex">\(t\)</span> aparecem, também entram no grupo por meio de uma nova visão.</p>
+<p>Finalmente, quando ambos <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> falham, os outros processo os excluem da visão, e continuam funcionando normalmente.</p>
+<p>Impossibilidade de Detecção de Falhas}
+Em um sistema distribuído assíncrono, é impossível distinguir com toda certeza um processo falho (parou de funcionar) de um que está lento.</p>
+<p>Como decidir se mudar ou não de visão?</p>
+<p>Ou aceita a imprecisão e muda quando suspeitar de uma falha, ou corre o risco de ficar esperando \emph{ad eternum} e não mudar, mesmo quando uma falha aconteceu.</p>
+<p>Uma ``solução''!}
+Quando suspeitar de falha, reporte suspeita a outros processos, que também passarão a suspeitar.</p>
+<p>Tome decisão baseado na suspeita, isto é, troque de visão quando houver suspeita.</p>
+<p>Pague o preço de uma suspeita errada, isto é, quando um processo for removido da visão indevidamente, adicione-o novamente.</p>
+<p>Sincronismos Virtual}
+Gerenciamento de Grupo/Group Membership e Comunicação em Grupo</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Processos se unem ao grupo
+* Processos saem do grupo
+* Processos enviam mensagens para o grupo
+* Diferentes ordenações
+
+        * Atomic Multicast
+</code></pre></div>
+</td></tr></table>
+<p>Visão de Grupo}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Visão: conjunto de processos no sistema.
+* Multicast feito para processos na visão.
+* Visão é consistente entre os processos.
+* Entrada e saída de processos muda a visão.
+</code></pre></div>
+</td></tr></table>
+<p>Eventos}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Mensagem
+* Mudança de Visão
+* Checkpoint
+</code></pre></div>
+</td></tr></table>
+<p>Visões}
+\includegraphics[width=.7\textwidth]{images/vc}</p>
+<p>Fonte: \href{<a href="https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul">https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul</a> Krzyzanowski}</p>
+<p>Sincronismo Virtual}
+Deve satisfazer</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.
+* Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.
+* Se um processo não recebe a mensagem, ele não estará na próxima visão.
+* Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.
+</code></pre></div>
+</td></tr></table>
+<p>A troca de Visão é uma barreira.</p>
+<p>ISIS Toolkit}
+    Sistema de Sincronismo Virtual tolerante a falhas desenvolvido por Ken Birman, Cornell University (\url{<a href="http://www.cs.cornell.edu/Info/Projects/Isis/">http://www.cs.cornell.edu/Info/Projects/Isis/</a>})\
+    ISIS: An Environment for Constructing Fault-Tolerant Distributed Systems. Kenneth Birman, D. Skeen, A. El Abbadi, W. C. Dietrich and T. Raeuchle. May 1983.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* 100.000&#39;s/s
+* Em uso até 2009
+* NY Stock Exchange
+* Swiss Exchange
+* US Navy
+* Precursos de sistemas como Zookeeker
+* Totem, ISIS, Horus, Transis (Partições), \alert{Spread}, \alert{Ensamble}, \alert{JGroups}, Appia, QuickSilver, vSynch (née ISIS 2)
+</code></pre></div>
+</td></tr></table>
+<p>Difusão Totalmente Ordenada}</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Corretude: Se um processo $p$ envia uma mensagem $m$ para processos no grupo $G$, então se $p$ não falha, todos os processos corretos em $G$ recebem a mensagem.
+
+* Acordo: Se um processo correto em $G$ recebe uma mensagem $m$, então todo processo correto em $G$ recebe $m$
+
+* Ordenação: Se um processo recebe mensagem $m$ e depois $n$, então qualquer processo que receba a mensagem $n$ deve primeiro receber $m$
+
+* Validade: Somente mensagens difundidas são entregues.
+</code></pre></div>
+</td></tr></table>
+<p>E se mandarmos mensagens do tipo ``A partir da entrega desta mensagem, o grupo de processos é <span class="arithmatex">\(G\)</span>.''</p>
+<p>Sincronismo Virtual}
+Deve satisfazer</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>* Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.\\
+Mensagens de troca de visão podem incrementar um contador\\
+Mensagens normais carregam o valor atual do contador\\
+Mensagem descartada se valor na mensagem é maior contador no destinatário
+
+* Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.\\
+Pela difusão, se a mensagem de troca for entregue para um processo, será entregue para todos os corretos, na mesma ordem
+Se mensagem comum for entregue antes para algum, será entregue ante para todos.
+
+* Se um processo não recebe a mensagem, ele não estará na próxima visão.\\
+Se um processo não recebe uma mensagem comum que foi entregue pelos outros, então ele não troca de visão.
+
+* Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.\\
+Caso contrário, não haveria porquê trocar os processos
+</code></pre></div>
+</td></tr></table>
+<p>State Transfer}
+\includegraphics[width=.7\textwidth]{images/state_transfer}</p>
+<p>\href{<a href="http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building">http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building</a> Secure and Reliable Network Applications}</p>
+<p>Difusão Atômica <span class="arithmatex">\(\equiv\)</span> Sincronismo Virtual?}
+Seria uma boa aproximação, mas que poderia ser relaxada. </p>
+<p>Em certas aplicações, FIFO ou Causal seriam suficientes dentro da visão, desde que a mensagem de mudança da visão seja totalmente ordenada com as comuns.</p>
+<p>Particionamento}
+E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões independentes?</p>
+<p>\emph{Primary Partition Model} -- Somente a partição primária pode mudar de visão.</p>
+<p>Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.</p>
+<p>Extended Virtual Synchrony}
+\emph{Primary Partition Model} -- Não é adequado a uma rede geograficamente distribuída (Internet scale).</p>
+<p>Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.</p>
+<p>É possível que no trabalho dois, alguns de vocês tenham tentado gerar locks do sistema para manipular objetos distribuídos no sistema. Esse locks são perigosos por quê processos pode travar/quebrar/falhar e nunca liberarem os locks. O uso de um algoritmo VS poderia ser usado para resolver o problema.\right </p>
+<p><a href="https://asafdav2.github.io/2017/swim-protocol/">Swim</a></p>
+<p><a href="http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf">http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf</a></p>
+<h3 id="estudo-de-caso-kafka">Estudo de caso: Kafka</h3>
+<details class="todo"><summary>Todo</summary></details>
+<blockquote></blockquote>
 <div class="footnote">
 <hr />
 <ol>
@@ -2819,14 +2767,19 @@ http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
 <li id="fn:paxosmade">
 <p>Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em <a href="https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf">Paxos Made Live - An Engineering Perspective</a>.&#160;<a class="footnote-backref" href="#fnref:paxosmade" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
+<li id="fn:cons_core">
+<p><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html">Consistent Core</a>&#160;<a class="footnote-backref" href="#fnref:cons_core" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
 <li id="fn:\\">
 <p>O <code>\\</code> no final da linha é só para mostrar que o comando continua na próxima e facilitar a visualização. 
-Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class="footnote-backref" href="#fnref:\\" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class="footnote-backref" href="#fnref:\\" title="Jump back to footnote 11 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
-                
-              
+
+  <!-- Last update of source file -->
+
+
               
                 
 
@@ -2843,14 +2796,14 @@ Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class=
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../time/" title="Tempo" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../time/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Previous
+                  Anterior
                 </span>
                 Tempo
               </div>
@@ -2858,17 +2811,17 @@ Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class=
           </a>
         
         
-          <a href="../disdb/" title="Bancos de Dados" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../disdb/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
-                  Next
+                  Próximo
                 </span>
                 Bancos de Dados
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
             </div>
           </a>
         
@@ -2891,15 +2844,15 @@ Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class=
       
     </div>
     
-      <script src="../assets/javascripts/vendor.c51dfa35.min.js"></script>
-      <script src="../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}</script>
+      <script src="../assets/javascripts/vendor.18f0862e.min.js"></script>
+      <script src="../assets/javascripts/bundle.994580cf.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.58d22e8e.min.js"
+            worker: "../assets/javascripts/worker/search.9c0e82ba.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
