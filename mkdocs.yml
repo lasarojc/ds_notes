@@ -1,4 +1,6 @@
 site_name: Notas em Sistemas Distribuídos
+repo_url: https://github.com/lasarojc/ds_notes 
+edit_uri: ""
 nav:
         - Prefácio: index.md
         - Introdução: intro/index.md
@@ -16,11 +18,16 @@ nav:
 theme:
         name: material
         palette:
-            scheme: slate
+            scheme: preference
+            primary: black
+        language: pt
         custom_dir: overrides
 
 plugins:
         - search
+#        - bibtex:
+#            bib_file: "refs.bib"
+#            cite_style: "pandoc"
         - drawio-exporter:
                 cache_dir: 'drawio-exporter'
                 drawio_executable: null
@@ -43,8 +50,10 @@ markdown_extensions:
         - pymdownx.critic
         - pymdownx.details
         - pymdownx.emoji:
-            emoji_index: !!python/name:materialx.emoji.twemoji
-            emoji_generator: !!python/name:materialx.emoji.to_svg
+            #emoji_index: !!python/name:materialx.emoji.twemoji
+            #emoji_generator: !!python/name:materialx.emoji.to_svg
+            emoji_index: !!python/name:pymdownx.emoji.twemoji
+            emoji_generator: !!python/name:pymdownx.emoji.to_svg
         - pymdownx.highlight:
              linenums: true
         - pymdownx.inlinehilite
@@ -65,5 +74,8 @@ extra_javascript:
         - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
         - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
         - javascripts/mathjaxhelper.js
+
+extra_css:
+        - css/extra.css
 
 google_analytics: ['G-PJX835H7DP', 'lasarojc.github.org/dsnotes']

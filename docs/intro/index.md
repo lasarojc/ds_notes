@@ -3,22 +3,22 @@
 Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.
 
 ## O quê são Sistemas Distribuídos?
-
-Para entendermos o que é um Sistema Distribuído, talvez seja mais fácil por um sistema não-distribuído ou, como os denominaremos aqui, sistema monolítico[^centr].
-
-[^centr]: Muitos se referem a sistemas não-distribuídos como **centralizados** mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso é em acordo como o oposto a distribuído.
-
-Pense na maioria das aplicações que desenvolveu no curso até agora.
-Mesmo que use diferentes bibliotecas e *frameworks*, toda a lógica de negócio, armazenamento e interface com usuário está contida em um mesmo executável e, quando executado, em um único processo. 
-Quando começou a programar este tipo de aplicação, o trabalho era basicamente colar blocos que se encaixavam perfeitamente, como Lego :registered:, bastando importar a biblioteca correta e invocar suas funções.
+Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
+Estes são os sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.
+Sejam estes sistemas construído com blocos que se encaixam perfeitamente, disponibilizados basicamente pela biblioteca da linguagem que está utilizando;
 
 ![Lego Rainbow](./images/lego0.jpg)
 
-O cenário deve ter mudado um pouco no decorrer do curso e com o início de sua atividade profissional, quando passou a usar muito mais bibliotecas de muitos desenvolvedores diferentes, em equipes com várias pessoas, aumentando consideravelmente a complexidade do desenvolvimento; o resultado, contudo, continua sendo um artefato só. 
+ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
 
 ![Lego Hell](images/lego3.jpg)
 
-Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que nunca foram pensadas para trabalharem juntas, nos forçando a usar um pouco de ![*crazy glue*](images/lego5.jpg),  ![jeitinho](images/lego4.jpg) e fios, no caso, um tipo especial de fio conhecido como cabo de rede.
+o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolítico**.[^centr]
+
+[^centr]: Muitos se referem a sistemas não-distribuídos como **centralizados** mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso está de acordo com o uso que fazemos aqui.
+
+
+Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que não foram pensadas para trabalhar juntas, forçando-nos a usar um pouco de ![*crazy glue*](images/lego5.jpg),  ![jeitinho](images/lego4.jpg) e fios, no caso, um tipo especial de fio conhecido como cabo de rede.
 
 ![Lego SD](images/cablemess.jpg)
 
