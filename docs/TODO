@@ -83,3 +83,18 @@ TODO: usar consistência entre réplicas da DHT para motivar a sincronização.
 * [Arquitetura Reativa](./reactive.md)
 * [Map & Reduce](./mapreduce.md)
 * Netty
+
+
+
+
+### Escalabilidade
+
+Para terminar, deixem-me apenas retomar um termo usado acima, **escalabilidade**.
+O termo está muito em voga e é usado, normalmente, para descrever a capacidade de um sistema de se adequar a variações de carga de trabalho.
+Embora seja um uso válido, há outros tipos de escalabilidade.
+
+* Tamanho: Número de usuários que suporta.
+* Geográfica: Região que cobre.
+* Administrativa: Número de domínios administrativos.
+
+ Para evitar ambiguidade, dado que há várias possibilidades, seja específico.

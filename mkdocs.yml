@@ -13,7 +13,6 @@ nav:
         - Bancos de Dados: disdb/index.md
         - Sistemas de Arquivos: disfs/index.md
         - Tecnologias: tech/index.md
-        - Projeto: projeto/index.md
 
 theme:
         name: material
@@ -39,6 +38,7 @@ plugins:
 markdown_extensions:
         - toc:
             toc_depth: 5
+        - attr_list
         - mdx_math
         - admonition
         - footnotes

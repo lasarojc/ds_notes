@@ -69,6 +69,11 @@ Algumas características comuns, ou pelo menos desejáveis, das *blockchains* s�
 * Imutabilidade - entradas não podem ser alteradas
 * Finalidade - entradas não podem ser refutadas
 
+!!!quote "Bitcoin"
+    Everything you don't understand about money, combined with everything you don't understand about technology.
+
+    Joh Oliver, Last Week Tonight, Março 2018.
+
 Além disso, no mundo dos negócios, é interessante que possa usar a **blockchain** para diferentes tipos de bens (na *bitcoin*, só a *bitcoin*), que as partes sejam **identificáveis** (na *bitcoin*, os usuários são anônimos), e que não gaste muito energia (*bitcoin* usa *proof-of-work*, que gasta muita, muita energia).
 
 Vejamos um [exemplo de como uma blockchain funciona](https://andersbrownworth.com/blockchain/).

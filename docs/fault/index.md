@@ -386,7 +386,7 @@ No nível da difusão atômica, mensagens são **difundidas** e **entregues**. S
      * propor & decidir (*propose & decide*) - consenso
      * difundir & entregar (*broadcast & deliver*) - difusão
 
-![Total order multicast](./drawings/abcast.drawio)
+![Total order multicast](drawings/abcast2.drawio)
 
 Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:
 

@@ -1,4 +1,4 @@
-no sql fcresceram rapidamente em uso e implementacoes.a facilidade e familiaridade do sql tem atrativos fortes. cockroach and yugabyte.
+no sql cresceram rapidamente em uso e implementacoes.a facilidade e familiaridade do sql tem atrativos fortes. cockroach and yugabyte.
 entender como funcionam é importate para qquer um interessado em SD.
 
 In this project we will develop a rudimentary no SQL database and use that many difficulties to implement such a project to introduce concepts and frameworks related to the development of distributing systems. We will start by exploring the Waze stocked each other in a Distributed system. Then we will Dan will be explored different Architectures used to combine the efforts of components in the distributed system. Next we explore the guarantees that databases can provide to their users and how these guarantees are insured. 
@@ -86,7 +86,6 @@ Para garantir que todo o seu esforço será concentrado no lugar certo e que sua
     * Servidor
          * A API permanece a mesma e implementada via gRPC.
          * Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).  
-         ![Arquitetura Etapa 2](drawings/abcast.drawio)
          * Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.
     * Cliente
          * Sem alteração.

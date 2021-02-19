@@ -14,13 +14,11 @@ Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é
     * Ciência de dados
     * Computação gráfica
 
-Se estiver se perguntando do que estou falando, sobre como posso dizer que é quente uma área sobre a qual talvez você nunca tenha ouvido falar, ao contrário de áreas como[**aprendizado de máquina**]() e [**ciência de dados**](), então deixe-me explicar o que quero dizer. Sem o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais.
+Se estiver se perguntando do que estou falando, sobre como posso dizer que é quente uma área sobre a qual talvez você nunca tenha ouvido falar, ao contrário de áreas como [**aprendizado de máquina**]() e [**ciência de dados**](), então deixe-me explicar o que quero dizer. Sem o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais.
 Veja, por exemplo, a seguinte descrição dos *skills* necessários para se atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro de software no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
 É fato que aplicações distribuídos já são parte inexpurgável da infraestrutura computacional que usamos para resolver os mais diversos problemas.
 
-???+ sideslide "Por quê?"
-    * Ponto de partida
-    * Fácil digestão
+???+ sideslide ""
     * A teoria por baixo dos *frameworks* que **já** usam
 
 Assim, respondendo à pergunta acima, entendo que ler estas notas lhe permitirá mergulhar rapidamente no coração da computação distribuída, para entender os fundamentos de como as grandes infra-estruturas computacionais que usamos hoje funcionam, muito além das anotações do [Springboot]() e dos clientes de bancos de dados.
@@ -41,7 +39,7 @@ Faremos isso começando por uma revisão de conceitos de redes de computadores e
 À medida em que apresentamos problemas com o modelo assumido inicialmente e com nossa implementação inicial, buscaremos por soluções enquanto introduzimos novas abstrações, mais poderosas e mais complexas.
 Ao final desta jornada, teremos fundamentado a construção de uma Tabela de Espalhamento Distribuído com particionamento de dados entre nós, usando protocolos par-a-par e replicação de máquinas de estados.
 Em paralelo, teremos estudado diversos *frameworks* de computação distribuída atuais, como modelo ou bloco de construção para a resolução de nossos problemas.
-
+Em resumo, durante este curso você irá:
 
 * programar processos que se comuniquem via redes de computadores;
 * conhecer arquiteturas clássicas de sistemas distribuídos (e.g, cliente/servidor, p2p e híbrida), seus usos e limitações;
@@ -54,13 +52,8 @@ Em paralelo, teremos estudado diversos *frameworks* de computação distribuída
 * entender onde os diversos *middleware* podem ser usados para acoplar tais componentes;
 * conhecer várias técnicas que controle de concorrência controlar o acesso a um recurso compartilhado;
 
-Mãos a obra!
-
 ???todo "TODO"
       Estruturar melhor esta seção uma vez que a estrutura do documento tenha estabilizado mais.
-
-Para navegar no material, utilize o menu à esquerda para Capítulos, à direita para seções, ou os botões abaixo para Anterior e Próximo.
-
 
 
 ## Convenções
