@@ -299,6 +299,68 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#arquiteturas_1" class="md-nav__link">
+    Arquiteturas
+  </a>
+  
+    <nav class="md-nav" aria-label="Arquiteturas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#componentes-e-conectores" class="md-nav__link">
+    Componentes e Conectores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clienteservidor" class="md-nav__link">
+    Cliente/Servidor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#par-a-par-p2p" class="md-nav__link">
+    Par-a-Par (P2P)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hibridos" class="md-nav__link">
+    Híbridos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistemas-multi-camadas" class="md-nav__link">
+    Sistemas multi-camadas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outras-arquiteturas" class="md-nav__link">
+    Outras arquiteturas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-aprender-mais" class="md-nav__link">
+    Para aprender mais
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#cliente-servidor" class="md-nav__link">
     Cliente Servidor
   </a>
@@ -587,21 +649,6 @@
   
 
     
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../projeto/" class="md-nav__link">
-        Projeto
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -625,6 +672,68 @@
       Índice
     </label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#arquiteturas_1" class="md-nav__link">
+    Arquiteturas
+  </a>
+  
+    <nav class="md-nav" aria-label="Arquiteturas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#componentes-e-conectores" class="md-nav__link">
+    Componentes e Conectores
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clienteservidor" class="md-nav__link">
+    Cliente/Servidor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#par-a-par-p2p" class="md-nav__link">
+    Par-a-Par (P2P)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hibridos" class="md-nav__link">
+    Híbridos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistemas-multi-camadas" class="md-nav__link">
+    Sistemas multi-camadas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outras-arquiteturas" class="md-nav__link">
+    Outras arquiteturas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#para-aprender-mais" class="md-nav__link">
+    Para aprender mais
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#cliente-servidor" class="md-nav__link">
@@ -831,7 +940,6 @@
 
 <!-- Edit button -->
 
-
   <!--
        Hack: check whether the content contains a h1 headline. If it
        doesn't, the page title (or respectively site name) is used
@@ -841,6 +949,117 @@
 
   <!-- Content -->
   <h1 id="arquiteturas">Arquiteturas</h1>
+<h2 id="arquiteturas_1">Arquiteturas</h2>
+<p>De acordo com David Garlan and Mary Shaw, January 1994, CMU-CS-94-166, em <a href="http://www.cs.cmu.edu/afs/cs/project/able/ftp/intro_softarch/intro_softarch.pdf"><em>An Introduction to Software Architecture</em></a></p>
+<blockquote>
+<p>... an architectural style determines the vocabulary of components and connectors that can be used in instances of that style, together with a set of constraints on how they can be combined. These can include topological constraints on architectural descriptions (e.g., no cycles). Other constraints—say, having to do with execution semantics—might also be part of the style definition.</p>
+</blockquote>
+<p>Em outras palavras, um estilo ou padrão arquitetural é o conjunto de princípios que provê uma infraestrutura abstrata para uma família de sistemas, e promove o reuso de projeto ao <a href="https://msdn.microsoft.com/en-us/library/ee658117.aspx">prover soluções para problemas recorrentes e frequentes</a>.</p>
+<h3 id="componentes-e-conectores">Componentes e Conectores</h3>
+<p>Quando falamos sobre arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como componentes se conectam, por meio de conectores, para implementar a solução para um problema.</p>
+<div class="mermaid">graph LR
+    A[Componente 1] --&gt; C{Conector} --&gt; B(Componente 2)</div>
+<p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
+Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
+A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.</p>
+<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="images/loosetight.png" /></p>
+<p>Certos <em>middleware</em> permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.</p>
+<p><img alt="Desacoplamento" src="images/component2.png" /></p>
+<p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
+<h3 id="clienteservidor">Cliente/Servidor</h3>
+<p>A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. 
+Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
+Neste sentido, provavelmente a arquitetura de computação distribuída mais famosa é a <strong>Cliente/Servidor</strong>.</p>
+<p>Na arquitetura Cliente/Servidor, como implicado pelo nome, há um processo que serve a pedidos realizados por outros processos. 
+Isto é feito quando o <strong>cliente</strong> o contacta o servidor e requer (<em>request</em>) a realização do serviço.
+O <strong>servidor</strong>, por sua vez, pode desempenhar tarefas como fazer cálculos, armazenar dados, ou repassar uma mensagem e, ao final da realização da tarefa, responder (<em>response</em>) ao cliente.</p>
+<p>Um mesmo servidor pode atender a diversos clientes e, geralmente, a comunicação entre os mesmos é feita diretamente por sockets.</p>
+<p><img alt="http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html" src="images/cs.png" /></p>
+<p>Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
+Assim, geralmente a comunicação entre cliente e servidor segue o seguinte esquema:</p>
+<div class="mermaid">sequenceDiagram
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    Cliente-&gt;&gt;Servidor: Request
+    deactivate Cliente
+    activate Servidor
+    note right of Cliente: Espera pela resposta
+    note left of Servidor: Executa serviço
+    Servidor--&gt;&gt;Cliente: Resposta
+    deactivate Servidor
+    activate Cliente
+    note left of Servidor: Espera pela requisição
+    deactivate Cliente</div>
+<p>Observe que o cliente fica inativo enquanto espera a resposta e que o servidor fica inativo enquanto espera outras requisições.
+Para minimizar os períodos de inatividade, o cliente pode usar o socket assíncronamente, o que não é exatamente simples, ou usar múltiplos threads, para que continue operando mesmo enquanto um thread estiver bloqueado esperando a resposta do servidor.</p>
+<p>No lado do servidor, o minimização da ociosidade é feita pelo uso de múltiplos clientes, concorrentes, e também pelo uso de múltiplos threads.
+Neste caso, contudo, é necessário tomar muito cuidado para garantir que a concorrência não causará efeitos indesejados nos dados e execução das tarefas.
+Veja o caso de um banco de dados transacional, por exemplo, como discutido acima; ele precisa garantir ACID entre as transações propostas pelos clientes.</p>
+<p>Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muitas aplicações modernas, múltiplos servidores atenderão ao conjunto de clientes.
+Pense por exemplo no serviço de email do Google, o Gmail. Com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço.
+Provavelmente estes diversos servidores ficam atrás do que chamamos de um balanceador de carga, que roteia as requisições seguindo diferentes políticas, por exemplo, <em>round robin</em>.</p>
+<p><img alt="http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/" src="images/lb.jpg" /></p>
+<h3 id="par-a-par-p2p">Par-a-Par (P2P)</h3>
+<p>Diferentemente de sistemas cliente/servidor, em que um nó serve o outro, em sistemas par-a-par, os nós são parceiros e tem igual responsabilidade (e daí o nome) na execução das tarefas.</p>
+<p>Diversos sistemas P2P existem, sendo, provavelmente, os mais famosos, os sistemas de compartilhamento de arquivos.
+Nesta linha, embora diversos tenham existido, hoje o mais famoso é o Bittorrent, mesmo que, como veremos adiante, não seja P2P puro.</p>
+<p>Outro exemplo importante por ter inspirado diversos outros sistemas é o Chord. 
+Neste sistema, nós organizam-se em um anel lógico e cada um se torna responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
+Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
+Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
+<p><img alt="Chord" src="images/chord.png" /></p>
+<h3 id="hibridos">Híbridos</h3>
+<p>Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade consideradas híbridos.
+Considere um sistema de email, por exemplo. 
+Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. 
+Neste sentido, o sistema é um híbrido P2P e cliente/servidor.</p>
+<p>Outros exemplos abundam.</p>
+<ul>
+<li>Bancos de dados, e.g., DynamoDB, <a href="https://www.atlassian.com/blog/archives/do-you-know-cassandra">CassandraDB</a>, Redis,...</li>
+<li>Jogos multiplayer (pense no <a href="http://pages.cs.wisc.edu/~vshree/cs740/Voronoi.pdf">particionamento dos mapas</a>)</li>
+<li>Compartilhamento de arquivos: Bittorrent</li>
+</ul>
+<p>Voltemos ao exemplo do Bittorrent; observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
+Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.</p>
+<p><img alt="Bittorrent" src="images/bittorrent.png" /></p>
+<p>Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
+Podemos dizer que também este é híbrido.</p>
+<div class="mermaid">graph LR
+  A[Cliente] --&gt;|Requisição| B{Monitor de Transações}
+  B --&gt;|Resposta| A
+  B --&gt;|Requisição| C[(Servidor 1)]
+  B --&gt;|Requisição| D[(Servidor 2)]
+  B --&gt;|Requisição| E[(Servidor 3)]
+
+  C --&gt;|Resposta| B
+  D --&gt;|Resposta| B
+  E --&gt;|Resposta| B</div>
+<h3 id="sistemas-multi-camadas">Sistemas multi-camadas</h3>
+<p>Outra forma de hibridismo que podemos citar é quando um componente haje tanto como cliente quanto como servidor. 
+Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>tiers</em>).</p>
+<p><a href="https://managementmania.com/en/three-tier-architecture"><img alt="3 Tiers" src="images/3tierb.gif" /></a></p>
+<p>Neste caso, é interessante notar que esta disposição dos componentes é independente da disposição física. De fato, as três camadas podem estar em um mesmo nó, ou combinadas duas a duas, neste último caso resultando em duas camadas.</p>
+<p><img alt="2 Tiers" src="images/02-05.png" /></p>
+<p>Por outro lado, cada camada pode ser subdividida em mais componentes, resultando em múltiplos tiers, como neste exemplo de um sistema de busca na Web.</p>
+<p><img alt="Multi-tier" src="images/02-04.png" /></p>
+<h3 id="outras-arquiteturas">Outras arquiteturas</h3>
+<p>Diversas outras arquiteturas podem e foram propostas para o desenvolvimento de Sistemas Distribuídos.
+A moda da vez é a chamada arquitetura de micro serviços, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemnte.
+Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.</p>
+<p><img alt="Microserviços" src="images/microservice_sample.png" /></p>
+<p>Nós discutiremos micro-serviços mais adiante. 
+Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a href="http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/">os micro-serviços não são uma panacéia</a>.</p>
+<details class="todo"><summary>Todo</summary><p><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Event sourcing</a></p>
+</details>
+<details class="todo"><summary>Todo</summary><p>MOM</p>
+</details>
+<details class="todo"><summary>Todo</summary><p>Pub/Sub</p>
+</details>
+<h3 id="para-aprender-mais">Para aprender mais</h3>
+<p>Para aprender mais sobre arquiteturas, consulte a seguinte referência: <a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</p>
+<p>Para aprender um pouco sobre como funcionam as redes de um <em>datacenter</em>, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <h2 id="cliente-servidor">Cliente Servidor</h2>
 <p>Como brevemente discutido em <a href="../basics/#TCP">Fundamentos</a>, quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.</p>
 <p>Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.
