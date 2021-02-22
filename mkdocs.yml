@@ -5,8 +5,8 @@ nav:
         - Prefácio: index.md
         - Introdução: intro/index.md
         - Fundamentos: basics/index.md
-        - Comunicação: comm/index.md
         - Arquiteturas: arch/index.md
+        - Comunicação: comm/index.md
         - Coordenação: coord/index.md
         - Tempo: time/index.md
         - Tolerância a Falhas: fault/index.md
@@ -17,8 +17,9 @@ nav:
 theme:
         name: material
         palette:
-            scheme: preference
-            primary: black
+            scheme: default 
+            accent: deep orange
+            primary: blue grey
         language: pt
         custom_dir: overrides
 

@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="graphstatemachine">
+    <output-path>$PROJECT_DIR$/out/artifacts/graphstatemachine</output-path>
+    <root id="archive" name="graphstatemachine.jar" />
+  </artifact>
+</component>

@@ -1,18 +1,113 @@
 # Fundamentos
 
-A pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-No mundo de hoje, isto quer dizer que os *hosts* dos componentes devem possuir interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
-Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
+Mas se não temos alternativas à distribuição, precisamos então entender como podemos implementá-los e quais desafios encontraremos. 
+O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. 
+Isto é, precisamos definir um **modelo computacional**, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.
 
+
+
+## Modelos computacionais
+
+Definido ou identificado o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas.
+Contudo, antes de implementar esta coordenação precisamos responder a diversas perguntas, por exemplo:
+
+* Qual a probabilidade de um nó parar de funcionar?
+* Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?
+* A quais atrasos a comunicação está sujeita? Pode haver atrasos infinitos?
+* A comunicação pode ser corrompida?
+* Os relógios dos hospedeiros marcam o mesmo valor no mesmo instante, ou melhor, são sincronizados?
+* Há agentes que possam querer perturbar o sistema, por exemplo para ganhar acesso a mais recursos do que seria justo?
+
+??? sideslide "Modelos"
+    * Comunicação
+    * Sincronismo
+    * Falhas
+
+Estas perguntas são, normalmente, divididos em três eixos: **Comunicação**, **Sincronismo** e **Falhas**.
+
+### Comunicação
+De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou paralelamente.
+Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento via uma abstração de memória compartilhada distribuída. 
+Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
+
+???todo "TODO"
+    * Imagem shared memory
+    * diagrama de Venn (Shared memory [ distributed shared memory  ) Distributed systems ] 
+
+??? sideslide "Comunicação"
+    * memória compartilhada
+    * troca de mensagens
+
+Por outro lado, estamos mais interessados aqui em sistemas de maior escala geográfica, o que se adequa melhor ao modelo de troca de mensagens, isto é, onde cada nó mantem controle total do seu espaço de endereçamento e só expõe seu estado via mensagens enviadas para os outros nós.
+Este modelo é mais adequado ao desenvolvimento de aplicações com componentes **fracamente acoplados**, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.
+
+???todo "TODO"
+    * Imagem message passing
+    * conectividade
+
+
+
+### Sincronismo
+
+??? sideslide "Sincronismo"
+    * operações
+    * comunicação
+    * relógio
+    * sincronização
+
+Quanto ao sincronismo, considera-se os limites de tempo para execução de operações, para troca de mensagens ou acesso à memória compartilhada (dependendo do modelo de comunicação), se os nós tem acesso a relógios para medição de passagem do tempo e quão acurazes este são e, finalmente, o quão sincronizados são estes relógios. 
+
+
+
+### Falhas
+
+Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, **computadores [falham](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/) o tempo todo!**.
+Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada e sem comprometer a corretude do sistema.
+
+??? sideslide "Falhas"
+    * detectável
+    * temporização
+    * quebras
+    * maliciosas
+    * perda e corrupção de mensagens
+
+Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
+
+### Outros fatores
+
+??? sideslide "Outros"
+    * carga de trabalho
+
+Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?)
+
+
+## Sistemas Distribuídos são como Ogros!
+
+Uma vez definido o **modelo computacional** e identificado os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
+Distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados[^recursos] e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão** reduzida, **latência** aumentada, menor capacidade de tratamento de requisições concorrentes, ou com  **funcionalidades** desabilitadas.
+
+[^recursos]: Os recursos compartilhados vão desde alguns óbvios, como **capacidade de armazenamento** e de **processamento**, a própria **localização** de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.
+
+Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
+Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
+
+Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
+Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.[^ogros]
+Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
+As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
 Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo.
 Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
 
-Neste capítulo, revisaremos de forma rápida tanto conceitos de redes de computadores quanto de concorrência e paralelismo.
+[^ogros]: Lembrem-se que também ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.
 
 
-## Canais e Protocolos de Comunicação
+### Canais e Protocolos de Comunicação
 
-Um canal de comunicação é o meio pelo qual os elementos da conversa entre os componentes do sistema distribuído são transmitidos e o protocolo são as regras codificam tal conversa.
+Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
+Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
 Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:
 
@@ -56,13 +151,13 @@ Felizmente boa parte da **complexidade da resolução destas questões é abstra
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
 
 
-## A Internet
+### A Internet
 
-A Internet tem este nome por usar o protocolo de interconexão de redes indepententes, o *internetworking protocol*, ou IP.
+A Internet tem este nome por usar o protocolo de interconexão de redes independentes, o *internetworking protocol*, ou IP.
 Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
 
-![A Internet](images/network.png)
+![A Internet](../images/network.png)
 
 Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
 Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
@@ -75,7 +170,7 @@ Cada camada é responsável pela comunicação em um nível e serve de fundaçã
 6. Apresentação: Objetos; json, xml; criptografia
 7. Aplicação: Aplicações; http, pop, ftp
 
-![image](images/04-01.png)
+![image](../images/04-01.png)
 
 O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
 Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
@@ -84,7 +179,7 @@ Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referi
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
 pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
 
-[![OSI x IP](images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+[![OSI x IP](../images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
 Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
 Alguns exemplos de tais funcionalidades são
@@ -101,7 +196,7 @@ Este característica é conhecida como o [argumento fim-a-fim no projeto de sist
 
 Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de **transporte**.
 
-## No princípio, era o Socket
+#### Sockets
 
 Na prática, para implementarmos a comunicação entre processos, usamos **sockets**.
 Para se definir um socket a partir de um ***host*** é necessário identificar o outro fim da comunicação, isto é, o outro *host*, ou melhor, uma de suas interfaces de rede.
@@ -129,7 +224,7 @@ Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UDP (**SO
 
 A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.
 
-### TCP
+#### TCP
 
 O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
 ```mermaid
@@ -164,7 +259,7 @@ stateDiagram-v2
    }
 ```
 
-<!--![image](images/04-15.png)-->
+<!--![image](../images/04-15.png)-->
 
 Estabelecido o socket, o mesmo pode ser usado como um **arquivo**, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
@@ -310,7 +405,7 @@ Socket s = new Socket(hostname,port);
 
 
 
-### UDP 
+#### UDP 
 
 No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.
 
@@ -334,7 +429,7 @@ Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UD
     Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. 
 
 
-### IP-Multicast
+#### IP-Multicast
 
 Imagine que você tenha que enviar um *stream* de vídeo para um amigo mostrando como você está jogando o mais novo jogo da velha no mercado.
 Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
@@ -348,7 +443,7 @@ Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no 
 Para terminar, lhe darei uma razão final: IP-Multicast!
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
 
-![Multicast](images/ipmulticast.jpg)
+![Multicast](../images/ipmulticast.jpg)
 
 IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
@@ -476,13 +571,6 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
     ```
 
 
-### Referências
-
-* [UDP em Python](http://pymotw.com/2/socket/udp.html)
-* [UDP em Python](http://www.tutorialspoint.com/python/python_networking.htm)
-* [Multicast em Java](lycog.com/programming/multicast-programming-java/)
-* [Multicast em Python](https://pymotw.com/2/socket/multicast.html)
-
 
 
 ## Multiprogramação e *Multithreading* em Sistemas Distribuídos
@@ -561,7 +649,7 @@ Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são clara
 Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. A figura a seguir mostra a carga do sítio da [Facom](https://www.facom.ufu.br).
 O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que isso acontece e são determinaos quais os demais arquivos necessários, requisções concorrentes são disparadas, minimizando o tempo total da operação.
 
-![Facom loading times](images/facom.png)
+![Facom loading times](../images/facom.png)
 
 
 ### Servidor
@@ -621,11 +709,11 @@ Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**
 [^seda]: O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.
 
 
-[![Seda](images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
+[![Seda](../images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
 Por ter seu próprio *pool*, cada estágio pode ser escalado individualmente de acordo com a demanda.
 
-[![Seda](images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
+[![Seda](../images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
 Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html).
 
@@ -661,14 +749,14 @@ Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não
 Não exatamente, pois mesmo este código simplíssimo podemos sofrer de [falso compartilhamento](https://dzone.com/articles/false-sharing).
 Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto `X` quanto `Y` no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.
 
-![Multithreaded](images/cache-line.png)
+![Multithreaded](../images/cache-line.png)
 
 Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache.
 Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento pode ser real (por exemplo se ambos os threads usarem a variável X).
 Neste caso, é preciso definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.
 
-![Multithreaded](images/multithread2.png)
+![Multithreaded](../images/multithread2.png)
 
 Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
 
@@ -1335,17 +1423,6 @@ public static Integer getMyId() {
 }
 ```
 
-!!! tip "Leia mais"
-    Para aprender mais, muito mais sobre concorrência em Java, ótimas referências são:
-
-    * [Java Concurrency in Practice](http://jcip.net/)
-    * [The Well-Grounded Java Developer](https://www.manning.com/books/the-well-grounded-java-developer)
-    * [Concorrência em Java](http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html)
-    * [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
-    * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
-    * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
-
-
 
 !!! question "Exercício - Anel Multithread"
     * Usando uma linguagem de alto-nível como C/C++/Java, escrever um programa que crie 30 threads e faça com que uma mensagem circule entre os mesmos. 
@@ -1353,3 +1430,21 @@ public static Integer getMyId() {
     * A cada vez que um thread recebe a mensagem ele a imprime, modifica o primeiro caractere minúsculo para maiúsculo, caso exista, dorme por 1 segundo, e repassa a mensagem. 
     * Quando todos os caracteres forem maiúsculos, o processo repassa a mensagem e então termina. 
     * Antes de terminar, o processo deve imprimir a mensagem resultante.
+
+
+
+## Referências
+
+* Sockets
+    * [UDP em Python](http://pymotw.com/2/socket/udp.html)
+    * [UDP em Python](http://www.tutorialspoint.com/python/python_networking.htm)
+    * [Multicast em Java](lycog.com/programming/multicast-programming-java/)
+    * [Multicast em Python](https://pymotw.com/2/socket/multicast.html)
+    * [Beej's Guide to Network Programming - Using Internet Sockets](https://beej.us/guide/bgnet/)
+* Concorrência em Java
+    * [Java Concurrency in Practice](http://jcip.net/)
+    * [The Well-Grounded Java Developer](https://www.manning.com/books/the-well-grounded-java-developer)
+    * [Concorrência em Java](http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html)
+    * [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
+    * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
+    * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
