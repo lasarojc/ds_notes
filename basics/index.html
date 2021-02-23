@@ -296,8 +296,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#outros-fatores" class="md-nav__link">
-    Outros fatores
+  <a href="#modelos-assumido" class="md-nav__link">
+    Modelos Assumido
   </a>
   
 </li>
@@ -308,11 +308,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sistemas-distribuidos-sao-como-ogros" class="md-nav__link">
-    Sistemas Distribuídos são como Ogros!
+  <a href="#sistemas-distribuidos-sao-como-cebolas" class="md-nav__link">
+    Sistemas Distribuídos são como cebolas!
   </a>
   
-    <nav class="md-nav" aria-label="Sistemas Distribuídos são como Ogros!">
+    <nav class="md-nav" aria-label="Sistemas Distribuídos são como cebolas!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -726,8 +726,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#outros-fatores" class="md-nav__link">
-    Outros fatores
+  <a href="#modelos-assumido" class="md-nav__link">
+    Modelos Assumido
   </a>
   
 </li>
@@ -738,11 +738,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sistemas-distribuidos-sao-como-ogros" class="md-nav__link">
-    Sistemas Distribuídos são como Ogros!
+  <a href="#sistemas-distribuidos-sao-como-cebolas" class="md-nav__link">
+    Sistemas Distribuídos são como cebolas!
   </a>
   
-    <nav class="md-nav" aria-label="Sistemas Distribuídos são como Ogros!">
+    <nav class="md-nav" aria-label="Sistemas Distribuídos são como cebolas!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -997,12 +997,10 @@
 
   <!-- Content -->
   <h1 id="fundamentos">Fundamentos</h1>
-<p>Mas se não temos alternativas à distribuição, precisamos então entender como podemos implementá-los e quais desafios encontraremos. 
-O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. 
-Isto é, precisamos definir um <strong>modelo computacional</strong>, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.</p>
+<p>Uma vez que estejam convencidos de que não temos alternativas à distribuição se queremos sistemas escaláveis e tolerantes a falhas, o próximo passo é entender como podemos implementá-los e quais desafios encontraremos. 
+O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. Isto é, precisamos definir um <strong>modelo computacional</strong>, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.</p>
 <h2 id="modelos-computacionais">Modelos computacionais</h2>
-<p>Definido ou identificado o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas.
-Contudo, antes de implementar esta coordenação precisamos responder a diversas perguntas, por exemplo:</p>
+<p>Antes de distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas, precisamos responder a algumas perguntas:</p>
 <ul>
 <li>Qual a probabilidade de um nó parar de funcionar?</li>
 <li>Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?</li>
@@ -1017,14 +1015,13 @@ Contudo, antes de implementar esta coordenação precisamos responder a diversas
 <li>Falhas</li>
 </ul>
 </details>
-<p>Estas perguntas são, normalmente, divididos em três eixos: <strong>Comunicação</strong>, <strong>Sincronismo</strong> e <strong>Falhas</strong>.</p>
+<p>Estas perguntas são normalmente divididas em três eixos, <strong>Comunicação</strong>, <strong>Sincronismo</strong> e <strong>Falhas</strong>, e a combinação das respostas define o modelo computacional adotado.</p>
 <h3 id="comunicacao">Comunicação</h3>
-<p>De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou paralelamente.
-Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão <strong>próximos</strong> e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento via uma abstração de memória compartilhada distribuída. 
+<p>De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou <strong>paralelamente</strong>.
+Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão <strong>próximos</strong> e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como <a href="https://en.wikipedia.org/wiki/InfiniBand">Infiniband</a> que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
 Seja como for, estes sistemas com <strong>memória compartilhada</strong> são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais <strong>fortemente acoplados</strong> e melhor estudados em um curso de computação paralela.</p>
 <details class="todo"><summary>TODO</summary><ul>
 <li>Imagem shared memory</li>
-<li>diagrama de Venn (Shared memory [ distributed shared memory  ) Distributed systems ] </li>
 </ul>
 </details>
 <details class="sideslide"><summary>Comunicação</summary><ul>
@@ -1036,9 +1033,10 @@ Seja como for, estes sistemas com <strong>memória compartilhada</strong> são n
 Este modelo é mais adequado ao desenvolvimento de aplicações com componentes <strong>fracamente acoplados</strong>, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.</p>
 <details class="todo"><summary>TODO</summary><ul>
 <li>Imagem message passing</li>
-<li>conectividade</li>
 </ul>
 </details>
+<p>Uma abordagem conhecida como Memória Compartilhada Distribuída (DSM, do inglês, <em>Distributed Shared Memory</em>) tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.</p>
+<p><img alt="Memória" src="../drawings/memory.drawio-0.svg" /></p>
 <h3 id="sincronismo">Sincronismo</h3>
 <details class="sideslide"><summary>Sincronismo</summary><ul>
 <li>operações</li>
@@ -1047,9 +1045,10 @@ Este modelo é mais adequado ao desenvolvimento de aplicações com componentes 
 <li>sincronização</li>
 </ul>
 </details>
-<p>Quanto ao sincronismo, considera-se os limites de tempo para execução de operações, para troca de mensagens ou acesso à memória compartilhada (dependendo do modelo de comunicação), se os nós tem acesso a relógios para medição de passagem do tempo e quão acurazes este são e, finalmente, o quão sincronizados são estes relógios. </p>
+<p>Quanto ao sincronismo, considera-se os processos tem a capacidade de medir a passagem de tempo, isto é, tem a acesso a relógios, o uão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
+Além disso, considera-se a existência de limites de tempo para execução de operações, por exemplo, o tempo um processador leva para executar uma operação de soma de dois inteiros, ou o tempo necessário para a entrega de uma mensagem ou acesso a uma região de memória.</p>
 <h3 id="falhas">Falhas</h3>
-<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, <strong>computadores <a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">falham</a> o tempo todo!</strong>.
+<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, estas falhas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">1</a></sup> 
 Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada e sem comprometer a corretude do sistema.</p>
 <details class="sideslide"><summary>Falhas</summary><ul>
 <li>detectável</li>
@@ -1060,45 +1059,52 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 </ul>
 </details>
 <p>Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.</p>
-<h3 id="outros-fatores">Outros fatores</h3>
+<h3 id="modelos-assumido">Modelos Assumido</h3>
 <details class="sideslide"><summary>Outros</summary><ul>
 <li>carga de trabalho</li>
 </ul>
 </details>
-<p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?)</p>
-<h2 id="sistemas-distribuidos-sao-como-ogros">Sistemas Distribuídos são como Ogros!</h2>
+<p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.</p>
+<h2 id="sistemas-distribuidos-sao-como-cebolas">Sistemas Distribuídos são como cebolas!</h2>
 <p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
 Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
-Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">1</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão</strong> reduzida, <strong>latência</strong> aumentada, menor capacidade de tratamento de requisições concorrentes, ou com  <strong>funcionalidades</strong> desabilitadas.</p>
+Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">2</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
 <p>Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por <strong>troca de mensagens</strong> ordenadas, <strong>fluxos de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
-Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Dado que a complexidade de se implementar estas abstrações já é grande por si só, se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">2</a></sup>
-Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
-As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo.
-Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup>
+Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.</p>
+<p>As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo,pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
 <h3 id="canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</h3>
 <p>Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus <em>hosts</em> possuam interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
 Além do canal, é também necessário que se estabeleça um <strong>protocolo de comunicação</strong>, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
-Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:</p>
-<ul>
-<li>Ponto-a-ponto<ul>
-<li>Eficiente</li>
-<li>Caro para muitos nós</li>
-<li>Roteamento trivial</li>
-</ul>
-</li>
-<li>Compartilhado<ul>
-<li>Colisões</li>
-<li>Menor custo</li>
-<li>Roteamento mais complicado</li>
-</ul>
-</li>
-</ul>
+Na prática, canais de comunicação podem ter diversas topologias e características, por exemplo:</p>
+<table>
+<thead>
+<tr>
+<th>Ponto-a-ponto</th>
+<th>Compartilhado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sem colisões</td>
+<td>Com colisões</td>
+</tr>
+<tr>
+<td>Roteamento trivial</td>
+<td>Roteamento complexo</td>
+</tr>
+<tr>
+<td>Caro (exponencial)</td>
+<td>Barato (linear)</td>
+</tr>
+</tbody>
+</table>
 <p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>.
 Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
@@ -1106,34 +1112,44 @@ Sobre este meio, são usados protocolos para, por exemplo,</p>
 <li>Transmissão de mensagens</li>
 <li>Evitar e tratar colisões</li>
 </ul>
-<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
 A conversa então é feita por meio de intermediários, <strong><em>gateways</em></strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.</p>
 <p>Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
-<ul>
-<li>Comutação de pacotes <ul>
-<li>Dados divididos em pacotes</li>
-<li>Cada pacote viaja independentemente</li>
-<li>Pacotes são perdidos</li>
-<li>Latência variável</li>
-</ul>
-</li>
-<li>Circuit switching<ul>
-<li>Caminho dedicado</li>
-<li>Recursos reservados</li>
-<li>Pacotes de tamanho fixo</li>
-<li>Latência constante</li>
-</ul>
-</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Comutação de pacotes</th>
+<th>Comutação de circuito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cada pacote viaja independentemente</td>
+<td>Todo pacote viaja por caminho predefinido</td>
+</tr>
+<tr>
+<td>Latência variável</td>
+<td>Latência mais constante</td>
+</tr>
+<tr>
+<td>Banda não reservada</td>
+<td>Banda reservada</td>
+</tr>
+<tr>
+<td>Banda não desperdiçada</td>
+<td>Banda desperdiçada</td>
+</tr>
+</tbody>
+</table>
 <p>Outro fator importante é a <strong>unidade máxima de transmissão</strong> (<em>maximum transmission unit</em>, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
-<p>Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
+<p>Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
 <p>Felizmente boa parte da <strong>complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos</strong>, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 <h3 id="a-internet">A Internet</h3>
 <p>A Internet tem este nome por usar o protocolo de interconexão de redes independentes, o <em>internetworking protocol</em>, ou IP.
 Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
-<p><img alt="A Internet" src="../images/network.png" /></p>
+<p><img alt="A Internet" src="../images/internet.png" /><sup id="fnref:internet"><a class="footnote-ref" href="#fn:internet">4</a></sup></p>
 <p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
 Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:</p>
 <ol>
@@ -1173,7 +1189,7 @@ No caso da pilha IP, usa-se o protocolo AF_INET ou PF_INET.
 Escolhido o protocolo, </p>
 <ul>
 <li>cada interface tem um endereço MAC, na camada 2, que a identifica entre as interfaces na mesma rede local, e </li>
-<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.<sup id="fnref:ippub"><a class="footnote-ref" href="#fn:ippub">3</a></sup></li>
+<li>cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.<sup id="fnref:ippub"><a class="footnote-ref" href="#fn:ippub">5</a></sup></li>
 </ul>
 <p>Mas dentro de um <em>host</em>, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
 Isto é feito pela definição uma porta:</p>
@@ -1224,7 +1240,7 @@ Novamente, no caso da pilha IP, pode-se usar TCP (<strong>SOCK_STREAM</strong>) 
 
 <p>Estabelecido o socket, o mesmo pode ser usado como um <strong>arquivo</strong>, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, <strong>sua responsabilidade</strong>.</p>
-<p>Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo <code>server.py</code>.<sup id="fnref:pyname"><a class="footnote-ref" href="#fn:pyname">4</a></sup></p>
+<p>Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo <code>server.py</code>.<sup id="fnref:pyname"><a class="footnote-ref" href="#fn:pyname">6</a></sup></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1246,7 +1262,7 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 <span class="kn">import</span> <span class="nn">socket</span>                                   <span class="c1"># Import socket module</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>                             <span class="c1"># Create a socket object</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>                <span class="c1"># Get local machine name</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>                     <span class="c1"># Get local machine name</span>
 <span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>                                    <span class="c1"># Reserve a port for your service.</span>
 <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>                            <span class="c1"># Bind to the port</span>
 
@@ -1262,7 +1278,7 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python server.py
 </code></pre></div>
 </td></tr></table>
-<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir. <sup id="fnref:telnet"><a class="footnote-ref" href="#fn:telnet">5</a></sup></p>
+<p>Em outro terminal, execute <strong>um dos</strong> dois comandos a seguir. <sup id="fnref:telnet"><a class="footnote-ref" href="#fn:telnet">7</a></sup></p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet localhost <span class="m">12345</span>
 </code></pre></div>
 </td></tr></table>
@@ -1450,7 +1466,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 <p><img alt="Multicast" src="../images/ipmulticast.jpg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
-A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">6</a></sup></p>
+A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">8</a></sup></p>
 <table>
 <thead>
 <tr>
@@ -1585,7 +1601,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 <p>Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.</p>
 <p>A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças </p>
 <div class="admonition tip">
-<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">7</a></sup></p>
+<p class="admonition-title">IP-Multicast em IPv6<sup id="fnref:ipv6multi"><a class="footnote-ref" href="#fn:ipv6multi">9</a></sup></p>
 <p>In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.</p>
 <p>In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''</p>
 </div>
@@ -1679,7 +1695,7 @@ Este cenário, apresentado na figura a seguir, mostra que apesar do uso de proce
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).</p>
 <p>No modelo de bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
 Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer <strong>E/S assíncrona</strong>.</p>
-<p>Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono<sup id="fnref:asyncio"><a class="footnote-ref" href="#fn:asyncio">8</a></sup> e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de multi-threading e as várias formas em que aparecem nos sistemas.</p>
+<p>Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono<sup id="fnref:asyncio"><a class="footnote-ref" href="#fn:asyncio">10</a></sup> e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de multi-threading e as várias formas em que aparecem nos sistemas.</p>
 <p>Há duas razões claras para estudarmos multi-threading. A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
 A segunda, didática, é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas a abstração é essencialmente a mesma:</p>
@@ -1753,7 +1769,7 @@ O primeiro arquivo, <code>index.html</code> é baixado individualmente, mas uma 
 <h4 id="single-threaded">Single-threaded</h4>
 <p>A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
 Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:</p>
-<p><img alt="Single Threaded" src="./images/singlethreadedserver.gif" /></p>
+<p><img alt="Single Threaded" src="../images/singlethreadedserver.gif" /></p>
 <ol>
 <li>O servidor é iniciado, criando o socket e invocando accept</li>
 <li>o cliente envia a requisição para o servidor</li>
@@ -1770,7 +1786,7 @@ Para evitar que isto ocorra, o servidor pode usar mais threads.</p>
 <h4 id="thread-per-request">Thread per request</h4>
 <p>O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
 Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.</p>
-<p><img alt="Multi Threaded" src="./images/multithreadedserver.gif" /></p>
+<p><img alt="Multi Threaded" src="../images/multithreadedserver.gif" /></p>
 <p>Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
 Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
 Se possível, devemos evitar a criação de novos threads em aplicações com requisitos de desempenho, e recliclá-los pode ser uma boa estratégia.</p>
@@ -1779,14 +1795,14 @@ Se possível, devemos evitar a criação de novos threads em aplicações com re
 No cerne desta abordagem, junto com o <em>pool</em> de threads, fica uma fila bloquenante na qual tarefas são inseridas e de onde os threads tentam retirá-las.</p>
 <p>Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de consumir recursos. Tão logo nova tarefa seja inserida, a fila acorda os threads para que a processem. Para garantir a corretude no processamento, a fila deve ser <strong>thread-safe</strong>, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas.</p>
 <p>Na figura, um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.</p>
-<p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="./images/poolthreadedserver.gif" /></a></p>
+<p><a href="https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html"><img alt="Pool Threaded" src="../images/poolthreadedserver.gif" /></a></p>
 <p>Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; requisições que demandam menor processamento liberam o thread mais rapidamente para que pegue nova tarefa.
 Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo. Se todas são grandes, as tarefas se acumularão na fila.
 Por isso é importante dimensionar bem o tamanho to <em>pool</em>, ou mesmo torná-lo dinâmico para que use menos recursos (threads) quando não necessário e não deixe tarefas pendentes por muito tempo. </p>
 <p>Se considerarmos que cada tarefa na verdade tem várias partes, 
 é possível refinar mais este modelo, quebrando o processamento em vários pools.</p>
 <h4 id="estagios">Estágios</h4>
-<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">9</a></sup></p>
+<p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">11</a></sup></p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="../images/seda1.png" /></a></p>
 <p>Por ter seu próprio <em>pool</em>, cada estágio pode ser escalado individualmente de acordo com a demanda.</p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="../images/seda2.png" /></a></p>
@@ -1837,7 +1853,7 @@ Neste caso, é preciso definir afinidade entre threads, isto é, notar quais thr
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.</p>
 <p><img alt="Multithreaded" src="../images/multithread2.png" /></p>
 <p>Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.</p>
-<p><img alt="Multithreaded" src="./images/multithreaded.jpg" /></p>
+<p><img alt="Multithreaded" src="../images/multithreaded.jpg" /></p>
 <p>Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a <strong>inconsistências</strong> na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como <strong>deadlocks</strong> e <strong>inanição</strong>.
 Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.</p>
@@ -1917,13 +1933,6 @@ Veja um pequeno comparativo das características das duas abordagens.</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition tip">
-<p class="admonition-title">Leia mais</p>
-<p>Uma visão interessante sobre estado é apresentada em <a href="https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2">On stateless software design</a>.</p>
-</div>
-<p>Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre <em>stateful</em> ser sempre mais complexo.
-    A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.
-    <a href="https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html">Sobre IO não bloqueante em Java.</a></p>
 <h3 id="multithread-na-pratica">Multithread na prática</h3>
 <h4 id="posix">POSIX</h4>
 <p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição aberta de como <em>threads</em> devem funcionar em sistemas operacionais.
@@ -2776,36 +2785,47 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li><a href="http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/">Tipos Atômicos</a></li>
 </ul>
 </li>
+<li>Estado<ul>
+<li>Uma visão interessante sobre estado é apresentada em <a href="https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2">On stateless software design</a>. Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre <em>stateful</em> ser sempre mais complexo. A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.</li>
+<li><a href="https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html">Sobre IO não bloqueante em Java.</a></li>
+</ul>
+</li>
 </ul>
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:falham">
+<p><a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">Annual failure rates - servers</a>&#160;<a class="footnote-backref" href="#fnref:falham" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
 <li id="fn:recursos">
-<p>Os recursos compartilhados vão desde alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, a própria <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.&#160;<a class="footnote-backref" href="#fnref:recursos" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Os recursos compartilhados vão desde alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, a própria <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.&#160;<a class="footnote-backref" href="#fnref:recursos" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ogros">
-<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:internet">
+<p>By User:Ludovic.ferre - Internet Connectivity Distribution&amp;Core.svg, CC BY-SA 3.0, (<a href="https://commons.wikimedia.org/w/index.php?curid=10030716">https://commons.wikimedia.org/w/index.php?curid=10030716</a>)&#160;<a class="footnote-backref" href="#fnref:internet" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ippub">
-<p>Endereços IP não públicos não servem como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:ippub" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Endereços IP não públicos não servem como identificadores únicos na Internet.&#160;<a class="footnote-backref" href="#fnref:ippub" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:pyname">
-<p>Você pode usar outro nome, desde que não seja <code>socket.py</code>, e que adapte o comando para sua execução.&#160;<a class="footnote-backref" href="#fnref:pyname" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>Você pode usar outro nome, desde que não seja <code>socket.py</code>, e que adapte o comando para sua execução.&#160;<a class="footnote-backref" href="#fnref:pyname" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:telnet">
-<p>O programa <code>telnet</code> é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o <code>netcat</code> normalmente precisa ser instalado por você. Em alguns sistemas, em vez de <code>netcat</code> o comando é o <code>nc</code>].&#160;<a class="footnote-backref" href="#fnref:telnet" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>O programa <code>telnet</code> é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o <code>netcat</code> normalmente precisa ser instalado por você. Em alguns sistemas, em vez de <code>netcat</code> o comando é o <code>nc</code>].&#160;<a class="footnote-backref" href="#fnref:telnet" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:multicast_use">
-<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="http://www.dasblinkenlichten.com/understanding-ip-multicast/">Understanding IP Multicast</a>&#160;<a class="footnote-backref" href="#fnref:multicast_use" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ipv6multi">
-<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="http://www.baeldung.com/java-broadcast-multicast">IP-Multicast em IPv6</a>&#160;<a class="footnote-backref" href="#fnref:ipv6multi" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
 <li id="fn:asyncio">
-<p>Um bom ponto de partida para o tópico é a sua entrada na <a href="https://en.wikipedia.org/wiki/Asynchronous_I/O">wikipedia</a>.&#160;<a class="footnote-backref" href="#fnref:asyncio" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p>Um bom ponto de partida para o tópico é a sua entrada na <a href="https://en.wikipedia.org/wiki/Asynchronous_I/O">wikipedia</a>.&#160;<a class="footnote-backref" href="#fnref:asyncio" title="Jump back to footnote 10 in the text">&#8617;</a></p>
 </li>
 <li id="fn:seda">
-<p>O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.&#160;<a class="footnote-backref" href="#fnref:seda" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+<p>O artigo <a href="http://www.sosp.org/2001/papers/welsh.pdf">SEDA: An Architecture for Well-Conditioned, Scalable Internet Services</a> descreve em detalhes a arquitetura SEDA.&#160;<a class="footnote-backref" href="#fnref:seda" title="Jump back to footnote 11 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

@@ -360,6 +360,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -636,6 +643,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -697,7 +711,7 @@ Assim, uma possível definição de Sistema Distribuído, que me agrada, é a se
 </ul>
 </details>
 <p>No jargão da área, os componentes independentes são denominados <strong>nós</strong>. 
-Frequentemente, cada <strong>nó</strong> do sistema será, na prática, um processo em um computador hospedeiro, um <strong><em>host</em></strong>, para que possa fazer uso de todos os recursos do hospedeiro. 
+Frequentemente, cada <strong>nó</strong> do sistema será, na prática, um processo em um computador hospedeiro, um <strong><em>host</em></strong>, para que possa fazer uso de todos os recursos do hospedeiro e, por isso, frequentemente nos referimos ao próprio <em>host</em> como o nó.
 Contudo, nada impede que possivelmente múltiplos nós possam ser executados em um mesmo <em>host</em> ou mesmo que múltiplos <em>hosts</em>  virtuais, sejam máquinas virtuais ou containers, executem na mesma máquina física; isso não muda o fato de que os componentes são independentes e poderiam ser distanciados. <sup id="fnref:embed"><a class="footnote-ref" href="#fn:embed">2</a></sup></p>
 <details class="sideslide"><summary>Comunicação</summary><ul>
 <li>memória compartilhada</li>
@@ -713,8 +727,9 @@ Eles também podem se comunicar por mensagens trocadas via uma rede de comunica�
 <li>Falha pode parar o sistema</li>
 </ul>
 </details>
-<p>Neste exemplo, cada celular é um nó do sistema, assim como o processo responsável por receber os emails e encaminhá-los para o banco, bem como ler do banco e entregar para os destinatários.
-Se o banco de dados para de funcionar, o processo na outra máquina passa a ser inútil, uma vez que não pode armazenar novas mensagens e nem recuperar mensagens já armazenadas. </p>
+<p>Neste exemplo, cada celular, o processo que implementa o serviço de email e o servidor de banco de dados, são nós do sistema.
+Observe que o nó do serviço de email é responsável por receber os emails e encaminhá-los para o banco em um sentido, bem como ler emails do banco e entregar para os destinatários, no outro.
+Observe também que se o banco de dados para de funcionar, o serviço de email passa a ser inútil, uma vez que não pode armazenar novas mensagens e nem recuperar mensagens já armazenadas. </p>
 <details class="sideslide"><summary>Disponibilidade</summary><ul>
 <li>falhas</li>
 <li>dependabilidade</li>
@@ -724,14 +739,14 @@ Se o banco de dados para de funcionar, o processo na outra máquina passa a ser 
 <blockquote>
 <p>A distributed system is one in which the failure of a computer you didn't even know existed can render your own computer unusable.</p>
 </blockquote>
-<p>Lamport está correto quanto a problemas em sistemas distribuídos, e problemas podem se manifestar em diversas formas. Por exemplo, mesmo que um computador não pare, se ele ficar lento ou se o canal de comunicação não for confiável, a uma aplicação crítica poderá ser inviabilizada, como no exemplo de tele-cirurgia acima.
+<p>Lamport está correto quanto aos problemas em sistemas distribuídos, e problemas podem se manifestar em diversas formas. Por exemplo, mesmo que um computador não pare, se ele ficar lento ou se o canal de comunicação não for confiável, uma aplicação crítica poderia ser inviabilizada, como no exemplo de telecirurgia acima.
 Algumas aplicações, contudo, aparentemente conseguem superar estes obstáculos.
 Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que, por seu sucesso, devem ser bons sistemas distribuídos.
 Alguns exemplos óbvios são <a href="https://www.amazon.com">Amazon.com</a>, <a href="https://www.facebook.com">Facebook</a>, e <a href="https://www.gmail.com">GMail</a>.</p>
 <p>Estes sistemas rodam em grandes <em>data centers</em> com <a href="https://youtu.be/D77WDo881Pc">milhares de máquinas</a>, estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc<sup id="fnref:failures"><a class="footnote-ref" href="#fn:failures">3</a></sup>. 
 Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
 Assim, digamos que um sistema computacional é <strong>bom</strong> se está sempre funcional, com bom desempenho e é de baixo custo.
-Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas; bom desempenho implica que  respostas "rápidas" são dadas para o usuário; baixo custo implica não gastar mais que o necessário para realizar a tarefa para a qual foi construído.</p>
+Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas, que ter bom desempenho implica que  respostas "rápidas" são dadas para o usuário, e que baixo custo implica em não gastar mais que o necessário para realizar a tarefa para a qual foi construído.</p>
 <details class="sideslide"><summary>Um "bom" sistema</summary><ul>
 <li>Disponível<ul>
 <li>Falhas</li>
@@ -748,7 +763,7 @@ Observe que estar sempre funcional implica em continuar provendo o serviço mesm
 </li>
 </ul>
 </details>
-<p>Enquanto subjetiva, nossa definição de <strong>bom</strong> nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar.
+<p>Enquanto subjetiva, nossa definição de <strong>bom</strong> nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar sistemas distribuídos.
 Como veremos adiante, os requisitos para um bom sistema distribuído são conflitantes e difíceis, as vezes impossíveis, de serem alcançados. 
 Mas se esta é a realidade da programação distribuída, por quê fazê-lo? A resposta tem a ver com a <strong>colaboração</strong>, na definição.</p>
 <h2 id="por-que-desenvolvemos-sistemas-distribuidos">Por quê desenvolvemos sistemas distribuídos?</h2>
@@ -766,15 +781,15 @@ Com a quantidade de informação armazenada a cada acesso a um sítio, a cada pr
 </ul>
 </details>
 <p>Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
-Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em <strong>distribuição</strong> e em <strong>Sistemas Distribuídos</strong>.
+Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em <strong>distribuição</strong> e em Sistemas Distribuídos.
 Assim, podemos concluir que as principais razões para se desenvolver sistemas distribuídos são alcançar <strong>escalabilidade</strong> e <strong>tolerância a falhas</strong>, ambas resultantes da <strong>agregação</strong> (correta) do poder computacional de múltiplos componentes.</p>
-<p>Uma vez que tenhamos entendido o porquê de desenvolver sistemas distribuídos, vejamos que tipo de sistema resulta desta abordagem.</p>
+<p>Uma vez que tenhamos entendido o porquê de desenvolver sistemas distribuídos, vejamos que tipos de sistemas resultam desta abordagem.</p>
 <h2 id="tipos-de-sistemas-distribuidos">Tipos de Sistemas Distribuídos</h2>
 <p>Há quem diga que <a href="https://devclass.com/2019/08/16/pivotal-cto-kubernetes-means-were-all-distributed-systems-programmers-now/">já somos todos desenvolvedores de sistemas distribuídos</a>.
-Ainda assim, é importante entender que há vários tipos de sistemas distribuídos, com diversas finalidades e diversas as arquiteturas, pois classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas. </p>
+Ainda assim, é importante entender que há vários tipos de sistemas distribuídos, com diversas finalidades e diversas arquiteturas, pois classificações nos ajudam a pensar sobre sistemas e a encontrar e reusar soluções previamente testadas e depuradas.</p>
 <h3 id="sistemas-de-computacao">Sistemas de Computação</h3>
-<p>A possibilidade de agregar poder de processamento de muitos computadores em um rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos
-Clusters como o da imagem a seguir, do High Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas áreas como bio-informática, engenharia, economia, inteligência artificial, etc.</p>
+<p>A possibilidade de agregar poder de processamento de muitos computadores via uma rede de comunicação com altíssima largura de banda nos permite atacar problemas computacionalmente muito intensos.
+Clusters como o da imagem a seguir, do High Performance Computing Center de Stuttgart, são compartilhados por pesquisadores resolvendo problemas de áreas como bio-informática, engenharia, economia e inteligência artificial.</p>
 <p><img alt="Cluster para HPC no High Performance Computing Center de Stuttgart" src="https://upload.wikimedia.org/wikipedia/commons/9/9e/High_Performance_Computing_Center_Stuttgart_HLRS_2015_08_Cray_XC40_Hazel_Hen_IO.jpg" /></p>
 <p>Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de projetos sem construir protótipos, seja</p>
 <ul>
@@ -788,24 +803,21 @@ Clusters como o da imagem a seguir, do High Performance Computing Center de Stut
 <p>Os <strong>nós</strong> de um cluster são normalmente divididos em três categorias: administração, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
 O <a href="https://github.com/oscar-cluster/oscar">Oscar</a>, por exemplo, é uma é conjunto de softwares para gerenciamento de clusters.
-Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que sejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
-Finalmente, as tarefas submetidas em si são normalmente aplicações distribuídas. Cada processo executando em uma máquina distinta é normalmente responsável por resolver uma parte do problema.</p>
+Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que estejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
+Finalmente, as tarefas submetidas em si são também aplicações distribuídas em que cada processo executando em uma máquina distinta é responsável por resolver uma parte do problema.</p>
 <p><img alt="CFD" src="../images/cfd_domain.png" /></p>
-<p>Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
-A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.</p>
-<p><img alt="CFD" src="../images/mpi.jpeg" /></p>
-<p>Este tipo de sistemas distribuídos são o que chamamos de fortemente acoplados pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
-Do ponto de vista deste curso, estamos mais interessados em sistemas fracamente acoplados.</p>
-<p>Um outro tipo de sistema, fracamente acoplado, mas com a mesma finalidade de atacar problemas que exigem muita computação, rodam nas <a href="https://en.wikipedia.org/wiki/Grid_computing">grades computacionais</a>. Muito usados até meados da década passada, neste arranjo, membros de uma associação disponibilizam capacidade computacional a um <em>pool</em>. De lá, os recursos podem ser acessados, seguindo algum critério de gerenciamento, por quaisquer dos membros da associação.
-Este modelo surgiu de iniciativas como o <a href="https://en.wikipedia.org/wiki/SETI@home">SETI@home</a>, em que pessoas doavam tempo ocioso do seu computador para analisar sinais de rádio recebidos do espaço.</p>
-<p>As grades computacionais são às vezes vistas como precursoras da computação utilitária, isto é, o fornecimento de recursos computacionais por provedores em troca de um pagamento proporcional à quantidade de recursos utilizados, como no fornecimento de água ou eletricidade.</p>
+<p>Este tipo de sistemas distribuídos são o que chamamos de <strong>fortemente acoplados</strong> pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
+Do ponto de vista deste curso, estamos mais interessados em sistemas <strong>fracamente acoplados</strong>.</p>
+<p>Um outro tipo de sistema, fracamente acoplado, mas com a mesma finalidade de atacar problemas que exigem muita computação, são as <a href="https://en.wikipedia.org/wiki/Grid_computing">grades computacionais</a>. Muito usadas até meados da década passada, neste arranjo, membros de uma associação disponibilizam capacidade computacional a um <em>pool</em>. De lá, os recursos podem ser acessados, seguindo algum critério de gerenciamento, por quaisquer dos membros da associação.
+Este modelo surgiu de iniciativas como o <a href="https://en.wikipedia.org/wiki/SETI@home">SETI@home</a>, em que pessoas doavam tempo ocioso do seu computador para analisar sinais de rádio recebidos do espaço. Após o sucesso inicial, a computação foi movida de computadores de voluntários para os de instituições com interesses em comum.</p>
+<p>As grades computacionais são às vezes vistas como precursoras da <strong>computação utilitária</strong>, isto é, o fornecimento de recursos computacionais por provedores em troca de um pagamento proporcional à quantidade de recursos utilizados, como no fornecimento de água ou eletricidade.</p>
 <p><img alt="tap" src="../images/faucet.png" style="width:300px" /></p>
 <p>A materialização recente da computação utilitária são as nuvens computacionais.
 Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.</p>
-<p>O seguinte vídeo mostra, em 360 graus, um dos <em>datacenters</em> do Google, para que você tenha ideia da escala em que estes sistemas são construídos.</p>
+<p>O seguinte vídeo mostra, em 360 graus, um dos <em>datacenters</em> do Google, para que você tenha ideia da escala em que estes sistemas são construídos.
+Já este outro <a href="https://www.google.com/about/datacenters/gallery/#/all">sítio</a> apresenta uma viagem fotográfica por alguns <em>datacenters</em>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zDAYZU4A3w0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p>Para uma viagem fotográfica, siga este <a href="https://www.google.com/about/datacenters/gallery/#/all">link</a></p>
 <h3 id="sistemas-de-informacao">Sistemas de Informação</h3>
 <p>Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos são encontrados em diversas formas. De fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.
 O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira implementa a interface com o usuário, a segunda contém a lógica do negócio, e a terceira mantem os dados.</p>
@@ -861,9 +873,8 @@ Suponha duas instâncias desta sequência, <span class="arithmatex">\(T_1\)</spa
 Este escalonamento violou a <strong>consistência</strong> do banco de dados por quê as operações não foram executadas <strong>isoladamente</strong>.</p>
 <p>Tente imaginar a dificuldade de se implementar um banco de dados distribuído. 
 Isto é, um banco em que vários nós mantem os dados, participam de transações e, portanto, precisam coordenar-se para manter os dados consistentes. 
-A figura a seguir mostra um cenário com três bancos. 
-Imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e no terceiro as ordens de compra. 
-Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo nó, e no terceiro é disparada uma cobrança para o cliente. 
+A figura a seguir mostra um cenário com três bancos; imagine que em um deles está uma relação com os dados dos clientes, em outro, os dados do estoque e, no terceiro, as ordens de compra. 
+Quando um cliente faz um pedido, o cliente deve ser validado no primeiro nó, o item é removido do estoque no segundo, e uma cobrança é disparada para o cliente no terceiro. 
 Se qualquer destas três relações não for corretamente consultada e alterada, os efeitos podem ser catastróficos para o negócio ou para o cliente.</p>
 <div class="mermaid">graph LR
   A[Cliente] --&gt;|Requisição| B{Monitor de Transações}
@@ -878,26 +889,23 @@ Se qualquer destas três relações não for corretamente consultada e alterada,
 <p>Como implementar ACID neste banco de dados? 
 Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
-Tambem discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.</p>
+Também discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.</p>
 <p><img alt="https://www.algoworks.com/blog/nosql-database/" src="../images/nosql.jpeg" /></p>
 <h3 id="integracao-de-aplicacoes">Integração de Aplicações</h3>
-<p>Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, é possível integrar diversos sistemas usando um <em>middleware</em> que os encapsule.</p>
+<p>Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, é possível integrar diversos sistemas usando um <strong><em>middleware</em></strong> que os encapsule.</p>
 <p><img alt="01-11" src="../images/01-11.png" /></p>
-<p>O <em>middleware</em> pode, por exemplo, se expor via interface REST para os clientes, mas consultar o sistema legado em um padrão antigo.</p>
-<p>Outro exemplo é o sistema na imagem seguinte, que mostra diversos departamentos de uma empresa conversando via troca de mensagens. 
-Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los. 
-Eles apenas publicam a mensagem para quem puder tratar. 
-Da mesma forma, a resposta vem na forma de uma mensagem.</p>
+<p>Veremos mais adiante o que é um <em>middleware</em>; por enquanto, pense nele apenas como um camada de software que se interpõe entre os clientes e um serviço oferecido.
+No exemplo, o <em>middleware</em> pode, por exemplo, se expor via interface REST para os clientes, mas consultar o sistema legado em um padrão antigo.</p>
+<p>Outro exemplo, na imagem seguinte,  é um sistema que agrega subsistemas de diversos departamentos de uma empresa via troca de mensagens.
+Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los; eles apenas <strong>publicam</strong> a mensagem para quem tiver interesse e aguardam um resposta também na forma de uma mensagem.
+Observe que nenhum componente tem que saber da existência do outro ou se torna indisponível caso os outros falhem, o que aumenta a escalabilidade do sistema e sua capacidade de tolerar falhas.</p>
 <p><img alt="https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite" src="../images/mq.png" /></p>
-<p>Este é um exemplo de sistema <strong>fracamente acoplado</strong>, pois nenhum componente tem que saber da existência do outro ou se torna indisponível caso os outros falhem.</p>
-<p>Siga este <a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">link</a> para ler mais sobre este tipo de sistema.</p>
 <h3 id="sistemas-pervasivosubiquos">Sistemas Pervasivos/Ubíquos</h3>
 <p>Segundo Weiser, 1993</p>
 <blockquote>
 <p>Ubiquitous computing is the method of enhancing computer use by making many computers available throughout the physical environment, but making them effectively invisible to the user.</p>
 </blockquote>
-<p>O que é importante aqui é o foco na tarefa em vez de na ferramenta. 
-Assim, sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
+<p>Assim, sistemas ubíquos aumentam e otimizam a interação do usuário com o ambiente, para que estes foquem-se na tarefa em vez de na ferramenta. Outra forma de se colocar, é que sistemas pervasivos devem ajudar as pessoas a realizar suas tarefas, de forma implícita, sem ter que pensar em como a tarefa será executada.
 Para que seja realizada, a computação pervasiva requer que dispositivos <strong>detectem o contexto</strong> em que estão inseridos, <strong>combinem-se</strong> de forma <em>ad-hoc</em> e <strong>compartilhem</strong> informações.</p>
 <div class="admonition example">
 <p class="admonition-title">Exemplos fictícios e reais</p>
@@ -922,8 +930,8 @@ A Internet das Coisas (IoT, do inglês <em>Internet of Things</em>) vai também 
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.</p>
 <p><img alt="https://www.edureka.co/blog/iot-applications/" src="../images/iot1.png" /></p>
-<p>Para aprender mais sobre IoT, veja este <a href="https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc">link</a> que descreve diversos projetos europeus na área.</p>
-<details class="todo"><summary>Todo</summary><p>Alguns exemplos de IoT e redes de sensores:</p>
+<div class="admonition example">
+<p class="admonition-title">Alguns exemplos de IoT e redes de sensores</p>
 <ul>
 <li>Smart grid e lavadora que escolhe horário</li>
 <li>Termostatos que percebem movimento</li>
@@ -933,19 +941,21 @@ Por exemplo, um sistema de irrigação que percebe o nível de humidade do ar, a
 <li>Abalos sísmicos e predição de avalanches</li>
 <li><a href="https://beebom.com/examples-of-internet-of-things-technology/">link</a></li>
 </ul>
-</details>
+</div>
 <h4 id="uma-nota-sobre-privacidade-nos-sistemas-pervasivos">Uma nota sobre privacidade nos sistemas pervasivos</h4>
 <p>À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.</p>
-<details class="todo"><summary>Todo</summary><p>Exemplos de problemas de privacidade.</p>
+<div class="admonition example">
+<p class="admonition-title">Exemplos de <em>hacking</em> em IOT</p>
 <ul>
-<li><a href="https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html">Roomba mapeando sua casa</a>.</li>
-<li>Ghost in the shell</li>
-<li>Snow crash</li>
+<li><a href="https://www.healthline.com/health-news/are-pacemakers-defibrillators-vulnerable-to-hackers">Hackers Can Access Pacemakers, but Don’t Panic Just Yet</a></li>
+<li><a href="https://www.news5cleveland.com/news/local-news/investigations/ethical-hacker-shows-us-how-easily-smart-devices-can-be-hacked-and-give-access-to-your-personal-info">Ethical hacker shows us how easily smart devices can be hacked and give access to your personal info</a></li>
+<li><a href="https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html">Your Roomba May Be Mapping Your Home, Collecting Data That Could Be Shared</a>.</li>
 </ul>
-</details>
+</div>
 <h2 id="projeto">Projeto</h2>
-<p>Como puderam ver até agora, a área de computação distribuída é rica aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.</p>
+<p>Como puderam ver até agora, a área de computação distribuída é rica aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
+Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.</p>
 <p>O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. As funcionalidades são expostas para estes usuários via duas aplicações distintas, o <strong>portal do cliente</strong>  e o <strong>portal administrativo</strong>, mas ambos manipulam a mesma base de dados. A base de dados é particionada usando <em>consistent hashing</em> e as partições são mantidas em memória apenas. Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. A imagem descreve a aplicação.</p>
 <p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
 <p>Apesar de introduzir complexidade extra, usaremos diversos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.</p>
@@ -1017,7 +1027,11 @@ A tabela hash remota é particionada para permitir o armazenamento de mais dados
 </ul>
 <h3 id="etapa-3-durabilidade">Etapa 3 - Durabilidade</h3>
 <p>Nesta etapa tornaremos todas as operações feitas no banco de dados permanentes por meio de um log remoto ou pela replicação das partições. Mais detalhes se seguirão.</p>
-<p><img alt="Arquitetura Etapa 2" src="../drawings/abcast.drawio-0.svg" /></p>
+<h2 id="referencias">Referências</h2>
+<ul>
+<li><a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">The Log: What every software engineer should know about real-time data's unifying abstraction</a></li>
+<li><a href="https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc">Vision and challenges for realising the Internet of things</a></li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
