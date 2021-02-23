@@ -1269,3 +1269,17 @@ If you can think of any other differences that we overlooked, we would love to h
     * Usando *thrift* e a linguagem Java, extenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação `setKV()`  caso a chave já exista.
     * Usando o *broker* mosquitto instalado localmente, faça em Java um *publisher* que simula um sensor de temperatura e publica valores aleatórios entre 15 e 45 a cada segundo.
     * Faça o *subscriber* que irá consumir esses dados de temperatura.
+
+
+
+### Message Passing Interface
+
+Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
+A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.
+
+
+![CFD](../images/mpi.jpeg)
+
+
+### Protocolos Epidêmicos
+

@@ -1,15 +1,12 @@
 # Fundamentos
 
-Mas se não temos alternativas à distribuição, precisamos então entender como podemos implementá-los e quais desafios encontraremos. 
-O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. 
-Isto é, precisamos definir um **modelo computacional**, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.
-
+Uma vez que estejam convencidos de que não temos alternativas à distribuição se queremos sistemas escaláveis e tolerantes a falhas, o próximo passo é entender como podemos implementá-los e quais desafios encontraremos. 
+O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. Isto é, precisamos definir um **modelo computacional**, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.
 
 
 ## Modelos computacionais
 
-Definido ou identificado o modelo computacional, podemos distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas.
-Contudo, antes de implementar esta coordenação precisamos responder a diversas perguntas, por exemplo:
+Antes de distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas, precisamos responder a algumas perguntas:
 
 * Qual a probabilidade de um nó parar de funcionar?
 * Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?
@@ -23,16 +20,15 @@ Contudo, antes de implementar esta coordenação precisamos responder a diversas
     * Sincronismo
     * Falhas
 
-Estas perguntas são, normalmente, divididos em três eixos: **Comunicação**, **Sincronismo** e **Falhas**.
+Estas perguntas são normalmente divididas em três eixos, **Comunicação**, **Sincronismo** e **Falhas**, e a combinação das respostas define o modelo computacional adotado.
 
 ### Comunicação
-De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou paralelamente.
-Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento via uma abstração de memória compartilhada distribuída. 
+De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou **paralelamente**.
+Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como [Infiniband](https://en.wikipedia.org/wiki/InfiniBand) que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
 Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
 
 ???todo "TODO"
     * Imagem shared memory
-    * diagrama de Venn (Shared memory [ distributed shared memory  ) Distributed systems ] 
 
 ??? sideslide "Comunicação"
     * memória compartilhada
@@ -43,8 +39,10 @@ Este modelo é mais adequado ao desenvolvimento de aplicações com componentes 
 
 ???todo "TODO"
     * Imagem message passing
-    * conectividade
 
+Uma abordagem conhecida como Memória Compartilhada Distribuída (DSM, do inglês, *Distributed Shared Memory*) tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.
+
+![Memória](../drawings/memory.drawio)
 
 
 ### Sincronismo
@@ -55,14 +53,17 @@ Este modelo é mais adequado ao desenvolvimento de aplicações com componentes 
     * relógio
     * sincronização
 
-Quanto ao sincronismo, considera-se os limites de tempo para execução de operações, para troca de mensagens ou acesso à memória compartilhada (dependendo do modelo de comunicação), se os nós tem acesso a relógios para medição de passagem do tempo e quão acurazes este são e, finalmente, o quão sincronizados são estes relógios. 
+Quanto ao sincronismo, considera-se os processos tem a capacidade de medir a passagem de tempo, isto é, tem a acesso a relógios, o uão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
+Além disso, considera-se a existência de limites de tempo para execução de operações, por exemplo, o tempo um processador leva para executar uma operação de soma de dois inteiros, ou o tempo necessário para a entrega de uma mensagem ou acesso a uma região de memória.
 
 
 
 ### Falhas
 
-Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais computadores, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, **computadores [falham](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/) o tempo todo!**.
+Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais *hosts*, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, estas falhas acontecem o tempo todo.[^falham] 
 Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada e sem comprometer a corretude do sistema.
+
+[^falham]: [Annual failure rates - servers](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/)
 
 ??? sideslide "Falhas"
     * detectável
@@ -73,19 +74,19 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 
 Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
 
-### Outros fatores
+### Modelos Assumido
 
 ??? sideslide "Outros"
     * carga de trabalho
 
-Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?)
+Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.
 
 
-## Sistemas Distribuídos são como Ogros!
+## Sistemas Distribuídos são como cebolas!
 
 Uma vez definido o **modelo computacional** e identificado os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
 Distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
-Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados[^recursos] e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão** reduzida, **latência** aumentada, menor capacidade de tratamento de requisições concorrentes, ou com  **funcionalidades** desabilitadas.
+Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados[^recursos] e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão reduzida**, **latência aumentada**, menor capacidade de tratamento de requisições concorrentes, ou com **funcionalidades desabilitadas**.
 
 [^recursos]: Os recursos compartilhados vão desde alguns óbvios, como **capacidade de armazenamento** e de **processamento**, a própria **localização** de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.
 
@@ -93,13 +94,13 @@ Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
 Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
-Quero dizer, a complexidade de se implementar estas abstrações já é grande por si só e se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
+Dado que a complexidade de se implementar estas abstrações já é grande por si só, se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos manipulá-las.[^ogros]
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.[^ogros]
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
+
 As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo.
-Afinal, um componente pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo,pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
 
 [^ogros]: Lembrem-se que também ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.
 
@@ -109,16 +110,13 @@ Afinal, um componente pode necessitar manter várias "conversas" em paralelo com
 Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
 Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
-Na prática, canais de comunicação podem ter diversas formas e características, por exemplo:
+Na prática, canais de comunicação podem ter diversas topologias e características, por exemplo:
 
-* Ponto-a-ponto
-	* Eficiente
-	* Caro para muitos nós
-	* Roteamento trivial
-* Compartilhado
-  	* Colisões
-  	* Menor custo
-  	* Roteamento mais complicado
+| Ponto-a-ponto  | Compartilhado |
+|----------------|---------------|
+ | Sem colisões | Com colisões|
+| Roteamento trivial | Roteamento complexo |
+| Caro (exponencial) | Barato (linear)
 
 Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**.
 Sobre este meio, são usados protocolos para, por exemplo,
@@ -127,25 +125,22 @@ Sobre este meio, são usados protocolos para, por exemplo,
 * Transmissão de mensagens
 * Evitar e tratar colisões
 
-As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas "mais interessantes", é necessário que se conecte diversas destas redes.
+As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
 A conversa então é feita por meio de intermediários, ***gateways*** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
 
 Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de **comutação de pacotes** (*packet switching*) ou de **circuitos** (*circuit switching*).
 
-* Comutação de pacotes 
-	* Dados divididos em pacotes
-	* Cada pacote viaja independentemente
-	* Pacotes são perdidos
-	* Latência variável
-* Circuit switching
-	* Caminho dedicado
-	* Recursos reservados
-	* Pacotes de tamanho fixo
-	* Latência constante
+| Comutação de pacotes | Comutação de circuito |
+|-|-|
+| Cada pacote viaja independentemente | Todo pacote viaja por caminho predefinido|
+| Latência variável | Latência mais constante|
+| Banda não reservada | Banda reservada |
+| Banda não desperdiçada | Banda desperdiçada |
+
 
 Outro fator importante é a **unidade máxima de transmissão** (*maximum transmission unit*, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
 
-Finalmente, há a questão importante é relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
+Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
 
 Felizmente boa parte da **complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
@@ -157,7 +152,9 @@ A Internet tem este nome por usar o protocolo de interconexão de redes independ
 Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
 
-![A Internet](../images/network.png)
+![A Internet](../images/internet.png)[^internet]
+
+[^internet]: By User:Ludovic.ferre - Internet Connectivity Distribution&Core.svg, CC BY-SA 3.0, (https://commons.wikimedia.org/w/index.php?curid=10030716)
 
 Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
 Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
@@ -275,7 +272,7 @@ Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo `server.py`
 import socket                                   # Import socket module
 
 s = socket.socket()                             # Create a socket object
-host = socket.gethostname()	               # Get local machine name
+host = socket.gethostname()	                    # Get local machine name
 port = 12345                                    # Reserve a port for your service.
 s.bind((host, port))                            # Bind to the port
 
@@ -661,7 +658,7 @@ Do lado dos servidores há diversas possibilidades de uso de threads para aument
 A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
 Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:
 
-![Single Threaded](./images/singlethreadedserver.gif)
+![Single Threaded](../images/singlethreadedserver.gif)
 
 0. O servidor é iniciado, criando o socket e invocando accept
 1. o cliente envia a requisição para o servidor
@@ -680,7 +677,7 @@ Para evitar que isto ocorra, o servidor pode usar mais threads.
 O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
 Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.
 
-![Multi Threaded](./images/multithreadedserver.gif)
+![Multi Threaded](../images/multithreadedserver.gif)
 
 Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
 Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
@@ -694,7 +691,7 @@ Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de con
 
 Na figura, um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
 
-[![Pool Threaded](./images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
+[![Pool Threaded](../images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
 
 Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; requisições que demandam menor processamento liberam o thread mais rapidamente para que pegue nova tarefa.
 Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo. Se todas são grandes, as tarefas se acumularão na fila.
@@ -760,7 +757,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 
 Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
 
-![Multithreaded](./images/multithreaded.jpg)
+![Multithreaded](../images/multithreaded.jpg)
 
 Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
@@ -830,12 +827,6 @@ Veja um pequeno comparativo das características das duas abordagens.
 | Não fica inconsistente com relação ao cliente | Pode ficar inconsistente se perder estado ou conexão feita com outro servidor |
 | re-autenticação (mesmo que simplficada) a cada requisição | Autentica no começo da sessão |
 
-
-!!!tip "Leia mais"
-    Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2).
-Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo.
-    A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
-    [Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
 
 ### Multithread na prática
 
@@ -1448,3 +1439,6 @@ public static Integer getMyId() {
     * [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
     * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
     * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
+* Estado
+    * Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2). Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo. A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
+    * [Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
