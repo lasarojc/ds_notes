@@ -308,11 +308,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sistemas-distribuidos-sao-como-cebolas" class="md-nav__link">
-    Sistemas Distribuídos são como cebolas!
+  <a href="#sd-sao-como-cebolas" class="md-nav__link">
+    SD são como cebolas!
   </a>
   
-    <nav class="md-nav" aria-label="Sistemas Distribuídos são como cebolas!">
+    <nav class="md-nav" aria-label="SD são como cebolas!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -369,11 +369,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos" class="md-nav__link">
-    Multiprogramação e Multithreading em Sistemas Distribuídos
+  <a href="#multiprogramacao-e-multithreading" class="md-nav__link">
+    Multiprogramação e Multithreading
   </a>
   
-    <nav class="md-nav" aria-label="Multiprogramação e Multithreading em Sistemas Distribuídos">
+    <nav class="md-nav" aria-label="Multiprogramação e Multithreading">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -738,11 +738,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sistemas-distribuidos-sao-como-cebolas" class="md-nav__link">
-    Sistemas Distribuídos são como cebolas!
+  <a href="#sd-sao-como-cebolas" class="md-nav__link">
+    SD são como cebolas!
   </a>
   
-    <nav class="md-nav" aria-label="Sistemas Distribuídos são como cebolas!">
+    <nav class="md-nav" aria-label="SD são como cebolas!">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -799,11 +799,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#multiprogramacao-e-multithreading-em-sistemas-distribuidos" class="md-nav__link">
-    Multiprogramação e Multithreading em Sistemas Distribuídos
+  <a href="#multiprogramacao-e-multithreading" class="md-nav__link">
+    Multiprogramação e Multithreading
   </a>
   
-    <nav class="md-nav" aria-label="Multiprogramação e Multithreading em Sistemas Distribuídos">
+    <nav class="md-nav" aria-label="Multiprogramação e Multithreading">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1020,10 +1020,7 @@ O primeiro desafio é entender o ambiente no qual estão inseridos, suas limita�
 <p>De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou <strong>paralelamente</strong>.
 Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão <strong>próximos</strong> e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como <a href="https://en.wikipedia.org/wiki/InfiniBand">Infiniband</a> que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
 Seja como for, estes sistemas com <strong>memória compartilhada</strong> são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais <strong>fortemente acoplados</strong> e melhor estudados em um curso de computação paralela.</p>
-<details class="todo"><summary>TODO</summary><ul>
-<li>Imagem shared memory</li>
-</ul>
-</details>
+<p><img alt="Memória Compartilhada" src="../drawings/shared_memory.drawio-0.svg" /></p>
 <details class="sideslide"><summary>Comunicação</summary><ul>
 <li>memória compartilhada</li>
 <li>troca de mensagens</li>
@@ -1031,12 +1028,13 @@ Seja como for, estes sistemas com <strong>memória compartilhada</strong> são n
 </details>
 <p>Por outro lado, estamos mais interessados aqui em sistemas de maior escala geográfica, o que se adequa melhor ao modelo de troca de mensagens, isto é, onde cada nó mantem controle total do seu espaço de endereçamento e só expõe seu estado via mensagens enviadas para os outros nós.
 Este modelo é mais adequado ao desenvolvimento de aplicações com componentes <strong>fracamente acoplados</strong>, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.</p>
-<details class="todo"><summary>TODO</summary><ul>
-<li>Imagem message passing</li>
-</ul>
-</details>
-<p>Uma abordagem conhecida como Memória Compartilhada Distribuída (DSM, do inglês, <em>Distributed Shared Memory</em>) tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.</p>
-<p><img alt="Memória" src="../drawings/memory.drawio-0.svg" /></p>
+<p><img alt="Passagem de Mensagens" src="../drawings/shared_memory.drawio-2.svg" /></p>
+<p>Memória Compartilhada Distribuída (DSM, do inglês, <em>Distributed Shared Memory</em>) é uma abordagem híbrida que tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.</p>
+<p><img alt="Memória Compartilhada" src="../drawings/memory.drawio-0.svg" /></p>
+<p>Considere uma possível implementação em software da DSM, apresentada na próxima figura. 
+Nesta abordagem, cada <em>host</em> contribui uma porção de sua memória para um <em>pool</em> global. Processos acessam o <em>pool</em> via <strong>gerentes de memória</strong>, que traduzem os endereços de um espaço de endereçamento virtual para um host e um endereço local a tal host, e usam <em>message passing</em>  para implementar o acesso. 
+Esta abordagem resulta em uma arquitetura NUMA, isto é, <em>Non-Uniform Memory Access</em>, já que os acessos a endereços locais são mais rápidos que aos remotos.</p>
+<p><img alt="Memória Compartilhada Distribuída em Software" src="../drawings/shared_memory.drawio-1.svg" /></p>
 <h3 id="sincronismo">Sincronismo</h3>
 <details class="sideslide"><summary>Sincronismo</summary><ul>
 <li>operações</li>
@@ -1065,7 +1063,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 </ul>
 </details>
 <p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.</p>
-<h2 id="sistemas-distribuidos-sao-como-cebolas">Sistemas Distribuídos são como cebolas!</h2>
+<h2 id="sd-sao-como-cebolas">SD são como cebolas!</h2>
 <p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
 Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
 Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">2</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
@@ -1660,7 +1658,7 @@ Agora criemos um programa que envia pacotes para o dito grupo.</p>
 </code></pre></div>
 </td></tr></table>
 </div>
-<h2 id="multiprogramacao-e-multithreading-em-sistemas-distribuidos">Multiprogramação e <em>Multithreading</em> em Sistemas Distribuídos</h2>
+<h2 id="multiprogramacao-e-multithreading">Multiprogramação e <em>Multithreading</em></h2>
 <p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
