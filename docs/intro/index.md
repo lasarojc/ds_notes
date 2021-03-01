@@ -6,7 +6,7 @@ Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obst�
 
     
 ??? sideslide "Sistemas simples"
-     ![Lego Rainbow](./images/lego0.jpg){: style="width:300px"}
+     ![Lego Rainbow](../images/lego0.jpg){: style="width:300px"}
 
 Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
 Estes são os sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.

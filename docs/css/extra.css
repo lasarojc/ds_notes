@@ -5,6 +5,14 @@
     z-index: 1;
 }
 
+/*.sideslide {
+    width: 25%;
+    position: absolute;
+    left: 62%;
+    z-index: 1;
+}*/
+
+
 details[open] summary ~ * {
     animation: sweep .5s ease-in-out;
 }

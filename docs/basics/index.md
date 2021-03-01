@@ -27,8 +27,8 @@ De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltip
 Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como [Infiniband](https://en.wikipedia.org/wiki/InfiniBand) que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
 Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
 
-???todo "TODO"
-    * Imagem shared memory
+![Memória Compartilhada](../drawings/shared_memory.drawio#0)
+
 
 ??? sideslide "Comunicação"
     * memória compartilhada
@@ -37,12 +37,18 @@ Seja como for, estes sistemas com **memória compartilhada** são normalmente us
 Por outro lado, estamos mais interessados aqui em sistemas de maior escala geográfica, o que se adequa melhor ao modelo de troca de mensagens, isto é, onde cada nó mantem controle total do seu espaço de endereçamento e só expõe seu estado via mensagens enviadas para os outros nós.
 Este modelo é mais adequado ao desenvolvimento de aplicações com componentes **fracamente acoplados**, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.
 
-???todo "TODO"
-    * Imagem message passing
+![Passagem de Mensagens](../drawings/shared_memory.drawio#2)
 
-Uma abordagem conhecida como Memória Compartilhada Distribuída (DSM, do inglês, *Distributed Shared Memory*) tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.
+Memória Compartilhada Distribuída (DSM, do inglês, *Distributed Shared Memory*) é uma abordagem híbrida que tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.
 
-![Memória](../drawings/memory.drawio)
+![Memória Compartilhada](../drawings/memory.drawio)
+
+Considere uma possível implementação em software da DSM, apresentada na próxima figura. 
+Nesta abordagem, cada *host* contribui uma porção de sua memória para um *pool* global. Processos acessam o *pool* via **gerentes de memória**, que traduzem os endereços de um espaço de endereçamento virtual para um host e um endereço local a tal host, e usam *message passing*  para implementar o acesso. 
+Esta abordagem resulta em uma arquitetura NUMA, isto é, *Non-Uniform Memory Access*, já que os acessos a endereços locais são mais rápidos que aos remotos.
+
+![Memória Compartilhada Distribuída em Software](../drawings/shared_memory.drawio#1)
+
 
 
 ### Sincronismo
@@ -82,7 +88,7 @@ Para lidar com falhas, precisamos entender quais são suas possíveis formas, is
 Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.
 
 
-## Sistemas Distribuídos são como cebolas!
+## SD são como cebolas!
 
 Uma vez definido o **modelo computacional** e identificado os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
 Distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
@@ -570,7 +576,7 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
 
 
 
-## Multiprogramação e *Multithreading* em Sistemas Distribuídos
+## Multiprogramação e *Multithreading*
 
 É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
 De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
