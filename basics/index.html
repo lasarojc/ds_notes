@@ -296,8 +296,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#modelos-assumido" class="md-nav__link">
-    Modelos Assumido
+  <a href="#modelo-assumido" class="md-nav__link">
+    Modelo Assumido
   </a>
   
 </li>
@@ -726,8 +726,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#modelos-assumido" class="md-nav__link">
-    Modelos Assumido
+  <a href="#modelo-assumido" class="md-nav__link">
+    Modelo Assumido
   </a>
   
 </li>
@@ -1057,7 +1057,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 </ul>
 </details>
 <p>Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.</p>
-<h3 id="modelos-assumido">Modelos Assumido</h3>
+<h3 id="modelo-assumido">Modelo Assumido</h3>
 <details class="sideslide"><summary>Outros</summary><ul>
 <li>carga de trabalho</li>
 </ul>
@@ -1067,6 +1067,22 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 <p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
 Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
 Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">2</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
+<details class="sideslide"><summary>Abstrações</summary><ul>
+<li>Comunicação<ul>
+<li>Ordenação</li>
+<li>Confiabilidade</li>
+<li>Invocação de procedimentos remotos</li>
+</ul>
+</li>
+<li>Heterogeneidade<ul>
+<li>Linguagens</li>
+<li>Arquiteturas</li>
+<li>Sistemas Operacionais</li>
+<li>Times</li>
+</ul>
+</li>
+</ul>
+</details>
 <p>Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por <strong>troca de mensagens</strong> ordenadas, <strong>fluxos de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
@@ -1074,10 +1090,10 @@ Dado que a complexidade de se implementar estas abstrações já é grande por s
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
 Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup>
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.</p>
-<p>As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo,pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
+<p>As camadas de abstração mais básicas estão <strong>na rede de computadores</strong> que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
 <h3 id="canais-e-protocolos-de-comunicacao">Canais e Protocolos de Comunicação</h3>
-<p>Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus <em>hosts</em> possuam interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
+<p>Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus <em>hosts</em> possuam <strong>interfaces de rede</strong> e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um <strong>canal de comunicação</strong> entre os componentes.
 Além do canal, é também necessário que se estabeleça um <strong>protocolo de comunicação</strong>, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
 Na prática, canais de comunicação podem ter diversas topologias e características, por exemplo:</p>
@@ -1085,25 +1101,29 @@ Na prática, canais de comunicação podem ter diversas topologias e caracterís
 <thead>
 <tr>
 <th>Ponto-a-ponto</th>
-<th>Compartilhado</th>
+<th>Barramento Compartilhado</th>
+<th>Token Ring</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Sem colisões</td>
 <td>Com colisões</td>
+<td>Sem colisões</td>
 </tr>
 <tr>
 <td>Roteamento trivial</td>
 <td>Roteamento complexo</td>
+<td>Roteamento simples</td>
 </tr>
 <tr>
 <td>Caro (exponencial)</td>
 <td>Barato (linear)</td>
+<td>Barato (linear)</td>
 </tr>
 </tbody>
 </table>
-<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>.
+<p>Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura <strong>Ethernet</strong>, que trata da comunicação entre nós usando um <strong>barramento compartilhado</strong>, mesmo que este esteja por vezes escondido.
 Sobre este meio, são usados protocolos para, por exemplo,</p>
 <ul>
 <li>Controle de acesso ao meio </li>
@@ -1140,7 +1160,7 @@ A conversa então é feita por meio de intermediários, <strong><em>gateways</em
 </tbody>
 </table>
 <p>Outro fator importante é a <strong>unidade máxima de transmissão</strong> (<em>maximum transmission unit</em>, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
-<p>Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.</p>
+<p>Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a <strong>mensagem pode ser perdida</strong> no meio.</p>
 <p>Felizmente boa parte da <strong>complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos</strong>, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 <h3 id="a-internet">A Internet</h3>
@@ -1148,8 +1168,11 @@ Nas redes atuais, a conversa em componentes será feita, em algum nível, por me
 Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados <strong>roteadores</strong> e fazem um <strong>melhor esforço</strong> para encaminhar os pacotes de dados do remetente ao destinatário.</p>
 <p><img alt="A Internet" src="../images/internet.png" /><sup id="fnref:internet"><a class="footnote-ref" href="#fn:internet">4</a></sup></p>
-<p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
-Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:</p>
+<p>Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há uma organização em camadas em que cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
+O protocolo de cada camada inclui <strong>cabeçalhos</strong> (<em>header</em>) e <strong>carga</strong> (<em>payload</em>) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. </p>
+<p><img alt="Pilhas de Comunicação" src="../drawings/pilha.drawio-0.svg" /></p>
+<p>São sete as camadas:</p>
 <ol>
 <li>Física: Bits</li>
 <li>Enlace: Frames/quadros; controle de fluxo; acesso ao meio.</li>
@@ -1159,21 +1182,19 @@ Cada camada é responsável pela comunicação em um nível e serve de fundaçã
 <li>Apresentação: Objetos; json, xml; criptografia</li>
 <li>Aplicação: Aplicações; http, pop, ftp</li>
 </ol>
-<p><img alt="image" src="../images/04-01.png" /></p>
-<p>O protocolo de cada camada inclui <strong>cabeçalhos</strong> (<em>header</em>) e <strong>carga</strong> (<em>payload</em>) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
-Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. </p>
+<p><img alt="Pilhas de Comunicação" src="../drawings/pilha.drawio-1.svg" /></p>
 <p>Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
 pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.</p>
-<p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="../images/osi-ip.jpg" /></a></p>
+<p><a href="http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html"><img alt="OSI x IP" src="../drawings/pilha.drawio-2.svg" /></a></p>
 <p>Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de <em>frameworks</em> ou do <em>middleware</em> em uso.
 Alguns exemplos de tais funcionalidades são</p>
 <ul>
-<li>(De)Serialização</li>
-<li>Nomeamento</li>
-<li>Criptografia</li>
-<li>Replicação</li>
-<li>Invocação remota de procedimentos</li>
+<li>(De)Serialização - conversão de estruturas complexas, e.g., objetos e estruturas, em sequência de bytes.</li>
+<li>Nomeamento - identificação de <em>hosts</em></li>
+<li>Criptografia - ocultação dos dados trafegados</li>
+<li>Replicação - comunicação com múltiplos interlocutores</li>
+<li>Invocação remota de procedimentos - abstração de protocolos de comunicação</li>
 </ul>
 <p>A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
 Este característica é conhecida como o <a href="http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">argumento fim-a-fim no projeto de sistemas</a>; uma análise recente deste argumento foi feita <a href="https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/">aqui</a>.</p>
@@ -1255,21 +1276,21 @@ O que exatamente deve ser escrito e como o que é lido deve ser interpretado é 
 14
 15
 16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">#server.py</span>
-<span class="c1">#!/usr/bin/python                               # This is server.py file</span>
+<span class="c1">#!/usr/bin/python                           # This is server.py file</span>
 
-<span class="kn">import</span> <span class="nn">socket</span>                                   <span class="c1"># Import socket module</span>
+<span class="kn">import</span> <span class="nn">socket</span>                               <span class="c1"># Import socket module</span>
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>                             <span class="c1"># Create a socket object</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>                     <span class="c1"># Get local machine name</span>
-<span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>                                    <span class="c1"># Reserve a port for your service.</span>
-<span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>                            <span class="c1"># Bind to the port</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>                         <span class="c1"># Create a socket object</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>                 <span class="c1"># Get local machine name</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>                                <span class="c1"># Reserve a port for your service.</span>
+<span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>                        <span class="c1"># Bind to the port</span>
 
-<span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                                     <span class="c1"># Now wait for client connections.</span>
+<span class="n">s</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>                                 <span class="c1"># Now wait for client connections.</span>
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-   <span class="n">c</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>                         <span class="c1"># Establish connection with client.</span>
+   <span class="n">c</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>                     <span class="c1"># Establish connection with client.</span>
    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Got connection from&#39;</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
    <span class="n">c</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s1">&#39;Thank you for connecting&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-   <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                                    <span class="c1"># Close the connection</span>
+   <span class="n">c</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                                <span class="c1"># Close the connection</span>
 </code></pre></div>
 </td></tr></table>
 <p>Para executá-lo, execute o seguinte comando em um terminal. </p>
@@ -1310,18 +1331,18 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 13
 14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">#client.py</span>
 
-<span class="c1">#!/usr/bin/python                               # This is client.py file</span>
+<span class="c1">#!/usr/bin/python                      # This is client.py file</span>
 
-<span class="kn">import</span> <span class="nn">socket</span>                                   <span class="c1"># Import socket module</span>
+<span class="kn">import</span> <span class="nn">socket</span>                          <span class="c1"># Import socket module</span>
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>                             <span class="c1"># Create a socket object</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>                <span class="c1"># Get local machine name</span>
-<span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>                                    <span class="c1"># Reserve a port for your service.</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">()</span>                    <span class="c1"># Create a socket object</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>            <span class="c1"># Get local machine name</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">12345</span>                           <span class="c1"># Reserve a port for your service.</span>
 
 <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
-<span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                                         <span class="c1"># Close the socket when done</span>
+<span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                              <span class="c1"># Close the socket when done</span>
 </code></pre></div>
 </td></tr></table></p>
 <p>E para se executar o cliente, faça:
@@ -1459,9 +1480,10 @@ Além do mais, as pessoas provavelmente preferirão perder alguns quadros que pe
 Parece que uma opção melhor seria então usar UDP, correto?</p>
 <p>Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
 Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!</p>
+<p><img alt="Multicast" src="../drawings/multicast.drawio-0.svg" /></p>
 <p>Para terminar, lhe darei uma razão final: IP-Multicast!
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. </p>
-<p><img alt="Multicast" src="../images/ipmulticast.jpg" /></p>
+<p><img alt="Multicast" src="../drawings/multicast.drawio-1.svg" /></p>
 <p>IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
 A seguinte tabela descreve os usos das sub-faixas de endereços.<sup id="fnref:multicast_use"><a class="footnote-ref" href="#fn:multicast_use">8</a></sup></p>

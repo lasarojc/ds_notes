@@ -12,5 +12,5 @@ s.listen(5)                                     # Now wait for client connection
 while True:
    c, addr = s.accept()                         # Establish connection with client.
    print('Got connection from', addr)
-   c.send("teste".encode())
+   c.send("teste um pouco mais long".encode())
    c.close() 
