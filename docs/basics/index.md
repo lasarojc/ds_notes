@@ -80,7 +80,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 
 Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
 
-### Modelos Assumido
+### Modelo Assumido
 
 ??? sideslide "Outros"
     * carga de trabalho
@@ -96,6 +96,16 @@ Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde o
 
 [^recursos]: Os recursos compartilhados vão desde alguns óbvios, como **capacidade de armazenamento** e de **processamento**, a própria **localização** de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.
 
+??? sideslide "Abstrações"
+    * Comunicação
+        * Ordenação
+        * Confiabilidade
+        * Invocação de procedimentos remotos
+    * Heterogeneidade
+        * Linguagens
+        * Arquiteturas
+        * Sistemas Operacionais
+        * Times
 Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
@@ -105,26 +115,26 @@ Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar co
 Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.[^ogros]
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 
-As camadas de abstração mais básicas estão na rede de computadores que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo,pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
+As camadas de abstração mais básicas estão **na rede de computadores** que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
 
 [^ogros]: Lembrem-se que também ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.
 
 
 ### Canais e Protocolos de Comunicação
 
-Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam interfaces de rede e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
+Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam **interfaces de rede** e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
 Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
 Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
 Na prática, canais de comunicação podem ter diversas topologias e características, por exemplo:
 
-| Ponto-a-ponto  | Compartilhado |
-|----------------|---------------|
- | Sem colisões | Com colisões|
-| Roteamento trivial | Roteamento complexo |
-| Caro (exponencial) | Barato (linear)
+| Ponto-a-ponto  | Barramento Compartilhado | Token Ring |
+|----------------|--------------------------|------------|
+| Sem colisões   | Com colisões             | Sem colisões|
+| Roteamento trivial | Roteamento complexo | Roteamento simples|
+| Caro (exponencial) | Barato (linear) | Barato (linear)|
 
-Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**.
+Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**, mesmo que este esteja por vezes escondido.
 Sobre este meio, são usados protocolos para, por exemplo,
 
 * Controle de acesso ao meio 
@@ -146,7 +156,7 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 
 Outro fator importante é a **unidade máxima de transmissão** (*maximum transmission unit*, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
 
-Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a mensagem pode ser perdida no meio.
+Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a **mensagem pode ser perdida** no meio.
 
 Felizmente boa parte da **complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
@@ -162,8 +172,13 @@ Os elementos que conectam as diversas redes são denominados **roteadores** e fa
 
 [^internet]: By User:Ludovic.ferre - Internet Connectivity Distribution&Core.svg, CC BY-SA 3.0, (https://commons.wikimedia.org/w/index.php?curid=10030716)
 
-Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há sete camadas na mesma.
-Cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
+Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há uma organização em camadas em que cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
+O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
+
+![Pilhas de Comunicação](../drawings/pilha.drawio#0)
+
+São sete as camadas:
 
 1. Física: Bits
 2. Enlace: Frames/quadros; controle de fluxo; acesso ao meio.
@@ -173,25 +188,22 @@ Cada camada é responsável pela comunicação em um nível e serve de fundaçã
 6. Apresentação: Objetos; json, xml; criptografia
 7. Aplicação: Aplicações; http, pop, ftp
 
-![image](../images/04-01.png)
-
-O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
-Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
+![Pilhas de Comunicação](../drawings/pilha.drawio#1)
 
 Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
 pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
 
-[![OSI x IP](../images/osi-ip.jpg)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+[![OSI x IP](../drawings/pilha.drawio#2)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
 Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
 Alguns exemplos de tais funcionalidades são
 
-* (De)Serialização
-* Nomeamento
-* Criptografia
-* Replicação
-* Invocação remota de procedimentos
+* (De)Serialização - conversão de estruturas complexas, e.g., objetos e estruturas, em sequência de bytes.
+* Nomeamento - identificação de *hosts*
+* Criptografia - ocultação dos dados trafegados
+* Replicação - comunicação com múltiplos interlocutores
+* Invocação remota de procedimentos - abstração de protocolos de comunicação
 
 A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
 Este característica é conhecida como o [argumento fim-a-fim no projeto de sistemas](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf); uma análise recente deste argumento foi feita [aqui](https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/).
@@ -273,21 +285,21 @@ Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo `server.py`
 
 ```python
 #server.py
-#!/usr/bin/python                               # This is server.py file
+#!/usr/bin/python                           # This is server.py file
 
-import socket                                   # Import socket module
+import socket                               # Import socket module
 
-s = socket.socket()                             # Create a socket object
-host = socket.gethostname()	                    # Get local machine name
-port = 12345                                    # Reserve a port for your service.
-s.bind((host, port))                            # Bind to the port
+s = socket.socket()                         # Create a socket object
+host = socket.gethostname()	                # Get local machine name
+port = 12345                                # Reserve a port for your service.
+s.bind((host, port))                        # Bind to the port
 
-s.listen(5)                                     # Now wait for client connections.
+s.listen(5)                                 # Now wait for client connections.
 while True:
-   c, addr = s.accept()                         # Establish connection with client.
+   c, addr = s.accept()                     # Establish connection with client.
    print('Got connection from', addr)
    c.send('Thank you for connecting'.encode())
-   c.close()                                    # Close the connection
+   c.close()                                # Close the connection
 ```
 
 Para executá-lo, execute o seguinte comando em um terminal. 
@@ -327,18 +339,18 @@ Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servi
 ```Python
 #client.py
 
-#!/usr/bin/python                               # This is client.py file
+#!/usr/bin/python                      # This is client.py file
 
-import socket                                   # Import socket module
+import socket                          # Import socket module
 
-s = socket.socket()                             # Create a socket object
-host = socket.gethostname()                # Get local machine name
-port = 12345                                    # Reserve a port for your service.
+s = socket.socket()                    # Create a socket object
+host = socket.gethostname()            # Get local machine name
+port = 12345                           # Reserve a port for your service.
 
 s.connect((host, port))
 data = s.recv(1024)
 print(data.decode())
-s.close()                                         # Close the socket when done
+s.close()                              # Close the socket when done
 ```
 
 E para se executar o cliente, faça:
@@ -443,10 +455,12 @@ Parece que uma opção melhor seria então usar UDP, correto?
 Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
 Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!
 
+![Multicast](../drawings/multicast.drawio#0)
+
 Para terminar, lhe darei uma razão final: IP-Multicast!
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
 
-![Multicast](../images/ipmulticast.jpg)
+![Multicast](../drawings/multicast.drawio#1)
 
 IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
