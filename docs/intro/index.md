@@ -358,7 +358,7 @@ A arquitetura também será híbrida, contendo um pouco de Cliente/Servidor e Pe
     * O Cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto.
         * inserirTarefa(CID, "titulo da tarefa", "descrição da tarefa"): Sucesso/Falha
         * modificarTarefa(CID, "titulo da tarefa", "nova descrição da tarefa"): Sucesso/Falha
-        * listarTarefas(CID): List<Pair<titulo,Descrição>>
+        * listarTarefas(CID): Lista de tuplas (titulo,Descrição)
         * apagarTarefas(CID): Sucesso/Falha
         * apagarTarefa(CID, "titulo da tarefa"): Sucesso/Falha
     * Os dados são mantidos em uma tabela hash (BigInteger[^int64],Bytes)

@@ -59,7 +59,7 @@ Esta abordagem resulta em uma arquitetura NUMA, isto é, *Non-Uniform Memory Acc
     * relógio
     * sincronização
 
-Quanto ao sincronismo, considera-se os processos tem a capacidade de medir a passagem de tempo, isto é, tem a acesso a relógios, o uão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
+Quanto ao sincronismo, considera-se os processos tem a capacidade de medir a passagem de tempo, isto é, tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
 Além disso, considera-se a existência de limites de tempo para execução de operações, por exemplo, o tempo um processador leva para executar uma operação de soma de dois inteiros, ou o tempo necessário para a entrega de uma mensagem ou acesso a uma região de memória.
 
 
