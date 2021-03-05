@@ -88,7 +88,7 @@ Para lidar com falhas, precisamos entender quais são suas possíveis formas, is
 Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.
 
 
-## SD são como cebolas!
+### SD são como cebolas!
 
 Uma vez definido o **modelo computacional** e identificado os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
 Distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
@@ -106,6 +106,7 @@ Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde o
         * Arquiteturas
         * Sistemas Operacionais
         * Times
+
 Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
@@ -115,13 +116,15 @@ Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar co
 Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.[^ogros]
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.
 
-As camadas de abstração mais básicas estão **na rede de computadores** que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
-
 [^ogros]: Lembrem-se que também ![ogros são como cebolas](https://media.giphy.com/media/4RsEUfHym7tuw/200.gif) e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.
 
 
-### Canais e Protocolos de Comunicação
+## Comunicação
+
+As camadas de abstração mais básicas estão **na rede de computadores** que serve de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
+
+### Canais e Protocolos
 
 Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam **interfaces de rede** e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
 Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
@@ -590,10 +593,10 @@ A título de curiosidade, IP-Multicast também está presente em IPv6, mas com a
 
 
 
-## Multiprogramação e *Multithreading*
+## Concorrência
 
-É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos.
-De fato, os exemplos que apresentamos até agora consistem todos em um processo cliente requisitando ações de algum processo servidor.
+É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos e em termos de múltiplos *threads* nos processos.
+Os exemplos apresentados até agora, consistem todos em um processo cliente requisitando ações de algum processo servidor.
 Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
 Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.
 
@@ -626,27 +629,29 @@ sequenceDiagram
 ```
 
 
-Este modelo de sincronização entre as partes comunicantes é um exemplo de **E/S bloqueante**. O principal ponto positivo desta estratégia é a **simplicidade do código** e o principal ponto negativo é a **limitação do paralelismo** no uso de recursos, uma das razões de ser da computação distribuída.
+Este modelo de sincronização entre as partes comunicantes é um exemplo de **E/S bloqueante**. 
+O principal ponto positivo desta estratégia é a **simplicidade do código** e o principal ponto negativo é a **limitação do paralelismo** no uso de recursos, uma das razões de ser da computação distribuída.
 
 Para usarmos melhor os recursos disponíveis, tanto do lado dos clientes quanto servidores, temos então que pensar em termos de eventos sendo disparados entre os componentes, que devem ser tratados assim que recebidos ou tão logo haja recursos para fazê-lo. 
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).
 
-No modelo de bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
+No modelo bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
 Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer **E/S assíncrona**.
 
-Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono[^asyncio] e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de multi-threading e as várias formas em que aparecem nos sistemas.
+Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono[^asyncio] e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de *multithreading* e as várias formas em que aparecem nos sistemas.
 
 [^asyncio]: Um bom ponto de partida para o tópico é a sua entrada na [wikipedia](https://en.wikipedia.org/wiki/Asynchronous_I/O).
 
-Há duas razões claras para estudarmos multi-threading. A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
-A segunda, didática, é o fato que muitos dos problemas que aparecem em programação multi-thread, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
+Há duas razões claras para estudarmos *multithreading*. 
+A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
+A segunda, didática, é o fato que muitos dos problemas que aparecem em programação *multithread*, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre *threads* e processos, mas a abstração é essencialmente a mesma:
 
 || Processo | Thread |
 -|----------|--------
 Definição | Instância de um programa | "Processo leve"
 Função de entrada | `main` | função "qualquer"
-Compartilhammento de código e dados | Privado ao processo | Compartilhado pelos threads
+Compartilhamento de código e dados | Privado ao processo | Compartilhado pelos threads
 Estado | Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso | Stack, variáveis locais 
 Comunicação| IPC (*Inter Process Communication*): sockets, FIFO, memória compartilhada, etc  | IPC, mutex, variáveis de condição, semáforos, etc
 Nível da implementação | Sistema operacional | Diferentes implementações 
@@ -654,19 +659,22 @@ API || Posix, C++, Java, ...
 Bloqueio | Mudança de contexto para outro thread mesmo sem terminar quantum | Mudança de contexto para outro thread do mesmo processo
 Tempo de criação, terminação e mudança de contexto| Demora mais | Demora menos
 
+
 Vejamos como o uso de múltiplos threads podem melhorar o desenvolvimento de sistemas distribuídos na prática.
 Considere os exemplos de clientes e servidores vistos [anteriormente](#tcp).
 Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma página Web.
-Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requição `GET arquivo.html` será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.
-
+Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requisição `GET arquivo.html` será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.
 
 ### Cliente
 
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
-Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. A figura a seguir mostra a carga do sítio da [Facom](https://www.facom.ufu.br).
-O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que isso acontece e são determinaos quais os demais arquivos necessários, requisções concorrentes são disparadas, minimizando o tempo total da operação.
+Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. 
+A figura a seguir mostra a carga do sítio da [Facom](https://www.facom.ufu.br).
+O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que isso acontece e são determinados quais os demais arquivos necessários, requisições concorrentes são disparadas, minimizando o tempo total da operação.
 
 ![Facom loading times](../images/facom.png)
+
+Como outros exemplos, considere um formulário *online* em que a validação de um campo é executada enquanto o campo seguinte está sendo preenchido, ou um serviço de email em que arquivos são carregados enquanto a mensagem é confeccionada.
 
 
 ### Servidor
@@ -728,17 +736,15 @@ Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**
 
 [![Seda](../images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
-Por ter seu próprio *pool*, cada estágio pode ser escalado individualmente de acordo com a demanda.
+Uma característica importante deste modelo é que cada estágio pode ser escalado individualmente de acordo com a demanda uma vez que cada estágio tem seu próprio *pool*. Por exemplo, se um estágio faz algum cálculo leve, então poucos *threads* são necessários ao mesmo. Já um estágio que precise efetuar E/S talvez precise mais *threads*, uma vez que estes ficam bloqueandos enquanto a operação é executada. [^ioasync]
+
+[^ioasync]: Pode-se argumentar que E/S assíncrona resolveria o problema aqui, mas isso não vem ao caso.
 
 [![Seda](../images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
-Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de [micro-serviços](http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html).
 
 
-
-
-
-#### Problemas
+### Desafios
 
 Embora a ideia de usar múltiplos threads seja melhorar desempenho e experiência do usuário, fazê-lo efetivamente é não trivial.
 Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte pseudo-código:
@@ -768,18 +774,20 @@ Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa
 
 ![Multithreaded](../images/cache-line.png)
 
-Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache.
-Mas nem sempre o problema é tão facilmente resolvível pois o compartilhamento pode ser real (por exemplo se ambos os threads usarem a variável X).
-Neste caso, é preciso definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
+Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache; no exemplo, poderia-se definir X e Y como vetores do tamanho da linha da cache e usar efetivamente apenas a primeira posição de cada vetor.
+
+Se o compartilhamento for real, por exemplo se ambos os threads usarem a variável X, então o problema não será tão facilmente resolvível.
+Neste caso, poder-se-ia definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.
 
 ![Multithreaded](../images/multithread2.png)
 
-Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida e é difícil determinar (se existir) uma configuração ótima em termos de afinidade  que seja também eficiente.
 
-![Multithreaded](../images/multithreaded.jpg)
+???- sideslide "Multiprogramação"
+     ![Multithreaded](../images/multithreaded.jpg)
 
-Memes bonitinhos à parte, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
+Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
+Ainda assim, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
 Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.
 
@@ -787,8 +795,8 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 
 
 
-#### Estado
-A questão das regiões críticas no servidor está intimamente relacionada à questão da manutenção de estado nos servidores.
+### Estado
+A questão das regiões críticas está intimamente relacionada à questão da manutenção de estado nos servidores.
 Quanto a este respeito, podemos classificar servidores como **stateful** e **stateless**, dois termos que ouvirão frequentemente enquanto trabalhando com SD.
 
 O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
@@ -814,12 +822,12 @@ Também a complexidade do servidor aumenta. Considere as algumas de muitas pergu
 Você já deve ter adivinhado que no primeiro exemplo temos um servidor *stateless* e no segundo um *stateful*, e percebido que cada um tem suas vantagens e desvantagens.
 Vejamos mais algumas.
 
-##### Sessão
+#### Sessão
 
 Essencialmente, o servidor *stateless* não mantem informação sobre a sessão do cliente e requer que a cada nova requisição, quaisquer informações necessárias para realizar a tarefa requisitada sejam novamente fornecidas ao servidor.
 No caso *stateful*, o servidor pode se lembrar, como no exemplo anterior, até onde o trabalho já foi executado, quais arquivos o cliente manipulou (e mantê-los abertos), qual o endereço o cliente e enviar-lhe notificações importantes (e.g., "Novo dado inserido!").
 
-##### Falhas
+#### Falhas
 
 Enquanto servidores *stateful* obviamente levam a melhor desempenho no *happy path* (contanto que recursos suficientes sejam providos), no caso de falhas, serviços *stateless* tendem a voltar ao ar mais rapidamente, uma vez que não há estado que precise ser recuperado.
 Pela mesma razão, clientes que percebem que um servidor falhou podem rapidamente se dirigir a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.
@@ -830,7 +838,7 @@ Para que possa o recuperar o estado anterior à falha, o servidor precisa coloca
 A perda deste estado implicaria na incapacidade de prover o serviço corretamente.
 Um projeto *stateless* não depende deste estado e por isso pode ser mais rapidamente recuperado, replicado ou substituído.
 
-##### Stateless x Stateful
+#### Stateless x Stateful
 
 Não surpreendentemente, a resposta para "qual abordagem é melhor, *stateful* ou *stateless*?" é **depende**.
 Ambos as opções tem suas vantagens e desvantagens e para algums serviços apenas uma opção será viável.
@@ -855,9 +863,6 @@ Veja um pequeno comparativo das características das duas abordagens.
 [POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição aberta de como *threads* devem funcionar em sistemas operacionais.
 Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, compatíveis com especifições POSIX, mas também para Windows, via subsistemas.
 Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação *multi-threaded*.
-
-
-##### Ciclo de vida
 
 Para se definir um *thread*, é necessário definir uma função de entrada, que será para o *thread* como a função `main` é para o processo em si.
 No exemplo a seguir a função foi definida com retorno `void *` e com único parâmetro tambem `void *`; esta é uma obrigatoriedade para funções de entrata PThread.
@@ -1019,8 +1024,6 @@ Java também provê diversas estruturas para comunicação e coordenação de th
 
 Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico e uma ótima documentação é dispobinilizada pela própria [Oracle](https://docs.oracle.com/javase/tutorial/essential/concurrency/).
 
-
-##### Ciclo de vida
 Há duas formas básicas de definir um novo *thread* em Java, via extensão da classe `Thread`, como no primeiro exemplo, ou ou via implementação da interface `Runnable`, como no segundo, a seguir.
 
 !!! example "*Thread*"
@@ -1192,7 +1195,7 @@ Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode
     
 
 ???todo 
-   Melhorar explicação abaixo
+    Melhorar explicação abaixo
 
 Além de extensão de `Thread` e implementação de `Runnable`, Java disponibiliza também `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
 
