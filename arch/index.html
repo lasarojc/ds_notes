@@ -286,15 +286,15 @@
     Componentes e Conectores
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Componentes e Conectores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#clienteservidor" class="md-nav__link">
     Cliente/Servidor
   </a>
   
-    <nav class="md-nav" aria-label="Cliente/Servidor">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#par-a-par-p2p" class="md-nav__link">
@@ -340,6 +340,40 @@
   <a href="#cliente-servidor" class="md-nav__link">
     Cliente Servidor
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
+    Arquitetura Orientada a Microsserviços
+  </a>
+  
+    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monolitos" class="md-nav__link">
+    Monolitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsservicos" class="md-nav__link">
+    Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
+    Do Monolito aos Microsserviços
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -485,40 +519,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
-    Arquitetura Orientada a Microsserviços
-  </a>
-  
-    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#monolitos" class="md-nav__link">
-    Monolitos
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#microsservicos" class="md-nav__link">
-    Microsserviços
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
-    Do Monolito aos Microsserviços
-  </a>
   
 </li>
         
@@ -669,15 +669,15 @@
     Componentes e Conectores
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Componentes e Conectores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#clienteservidor" class="md-nav__link">
     Cliente/Servidor
   </a>
   
-    <nav class="md-nav" aria-label="Cliente/Servidor">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#par-a-par-p2p" class="md-nav__link">
@@ -723,6 +723,40 @@
   <a href="#cliente-servidor" class="md-nav__link">
     Cliente Servidor
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
+    Arquitetura Orientada a Microsserviços
+  </a>
+  
+    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monolitos" class="md-nav__link">
+    Monolitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microsservicos" class="md-nav__link">
+    Microsserviços
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
+    Do Monolito aos Microsserviços
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -876,40 +910,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#arquitetura-orientada-a-microsservicos" class="md-nav__link">
-    Arquitetura Orientada a Microsserviços
-  </a>
-  
-    <nav class="md-nav" aria-label="Arquitetura Orientada a Microsserviços">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#monolitos" class="md-nav__link">
-    Monolitos
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#microsservicos" class="md-nav__link">
-    Microsserviços
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#do-monolito-aos-microsservicos" class="md-nav__link">
-    Do Monolito aos Microsserviços
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -923,6 +923,7 @@
               
 
 <!-- Edit button -->
+
 
   <!--
        Hack: check whether the content contains a h1 headline. If it
@@ -951,7 +952,7 @@ A razão óbvia para preferir sistemas fracamente conectados é sua capacidade d
 <p>Certos <em>middleware</em> permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.</p>
 <p><img alt="Desacoplamento" src="../images/component2.png" /></p>
 <p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
-<h2 id="clienteservidor">Cliente/Servidor</h2>
+<h3 id="clienteservidor">Cliente/Servidor</h3>
 <p>A forma como os componentes se comunicam, isto é, os conectores usados, é importante no estudo arquitetural. 
 Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
 Neste sentido, provavelmente a arquitetura de computação distribuída mais comum é a <strong>Cliente/Servidor</strong>.</p>
@@ -1034,6 +1035,7 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
 <p><img alt="Microserviços" src="../images/microservice_sample.png" /></p>
 <p>Nós discutiremos micro-serviços mais adiante. 
 Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a href="http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/">os micro-serviços não são uma panacéia</a>.</p>
+<p>Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a>.</p>
 <details class="todo"><summary>Todo</summary><p><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Event sourcing</a></p>
 </details>
 <details class="todo"><summary>Todo</summary><p>MOM</p>
@@ -1085,6 +1087,88 @@ Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por que
 Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, também a ser visto adiante.
 Quarto, usando-se sockets como base, podemos construir outros modelos de comunicação entre processos, efetivamente colocando camadas na nossa cebola.<sup id="fnref:shrek"><a class="footnote-ref" href="#fn:shrek">1</a></sup></p>
 <p>A seguir, exploraremos as arquiteturas construídas sobre cliente/servidor.</p>
+<h2 id="arquitetura-orientada-a-microsservicos">Arquitetura Orientada a Microsserviços</h2>
+<p>No dia 3 de Junho de 2020, termo <strong>microservice</strong> resultava em 6.6 milhões de resultados no <a href="https://www.bing.com/search?q=microservice&amp;PC=U316&amp;FORM=CHROMN">Google</a>.
+Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes, que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
+Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surgiram com grande estrondo, sendo alguns exemplos recentes Docker, Golang, Angular, e JQuery, e embora seja certo que algumas destas encontrarão seus nichos, como fizeram antes delas Cobol, C, e SQL, outras deparecerão da face da indústria; afinal, quem sabe o que é Delphi e quem ainda usa JQuery?
+Este fenômeno é capturado pelas várias fases do <em>hype-cycle</em> da Gartner.<sup id="fnref:hype_gartner"><a class="footnote-ref" href="#fn:hype_gartner">3</a></sup></p>
+<p><a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle"><img alt="Hype Cycle" src="../images/gartner-hype-cycle-overview.png" /></a></p>
+<p>A Arquitetura Orientada a Microsserviços, tendo atingido o pico das expectativas infladas<sup id="fnref:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2017, está deslizando na <a href="https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-">Trough of Desilusionment</a><sup id="fnref2:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2019.
+Isto é, este modelo de desenvolvimento não é mais propagandeado como uma bala de prata para todas as aplicações distribuídas.
+Ainda assim, é um importante modelo. Mas afinal, o que é a arquitetura de microsserviços?
+Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termoss de sistemas monolíticos. <br />
+<a href="http://www.imdb.com/title/tt0062622/"><img alt="2001 Space Odyssey" src="../images/monolith_2001.jpg" /></a>   </p>
+<h3 id="monolitos">Monolitos</h3>
+<p>Muitas aplicações seguem o modelo de 3 camadas em que em um dos extremos tem-se a interface com os usuários, materializada normalmente por um navegador, no outro tem-se um SGBD onde são armazenados os dados da aplicação, e, no meio, a lógica do negócio.
+A camada central, implementada por um único processo, que alimenta a interface com o usuário, manipula o modelo de dados, e onde reside a lógica do negócio, é um <strong>monolito</strong>.</p>
+<p><a href="http://nodexperts.com/blog/microservice-vs-monolithic/"><img alt="Monolitos" src="../images/monolith_arc.png" /></a></p>
+<p>Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em colocadas em desenvolvimento de forma atômica:   </p>
+<ul>
+<li>Desenvolva</li>
+<li>Teste</li>
+<li>Implante</li>
+<li>loop</li>
+</ul>
+<p>Simples não quer dizer necessariamente eficiente; no caso de atualizações de uma parte do sistema, todo o monolito precisa ser trocado, incorrendo em indisponibilidade total do sistema, mesmo das partes não modificadas.
+Esta dificuldade tende a limitar as janelas de atualização do sistema, o que aumenta no número de mudanças que ocorrem a cada atualização, o que aumenta o risco de regressões e portanto requer mais testes, o que aumenta o intervalo entre janelas de atualização. Além disso, nos caso de bugs, é mais difícil encontrar o problema, uma vez que fica impossível os desenvolvedores conhecerem todo o sistema.
+Isso apenas exacerba o problema, o que limita mais ainda as atualizações, gerando um ciclo vicioso que mantem desenvolvedores acordados nas madrugadas de sexta para sábado quando é dia de <em>deploy</em>.</p>
+<p>Sistemas monolíticos também podem ser problemáticos quanto à escalabilidde, pois quando a capacidade do sistema é atingida, ou todo o sistema é movido para um <em>host</em> de maior capacidade ou todo o sistema deve ser  replicado.
+Na primeira abordagem, o custo geralmente é um impecilho, pois preços de hardware crescem exponencialmente. Além disso, um servidor, por mais parrudo que seja, é um Ponto Único de Falha (ou SPOF, do inglês <em>single point of failure</em>).
+Quanto à segunda abordagem, ela traz complexidades na coordenação das réplicas e ineficiências ao replicar inclusive as partes subutilizadas.
+Ambas as abordagens também esbarram na escalabilidade do banco de dados que lhes serve de <em>backend</em>.
+Para contornar ou pelo menos minimizar estes problemas, pode-se fragmentar o serviço e o banco de dados, o que facilita tanto a escalabilidade vertical quanto horizontal de cada módulo, que é menor e mais simples de coordenar, e divide a carga nos bancos de dados; mas isso é a troca do servíço monolítico por microsserviços.</p>
+<p><a href="https://thenewstack.io/from-monolith-to-microservices/"><img alt="Escala de Microsserviços" src="../images/microservices_scale.png" /></a></p>
+<h3 id="microsservicos">Microsserviços</h3>
+<p>De acordo com <a href="https://martinfowler.com/articles/microservices.html">Lewis &amp; Fowler</a></p>
+<blockquote>
+<p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
+</blockquote>
+<p>Em outras palavras, com os microsserviços, quebra-se o monolito em diferentes processos, "<em>small autonomous services that work together, modelled around a business domain</em>", cada um gerenciando os dados relevantes para aquela parte do sistema e, possivelmente, sua própria interação com o usuário.
+Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhas o funcionamento de todo o sistema.</p>
+<p>Além disso, quando um serviço precisa ser atualizado, todos os demais podem continuar operantes e possível até que múltiplas versões do mesmo serviço sejam executadas concorrentemente, possibilitando atualizações sem janelas de manutenção.  </p>
+<p>Quanto à escalabilidade, esta é feita indepentendentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design"><img alt="" src="../images/microservice_sample.png" /></a></p>
+<p>Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou <em>sharding</em>).
+Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
+<h3 id="do-monolito-aos-microsservicos">Do Monolito aos Microsserviços</h3>
+<p>Com tantas vantagens, suge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
+A resposta é <strong>não</strong>, pois como colocado no início desta seção, <strong>não existem balas de prata</strong> e se um sistema monolítico está funcionando para você e não há perspectiva de problemas acometerem (a demanda no sistema não está aumentando, a lógica do sistema é muito simples, indisponibilidade não te traz prejuízo, você não pode arcar com a refatoração), então mantenha seu sistema como está.</p>
+<p>Caso haja a necessidade de evolução e o modelo de microsserviços pareça adequado, existem recomendações de como a migração pode ser feita.
+Primeiro, é preciso aceitar que o desenvolvimento de microsserviços afeta a organização do time de desenvolvimento e que a organização provavelmente refletirá a arquitetura.
+O desenvolvimento, manutenção e operação de microsserviços acontece em times pequenos, de 1 a 8 pessoas ("pizza team"), dependendo da complexidade do serviço; se houver a necessidade de mais pesssoas no time, o escopo do microsserviço provavelmente está grande demais; cada componente resolve um problema, bem.</p>
+<p>Segundo, a mudança não deverá acontecer atomicamente. 
+Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como microsserviço, desenvolvê-la e modificar o monolito para usar o microsserviço.
+O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
+Mais fácil dito que feito, há muita documentação orientando o processo.</p>
+<div class="admonition tip">
+<p class="admonition-title">Para saber mais</p>
+<p>Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
+Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.</p>
+<p>Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wgdBVIX9ifA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
+ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles/microservices.html">sítio</a>.</p>
+<p>Para entender os princípios por trás do uso da arquitetura,<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<p>Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por <strong>menos de 16 segundos por ano</strong>. <br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   </p>
+</div>
+<p>Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
+    Os diferentes tiposde falhas são injetados por um "<strong>exército de macacos do caos</strong>"<br />
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
+    Para uma visão prática da implementação de microsserviços usando AWS, veja
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+<details class="bug"><summary>TODO</summary><ul>
+<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
+<li>MOM </li>
+<li>Publish/Subscribe </li>
+<li>Message Queues</li>
+<li>Event Sourcing    <ul>
+<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
+<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
+</ul>
+</li>
+</ul>
+</details>
 <h2 id="par-a-par-peer-to-peer-p2p">Par-a-Par (Peer-to-Peer, P2P)</h2>
 <p>Nos sistemas que seguem a arquitetura Par-a-Par, ou simplesmente P2P, há uma substituição dos papéis de clientes e servidores, em que há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão.
 Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.</p>
@@ -1175,7 +1259,7 @@ Efetivamente, temos a rede sobreposta à esquerda.</p>
 <p>Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos ser'ão os nós à direita, esquerda, acima e abaixo.
 A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" 3D.</p>
 <p><a href="https://clusterdesign.org/torus/"><img alt="Fujitsu and RIKEN, 2009" src="../images/3d-torus.jpg" /></a></p>
-<p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura, no qual diversos <a href="https://en.wikipedia.org/wiki/Hypercube_internetwork_topology">esquemas de roteamento eficientes podem ser usados</a>.<sup id="fnref:icpc_hyper"><a class="footnote-ref" href="#fn:icpc_hyper">3</a></sup></p>
+<p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura, no qual diversos <a href="https://en.wikipedia.org/wiki/Hypercube_internetwork_topology">esquemas de roteamento eficientes podem ser usados</a>.<sup id="fnref:icpc_hyper"><a class="footnote-ref" href="#fn:icpc_hyper">5</a></sup></p>
 <p><a href="https://commons.wikimedia.org/w/index.php?curid=5071550"><img alt="By Spiritia" src="../images/hypercube.png" /></a></p>
 <div class="admonition note">
 <p class="admonition-title">Sistemas P2P</p>
@@ -1269,7 +1353,7 @@ Como a função hash é criptográfica, uma pequena variação na entrada implic
 <p>A cada nó é atribuído um identificador único de <strong><span class="arithmatex">\(m\)</span> bits</strong>, gerado aleatoriamente. 
 Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">4</a></sup>
+A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">6</a></sup>
 Assumamos inicialmente que os nós só estão cientes dos seus vizihos imediatos no anel.</p>
 <p><img alt="Anel Chord" src="../drawings/chord_ring.drawio-0.svg" /></p>
 <p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
@@ -1448,7 +1532,7 @@ Por exemplo, considere os seguintes dados escritos no banco:</p>
 </table>
 <p>Uma busca pelos dados associados à chave 3 retornará o seguinte resultado:  Nome<span class="arithmatex">\(\rightarrow\)</span>José, Idade<span class="arithmatex">\(\rightarrow\)</span>33, Telefone<span class="arithmatex">\(\rightarrow\)</span>333444554433.
 Para facilitar mais ainda o desenvolvimento, o Cassandra conta com uma linguagem de consulta similar ao SQL (Structured Query Language), a CQL (Cassandra Query Language).
-Assim, a consulta a estes dados seria mais ou menos como <code class="highlight"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dados</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">==</span> <span class="mi">3</span></code>.<sup id="fnref:cql_sintax"><a class="footnote-ref" href="#fn:cql_sintax">5</a></sup></p>
+Assim, a consulta a estes dados seria mais ou menos como <code class="highlight"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">dados</span> <span class="k">WHERE</span> <span class="k">key</span> <span class="o">==</span> <span class="mi">3</span></code>.<sup id="fnref:cql_sintax"><a class="footnote-ref" href="#fn:cql_sintax">7</a></sup></p>
 <p>Há muitos recursos <em>online</em>  para se aprender mais se aprender mais sobre como usar o Cassandra, por exemplo, <a href="http://wiki.apache.org/cassandra/GettingStarted">aqui</a>.
 Há também diversos projetos de código livre que o usam e podem ser estudados, por exemplo, o clone de Twiter <a href="https://github.com/twissandra/twissandra">Twissandra</a>.
 Mas embora o uso de sistemas gerenciadores de bancos de dados em sistemas distribuídos seja interessante, aqui nos focaremos em alguns dos aspectos de como estes SGBD são construídos.</p>
@@ -1465,88 +1549,6 @@ Isso é um atestado do que uma <a href="http://bittorrent.org/beps/bep_0003.html
 <p>O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
 Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção <a href="../tech/#blockchain">BlockChain</a>.
 Apenas para abrir o apetite, </p>
-<h2 id="arquitetura-orientada-a-microsservicos">Arquitetura Orientada a Microsserviços</h2>
-<p>No dia 3 de Junho de 2020, termo <strong>microservice</strong> resultava em 6.6 milhões de resultados no <a href="https://www.bing.com/search?q=microservice&amp;PC=U316&amp;FORM=CHROMN">Google</a>.
-Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes, que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
-Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surgiram com grande estrondo, sendo alguns exemplos recentes Docker, Golang, Angular, e JQuery, e embora seja certo que algumas destas encontrarão seus nichos, como fizeram antes delas Cobol, C, e SQL, outras deparecerão da face da indústria; afinal, quem sabe o que é Delphi e quem ainda usa JQuery?
-Este fenômeno é capturado pelas várias fases do <em>hype-cycle</em> da Gartner.<sup id="fnref:hype_gartner"><a class="footnote-ref" href="#fn:hype_gartner">6</a></sup></p>
-<p><a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle"><img alt="Hype Cycle" src="../images/gartner-hype-cycle-overview.png" /></a></p>
-<p>A Arquitetura Orientada a Microsserviços, tendo atingido o pico das expectativas infladas<sup id="fnref:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">7</a></sup> em 2017, está deslizando na <a href="https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-">Trough of Desilusionment</a><sup id="fnref2:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">7</a></sup> em 2019.
-Isto é, este modelo de desenvolvimento não é mais propagandeado como uma bala de prata para todas as aplicações distribuídas.
-Ainda assim, é um importante modelo. Mas afinal, o que é a arquitetura de microsserviços?
-Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termoss de sistemas monolíticos. <br />
-<a href="http://www.imdb.com/title/tt0062622/"><img alt="2001 Space Odyssey" src="../images/monolith_2001.jpg" /></a>   </p>
-<h3 id="monolitos">Monolitos</h3>
-<p>Muitas aplicações seguem o modelo de 3 camadas em que em um dos extremos tem-se a interface com os usuários, materializada normalmente por um navegador, no outro tem-se um SGBD onde são armazenados os dados da aplicação, e, no meio, a lógica do negócio.
-A camada central, implementada por um único processo, que alimenta a interface com o usuário, manipula o modelo de dados, e onde reside a lógica do negócio, é um <strong>monolito</strong>.</p>
-<p><a href="http://nodexperts.com/blog/microservice-vs-monolithic/"><img alt="Monolitos" src="../images/monolith_arc.png" /></a></p>
-<p>Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em colocadas em desenvolvimento de forma atômica:   </p>
-<ul>
-<li>Desenvolva</li>
-<li>Teste</li>
-<li>Implante</li>
-<li>loop</li>
-</ul>
-<p>Simples não quer dizer necessariamente eficiente; no caso de atualizações de uma parte do sistema, todo o monolito precisa ser trocado, incorrendo em indisponibilidade total do sistema, mesmo das partes não modificadas.
-Esta dificuldade tende a limitar as janelas de atualização do sistema, o que aumenta no número de mudanças que ocorrem a cada atualização, o que aumenta o risco de regressões e portanto requer mais testes, o que aumenta o intervalo entre janelas de atualização. Além disso, nos caso de bugs, é mais difícil encontrar o problema, uma vez que fica impossível os desenvolvedores conhecerem todo o sistema.
-Isso apenas exacerba o problema, o que limita mais ainda as atualizações, gerando um ciclo vicioso que mantem desenvolvedores acordados nas madrugadas de sexta para sábado quando é dia de <em>deploy</em>.</p>
-<p>Sistemas monolíticos também podem ser problemáticos quanto à escalabilidde, pois quando a capacidade do sistema é atingida, ou todo o sistema é movido para um <em>host</em> de maior capacidade ou todo o sistema deve ser  replicado.
-Na primeira abordagem, o custo geralmente é um impecilho, pois preços de hardware crescem exponencialmente. Além disso, um servidor, por mais parrudo que seja, é um Ponto Único de Falha (ou SPOF, do inglês <em>single point of failure</em>).
-Quanto à segunda abordagem, ela traz complexidades na coordenação das réplicas e ineficiências ao replicar inclusive as partes subutilizadas.
-Ambas as abordagens também esbarram na escalabilidade do banco de dados que lhes serve de <em>backend</em>.
-Para contornar ou pelo menos minimizar estes problemas, pode-se fragmentar o serviço e o banco de dados, o que facilita tanto a escalabilidade vertical quanto horizontal de cada módulo, que é menor e mais simples de coordenar, e divide a carga nos bancos de dados; mas isso é a troca do servíço monolítico por microsserviços.</p>
-<p><a href="https://thenewstack.io/from-monolith-to-microservices/"><img alt="Escala de Microsserviços" src="../images/microservices_scale.png" /></a></p>
-<h3 id="microsservicos">Microsserviços</h3>
-<p>De acordo com <a href="https://martinfowler.com/articles/microservices.html">Lewis &amp; Fowler</a></p>
-<blockquote>
-<p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
-</blockquote>
-<p>Em outras palavras, com os microsserviços, quebra-se o monolito em diferentes processos, "<em>small autonomous services that work together, modelled around a business domain</em>", cada um gerenciando os dados relevantes para aquela parte do sistema e, possivelmente, sua própria interação com o usuário.
-Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhas o funcionamento de todo o sistema.</p>
-<p>Além disso, quando um serviço precisa ser atualizado, todos os demais podem continuar operantes e possível até que múltiplas versões do mesmo serviço sejam executadas concorrentemente, possibilitando atualizações sem janelas de manutenção.  </p>
-<p>Quanto à escalabilidade, esta é feita indepentendentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design"><img alt="" src="../images/microservice_sample.png" /></a></p>
-<p>Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou <em>sharding</em>).
-Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
-<h3 id="do-monolito-aos-microsservicos">Do Monolito aos Microsserviços</h3>
-<p>Com tantas vantagens, suge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
-A resposta é <strong>não</strong>, pois como colocado no início desta seção, <strong>não existem balas de prata</strong> e se um sistema monolítico está funcionando para você e não há perspectiva de problemas acometerem (a demanda no sistema não está aumentando, a lógica do sistema é muito simples, indisponibilidade não te traz prejuízo, você não pode arcar com a refatoração), então mantenha seu sistema como está.</p>
-<p>Caso haja a necessidade de evolução e o modelo de microsserviços pareça adequado, existem recomendações de como a migração pode ser feita.
-Primeiro, é preciso aceitar que o desenvolvimento de microsserviços afeta a organização do time de desenvolvimento e que a organização provavelmente refletirá a arquitetura.
-O desenvolvimento, manutenção e operação de microsserviços acontece em times pequenos, de 1 a 8 pessoas ("pizza team"), dependendo da complexidade do serviço; se houver a necessidade de mais pesssoas no time, o escopo do microsserviço provavelmente está grande demais; cada componente resolve um problema, bem.</p>
-<p>Segundo, a mudança não deverá acontecer atomicamente. 
-Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como microsserviço, desenvolvê-la e modificar o monolito para usar o microsserviço.
-O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
-Mais fácil dito que feito, há muita documentação orientando o processo.</p>
-<div class="admonition tip">
-<p class="admonition-title">Para saber mais</p>
-<p>Como esta arquitetura não faz parte ainda do nosso currículo, não nos aprofundaremos nela aqui.
-Felizmente há muito material na Web sobre este modelo, sendo a lista a seguir uma ínfima fração.</p>
-<p>Para uma explicação geral do que são, assista a Martin Fowler no vídeo seguinte, assista<br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/wgdBVIX9ifA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
-ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles/microservices.html">sítio</a>.</p>
-<p>Para entender os princípios por trás do uso da arquitetura,<br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PFQnNFe27kU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-<p>Para um exemplo importante do uso de microsserviços, considere a Netflix, que usa microsserviços em larga escala em seus serviços. Quão larga? "...over five hundred services... we don't know how many..." Apesar de tal uso, ou justamente por causa dele, seus serviços mantém uma "...availability of 9.995...", ou seja, ficam indisponíveis por <strong>menos de 16 segundos por ano</strong>. <br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/57UK46qfBLY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   </p>
-</div>
-<p>Com respeito a estar preparado para falhas, afinal "... it is not if failures will happen... ... it is when it happens...", a empresa usa uma abordagem de injeção de falhas em serviços em produção.
-    Os diferentes tiposde falhas são injetados por um "<strong>exército de macacos do caos</strong>"<br />
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
-    Para uma visão prática da implementação de microsserviços usando AWS, veja
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-<details class="bug"><summary>TODO</summary><ul>
-<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
-<li>MOM </li>
-<li>Publish/Subscribe </li>
-<li>Message Queues</li>
-<li>Event Sourcing    <ul>
-<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
-<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
-</ul>
-</li>
-</ul>
-</details>
 <div class="footnote">
 <hr />
 <ol>
@@ -1556,17 +1558,8 @@ ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles
 <li id="fn:tabuleiro">
 <p>Se você não pegou esta referência, não teve infância.&#160;<a class="footnote-backref" href="#fnref:tabuleiro" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
-<li id="fn:icpc_hyper">
-<p>Neste <a href="https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf">problema</a> do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.&#160;<a class="footnote-backref" href="#fnref:icpc_hyper" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:chord_dist">
-<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcial à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-<li id="fn:cql_sintax">
-<p>Este exemplo é meramente ilustrativo e não segue estritamente a sintaxe do CQL.&#160;<a class="footnote-backref" href="#fnref:cql_sintax" title="Jump back to footnote 5 in the text">&#8617;</a></p>
-</li>
 <li id="fn:hype_gartner">
-<p>"The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies."&#160;<a class="footnote-backref" href="#fnref:hype_gartner" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>"The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies."&#160;<a class="footnote-backref" href="#fnref:hype_gartner" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:gartner_inflated">
 <ul>
@@ -1576,7 +1569,16 @@ ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles
 <li>Plateau of Productivity -- Mainstream adoption starts to take off. Criteria for assessing provider viability are more clearly defined. The technology's broad market applicability and relevance are clearly paying off.</li>
 <li>Trough of Disillusionmen - Interest wanes as experiments and implementations fail to deliver. Producers of the technology shake out or fail. Investment continues only if the surviving providers improve their products to the satisfaction of early adopters.</li>
 </ul>
-<p><a class="footnote-backref" href="#fnref:gartner_inflated" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:gartner_inflated" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a class="footnote-backref" href="#fnref:gartner_inflated" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:gartner_inflated" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:icpc_hyper">
+<p>Neste <a href="https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf">problema</a> do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.&#160;<a class="footnote-backref" href="#fnref:icpc_hyper" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:chord_dist">
+<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcial à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:cql_sintax">
+<p>Este exemplo é meramente ilustrativo e não segue estritamente a sintaxe do CQL.&#160;<a class="footnote-backref" href="#fnref:cql_sintax" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
