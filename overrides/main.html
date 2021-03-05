@@ -12,7 +12,6 @@
   {% include ".icons/material/pencil.svg" %}
   </a>
 {% endif %}
-
   <!--
        Hack: check whether the content contains a h1 headline. If it
        doesn't, the page title (or respectively site name) is used
@@ -33,4 +32,58 @@
   {% include "partials/source-date.html" %}
   {% endif %}
 {% endif %}
+{% endblock %}
+
+{% block site_nav %}
+
+  <!-- Main navigation -->
+  {% if nav %}
+    {% if page and page.meta and page.meta.hide %}
+      {% set hidden = "hidden" if "navigation" in page.meta.hide %}
+    {% endif %}
+    <div
+      class="md-sidebar md-sidebar--primary"
+      data-md-component="sidebar" data-md-type="navigation"
+      {{ hidden }}
+    >
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner">
+          {% include "partials/nav.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Slide bar -->
+  {% if page.toc and "slides" in features %}
+    <div
+      class="md-sidebar md-sidebar--secondary md-sidebar--tertiary"
+      data-md-component="sidebar" data-md-type="slide-deck"
+    >
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner">
+          {% include "partials/slides.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+    <!-- Table of contents -->
+  {% if page.toc and not "toc.integrate" in features %}
+    {% if page and page.meta and page.meta.hide %}
+      {% set hidden = "hidden" if "toc" in page.meta.hide %}
+    {% endif %}
+    <div
+      class="md-sidebar md-sidebar--secondary"
+      data-md-component="sidebar" data-md-type="toc"
+      {{ hidden }}
+    >
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner">
+          {% include "partials/toc.html" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
 {% endblock %}

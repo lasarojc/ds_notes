@@ -22,6 +22,8 @@ theme:
             primary: blue grey
         language: pt
         custom_dir: overrides
+#        features:
+#            - slides
 
 plugins:
         - search
@@ -70,7 +72,7 @@ markdown_extensions:
             custom_checkbox: true
         - pymdownx.tabbed
         - pymdownx.tilde
-
+        
 extra_javascript:
         - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
         - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
