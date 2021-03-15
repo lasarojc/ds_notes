@@ -1,8 +1,9 @@
 # My Distributed Systems Lecture Notes
 
-These are (will be, eventually) the nodes of my Distributed Systems Course @ the Federal University of Uberlândia.
+These are the sources of my Distributed Systems Course @ the Federal University of Uberlândia.
+For the live current version, go to (https://lasarojc.github.io/ds_notes/intro/)
 
-Uses mkdocs to build and deploy gh-pages
+To build your own version and deploy, use `mkdocs`
 
 * `python3 -m pip install git+https://github.com/Python-Markdown/markdown.git`
 * `python3 -m pip install mkdocs-material`
