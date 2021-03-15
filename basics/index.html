@@ -1811,22 +1811,20 @@ Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte p
 12
 13
 14
-15
-16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">threadfunction</span><span class="p">(</span><span class="n">int32</span> <span class="o">*</span> <span class="n">exclusivo</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">int32</span> <span class="n">local</span> <span class="o">=</span> <span class="o">*</span><span class="n">exclusivo</span><span class="p">;</span>
-        <span class="n">local</span> <span class="o">=</span> <span class="n">processa</span><span class="p">(</span><span class="n">local</span><span class="p">);</span>
-        <span class="o">*</span><span class="n">exclusivo</span> <span class="o">=</span> <span class="n">local</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="p">...</span>
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
 <span class="n">int32</span> <span class="n">X</span><span class="p">;</span>
 <span class="n">int32</span> <span class="n">Y</span><span class="p">;</span>
 
 <span class="n">thread1</span> <span class="o">=</span> <span class="n">tread_new</span><span class="p">(</span><span class="n">threadfunction</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">);</span>
 <span class="n">thread2</span> <span class="o">=</span> <span class="n">tread_new</span><span class="p">(</span><span class="n">threadfunction</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Y</span><span class="p">);</span>
 
+<span class="kt">void</span> <span class="nf">threadfunction</span><span class="p">(</span><span class="n">int32</span> <span class="o">*</span> <span class="n">exclusivo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">int32</span> <span class="n">local</span> <span class="o">=</span> <span class="o">*</span><span class="n">exclusivo</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">local</span> <span class="o">=</span> <span class="n">processa</span><span class="p">(</span><span class="n">local</span><span class="p">);</span>
+        <span class="o">*</span><span class="n">exclusivo</span> <span class="o">=</span> <span class="n">local</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 <span class="p">...</span>
 </code></pre></div>
 </td></tr></table>
@@ -1850,6 +1848,12 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 <h3 id="estado">Estado</h3>
 <p>A questão das regiões críticas está intimamente relacionada à questão da manutenção de estado nos servidores.
 Quanto a este respeito, podemos classificar servidores como <strong>stateful</strong> e <strong>stateless</strong>, dois termos que ouvirão frequentemente enquanto trabalhando com SD.</p>
+<details class="- sideslide"><summary>To state or not to state?</summary><ul>
+<li>Complexidade e desempenho</li>
+<li>Falhas</li>
+<li>Balanceamento</li>
+</ul>
+</details>
 <p>O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
 Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span class="arithmatex">\(n\)</span> novas linhas para processar e, quando estiver pronto, requisite <span class="arithmatex">\(n\)</span> novas linhas.
@@ -1923,12 +1927,14 @@ Veja um pequeno comparativo das características das duas abordagens.</p>
 </table>
 <h3 id="multithread-na-pratica">Multithread na prática</h3>
 <h4 id="posix">POSIX</h4>
-<p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição aberta de como <em>threads</em> devem funcionar em sistemas operacionais.
-Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, compatíveis com especifições POSIX, mas também para Windows, via subsistemas.
+<p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição <strong>aberta</strong> de como <em>threads</em> devem funcionar em sistemas operacionais.
+Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, que se esforçam para ser compatíveis com especifições POSIX, mas também para Windows, via subsistemas que compatibilizam diferentes API.
 Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação <em>multi-threaded</em>.</p>
 <p>Para se definir um <em>thread</em>, é necessário definir uma função de entrada, que será para o <em>thread</em> como a função <code>main</code> é para o processo em si.
-No exemplo a seguir a função foi definida com retorno <code>void *</code> e com único parâmetro tambem <code>void *</code>; esta é uma obrigatoriedade para funções de entrata PThread.
-Observe contudo que <code>void *</code> pode ser tratado como um blob para mascarar outros tipos de dado, por exemplo um vetor, um enumeração ou uma <code>struct</code>.</p>
+No exemplo a seguir a função foi definida com retorno <code>void *</code> e com único parâmetro, também <code>void *</code>; esta é uma obrigatoriedade para funções de entrata PThread.
+Observe contudo que <code>void *</code> pode ser tratado como um blob para mascarar outros tipos de dados, por exemplo um vetor, um ponteiro para uma enumeração ou uma <code>struct</code>.
+Também observe que a função tem uma variável local <code>my_id</code> que só está definida no contexto da thread (linha 8); se múltiplas <em>threads</em> forem instanciadas, cada uma terá a sua versão da variável. 
+Há também uma variável global <code>thread_count</code>, compartilhada por todas as instâncias (linha 5).</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1945,14 +1951,15 @@ Observe contudo que <code>void *</code> pode ser tratado como um blob para masca
 
 <span class="kt">int</span> <span class="n">thread_count</span><span class="p">;</span>
 
-<span class="kt">void</span><span class="o">*</span> <span class="nf">hello</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">rank</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">long</span> <span class="n">my_rank</span> <span class="o">=</span> <span class="p">(</span><span class="kt">long</span><span class="p">)</span> <span class="n">rank</span><span class="p">;</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from thread %ld of %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">my_rank</span><span class="p">,</span> <span class="n">thread_count</span><span class="p">);</span>
+<span class="kt">void</span><span class="o">*</span> <span class="nf">hello</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="n">my_id</span> <span class="o">=</span> <span class="p">(</span><span class="kt">long</span><span class="p">)</span> <span class="n">id</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from thread %ld of %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">my_id</span><span class="p">,</span> <span class="n">thread_count</span><span class="p">);</span>
     <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-<p>Um <em>thread</em>  é criado pela função <code>pthread_create</code>, que coloca em um <code>pthread_t</code> um <em>handle</em> para o <em>thread</em>.
+<p>Um <em>thread</em>  é criado pela função <code>pthread_create</code> (linha 14), que coloca em um <code>pthread_t</code> um <em>handle</em> para o <em>thread</em>.
+O <em>handle</em> do <em>thread</em> deve ser alocado previamente à função de criação do <em>thread</em> (linha 11).
 A função recebe como parâmetros opções para configuração, a função de entrada, e o parâmetro do tipo <code>void *</code>.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -1987,8 +1994,8 @@ A função recebe como parâmetros opções para configuração, a função de e
     <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from the main thread</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-<p>O <em>handle</em> do <em>thread</em> deve ser alocado previamente à função de criação e liberado após o fim da execução do <em>thread</em>.
-É possível esperar pelo fim da execução usando o <code>pthread_join</code>, que recebe como parâmetro o <em>handle</em> do <em>thread</em> e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo <code>void **</code>.</p>
+<p>É possível esperar pelo fim da execução do <em>thread</em> usando o <code>pthread_join</code>, que recebe como parâmetro o <em>handle</em> do <em>thread</em> e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo <code>void **</code> (linha 2). No exemplo, nenhum retorno é esperado, então um endereço nulo é passado como parâmetro.
+Ao final da execução, o <em>handle</em> deve ser liberado (linha 4).</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -2146,70 +2153,64 @@ O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envó
 </code></pre></div>
 </td></tr></table>
 <p>Uma consequência desta divisão é que um mesmo objeto do tipo <code>Thread</code> pode ser reciclado e executado várias vezes.</p>
-<div class="admonition tip">
-<p class="admonition-title">Leia mais</p>
-<p><a href="https://www.tutorialspoint.com/python/python_multithreading.htm">Threads em Python</a></p>
-</div>
 <h4 id="java">Java</h4>
-<p>Outro exemplo importante de API para multithreading é a Java.
-Em Java, há essencialmente duas formas de se conseguir concorrência. 
+<p>Outro exemplo importante de API para multithreading é a do Java, pois nesta linguagem há, essencialmente, duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe <code>Thread</code> e, a segunda, via abstrações de mais alto nível, os <code>Executors</code>.
-Java também provê diversas estruturas para comunicação e coordenação de threads no pacote <code>java.util.concurrent</code>.</p>
-<p>Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico e uma ótima documentação é dispobinilizada pela própria <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/">Oracle</a>.</p>
-<p>Há duas formas básicas de definir um novo <em>thread</em> em Java, via extensão da classe <code>Thread</code>, como no primeiro exemplo, ou ou via implementação da interface <code>Runnable</code>, como no segundo, a seguir.</p>
-<div class="admonition example">
-<p class="admonition-title"><em>Thread</em></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello from a thread!&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HelloThread</span><span class="p">();</span>
-        <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-<div class="admonition example">
-<p class="admonition-title"><em>Runnable</em></p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello from a thread!&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloRunnable</span><span class="p">());</span>
-        <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-</div>
-<p>Observe que nos dois exemplos, um método <code>run()</code> é implementado com o código a ser executado pelo <em>thread</em>. Em nenhum dos exemplos, contudo, o método é invocado diretamente. 
-Em vez disto, o método <code>start()</code>, sim, é invocado. Isto ocorre porquê antes de executar as instruções definidas pelo pelo programador no método <code>run()</code>,
+Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico, por exemplo provendo diversas estruturas para comunicação e coordenação de <em>threads</em> no pacote <code>java.util.concurrent</code>.
+Uma ótima documentação sobre o uso de <em>threads</em> e estruturas é dispobinilizada pela <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/">Oracle</a>.</p>
+<p>Há duas formas básicas de definir um novo <em>thread</em> em Java, ou via extensão da classe <code>Thread</code> ou via implementação da interface <code>Runnable</code>; observe o quão pouco muda no código dos exemplos a seguir.
+Note também que, nos dois exemplos, um método <code>run()</code> é implementado com o código a ser executado pelo <em>thread</em> mas que em nenhum momento tal método é invocado diretamente.
+Em vez disto, o método <code>start()</code> é que é invocado, porquê antes de executar as instruções definidas pelo pelo programador no método <code>run()</code>,
 a máquina virtual precisa executar alguma "mágica" por baixo dos panos como, por exemplo, solicitar ao sistema operacional a criação de um <em>thread</em> do SO, que servirá de hospedeiro para o <em>thread</em> Java. 
 Isto acontece dentro do <code>start()</code>, que em algum ponto de sua execução levará à invocação do método <code>run()</code>.</p>
-<p>A classe <code>Thread</code> também provê uma série de métodos que permitem gerenciar a vida do <em>thread</em> criado. 
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Thread</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello from a thread!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Hello</span><span class="p">();</span>
+        <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Runnable</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello from a thread!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">());</span>
+        <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+</div>
+<p>Além de servider base para outras classes, a classe <code>Thread</code> também provê uma série de métodos que permitem gerenciar a vida dos <em>threads</em> criados.
 Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o thread no qual a invocação aconteceu por um determinado período.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -2227,11 +2228,9 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
 14
 15
 16
-17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">){</span>
             <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello at instant &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
             <span class="k">try</span> <span class="p">{</span>
                 <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
@@ -2242,13 +2241,15 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
     <span class="p">}</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloRunnable</span><span class="p">());</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">());</span>
         <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-<p>Observe que a chamada a <code>sleep()</code> está dentro de um bloco <code>try/catch</code>. Isto é necessário pois é permitido à JVM acordar o <em>thread</em> em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o <em>thread</em>, ao acordar, verifique se já dormiu o suficiente.</p>
+<p>Observe que a chamada a <code>sleep()</code> deve estar dentro de um bloco <code>try/catch</code>, pois é permitido à JVM acordar o <em>thread</em> em qualquer instante, antes ou após o tempo especificado. 
+Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é sugerido que a <em>thread</em> durma em pequenas frações até chegar ao valor total e que, ao acordar, verifique se já não dormiu o suficiente.
+No exemplo seguinte, o <em>thread</em> dorme por pelo menos 1000 milissegundos a cada iteração.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -2269,17 +2270,13 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
 18
 19
 20
-21
-22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">){</span>
             <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello at instant &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
             <span class="kt">long</span> <span class="n">before</span> <span class="o">=</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span>
             <span class="kt">long</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
-            <span class="k">while</span><span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">())</span>
-            <span class="p">{</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()){</span>
                 <span class="k">try</span> <span class="p">{</span>
                     <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span><span class="p">)));</span>
                 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">ie</span><span class="p">)</span> <span class="p">{</span>
@@ -2290,7 +2287,7 @@ Por exemplo, o método de classe <code>Thread.sleep()</code> permite bloquear o 
     <span class="p">}</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloRunnable</span><span class="p">());</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">());</span>
         <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -2331,18 +2328,14 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 30
 31
 32
-33
-34
-35</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
+33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">Random</span> <span class="n">rand</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span>
-        <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">){</span>
             <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Hello at instant &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
             <span class="kt">long</span> <span class="n">before</span> <span class="o">=</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">();</span>
             <span class="kt">long</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">901</span> <span class="o">+</span> <span class="n">rand</span><span class="p">.</span><span class="na">nextInt</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-            <span class="k">while</span><span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">())</span>
-            <span class="p">{</span>
+            <span class="k">while</span><span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span> <span class="o">&gt;</span> <span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()){</span>
                 <span class="k">try</span> <span class="p">{</span>
                     <span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="na">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()</span> <span class="o">-</span> <span class="p">(</span><span class="n">before</span> <span class="o">+</span> <span class="n">timeout</span><span class="p">)));</span>
                 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">ie</span><span class="p">)</span> <span class="p">{</span>
@@ -2353,7 +2346,7 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
     <span class="p">}</span>
 
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[]</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">HelloRunnable</span><span class="p">());</span>
+        <span class="n">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Hello</span><span class="p">());</span>
         <span class="c1">//t.setDaemon(true);</span>
         <span class="n">t</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
         <span class="k">try</span> <span class="p">{</span>
@@ -2371,7 +2364,7 @@ do servidor não receber sua resposta. Um <em>thread</em> indica a intenção de
 </code></pre></div>
 </td></tr></table>
 <p>Invocar <code>t.join()</code> fará com que o <em>thread</em> corrente, neste caso o principal, espere indefinidamente até que <code>t</code> termine de executar.
-Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
+Caso seja necessário limitar o tempo de espera, um limite pode ser especificado como na linha comentada.
 Caso a espera termine por causa de um <em>timeout</em>, é possível testar o estado atual do thread com <code>Thread.isAlive()</code>.</p>
 <p>Outro método interessante, <code>Thread.setDaemon()</code>, especifica que o <em>thread</em> pode ser terminado quando a <em>thread</em> principal terminar. Descomente a invocação e teste o efeito.</p>
 <div class="admonition question">
@@ -2416,33 +2409,108 @@ Caso a espera termine por causa de um <em>timeout</em>, é possível testar o es
 <li>A <em>thread</em>  principal deve esperar todas as outras terminarem antes de terminar (use <code>Thread.join()</code>).</li>
 <li>Analise a saída do programa observando a ordem de execução dos <em>threads</em>.</li>
 </ul>
-<details class="tip"><summary>Análise</summary><p>É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. Isso acontece porquê a execução dos <em>threads</em> é não determinística; uma vez que estejam prontos para executar, cabe ao escalonador do sistema operacional a decisão sobre qual processo e em qual processador deverá executar.</p>
+<details class="note"><summary>Análise</summary><p>É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. Isso acontece porquê a execução dos <em>threads</em> é não determinística; uma vez que estejam prontos para executar, cabe ao escalonador do sistema operacional a decisão sobre qual processo e em qual processador deverá executar.</p>
 </details>
 </div>
-<details class="todo"><summary>Todo</summary><p>Melhorar explicação abaixo</p>
-</details>
-<p>Além de extensão de <code>Thread</code> e implementação de <code>Runnable</code>, Java disponibiliza também <code>Executor</code> como abstração de mais alto nível para execução de tarefas concorrentes.</p>
-<ul>
-<li><code>Executor</code></li>
-<li><code>ExecutorService</code></li>
-<li><code>ScheduledExecutorService</code></li>
-</ul>
+<p>Além de extensão de <code>Thread</code> e implementação de <code>Runnable</code>, Java disponibiliza também <code>ExecutorService</code> como abstração de mais alto nível para execução de tarefas concorrentes.
+Os <code>ExecutorService</code>, de forma genérica, provê o acesso a <em>pools</em> de <em>thread</em> e a API para submeter tarefas para este pool.
+Para iniciar tal processo, você pode criar um executor service usando uma das muitas fábricas providas pela classe <a href="https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html"><code>Executors</code></a> ou pela instanciação de <em>thread</em> <em>pools</em>  diretamente.
+O mais simples é o de tamanho fixo em que há um número inicial de <em>threads</em> criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Executor</span> <span class="n">e</span> <span class="o">=</span> <span class="p">...;</span>
-<span class="n">Runnable</span> <span class="n">r</span> <span class="o">=</span> <span class="p">...;</span>
-<span class="n">e</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">ExecutorService</span> <span class="n">es1</span> <span class="o">=</span> <span class="n">Executors</span><span class="p">.</span><span class="na">newFixedThreadPool</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">ExecutorService</span> <span class="n">es2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="n">L</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">,</span> <span class="k">new</span> <span class="n">LinkedBlockingQueue</span><span class="o">&lt;&gt;</span><span class="p">());</span>
 </code></pre></div>
 </td></tr></table>
-<p>Executors normalmente implementam <em>thread pools</em>, que podem ser de diferentes tipos. 
-O mais simples é o de tamanho fixo em que há um número inicial de <em>threads</em> criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.</p>
-<p><code class="highlight"><span class="n">Executor</span> <span class="n">e</span> <span class="o">=</span> <span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">concurrent</span><span class="p">.</span><span class="na">Executors</span><span class="p">.</span><span class="na">newFixedThreadPool</span><span class="p">();</span></code></p>
-<ul>
-<li><code>newCachedThreadPool()</code> - <em>expandable thread pool</em></li>
-<li><code>newSingleThreadExecutor()</code> - <em>single task at a time</em></li>
-<li>e outras versões</li>
-<li><code>ForkJoinPool</code></li>
-</ul>
+<p>Uma vez criado o executor, você atribui tarefas para serem executadas, que devem implementar <code>Runnable</code> ou <code>Callable</code>.
+No caso de <code>Runnable</code>, você pode usar o método <code>execute</code> para executá-las em algum momento, sem a possibilidade de retorno de resultados.</p>
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Implements</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">MyRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;R0&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Runnable</span> <span class="n">r</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyRunnable</span><span class="p">();</span>
+
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es2</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Anônimo</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Runnable</span> <span class="n">r</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Runnable</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="p">(){</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;R1&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es2</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Lambda</label><div class="tabbed-content">
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Runnable</span> <span class="n">r</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;R2&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es1</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+<span class="n">es2</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</code></pre></div>
+</td></tr></table>
+</div>
+</div>
+<p>Já usando <code>Callable</code>, é possível retornar resultados na forma de <code>Future&lt;T&gt;</code>. No exemplo a seguir, a <code>c</code> retorna um <code>Integer</code>, e portanto <code>submit</code> retorna <code>Future&lt;Integer&gt;</code>; para acessar o resultado, use <code>Future&lt;&gt;.get()</code>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Callable</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;C1&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">es1</span><span class="p">.</span><span class="na">submit</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+
+<span class="cm">/* Outras tarefas... */</span>
+
+<span class="kt">int</span> <span class="n">resultado</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
+</code></pre></div>
+</td></tr></table>
+<p>Outros métodos interessantes dos <code>ExecutorService</code> são <code>invokeAny()</code> e <code>invokeAll()</code>, que permitem passar uma lista de tarefas e retornam o resultado de qualquer tarefa ou implica na execução de todas, respectivamente.</p>
+<p>Alguns executores são interessantes por razões diferentes. Primeiro, o <code>ForkJoinPool</code> é um executor interessante por funcionar da seguinte forma: </p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -2452,6 +2520,20 @@ O mais simples é o de tamanho fixo em que há um número inicial de <em>threads
 else
   split my work into two pieces
   invoke the two pieces and wait for the results
+</code></pre></div>
+</td></tr></table>
+<p>Segundo, os <code>ScheduledExecutorService</code> permitem a execução agendada ou periódica de tarefas, por exemplo:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">ScheduledExecutorService</span> <span class="n">es3</span> <span class="o">=</span> <span class="n">Executors</span><span class="p">.</span><span class="na">newSingleThreadScheduledExecutor</span><span class="p">();</span>
+<span class="n">Future</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="n">executorService</span><span class="p">.</span><span class="na">schedule</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">SECONDS</span><span class="p">);</span>
+<span class="c1">//Executa a cada 5 segundos, depois de esperar por 1 segundo para começar. </span>
+<span class="n">executorService</span><span class="p">.</span><span class="na">scheduleAtFixedDelay</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
+<span class="c1">//Como a anterior, mas pode atrasar a próxima invocação para permiter à anterior que termine.</span>
+<span class="n">executorService</span><span class="p">.</span><span class="na">scheduleAtFixedRate</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
 <h4 id="coordenacao">Coordenação</h4>
@@ -2754,7 +2836,9 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 </div>
 <h2 id="referencias">Referências</h2>
 <ul>
-<li>Sockets<ul>
+<li>
+<p>Sockets</p>
+<ul>
 <li><a href="http://pymotw.com/2/socket/udp.html">UDP em Python</a></li>
 <li><a href="http://www.tutorialspoint.com/python/python_networking.htm">UDP em Python</a></li>
 <li><a href="lycog.com/programming/multicast-programming-java/">Multicast em Java</a></li>
@@ -2762,7 +2846,9 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li><a href="https://beej.us/guide/bgnet/">Beej's Guide to Network Programming - Using Internet Sockets</a></li>
 </ul>
 </li>
-<li>Concorrência em Java<ul>
+<li>
+<p>Concorrência em Java</p>
+<ul>
 <li><a href="http://jcip.net/">Java Concurrency in Practice</a></li>
 <li><a href="https://www.manning.com/books/the-well-grounded-java-developer">The Well-Grounded Java Developer</a></li>
 <li><a href="http://docs.oracle.com/javase/tutorial/essential/concurrency/simple.html">Concorrência em Java</a></li>
@@ -2771,7 +2857,15 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
 <li><a href="http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/">Tipos Atômicos</a></li>
 </ul>
 </li>
-<li>Estado<ul>
+<li>
+<p>Concorrência em Python</p>
+<ul>
+<li><a href="https://www.tutorialspoint.com/python/python_multithreading.htm">Threads em Python</a></li>
+</ul>
+</li>
+<li>
+<p>Estado</p>
+<ul>
 <li>Uma visão interessante sobre estado é apresentada em <a href="https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2">On stateless software design</a>. Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre <em>stateful</em> ser sempre mais complexo. A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores <em>stateless</em>, mas não necessariamente ser eliminada.</li>
 <li><a href="https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html">Sobre IO não bloqueante em Java.</a></li>
 </ul>
