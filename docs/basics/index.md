@@ -750,14 +750,6 @@ Embora a ideia de usar múltiplos threads seja melhorar desempenho e experiênci
 Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte pseudo-código:
 
 ```c
-void threadfunction(int32 * exclusivo) {
-    while (true) {
-        int32 local = *exclusivo;
-        local = processa(local);
-        *exclusivo = local;
-    }
-}
-
 ...
 int32 X;
 int32 Y;
@@ -765,6 +757,13 @@ int32 Y;
 thread1 = tread_new(threadfunction, &X);
 thread2 = tread_new(threadfunction, &Y);
 
+void threadfunction(int32 * exclusivo) {
+    int32 local = *exclusivo;
+    while (true) {
+        local = processa(local);
+        *exclusivo = local;
+    }
+}
 ...
 ```
 
@@ -798,6 +797,11 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 ### Estado
 A questão das regiões críticas está intimamente relacionada à questão da manutenção de estado nos servidores.
 Quanto a este respeito, podemos classificar servidores como **stateful** e **stateless**, dois termos que ouvirão frequentemente enquanto trabalhando com SD.
+
+???- sideslide "To state or not to state?"
+      * Complexidade e desempenho
+      * Falhas
+      * Balanceamento
 
 O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
@@ -860,13 +864,15 @@ Veja um pequeno comparativo das características das duas abordagens.
 
 #### POSIX
 
-[POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição aberta de como *threads* devem funcionar em sistemas operacionais.
-Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, compatíveis com especifições POSIX, mas também para Windows, via subsistemas.
+[POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição **aberta** de como *threads* devem funcionar em sistemas operacionais.
+Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, que se esforçam para ser compatíveis com especifições POSIX, mas também para Windows, via subsistemas que compatibilizam diferentes API.
 Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação *multi-threaded*.
 
 Para se definir um *thread*, é necessário definir uma função de entrada, que será para o *thread* como a função `main` é para o processo em si.
-No exemplo a seguir a função foi definida com retorno `void *` e com único parâmetro tambem `void *`; esta é uma obrigatoriedade para funções de entrata PThread.
-Observe contudo que `void *` pode ser tratado como um blob para mascarar outros tipos de dado, por exemplo um vetor, um enumeração ou uma `struct`.
+No exemplo a seguir a função foi definida com retorno `void *` e com único parâmetro, também `void *`; esta é uma obrigatoriedade para funções de entrata PThread.
+Observe contudo que `void *` pode ser tratado como um blob para mascarar outros tipos de dados, por exemplo um vetor, um ponteiro para uma enumeração ou uma `struct`.
+Também observe que a função tem uma variável local `my_id` que só está definida no contexto da thread (linha 8); se múltiplas *threads* forem instanciadas, cada uma terá a sua versão da variável. 
+Há também uma variável global `thread_count`, compartilhada por todas as instâncias (linha 5).
 
 ```c
 #include <stdio.h>
@@ -875,14 +881,15 @@ Observe contudo que `void *` pode ser tratado como um blob para mascarar outros 
 	
 int thread_count;
 
-void* hello(void* rank) {
-	long my_rank = (long) rank;
-	printf("Hello from thread %ld of %d\n", my_rank, thread_count);
+void* hello(void* id) {
+	long my_id = (long) id;
+	printf("Hello from thread %ld of %d\n", my_id, thread_count);
 	return NULL;
 }
 ```
 
-Um *thread*  é criado pela função `pthread_create`, que coloca em um `pthread_t` um *handle* para o *thread*.
+Um *thread*  é criado pela função `pthread_create` (linha 14), que coloca em um `pthread_t` um *handle* para o *thread*.
+O *handle* do *thread* deve ser alocado previamente à função de criação do *thread* (linha 11).
 A função recebe como parâmetros opções para configuração, a função de entrada, e o parâmetro do tipo `void *`.
 
 ```c
@@ -904,8 +911,8 @@ int main(int argc, char* argv[]) {
 	printf("Hello from the main thread\n");
 ```
 
-O *handle* do *thread* deve ser alocado previamente à função de criação e liberado após o fim da execução do *thread*.
-É possível esperar pelo fim da execução usando o `pthread_join`, que recebe como parâmetro o *handle* do *thread* e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo `void **`.
+É possível esperar pelo fim da execução do *thread* usando o `pthread_join`, que recebe como parâmetro o *handle* do *thread* e um ponteiro para onde o resultado da função de entrada deve ser colocado, do tipo `void **` (linha 2). No exemplo, nenhum retorno é esperado, então um endereço nulo é passado como parâmetro.
+Ao final da execução, o *handle* deve ser liberado (linha 4).
 
 ```c
 	for (thread = 0; thread < thread_count; thread++)
@@ -1011,63 +1018,53 @@ print "Exiting Main Thread"
 
 Uma consequência desta divisão é que um mesmo objeto do tipo `Thread` pode ser reciclado e executado várias vezes.
 
-!!! tip "Leia mais"
-    [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
-
-
 #### Java
 
-Outro exemplo importante de API para multithreading é a Java.
-Em Java, há essencialmente duas formas de se conseguir concorrência. 
+Outro exemplo importante de API para multithreading é a do Java, pois nesta linguagem há, essencialmente, duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe `Thread` e, a segunda, via abstrações de mais alto nível, os `Executors`.
-Java também provê diversas estruturas para comunicação e coordenação de threads no pacote `java.util.concurrent`.
+Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico, por exemplo provendo diversas estruturas para comunicação e coordenação de *threads* no pacote `java.util.concurrent`.
+Uma ótima documentação sobre o uso de *threads* e estruturas é dispobinilizada pela [Oracle](https://docs.oracle.com/javase/tutorial/essential/concurrency/).
 
-Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico e uma ótima documentação é dispobinilizada pela própria [Oracle](https://docs.oracle.com/javase/tutorial/essential/concurrency/).
-
-Há duas formas básicas de definir um novo *thread* em Java, via extensão da classe `Thread`, como no primeiro exemplo, ou ou via implementação da interface `Runnable`, como no segundo, a seguir.
-
-!!! example "*Thread*"
-    ```Java
-    public class HelloThread extends Thread {
-        public void run() {
-            System.out.println("Hello from a thread!");
-        }
-
-        public static void main(String args[]) {
-            Thread t = new HelloThread();
-            t.start();
-        }
-    }
-    ```
-
-!!! example "*Runnable*"
-    ```Java
-    public class HelloRunnable implements Runnable {
-        public void run() {
-            System.out.println("Hello from a thread!");
-        }
-
-        public static void main(String args[]) {
-            Thread t = new Thread(new HelloRunnable());
-            t.start();
-        }
-    }
-    ```
-
-Observe que nos dois exemplos, um método `run()` é implementado com o código a ser executado pelo *thread*. Em nenhum dos exemplos, contudo, o método é invocado diretamente. 
-Em vez disto, o método `start()`, sim, é invocado. Isto ocorre porquê antes de executar as instruções definidas pelo pelo programador no método `run()`,
+Há duas formas básicas de definir um novo *thread* em Java, ou via extensão da classe `Thread` ou via implementação da interface `Runnable`; observe o quão pouco muda no código dos exemplos a seguir.
+Note também que, nos dois exemplos, um método `run()` é implementado com o código a ser executado pelo *thread* mas que em nenhum momento tal método é invocado diretamente.
+Em vez disto, o método `start()` é que é invocado, porquê antes de executar as instruções definidas pelo pelo programador no método `run()`,
 a máquina virtual precisa executar alguma "mágica" por baixo dos panos como, por exemplo, solicitar ao sistema operacional a criação de um *thread* do SO, que servirá de hospedeiro para o *thread* Java. 
 Isto acontece dentro do `start()`, que em algum ponto de sua execução levará à invocação do método `run()`.
 
+=== "Thread"
+    ```Java
+    public class Hello extends Thread {
+        public void run() {
+            System.out.println("Hello from a thread!");
+        }
 
-A classe `Thread` também provê uma série de métodos que permitem gerenciar a vida do *thread* criado. 
+        public static void main(String args[]) {
+            Thread t = new Hello();
+            t.start();
+        }
+    }
+    ```
+
+=== "Runnable"
+    ```Java
+    public class Hello implements Runnable {
+        public void run() {
+            System.out.println("Hello from a thread!");
+        }
+
+        public static void main(String args[]) {
+            Thread t = new Thread(new Hello());
+            t.start();
+        }
+    }
+    ```
+Além de servider base para outras classes, a classe `Thread` também provê uma série de métodos que permitem gerenciar a vida dos *threads* criados.
 Por exemplo, o método de classe `Thread.sleep()` permite bloquear o thread no qual a invocação aconteceu por um determinado período.
 
 ```Java
-public class HelloRunnable implements Runnable {
+public class Hello implements Runnable {
     public void run() {
-        for (int i = 0; i < 10; i ++)
-        {
+        for (int i = 0; i < 10; i ++){
             System.out.println("Hello at instant " + i);
             try {
                 Thread.sleep(1000);
@@ -1078,24 +1075,24 @@ public class HelloRunnable implements Runnable {
     }
 
     public static void main(String args[]) {
-        Thread t = new Thread(new HelloRunnable());
+        Thread t = new Thread(new Hello());
         t.start();
     }
 }
 ```
 
-Observe que a chamada a `sleep()` está dentro de um bloco `try/catch`. Isto é necessário pois é permitido à JVM acordar o *thread* em qualquer instante, antes ou após o tempo especificado. Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é necessário que o *thread*, ao acordar, verifique se já dormiu o suficiente.
+Observe que a chamada a `sleep()` deve estar dentro de um bloco `try/catch`, pois é permitido à JVM acordar o *thread* em qualquer instante, antes ou após o tempo especificado. 
+Assim, embora normalmente o tempo "dormido" seja próximo ao especificado, se há requisitos de precisão, é sugerido que a *thread* durma em pequenas frações até chegar ao valor total e que, ao acordar, verifique se já não dormiu o suficiente.
+No exemplo seguinte, o *thread* dorme por pelo menos 1000 milissegundos a cada iteração.
 
 ```Java
-public class HelloRunnable implements Runnable {
+public class Hello implements Runnable {
     public void run() {
-        for (int i = 0; i < 10; i ++)
-        {
+        for (int i = 0; i < 10; i ++){
             System.out.println("Hello at instant " + i);
             long before = System.currentTimeMillis();
             long timeout = 1000;
-            while(before + timeout > System.currentTimeMillis())
-            {
+            while(before + timeout > System.currentTimeMillis()){
                 try {
                     Thread.sleep(Math.max(0,System.currentTimeMillis() - (before + timeout)));
                 } catch (InterruptedException ie) {
@@ -1106,7 +1103,7 @@ public class HelloRunnable implements Runnable {
     }
 
     public static void main(String args[]) {
-        Thread t = new Thread(new HelloRunnable());
+        Thread t = new Thread(new Hello());
         t.start();
     }
 }
@@ -1118,16 +1115,14 @@ do servidor não receber sua resposta. Um *thread* indica a intenção de espera
 
 
 ```Java
-public class HelloRunnable implements Runnable {
+public class Hello implements Runnable {
     public void run() {
         Random rand = new Random();
-        for (int i = 0; i < 10; i ++)
-        {
+        for (int i = 0; i < 10; i ++){
             System.out.println("Hello at instant " + i);
             long before = System.currentTimeMillis();
             long timeout = 901 + rand.nextInt(200);
-            while(before + timeout > System.currentTimeMillis())
-            {
+            while(before + timeout > System.currentTimeMillis()){
                 try {
                     Thread.sleep(Math.max(0,System.currentTimeMillis() - (before + timeout)));
                 } catch (InterruptedException ie) {
@@ -1138,7 +1133,7 @@ public class HelloRunnable implements Runnable {
     }
 
     public static void main(String args[]) {
-        Thread t = new Thread(new HelloRunnable());
+        Thread t = new Thread(new Hello());
         //t.setDaemon(true);
         t.start();
         try {
@@ -1156,7 +1151,7 @@ public class HelloRunnable implements Runnable {
 ```
 
 Invocar `t.join()` fará com que o *thread* corrente, neste caso o principal, espere indefinidamente até que `t` termine de executar.
-Caso seja necessário limitar o tempo de espera, o tempo pode ser especificado como na linha comentada. 
+Caso seja necessário limitar o tempo de espera, um limite pode ser especificado como na linha comentada.
 Caso a espera termine por causa de um *timeout*, é possível testar o estado atual do thread com `Thread.isAlive()`.
 
 Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode ser terminado quando a *thread* principal terminar. Descomente a invocação e teste o efeito.
@@ -1190,34 +1185,82 @@ Outro método interessante, `Thread.setDaemon()`, especifica que o *thread* pode
     * Analise a saída do programa observando a ordem de execução dos *threads*.
 
 
-    ??? tip "Análise"
+    ???note "Análise"
         É fácil observar que a saída do programa é aleatória nos identificadores e tende a ser incremental nos contadores, mas nem sempre isso é verdade. Isso acontece porquê a execução dos *threads* é não determinística; uma vez que estejam prontos para executar, cabe ao escalonador do sistema operacional a decisão sobre qual processo e em qual processador deverá executar.
     
-
-???todo 
-    Melhorar explicação abaixo
-
-Além de extensão de `Thread` e implementação de `Runnable`, Java disponibiliza também `Executor` como abstração de mais alto nível para execução de tarefas concorrentes.
-
-* `Executor`
-* `ExecutorService`
-* `ScheduledExecutorService`
-
-```Java
-Executor e = ...;
-Runnable r = ...;
-e.execute(r);
-```
-
-Executors normalmente implementam *thread pools*, que podem ser de diferentes tipos. 
+Além de extensão de `Thread` e implementação de `Runnable`, Java disponibiliza também `ExecutorService` como abstração de mais alto nível para execução de tarefas concorrentes.
+Os `ExecutorService`, de forma genérica, provê o acesso a *pools* de *thread* e a API para submeter tarefas para este pool.
+Para iniciar tal processo, você pode criar um executor service usando uma das muitas fábricas providas pela classe [`Executors`](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html) ou pela instanciação de *thread* *pools*  diretamente.
 O mais simples é o de tamanho fixo em que há um número inicial de *threads* criados e que, no caso de algum ser terminado, por exemplo por causa de uma exceção não tratada, cria substitutos para manter o número constante.
 
-`#!java Executor e = java.util.concurrent.Executors.newFixedThreadPool();`
 
-* `newCachedThreadPool()` - *expandable thread pool*
-* `newSingleThreadExecutor()` - *single task at a time*
-* e outras versões
-* `ForkJoinPool`
+```java
+ExecutorService es1 = Executors.newFixedThreadPool(10);
+ExecutorService es2 = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+```
+
+Uma vez criado o executor, você atribui tarefas para serem executadas, que devem implementar `Runnable` ou `Callable`.
+No caso de `Runnable`, você pode usar o método `execute` para executá-las em algum momento, sem a possibilidade de retorno de resultados.
+
+
+=== "Implements"
+    ```java
+    class MyRunnable implements Runnable {
+        public void run(){
+            System.out.println("R0");
+        }
+    }
+
+    Runnable r = new MyRunnable();
+
+    es1.execute(r);
+    es1.execute(r);
+    es2.execute(r);
+    ```
+
+=== "Anônimo"
+    ```java
+    Runnable r = new Runnable() {
+        public void run(){
+            System.out.println("R1");
+        }
+    }
+
+    es1.execute(r);
+    es1.execute(r);
+    es2.execute(r);
+    ```
+
+=== "Lambda"
+    ```java
+    Runnable r = () -> {
+        System.out.println("R2");
+    }
+
+    es1.execute(r);
+    es1.execute(r);
+    es2.execute(r);
+    ```
+
+
+Já usando `Callable`, é possível retornar resultados na forma de `Future<T>`. No exemplo a seguir, a `c` retorna um `Integer`, e portanto `submit` retorna `Future<Integer>`; para acessar o resultado, use `Future<>.get()`:
+
+```java
+Callable<Integer> c = () -> {
+    System.out.println("C1");
+    return 3;
+}
+
+Future<Integer> f = es1.submit(c);
+
+/* Outras tarefas... */
+
+int resultado = f.get();
+```
+
+Outros métodos interessantes dos `ExecutorService` são `invokeAny()` e `invokeAll()`, que permitem passar uma lista de tarefas e retornam o resultado de qualquer tarefa ou implica na execução de todas, respectivamente.
+
+Alguns executores são interessantes por razões diferentes. Primeiro, o `ForkJoinPool` é um executor interessante por funcionar da seguinte forma: 
 
 ```
 if (my portion of the work is small enough)
@@ -1226,6 +1269,18 @@ else
   split my work into two pieces
   invoke the two pieces and wait for the results
 ```
+
+Segundo, os `ScheduledExecutorService` permitem a execução agendada ou periódica de tarefas, por exemplo:
+
+```java
+ScheduledExecutorService es3 = Executors.newSingleThreadScheduledExecutor();
+Future<Integer> f = executorService.schedule(c, 1, TimeUnit.SECONDS);
+//Executa a cada 5 segundos, depois de esperar por 1 segundo para começar. 
+executorService.scheduleAtFixedDelay(r1, 1000, 5000, TimeUnit.MILLISECONDS);
+//Como a anterior, mas pode atrasar a próxima invocação para permiter à anterior que termine.
+executorService.scheduleAtFixedRate(r1, 1000, 5000, TimeUnit.MILLISECONDS);
+```
+
 
 #### Coordenação
 Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. 
@@ -1455,6 +1510,7 @@ public static Integer getMyId() {
     * [Multicast em Java](lycog.com/programming/multicast-programming-java/)
     * [Multicast em Python](https://pymotw.com/2/socket/multicast.html)
     * [Beej's Guide to Network Programming - Using Internet Sockets](https://beej.us/guide/bgnet/)
+
 * Concorrência em Java
     * [Java Concurrency in Practice](http://jcip.net/)
     * [The Well-Grounded Java Developer](https://www.manning.com/books/the-well-grounded-java-developer)
@@ -1462,6 +1518,10 @@ public static Integer getMyId() {
     * [Futures e Promises](http://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/)
     * [Locks](http://winterbe.com/posts/2015/04/30/java8-concurrency-tutorial-synchronized-locks-examples/)
     * [Tipos Atômicos](http://winterbe.com/posts/2015/05/22/java8-concurrency-tutorial-atomic-concurrent-map-examples/)
+
+* Concorrência em Python
+    * [Threads em Python](https://www.tutorialspoint.com/python/python_multithreading.htm)
+
 * Estado
     * Uma visão interessante sobre estado é apresentada em [On stateless software design](https://leonmergen.com/on-stateless-software-design-what-is-state-72b45b023ba2). Observe que não necessariamente eu concordo com tudo o que está escrito aqui, principalmente a questão sobre *stateful* ser sempre mais complexo. A discrepância de visão está no fato de parte da complexidade ser levada para o cliente, no caso dos servidores *stateless*, mas não necessariamente ser eliminada.
     * [Sobre IO não bloqueante em Java.](https://www.developer.com/java/data/understanding-asynchronous-socket-channels-in-java.html)
