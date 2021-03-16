@@ -1451,7 +1451,7 @@ graph LR
 
 Finalmente, Java também disponibiliza estruturas de dados que podem ser acessadas concorrentemente por múltiplos *threads* sem risco de corrupção, denominadas *thread-safe*.
 
-* `BlockingQueue` - bloquei *threads*  se não houver elementos na filq.
+* `BlockingQueue` - bloqueia *threads*  se não houver elementos na fila.
 * `ConcurrentMap/ConcurrentHashMap` - operações atômicas;
    * `if (!m.containsKey(k)) m.put(k,v);`
    * `vOld = m.putIfAbsent(k,v);`
