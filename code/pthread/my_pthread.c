@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
     printf("Hello from the main thread\n");
 
     free(thread_handles);
-    free(resultado_ptr)
+    free(resultado_ptr);
 
     return 0;
 }
