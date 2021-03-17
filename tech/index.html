@@ -577,7 +577,7 @@ Desde que Nakamoto introduziu a primeira <em>blockchain</em><sup id="fnref:nakam
 <p>Vejamos um <a href="https://andersbrownworth.com/blockchain/">exemplo de como uma blockchain funciona</a>.</p>
 <p>Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."</p>
 <p>Se quiser saber mais, consulte esta pequena <a href="https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/">lista</a> artigos sobre <em>blockchain</em>.</p>
-<p><img alt="" src="images/bitcoin_jun_2018.png" /></p>
+<p><img alt="" src="../images/bitcoin_jun_2018.png" /></p>
 <details class="todo"><summary>Todo</summary><ul>
 <li>Smart-contracts</li>
 <li>proof-of-stake</li>
@@ -651,8 +651,8 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Servidores/discos/memórias estão sempre falhando</li>
 <li>Centenas de clientes concorrentes no mesmo arquivo</li>
 </ul>
-<p><img alt="" src="images/gfs3.png" /></p>
-<p><img alt="" src="images/gfs2.png" /></p>
+<p><img alt="" src="../images/gfs3.png" /></p>
+<p><img alt="" src="../images/gfs2.png" /></p>
 <ul>
 <li>Clusters de nós ``comuns''</li>
 <li>Master node: metadata</li>
@@ -660,7 +660,7 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Permite usar um cluster como um único HD elástico na rede.</li>
 </ul>
 <p><a href="https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html">Fonte</a></p>
-<p><img alt="" src="images/gfs3.png" /></p>
+<p><img alt="" src="../images/gfs3.png" /></p>
 <ul>
 <li>Apps recebem \emph{leases} de acesso direto aos dados</li>
 <li>Atomic commitment garante consistência entre réplicas</li>
@@ -669,7 +669,7 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <ul>
 <li>
 <p>Consistência 
-<img alt="" src="images/gfs6.png" /></p>
+<img alt="" src="../images/gfs6.png" /></p>
 </li>
 <li>
 <p>Application sends the file name and data to the GFS client.</p>
@@ -691,11 +691,11 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Processamento distribuído</li>
 <li>Processa arquivos no Google FS</li>
 </ul>
-<p><img alt="" src="images/gfs4.png" /></p>
+<p><img alt="" src="../images/gfs4.png" /></p>
 <p>Chubby</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>*  Google, 2006
-![](images/chubby1.png)
+![](../images/chubby1.png)
 </code></pre></div>
 </td></tr></table>
 <p>Hadoop</p>
@@ -782,8 +782,8 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Resultado são arquivos no GFS/HDFS/EC2</li>
 </ul>
 <p>MapReduce</p>
-<p><img alt="" src="images/mapreduce1.png" /></p>
-<p><img alt="" src="images/mapreduce2.png" /></p>
+<p><img alt="" src="../images/mapreduce1.png" /></p>
+<p><img alt="" src="../images/mapreduce2.png" /></p>
 <p>Exemplo
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
@@ -874,7 +874,7 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <p><a href="https://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html#Example:_WordCount_v1.0">Fonte</a></p>
 <p><a href="https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v">https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v</a></p>
 <h2 id="estudo-de-caso-kafka">Estudo de caso: Kafka</h2>
-<p>![](images/kafka0.png</p>
+<p>![](../images/kafka0.png</p>
 <div class="admonition quote">
 <p class="admonition-title">Quote</p>
 <p>Kafka is a distributed streaming platform.</p>
@@ -884,10 +884,10 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>OpenSource em 2011</li>
 <li>Projeto Apache em ????</li>
 </ul>
-<p><img alt="" src="images/kafka1.png" /></p>
-<p><img alt="" src="images/kafka2.png" /></p>
+<p><img alt="" src="../images/kafka1.png" /></p>
+<p><img alt="" src="../images/kafka2.png" /></p>
 <p>Producers x Message Broker x Consumers</p>
-<p><img alt="" src="images/kafka3.png" /></p>
+<p><img alt="" src="../images/kafka3.png" /></p>
 <ul>
 <li>Produtores: enviam dados/mensagens/records (array de bytes)</li>
 <li>Consumidores: recebem dados</li>
@@ -922,7 +922,7 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Offsets são locais às partições</li>
 <li>Mensagens são unicamente identificadas por (tópico, partição, índice)</li>
 </ul>
-<p><img alt="" src="images/kafka4.png" /></p>
+<p><img alt="" src="../images/kafka4.png" /></p>
 <p>Consumer group</p>
 <ul>
 <li>Carga pode ser muito grande para um consumidor</li>
@@ -932,7 +932,7 @@ Isso quer dizer que vai de alguns TB até Petabytes, dependendo do problema.</p>
 <li>Número de consumidores <span class="arithmatex">\(\leq\)</span> partições no tópico</li>
 <li>Máximo de dois consumidores por partição (mantem pos. de cada um)</li>
 </ul>
-<p><img alt="" src="images/kafka5.png" /></p>
+<p><img alt="" src="../images/kafka5.png" /></p>
 <p>Siga o <a href="http://kafka.apache.org/quickstart">tutorial</a>, até o passo 5.</p>
 <ul>
 <li>Baixe e descompacte</li>
