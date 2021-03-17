@@ -532,19 +532,19 @@
 <li>Se mais de um hash gerado, <ul>
 <li>Concatene hashes duas a duas; cada concatenação resulta em um novo bloco.</li>
 <li>Repita o processo; os hashes resultantes correspondem a uma árvore<br />
-<img alt="Merkle Tree" src="drawings/merkle.drawio-0.svg" /></li>
+<img alt="Merkle Tree" src="../drawings/merkle.drawio-0.svg" /></li>
 </ul>
 </li>
 <li>Troque hashes da raiz.<ul>
 <li>Se hashes iguais, pronto.</li>
 <li>Se hashes diferentes troque hashes das raizes das subárvores e execute recursivamente.
-<img alt="Merkle Tree" src="drawings/merkle.drawio-1.svg" /></li>
+<img alt="Merkle Tree" src="../drawings/merkle.drawio-1.svg" /></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<details class="question"><summary>Se um byte é adicionado no meio do arquivo?</summary><p><img alt="Merkle Tree" src="drawings/merkle.drawio-2.svg" /></p>
+<details class="question"><summary>Se um byte é adicionado no meio do arquivo?</summary><p><img alt="Merkle Tree" src="../drawings/merkle.drawio-2.svg" /></p>
 </details>
 <p>A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, , somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor. Mas esta abordagem não é genérica, pois qual o correspondente em uma imagem ou um áudio ou em um arquivo <code>tgz</code>?</p>
 <h2 id="rabin-fingerprinting">Rabin Fingerprinting</h2>
