@@ -20,17 +20,17 @@ O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e
     * Se mais de um hash gerado, 
 	     * Concatene hashes duas a duas; cada concatenação resulta em um novo bloco.
          * Repita o processo; os hashes resultantes correspondem a uma árvore  
-         ![Merkle Tree](drawings/merkle.drawio#0)
+         ![Merkle Tree](../drawings/merkle.drawio#0)
     * Troque hashes da raiz.
         * Se hashes iguais, pronto.
         * Se hashes diferentes troque hashes das raizes das subárvores e execute recursivamente.
-        ![Merkle Tree](drawings/merkle.drawio#1)
+        ![Merkle Tree](../drawings/merkle.drawio#1)
 
 [^madsmt]: [Modern Algorithms and Data Structures: Merkle Trees](http://www.slideshare.net/quipo/modern-algorithms-and-data-structures-1-bloom-filters-merkle-trees)
 
 
 ???question "Se um byte é adicionado no meio do arquivo?"
-	![Merkle Tree](drawings/merkle.drawio#2)
+	![Merkle Tree](../drawings/merkle.drawio#2)
 
 
 
@@ -85,7 +85,7 @@ Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/
 
 
 
-![](images/bitcoin_jun_2018.png)
+![](../images/bitcoin_jun_2018.png)
 
 
 
@@ -174,9 +174,9 @@ Google FS
 * Servidores/discos/memórias estão sempre falhando
 * Centenas de clientes concorrentes no mesmo arquivo
 
-![](images/gfs3.png)
+![](../images/gfs3.png)
 
-![](images/gfs2.png)
+![](../images/gfs2.png)
 
 * Clusters de nós ``comuns''
 * Master node: metadata
@@ -185,7 +185,7 @@ Google FS
 
 [Fonte](https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html)
 
-![](images/gfs3.png)
+![](../images/gfs3.png)
 
 *  Apps recebem \emph{leases} de acesso direto aos dados
 *  Atomic commitment garante consistência entre réplicas
@@ -193,7 +193,7 @@ Google FS
 [Fonte](http://google-file-system.wikispaces.asu.edu/)
 
 * Consistência 
-![](images/gfs6.png)
+![](../images/gfs6.png)
 
 * Application sends the file name and data to the GFS client.
 * GFS Client send the file name and chunk index to master
@@ -216,12 +216,12 @@ Map Reduce
 *  Processamento distribuído
 *  Processa arquivos no Google FS
 
-![](images/gfs4.png)
+![](../images/gfs4.png)
 
 Chubby
 
 	*  Google, 2006
-	![](images/chubby1.png)
+	![](../images/chubby1.png)
 
 
 Hadoop
@@ -312,9 +312,9 @@ MapReduce
 
 MapReduce
 
-![](images/mapreduce1.png)
+![](../images/mapreduce1.png)
 
-![](images/mapreduce2.png)
+![](../images/mapreduce2.png)
 
 
 Exemplo
@@ -374,7 +374,7 @@ https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v
 
 ## Estudo de caso: Kafka
 
-![](images/kafka0.png
+![](../images/kafka0.png
 
 !!!quote
      Kafka is a distributed streaming platform.
@@ -384,14 +384,14 @@ https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v
 *  Projeto Apache em ????
 
 
-![](images/kafka1.png)
+![](../images/kafka1.png)
 
-![](images/kafka2.png)
+![](../images/kafka2.png)
 
 
 Producers x Message Broker x Consumers
 
-![](images/kafka3.png)
+![](../images/kafka3.png)
 
 *  Produtores: enviam dados/mensagens/records (array de bytes)
 *  Consumidores: recebem dados
@@ -431,7 +431,7 @@ Offset
 *  Offsets são locais às partições
 *  Mensagens são unicamente identificadas por (tópico, partição, índice)
 
-![](images/kafka4.png)
+![](../images/kafka4.png)
 
 Consumer group
 
@@ -443,7 +443,7 @@ Consumer group
 *  Máximo de dois consumidores por partição (mantem pos. de cada um)
 
 
-![](images/kafka5.png)
+![](../images/kafka5.png)
 
 
 Siga o [tutorial](http://kafka.apache.org/quickstart), até o passo 5.
