@@ -324,13 +324,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#para-aprender-mais" class="md-nav__link">
-    Para aprender mais
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -707,13 +700,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#para-aprender-mais" class="md-nav__link">
-    Para aprender mais
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -938,13 +924,17 @@
 <blockquote>
 <p>... an architectural style determines the vocabulary of components and connectors that can be used in instances of that style, together with a set of constraints on how they can be combined. These can include topological constraints on architectural descriptions (e.g., no cycles). Other constraints—say, having to do with execution semantics—might also be part of the style definition.</p>
 </blockquote>
-<p>Em outras palavras, um estilo ou padrão arquitetural é o conjunto de princípios que provê uma infraestrutura abstrata para uma família de sistemas, e promove o reuso de projeto ao <a href="https://msdn.microsoft.com/en-us/library/ee658117.aspx">prover soluções para problemas recorrentes e frequentes</a>.</p>
-<p>Quando falamos de arquiteturas em sistemas distribuídos, estamos primariamente focados na forma como os <strong>componentes</strong> do sistema interagem uns com os outros, por meio de <strong>conectores</strong>, para implementar a solução para um problema.</p>
+<p>Em outras palavras, um estilo ou padrão arquitetural é o conjunto de princípios que provê uma infraestrutura abstrata para uma família de sistemas, e promove o reuso de projeto ao <a href="https://msdn.microsoft.com/en-us/library/ee658117.aspx">prover soluções para problemas recorrentes e frequentes</a> ao definir quais o <strong>componentes</strong> presentes no sistema e como estes interagem uns com os outros, por meio de <strong>conectores</strong>, para implementar a solução para um problema.</p>
 <h2 id="componentes-e-conectores">Componentes e Conectores</h2>
-<details class="todo"><summary>Todo</summary><p>comp e conec</p>
-</details>
+<p>Para se alcançar eficiência no desenvolvimento de sistemas, é imperativo que se pare de reinventar a roda a cada iteração e, em vez disso, se reuse artefatos existentes, providos pela linguagem sendo usada, por <em>frameworks</em> de terceiros e por iterações anteriores da equipe. 
+De fato, o desenvolvimento de novos sistemas deveria ser pautado pela criação de componentes simples e coesos, que possam ser operados independentemente e que por meio de interfaces bem especificadas completas, passam ser então conectados para resolver um problema maior.</p>
+<p>Uma vez selecionados, os componentes são conectados por meio de conectores, que podem assumir múltiplas formas para esconder as complexas iterações entres os componentes, por exemplo, por meio de fluxos de mensagens ou invocações remotas de procedimentos.
+Alguns conectores são complexos o suficiente para serem considerados eles próprios componentes, mas no contexto desta discussão, a bem da abstração, os consideraremos apenas como conectores. Por exemplo, um banco de dados usado para a comunicação entre dois processos é considerado um conector, e não um componente.</p>
+<p>Componentes bem projetados, deveriam ser facilmente substituídos por outros que respeitem a conexão. Isto aumenta a manutenabilidade do sistemas e pode simplificar passos como a replicação de componentes.</p>
 <div class="mermaid">graph LR
     A[Componente 1] --&gt; C{Conector} --&gt; B(Componente 2)</div>
+<details class="todo"><summary>TODO</summary><p>desenhar o conector corretamente</p>
+</details>
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
 Quando houver forte dependência, diremos que os componentes estão <strong>fortemente acoplados</strong> (<em>tightly coupled</em>). Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.</p>
@@ -995,7 +985,7 @@ Requisições para correspondentes a um segmento são roteados para o nó respon
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
 <p><img alt="Chord" src="../images/chord.png" /></p>
 <h3 id="hibridos">Híbridos</h3>
-<p>Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade consideradas híbridos.
+<p>Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos.
 Considere um sistema de email, por exemplo. 
 Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. 
 Neste sentido, o sistema é um híbrido P2P e cliente/servidor.</p>
@@ -1030,27 +1020,21 @@ Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 <em>
 <p><img alt="Multi-tier" src="../images/02-04.png" /></p>
 <h3 id="outras-arquiteturas">Outras arquiteturas</h3>
 <p>Diversas outras arquiteturas podem e foram propostas para o desenvolvimento de Sistemas Distribuídos.
-A moda da vez é a chamada arquitetura de micro serviços, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemnte.
+A moda da vez é a chamada arquitetura de <strong>microsserviços</strong>, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemente.
 Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.</p>
 <p><img alt="Microserviços" src="../images/microservice_sample.png" /></p>
 <p>Nós discutiremos micro-serviços mais adiante. 
 Por agora, apenas tenha em mente que embora seja vendido por muitos como tal, <a href="http://www.zdnet.com/article/microservices-101-the-good-the-bad-and-the-ugly/">os micro-serviços não são uma panacéia</a>.</p>
 <p>Uma extrapolação que pode ser feita aqui, reforçando a observação que problemas (e soluções) de sistemas distribuídos são refletidos em nível de processamento paralelo e concorrente, é que a uma arquitetura SEDA lembra em muito a arquitetura de <a href="http://muratbuffalo.blogspot.com.br/2011/02/seda-architecture-for-well-conditioned.html">micro-serviços</a>.</p>
-<details class="todo"><summary>Todo</summary><p><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Event sourcing</a></p>
-</details>
-<details class="todo"><summary>Todo</summary><p>MOM</p>
-</details>
-<details class="todo"><summary>Todo</summary><p>Pub/Sub</p>
-</details>
-<h3 id="para-aprender-mais">Para aprender mais</h3>
-<p>Para aprender mais sobre arquiteturas, consulte a seguinte referência: <a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</p>
-<p>Para aprender um pouco sobre como funcionam as redes de um <em>datacenter</em>, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<p>Observe que à direita no exemplo de microsserviços, se vê um conector (ou componente) denominado <strong><em>event bus</em></strong>.
+A ideia é que componentes publiquem mensagens no barramento, os <strong><em>publishers</em></strong>, e que componentes interessados em mensagens de algum tópico, os <strong><em>subscribers</em></strong> se subscrevam. 
+O barramento então serve de canal de comunicação, entregando as mensagens publicadas a quem tiver interesse, implementando assim uma arquitetura <strong><em>publish/subscribe</em></strong>.</p>
+<p><em>Publish/subscribe</em> é uma das manifestações os <strong><em>message oriented middleware</em></strong>, ou MOM. Uma outra manifestação são as <strong>filas de mensagens</strong>, que permitem que componentes enviem mensagens para caixas postais uns dos outros.
+Dependendo da implementação e do MOM usado, componentes não precisam sequer se identificar ou mesmo estar ativos ao mesmo tempo para que a troca de mensagens aconteça, novamente levando a sistemas mais ou menos acoplados.</p>
 <h2 id="cliente-servidor">Cliente Servidor</h2>
-<p>Como brevemente discutido em <a href="../basics/#TCP">Fundamentos</a>, quando pensamos em termos de comunicação entre dois processos usando sockets, em geral pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.</p>
-<p>Como exemplos desta arquitetura, podemos pensar em um navegador requisitando a um servidor Apache que lhe retorne uma página Web, ou em um aplicativo móvel solicitando ao servidor de aplicações que dispare uma transferência de fundos.
-Um exemplo genérico é apresentado na figura a seguir.</p>
+<p>Nos foquemos novamente na comunicação entre dois processos usando sockets e como, em geral, pensamos em processos clientes e servidores, onde servidores esperam a conexão por parte de clientes e executam as operações requisitadas pelos mesmos.
+Exemplos desta arquitetura são abundantes, incluindo um navegador que se comunica com um servidor Apache para recuperar uma página Web ou em um aplicativo móvel que solicita ao servidor de aplicações que dispare uma transferência de fundos.
+De forma genérica, estas interações acontecem como na figura a seguir.</p>
 <div class="mermaid">sequenceDiagram
     activate Servidor
     activate Cliente
@@ -1073,69 +1057,85 @@ Um exemplo genérico é apresentado na figura a seguir.</p>
     activate Cliente
     note right of Cliente: Ativo (processando resposta
     note left of Servidor: Inativo (esperando requisição)
-    deactivate Cliente</div>
+    deactivate Cliente
+
+    activate Cliente
+    note right of Cliente: Ativo (gerando requisição)
+    Cliente-&gt;&gt;+Servidor: Request
+    deactivate Cliente
+    note right of Cliente: Inativo (esperando resposta)
+    note left of Servidor: Ativo (processando requisição)
+    Servidor--&gt;&gt;-Cliente: Response
+    activate Cliente
+    note right of Cliente: Ativo (processando resposta
+    note left of Servidor: Inativo (esperando requisição)
+    deactivate Cliente
+</div>
 <p>O modelo cliente/servidor forma a base da computação distribuída, sobre a qual todos os outros modelos são implementados.
-Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de uma host robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor, isto é, um servidor e vários clientes.</p>
+Uma das razões é histórica: os primeiros sistemas a permitirem a operação por múltiplos usuários, ainda na década de 60, eram compostos de um <em>host</em> robusto ao qual se conectavam diversos terminais, essencialmente com teclado e monitor, isto é, um servidor e vários clientes.</p>
 <p>Com a redução dos computadores, surgiram as primeiras redes de computadores e a necessidade de uma abstração para o estabelecimento de comunicação entre processos em hosts distintos, e assim surgiram os <strong>sockets</strong>.
 Com os sockets, vem uma grande flexibilidade, pois um processo não precisa saber como o outro manuseia os dados que lhe cabem, desde que siga um protocolo pré-estabelecido na comunicação. Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter <a href="../intro/#transparencia">transparência de acesso</a>.
 Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.
 Exemplos cotidianos disto são servidores de bancos de dados, de páginas Web e email.
 De fato, esta flexibilidade permite que diversas aplicações continuem operando de forma centralizada, com servidores rodando, por exemplo, em mainframes e clientes rodando de forma emulada por software em computadores pessoais.</p>
-<p>Contudo, em certas situações, esta divisão entre clientes e servidores pode ser tornar confusa.
-Primeiro, porquê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
+<p>Contudo, em certas situações, esta divisão entre clientes e servidores pode se tornar confusa.
+Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
 Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P.
 Terceiro, um mesmo processo pode atuar tanto como cliente quanto como servidor, no que é conhecido como arquitetura multicamadas, também a ser visto adiante.
 Quarto, usando-se sockets como base, podemos construir outros modelos de comunicação entre processos, efetivamente colocando camadas na nossa cebola.<sup id="fnref:shrek"><a class="footnote-ref" href="#fn:shrek">1</a></sup></p>
 <p>A seguir, exploraremos as arquiteturas construídas sobre cliente/servidor.</p>
 <h2 id="arquitetura-orientada-a-microsservicos">Arquitetura Orientada a Microsserviços</h2>
-<p>No dia 3 de Junho de 2020, termo <strong>microservice</strong> resultava em 6.6 milhões de resultados no <a href="https://www.bing.com/search?q=microservice&amp;PC=U316&amp;FORM=CHROMN">Google</a>.
-Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes, que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
-Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surgiram com grande estrondo, sendo alguns exemplos recentes Docker, Golang, Angular, e JQuery, e embora seja certo que algumas destas encontrarão seus nichos, como fizeram antes delas Cobol, C, e SQL, outras deparecerão da face da indústria; afinal, quem sabe o que é Delphi e quem ainda usa JQuery?
+<p>No dia 3 de Junho de 2020, o termo <strong>microservice</strong> resultava em 6.6 milhões de resultados no <a href="https://www.bing.com/search?q=microservice&amp;PC=U316&amp;FORM=CHROMN">Google</a>.
+Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes e que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
+Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surgiram com grande estrondo, sendo alguns exemplos recentes Docker, Golang, Angular, e JQuery, e embora seja certo que algumas destas encontrarão seus nichos, como fizeram antes delas Cobol, C, e SQL, outras desaparecerão da face da indústria; afinal, quem sabe o que é Delphi e quem ainda usa JQuery?
 Este fenômeno é capturado pelas várias fases do <em>hype-cycle</em> da Gartner.<sup id="fnref:hype_gartner"><a class="footnote-ref" href="#fn:hype_gartner">3</a></sup></p>
 <p><a href="https://www.gartner.com/en/research/methodologies/gartner-hype-cycle"><img alt="Hype Cycle" src="../images/gartner-hype-cycle-overview.png" /></a></p>
-<p>A Arquitetura Orientada a Microsserviços, tendo atingido o pico das expectativas infladas<sup id="fnref:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2017, está deslizando na <a href="https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-">Trough of Desilusionment</a><sup id="fnref2:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2019.
+<p>A Arquitetura Orientada a microsserviços, tendo atingido o pico das expectativas infladas<sup id="fnref:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2017, está deslizando na <a href="https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-">Trough of Desilusionment</a><sup id="fnref2:gartner_inflated"><a class="footnote-ref" href="#fn:gartner_inflated">4</a></sup> em 2019.
 Isto é, este modelo de desenvolvimento não é mais propagandeado como uma bala de prata para todas as aplicações distribuídas.
 Ainda assim, é um importante modelo. Mas afinal, o que é a arquitetura de microsserviços?
-Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termoss de sistemas monolíticos. <br />
+Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termos de sistemas monolíticos. <br />
 <a href="http://www.imdb.com/title/tt0062622/"><img alt="2001 Space Odyssey" src="../images/monolith_2001.jpg" /></a>   </p>
 <h3 id="monolitos">Monolitos</h3>
 <p>Muitas aplicações seguem o modelo de 3 camadas em que em um dos extremos tem-se a interface com os usuários, materializada normalmente por um navegador, no outro tem-se um SGBD onde são armazenados os dados da aplicação, e, no meio, a lógica do negócio.
 A camada central, implementada por um único processo, que alimenta a interface com o usuário, manipula o modelo de dados, e onde reside a lógica do negócio, é um <strong>monolito</strong>.</p>
 <p><a href="http://nodexperts.com/blog/microservice-vs-monolithic/"><img alt="Monolitos" src="../images/monolith_arc.png" /></a></p>
-<p>Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em colocadas em desenvolvimento de forma atômica:   </p>
-<ul>
+<p>Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em conjunto e colocadas em produção de forma atômica:   </p>
+<ol>
 <li>Desenvolva</li>
 <li>Teste</li>
 <li>Implante</li>
-<li>loop</li>
-</ul>
-<p>Simples não quer dizer necessariamente eficiente; no caso de atualizações de uma parte do sistema, todo o monolito precisa ser trocado, incorrendo em indisponibilidade total do sistema, mesmo das partes não modificadas.
-Esta dificuldade tende a limitar as janelas de atualização do sistema, o que aumenta no número de mudanças que ocorrem a cada atualização, o que aumenta o risco de regressões e portanto requer mais testes, o que aumenta o intervalo entre janelas de atualização. Além disso, nos caso de bugs, é mais difícil encontrar o problema, uma vez que fica impossível os desenvolvedores conhecerem todo o sistema.
-Isso apenas exacerba o problema, o que limita mais ainda as atualizações, gerando um ciclo vicioso que mantem desenvolvedores acordados nas madrugadas de sexta para sábado quando é dia de <em>deploy</em>.</p>
-<p>Sistemas monolíticos também podem ser problemáticos quanto à escalabilidde, pois quando a capacidade do sistema é atingida, ou todo o sistema é movido para um <em>host</em> de maior capacidade ou todo o sistema deve ser  replicado.
-Na primeira abordagem, o custo geralmente é um impecilho, pois preços de hardware crescem exponencialmente. Além disso, um servidor, por mais parrudo que seja, é um Ponto Único de Falha (ou SPOF, do inglês <em>single point of failure</em>).
+<li>volte ao passo 1</li>
+</ol>
+<p>Simples não quer dizer necessariamente eficiente; no caso de atualizações de uma parte do sistema, <strong>todo o monolito precisa ser trocado</strong>, incorrendo em, com raras exceções, <strong>indisponibilidade total</strong> do sistema, incluindo as partes não modificadas.
+Esta dificuldade tende a limitar as <strong>janelas de atualização</strong> do sistema, o que aumenta no número de mudanças que ocorrem a cada atualização, o que <strong>aumenta o risco de regressões</strong> e portanto requer mais testes, o que aumenta o intervalo entre janelas de atualização. 
+Além disso, nos caso de bugs, é mais difícil encontrar o problema, uma vez que fica <strong>impossível aos desenvolvedores conhecer todo o sistema</strong>.
+Isso apenas exacerba o problema, o que limita mais ainda as atualizações, gerando um <strong>ciclo vicioso</strong> que mantem desenvolvedores acordados nas madrugadas de sexta para sábado quando é dia de <em>deploy</em>.</p>
+<p>Sistemas monolíticos também podem ser problemáticos quanto à escalabilidade, pois quando a capacidade do sistema é atingida, ou todo o sistema é movido para um <em>host</em> de maior capacidade ou todo o sistema deve ser  replicado.
+Na primeira abordagem, o custo geralmente é um empecilho, pois preços de hardware crescem exponencialmente com <em>scale up</em>. 
+Além disso, um servidor, por mais parrudo que seja, é um Ponto Único de Falha (ou SPOF, do inglês <em>single point of failure</em>).
 Quanto à segunda abordagem, ela traz complexidades na coordenação das réplicas e ineficiências ao replicar inclusive as partes subutilizadas.
 Ambas as abordagens também esbarram na escalabilidade do banco de dados que lhes serve de <em>backend</em>.
-Para contornar ou pelo menos minimizar estes problemas, pode-se fragmentar o serviço e o banco de dados, o que facilita tanto a escalabilidade vertical quanto horizontal de cada módulo, que é menor e mais simples de coordenar, e divide a carga nos bancos de dados; mas isso é a troca do servíço monolítico por microsserviços.</p>
-<p><a href="https://thenewstack.io/from-monolith-to-microservices/"><img alt="Escala de Microsserviços" src="../images/microservices_scale.png" /></a></p>
+Para contornar ou pelo menos minimizar estes problemas, pode-se fragmentar o serviço e o banco de dados, o que facilita tanto a escalabilidade vertical quanto horizontal de cada módulo, que é menor e mais simples de coordenar, e divide a carga nos bancos de dados; mas isso é a troca do serviço monolítico por microsserviços.</p>
 <h3 id="microsservicos">Microsserviços</h3>
 <p>De acordo com <a href="https://martinfowler.com/articles/microservices.html">Lewis &amp; Fowler</a></p>
 <blockquote>
 <p>The microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
 </blockquote>
 <p>Em outras palavras, com os microsserviços, quebra-se o monolito em diferentes processos, "<em>small autonomous services that work together, modelled around a business domain</em>", cada um gerenciando os dados relevantes para aquela parte do sistema e, possivelmente, sua própria interação com o usuário.
-Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhas o funcionamento de todo o sistema.</p>
-<p>Além disso, quando um serviço precisa ser atualizado, todos os demais podem continuar operantes e possível até que múltiplas versões do mesmo serviço sejam executadas concorrentemente, possibilitando atualizações sem janelas de manutenção.  </p>
-<p>Quanto à escalabilidade, esta é feita indepentendentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
+Com o uso de microsserviços, se dá mais um passo em direção à máxima escalabilidade do sistema.
+<a href="https://thenewstack.io/from-monolith-to-microservices/"><img alt="Escala de Microsserviços" src="../images/microservices_scale.png" /></a></p>
+<p>Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhes o funcionamento de todo o sistema.</p>
+<p>Além disso, quando um serviço precisa ser atualizado, se bem projetados, todos os demais podem continuar operantes e é possível até que múltiplas versões do mesmo serviço sejam executadas concorrentemente, possibilitando atualizações sem janelas de manutenção.  </p>
+<p>Quanto à escalabilidade, esta é feita independentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
 <p><a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design"><img alt="" src="../images/microservice_sample.png" /></a></p>
 <p>Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou <em>sharding</em>).
 Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
 <h3 id="do-monolito-aos-microsservicos">Do Monolito aos Microsserviços</h3>
-<p>Com tantas vantagens, suge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
+<p>Com tantas vantagens, surge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
 A resposta é <strong>não</strong>, pois como colocado no início desta seção, <strong>não existem balas de prata</strong> e se um sistema monolítico está funcionando para você e não há perspectiva de problemas acometerem (a demanda no sistema não está aumentando, a lógica do sistema é muito simples, indisponibilidade não te traz prejuízo, você não pode arcar com a refatoração), então mantenha seu sistema como está.</p>
 <p>Caso haja a necessidade de evolução e o modelo de microsserviços pareça adequado, existem recomendações de como a migração pode ser feita.
 Primeiro, é preciso aceitar que o desenvolvimento de microsserviços afeta a organização do time de desenvolvimento e que a organização provavelmente refletirá a arquitetura.
-O desenvolvimento, manutenção e operação de microsserviços acontece em times pequenos, de 1 a 8 pessoas ("pizza team"), dependendo da complexidade do serviço; se houver a necessidade de mais pesssoas no time, o escopo do microsserviço provavelmente está grande demais; cada componente resolve um problema, bem.</p>
+O desenvolvimento, manutenção e operação de microsserviços acontece em times pequenos, de 1 a 8 pessoas ("pizza team"), dependendo da complexidade do serviço; se houver a necessidade de mais pessoas no time, o escopo do microsserviço provavelmente está grande demais; cada componente resolve um problema, bem.</p>
 <p>Segundo, a mudança não deverá acontecer atomicamente. 
 Uma boa estratégia é identificar uma parte do sistema que funcionaria bem como microsserviço, desenvolvê-la e modificar o monolito para usar o microsserviço.
 O aprendizado então é usado para encontrar novo candidato e o procedimento é iterado até que o monolito seja apenas uma casca e possa também ser removido.
@@ -1157,18 +1157,6 @@ ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles
     <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ3wIuvmHeM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br />
     Para uma visão prática da implementação de microsserviços usando AWS, veja
     <iframe width="560" height="315" src="https://www.youtube.com/embed/Ijs55IA8DIk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
-<details class="bug"><summary>TODO</summary><ul>
-<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
-<li>MOM </li>
-<li>Publish/Subscribe </li>
-<li>Message Queues</li>
-<li>Event Sourcing    <ul>
-<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
-<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
-</ul>
-</li>
-</ul>
-</details>
 <h2 id="par-a-par-peer-to-peer-p2p">Par-a-Par (Peer-to-Peer, P2P)</h2>
 <p>Nos sistemas que seguem a arquitetura Par-a-Par, ou simplesmente P2P, há uma substituição dos papéis de clientes e servidores, em que há uma "hirarquia" entre os componentes, por uma onde todos os nós são pares na execução da tarefa em questão.
 Um exemplo comum destas arquitetura são os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.</p>
@@ -1465,7 +1453,14 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
 </ul>
 </div>
 <h5 id="referencias">Referências</h5>
-<p><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></p>
+<ul>
+<li><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></li>
+<li><a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</li>
+<li>Para aprender um pouco sobre como funcionam as redes de um <em>datacenter</em>, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook. <br />
+<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</li>
+</ul>
 <h4 id="estudo-de-caso-dynamodb">Estudo de Caso: DynamoDB</h4>
 <p>DynamoDB é o marco fundamental dos bancos de dados NoSQL. 
 No vídeo a seguir um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.</p>
@@ -1549,6 +1544,21 @@ Isso é um atestado do que uma <a href="http://bittorrent.org/beps/bep_0003.html
 <p>O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
 Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção <a href="../tech/#blockchain">BlockChain</a>.
 Apenas para abrir o apetite, </p>
+<details class="bug"><summary>TODO</summary><ul>
+<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
+<li>MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s<ul>
+<li>Publish/Subscribe </li>
+<li>Message Queues</li>
+</ul>
+</li>
+<li>Event Sourcing    <ul>
+<li><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Stream Processing/Event sourcing</a></li>
+<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
+<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
+</ul>
+</li>
+</ul>
+</details>
 <div class="footnote">
 <hr />
 <ol>
