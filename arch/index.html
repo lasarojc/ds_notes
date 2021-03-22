@@ -415,13 +415,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -502,6 +495,13 @@
         <li class="md-nav__item">
   <a href="#outras-arquiteturas" class="md-nav__link">
     Outras arquiteturas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
   </a>
   
 </li>
@@ -777,13 +777,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -864,6 +857,13 @@
         <li class="md-nav__item">
   <a href="#outras-arquiteturas" class="md-nav__link">
     Outras arquiteturas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
   </a>
   
 </li>
@@ -1011,11 +1011,9 @@ Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <
 Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente na forma de conexões TCP/IP.
 Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
 Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.</p>
-<p>Uma vez que as conexões na rede sobreposta não correspondem a conexões físicas, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
-Isto também implica que a otimização da rota lógica não necessariamente leva à otimização da rota física.</p>
+<p>Uma vez que as <strong>conexões na rede sobreposta não correspondem a conexões físicas</strong>, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Isto também implica que a <strong>otimização da rota lógica não necessariamente leva à otimização da rota física</strong>.</p>
 <p><a href="https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg"><img alt="Por Gustavo Lacerda - UFRJ, Domínio público" src="../images/overlay.jpg" /></a></p>
-<details class="todo"><summary>Todo</summary><p>A figura não mostra hosts, apenas roteadores. Trocar por figura em com hosts, roteadores, e processos nos hosts.</p>
-</details>
 <p>Dependendo em como esta rede é organizada (ou não), a mesma é classificada como <strong>estruturada</strong> ou <strong>não-estruturada</strong>.</p>
 <h4 id="rede-nao-estruturada">Rede Não-Estruturada</h4>
 <p>Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede <strong>não-estruturada</strong>. 
@@ -1026,7 +1024,7 @@ Inserções de dados podem ser feitas muito rapidamente, armazenando-os no prime
 Os objetos amarelo e vermelho foram inseridos desta forma, e copiados em nós próximos para tolerar a falha de alguns hosts sem perder os dados.
 Buscas, contudo, terão que vasculhar a rede usando algoritmos como <strong>busca em largura</strong>, <strong>busca em profundidade</strong> ou <strong>caminhada aleatória</strong> (resposta probabilística).</p>
 <h4 id="rede-estruturada">Rede Estruturada</h4>
-<p>Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de <strong>estruturada</strong>.
+<p>Se as conexões são construídas e mantidas de forma a gerar uma <strong>topologia bem definida</strong>, chamamos esta rede de <strong>estruturada</strong>.
 Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
 A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
 Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
@@ -1083,12 +1081,12 @@ Efetivamente, temos a rede sobreposta à esquerda.</p>
 </ul>
 </li>
 </ul>
-<p>Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos ser'ão os nós à direita, esquerda, acima e abaixo.
+<p>Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos serão os nós à direita, esquerda, acima e abaixo.
 A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" 3D.</p>
 <p><a href="https://clusterdesign.org/torus/"><img alt="Fujitsu and RIKEN, 2009" src="../images/3d-torus.jpg" /></a></p>
 <p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura, no qual diversos <a href="https://en.wikipedia.org/wiki/Hypercube_internetwork_topology">esquemas de roteamento eficientes podem ser usados</a>.<sup id="fnref:icpc_hyper"><a class="footnote-ref" href="#fn:icpc_hyper">3</a></sup></p>
 <p><a href="https://commons.wikimedia.org/w/index.php?curid=5071550"><img alt="By Spiritia" src="../images/hypercube.png" /></a></p>
-<div class="admonition note">
+<div class="admonition sideslide">
 <p class="admonition-title">Sistemas P2P</p>
 <ul>
 <li>Arquitetura decentralizada;</li>
@@ -1101,7 +1099,7 @@ A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo pri
 </ul>
 </div>
 <h3 id="tabelas-de-espalhamento-distribuidas-dht">Tabelas de Espalhamento Distribuídas (DHT)</h3>
-<p>A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuíds (DHT, do inglês, <em>Distributed Hash Tables</em>).</p>
+<p>A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuídas (DHT, do inglês, <em>Distributed Hash Tables</em>).</p>
 <p>As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
 Em essência, estas tabelas são funções que <strong>mapeiam</strong> uma chave para um valor, uma função <span class="arithmatex">\(f\)</span> tal que</p>
 <ul>
@@ -1163,7 +1161,7 @@ Para este problema, poderíamos usar um identificador auto-incrementável, por e
 Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de <span class="arithmatex">\(k\)</span>.
 Alguns exemplos de divisão são:</p>
 <ul>
-<li>definia <em>buckets</em> para cada host e atribua o dado com chave <span class="arithmatex">\(k\)</span> para bucket <span class="arithmatex">\(k \% b\)</span>, onde <span class="arithmatex">\(b\)</span> é o número de buckets</li>
+<li>defina <em>buckets</em> para cada host e atribua o dado com chave <span class="arithmatex">\(k\)</span> para bucket <span class="arithmatex">\(k \% b\)</span>, onde <span class="arithmatex">\(b\)</span> é o número de buckets</li>
 <li>divida a faixa de valores em <span class="arithmatex">\(b\)</span> segmentos e atribua a cada host uma faixa</li>
 <li>dados <span class="arithmatex">\(2^n\)</span> hosts, atribua ao host <span class="arithmatex">\(0 &lt; x &lt; 2^n-1\)</span> os dados cujas chaves terminem com o valor <span class="arithmatex">\(x\)</span>.</li>
 </ul>
@@ -1180,14 +1178,14 @@ Como a função hash é criptográfica, uma pequena variação na entrada implic
 <p>A cada nó é atribuído um identificador único de <strong><span class="arithmatex">\(m\)</span> bits</strong>, gerado aleatoriamente. 
 Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">4</a></sup>
-Assumamos inicialmente que os nós só estão cientes dos seus vizihos imediatos no anel.</p>
-<p><img alt="Anel Chord" src="../drawings/chord_ring.drawio-0.svg" /></p>
+A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">4</a></sup>
+Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.</p>
+<p><img alt="Anel Chord" src="../drawings/chord.drawio-0.svg" /></p>
 <p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
 A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="Anel com Chaves no Chord" src="../drawings/chord_ring_data.drawio-0.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../drawings/chord.drawio-1.svg" /></p>
 <h5 id="roteamento_1">Roteamento</h5>
 <p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
@@ -1200,7 +1198,7 @@ Observe que o custo em termos de espaço para se implementar esta solução é <
 Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
 <p>Com uma rede com milhares de nós, uma solução <span class="arithmatex">\(O(n)\)</span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
 Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
-<p><img alt="Anel com Chaves no Chord" src="../drawings/chord_ring_fingers.drawio-0.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../drawings/chord.drawio-2.svg" /></p>
 <p>A <em>finger-table</em> é construída da seguinte forma, onde <span class="arithmatex">\(m\)</span> é a quantidade de bits usados para identificar nós no sistema:</p>
 <ul>
 <li>seja <span class="arithmatex">\(F_p\)</span> a <em>finger-table</em> do processo <span class="arithmatex">\(p\)</span>;</li>
@@ -1291,15 +1289,6 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
 <li>O sistema se adapta a entrada e saída de nós, por falhas ou não.</li>
 </ul>
 </div>
-<h5 id="referencias">Referências</h5>
-<ul>
-<li><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></li>
-<li><a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</li>
-<li>Para aprender um pouco sobre como funcionam as redes de um <em>datacenter</em>, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook. <br />
-<br />
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</li>
-</ul>
 <h4 id="estudo-de-caso-dynamodb">Estudo de Caso: DynamoDB</h4>
 <p>DynamoDB é o marco fundamental dos bancos de dados NoSQL. 
 No vídeo a seguir um de seus evangelizadores, descreve rapidamente o banco, os cenários em que deveria ser usado e diversos padrões de projeto para modelagem de dados.</p>
@@ -1383,21 +1372,6 @@ Isso é um atestado do que uma <a href="http://bittorrent.org/beps/bep_0003.html
 <p>O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
 Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção <a href="../tech/#blockchain">BlockChain</a>.
 Apenas para abrir o apetite, </p>
-<details class="bug"><summary>TODO</summary><ul>
-<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
-<li>MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s<ul>
-<li>Publish/Subscribe </li>
-<li>Message Queues</li>
-</ul>
-</li>
-<li>Event Sourcing    <ul>
-<li><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Stream Processing/Event sourcing</a></li>
-<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
-<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
-</ul>
-</li>
-</ul>
-</details>
 <h3 id="hibridos">Híbridos</h3>
 <p>Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos.
 Considere um sistema de email, por exemplo. 
@@ -1477,7 +1451,7 @@ Com o uso de microsserviços, se dá mais um passo em direção à máxima escal
 <p>Quanto à escalabilidade, esta é feita independentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.</p>
 <p><a href="https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design"><img alt="" src="../images/microservice_sample.png" /></a></p>
 <p>Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou <em>sharding</em>).
-Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
+Como na computação paralela, na "componentização" é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.</p>
 <h3 id="do-monolito-aos-microsservicos">Do Monolito aos Microsserviços</h3>
 <p>Com tantas vantagens, surge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
 A resposta é <strong>não</strong>, pois como colocado no início desta seção, <strong>não existem balas de prata</strong> e se um sistema monolítico está funcionando para você e não há perspectiva de problemas acometerem (a demanda no sistema não está aumentando, a lógica do sistema é muito simples, indisponibilidade não te traz prejuízo, você não pode arcar com a refatoração), então mantenha seu sistema como está.</p>
@@ -1510,6 +1484,30 @@ ou consulte os vários artigos no seu <a href="https://martinfowler.com/articles
 Uma outra manifestação são as <strong>filas de mensagens</strong>, que permitem que componentes enviem mensagens para caixas postais uns dos outros.
 Dependendo da implementação e do MOM usado, componentes não precisam sequer se identificar ou mesmo estar ativos ao mesmo tempo para que a troca de mensagens aconteça, novamente levando a sistemas mais ou menos acoplados.
 No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arquiteturas orientadas a mensagens, pois neste caso, a arquitetura se confunde com os conectores do nosso sistema distribuído.</p>
+<details class="bug"><summary>TODO</summary><ul>
+<li>SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.</li>
+<li>MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s<ul>
+<li>Publish/Subscribe </li>
+<li>Message Queues</li>
+</ul>
+</li>
+<li>Event Sourcing    <ul>
+<li><a href="https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/">Stream Processing/Event sourcing</a></li>
+<li><a href="https://www.confluent.io/blog/making-sense-of-stream-processing/">Stream Processing/Event Sourcing</a></li>
+<li><a href="https://youtu.be/06iRM1Ghr1k">Kafka Overview</a></li>
+</ul>
+</li>
+</ul>
+</details>
+<h2 id="referencias">Referências</h2>
+<ul>
+<li><a href="https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf">https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf</a></li>
+<li><a href="https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles">Distributed System Architectures and Architectural Styles</a>.</li>
+<li>Para aprender um pouco sobre como funcionam as redes de um <em>datacenter</em>, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook. <br />
+<br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
@@ -1523,7 +1521,7 @@ No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arqui
 <p>Neste <a href="https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf">problema</a> do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.&#160;<a class="footnote-backref" href="#fnref:icpc_hyper" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:chord_dist">
-<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcial à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcional à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:cql_sintax">
 <p>Este exemplo é meramente ilustrativo e não segue estritamente a sintaxe do CQL.&#160;<a class="footnote-backref" href="#fnref:cql_sintax" title="Jump back to footnote 5 in the text">&#8617;</a></p>
