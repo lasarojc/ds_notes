@@ -186,13 +186,10 @@ Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente
 Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
 Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
 
-Uma vez que as conexões na rede sobreposta não correspondem a conexões físicas, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
-Isto também implica que a otimização da rota lógica não necessariamente leva à otimização da rota física.
+Uma vez que as **conexões na rede sobreposta não correspondem a conexões físicas**, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Isto também implica que a **otimização da rota lógica não necessariamente leva à otimização da rota física**.
 
 [![Por Gustavo Lacerda - UFRJ, Domínio público](../images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
-
-??? todo
-    A figura não mostra hosts, apenas roteadores. Trocar por figura em com hosts, roteadores, e processos nos hosts.
 
 Dependendo em como esta rede é organizada (ou não), a mesma é classificada como **estruturada** ou **não-estruturada**.
 
@@ -212,7 +209,7 @@ Buscas, contudo, terão que vasculhar a rede usando algoritmos como **busca em l
 
 #### Rede Estruturada
 
-Se as conexões são construídas e mantidas de forma a gerar uma topologia bem definida, chamamos esta rede de **estruturada**.
+Se as conexões são construídas e mantidas de forma a gerar uma **topologia bem definida**, chamamos esta rede de **estruturada**.
 Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
 A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
 Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
@@ -260,7 +257,7 @@ Se cada nó executar o seguinte protocolo, a rede evoluirá da topologia não es
     * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
     * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
 
-Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos ser'ão os nós à direita, esquerda, acima e abaixo.
+Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos serão os nós à direita, esquerda, acima e abaixo.
 A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" 3D.
 
 [![Fujitsu and RIKEN, 2009](../images/3d-torus.jpg)](https://clusterdesign.org/torus/)
@@ -272,7 +269,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 [![By Spiritia](../images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
 
 
-!!! note "Sistemas P2P"
+!!! sideslide "Sistemas P2P"
     * Arquitetura decentralizada;
     * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
     * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo;
@@ -285,7 +282,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 ### Tabelas de Espalhamento Distribuídas (DHT)
 
-A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuíds (DHT, do inglês, *Distributed Hash Tables*).
+A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuídas (DHT, do inglês, *Distributed Hash Tables*).
 
 As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
 Em essência, estas tabelas são funções que **mapeiam** uma chave para um valor, uma função $f$ tal que
@@ -351,7 +348,7 @@ Se usarmos, por exemplo, MD5, é fato que $k$ tem distribuição uniforme no esp
 Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de $k$.
 Alguns exemplos de divisão são:
 
-* definia *buckets* para cada host e atribua o dado com chave $k$ para bucket $k \% b$, onde $b$ é o número de buckets
+* defina *buckets* para cada host e atribua o dado com chave $k$ para bucket $k \% b$, onde $b$ é o número de buckets
 * divida a faixa de valores em $b$ segmentos e atribua a cada host uma faixa
 * dados $2^n$ hosts, atribua ao host $0 < x < 2^n-1$ os dados cujas chaves terminem com o valor $x$.
 
@@ -372,18 +369,18 @@ Como a função hash é criptográfica, uma pequena variação na entrada implic
 A cada nó é atribuído um identificador único de **$m$ bits**, gerado aleatoriamente. 
 Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 253), com cinco nós.[^chord_dist]
-Assumamos inicialmente que os nós só estão cientes dos seus vizihos imediatos no anel.
-[^chord_dist]: Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcial à diferença numérica entre os identificadores.
+A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.[^chord_dist]
+Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.
+[^chord_dist]: Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcional à diferença numérica entre os identificadores.
 
-![Anel Chord](../drawings/chord_ring.drawio)
+![Anel Chord](../drawings/chord.drawio#0)
 
 Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
 A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka, **sucessor de $k$** ($i = suc(k)$), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.
 
-![Anel com Chaves no Chord](../drawings/chord_ring_data.drawio)
+![Anel com Chaves no Chord](../drawings/chord.drawio#1)
 
 
 ##### Roteamento
@@ -401,7 +398,7 @@ Em outras palavras, cada nó mantem uma **tabela de rotas** com uma ou duas entr
 Com uma rede com milhares de nós, uma solução $O(n)$ saltos, onde cada pode levar **ao outro lado do planeta**, operações teriam uma latência muito alta.
 Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como *finger-table*, que aponta para nós no anel com distâncias que se dobram a cada entrada.
 
-![Anel com Chaves no Chord](../drawings/chord_ring_fingers.drawio)
+![Anel com Chaves no Chord](../drawings/chord.drawio#2)
 
 A *finger-table* é construída da seguinte forma, onde $m$ é a quantidade de bits usados para identificar nós no sistema:
 
@@ -501,12 +498,6 @@ O Dynamo, que veremos a seguir, é um destes sistemas.
     * O sistema se adapta a entrada e saída de nós, por falhas ou não.
 
 
-##### Referências
-
-* [https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
-* [Distributed System Architectures and Architectural Styles](https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles).
-* Para aprender um pouco sobre como funcionam as redes de um *datacenter*, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.   
-   <iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 #### Estudo de Caso: DynamoDB
@@ -595,25 +586,6 @@ Isso é um atestado do que uma [especificação](http://bittorrent.org/beps/bep_
 O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
 Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção [BlockChain](../tech/#blockchain).
 Apenas para abrir o apetite, 
-
-
-
-???bug "TODO"
-    * SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
-    * MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s
-        * Publish/Subscribe 
-        * Message Queues
-    * Event Sourcing    
-        * [Stream Processing/Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
-        * [Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
-        * [Kafka Overview](https://youtu.be/06iRM1Ghr1k)
-
-
-
-
-
-
-
 
 
 
@@ -737,7 +709,7 @@ Quanto à escalabilidade, esta é feita independentemente também; no exemplo na
 [![](../images/microservice_sample.png)](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design)
 
 Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou *sharding*).
-Como na computação paralela, na componentização é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.
+Como na computação paralela, na "componentização" é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.
 
 ### Do Monolito aos Microsserviços
 Com tantas vantagens, surge a dúvida se todos os sistemas deveriam ser desenvolvidos usando-se a arquitetura de microsserviços.
@@ -781,3 +753,22 @@ No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arqui
 
 
 
+???bug "TODO"
+    * SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
+    * MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s
+        * Publish/Subscribe 
+        * Message Queues
+    * Event Sourcing    
+        * [Stream Processing/Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
+        * [Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
+        * [Kafka Overview](https://youtu.be/06iRM1Ghr1k)
+
+
+
+
+## Referências
+
+* [https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf](https://www.cs.cmu.edu/~dga/15-744/S07/lectures/16-dht.pdf)
+* [Distributed System Architectures and Architectural Styles](https://keetmalin.wixsite.com/keetmalin/single-post/2017/09/27/Distributed-System-Architectures-and-Architectural-Styles).
+* Para aprender um pouco sobre como funcionam as redes de um *datacenter*, definidas por software, assista ao seguinte vídeo, que fala sobre a infra-estrutura do Facebook.   
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/mLEawo6OzFM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
