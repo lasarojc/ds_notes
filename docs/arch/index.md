@@ -170,18 +170,11 @@ Uma das ferramentas utilizadas para simplificar o trabalho de auto-gerenciamento
 
 Diversos sistemas P2P existem, sendo, provavelmente, os mais famosos, os sistemas de compartilhamento de arquivos, em que cada nó armazena e disponibiliza parte dos dados, bem como acessa os dados disponibilizados por outros nós.
 Nesta linha, embora diversos tenham existido, hoje o mais famoso é o Bittorrent, mesmo que, como veremos adiante, não seja P2P puro.
-
-Outro exemplo importante por ter inspirado diversos outros sistemas é o Chord. 
-Neste sistema, nós organizam-se em um anel lógico e cada um se torna responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
-Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como *finger table*.
-Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos **cordas** sobre o mesmo, o que explica o nome do sistema.
-
-![Chord](../images/chord.png)
-
+Antes de nos aprofundarmos nos exemplos, precisamos entender o conceito das redes **sobrepostas**.
 
 ### Rede Sobreposta (*Overlay*)
 
-Os componentes de um sistema P2P se organizam em uma rede lógica, **sobreposta** à rede física.
+Os componentes de um sistema P2P se organizam em uma rede lógica, sobreposta à rede física.
 Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente na forma de conexões TCP/IP.
 Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
 Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
@@ -220,6 +213,7 @@ Cada nó é responsável pela faixa de valores indexados por chaves entre o iden
 Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente para um determinado nó, e deve ser **roteada** para o mesmo.
 A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.
 
+
 ![](../images/05-04.png)
 
 
@@ -242,27 +236,41 @@ A seguinte tabela resume as diferenças entre os dois tipos de redes sobrepostas
  Busca por dados é rápida         | Busca por dados lenta
 
 Mas, e se pudéssemos juntar o melhor dos dois mundos em um único sistema? Isso é possível em certos cenários. 
-Por exemplo, seja uma grade $N \times N$ em que nós se conectam aleatoriamente uns aos outros, e que nós em uma borda da matriz conseguem se conectar aos nós da borda oposta, com distância 1.
-Efetivamente, temos a rede sobreposta à esquerda.
+Por exemplo, seja uma grade $N \times N$ em que nós  em uma borda da matriz conseguem se conectar aos nós da borda oposta.
+Distâncias entre nós são medidas como a soma das distâncias em $x$ mais a distância em $y$.
 
-![](../images/02-11.png)
+* $a = (x,y), b = (x', y')$
+* $d_x(a,b) = min(|x - x'|, N - |x - x'|)$
+* $d_y(a,b) = min(|y - y'|, N - |y - y'|)$
+* $d(a,b) = d_x(a,b) + d_y(a,b)$
 
-Se cada nó executar o seguinte protocolo, a rede evoluirá da topologia não estruturada para a estruturada, à direita.
+![Grade NxN](../drawings/estruturada.drawio#0)
 
-* Divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.  
-  ![](../images/02-10.png)
+Suponha que cada divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+
+![](../images/02-10.png)
+
+O módulo de descoberta leva inicialmente ao estabelecimento de conexões aleatórias e à formação de uma rede sobreposta não estruturada como, por exemplo, a seguinte.
+
+![Grade NxN](../drawings/estruturada.drawio#1)
+
+Após as conexões inicias, cada um dos nós executa o seguinte protocolo iteradamente.
+
 * O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.
-* O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância, onde
-    * $a = (x,y), b = (x', y')$
-    * $dx_{a,b} = min(|x - x'|, N - |x - x'|)$
-    * $dy_{a,b} = min(|y - y'|, N - |y - y'|)$
+* O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância.
 
-Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), os vizinhos serão os nós à direita, esquerda, acima e abaixo.
-A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" 3D.
+Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), como no exemplo, e o módulo de seleção sempre mantiver quatro conexões, ao final do processo os vizinhos serão os nós à direita, esquerda, acima e abaixo.
+Se a rede não for completa ou se menos conexões forem mantidas, uma aproximação será obtida.
+
+![Grade NxN](../drawings/estruturada.drawio#2)
+
+A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.
 
 [![Fujitsu and RIKEN, 2009](../images/3d-torus.jpg)](https://clusterdesign.org/torus/)
 
-Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura, no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
+Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura,[^hyper] no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
+
+[^hyper]: No caso da grade 4x4, a o hipercubo é topologicamente igual à rede obtida pela distância cartesiana como mostrado no exemplo acima.
 
 [^icpc_hyper]: Neste [problema](https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf) do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.
 
@@ -287,7 +295,7 @@ A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicad
 As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
 Em essência, estas tabelas são funções que **mapeiam** uma chave para um valor, uma função $f$ tal que
 
-* $f(K): V \cup$ \{null\}
+* $f(K): V \cup \{null\}$
 * $K$: Universo de chaves
 * $V$: Universo de valores
 
@@ -297,11 +305,19 @@ Na prática, são estruturas de dados adaptáveis, com um API muito simples, e c
 Tanto $K$ quanto $V$ são **blobs** de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de problemas.
 
 !!! note "API"
-    * $put(k,v)$: if $k \rightarrow w$ then return $w$ else $k \rightarrow v$; return $\emptyset$
-    * $update(k,v)$: if $k \rightarrow w$ then return $w$ else return $\emptyset$
-    * $get(k)$: if $k \rightarrow w$ then return $w$ else return $\emptyset$ 
-    * $del(k)$: if $k \rightarrow w$ then return $w$ else $k \rightarrow v$; return $\emptyset$
-    * $k$ e $v$ são blobs
+    * sejam $k \in K$ e $v,w \in V$
+    * $put(k,v)$: 
+         * if $f(k) = w \neq null$ then return $w$
+         * else $f(k) \rightarrow v$;  return $null$
+    * $update(k,v)$: 
+         * if $f(k) = w \neq null$ then return $w$; $f(k) \rightarrow v$
+         * else return $null$
+    * $get(k)$: 
+         * if $f(k) = w \neq null$ then return $w$
+         * else return $null$ 
+    * $del(k)$:
+         * if $f(k) = w \neq null$ then return $w$ 
+         * else return $null$
     * execução $O(1)$
 
 Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser **tolerante a falhas** e ter **escalabilidade linear**.
@@ -316,32 +332,21 @@ Dentre os desafios na implementação de uma DHT estão
 #### Identificação
 
 A identificação de objetos precisa ser facilmente **determinável pela aplicação** para permitir a recuperação precisa dos dados. 
-Por exemplo, pode-se dividir faixas de nomes entre os processos.
+Por exemplo, podemos usar o identificador único CPF como chave para dados de pessoas e dividir seus possíveis valores em faixas, atribuídas a diferentes nós do sistema.
 
-* A -- C -- Host1
-* CA -- E -- Host2
-* EA -- G -- Host3
+* 000.000.000-00 - 111.111.111-00: nó 1
+* 111.111.111-01 - 222.222.222-00: nó 2
+* 222.222.222-01 - 333.333.333-00: nó 3
 * ...
 
-Esta distribuição tem três problemas graves. O primeiro, é no fato de nomes não serem **unívocos**.
-Neste caso, uma exemplo melhor seria o uso do CPF.
+Contudo, esta chave é ruim pois não propicia uma distribuição uniforme da carga de trabalho entre os hosts; como CPF são gerados sequencialmente, os hosts iniciais seriam responsáveis por mais dados que os demais.
 
-* 000.000.000-00 -- 111.111.111-00 -- Host1
-* 111.111.111-01 -- 222.222.222-00 -- Host2
-* 222.222.222-01 -- 333.333.333-00 -- Host3
-* ...
-
-O segundo problema, presente também no uso de CPF, tem a ver com a distribuição da carga de trabalho entre os hosts.
-Nem nomes e nem CPF tem distribuição uniforme, então alguns nós ficariam mais carregados que outros.
-
-O terceiro problema tem a ver com o uso de chaves não genéricas, dependentes da aplicação.
-Para este problema, poderíamos usar um identificador auto-incrementável, por exemplo, mas em muitas situações esta abordagem implicaria em dificuldade para se recuperar os dados: "qual é mesmo o identificador numérico do livro [How Fascism Works](https://ler.amazon.com.br/kp/embed?asin=B0796DNSVZ&preview=newtab&linkCode=kpe&ref_=cm_sw_r_kb_dp_fAlUDbMBJM4RP)?"
-
+Mas mesmo que a geração de CPF fosse aleatória, ainda teríamos outro problema com seu uso como chave: o CPF só se aplica a pessoas e portanto não é usável em outras aplicações.
 Para resolver estes três problemas, recorremos a uma abordagem usada na literatura da área, dividindo a identificação em duas camadas:
 
 * Seja $i$ o identificador do objeto, dado pela aplicação (e.g., CPF, nome, telefone)
-* Seja $h$ uma função criptográfica
-* Seja $k = h(i)$ o identificador do objeto $i$.
+* Seja $h$ uma função *hash* criptográfica
+* O objeto identificado por $i$ na aplicação será identificado por $k = h(i)$ dentro da DHT.
 
 #### Divisão da carga
 Se usarmos, por exemplo, MD5, é fato que $k$ tem distribuição uniforme no espaço de 0 a $2^{160}-1$ possíveis valores.
@@ -357,9 +362,19 @@ São várias as formas de se dividir os dados e estas estão intimamente ligadas
 #### Roteamento
 Para estudar o desafio do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
 
+
+
+
 #### Estudo de Caso: Chord
 Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do [CSAIL](https://www.csail.mit.edu/), do MIT, e publicado em 2001. 
 Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
+Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
+Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como *finger table*.
+Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos **cordas** sobre o mesmo, o que explica o nome do sistema.
+
+![Chord](../images/chord.png)
+
+
 
 ##### Identificação
 No Chord o problema da identificação dos dados é resolvido usando-se chaves de **$m$ bits**, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
@@ -574,21 +589,6 @@ Mas embora o uso de sistemas gerenciadores de bancos de dados em sistemas distri
     A seção de [tecnologias](../tech/#estruturas-de-dados-para-sd) descreve várias estruturas de dados recorrentemente usadas em implementação de bancos de dados como o Cassandra.
 
 
-#### Outros exemplos
-P2P é terreno fértil e poderíamos passar muito tempo apenas enumerando exemplos interessantes, mas nos limitaremos aqui a dois dos mais atuais.
-O primeiro é o sistema de compartilhamento de arquivos já mencionado na [introdução](../intro/index.html), BitTorrent.
-
-![Bittorrent](../images/bittorrent.png)
-
-O que há de mais interessante neste exemplo o fato de haverem diversas implementações dos clientes, e.g., $\mu$Torrent, Azureus, Transmission, Vuze, qTorrent, implemenados em diversas linguagens e para diversas plataformas, todos interoperáveis.
-Isso é um atestado do que uma [especificação](http://bittorrent.org/beps/bep_0003.html) bem feita e aberta pode alcançar.
-
-O segundo é o sistema que suporta a criptomoeda BitCoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. 
-Mas em vez de expandir aqui este assunto, deferiremos esta discussão para a seção [BlockChain](../tech/#blockchain).
-Apenas para abrir o apetite, 
-
-
-
 ### Híbridos
 
 Embora cliente/servidor e P2P sejam arquiteturas clássicas, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos.
@@ -602,7 +602,10 @@ Outros exemplos abundam.
 * Jogos multiplayer (pense no [particionamento dos mapas](http://pages.cs.wisc.edu/~vshree/cs740/Voronoi.pdf))
 * Compartilhamento de arquivos: Bittorrent
 
-Voltemos ao exemplo do Bittorrent; observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
+Foquemo-nos no exemplo do Bittorrent
+O que há de mais interessante neste exemplo o fato de haverem diversas implementações dos clientes, e.g., $\mu$Torrent, Azureus, Transmission, Vuze, qTorrent, implementados em diversas linguagens e para diversas plataformas, todos interoperáveis.
+Isso é um atestado do que uma [especificação](http://bittorrent.org/beps/bep_0003.html) bem feita e aberta pode alcançar.
+Observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
 Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.
 
 ![Bittorrent](../images/bittorrent.png)
@@ -624,7 +627,7 @@ graph LR
 ```
 
 
-
+Um último exemplo é o sistema que suporta a criptomoeda Bitcoin, em que milhares de nós armazenam coletivamente o histórico de transações de trocas de dono das moedas. Mas em vez de expandir aqui este assunto, diferiremos esta discussão para a seção [BlockChain](../tech/#blockchain).
 
 
 
@@ -746,13 +749,6 @@ Com respeito a estar preparado para falhas, afinal "... it is not if failures wi
 
 ## Outras arquiteturas
 
-*Publish/subscribe* é uma das manifestações os ***message oriented middleware***, ou MOM. 
-Uma outra manifestação são as **filas de mensagens**, que permitem que componentes enviem mensagens para caixas postais uns dos outros.
-Dependendo da implementação e do MOM usado, componentes não precisam sequer se identificar ou mesmo estar ativos ao mesmo tempo para que a troca de mensagens aconteça, novamente levando a sistemas mais ou menos acoplados.
-No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arquiteturas orientadas a mensagens, pois neste caso, a arquitetura se confunde com os conectores do nosso sistema distribuído.
-
-
-
 ???bug "TODO"
     * SOA - Foco no uso de outras formas de comunicação para chegar em outras arquiteturas.
     * MOM - Foco na arquitetura pois o uso será visto no próximo capítulo.s
@@ -762,6 +758,14 @@ No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arqui
         * [Stream Processing/Event sourcing](https://www.confluent.io/blog/event-sourcing-cqrs-stream-processing-apache-kafka-whats-connection/)
         * [Stream Processing/Event Sourcing](https://www.confluent.io/blog/making-sense-of-stream-processing/)
         * [Kafka Overview](https://youtu.be/06iRM1Ghr1k)
+
+
+*Publish/subscribe* é uma das manifestações os ***message oriented middleware***, ou MOM. 
+Uma outra manifestação são as **filas de mensagens**, que permitem que componentes enviem mensagens para caixas postais uns dos outros.
+Dependendo da implementação e do MOM usado, componentes não precisam sequer se identificar ou mesmo estar ativos ao mesmo tempo para que a troca de mensagens aconteça, novamente levando a sistemas mais ou menos acoplados.
+No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arquiteturas orientadas a mensagens, pois neste caso, a arquitetura se confunde com os conectores do nosso sistema distribuído.
+
+
 
 
 
