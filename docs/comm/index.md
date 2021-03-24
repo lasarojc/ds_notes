@@ -283,7 +283,7 @@ Neste cenário, vários fatores precisam ser levados em consideração na hora d
 * variações de definições de tipos, por exemplo, `inteiro`: 8: 16, 32, ou 64 bits?
 * variações na representação de dados complexos: classe x estrutura   
 * conjunto de caracteres diferentes: ASCII x UTF
-* little endian, como x64 e IA-32, ou  big endian como SPARC (< V9), Motorola e PowerPC? ou aidna, flexível como  ARM,  MIPS ou  IA-64?
+* little endian, como x64 e IA-32, ou  big endian como SPARC (< V9), Motorola e PowerPC? ou ainda, flexível como  ARM,  MIPS ou  IA-64?
 * fim de linha com crlf (DOS) x lf (Unix)?
 * fragmentação de dados na rede   
   [![Fragmentação](../images/ipfrag.png)](http://www.acsa.net/IP/)
@@ -299,7 +299,7 @@ Connected to www.google.com.
 Escape character is '^]'.
 GET / HTTP/1.1
 host: www.google.com
-
+                        <=== Linha vazia!
 ```
 As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio [www.google.com](https://www.google.com).
 A linha 7, vazia, indica ao servidor que a requisição está terminada.
