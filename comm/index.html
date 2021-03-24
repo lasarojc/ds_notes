@@ -1637,7 +1637,7 @@ Neste cenário, vários fatores precisam ser levados em consideração na hora d
 <li>variações de definições de tipos, por exemplo, <code>inteiro</code>: 8: 16, 32, ou 64 bits?</li>
 <li>variações na representação de dados complexos: classe x estrutura   </li>
 <li>conjunto de caracteres diferentes: ASCII x UTF</li>
-<li>little endian, como x64 e IA-32, ou  big endian como SPARC (&lt; V9), Motorola e PowerPC? ou aidna, flexível como  ARM,  MIPS ou  IA-64?</li>
+<li>little endian, como x64 e IA-32, ou  big endian como SPARC (&lt; V9), Motorola e PowerPC? ou ainda, flexível como  ARM,  MIPS ou  IA-64?</li>
 <li>fim de linha com crlf (DOS) x lf (Unix)?</li>
 <li>fragmentação de dados na rede <br />
 <a href="http://www.acsa.net/IP/"><img alt="Fragmentação" src="../images/ipfrag.png" /></a></li>
@@ -1650,12 +1650,14 @@ Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.
 3
 4
 5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet www.google.com 80
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>telnet www.google.com 80
 Trying 187.72.192.217...
 Connected to www.google.com.
 Escape character is &#39;^]&#39;.
 GET / HTTP/1.1
 host: www.google.com
+                        <span class="err">&lt;</span>=== Linha vazia!
 </code></pre></div>
 </td></tr></table>
 As linhas 5 e 6 são entradas pelo cliente para requisitar a página raiz do sítio <a href="https://www.google.com">www.google.com</a>.
