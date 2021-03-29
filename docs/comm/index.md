@@ -48,8 +48,6 @@ Desenvolver sistemas distribuídos sem usar um *middleware* é como desenvolver 
 Idealmente, com o *middleware*, o desenvolvedor conseguiria facilmente implementar uma aplicação em que a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
 Pense no browser e na WWW, por exemplo: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de **transparência**.
 
-#### Transparência
-
 ??? sideslide "Transparência Total"
     Acesso + Localização + Relocação + Migração + Replicação + Falha
 
@@ -435,22 +433,59 @@ De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/p
 
 > When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
 
+
+
 ### Thrift
 
-??? bug "TODO"
-    Thrift como forma de representação de dados: [Thrift type system](https://thrift-tutorial.readthedocs.io/en/latest/thrift-types.html)
+Thrift é um framework inicialmente desenvolvido pelo Facebook e depois adotado pela fundação Apache. O Facebook, insatisfeito com os progressos da versão Apache, acabou fazendo um novo *fork* e mantém agora o `fbthrift`, também de código livre.
+
+Comparado ao gRPC, ele possui praticamente as mesmas funcionalidades.
+O mesmo exemplo acima, em Thrift, ficaria assim.
+
+```thrift
+enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+}
+
+struct PhoneNumber {
+    1: required string number;
+    2: optional PhoneType type = 2 PhoneType.HOME;
+}
+
+struct Person {
+	1: required string name;
+	2: required i32 id;
+	3: optional string email;
+    4: list<PhoneNumber> phone;
+} 
+
+exception PessoaNaoEncontrada {
+   1:i64 hora;
+   2:string chaveProcurada;
+}
+```
+
+Usar a classe correspondente em Java, depois da geração de código pelo compilador `thriftc`, é bem simples.
+
+```Java
+...
+Person p = new Person("John Doe",112234556,"jdoe@example.com", Collections.emptyList())
+```
+
+Além de formas de se representar dados, tanto gRPC quanto thrift provêem funcionalidades para definir serviços que manipulam estes dados, acessíveis remotamente, com mínimo esforço, no que se denomina **Invocação Remota de Procedimento**, ou RPC (do inglês, *remote procedure call*).
 
 ## Invocação Remota de Procedimentos - RPC
 
-Em 1984, Birrel e Nelson[^birrel]
-introduziram o mecanismo de **Invocação Remota de Procedimentos** (*Remote Procedure Calls*), que permite que processos façam, pasmem, invocações de procedimentos remotos!
+Em 1984, Birrel e Nelson[^birrel] introduziram o mecanismo de Invocação Remota de Procedimentos (*Remote Procedure Calls*), que permite que processos façam, pasmem, invocações de procedimentos remotos!
 Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
-Por exemplo, RPC permita que se procure a *substring* `"teste"` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,"teste");`, mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
+Por exemplo, RPC permite que se procure a *substring* `"teste"` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,"teste");` mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
 
 [^birrel]:[Implementing RPC](http://www.birrell.org/andrew/papers/ImplementingRPC.pdf)
 
 ### Stubs
-Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo[^omissao].
+Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo.[^omissao]
 O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
 		
 [^omissao]: Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
@@ -467,43 +502,35 @@ O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é tradu
 * coloque resultado em `x`
 
 Se o que queremos é colocar o código da função `substring` em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
-Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local mas que, por baixo do capô, use sockets para se comunicar com o processo remoto.  
-Estq simulação usará código extra, que finge implementar `substring` para o invocador mas delega ao código remoto o trabalho real da busca.
-Este código extra é conhecido como **stub**, ou para ser mais preciso, *stub cliente*, que faz parte do processo invocando a operação, e *stub* servidor, que faz parte do processo executando a operação invocada[^skeleton].
+Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local e que, "por debaixo do capô", use sockets para se comunicar com o processo remoto.  
+Esta simulação usará código extra, que finge implementar `substring` para o invocador mas delega ao código remoto o trabalho real da busca.
+Este código extra é conhecido como **stub**, ou para ser mais preciso, ***stub*** **cliente**, que faz parte do processo invocando a operação, e ***stub*** **servidor**, que faz parte do processo executando a operação invocada[^skeleton].
 
 [^skeleton]: O *stub* do servidor também é conhecido como *skeleton*.
 		
-Assim, o cliente invoca função no stub cliente, achando que é a função que quer executar.
-Stub cliente faz o **marshaling** [^marshal]  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
-Quando recebe a resposta do servidor, o stub cliente retorna a mesma resposta, como se tivesse calculado localmente.
+Assim, o cliente invoca a função no *stub* cliente, achando que é a função que quer executar.
+O *stub* cliente faz o ***marshaling*** [^marshal]  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
+Quando recebe a resposta do servidor, o *stub* cliente retorna a mesma resposta, como se tivesse sido calculada localmente.
+Já o stub servidor fica esperando o contato do cliente.
+Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retorna ao cliente.
 
 [^marshal]: Marshalling: representar parâmetros de forma própria para transmissão "no fio".
 
-!!! note "Stub cliente"
-    Implementa uma função `substring(char*, int, char*)` que
+![RPC](../drawings/rpc.drawio#0)
 
-    * abre socket para servidor
-    * envia parâmetros
-    * especifica função
-    * espera resposta
-    * retorna resultado
-
-Já o stub servidor fica esperando o contato do cliente.
-Quando acontece, faz o "unmarshalling" dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retona ao cliente.
-		
-!!!note "Stub servidor"
-    * espera conexão
-    * recebe parâmetros
-    * recebe especificação da função
-    * invoca função localmente
-    * envia resultado para cliente
-	
-![Skeleton](../images/stubskeleton.png)
+|Stub cliente    | Stub servidor  |
+|----------------|----------------|
+    1. abre socket para servidor | 1. espera conexão
+    2. envia parâmetros | 2. recebe parâmetros
+    3. especifica função | 3. recebe especificação da função
+    4. espera resposta | 4. invoca função localmente
+    5. retorna resultado | 5. envia resultado para cliente
 
 
 ### Transparência
 
-É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao centralizado, certo? Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
+É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao não-distribuído, certo? 
+Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
 Como já discutimos, vários fatores trabalham contra a [transparência em sistemas distribuídos](../intro/#transparencia).
 Em específico quanto à transparência dada pelo RPC, também temos limitações.
 O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
@@ -511,8 +538,14 @@ O problema é que há uma distinção clara em pelo menos dois processos e se pe
 * processos independentes não compartilham um espaço de endereçamento, e
 * processos independentes não compartilham uma pilha.
 
+![RPC](../drawings/rpc.drawio#1)
+
+
 Assim, como fica a **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
 Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.
+
+![RPC](../drawings/rpc.drawio#2)
+
 Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
 Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
 Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista? Como ensinar para o *framework* RPC o que é "toda" a lista?
@@ -520,7 +553,7 @@ Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve
 Java "resolve" o problema da passagem de parâmetro por referência passando todo o grafo do objeto passado como parâmetro para o servidor. Isto é, além de serializar o objeto apontado no parâmetro, se o mesmo aponta para outros objetos, estes também serão serializados e transferidos; o servidor irá então reconstruir todo o grafo e passar para o método sendo invocado.
 É muito fácil ver que esta abordagem pode se tornar inviável rapidamente. Quando for o caso, Java permite marcar objetos como **remotos** e, em vez de serializar este objeto e enviar para o servidor, envia informação suficiente para que o servidor possa invocar métodos em tal objeto no cliente, tornando nebulosa a definição de quem é quem.
 
-Outros fatores também trabalham contra a transparência para o desenvolvedor. Vejamos alguns
+Outros fatores também trabalham contra a transparência para o desenvolvedor.
 
 #### Descoberta de Serviços
 Por exemplo, mesmo que o socket seja ocultado, ele ainda existe e precisa de informações sobre **onde se conectar** (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
@@ -530,6 +563,8 @@ Mais interessante seria um mecanismo que permitisse uma indireção para o servi
 Birrel e Nelson propuseram um serviço de **Páginas Amarelas**, no qual clientes podem questionar quem oferece um certo serviço e serem redirecionados automaticamente.
 Esta abordagem tem seus próprios problemas, como por exemplo determinar **quem administra** o serviço para incluir novos servidores.
 E como determinar qual serviço acessar, caso hajam **múltiplas opções de servidores**.
+
+![RPC](../drawings/rpc.drawio#3)
 
 Apesar dos problemas, **páginas amarelas** foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo [Web Services Discovery](https://en.wikipedia.org/wiki/Web_Services_Discovery), que permite a descoberta de Web Services em escala global, e [Java Remote Object Registry](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html) que permite a descoberta de objetos remotos Java.
 
@@ -580,14 +615,14 @@ Imagine que a operação se tratasse de uma transferência de saldo, ou a encome
 Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
 
-Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados **exatamente uma** vez.
+Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados **exatamente uma** vez.
 Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
 De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.
 
 
 !!! note "Quantidade de execuções"
     * No máximo uma - não retentar
-    * Exatamente uma - impedir que falhas aconteçam :/
+    * Exatamente uma - impedir que falhas aconteçam :white_frowning_face:
     * Pelo menos uma - retentar até ter confirmação
 
 Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
@@ -697,8 +732,11 @@ git checkout v1.33.0
 O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
 
 ```bash
-./gradlew installDist
+./gradlew installDist -PskipAndroid=true
 ```
+
+!!!todo "TODO"
+    Testar novas versões. Esta versão está limitada ao JDK 15.
 
 Caso esteja na UFU, coloque também informação sobre o proxy no comando.
 
@@ -1120,13 +1158,13 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 
 O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.
 
-## Publish/Subscribe
+### Publish/Subscribe
 
 O padrão *publish/subscribe* (ou *pub/sub*) se apresenta como uma alternativa à arquitetura cliente-servidor.
 Enquanto no modelo client-servidor, o cliente se comunica diretamente com um *endpoint* representado pelo servidor, no padrão *pub/sub* temos clientes que enviam mensagens, ou *publishers*, e clientes que recebem as mensagens, ou *subscribers*. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
 Um agente especial, denominado *broker*, gerencia a conexão, armazena e filtrando as mensagens, além de distribuí-las corretamente aos *subscribers*.
 
-### Desacoplamento
+#### Desacoplamento
 
 Um dos aspectos mais importantes proporciados pelo padrão *pub/sub* é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:
 
@@ -1134,7 +1172,7 @@ Um dos aspectos mais importantes proporciados pelo padrão *pub/sub* é o desaco
 * Tempo: *publishers* e *subscribers* não precisam nem estar em execução ao mesmo tempo.
 * Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.
 
-### Filtragem
+#### Filtragem
 
 O *broker* tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:
 
@@ -1142,7 +1180,10 @@ O *broker* tem um papel fundamental pois permite a especificação de diversos n
 * Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. *Downside:* mensagem não pode ser criptografada.
 * Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo *Exception* e subtipos, por exemplo.
 
-### MQTT
+
+#### Estudo de caso: MosQuiTTo
+
+>[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
 
 MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
 É leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
@@ -1151,22 +1192,16 @@ MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servid
 
 O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.
 
-### Referência
 
-[MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
 
-### Estudo de caso: MosQuiTTo
-
->[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
-
-#### Instalação
+##### Instalação
 
 ```bash
 apt-get install mosquitto # Ubuntu
 brew install mosquitto # MacOS
 ```
 
-#### Inicializando o serviço
+##### Inicializando o serviço
 
 O arquivo `mosquito.conf` contém as configurações para o *broker*. 
 As configurações funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
@@ -1176,7 +1211,7 @@ Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que o
 mosquitto -v
 ```
 
-#### Publicando
+##### Publicando
 
 Para publicar uma mensagem, o *publisher* deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se `localhost:1883`.
 
@@ -1188,7 +1223,7 @@ mosquitto_pub -t sensor/temperature/2 -m 32
 
 Caso o *subscriber* não esteja em execução, adicione a opção `-r` para que o broker retenha a mensagem.
 
-#### Consumindo
+##### Consumindo
 
 O consumidor funciona de maneira semelhante, informando o tópico de interesse:
 
@@ -1197,12 +1232,12 @@ O consumidor funciona de maneira semelhante, informando o tópico de interesse:
 mosquito_pub -t sensor/temperature/+
 ```
 
-#### Programando
+##### Programando
 
 Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
 A biblioteca pode ser baixada [aqui](https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar).
 
-##### Exemplo de *Publisher*
+###### Exemplo de *Publisher*
 
 ```java
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -1272,7 +1307,7 @@ If you can think of any other differences that we overlooked, we would love to h
 
 
 
-### Message Passing Interface
+## Message Passing Interface
 
 Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
 A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.
@@ -1281,5 +1316,12 @@ A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destina
 ![CFD](../images/mpi.jpeg)
 
 
-### Protocolos Epidêmicos
+## Protocolos Epidêmicos
 
+
+
+## Referências
+* [The call Stack](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
+* [Introdução ao gRPC](https://grpc.io/docs/what-is-grpc/introduction/)
+* [Thrift: the missing guide](https://diwakergupta.github.io/thrift-missing-guide/)
+* [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
