@@ -408,20 +408,34 @@ message Person {
 }
 ```
 
-Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...
+Além dos tipos usados no exemplo, diversos outros tipos primitivos estão disponíveis:
+
+* `bool`: boolean (true/false)
+* `double`: 64-bit; ponto-flutuante 
+* `float`: 32-bit; ponto-flutuante 
+* `i32`: 32-bit; inteiro sinalizado 
+* `i64`: 64-bit; inteiro sinalizado
+* `siXX`: signed
+* `uiXX`: unsigned
+* `sfixedXX`: codificação de tamanho fixo
+* `bytes`: 8-bit; inteiro sinalizado
+* `string`: string UTF-8 ou ASCII 7-bit
+
+Além destes, também pode ser usado um tipo indefinido e adaptável, [`Any`](https://developers.google.com/protocol-buffers/docs/proto3#any), bem como coleções.
+
+A especificação protobuffer pode ser traduzida para [múltiplas linguagens](https://developers.google.com/protocol-buffers/docs/proto3)
+Por exemplo, se a tradução for feita para C++, o tipo `message` resulta em uma classe de mesmo nome, com funcionalidades para serialização e desserialização do objeto, como no exemplo a seguir.
 
 ```c++
+//Instancia person e salva conteúdo em arquivo
 Person person;
 person.set_name("John Doe");
 person.set_id(1234);
 person.set_email("jdoe@example.com");
 fstream output("myfile", ios::out | ios::binary);
 person.SerializeToOstream(&output);
-```
 
-e lê do arquivo e desserializa para hidratar um novo objeto.
-
-```c++
+//Instancia Person e o inicializa com dados do arquivo
 fstream input("myfile", ios::in | ios::binary);
 Person person;
 person.ParseFromIstream(&input);
@@ -439,7 +453,18 @@ De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/p
 
 Thrift é um framework inicialmente desenvolvido pelo Facebook e depois adotado pela fundação Apache. O Facebook, insatisfeito com os progressos da versão Apache, acabou fazendo um novo *fork* e mantém agora o `fbthrift`, também de código livre.
 
-Comparado ao gRPC, ele possui praticamente as mesmas funcionalidades.
+Comparado ao gRPC, ele possui praticamente as mesmas funcionalidades, como os mesmos tipos básicos estão disponíveis e coleções
+
+* bool: boolean (true/false)
+* byte: 8-bit; inteiro sinalizado
+* i16: 16-bit; inteiro sinalizado
+* i32: 32-bit; inteiro sinalizado
+* i64: 64-bit; inteiro sinalizado
+* double: 64-bit; ponto-flutuante 
+* string: string UTF-8
+* binary: sequência de bytes
+* coleções: List, Map, Set
+
 O mesmo exemplo acima, em Thrift, ficaria assim.
 
 ```thrift
@@ -470,7 +495,6 @@ exception PessoaNaoEncontrada {
 Usar a classe correspondente em Java, depois da geração de código pelo compilador `thriftc`, é bem simples.
 
 ```Java
-...
 Person p = new Person("John Doe",112234556,"jdoe@example.com", Collections.emptyList())
 ```
 
@@ -480,29 +504,12 @@ Além de formas de se representar dados, tanto gRPC quanto thrift provêem funci
 
 Em 1984, Birrel e Nelson[^birrel] introduziram o mecanismo de Invocação Remota de Procedimentos (*Remote Procedure Calls*), que permite que processos façam, pasmem, invocações de procedimentos remotos!
 Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
-Por exemplo, RPC permite que se procure a *substring* `"teste"` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,"teste");` mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
+Por exemplo, RPC permite que se procure a *substring* apontada por `c` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,c);` mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
 
 [^birrel]:[Implementing RPC](http://www.birrell.org/andrew/papers/ImplementingRPC.pdf)
 
 ### Stubs
-Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo.[^omissao]
-O código `x = substring(a,3,"teste");`, que procura `"teste"` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
-		
-[^omissao]: Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
-
-* coloque o endereço de `"teste"` na pilha
-* coloque `3` na pilha
-* coloque o valor de `a` na pilha
-* coloque o endereço de retorno na pilha (junto com outros dados de controle)
-* salte para `substring` ajustando o *instruction pointer*
-* ... procure substring ...
-* coloque o resultado no acumulador
-* limpe a pilha
-* salte de volta recuperando o endereço de retorno da pilha e ajustando o IP
-* coloque resultado em `x`
-
-Se o que queremos é colocar o código da função `substring` em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
-Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local e que, "por debaixo do capô", use sockets para se comunicar com o processo remoto.  
+Se o que queremos é colocar o código da função `substring` em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões, sendo a principal o fato de que, embora seja simulada a invocação local, "por debaixo do capô" há o uso sockets para a comunicação com o processo remoto.
 Esta simulação usará código extra, que finge implementar `substring` para o invocador mas delega ao código remoto o trabalho real da busca.
 Este código extra é conhecido como **stub**, ou para ser mais preciso, ***stub*** **cliente**, que faz parte do processo invocando a operação, e ***stub*** **servidor**, que faz parte do processo executando a operação invocada[^skeleton].
 
@@ -520,11 +527,11 @@ Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmen
 
 |Stub cliente    | Stub servidor  |
 |----------------|----------------|
-    1. abre socket para servidor | 1. espera conexão
-    2. envia parâmetros | 2. recebe parâmetros
-    3. especifica função | 3. recebe especificação da função
-    4. espera resposta | 4. invoca função localmente
-    5. retorna resultado | 5. envia resultado para cliente
+1. invoca `substring` no *stub* | 1. retorna o resultado para o *stub*
+2. conecta-se ao servidor, envia parâmetros e especifica a função | 2. envia resulta serializado para cliente
+3. transmite os dados serializados | transmite resposta serializada
+4. deserializa parâmetros | 4. deserializa os parâmetro
+5. invoca a função `substring` localmente | 5. retorna o resultado para o invocador
 
 
 ### Transparência
@@ -533,13 +540,32 @@ Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmen
 Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
 Como já discutimos, vários fatores trabalham contra a [transparência em sistemas distribuídos](../intro/#transparencia).
 Em específico quanto à transparência dada pelo RPC, também temos limitações.
+Antes de nos aprofundarmos, lembremos como uma invocação de funções acontece normalmente dentro de um único processo.[^omissao]
+O código `x = substring(a,3,c);`, que procura `*c` em `*a`, é traduzido nos seguintes passos em linguagem de máquina:
+		
+[^omissao]: Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.
+
+* coloque o valor de `c` na pilha
+* coloque `3` na pilha
+* coloque o valor de `a` na pilha
+* coloque o endereço de retorno na pilha (junto com outros dados de controle)
+* salte para `substring` ajustando o *instruction pointer*
+* ... procure substring ...
+* coloque o resultado no acumulador
+* limpe a pilha
+* salte de volta recuperando o endereço de retorno da pilha e ajustando o IP
+* coloque resultado em `x`
+
+![RPC](../drawings/rpc.drawio#4)
+
+
 O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
 
 * processos independentes não compartilham um espaço de endereçamento, e
 * processos independentes não compartilham uma pilha.
 
-![RPC](../drawings/rpc.drawio#1)
 
+![RPC](../drawings/rpc.drawio#1)
 
 Assim, como fica a **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
 Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.
@@ -572,12 +598,12 @@ Apesar dos problemas, **páginas amarelas** foram usadas em abordagens muito mai
 
 Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
 Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
-Assim, o que era um simples `x = substring(a,3,"teste");` passa para algo assim (em uma linguagem fictícia):
+Assim, o que era um simples `x = substring(a,3,c);` passa para algo assim (em uma linguagem fictícia):
 
 ```c
 int x = -2;
 try {
-    x = substring(a,3,"teste");`
+    x = substring(a,3,c);`
 } catch(CommunicationFailureException cfe) {
     log_error("Como pode substring falhar? Desespero!!!");
 }
@@ -587,7 +613,7 @@ if (x == -2)
 else if (x == -1)
     //não achou
 else
-    //achou "teste" na posição x
+    //achou na posição x
 ```
 
 O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.
@@ -605,25 +631,30 @@ Se o cliente havia invocado uma operação mas percebeu o erro antes de receber 
 * (i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,
 * (ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.
 
+![RPC](../drawings/rpc.drawio#5)
+
 O cliente tem que tratar o erro, mas como?
 Se a operação **precisa** ser executada **a qualquer custo**, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
 Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
 Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
-Esta abordagem é garantirá que a execução acontece **pelo menos 1 vez**.
+Esta abordagem é o que garantirá que a execução acontece **pelo menos 1 vez**.
+
+![RPC](../drawings/rpc.drawio#6)
 
 Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
 Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
 
-Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados **exatamente uma** vez.
-Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
-De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.
+![RPC](../drawings/rpc.drawio#6)
 
-
-!!! note "Quantidade de execuções"
+!!!sideslide "Quantidade de execuções"
     * No máximo uma - não retentar
     * Exatamente uma - impedir que falhas aconteçam :white_frowning_face:
     * Pelo menos uma - retentar até ter confirmação
+
+Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados **exatamente uma** vez.
+Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
+De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.
 
 Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
 Mas ela não pode ser repetida, então a alternativa é tornar as operações [**idempotentes**](https://en.wikipedia.org/wiki/Idempotence), o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.
@@ -633,8 +664,6 @@ Mas ela não pode ser repetida, então a alternativa é tornar as operações [*
 
     * Exemplo: `x = 10`
     * Anti-exemplo:  `x = x+1`.
-
-
 
 Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.
 
@@ -723,20 +752,19 @@ git clone -b v1.33.0 https://github.com/grpc/grpc-java
 Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.
 
 ```bash
-cd grpc-java\examples
-git checkout v1.33.0
+cd grpc-java/examples
+git checkout v1.36.0
 ```
 
 ##### Compilando e executando
 
 O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
 
+
 ```bash
+cd grpc-java/examples
 ./gradlew installDist -PskipAndroid=true
 ```
-
-!!!todo "TODO"
-    Testar novas versões. Esta versão está limitada ao JDK 15.
 
 Caso esteja na UFU, coloque também informação sobre o proxy no comando.
 
@@ -761,7 +789,7 @@ Agora, em **um terminal distinto** e a partir da mesma localização, execute o 
 O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
 O serviço é definido no seguinte arquivo `.proto`, localizado em `./src/main/proto/helloworld.proto`.
 
-```protobuffer
+```protobuf
 message HelloRequest {
   string name = 1;
 }
@@ -881,103 +909,130 @@ Agora sim, você pode reexecutar cliente e servidor.
 ./build/install/examples/bin/hello-world-client
 ```
 
-Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.
+Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes, começando sobre como um servidor gRPC é criado.
+Observe que um objeto `Server` é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo `.proto`. O `start()` também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratada.
 
-##### Stub do servidor
+```java
+import io.grpc.Server;
+...
+private Server server;
+...
+ server = ServerBuilder.forPort(port)
+                       .addService(new GreeterImpl())
+                       .build()
+                       .start();
+...
+```
 
-* Como criar o servidor
-* Como definir o serviço
-* Como "startar" o servidor.
+Do lado do cliente, é criado um `ManagedChannel` e com este um `GreeterBlockingStub`, um *stub* em cujas chamadas são bloqueantes.
+Finalmente, no *stub* são invocados os serviços definidos na IDL.
 
-##### Stub do cliente
+```java
+import io.grpc.Channel;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+...
+ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
+                                              .usePlaintext()
+                                              .build();
+...                                              
+private final GreeterGrpc.GreeterBlockingStub blockingStub = GreeterGrpc.newBlockingStub(channel);
+...
+HelloRequest request = HelloRequest.newBuilder()
+                                   .setName(name)
+                                   .build();
+HelloReply response;
+try {
+    response = blockingStub.sayHello(request);
+} catch (StatusRuntimeException e) {
+    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+    return;
+}
+logger.info("Greeting: " + response.getMessage());
+```
 
-* Stub bloqueante
-* Stub não bloqueante
+!!!exercise "Diga Olás!"
+    Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação `DigaOlas` em que uma **lista** de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string**cumprimentando todos os nomes, um após o outro.
 
-##### IDL gRPC
+    ???tip "Só abra depois de pensar em como resolver o problema"
+        Você pode usar `repeated` no campo `message` do tipo `HelloRequest`.
 
-Outras características da IDL do gRPC
 
-* Tipos básicos
-    * bool: boolean (true/false)
-    * double: 64-bit; ponto-flutuante 
-    * float: 32-bit; ponto-flutuante 
-    * i32: 32-bit; inteiro sinalizado 
-    * i64: 64-bit; inteiro sinalizado
-    * siXX: signed
-    * uiXX: unsigned
-    * sfixedXX: codificação de tamanho fixo
-    * bytes: 8-bit; inteiro sinalizado
-    * string: string UTF-8 ou ASCII 7-bit
-    * Any: tipo indefinido
-* [Diferentes traduções](https://developers.google.com/protocol-buffers/docs/proto3)
-* Coleções
-Defina e implemente uma operação `DigaOlas` em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.
+!!!exercise "Stream"
+    Para terminar este estudo de caso, modifique a função definida no exercício anterior para gerar múltiplas respostas, uma para cada nome passado, em vez de uma única, longa, resposta.
 
-* *Streams*
-    - Do lado do servidor   
-    ```java
-    List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
+    ???tip "Só abra depois de pensar em como resolver o problema"
+        Você deverá usar *streams*.
 
-    @Override
-    public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-    for (String hi: listOfHi)
-    {
-      OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
-      responseObserver.onNext(reply);
-    }
-    responseObserver.onCompleted();
-    }
-    ```   
-    - Do lado do cliente   
-     ```java
-     OlaRequest request = OlaRequest.newBuilder().setName(name).build();
-     try {
-        Iterator<OlaReply> it = blockingStub.digaOlas(request);
-        while (it.hasNext()){
-          OlaReply response = it.next();
-          logger.info("Greeting: " + response.getMessage());
+        ```protobuf
+        rpc DigaOlas (OlaRequest) returns (stream OlaReply) {}
+        ```
+
+        - Do lado do servidor   
+        ```java
+        List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
+
+        @Override
+        public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
+           for (String hi: listOfHi)
+           {
+              OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
+              responseObserver.onNext(reply);
+           }
+           responseObserver.onCompleted();
         }
-     } catch (StatusRuntimeException e) {
-        logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-        return;
-     }
-     ```
+        ```   
+        - Do lado do cliente   
+        ```java
+        OlaRequest request = OlaRequest.newBuilder().setName(name).build();
+        try {
+            Iterator<OlaReply> it = blockingStub.digaOlas(request);
+            while (it.hasNext()){
+               OlaReply response = it.next();
+               logger.info("Greeting: " + response.getMessage());
+            }
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return;
+        }
+        ```
 
-##### Exemplo Python
 
-```bash
-apt-get install python3
-apt-get install python3-pip
-python3 -m pip install --upgrade pip
-python3 -m pip install grpcio
-python3 -m pip install grpcio-tools
+!!!exercise "Desafio de Interoperabilidade"
+    Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em java.
 
-git clone -b v1.10.x https://github.com/grpc/grpc
-cd grpc/examples/python/helloworld
-python3 greeter\_server.py
-python3 greeter\_client.py
-```
+    ```bash
+    apt-get install python3
+    apt-get install python3-pip
+    python3 -m pip install --upgrade pip
+    python3 -m pip install grpcio
+    python3 -m pip install grpcio-tools
 
-Para recompilar os stubs, faça
+    git clone -b v1..x https://github.com/grpc/grpc
+    cd grpc/examples/python/helloworld
+    python3 greeter\_server.py
+    python3 greeter\_client.py
+    ```
 
-```bash
-python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
-```
+    Para recompilar os *stubs*, faça
 
-Modifique o servidor
+    ```bash
+    python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
+    ```
 
-```Python
-def DigaOla(self, request, context):
-	return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
-```
+    Modifique o servidor
 
-Modifique o cliente
+    ```Python
+    def DigaOla(self, request, context):
+        return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
+    ```
 
-```Python
-response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
-print("Greeter client received: " + response.message)
-```
+    Modifique o cliente
+
+    ```Python
+    response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
+    print("Greeter client received: " + response.message)
+    ```
 
 ### Estudo de Caso RPC: Thrift
 
@@ -994,27 +1049,8 @@ print("Greeter client received: " + response.message)
   * coloque-os na pasta `jars`
 
 
-
 #### IDL Thrift
 
-*  Tipos básicos
-    * bool: boolean (true/false)
-    * byte: 8-bit; inteiro sinalizado
-	* i16: 16-bit; inteiro sinalizado
-	* i32: 32-bit; inteiro sinalizado
-	* i64: 64-bit; inteiro sinalizado
-	* double: 64-bit; ponto-flutuante 
-	* string: string UTF-8
-	* binary: sequência de bytes
-* Estruturas
-```thrift
-struct Example {
-    1:i32 number,
-    2:i64 bigNumber,
-    3:double decimals,
-    4:string name="thrifty"
-}
-```	
 * Serviços
 ```thrift
 service ChaveValor {
@@ -1031,11 +1067,6 @@ exception KeyNotFound {
    2:string chaveProcurada="thrifty"
 }
 ```
-*  Containers
-    * List
-	* Map
-	* Set
-
 
 Exemplo: chavevalor.thrift
 
