@@ -506,34 +506,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#stub-do-servidor" class="md-nav__link">
-    Stub do servidor
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stub-do-cliente" class="md-nav__link">
-    Stub do cliente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#idl-grpc" class="md-nav__link">
-    IDL gRPC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-python" class="md-nav__link">
-    Exemplo Python
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1041,34 +1013,6 @@
           <li class="md-nav__item">
   <a href="#implementando-um-servico" class="md-nav__link">
     Implementando um serviço
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stub-do-servidor" class="md-nav__link">
-    Stub do servidor
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stub-do-cliente" class="md-nav__link">
-    Stub do cliente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#idl-grpc" class="md-nav__link">
-    IDL gRPC
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exemplo-python" class="md-nav__link">
-    Exemplo Python
   </a>
   
 </li>
@@ -1745,26 +1689,45 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
-<p>Com tal definição é possível gerar código como o seguinte, em C++, que serializa os dados para escrita em um arquivo...</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span> <span class="n">person</span><span class="p">;</span>
+<p>Além dos tipos usados no exemplo, diversos outros tipos primitivos estão disponíveis:</p>
+<ul>
+<li><code>bool</code>: boolean (true/false)</li>
+<li><code>double</code>: 64-bit; ponto-flutuante </li>
+<li><code>float</code>: 32-bit; ponto-flutuante </li>
+<li><code>i32</code>: 32-bit; inteiro sinalizado </li>
+<li><code>i64</code>: 64-bit; inteiro sinalizado</li>
+<li><code>siXX</code>: signed</li>
+<li><code>uiXX</code>: unsigned</li>
+<li><code>sfixedXX</code>: codificação de tamanho fixo</li>
+<li><code>bytes</code>: 8-bit; inteiro sinalizado</li>
+<li><code>string</code>: string UTF-8 ou ASCII 7-bit</li>
+</ul>
+<p>Além destes, também pode ser usado um tipo indefinido e adaptável, <a href="https://developers.google.com/protocol-buffers/docs/proto3#any"><code>Any</code></a>, bem como coleções.</p>
+<p>A especificação protobuffer pode ser traduzida para <a href="https://developers.google.com/protocol-buffers/docs/proto3">múltiplas linguagens</a>
+Por exemplo, se a tradução for feita para C++, o tipo <code>message</code> resulta em uma classe de mesmo nome, com funcionalidades para serialização e desserialização do objeto, como no exemplo a seguir.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1">//Instancia person e salva conteúdo em arquivo</span>
+<span class="n">Person</span> <span class="n">person</span><span class="p">;</span>
 <span class="n">person</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">);</span>
 <span class="n">person</span><span class="p">.</span><span class="n">set_id</span><span class="p">(</span><span class="mi">1234</span><span class="p">);</span>
 <span class="n">person</span><span class="p">.</span><span class="n">set_email</span><span class="p">(</span><span class="s">&quot;jdoe@example.com&quot;</span><span class="p">);</span>
 <span class="n">fstream</span> <span class="nf">output</span><span class="p">(</span><span class="s">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">out</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
 <span class="n">person</span><span class="p">.</span><span class="n">SerializeToOstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">output</span><span class="p">);</span>
-</code></pre></div>
-</td></tr></table>
-<p>e lê do arquivo e desserializa para hidratar um novo objeto.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">fstream</span> <span class="nf">input</span><span class="p">(</span><span class="s">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+
+<span class="c1">//Instancia Person e o inicializa com dados do arquivo</span>
+<span class="n">fstream</span> <span class="nf">input</span><span class="p">(</span><span class="s">&quot;myfile&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">in</span> <span class="o">|</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
 <span class="n">Person</span> <span class="n">person</span><span class="p">;</span>
 <span class="n">person</span><span class="p">.</span><span class="n">ParseFromIstream</span><span class="p">(</span><span class="o">&amp;</span><span class="n">input</span><span class="p">);</span>
 <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Name: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">person</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
@@ -1777,8 +1740,19 @@ Observe a presença de campos de preenchimento opcional (<strong>optional</stron
 </blockquote>
 <h3 id="thrift">Thrift</h3>
 <p>Thrift é um framework inicialmente desenvolvido pelo Facebook e depois adotado pela fundação Apache. O Facebook, insatisfeito com os progressos da versão Apache, acabou fazendo um novo <em>fork</em> e mantém agora o <code>fbthrift</code>, também de código livre.</p>
-<p>Comparado ao gRPC, ele possui praticamente as mesmas funcionalidades.
-O mesmo exemplo acima, em Thrift, ficaria assim.</p>
+<p>Comparado ao gRPC, ele possui praticamente as mesmas funcionalidades, como os mesmos tipos básicos estão disponíveis e coleções</p>
+<ul>
+<li>bool: boolean (true/false)</li>
+<li>byte: 8-bit; inteiro sinalizado</li>
+<li>i16: 16-bit; inteiro sinalizado</li>
+<li>i32: 32-bit; inteiro sinalizado</li>
+<li>i64: 64-bit; inteiro sinalizado</li>
+<li>double: 64-bit; ponto-flutuante </li>
+<li>string: string UTF-8</li>
+<li>binary: sequência de bytes</li>
+<li>coleções: List, Map, Set</li>
+</ul>
+<p>O mesmo exemplo acima, em Thrift, ficaria assim.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1825,37 +1799,20 @@ O mesmo exemplo acima, em Thrift, ficaria assim.</p>
 </code></pre></div>
 </td></tr></table>
 <p>Usar a classe correspondente em Java, depois da geração de código pelo compilador <code>thriftc</code>, é bem simples.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
-<span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="mi">112234556</span><span class="p">,</span><span class="s">&quot;jdoe@example.com&quot;</span><span class="p">,</span> <span class="n">Collections</span><span class="p">.</span><span class="na">emptyList</span><span class="p">())</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&quot;John Doe&quot;</span><span class="p">,</span><span class="mi">112234556</span><span class="p">,</span><span class="s">&quot;jdoe@example.com&quot;</span><span class="p">,</span> <span class="n">Collections</span><span class="p">.</span><span class="na">emptyList</span><span class="p">())</span>
 </code></pre></div>
 </td></tr></table>
 <p>Além de formas de se representar dados, tanto gRPC quanto thrift provêem funcionalidades para definir serviços que manipulam estes dados, acessíveis remotamente, com mínimo esforço, no que se denomina <strong>Invocação Remota de Procedimento</strong>, ou RPC (do inglês, <em>remote procedure call</em>).</p>
 <h2 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h2>
 <p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">6</a></sup> introduziram o mecanismo de Invocação Remota de Procedimentos (<em>Remote Procedure Calls</em>), que permite que processos façam, pasmem, invocações de procedimentos remotos!
 Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
-Por exemplo, RPC permite que se procure a <em>substring</em> <code>"teste"</code> dentro da string apontada por <code>a</code>, a partir da posição 3, usando <code>x = substring(a,3,"teste");</code> mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.</p>
+Por exemplo, RPC permite que se procure a <em>substring</em> apontada por <code>c</code> dentro da string apontada por <code>a</code>, a partir da posição 3, usando <code>x = substring(a,3,c);</code> mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.</p>
 <h3 id="stubs">Stubs</h3>
-<p>Antes de nos aprofundarmos, vejamos como uma invocação de funções acontece normalmente dentro de um único processo.<sup id="fnref:omissao"><a class="footnote-ref" href="#fn:omissao">7</a></sup>
-O código <code>x = substring(a,3,"teste");</code>, que procura <code>"teste"</code> em <code>*a</code>, é traduzido nos seguintes passos em linguagem de máquina:</p>
-<ul>
-<li>coloque o endereço de <code>"teste"</code> na pilha</li>
-<li>coloque <code>3</code> na pilha</li>
-<li>coloque o valor de <code>a</code> na pilha</li>
-<li>coloque o endereço de retorno na pilha (junto com outros dados de controle)</li>
-<li>salte para <code>substring</code> ajustando o <em>instruction pointer</em></li>
-<li>... procure substring ...</li>
-<li>coloque o resultado no acumulador</li>
-<li>limpe a pilha</li>
-<li>salte de volta recuperando o endereço de retorno da pilha e ajustando o IP</li>
-<li>coloque resultado em <code>x</code></li>
-</ul>
-<p>Se o que queremos é colocar o código da função <code>substring</code> em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões relativas ao fluxo mostrado acima.
-Claramente não podemos usar o mesmo fluxo para invocar uma função, mas precisamos de código de simule a invocação local e que, "por debaixo do capô", use sockets para se comunicar com o processo remoto.<br />
+<p>Se o que queremos é colocar o código da função <code>substring</code> em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões, sendo a principal o fato de que, embora seja simulada a invocação local, "por debaixo do capô" há o uso sockets para a comunicação com o processo remoto.
 Esta simulação usará código extra, que finge implementar <code>substring</code> para o invocador mas delega ao código remoto o trabalho real da busca.
-Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <strong><em>stub</em></strong> <strong>cliente</strong>, que faz parte do processo invocando a operação, e <strong><em>stub</em></strong> <strong>servidor</strong>, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">8</a></sup>.</p>
+Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <strong><em>stub</em></strong> <strong>cliente</strong>, que faz parte do processo invocando a operação, e <strong><em>stub</em></strong> <strong>servidor</strong>, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">7</a></sup>.</p>
 <p>Assim, o cliente invoca a função no <em>stub</em> cliente, achando que é a função que quer executar.
-O <em>stub</em> cliente faz o <strong><em>marshaling</em></strong> <sup id="fnref:marshal"><a class="footnote-ref" href="#fn:marshal">9</a></sup>  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
+O <em>stub</em> cliente faz o <strong><em>marshaling</em></strong> <sup id="fnref:marshal"><a class="footnote-ref" href="#fn:marshal">8</a></sup>  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
 Quando recebe a resposta do servidor, o <em>stub</em> cliente retorna a mesma resposta, como se tivesse sido calculada localmente.
 Já o stub servidor fica esperando o contato do cliente.
 Quando acontece, faz o <strong><em>unmarshalling</em></strong> dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retorna ao cliente.</p>
@@ -1869,24 +1826,24 @@ Quando acontece, faz o <strong><em>unmarshalling</em></strong> dos dados, invoca
 </thead>
 <tbody>
 <tr>
-<td>1. abre socket para servidor</td>
-<td>1. espera conexão</td>
+<td>1. invoca <code>substring</code> no <em>stub</em></td>
+<td>1. retorna o resultado para o <em>stub</em></td>
 </tr>
 <tr>
-<td>2. envia parâmetros</td>
-<td>2. recebe parâmetros</td>
+<td>2. conecta-se ao servidor, envia parâmetros e especifica a função</td>
+<td>2. envia resulta serializado para cliente</td>
 </tr>
 <tr>
-<td>3. especifica função</td>
-<td>3. recebe especificação da função</td>
+<td>3. transmite os dados serializados</td>
+<td>transmite resposta serializada</td>
 </tr>
 <tr>
-<td>4. espera resposta</td>
-<td>4. invoca função localmente</td>
+<td>4. deserializa parâmetros</td>
+<td>4. deserializa os parâmetro</td>
 </tr>
 <tr>
-<td>5. retorna resultado</td>
-<td>5. envia resultado para cliente</td>
+<td>5. invoca a função <code>substring</code> localmente</td>
+<td>5. retorna o resultado para o invocador</td>
 </tr>
 </tbody>
 </table>
@@ -1895,7 +1852,22 @@ Quando acontece, faz o <strong><em>unmarshalling</em></strong> dos dados, invoca
 Isto é, <strong>interface baseada em procedimentos</strong> e sem a necessidade de detalhar <strong>portas, sockets, e representação de dados</strong>.  Ou seja, tudo é transparente!
 Como já discutimos, vários fatores trabalham contra a <a href="../intro/#transparencia">transparência em sistemas distribuídos</a>.
 Em específico quanto à transparência dada pelo RPC, também temos limitações.
-O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que </p>
+Antes de nos aprofundarmos, lembremos como uma invocação de funções acontece normalmente dentro de um único processo.<sup id="fnref:omissao"><a class="footnote-ref" href="#fn:omissao">9</a></sup>
+O código <code>x = substring(a,3,c);</code>, que procura <code>*c</code> em <code>*a</code>, é traduzido nos seguintes passos em linguagem de máquina:</p>
+<ul>
+<li>coloque o valor de <code>c</code> na pilha</li>
+<li>coloque <code>3</code> na pilha</li>
+<li>coloque o valor de <code>a</code> na pilha</li>
+<li>coloque o endereço de retorno na pilha (junto com outros dados de controle)</li>
+<li>salte para <code>substring</code> ajustando o <em>instruction pointer</em></li>
+<li>... procure substring ...</li>
+<li>coloque o resultado no acumulador</li>
+<li>limpe a pilha</li>
+<li>salte de volta recuperando o endereço de retorno da pilha e ajustando o IP</li>
+<li>coloque resultado em <code>x</code></li>
+</ul>
+<p><img alt="RPC" src="../drawings/rpc.drawio-4.svg" /></p>
+<p>O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que </p>
 <ul>
 <li>processos independentes não compartilham um espaço de endereçamento, e</li>
 <li>processos independentes não compartilham uma pilha.</li>
@@ -1922,7 +1894,7 @@ E como determinar qual serviço acessar, caso hajam <strong>múltiplas opções 
 <h4 id="tratamento-de-excecoes">Tratamento de Exceções</h4>
 <p>Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
 Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
-Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para algo assim (em uma linguagem fictícia):</p>
+Assim, o que era um simples <code>x = substring(a,3,c);</code> passa para algo assim (em uma linguagem fictícia):</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1937,7 +1909,7 @@ Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para 
 12
 13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">-2</span><span class="p">;</span>
 <span class="n">try</span> <span class="p">{</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">substring</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s">&quot;teste&quot;</span><span class="p">);</span><span class="err">`</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">substring</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="p">);</span><span class="err">`</span>
 <span class="p">}</span> <span class="n">catch</span><span class="p">(</span><span class="n">CommunicationFailureException</span> <span class="n">cfe</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">log_error</span><span class="p">(</span><span class="s">&quot;Como pode substring falhar? Desespero!!!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1947,7 +1919,7 @@ Assim, o que era um simples <code>x = substring(a,3,"teste");</code> passa para 
 <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span>
     <span class="c1">//não achou</span>
 <span class="k">else</span>
-    <span class="c1">//achou &quot;teste&quot; na posição x</span>
+    <span class="c1">//achou na posição x</span>
 </code></pre></div>
 </td></tr></table>
 <p>O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.</p>
@@ -1962,18 +1934,18 @@ Se o cliente havia invocado uma operação mas percebeu o erro antes de receber 
 <li>(i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,</li>
 <li>(ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.</li>
 </ul>
+<p><img alt="RPC" src="../drawings/rpc.drawio-5.svg" /></p>
 <p>O cliente tem que tratar o erro, mas como?
 Se a operação <strong>precisa</strong> ser executada <strong>a qualquer custo</strong>, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
 Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
 Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
-Esta abordagem é garantirá que a execução acontece <strong>pelo menos 1 vez</strong>.</p>
+Esta abordagem é o que garantirá que a execução acontece <strong>pelo menos 1 vez</strong>.</p>
+<p><img alt="RPC" src="../drawings/rpc.drawio-6.svg" /></p>
 <p>Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
 Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a <strong>no máximo uma</strong> execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um <em>stream</em> de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.</p>
-<p>Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados <strong>exatamente uma</strong> vez.
-Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
-De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.</p>
-<div class="admonition note">
+<p><img alt="RPC" src="../drawings/rpc.drawio-6.svg" /></p>
+<div class="admonition sideslide">
 <p class="admonition-title">Quantidade de execuções</p>
 <ul>
 <li>No máximo uma - não retentar</li>
@@ -1981,6 +1953,9 @@ De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas u
 <li>Pelo menos uma - retentar até ter confirmação</li>
 </ul>
 </div>
+<p>Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados <strong>exatamente uma</strong> vez.
+Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
+De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.</p>
 <p>Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
 Mas ela não pode ser repetida, então a alternativa é tornar as operações <a href="https://en.wikipedia.org/wiki/Idempotence"><strong>idempotentes</strong></a>, o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.</p>
 <div class="admonition note">
@@ -2065,19 +2040,17 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 </td></tr></table>
 <p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java<span class="se">\e</span>xamples
-git checkout v1.33.0
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
+git checkout v1.36.0
 </code></pre></div>
 </td></tr></table>
 <h5 id="compilando-e-executando">Compilando e executando</h5>
 <p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist -PskipAndroid<span class="o">=</span><span class="nb">true</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
+./gradlew installDist -PskipAndroid<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 </td></tr></table>
-<div class="admonition todo">
-<p class="admonition-title">TODO</p>
-<p>Testar novas versões. Esta versão está limitada ao JDK 15.</p>
-</div>
 <p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
 </code></pre></div>
@@ -2105,19 +2078,19 @@ O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <c
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>message HelloRequest {
-  string name = 1;
-}
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">HelloRequest</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
-message HelloReply {
-  string message = 1;
-}
+<span class="kd">message</span> <span class="nc">HelloReply</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 
 
-// The greeting service definition.
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-}
+<span class="c1">// The greeting service definition.</span>
+<span class="kd">service</span> <span class="n">Greeter</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">SayHello</span> <span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
 <p>No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.</p>
@@ -2257,42 +2230,85 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 ./build/install/examples/bin/hello-world-client
 </code></pre></div>
 </td></tr></table>
-<p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes.</p>
-<h5 id="stub-do-servidor">Stub do servidor</h5>
-<ul>
-<li>Como criar o servidor</li>
-<li>Como definir o serviço</li>
-<li>Como "startar" o servidor.</li>
-</ul>
-<h5 id="stub-do-cliente">Stub do cliente</h5>
-<ul>
-<li>Stub bloqueante</li>
-<li>Stub não bloqueante</li>
-</ul>
-<h5 id="idl-grpc">IDL gRPC</h5>
-<p>Outras características da IDL do gRPC</p>
-<ul>
-<li>Tipos básicos<ul>
-<li>bool: boolean (true/false)</li>
-<li>double: 64-bit; ponto-flutuante </li>
-<li>float: 32-bit; ponto-flutuante </li>
-<li>i32: 32-bit; inteiro sinalizado </li>
-<li>i64: 64-bit; inteiro sinalizado</li>
-<li>siXX: signed</li>
-<li>uiXX: unsigned</li>
-<li>sfixedXX: codificação de tamanho fixo</li>
-<li>bytes: 8-bit; inteiro sinalizado</li>
-<li>string: string UTF-8 ou ASCII 7-bit</li>
-<li>Any: tipo indefinido</li>
-</ul>
-</li>
-<li><a href="https://developers.google.com/protocol-buffers/docs/proto3">Diferentes traduções</a></li>
-<li>
-<p>Coleções
-Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nomes é enviada ao servidor e tal que o servidor responda com uma longa string cumprimentando todos os nomes, um ap;os o outro.</p>
-</li>
-<li>
-<p><em>Streams</em></p>
+<p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes, começando sobre como um servidor gRPC é criado.
+Observe que um objeto <code>Server</code> é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo <code>.proto</code>. O <code>start()</code> também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratada.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Server</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="kd">private</span> <span class="n">Server</span> <span class="n">server</span><span class="p">;</span>
+<span class="p">...</span>
+ <span class="n">server</span> <span class="o">=</span> <span class="n">ServerBuilder</span><span class="p">.</span><span class="na">forPort</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+                       <span class="p">.</span><span class="na">addService</span><span class="p">(</span><span class="k">new</span> <span class="n">GreeterImpl</span><span class="p">())</span>
+                       <span class="p">.</span><span class="na">build</span><span class="p">()</span>
+                       <span class="p">.</span><span class="na">start</span><span class="p">();</span>
+<span class="p">...</span>
+</code></pre></div>
+</td></tr></table>
+<p>Do lado do cliente, é criado um <code>ManagedChannel</code> e com este um <code>GreeterBlockingStub</code>, um <em>stub</em> em cujas chamadas são bloqueantes.
+Finalmente, no <em>stub</em> são invocados os serviços definidos na IDL.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Channel</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.grpc.ManagedChannel</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">io.grpc.ManagedChannelBuilder</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="n">ManagedChannel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">ManagedChannelBuilder</span><span class="p">.</span><span class="na">forTarget</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+                                              <span class="p">.</span><span class="na">usePlaintext</span><span class="p">()</span>
+                                              <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="p">...</span>                                              
+<span class="kd">private</span> <span class="kd">final</span> <span class="n">GreeterGrpc</span><span class="p">.</span><span class="na">GreeterBlockingStub</span> <span class="n">blockingStub</span> <span class="o">=</span> <span class="n">GreeterGrpc</span><span class="p">.</span><span class="na">newBlockingStub</span><span class="p">(</span><span class="n">channel</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="n">HelloRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">HelloRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+                                   <span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                                   <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="n">HelloReply</span> <span class="n">response</span><span class="p">;</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">sayHello</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+</code></pre></div>
+</td></tr></table>
+<div class="admonition exercise">
+<p class="admonition-title">Diga Olás!</p>
+<p>Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação <code>DigaOlas</code> em que uma <strong>lista</strong> de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string**cumprimentando todos os nomes, um após o outro.</p>
+<details class="tip"><summary>Só abra depois de pensar em como resolver o problema</summary><p>Você pode usar <code>repeated</code> no campo <code>message</code> do tipo <code>HelloRequest</code>.</p>
+</details>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">Stream</p>
+<p>Para terminar este estudo de caso, modifique a função definida no exercício anterior para gerar múltiplas respostas, uma para cada nome passado, em vez de uma única, longa, resposta.</p>
+<details class="tip"><summary>Só abra depois de pensar em como resolver o problema</summary><p>Você deverá usar <em>streams</em>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">rpc</span> <span class="n">DigaOlas</span> <span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">OlaReply</span><span class="p">)</span> <span class="p">{}</span>
+</code></pre></div>
+</td></tr></table>
 <ul>
 <li>Do lado do servidor <br />
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -2309,17 +2325,17 @@ Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nom
 
 <span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOlas</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hi</span><span class="p">:</span> <span class="n">listOfHi</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="n">hi</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
-  <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
+   <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="n">hi</span><span class="p">:</span> <span class="n">listOfHi</span><span class="p">)</span>
+   <span class="p">{</span>
+      <span class="n">OlaReply</span> <span class="n">reply</span> <span class="o">=</span> <span class="n">OlaReply</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setMessage</span><span class="p">(</span><span class="n">hi</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="n">req</span><span class="p">.</span><span class="na">getName</span><span class="p">()).</span><span class="na">build</span><span class="p">();</span>
+      <span class="n">responseObserver</span><span class="p">.</span><span class="na">onNext</span><span class="p">(</span><span class="n">reply</span><span class="p">);</span>
+   <span class="p">}</span>
+   <span class="n">responseObserver</span><span class="p">.</span><span class="na">onCompleted</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table></li>
 <li>Do lado do cliente <br />
- <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
  4
@@ -2331,21 +2347,23 @@ Defina e implemente uma operação <code>DigaOlas</code> em que uma lista de nom
 10
 11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
 <span class="k">try</span> <span class="p">{</span>
-   <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-   <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
-     <span class="n">OlaReply</span> <span class="n">response</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-     <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-   <span class="p">}</span>
+    <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
+       <span class="n">OlaReply</span> <span class="n">response</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+       <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Greeting: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+    <span class="p">}</span>
 <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">StatusRuntimeException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-   <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
-   <span class="k">return</span><span class="p">;</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">log</span><span class="p">(</span><span class="n">Level</span><span class="p">.</span><span class="na">WARNING</span><span class="p">,</span> <span class="s">&quot;RPC failed: {0}&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getStatus</span><span class="p">());</span>
+    <span class="k">return</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table></li>
 </ul>
-</li>
-</ul>
-<h5 id="exemplo-python">Exemplo Python</h5>
+</details>
+</div>
+<div class="admonition exercise">
+<p class="admonition-title">Desafio de Interoperabilidade</p>
+<p>Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em java.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -2361,13 +2379,13 @@ python3 -m pip install --upgrade pip
 python3 -m pip install grpcio
 python3 -m pip install grpcio-tools
 
-git clone -b v1.10.x https://github.com/grpc/grpc
+git clone -b v1..x https://github.com/grpc/grpc
 <span class="nb">cd</span> grpc/examples/python/helloworld
 python3 greeter<span class="se">\_</span>server.py
 python3 greeter<span class="se">\_</span>client.py
 </code></pre></div>
 </td></tr></table>
-<p>Para recompilar os stubs, faça</p>
+<p>Para recompilar os <em>stubs</em>, faça</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 -m grpc_tools.protoc -I../../protos --python_out<span class="o">=</span>. --grpc_python_out<span class="o">=</span>. ../../protos/helloworld.proto
 </code></pre></div>
 </td></tr></table>
@@ -2383,6 +2401,7 @@ python3 greeter<span class="se">\_</span>client.py
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Greeter client received: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
+</div>
 <h3 id="estudo-de-caso-rpc-thrift">Estudo de Caso RPC: Thrift</h3>
 <p><a href="https://thrift.apache.org/">Thrift</a></p>
 <h4 id="instalacao_1">Instalação</h4>
@@ -2397,31 +2416,6 @@ python3 greeter<span class="se">\_</span>client.py
 </ul>
 <h4 id="idl-thrift">IDL Thrift</h4>
 <ul>
-<li>Tipos básicos<ul>
-<li>bool: boolean (true/false)</li>
-<li>byte: 8-bit; inteiro sinalizado</li>
-<li>i16: 16-bit; inteiro sinalizado</li>
-<li>i32: 32-bit; inteiro sinalizado</li>
-<li>i64: 64-bit; inteiro sinalizado</li>
-<li>double: 64-bit; ponto-flutuante </li>
-<li>string: string UTF-8</li>
-<li>binary: sequência de bytes</li>
-</ul>
-</li>
-<li>Estruturas
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">struct</span><span class="w"> </span><span class="nc">Example</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="mi">1</span><span class="p">:</span><span class="kt">i32</span><span class="w"> </span><span class="n">number</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="mi">2</span><span class="p">:</span><span class="kt">i64</span><span class="w"> </span><span class="n">bigNumber</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="mi">3</span><span class="p">:</span><span class="kt">double</span><span class="w"> </span><span class="n">decimals</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="mi">4</span><span class="p">:</span><span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;thrifty&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</code></pre></div>
-</td></tr></table></li>
 <li>Serviços
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2445,12 +2439,6 @@ python3 greeter<span class="se">\_</span>client.py
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </td></tr></table></li>
-<li>Containers<ul>
-<li>List</li>
-<li>Map</li>
-<li>Set</li>
-</ul>
-</li>
 </ul>
 <p>Exemplo: chavevalor.thrift</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -2823,14 +2811,14 @@ A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destina
 <li id="fn:birrel">
 <p><a href="http://www.birrell.org/andrew/papers/ImplementingRPC.pdf">Implementing RPC</a>&#160;<a class="footnote-backref" href="#fnref:birrel" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
-<li id="fn:omissao">
-<p>Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.&#160;<a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 7 in the text">&#8617;</a></p>
-</li>
 <li id="fn:skeleton">
-<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton</em>.&#160;<a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton</em>.&#160;<a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:marshal">
-<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio".&#160;<a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio".&#160;<a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:omissao">
+<p>Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.&#160;<a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
