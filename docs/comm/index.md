@@ -13,7 +13,7 @@ Enquanto se poderia argumentar que algumas destas desvantagens podem ser descart
 Aqui discutiremos algumas destas funcionalidades e como podem e são implementadas por *frameworks* de comunicação de mais alto nível.
 No mundo dos sistemas distribuídos, estes *frameworks* são conhecidos como ***middleware***.
 
-## Middleware
+## Middleware e Transparência
 
 ??? sideslide "Middleware"
     * software
@@ -56,7 +56,7 @@ Podemos quebrar esta transparência total em várias transparências mais simple
 **Migração**, **Replicação**, e **Falha**.
 Vejamos cada uma destas separadamente.
 
-##### Transparência de Acesso
+###### Transparência de Acesso
 
 ??? sideslide "Transparência de Acesso"
     * como se apresenta
@@ -102,7 +102,7 @@ Para se tentar obter transparência de acesso, é importante que se use **padrõ
 
 
 
-##### Transparência de Localização
+###### Transparência de Localização
 
 ??? sideslide "Transparência de localização"
     * onde está o objeto
@@ -115,7 +115,7 @@ Para se tentar obter transparência de acesso, é importante que se use **padrõ
 A transparência de localização diz respeito a onde está o objeto acessado pela aplicação, seja um BD, página Web ou serviço de echo: pouco importa ao usuário, se está dentro da mesma máquina de onde executa o acesso, se na sala ao lado ou em um servidor do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
 A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.
 
-###### Escondendo a Latência
+####### Escondendo a Latência
 
 Para se esconder a latência, várias táticas são utilizáveis:
 
@@ -147,7 +147,7 @@ De forma geral, pense em esconder latência pelos seguintes passos:
   * Atualize dados de acordo com necessidade (e.g., cache do navegador, com código do google.com sendo atualizado a cada 4 dias)
 
 
-##### Transparência de Relocação
+###### Transparência de Relocação
 
 ??? sideslide "Transparência de relocação"
     * como se movimenta
@@ -163,7 +163,7 @@ Se implementadas corretamente, as técnicas que entregam transparência de local
     * Cópias temporárias
 
 
-##### Transparência de Migração
+###### Transparência de Migração
 
 ??? sideslide "Transparência de migração"
     * como se movimenta
@@ -178,7 +178,7 @@ Veja o exemplo do VMotion da VMware.
 
 Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.
 
-##### Transparência de Replicação
+###### Transparência de Replicação
 
 ??? sideslide "Transparência de replicação"
     * redundância
@@ -229,7 +229,7 @@ Se houver mudanças frequentes nos dados, tal custo precisa ser pago também fre
 Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.
 
 
-##### Transparência de Concorrência
+###### Transparência de Concorrência
 
 ??? sideslide "Transparência de concorrência"
     * obliviedade a outros serviços
@@ -247,7 +247,7 @@ Para se tornar viável, contudo, uma mesma instância deve servir múltiplos cli
 
 Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos *pool* de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (*scale up*) e separe as cargas (*sharding*); se menos clientes estão presentes, então desligue algumas máquinas (*scale down*) e consolide recursos.
 
-##### Desafios para se obter transparência
+###### Desafios para se obter transparência
 
 Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
 Isto porquê, do **ponto de vista de usuários** espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.
@@ -286,7 +286,7 @@ Neste cenário, vários fatores precisam ser levados em consideração na hora d
 * fragmentação de dados na rede   
   [![Fragmentação](../images/ipfrag.png)](http://www.acsa.net/IP/)
 
-### Representação Textual
+###### Representação Textual
 
 Uma abordagem comumente usada é a representação em formato textual "amigável a humanos".
 Veja o exemplo de como o protocolo HTTP requisita e recebe uma página HTML.
@@ -382,7 +382,7 @@ Quanto à serialização feita nativamente pelo Java, por meio de `ObjectOutputS
 
 Nos foquemos nas autras alternativas listadas, ProtoBuffers e Thrift, que podem levar a representações binárias e textuais.
 
-### ProtoBuffers
+###### ProtoBuffers
 
 Nas palavras dos [criadores](https://developers.google.com/protocol-buffers/),
 > Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
@@ -449,7 +449,7 @@ De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/p
 
 
 
-### Thrift
+###### Thrift
 
 Thrift é um framework inicialmente desenvolvido pelo Facebook e depois adotado pela fundação Apache. O Facebook, insatisfeito com os progressos da versão Apache, acabou fazendo um novo *fork* e mantém agora o `fbthrift`, também de código livre.
 
@@ -530,7 +530,7 @@ Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmen
 1. invoca `substring` no *stub* | 1. retorna o resultado para o *stub*
 2. conecta-se ao servidor, envia parâmetros e especifica a função | 2. envia resulta serializado para cliente
 3. transmite os dados serializados | transmite resposta serializada
-4. deserializa parâmetros | 4. deserializa os parâmetro
+4. desserializa parâmetros | 4. desserializa os parâmetro
 5. invoca a função `substring` localmente | 5. retorna o resultado para o invocador
 
 
@@ -680,7 +680,7 @@ Em vez disso, ele provavelmente executará lógicas complicadas, como por exempl
 Além disso, o servidor provavelmente suportará diversas operações e por isso deverá identificar qual a operação sendo requisitada.
 Isto é feito por um *dispatcher*, que demultiplexa as operações requisitadas; o dispatcher pode, em algumas arquiteturas, ser independente do skeleton em si.
 
-### Interface Definition Language - IDL
+### Interface Definition Language
 
 Há diversas opções de *frameworks* para RPC, com diferentes características, focos, e garantias.
 Alguns são parte da linguagem e outros são implementados como bibliotecas.
@@ -724,23 +724,32 @@ O fluxo de processamento é o seguinte:
 ## Comunicação orientada a Mensagens
 
 Nesta seção, discutiremos abstrações de comunicação focadas nas mensagens trocadas entre processos em vez de nas operações executadas em função destas mensagens.
-Isto parece um retrocesso, afinal, no segundo capítulo nós revisamos o uso de *sockets* na comunicação entre processos, e *sockets* são tecnicamente uma tecnologia de comunicação orientada a mensagens. Contudo, *sockets* não se enquadram aqui tanto por já os termos estudado quant por ser uma abstração de baixo nível, difícil de ser usada corretamente.
+Isto parece um retrocesso, afinal, no segundo capítulo nós revisamos o uso de *sockets* na comunicação entre processos, e *sockets* são tecnicamente uma tecnologia de comunicação orientada a mensagens. Contudo, *sockets* não se enquadram aqui tanto por já os termos estudado quanto por ser uma abstração de baixo nível, difícil de ser usada corretamente.
 
-Uma tecnologia interessante é a ***Message Passing Interface***, muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (*high performance computing*). Por exemplo, suponha que se precise executar uma computação de alto custo sobre milhões de pontos em uma grade 3D, conhecida por um processo $O$ (origem); $O$ pode invocar a função `scatter` para distribuir segmentos da grade entre diversos processos automaticamente. Se uma computação final deve ser executada com os resultados parciais de cada domínio, ou a função `gather` ou `reduction` podem ser aplicadas, dependendo da semântica exata da operação. Assim, exatamente o mesmo executável pode ser usado independente de quantos processos estão disponíveis no sistema; MPI se adapta à quantidade de recursos disponíveis.
-MPI contudo exige que processos estejam presentes o tempo todo durante a execução, isto é, a troca de mensagens acontece somente com processos online ao mesmo tempo.
+### Message Passing Interface
+Subindo as camadas de abstração uma tecnologia interessante é a ***Message Passing Interface***, muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (*high performance computing*). 
+Quatro das operações providas pelas implementações de MPI são mostradas na figura a seguir, responsáveis por espalhar dados (***broadcast***), fragmentos dos dados (***scatter***), coletar e compor fragmentos (***gather***), ou reduzir resultados parciais (***reduce***).
 
 ![CFD](../images/mpi.jpeg)
 
-???todo "TODO"
-    Expandir MPI.
+Por exemplo, suponha que você esteja desenvolvendo uma aplicação que fará buscas de caminhos em grafos, com várias propriedades distintas.
+Digamos que precise calcular uma rota entre vários vértices do grafo usando caminhadas aleatórias. Usando a função *broadcast*, você pode enviar uma cópia do grafo para cada processo disponível para que independentemente calcule alguma rota. Ao final do cálculo, um processo pode coletar os resultados de cada processo e escolher a melhor entre as rotas encontradas usando a função *reduction*.
+Se preferir que cada busca se restrinja a um subgrafo, onde os vários subgrafos são complementares, então a função *scatter* seria usada.[^scatter]
+Finalmente, a função *gather* poderia ser usada para coletar subgrafos com rotas encontradas e montar um grafo com todas as alternativas.
+
+[^scatter:] O particionamento básico provido pela MPI é simplesmente uma divisão do buffer com os dados entre os vários processos, então para fragmentar um grafo, você teria um pouco de trabalho.
 
 
-Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos.
-Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e *Futures/Promisses*, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido. Apesar destas melhorias, **sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo**. 
-Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem um alternativa.
+
 
 
 ### Publish/Subscribe
+Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos. [^asynch]
+Apesar destas melhorias, **sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo**. 
+Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem um alternativa.
+
+[^asynch]: Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e *Futures/Promisses*, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido. 
+
 
 O padrão *publish/subscribe* (ou *pub/sub*) se apresenta como uma alternativa à arquitetura cliente-servidor.
 Enquanto no modelo client-servidor, o cliente se comunica diretamente com um *endpoint* representado pelo servidor, no padrão *pub/sub* temos *publishers* enviam mensagens e *subscribers* recebem tais mensagens, como clientes e servidores, mas com algumas diferenças fundamentais.
@@ -782,7 +791,7 @@ Embora simples, frameworks pub/sub permitem a implementação de arquiteturas co
 
 
 
-## Protocolos Epidêmicos
+### Protocolos Epidêmicos
 
 
 ???todo "TODO"
@@ -1393,6 +1402,7 @@ If you can think of any other differences that we overlooked, we would love to h
 * [What is gRPC: introduction](https://grpc.io/docs/what-is-grpc/introduction/)
 * [Thrift: the missing guide](https://diwakergupta.github.io/thrift-missing-guide/)
 * [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
+* [MQTT Client in Java](https://www.baeldung.com/java-mqtt-client)
 * [Message Oriented Middleware](https://en.wikipedia.org/wiki/Message-oriented_middleware)
 * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
 * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
