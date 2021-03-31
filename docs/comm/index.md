@@ -581,7 +581,7 @@ Java "resolve" o problema da passagem de parâmetro por referência passando tod
 
 Outros fatores também trabalham contra a transparência para o desenvolvedor.
 
-#### Descoberta de Serviços
+###### Descoberta de Serviços
 Por exemplo, mesmo que o socket seja ocultado, ele ainda existe e precisa de informações sobre **onde se conectar** (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
 Esta informação pode ser configurada *a priori* por um administrador de sistemas, mas requer atualizações sempre que a localização do serviço for alterada ou novos servidores adicionados.
 Mais interessante seria um mecanismo que permitisse uma indireção para o serviço; o próprio DNS pode ser uma opção inicial, mas um serviço dedicado pode ser mais apropriado, pois permite descobrir serviços e não apenas servidores.
@@ -594,7 +594,7 @@ E como determinar qual serviço acessar, caso hajam **múltiplas opções de ser
 
 Apesar dos problemas, **páginas amarelas** foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo [Web Services Discovery](https://en.wikipedia.org/wiki/Web_Services_Discovery), que permite a descoberta de Web Services em escala global, e [Java Remote Object Registry](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html) que permite a descoberta de objetos remotos Java.
 
-#### Tratamento de Exceções
+###### Tratamento de Exceções
 
 Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
 Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
@@ -623,7 +623,7 @@ Se esta fosse uma operacão local, cada invocação da operação corresponderia
 No caso de falhas, se o processo quebra como um todo, no seu reinício, pode-se identificar se a operação foi ou não executada e aplicar ações corretivas.
 Mas e no caso remoto?
 
-#### Reexecuções
+###### Reexecuções
 
 No caso da operação distribuída, se o servidor quebra, isso levará a um erro ser percebido do lado do cliente como uma **falha na conexão**.
 Se o cliente havia invocado uma operação mas percebeu o erro antes de receber uma confirmação de sua execução, isto pode indicar que:
@@ -667,7 +667,7 @@ Mas ela não pode ser repetida, então a alternativa é tornar as operações [*
 
 Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.
 
-#### Concorrência no servidor
+###### Concorrência no servidor
 
 É importante notar que um servidor não está obrigado a atender requisições de somente um cliente.
 Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.
@@ -720,7 +720,86 @@ O fluxo de processamento é o seguinte:
     * Gerenciamento de portas
     * Conexões
 
-Mas para entendermos melhor o fluxo, vejamos algumas ferramentas reais.
+
+## Comunicação orientada a Mensagens
+
+Nesta seção, discutiremos abstrações de comunicação focadas nas mensagens trocadas entre processos em vez de nas operações executadas em função destas mensagens.
+Isto parece um retrocesso, afinal, no segundo capítulo nós revisamos o uso de *sockets* na comunicação entre processos, e *sockets* são tecnicamente uma tecnologia de comunicação orientada a mensagens. Contudo, *sockets* não se enquadram aqui tanto por já os termos estudado quant por ser uma abstração de baixo nível, difícil de ser usada corretamente.
+
+Uma tecnologia interessante é a ***Message Passing Interface***, muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (*high performance computing*). Por exemplo, suponha que se precise executar uma computação de alto custo sobre milhões de pontos em uma grade 3D, conhecida por um processo $O$ (origem); $O$ pode invocar a função `scatter` para distribuir segmentos da grade entre diversos processos automaticamente. Se uma computação final deve ser executada com os resultados parciais de cada domínio, ou a função `gather` ou `reduction` podem ser aplicadas, dependendo da semântica exata da operação. Assim, exatamente o mesmo executável pode ser usado independente de quantos processos estão disponíveis no sistema; MPI se adapta à quantidade de recursos disponíveis.
+MPI contudo exige que processos estejam presentes o tempo todo durante a execução, isto é, a troca de mensagens acontece somente com processos online ao mesmo tempo.
+
+![CFD](../images/mpi.jpeg)
+
+???todo "TODO"
+    Expandir MPI.
+
+
+Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos.
+Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e *Futures/Promisses*, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido. Apesar destas melhorias, **sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo**. 
+Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem um alternativa.
+
+
+### Publish/Subscribe
+
+O padrão *publish/subscribe* (ou *pub/sub*) se apresenta como uma alternativa à arquitetura cliente-servidor.
+Enquanto no modelo client-servidor, o cliente se comunica diretamente com um *endpoint* representado pelo servidor, no padrão *pub/sub* temos *publishers* enviam mensagens e *subscribers* recebem tais mensagens, como clientes e servidores, mas com algumas diferenças fundamentais.
+
+Em primeiro lugar, os dois processos nunca comunicam diretamente e não precisam nem saber da existência do outro ou sequer executarem ao mesmo tempo, estando **desacoplados**.
+
+Em segundo lugar, mensagens são associadas a **tópicos**, aos quais os ***subscribers*** se subscrevem; somente tópicos de interesse são entregues aos *subscribers*, em um tipo de **filtragem**.
+
+![https://aws.amazon.com/pub-sub-messaging/](../images/aws_pubsub.png)
+
+
+###### Desacoplamento
+Um dos aspectos mais importantes proporcionados pelo padrão *pub/sub* é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:
+
+* Espaço: *publishers* e *subscribers* não precisam se conhecer (por exemplo, não há necessidade de informar endereço IP e porta de cada um).
+* Tempo: *publishers* e *subscribers* não precisam nem estar em execução ao mesmo tempo.
+* Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.
+
+Este desacoplamento é implementado por meio de ***brokers***, processos especiais que servem de ponto de conexão entre *publishers*  e *subscribers*, que dão persistência às mensagens (caso necessário), e distribuem as mensagens a quem devido.
+
+###### Filtragem
+
+O *broker* tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:
+
+* Baseada em assunto: *subscribers* se registram para receber mensagens de um ou mais tópicos de interesse. Em geral esses tópicos são strings com um formato hierárquico, por exemplo `/devices/sensor/+/temperature`.
+* Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. *Downside:* mensagem não pode ser criptografada.
+* Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo *Exception* e subtipos, por exemplo.
+
+Observe que uma mesma mensagem pode ser entregue a múltiplos *subscribers* se pertencer a um tópico de interesse em comum e que um mesmo *subscriber* pode se interessar por diversos tópicos.
+
+![https://cloud.google.com/pubsub/docs/overview](../images/google_pubsub.svg)
+
+
+### Arquiteturas baseadas em Pub/Sub
+
+Embora simples, frameworks pub/sub permitem a implementação de arquiteturas complexas, como o exemplo da figura a seguir.
+
+![https://cloud.google.com/pubsub/docs/overview](../images/google_pubsub2.svg)
+
+
+
+## Protocolos Epidêmicos
+
+
+???todo "TODO"
+    Material
+
+
+## Comunicação Orientada a Fluxos
+
+???todo "TODO"
+    Material
+
+
+
+
+
+
+## Estudos de Caso
 
 ### Estudo de Caso RPC: gRPC
 
@@ -1170,49 +1249,16 @@ java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.C
 java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient	
 ```
 
-#### Referências
 
-[Tutorial](http://thrift-tutorial.readthedocs.org/en/latest/index.html)
-
-
-### Estudo de Caso RPC: RMI
+### Estudo de caso de RPC: Remote Method Invocation
 
 ??? bug "TODO"
     Como usar RMI.
 
-## Comunicação orientada a Mensagens
-
-??? bug "TODO"
-    * [MOM](https://en.wikipedia.org/wiki/Message-oriented_middleware)
-    * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
-    * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
-
-O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte.
-
-### Publish/Subscribe
-
-O padrão *publish/subscribe* (ou *pub/sub*) se apresenta como uma alternativa à arquitetura cliente-servidor.
-Enquanto no modelo client-servidor, o cliente se comunica diretamente com um *endpoint* representado pelo servidor, no padrão *pub/sub* temos clientes que enviam mensagens, ou *publishers*, e clientes que recebem as mensagens, ou *subscribers*. Esses dois tipos de clientes nunca se comunicam diretamente e não precisam nem saber da existência do outro.
-Um agente especial, denominado *broker*, gerencia a conexão, armazena e filtrando as mensagens, além de distribuí-las corretamente aos *subscribers*.
-
-#### Desacoplamento
-
-Um dos aspectos mais importantes proporciados pelo padrão *pub/sub* é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:
-
-* Espaço: *publishers* e *subscribers* não precisam se conhecer (por exemplo, não há necessidade de informar endereço IP e porta de cada um).
-* Tempo: *publishers* e *subscribers* não precisam nem estar em execução ao mesmo tempo.
-* Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.
-
-#### Filtragem
-
-O *broker* tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:
-
-* Baseada em assunto: *subscribers* se registram para receber mensagens de um ou mais tópicos de interesse. Em geral esses tópicos são strings com um formato hierárquico, por exemplo `/devices/sensor/+/temperature`.
-* Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. *Downside:* mensagem não pode ser criptografada.
-* Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo *Exception* e subtipos, por exemplo.
 
 
-#### Estudo de caso: MosQuiTTo
+
+### Estudo de caso: MosQuiTTo
 
 >[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
 
@@ -1225,26 +1271,26 @@ O padrão é definido pela OASIS, uma organização aberta responsável por padr
 
 
 
-##### Instalação
+###### Instalação
 
-```bash
-apt-get install mosquitto # Ubuntu
-brew install mosquitto # MacOS
-```
+* Ubuntu: `apt-get install mosquitto`
+* MacOS: brew install mosquitto
+* Windows: baixe [mosquitto-2.0.9a-install-windows-x64.exe](http://mosquitto.org/download)
 
-##### Inicializando o serviço
+###### Inicializando o serviço
 
 O arquivo `mosquito.conf` contém as configurações para o *broker*. 
 As configurações funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
 Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que ocorre internamente.
 
-```bash
-mosquitto -v
-```
+* Ubuntu: `mosquitto -v`
+* MacOS: `/usr/local/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf`
 
-##### Publicando
+
+###### Publicando
 
 Para publicar uma mensagem, o *publisher* deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se `localhost:1883`.
+No MacOS, adicione `/usr/local/opt/mosquitto/bin/mosquitto_sub` ao *path*.
 
 ```bash
 # publicando valor de 40 para tópicos 'sensor/temperature/1' e 'sensor/temperature/2'
@@ -1254,7 +1300,7 @@ mosquitto_pub -t sensor/temperature/2 -m 32
 
 Caso o *subscriber* não esteja em execução, adicione a opção `-r` para que o broker retenha a mensagem.
 
-##### Consumindo
+###### Consumindo
 
 O consumidor funciona de maneira semelhante, informando o tópico de interesse:
 
@@ -1263,12 +1309,11 @@ O consumidor funciona de maneira semelhante, informando o tópico de interesse:
 mosquito_pub -t sensor/temperature/+
 ```
 
-##### Programando
+###### Programando
 
 Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
 A biblioteca pode ser baixada [aqui](https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar).
 
-###### Exemplo de *Publisher*
 
 ```java
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -1315,44 +1360,41 @@ public class MqttPublishSample {
 ```
 
 
+??? bug "TODO"
+    Diferenciar de message queues
+
 <!-- Distinction from message queues
 There is a lot of confusion about the name MQTT and whether the protocol is implemented as a message queue or not. We will try to shed some light on the topic and explain the differences. In our last post, we mentioned that MQTT refers to the MQseries product from IBM and has nothing to do with “message queue“. Regardless of where the name comes from, it’s useful to understand the differences between MQTT and a traditional message queue:
 
 A message queue stores message until they are consumed When you use a message queue, each incoming message is stored in the queue until it is picked up by a client (often called a consumer). If no client picks up the message, the message remains stuck in the queue and waits to be consumed. In a message queue, it is not possible for a message not to be processed by any client, as it is in MQTT if nobody subscribes to a topic.
 
-A message is only consumed by one client Another big difference is that in a traditional message queue a message can be processed by one consumer only. The load is distributed between all consumers for a queue. In MQTT the behavior is quite the opposite: every subscriber that subscribes to the topic gets the message.
+A message is only consumed by one client 
+Another big difference is that in a traditional message queue a message can be processed by one consumer only. The load is distributed between all consumers for a queue. In MQTT the behavior is quite the opposite: every subscriber that subscribes to the topic gets the message.
 
-Queues are named and must be created explicitly A queue is far more rigid than a topic. Before a queue can be used, the queue must be created explicitly with a separate command. Only after the queue is named and created is it possible to publish or consume messages. In contrast, MQTT topics are extremely flexible and can be created on the fly.
+Queues are named and must be created explicitly 
+A queue is far more rigid than a topic. Before a queue can be used, the queue must be created explicitly with a separate command. Only after the queue is named and created is it possible to publish or consume messages. In contrast, MQTT topics are extremely flexible and can be created on the fly.
 
 If you can think of any other differences that we overlooked, we would love to hear from you in the comments. -->
 
-??? bug "TODO"
-    Diferenciar de MOM
 
-<!-- O foco aqui é na descrição da tecnologia, mas não das arquiteturas resultantes, que serão vistas no capítulo seguinte. -->
+
+
+
 
 !!! question "Exercícios - RPC e Publish/Subscribe"
-    * Usando *thrift* e a linguagem Java, extenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação `setKV()`  caso a chave já exista.
+    * Usando *thrift* e a linguagem Java, estenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação `setKV()`  caso a chave já exista.
     * Usando o *broker* mosquitto instalado localmente, faça em Java um *publisher* que simula um sensor de temperatura e publica valores aleatórios entre 15 e 45 a cada segundo.
     * Faça o *subscriber* que irá consumir esses dados de temperatura.
 
 
 
-## Message Passing Interface
-
-Para facilitar a comunicação entre as partes do domínio, são normalmente utilizadas API como a Message Passing Interface (MPI), que provê funções para distribuição e agregação de dados entre os vários processos.
-A função broadcast, por exemplo, envia o mesmo conteúdo para diversos destinatários e a função scatter particiona o dado de acordo com o número de destinatários e envia uma parcela para cada um.
-
-
-![CFD](../images/mpi.jpeg)
-
-
-## Protocolos Epidêmicos
-
-
-
 ## Referências
 * [The call Stack](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
-* [Introdução ao gRPC](https://grpc.io/docs/what-is-grpc/introduction/)
+* [What is gRPC: introduction](https://grpc.io/docs/what-is-grpc/introduction/)
 * [Thrift: the missing guide](https://diwakergupta.github.io/thrift-missing-guide/)
 * [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
+* [Message Oriented Middleware](https://en.wikipedia.org/wiki/Message-oriented_middleware)
+* [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
+* [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
+* [Thrift Tutorial](http://thrift-tutorial.readthedocs.org/en/latest/index.html)
+
