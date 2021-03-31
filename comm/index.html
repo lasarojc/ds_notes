@@ -1716,11 +1716,10 @@ Quatro das operações providas pelas implementações de MPI são mostradas na 
 <p><img alt="CFD" src="../images/mpi.jpeg" /></p>
 <p>Por exemplo, suponha que você esteja desenvolvendo uma aplicação que fará buscas de caminhos em grafos, com várias propriedades distintas.
 Digamos que precise calcular uma rota entre vários vértices do grafo usando caminhadas aleatórias. Usando a função <em>broadcast</em>, você pode enviar uma cópia do grafo para cada processo disponível para que independentemente calcule alguma rota. Ao final do cálculo, um processo pode coletar os resultados de cada processo e escolher a melhor entre as rotas encontradas usando a função <em>reduction</em>.
-Se preferir que cada busca se restrinja a um subgrafo, onde os vários subgrafos são complementares, então a função <em>scatter</em> seria usada.[^scatter]
+Se preferir que cada busca se restrinja a um subgrafo, onde os vários subgrafos são complementares, então a função <em>scatter</em> seria usada.<sup id="fnref:scatter"><a class="footnote-ref" href="#fn:scatter">10</a></sup>
 Finalmente, a função <em>gather</em> poderia ser usada para coletar subgrafos com rotas encontradas e montar um grafo com todas as alternativas.</p>
-<p>[^scatter:] O particionamento básico provido pela MPI é simplesmente uma divisão do buffer com os dados entre os vários processos, então para fragmentar um grafo, você teria um pouco de trabalho.</p>
 <h3 id="publishsubscribe">Publish/Subscribe</h3>
-<p>Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos. <sup id="fnref:asynch"><a class="footnote-ref" href="#fn:asynch">10</a></sup>
+<p>Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos. <sup id="fnref:asynch"><a class="footnote-ref" href="#fn:asynch">11</a></sup>
 Apesar destas melhorias, <strong>sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo</strong>. 
 Arcabouços de <strong>comunicação orientada a mensagens</strong> implementada pelos <strong><em>middleware</em></strong> <strong>orientados a mensagem</strong>, oferecem um alternativa.</p>
 <p>O padrão <em>publish/subscribe</em> (ou <em>pub/sub</em>) se apresenta como uma alternativa à arquitetura cliente-servidor.
@@ -2526,8 +2525,11 @@ If you can think of any other differences that we overlooked, we would love to h
 <li id="fn:omissao">
 <p>Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.&#160;<a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
+<li id="fn:scatter">
+<p>O particionamento básico provido pela MPI é simplesmente uma divisão do buffer com os dados entre os vários processos, então para fragmentar um grafo, você teria um pouco de trabalho.&#160;<a class="footnote-backref" href="#fnref:scatter" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
 <li id="fn:asynch">
-<p>Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e <em>Futures/Promisses</em>, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido.&#160;<a class="footnote-backref" href="#fnref:asynch" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+<p>Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e <em>Futures/Promisses</em>, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido.&#160;<a class="footnote-backref" href="#fnref:asynch" title="Jump back to footnote 11 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
