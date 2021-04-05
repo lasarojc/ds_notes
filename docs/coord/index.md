@@ -1,7 +1,6 @@
 # Coordenação
 
-Como visto na seção sobre [Multiprogramação](../basics/#multiprogramacao-e-multithreading-em-sistemas-distribuidos
-../Multiprogramação concorrencia/concorrencia.md), diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. 
+Como visto na seção sobre [Multiprogramação](../Multiprogramação concorrencia/concorrencia.md), diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. 
 
 Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, ainda por cima, espalhados geograficamente. 
 Outras soluções e abstrações são portanto necessárias.
@@ -16,10 +15,10 @@ Qualquer solução que se proponha a este problema de exclusão mútua, precisa 
     1. **exclusão mútua** - somente um processo pode estar na **região crítica** em qualquer instante de tempo;
     2. **ausência de deadlocks** - se processos estão tentando acessar o recurso, então **algum processo deve conseguir acesso** em algum instante, dado que nenhum processo fique na região crítica indefinidamente;
     3. **não-inanição** - todos os processos interessados conseguem, em algum momento, acessar o recurso;
-    4. **espera limitada** - idealmente, o tempo de espera pelo recurso é limitado.
+    4. **espera limitada** - o tempo de espera pelo recurso é limitado.
 
 Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
-Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que a vez é circulada, e baseada em quoruns.
+Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que "a vez" é circulada, e baseada em quóruns.
 
 ### Coordenador 
 
@@ -28,12 +27,13 @@ Uma possível solução para o problema de exclusão mútua em um ambiente distr
 
 Nesta abordagem, os processos que precisam acessar a região crítica são denominados **participantes** e um dos processos assume o papel de **coordenador**. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:
 
-* Participante
+!!!example "Participante"
     1. Envia requisição de acesso ao coordenador
     2. Espera por resposta do coordenador
     3. Acessa o recurso
     4. Envia liberação do recurso para o coordenador
-* Coordenador
+
+!!!example "Coordenador"
     1. Inicializa recurso como livre
     2. Ao receber uma requisição, a enfileira
     3. Ao receber uma liberação, marca o recurso como livre
@@ -91,7 +91,7 @@ Por enquanto, consideraremos tolerância a falhas de forma superficial, após di
 Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. 
 Um dos processos é iniciado com um *token* que dá acesso ao recurso e o *token* é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:
 
-* Participante
+!!!example "Participante"
     1. Ao receber o *token* de acesso, se quiser acessar o recurso, acessa.
     2. Envia o *token* para o próximo nó do anel.
 
@@ -200,7 +200,7 @@ Por mais que se ajuste o valor do temporizador, em um sistema distribuído assí
 
 Mais tarde discutiremos as implicações desta impossibilidade. Por agora, tentemos responder à seguinte questão.
 
-!!! question
+!!! question "Pergunta!"
     Qual deve ser um *timeout*  **razoável** para o meu sistema?
 
 A resposta depende de mais perguntas, como:
@@ -235,43 +235,135 @@ Entretanto, em vez de apenas um coordenador no sistema, temos $n$, dos quais o p
 
 Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:   
 
-* Coordenador   
+!!!example "Coordenador"
     1. Inicializa recurso como livre
     2. Ao receber uma requisição, a enfileira
-    3. Ao receber uma liberação, marca o recurso como livre
+    3. Ao receber uma liberação
+        1. se do processo a quem autorizou, marca o recurso como livre
+        2. senão e se de um processo na fila, remove o processo da fila[^id]
+        3. senão, ignore mensagem.
     4. Sempre que recurso estiver marcado como livre **E** a fila não estiver vazia
         1. remove primeiro processo da fila
         2. envia liberação para processo removido
         3. marca o recurso como ocupado
-* Participante
+
+[^id]: para evitar que mensagens de requisições distintas do mesmo processo se confundam, é útil identificar cada requisição, por exemplo, com um contador de requisições.
+
+!!!example "Participante"
     1. Envia requisição de acesso aos $n$ coordenadores
     2. Espera por resposta de $m$ coordenadores
     3. Acessa o recurso
-    4. Envia liberação do recurso para o coordenador
+    4. Envia liberação do recurso para os $n$ coordenadores
 
-Além disso, para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueceme das autorizações já atribuídas.
+
+Vejamos uma execução bem sucedida destes algoritmo, com $n=3$ e $m=2$.
+
+```mermaid
+sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1->>Coord1: RequestAccess
+        Part1->>Coord2: RequestAccess
+
+        Part2->>Coord1: RequestAccess
+        Part2->>Coord2: RequestAccess
+
+        Part2->>Coord3: RequestAccess
+
+        Part1->>Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+        Coord1->>Part1: ResponseOK
+        Coord2->>+Part1: ResponseOK
+
+
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+        Coord3->>Part2: ResponseOK
+    
+    Part1->>-Coord1: RequestFree
+    Part1->>Coord2: RequestFree
+    Part1->>Coord3: RequestFree
+
+    note over Coord3: Recurso=ocupado/Fila = []
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = []
+        Coord1->>+Part2: ResponseOK
+        Coord2->>Part2: ResponseOK
+
+    Part2->>-Coord1: RequestFree
+    Part2->>Coord2: RequestFree
+    Part2->>Coord3: RequestFree
+
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+```
+
+
+Para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esquecem das autorizações já atribuídas.
 
 !!!warning "Perda de memória"
     Quando um coordenador falha, esquece que deu ok e reinicia seu estado.
 
-Vejamos uma execução bem sucedida destes algoritmo:
 
-???bug "TODO"
-     Construir execução bem sucedida.
 
 Este algoritmo é bom? Suponhamos o seguinte cenário:
 
-* Coordenadores = {$c_1,c_2,c_3,c_4,c_5,c_6,c_7$}
-* $n = 7$
-* $m = 4$
-* Participante $p_1$ consegue autorização de {$c_1,c_2,c_3,c_4$} e entra na região crítica.
-* Coordenador $c_4$ falha e se recupera
-* Participante $p_2$ consegue autorização de {$c_4,c_5,c_6,c_7$} e entra na região crítica.
+* Coordenadores = {Coord1,Coord2,Coord3}
+* $n = 3$
+* $m = 2$
+* Participante Part1 consegue autorização de {Coord1,Coord2} e entra na região crítica.
+* Coordenador Coord2 falha e se recupera
+* Participante Part2 consegue autorização de {Coord2,Coord3} e entra na região crítica.
+
+```mermaid
+sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1->>Coord1: RequestAccess
+        Part1->>Coord2: RequestAccess
+
+        Part2->>Coord1: RequestAccess
+        Part1->>Coord3: RequestAccess
+        Part2->>Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=livre/Fila = [Part1,Part2]
+    note over Coord3: Recurso=livre/Fila = [Part2,Part1]
+
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+
+        Coord1->>Part1: ResponseOK
+        Coord2->>+Part1: ResponseOK
+        Coord3->>Part2: ResponseOK
+
+    note over Coord2: 💀☠️💀☠️💀☠️💀
+    note over Coord2: Recurso=livre/Fila = []
+
+        Part2->>Coord2: RequestAccess
+    note over Coord2: Recurso=livre/Fila = [Part2]
+    note over Coord2: Recurso=livre/Fila = []
+rect rgb(200, 0, 0)
+        Coord2->>+Part2: ResponseOk
+
+
+        Part1->>-Coord1: RequestFree
+end
+        Part1->>Coord2: RequestFree
+        Part1->>Coord3: RequestFree
+
+        Part2->>-Coord1: RequestFree
+        Part2->>Coord2: RequestFree
+        Part2->>Coord3: RequestFree
+```
 
 Neste cenário, a propriedade de **Exclusão Mútua** é violada. 
 Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
-Ou seja, dados dois quoruns, de tamanho $m$, que se sobrepoem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
+Ou seja, dados dois quóruns, de tamanho $m$, que se sobrepõem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
 
 ![Quoruns](drawings/quorum_k.drawio#0)
 
@@ -286,7 +378,7 @@ Mas qual é o tamanho $k$ da interseção?
 * $\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k$
 * $\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n$
 
-Até agora consideramos que a $k$ corresponde à cardinalidade da interseção dos dois quoruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se $k$ assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. 
+Até agora consideramos que a $k$ corresponde à cardinalidade da interseção dos dois quóruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se $k$ assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. 
 
 * Probabilidade de quaisquer $k$ em $m$ coordenadores falharem, para qualquer $k$ variando de $2m-n$ a $n$: $P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}$
 
@@ -345,7 +437,7 @@ Para entendermos melhor o problema, tentemos desenvolver um protocolo simples pa
 * Comunicação: todos se conhecem e se falam diretamente ou há grupos incomunicáveis dentro da turma?
 * Estabilidade: de que adianta eleger um dos colegas se frequentemente falta não está presente quando necessário?
 
-Em termos computacionais, estas questões são relevantes pois todos os processoes **não** nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
+Em termos computacionais, estas questões são relevantes pois todos os processos **não** nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
 Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
 
 Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos diferenciar processos.
