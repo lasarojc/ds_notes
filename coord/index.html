@@ -660,8 +660,7 @@
 
   <!-- Content -->
   <h1 id="coordenacao">Coordenação</h1>
-<p>Como visto na seção sobre <a href="../basics/#multiprogramacao-e-multithreading-em-sistemas-distribuidos
-../Multiprogramação concorrencia/concorrencia.md">Multiprogramação</a>, diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. </p>
+<p>Como visto na seção sobre <a href="../Multiprogramação concorrencia/concorrencia.md">Multiprogramação</a>, diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. </p>
 <p>Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos <em>threads</em>, ainda por cima, espalhados geograficamente. 
 Outras soluções e abstrações são portanto necessárias.</p>
 <h2 id="exclusao-mutua">Exclusão Mútua</h2>
@@ -675,24 +674,27 @@ Qualquer solução que se proponha a este problema de exclusão mútua, precisa 
 <li><strong>exclusão mútua</strong> - somente um processo pode estar na <strong>região crítica</strong> em qualquer instante de tempo;</li>
 <li><strong>ausência de deadlocks</strong> - se processos estão tentando acessar o recurso, então <strong>algum processo deve conseguir acesso</strong> em algum instante, dado que nenhum processo fique na região crítica indefinidamente;</li>
 <li><strong>não-inanição</strong> - todos os processos interessados conseguem, em algum momento, acessar o recurso;</li>
-<li><strong>espera limitada</strong> - idealmente, o tempo de espera pelo recurso é limitado.</li>
+<li><strong>espera limitada</strong> - o tempo de espera pelo recurso é limitado.</li>
 </ol>
 </div>
 <p>Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
-Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que a vez é circulada, e baseada em quoruns.</p>
+Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que "a vez" é circulada, e baseada em quóruns.</p>
 <h3 id="coordenador">Coordenador</h3>
 <p>Enquanto em um sistema monolítico há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há naturalmente tal entidade.
 Uma possível solução para o problema de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.</p>
 <p>Nesta abordagem, os processos que precisam acessar a região crítica são denominados <strong>participantes</strong> e um dos processos assume o papel de <strong>coordenador</strong>. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:</p>
-<ul>
-<li>Participante<ol>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
 <li>Envia requisição de acesso ao coordenador</li>
 <li>Espera por resposta do coordenador</li>
 <li>Acessa o recurso</li>
 <li>Envia liberação do recurso para o coordenador</li>
 </ol>
-</li>
-<li>Coordenador<ol>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Coordenador</p>
+<ol>
 <li>Inicializa recurso como livre</li>
 <li>Ao receber uma requisição, a enfileira</li>
 <li>Ao receber uma liberação, marca o recurso como livre</li>
@@ -703,8 +705,7 @@ Uma possível solução para o problema de exclusão mútua em um ambiente distr
 </ol>
 </li>
 </ol>
-</li>
-</ul>
+</div>
 <p>O diagrama a seguir apresenta uma execução deste protocolo em um cenário com três participantes.
 O estado do coordenador mostra se o recurso está livre ou ocupado e quais processos esperam por permissão de acesso.</p>
 <div class="mermaid">sequenceDiagram
@@ -746,13 +747,13 @@ Por enquanto, consideraremos tolerância a falhas de forma superficial, após di
 <h3 id="anel">Anel</h3>
 <p>Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. 
 Um dos processos é iniciado com um <em>token</em> que dá acesso ao recurso e o <em>token</em> é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:</p>
-<ul>
-<li>Participante<ol>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
 <li>Ao receber o <em>token</em> de acesso, se quiser acessar o recurso, acessa.</li>
 <li>Envia o <em>token</em> para o próximo nó do anel.</li>
 </ol>
-</li>
-</ul>
+</div>
 <p>O diagrama adiante mostra uma execução do algoritmo em que apenas os participantes 1 e 3 acessam o recurso.</p>
 <div class="mermaid">sequenceDiagram
     Part1-&gt;&gt;Part2: Permissão de Acesso
@@ -845,7 +846,7 @@ Por exemplo, se o processo não devolver a permissão de acesso antes de que uma
 </div>
 <p>Mais tarde discutiremos as implicações desta impossibilidade. Por agora, tentemos responder à seguinte questão.</p>
 <div class="admonition question">
-<p class="admonition-title">Question</p>
+<p class="admonition-title">Pergunta!</p>
 <p>Qual deve ser um <em>timeout</em>  <strong>razoável</strong> para o meu sistema?</p>
 </div>
 <p>A resposta depende de mais perguntas, como:</p>
@@ -878,11 +879,17 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span class="arith
 </ul>
 </div>
 <p>Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:   </p>
-<ul>
-<li>Coordenador   <ol>
+<div class="admonition example">
+<p class="admonition-title">Coordenador</p>
+<ol>
 <li>Inicializa recurso como livre</li>
 <li>Ao receber uma requisição, a enfileira</li>
-<li>Ao receber uma liberação, marca o recurso como livre</li>
+<li>Ao receber uma liberação<ol>
+<li>se do processo a quem autorizou, marca o recurso como livre</li>
+<li>senão e se de um processo na fila, remove o processo da fila<sup id="fnref:id"><a class="footnote-ref" href="#fn:id">1</a></sup></li>
+<li>senão, ignore mensagem.</li>
+</ol>
+</li>
 <li>Sempre que recurso estiver marcado como livre <strong>E</strong> a fila não estiver vazia<ol>
 <li>remove primeiro processo da fila</li>
 <li>envia liberação para processo removido</li>
@@ -890,36 +897,114 @@ Entretanto, em vez de apenas um coordenador no sistema, temos <span class="arith
 </ol>
 </li>
 </ol>
-</li>
-<li>Participante<ol>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
 <li>Envia requisição de acesso aos <span class="arithmatex">\(n\)</span> coordenadores</li>
 <li>Espera por resposta de <span class="arithmatex">\(m\)</span> coordenadores</li>
 <li>Acessa o recurso</li>
-<li>Envia liberação do recurso para o coordenador</li>
+<li>Envia liberação do recurso para os <span class="arithmatex">\(n\)</span> coordenadores</li>
 </ol>
-</li>
-</ul>
-<p>Além disso, para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esqueceme das autorizações já atribuídas.</p>
+</div>
+<p>Vejamos uma execução bem sucedida destes algoritmo, com <span class="arithmatex">\(n=3\)</span> e <span class="arithmatex">\(m=2\)</span>.</p>
+<div class="mermaid">sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord1: RequestAccess
+        Part2-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord3: RequestAccess
+
+        Part1-&gt;&gt;Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+        Coord1-&gt;&gt;Part1: ResponseOK
+        Coord2-&gt;&gt;+Part1: ResponseOK
+
+
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+        Coord3-&gt;&gt;Part2: ResponseOK
+
+    Part1-&gt;&gt;-Coord1: RequestFree
+    Part1-&gt;&gt;Coord2: RequestFree
+    Part1-&gt;&gt;Coord3: RequestFree
+
+    note over Coord3: Recurso=ocupado/Fila = []
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = []
+        Coord1-&gt;&gt;+Part2: ResponseOK
+        Coord2-&gt;&gt;Part2: ResponseOK
+
+    Part2-&gt;&gt;-Coord1: RequestFree
+    Part2-&gt;&gt;Coord2: RequestFree
+    Part2-&gt;&gt;Coord3: RequestFree
+
+    note over Coord1,Coord3: Recurso=livre/Fila = []</div>
+<p>Para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esquecem das autorizações já atribuídas.</p>
 <div class="admonition warning">
 <p class="admonition-title">Perda de memória</p>
 <p>Quando um coordenador falha, esquece que deu ok e reinicia seu estado.</p>
 </div>
-<p>Vejamos uma execução bem sucedida destes algoritmo:</p>
-<details class="bug"><summary>TODO</summary><p>Construir execução bem sucedida.</p>
-</details>
 <p>Este algoritmo é bom? Suponhamos o seguinte cenário:</p>
 <ul>
-<li>Coordenadores = {<span class="arithmatex">\(c_1,c_2,c_3,c_4,c_5,c_6,c_7\)</span>}</li>
-<li><span class="arithmatex">\(n = 7\)</span></li>
-<li><span class="arithmatex">\(m = 4\)</span></li>
-<li>Participante <span class="arithmatex">\(p_1\)</span> consegue autorização de {<span class="arithmatex">\(c_1,c_2,c_3,c_4\)</span>} e entra na região crítica.</li>
-<li>Coordenador <span class="arithmatex">\(c_4\)</span> falha e se recupera</li>
-<li>Participante <span class="arithmatex">\(p_2\)</span> consegue autorização de {<span class="arithmatex">\(c_4,c_5,c_6,c_7\)</span>} e entra na região crítica.</li>
+<li>Coordenadores = {Coord1,Coord2,Coord3}</li>
+<li><span class="arithmatex">\(n = 3\)</span></li>
+<li><span class="arithmatex">\(m = 2\)</span></li>
+<li>Participante Part1 consegue autorização de {Coord1,Coord2} e entra na região crítica.</li>
+<li>Coordenador Coord2 falha e se recupera</li>
+<li>Participante Part2 consegue autorização de {Coord2,Coord3} e entra na região crítica.</li>
 </ul>
+<div class="mermaid">sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord3: RequestAccess
+        Part2-&gt;&gt;Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=livre/Fila = [Part1,Part2]
+    note over Coord3: Recurso=livre/Fila = [Part2,Part1]
+
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+
+        Coord1-&gt;&gt;Part1: ResponseOK
+        Coord2-&gt;&gt;+Part1: ResponseOK
+        Coord3-&gt;&gt;Part2: ResponseOK
+
+    note over Coord2: 💀☠️💀☠️💀☠️💀
+    note over Coord2: Recurso=livre/Fila = []
+
+        Part2-&gt;&gt;Coord2: RequestAccess
+    note over Coord2: Recurso=livre/Fila = [Part2]
+    note over Coord2: Recurso=livre/Fila = []
+rect rgb(200, 0, 0)
+        Coord2-&gt;&gt;+Part2: ResponseOk
+
+
+        Part1-&gt;&gt;-Coord1: RequestFree
+end
+        Part1-&gt;&gt;Coord2: RequestFree
+        Part1-&gt;&gt;Coord3: RequestFree
+
+        Part2-&gt;&gt;-Coord1: RequestFree
+        Part2-&gt;&gt;Coord2: RequestFree
+        Part2-&gt;&gt;Coord3: RequestFree</div>
 <p>Neste cenário, a propriedade de <strong>Exclusão Mútua</strong> é violada. 
 Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
-Ou seja, dados dois quoruns, de tamanho <span class="arithmatex">\(m\)</span>, que se sobrepoem em <span class="arithmatex">\(k\)</span> processos, qual a probabilidade <span class="arithmatex">\(P_v\)</span> de que os <span class="arithmatex">\(k\)</span> processos na interseção sejam reiniciados e levem à violação?</p>
+Ou seja, dados dois quóruns, de tamanho <span class="arithmatex">\(m\)</span>, que se sobrepõem em <span class="arithmatex">\(k\)</span> processos, qual a probabilidade <span class="arithmatex">\(P_v\)</span> de que os <span class="arithmatex">\(k\)</span> processos na interseção sejam reiniciados e levem à violação?</p>
 <p><img alt="Quoruns" src="drawings/quorum_k.drawio-0.svg" /></p>
 <p>Seja a <span class="arithmatex">\(P\)</span> a probabilidade de <strong>um coordenador em específico falhar</strong> e se recuperar dentro de uma janela de tempo <span class="arithmatex">\(\delta t\)</span>. Temos</p>
 <ul>
@@ -932,7 +1017,7 @@ Ou seja, dados dois quoruns, de tamanho <span class="arithmatex">\(m\)</span>, q
 <li><span class="arithmatex">\(\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k\)</span></li>
 <li><span class="arithmatex">\(\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n\)</span></li>
 </ul>
-<p>Até agora consideramos que a <span class="arithmatex">\(k\)</span> corresponde à cardinalidade da interseção dos dois quoruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se <span class="arithmatex">\(k\)</span> assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. </p>
+<p>Até agora consideramos que a <span class="arithmatex">\(k\)</span> corresponde à cardinalidade da interseção dos dois quóruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se <span class="arithmatex">\(k\)</span> assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. </p>
 <ul>
 <li>Probabilidade de quaisquer <span class="arithmatex">\(k\)</span> em <span class="arithmatex">\(m\)</span> coordenadores falharem, para qualquer <span class="arithmatex">\(k\)</span> variando de <span class="arithmatex">\(2m-n\)</span> a <span class="arithmatex">\(n\)</span>: <span class="arithmatex">\(P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}\)</span></li>
 </ul>
@@ -980,7 +1065,7 @@ Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema co
 <p>O problema da escolha de um processo centralizador, ou líder, pode ser posto informalmente como o procedimento pelo qual <strong>um processo é escolhido</strong> dentre os demais processos, sendo que o <strong>processo escolhido é ciente da escolha</strong> e <strong>todos os demais processos o identificam como eleito</strong>. Uma <strong>nova eleição</strong> deve acontecer sempre que o líder se tornar <strong>indisponível</strong>.
 Formalmente, um algoritmo de eleição de líderes deve satisfazer as seguintes condições.</p>
 <div class="admonition note">
-<p class="admonition-title">Eleição de Líderes<sup id="fnref:guptaetal"><a class="footnote-ref" href="#fn:guptaetal">1</a></sup></p>
+<p class="admonition-title">Eleição de Líderes<sup id="fnref:guptaetal"><a class="footnote-ref" href="#fn:guptaetal">2</a></sup></p>
 <ul>
 <li>Terminação: algum processo deve se considerar líder em algum momento.</li>
 <li>Unicidade: somente um processo se considera líder.</li>
@@ -1226,7 +1311,7 @@ No algoritmo seguinte, permitimos que os processos conheçam seus identificadore
 </ul>
 </div>
 <p>Este algoritmo envia até <span class="arithmatex">\(n^2\)</span> mensagens, se todos iniciarem a eleição ao mesmo tempo, e as mensagens crescem até o tamanho <span class="arithmatex">\(n\)</span>.
-O algoritmo de Chang e Robert<sup id="fnref:changrobert"><a class="footnote-ref" href="#fn:changrobert">2</a></sup> limita o tamanho das mensagens ao pré-selecionar candidatos viáveis.</p>
+O algoritmo de Chang e Robert<sup id="fnref:changrobert"><a class="footnote-ref" href="#fn:changrobert">3</a></sup> limita o tamanho das mensagens ao pré-selecionar candidatos viáveis.</p>
 <div class="admonition note">
 <p class="admonition-title">Algoritmo de Chang e Robert<ul>
 <li>Organize os nós em um anel lógico</li>
@@ -1429,11 +1514,14 @@ Aprofundemo-nos nos próximos capítulo nos conceitos de tempo e tolerância a f
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:id">
+<p>para evitar que mensagens de requisições distintas do mesmo processo se confundam, é útil identificar cada requisição, por exemplo, com um contador de requisições.&#160;<a class="footnote-backref" href="#fnref:id" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
 <li id="fn:guptaetal">
-<p><a href="https://www.cs.cornell.edu/home/rvr/papers/ProbLeaderElection.pdf">A Probabilistically Correct Leader Election Protocol for Large Groups</a>&#160;<a class="footnote-backref" href="#fnref:guptaetal" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="https://www.cs.cornell.edu/home/rvr/papers/ProbLeaderElection.pdf">A Probabilistically Correct Leader Election Protocol for Large Groups</a>&#160;<a class="footnote-backref" href="#fnref:guptaetal" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:changrobert">
-<p><a href="https://dl.acm.org/doi/10.1145/359104.359108">An improved algorithm for decentralized extrema-finding in circular configurations of processes</a>.&#160;<a class="footnote-backref" href="#fnref:changrobert" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://dl.acm.org/doi/10.1145/359104.359108">An improved algorithm for decentralized extrema-finding in circular configurations of processes</a>.&#160;<a class="footnote-backref" href="#fnref:changrobert" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
