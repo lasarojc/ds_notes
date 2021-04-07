@@ -1002,7 +1002,7 @@ end
         Part2-&gt;&gt;Coord2: RequestFree
         Part2-&gt;&gt;Coord3: RequestFree</div>
 <p>Neste cenário, a propriedade de <strong>Exclusão Mútua</strong> é violada. 
-Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
+Isto porquê, dados os dois quóruns, todos os processos na interseção foram reiniciados.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quóruns, de tamanho <span class="arithmatex">\(m\)</span>, que se sobrepõem em <span class="arithmatex">\(k\)</span> processos, qual a probabilidade <span class="arithmatex">\(P_v\)</span> de que os <span class="arithmatex">\(k\)</span> processos na interseção sejam reiniciados e levem à violação?</p>
 <p><img alt="Quoruns" src="drawings/quorum_k.drawio-0.svg" /></p>
@@ -1051,12 +1051,12 @@ Ou seja, dados dois quóruns, de tamanho <span class="arithmatex">\(m\)</span>, 
 </li>
 </ul>
 </div>
-<p>Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
+<p>Assim, este algoritmo também pode não ser adequado para certas situações. Vamos tentar re-acessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
 <details class="bug"><summary>TODO</summary><ul>
 <li>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
-<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descriçao</a>)</li>
+<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descrição</a>)</li>
 <li>Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
 <li><a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></li>
 </ul>
@@ -1074,13 +1074,13 @@ Formalmente, um algoritmo de eleição de líderes deve satisfazer as seguintes 
 </div>
 <p>Para entendermos melhor o problema, tentemos desenvolver um protocolo simples para escolhermos um líder, por exemplo, em sua turma da disciplina de Sistemas Distribuídos. Vejamos algumas questões importantes.</p>
 <ul>
-<li>Candidatos: são todos os membros elegíveis ou apenas um subconjunto dos mesmos?</li>
+<li>Candidatos: todos os membros são elegíveis ou apenas um subconjunto dos mesmos?</li>
 <li>Comunicação: todos se conhecem e se falam diretamente ou há grupos incomunicáveis dentro da turma?</li>
-<li>Estabilidade: de que adianta eleger um dos colegas se frequentemente falta não está presente quando necessário?</li>
+<li>Estabilidade: de que adianta eleger um dos colegas se frequentemente não está presente quando necessário?</li>
 </ul>
 <p>Em termos computacionais, estas questões são relevantes pois todos os processos <strong>não</strong> nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
 Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.</p>
-<p>Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos diferenciar processos.
+<p>Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíveis, ou exatamente por isso, temos  um problem mais fundamental para resolver: <strong>para eleger um líder, precisamos diferenciar processos</strong>.
 Dentro de uma única máquina, identificamos processos facilmente usando seu <strong>PID</strong>, ou <em>process id</em>, um inteiro associado a cada processo instanciado pelo sistema operacional; o PID é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, se o <em>host</em> é reiniciado, os PID também são, e portanto esta identificação não é duradoura. Mais importante, o PID só faz sentido dentro de uma única máquina e não em um sistema distribuído.</p>
 <p>Se apenas uma instância do processo executa em um mesmo <em>host</em>, então o identificador do <em>host</em> (e.g., endereço IP) em si é suficiente e, de fato, comumente utilizado. 
 Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
@@ -1089,7 +1089,7 @@ Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e qu
 <p><a href="https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html"><img alt="" src="images/octogono.jpg" /></a></p>
 <p>A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.</p>
 <h3 id="algoritmo-do-brigao-bully">Algoritmo do Brigão (<em>Bully</em>)</h3>
-<p>No algoritmo do brigão, alguma <strong>características comparável</strong> dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+<p>No algoritmo do brigão, alguma <strong>característica comparável</strong> dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
 Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.</p>
 <p>Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
 O algoritmo é apresentado a seguir, onde <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> são usados para representar tanto identificadores de processos quando os processos em si.</p>
@@ -1147,8 +1147,11 @@ Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicial
 <div class="admonition example">
 <p class="admonition-title">Algoritmo do Anel 1</p>
 <ul>
+<li>Na iniciação<ul>
 <li>Organize os nós em um anel lógico</li>
 <li><span class="arithmatex">\(C \gets\)</span> Seguidor</li>
+</ul>
+</li>
 <li>Quando um processo acha que o líder está morto<ul>
 <li><span class="arithmatex">\(C \gets\)</span> Candidato</li>
 <li>Envia (VoteEmMim) para "a direita" no anel.</li>
@@ -1180,7 +1183,7 @@ Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicial
 </ul>
 </div>
 <p>Imagine um cenário com dois processos, como na imagem a seguir. 
-Os nomes dos processos são apenas para facilitar o entendimento do fluxo dem mensagens e não estão acessíveis aos processos. <br />
+Os nomes dos processos são apenas para facilitar o entendimento do fluxo de mensagens e não estão acessíveis aos processos. <br />
 <img alt="" src="drawings/anel1.drawio-0.svg" /> <br />
 Executando o algoritmo Anel 1, os processos enviam (<span class="arithmatex">\(\rightarrow\)</span>) e recebem (<span class="arithmatex">\(\leftarrow\)</span>) as seguintes mensagens e ajustam <span class="arithmatex">\(C\)</span> da seguinte forma.</p>
 <table>
@@ -1349,29 +1352,29 @@ Ele faz isso em rodadas, comparando identificadores com outros processos ativos 
 <ul>
 <li>Organize os nós em um anel lógico</li>
 <li>Ativo <span class="arithmatex">\(\gets 1\)</span></li>
-<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto e se Ativo$ = 1$:<ul>
+<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto e se Ativo $ = 1$ :<ul>
 <li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
 </ul>
 </li>
 <li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>, da esquerda e da direita, respectivamente:<ul>
 <li>Se Ativo <span class="arithmatex">\(=1\)</span><ul>
 <li>Se <span class="arithmatex">\(max(e,d) &lt; p\)</span><ul>
-<li>Envia mensagem <span class="arithmatex">\(p\)</span> à direita e à esquerda</li>
+<li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
 </ul>
 </li>
-<li>Se <span class="arithmatex">\(max(q,r) &gt; p\)</span><ul>
+<li>Se <span class="arithmatex">\(max(e,d) &gt; p\)</span><ul>
 <li>Ativo <span class="arithmatex">\(\gets 0\)</span></li>
 <li>Envia mensagem <span class="arithmatex">\(-p\)</span> à direita e à esquerda</li>
 </ul>
 </li>
-<li>Se <span class="arithmatex">\(max(q,r) = p\)</span><ul>
+<li>Se <span class="arithmatex">\(max(e,d) = p\)</span><ul>
 <li><span class="arithmatex">\(p\)</span> se declara líder.</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>Se Ativo <span class="arithmatex">\(=0\)</span><ul>
-<li>Repassa cada messagem para o outro lado.</li>
+<li>Repassa cada mensagem para o outro lado.</li>
 </ul>
 </li>
 </ul>
@@ -1400,7 +1403,7 @@ De acordo com o tipo de arestas que um processo tem, ele é classificado como um
 <li>Vertedouro (sink) - processo que só tem arestas de chegada</li>
 <li>Interno - processo que tem arestas de chegada e de saída</li>
 </ul>
-<p>O algoritmo executa em duas fases. Na primera, cada processo marca sua arestas como apondando para o maior dentre si próprio e seus vizinhos.
+<p>O algoritmo executa em duas fases. Na primeira, cada processo marca sua arestas como apontando para o maior dentre si próprio e seus vizinhos.
 Na segunda fase, mensagens "vão e voltam", o que dá o nome ao algoritmo.
 Na "ida", as mensagens vão das fontes para os vertedouros, que identificam quais fontes tem os menores identificadores e sinalizam para que continuem fontes na próxima etapa com mensagens de volta.
 As mensagens de volta reordenam as arestas para garantir este comportamento.
@@ -1408,8 +1411,10 @@ Vejamos o algoritmo em mais detalhes.</p>
 <div class="admonition note">
 <p class="admonition-title">Algoritmo do YoYo</p>
 <ul>
-<li>Fase 1<ul>
-<li><span class="arithmatex">\(p\)</span> envia seu identificador para seus vizinhos.</li>
+<li>
+<p>Fase 1</p>
+<ul>
+<li><span class="arithmatex">\(p\)</span> envia seu identificador para seus vizinhos.<ul>
 <li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(q\)</span><ul>
 <li>Se <span class="arithmatex">\(p&gt;q\)</span><ul>
 <li>Marca a aresta em que recebeu <span class="arithmatex">\(q\)</span> como sendo de chegada (<span class="arithmatex">\(p\leftarrow q\)</span>)</li>
@@ -1423,40 +1428,80 @@ Vejamos o algoritmo em mais detalhes.</p>
 </li>
 </ul>
 </li>
+</ul>
+</li>
 <li>
-<ul>
-<li>Se <span class="arithmatex">\(p\)</span> é uma <strong>fonte</strong><ul>
-<li><span class="arithmatex">\(p\)</span> envia seu identificador em todas as suas arestas de saída.</li>
-<li>Quando <span class="arithmatex">\(p\)</span> receber <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída<ul>
-<li>Se recebeu apenas <span class="arithmatex">\(S\)</span><ul>
-<li>Executa fase 2 novamente</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 <p>Fase 2</p>
 <ul>
 <li>
-<p>Se <span class="arithmatex">\(p\)</span> é um <strong>nó interno</strong>
-        * Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada
-            * escolhe o menor id recebido <span class="arithmatex">\(m\)</span>
-            * envia <span class="arithmatex">\(m\)</span> em todas as suas arestas de saída
-        * Quando <span class="arithmatex">\(p\)</span> recebeu <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída
-            * Se recebeu algum <span class="arithmatex">\(S\)</span>
-                * envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span>
-                * envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span>
-            * Se não recebeu <span class="arithmatex">\(S\)</span>
-                * envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu algum id.</p>
+<p>Se <span class="arithmatex">\(p\)</span> é uma <strong>fonte</strong></p>
+<ul>
+<li><span class="arithmatex">\(p\)</span> envia seu identificador em todas as suas arestas de saída.</li>
+<li>Quando <span class="arithmatex">\(p\)</span> receber <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída<ul>
+<li>Se recebeu apenas <span class="arithmatex">\(S\)</span><ul>
+<li>Executa fase 2 novamente </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 <li>
-<p>Se <span class="arithmatex">\(p\)</span> é um <strong>vertedouro</strong>
-        * Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada
-            * escolhe o menor id recebido <span class="arithmatex">\(m\)</span>
-            * envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span>
-            * envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span></p>
+<p>Se <span class="arithmatex">\(p\)</span> é um <strong>nó interno</strong></p>
+<ul>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada</p>
+<ul>
+<li>
+<p>escolhe o menor id recebido <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(m\)</span> em todas as suas arestas de saída</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> recebeu <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída</p>
+<ul>
+<li>
+<p>Se recebeu algum <span class="arithmatex">\(S\)</span></p>
+<ul>
+<li>
+<p>envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Se não recebeu <span class="arithmatex">\(S\)</span></p>
+<ul>
+<li>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu algum id.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Se <span class="arithmatex">\(p\)</span> é um <strong>vertedouro</strong></p>
+<ul>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada</p>
+<ul>
+<li>
+<p>escolhe o menor id recebido <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
 </li>
 <li>
 <p>N inverte a direção das arestas em que trafega.</p>
@@ -1484,7 +1529,7 @@ Esta é uma situação que denominamos <strong>particionamento</strong> da rede 
 Vejamos esta e outras situações problemáticas em eleição de líderes.</p>
 <h3 id="questoes-importantes">Questões importantes</h3>
 <h4 id="split-brain"><em>Split-brain</em></h4>
-<p>Se o algoritmo viola a propridade de unicidade, então fica com <em>split-brain</em>, em que parte da rede vê um processo como líder e parte vê outro.
+<p>Se o algoritmo viola a propriedade de unicidade, então fica com <em>split-brain</em>, em que parte da rede vê um processo como líder e parte vê outro.
 Se o líder é o responsável por coordenar o acesso a uma região crítica, como visto no algoritmo coordenado de exclusão mútua, então ter dois líderes poderá levar a dois processos na região crítica e portanto violação da exclusão mútua. </p>
 <p>Uma das formas de evitar <em>split-brain</em> é atribuir um <strong>"peso"</strong> para cada processo e só aceitar que um líder seja declarado se o mesmo seus votos carregarem mais da metade do peso do sistema.
 Ainda assim, temos problemas, pois é necessário que rodadas sucessivas do algoritmo invalidem as eleições anteriores.
@@ -1494,12 +1539,12 @@ O algoritmo Raft de difusão atômica, que estudaremos adiante, define mandatos 
 <p>Dizemos que um algoritmo de eleição de líderes é estável se uma vez que um líder é eleito, uma nova eleição só acontece se o líder falha.
 Considere o algoritmo do brigão. Imagine, no exemplo apresentado, que o processo 5 teve problemas de comunicação e foi percebido como falho pelos demais.  Neste caso, o 4 seria eleito líder.
 Mas se o problema que aflige 5 é temporário, 5 voltará e executará nova eleição, tornando-se líder novamente. Se este cenário se repente indefinidamente, o sistema poderá ser seriamente comprometido em seu desempenho.</p>
-<p>Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de exeção ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
+<p>Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de execução ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
 Se o mesmo falhar, então seu peso será drasticamente reduzido e suas chances de ser eleito líder reduzidas temporariamente.</p>
-<p>Observe que os problemas enfrentados são ligados à detecção e contornação de falhas.</p>
+<p>Observe que os problemas enfrentados são ligados à detecção e contorno de falhas.</p>
 <h4 id="deteccao-de-falhas">Detecção de falhas</h4>
 <p>Como já mencionado antes, detecção de falhas é o mecanismo pelo qual um processo monitora e percebe se outro falhou.
-Pensemos em como um processo monitora o outro em um sitema distribuído. Claramente, por meio de troca de mensagens e temporizadores.
+Pensemos em como um processo monitora o outro em um sistema distribuído. Claramente, por meio de troca de mensagens e temporizadores.
 Mas se estamos falando de sistemas distribuídos assíncronos, então mensagens podem ser atrasadas indefinidamente ou relógios podem ser atrasados, então não se pode confiar na falta de recepção de uma mensagem como garantia de que um processo parou de funcionar.
 Aprofundemo-nos nos próximos capítulo nos conceitos de tempo e tolerância a falhas, mas enquanto isso, fiquemos com o seguinte resultado.</p>
 <div class="admonition note">
