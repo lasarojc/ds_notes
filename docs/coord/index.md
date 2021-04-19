@@ -361,11 +361,11 @@ end
 ```
 
 Neste cenário, a propriedade de **Exclusão Mútua** é violada. 
-Isto porquê, dados os dois quóruns, todos os processos na interseção foram reinicidaos.
+Isto porquê, dados os dois quóruns, todos os processos na interseção foram reiniciados.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quóruns, de tamanho $m$, que se sobrepõem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
 
-![Quoruns](drawings/quorum_k.drawio#0)
+![Quoruns](../drawings/quorum_k.drawio#0)
 
 Seja a $P$ a probabilidade de **um coordenador em específico falhar** e se recuperar dentro de uma janela de tempo $\delta t$. Temos
 
@@ -405,13 +405,13 @@ Mas e as outras propriedades desejáveis do algoritmo de exclusão mútua, são 
     * Espera limitada
         * Aborts podem levar a espera infinita.
 
-Assim, este agoritmo também pode não ser adequado para certas situações. Vamos tentar reacessar os problemas da primeira abordagem.
+Assim, este algoritmo também pode não ser adequado para certas situações. Vamos tentar re-acessar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
 
 ???bug "TODO"
     * Maekawa - Diminui número de votos necessários ([descrição](https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp))
-    * Lamport - Usa relógios lógicos, mas é possível entender sem este background ([descriçao](https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/))
+    * Lamport - Usa relógios lógicos, mas é possível entender sem este background ([descrição](https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/))
     * Ricart-Agrawala - Melhora algoritmo de Lamport ([descrição](https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp))
     * [Distributed-Mutual-Exclusion-slides](https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf)
 
@@ -433,14 +433,14 @@ Formalmente, um algoritmo de eleição de líderes deve satisfazer as seguintes 
 
 Para entendermos melhor o problema, tentemos desenvolver um protocolo simples para escolhermos um líder, por exemplo, em sua turma da disciplina de Sistemas Distribuídos. Vejamos algumas questões importantes.
 
-* Candidatos: são todos os membros elegíveis ou apenas um subconjunto dos mesmos?
+* Candidatos: todos os membros são elegíveis ou apenas um subconjunto dos mesmos?
 * Comunicação: todos se conhecem e se falam diretamente ou há grupos incomunicáveis dentro da turma?
-* Estabilidade: de que adianta eleger um dos colegas se frequentemente falta não está presente quando necessário?
+* Estabilidade: de que adianta eleger um dos colegas se frequentemente não está presente quando necessário?
 
 Em termos computacionais, estas questões são relevantes pois todos os processos **não** nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
 Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
 
-Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíves, ou exatamente por isso, temos  um problem mais fundamental para resolver: para eleger um líder, precisamos diferenciar processos.
+Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíveis, ou exatamente por isso, temos  um problem mais fundamental para resolver: **para eleger um líder, precisamos diferenciar processos**.
 Dentro de uma única máquina, identificamos processos facilmente usando seu **PID**, ou *process id*, um inteiro associado a cada processo instanciado pelo sistema operacional; o PID é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, se o *host* é reiniciado, os PID também são, e portanto esta identificação não é duradoura. Mais importante, o PID só faz sentido dentro de uma única máquina e não em um sistema distribuído.
 
 Se apenas uma instância do processo executa em um mesmo *host*, então o identificador do *host* (e.g., endereço IP) em si é suficiente e, de fato, comumente utilizado. 
@@ -449,13 +449,13 @@ Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor cri
 Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
 
-[![](images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
+[![](../images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
 
 A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.
 
 
 ### Algoritmo do Brigão (*Bully*)
-No algoritmo do brigão, alguma **características comparável** dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+No algoritmo do brigão, alguma **característica comparável** dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
 Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
 
 Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
@@ -486,7 +486,7 @@ Observe que os processos não sabem a priori como os eventos aconteceram e apena
 6. 4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.
 7. 4 se declara líder e envia (COORD,4) a todos os processos. 
 
-![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](./images/bully.png)
+![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](../images/bully.png)
 
 
 Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
@@ -497,7 +497,7 @@ Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder
 Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
 Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.
 
-![Why you bully?](./images/why-you-bully-meme.jpg)  
+![Why you bully?](../images/why-you-bully-meme.jpg)  
 
 Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.
 
@@ -509,8 +509,9 @@ Considere também que todos os processos são exatamente idênticos, inclusive n
 Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicialmente Seguidor se torna Candidato, então se declara Eleito, avisa a seus pares e, finalmente, se declara Empossado.
 
 !!!example "Algoritmo do Anel 1"
-     * Organize os nós em um anel lógico
-     * $C \gets$ Seguidor
+     * Na iniciação
+         * Organize os nós em um anel lógico
+         * $C \gets$ Seguidor
      * Quando um processo acha que o líder está morto
           * $C \gets$ Candidato
           * Envia (VoteEmMim) para "a direita" no anel.
@@ -527,8 +528,8 @@ Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicial
               * $C \gets$ Empossado
 
 Imagine um cenário com dois processos, como na imagem a seguir. 
-Os nomes dos processos são apenas para facilitar o entendimento do fluxo dem mensagens e não estão acessíveis aos processos.   
-![](drawings/anel1.drawio)   
+Os nomes dos processos são apenas para facilitar o entendimento do fluxo de mensagens e não estão acessíveis aos processos.   
+![](../drawings/anel1.drawio)   
 Executando o algoritmo Anel 1, os processos enviam ($\rightarrow$) e recebem ($\leftarrow$) as seguintes mensagens e ajustam $C$ da seguinte forma.
 
 | 1 | 2 |
@@ -604,26 +605,26 @@ Ele faz isso em rodadas, comparando identificadores com outros processos ativos 
 !!!note "Algoritmo de Franklin"
     * Organize os nós em um anel lógico
     * Ativo $\gets 1$
-    * Quando $p$ acha que o líder está morto e se Ativo$ = 1$:
+    * Quando $p$ acha que o líder está morto e se Ativo $ = 1$ :
         * Envia mensagem $(p)$ à direita e à esquerda
     * Quando $p$ recebe $e$ e $d$, da esquerda e da direita, respectivamente:
         * Se Ativo $=1$
             * Se $max(e,d) < p$
-                * Envia mensagem $p$ à direita e à esquerda
-            * Se $max(q,r) > p$
+                * Envia mensagem $(p)$ à direita e à esquerda
+            * Se $max(e,d) > p$
                 * Ativo $\gets 0$
                 * Envia mensagem $-p$ à direita e à esquerda
-            * Se $max(q,r) = p$
+            * Se $max(e,d) = p$
                 * $p$ se declara líder.
         * Se Ativo $=0$
-            * Repassa cada messagem para o outro lado.
+            * Repassa cada mensagem para o outro lado.
 
 No exemplo na figura, os nós brancos são ativos e os amarelos inativos. 
 Observe o papel do nó no centro, supondo que tem o maior identificador entre todos os processos. 
 Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
 Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, que também se inativam.
 
-![Algoritmo de Franklin](drawings/leaderelection.drawio#0)
+![Algoritmo de Franklin](../drawings/leaderelection.drawio#0)
 
 Observe o seguinte:
 
@@ -643,51 +644,65 @@ De acordo com o tipo de arestas que um processo tem, ele é classificado como um
 * Vertedouro (sink) - processo que só tem arestas de chegada
 * Interno - processo que tem arestas de chegada e de saída
 
-O algoritmo executa em duas fases. Na primera, cada processo marca sua arestas como apondando para o maior dentre si próprio e seus vizinhos.
+O algoritmo executa em duas fases. Na primeira, cada processo marca sua arestas como apontando para o maior dentre si próprio e seus vizinhos.
 Na segunda fase, mensagens "vão e voltam", o que dá o nome ao algoritmo.
 Na "ida", as mensagens vão das fontes para os vertedouros, que identificam quais fontes tem os menores identificadores e sinalizam para que continuem fontes na próxima etapa com mensagens de volta.
 As mensagens de volta reordenam as arestas para garantir este comportamento.
 Vejamos o algoritmo em mais detalhes.
 
 !!!note "Algoritmo do YoYo"
-	* Fase 1
-		* $p$ envia seu identificador para seus vizinhos.
-		* Quando $p$ recebe $q$
-			* Se $p>q$
-                * Marca a aresta em que recebeu $q$ como sendo de chegada ($p\leftarrow q$)
-			* Senão
-                * Marca a aresta em que recebeu $q$ como sendo de saída ($q\leftarrow p$)
-	* Fase 2
-        * Se $p$ é uma **fonte**
+    * Fase 1
+         * $p$ envia seu identificador para seus vizinhos.
+            * Quando $p$ recebe $q$
+                * Se $p>q$
+                     * Marca a aresta em que recebeu $q$ como sendo de chegada ($p\leftarrow q$)
+                * Senão
+                     * Marca a aresta em que recebeu $q$ como sendo de saída ($q\leftarrow p$)
+
+    * Fase 2
+         * Se $p$ é uma **fonte**
             * $p$ envia seu identificador em todas as suas arestas de saída.
             * Quando $p$ receber $S$ ou $N$ em todas as suas arestas de saída
                 * Se recebeu apenas $S$
-                    * Executa fase 2 novamente
+                    * Executa fase 2 novamente 
 
         * Se $p$ é um **nó interno**
+
             * Quando $p$ receber identificadores em todas as suas arestas de entrada
+
                 * escolhe o menor id recebido $m$
+
                 * envia $m$ em todas as suas arestas de saída
+
             * Quando $p$ recebeu $S$ ou $N$ em todas as suas arestas de saída
+
                 * Se recebeu algum $S$
+                    
                     * envia $S$ para vizinhos de onde recebeu $m$
+
                     * envia $N$ para vizinhos de onde recebeu $m' \neq m$
+                
                 * Se não recebeu $S$
+                
                     * envia $N$ para vizinhos de onde recebeu algum id.
 
         * Se $p$ é um **vertedouro**
+
             * Quando $p$ receber identificadores em todas as suas arestas de entrada
+
                 * escolhe o menor id recebido $m$
+
                 * envia $S$ para vizinhos de onde recebeu $m$
+
                 * envia $N$ para vizinhos de onde recebeu $m' \neq m$
-	    
-	    * N inverte a direção das arestas em que trafega.
+        
+        * N inverte a direção das arestas em que trafega.
 
 [Fonte](https://en.wikipedia.org/wiki/Leader_election)
 
 Veja um exemplo com 3 processos em destaque, uma fonte, um interno e um vertedouro.
 
-![Algoritmo do YoYo](drawings/leaderelection.drawio#1)
+![Algoritmo do YoYo](../drawings/leaderelection.drawio#1)
 
 Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do problema de eleição de líderes.
 
@@ -698,7 +713,7 @@ Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do
 * e) Inativação dos vertedouros
 
 Exemplo: 
-![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](./images/yoyo.png)
+![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](../images/yoyo.png)
 
 
 
@@ -711,7 +726,7 @@ Vejamos esta e outras situações problemáticas em eleição de líderes.
 ### Questões importantes
 
 #### *Split-brain*
-Se o algoritmo viola a propridade de unicidade, então fica com *split-brain*, em que parte da rede vê um processo como líder e parte vê outro.
+Se o algoritmo viola a propriedade de unicidade, então fica com *split-brain*, em que parte da rede vê um processo como líder e parte vê outro.
 Se o líder é o responsável por coordenar o acesso a uma região crítica, como visto no algoritmo coordenado de exclusão mútua, então ter dois líderes poderá levar a dois processos na região crítica e portanto violação da exclusão mútua. 
 
 Uma das formas de evitar *split-brain* é atribuir um **"peso"** para cada processo e só aceitar que um líder seja declarado se o mesmo seus votos carregarem mais da metade do peso do sistema.
@@ -725,14 +740,14 @@ Dizemos que um algoritmo de eleição de líderes é estável se uma vez que um 
 Considere o algoritmo do brigão. Imagine, no exemplo apresentado, que o processo 5 teve problemas de comunicação e foi percebido como falho pelos demais.  Neste caso, o 4 seria eleito líder.
 Mas se o problema que aflige 5 é temporário, 5 voltará e executará nova eleição, tornando-se líder novamente. Se este cenário se repente indefinidamente, o sistema poderá ser seriamente comprometido em seu desempenho.
 
-Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de exeção ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
+Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de execução ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
 Se o mesmo falhar, então seu peso será drasticamente reduzido e suas chances de ser eleito líder reduzidas temporariamente.
 
-Observe que os problemas enfrentados são ligados à detecção e contornação de falhas.
+Observe que os problemas enfrentados são ligados à detecção e contorno de falhas.
 
 #### Detecção de falhas
 Como já mencionado antes, detecção de falhas é o mecanismo pelo qual um processo monitora e percebe se outro falhou.
-Pensemos em como um processo monitora o outro em um sitema distribuído. Claramente, por meio de troca de mensagens e temporizadores.
+Pensemos em como um processo monitora o outro em um sistema distribuído. Claramente, por meio de troca de mensagens e temporizadores.
 Mas se estamos falando de sistemas distribuídos assíncronos, então mensagens podem ser atrasadas indefinidamente ou relógios podem ser atrasados, então não se pode confiar na falta de recepção de uma mensagem como garantia de que um processo parou de funcionar.
 Aprofundemo-nos nos próximos capítulo nos conceitos de tempo e tolerância a falhas, mas enquanto isso, fiquemos com o seguinte resultado.
 
