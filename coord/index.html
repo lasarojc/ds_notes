@@ -206,7 +206,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../preface/" class="md-nav__link">
         Prefácio
       </a>
     </li>
@@ -496,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tech/" class="md-nav__link">
+      <a href="../tech/index.md" class="md-nav__link">
         Tecnologias
       </a>
     </li>
@@ -1005,7 +1005,7 @@ end
 Isto porquê, dados os dois quóruns, todos os processos na interseção foram reiniciados.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quóruns, de tamanho <span class="arithmatex">\(m\)</span>, que se sobrepõem em <span class="arithmatex">\(k\)</span> processos, qual a probabilidade <span class="arithmatex">\(P_v\)</span> de que os <span class="arithmatex">\(k\)</span> processos na interseção sejam reiniciados e levem à violação?</p>
-<p><img alt="Quoruns" src="drawings/quorum_k.drawio-0.svg" /></p>
+<p><img alt="Quoruns" src="../drawings/quorum_k.drawio-0.svg" /></p>
 <p>Seja a <span class="arithmatex">\(P\)</span> a probabilidade de <strong>um coordenador em específico falhar</strong> e se recuperar dentro de uma janela de tempo <span class="arithmatex">\(\delta t\)</span>. Temos</p>
 <ul>
 <li>Probabilidade de falha de <strong>exatamente 1</strong> coordenador: <span class="arithmatex">\(P^1(1-P)^{n-1}\)</span></li>
@@ -1086,7 +1086,7 @@ Dentro de uma única máquina, identificamos processos facilmente usando seu <st
 Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
 <p>Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.</p>
-<p><a href="https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html"><img alt="" src="images/octogono.jpg" /></a></p>
+<p><a href="https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html"><img alt="" src="../images/octogono.jpg" /></a></p>
 <p>A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.</p>
 <h3 id="algoritmo-do-brigao-bully">Algoritmo do Brigão (<em>Bully</em>)</h3>
 <p>No algoritmo do brigão, alguma <strong>característica comparável</strong> dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
@@ -1131,14 +1131,14 @@ Observe que os processos não sabem a priori como os eventos aconteceram e apena
 <li>4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.</li>
 <li>4 se declara líder e envia (COORD,4) a todos os processos. </li>
 </ol>
-<p><img alt="Bully algorithm" src="images/bully.png" /></p>
+<p><img alt="Bully algorithm" src="../images/bully.png" /></p>
 <p>Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
 Se o temporizador usado pelos processos para esperar pelo líder for ajustado de forma agressiva, frequentemente serão iniciadas eleições mesmo que o líder não tenha falhado.
 Já se o valor do temporizador for muito grande, o sistema <strong>demorará a eleger um novo líder</strong>.
 Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder for muito curto, <strong>mais de um processo pode se declarar líder</strong>, uma situação conhecida como <em>split-brain</em>.</p>
 <p>Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
 Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.</p>
-<p><img alt="Why you bully?" src="images/why-you-bully-meme.jpg" />  </p>
+<p><img alt="Why you bully?" src="../images/why-you-bully-meme.jpg" />  </p>
 <p>Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.</p>
 <h3 id="algoritmos-em-aneis">Algoritmos em Anéis</h3>
 <p>Consideremos processos organizados em um anel lógico em que processos troquem mensagens apenas com processos à "esquerda" e à "direita".
@@ -1184,7 +1184,7 @@ Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicial
 </div>
 <p>Imagine um cenário com dois processos, como na imagem a seguir. 
 Os nomes dos processos são apenas para facilitar o entendimento do fluxo de mensagens e não estão acessíveis aos processos. <br />
-<img alt="" src="drawings/anel1.drawio-0.svg" /> <br />
+<img alt="" src="../drawings/anel1.drawio-0.svg" /> <br />
 Executando o algoritmo Anel 1, os processos enviam (<span class="arithmatex">\(\rightarrow\)</span>) e recebem (<span class="arithmatex">\(\leftarrow\)</span>) as seguintes mensagens e ajustam <span class="arithmatex">\(C\)</span> da seguinte forma.</p>
 <table>
 <thead>
@@ -1385,7 +1385,7 @@ Ele faz isso em rodadas, comparando identificadores com outros processos ativos 
 Observe o papel do nó no centro, supondo que tem o maior identificador entre todos os processos. 
 Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
 Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, que também se inativam.</p>
-<p><img alt="Algoritmo de Franklin" src="drawings/leaderelection.drawio-0.svg" /></p>
+<p><img alt="Algoritmo de Franklin" src="../drawings/leaderelection.drawio-0.svg" /></p>
 <p>Observe o seguinte:</p>
 <ul>
 <li>Em cada fase, para qualquer par de vizinhos ativos, pelos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo <span class="arithmatex">\(O(log n)\)</span> fases.</li>
@@ -1512,7 +1512,7 @@ Vejamos o algoritmo em mais detalhes.</p>
 </div>
 <p><a href="https://en.wikipedia.org/wiki/Leader_election">Fonte</a></p>
 <p>Veja um exemplo com 3 processos em destaque, uma fonte, um interno e um vertedouro.</p>
-<p><img alt="Algoritmo do YoYo" src="drawings/leaderelection.drawio-1.svg" /></p>
+<p><img alt="Algoritmo do YoYo" src="../drawings/leaderelection.drawio-1.svg" /></p>
 <p>Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do problema de eleição de líderes.</p>
 <ul>
 <li>a) A rede em seu estado inicial.</li>
@@ -1522,7 +1522,7 @@ Vejamos o algoritmo em mais detalhes.</p>
 <li>e) Inativação dos vertedouros</li>
 </ul>
 <p>Exemplo: 
-<img alt="Fonte: Hemis62 - Own work, CC BY-SA 4.0" src="images/yoyo.png" /></p>
+<img alt="Fonte: Hemis62 - Own work, CC BY-SA 4.0" src="../images/yoyo.png" /></p>
 <p>Embora interessante, este algoritmo também tem problemas, sendo um dos mais críticos a forma de lidar com falhas, mesmo sem considerar falhas de processos.
 Suponha que o canal de comunicação entre os processos 2 e 10 pare de funcionar. O que acontecerá?
 Esta é uma situação que denominamos <strong>particionamento</strong> da rede e que neste caso levará a duas eleições concorrentes acontecerem e, consequentemente, a dois líderes sendo eleitos, o que é conhecido na área como <strong><em>split-brain</em></strong>.

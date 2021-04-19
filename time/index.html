@@ -206,7 +206,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../preface/" class="md-nav__link">
         Prefácio
       </a>
     </li>
@@ -391,6 +391,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nunca-volte-no-tempo" class="md-nav__link">
+    Nunca volte no tempo
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -537,7 +544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tech/" class="md-nav__link">
+      <a href="../tech/index.md" class="md-nav__link">
         Tecnologias
       </a>
     </li>
@@ -629,6 +636,13 @@
           <li class="md-nav__item">
   <a href="#ptp-precision-time-protocol" class="md-nav__link">
     PTP - Precision Time Protocol
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nunca-volte-no-tempo" class="md-nav__link">
+    Nunca volte no tempo
   </a>
   
 </li>
@@ -743,53 +757,71 @@
   <!-- Content -->
   <h1 id="tempo">Tempo</h1>
 <p>Neste capítulo discutiremos como o <strong>tempo</strong> é importante no desenvolvimento de sistemas distribuídos.
-Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o armazenamento de arquivos na nuvem, sincronizado com o sistema de arquivos local. 
-Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.</p>
-<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-0.svg" /></p>
+Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o <strong>armazenamento de arquivos na nuvem</strong>, sincronizado com o sistema de arquivos local. 
+Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de <strong>cloud-drive</strong>.
+No exemplo a seguir, um arquivo é sincronizado com uma nova cópia, Cliente 1, que altera o arquivo e sincroniza de volta com o servidor.
+Na sequência, um novo cliente se registra, Cliente 2, recebe o arquivo, o altera e sincroniza com o servidor, que propaga a nova versão para Cliente 1.
+Ao final da execução, todos os envolvidos tem cópias idênticas do arquivo. <img alt="👍" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44d.svg" title=":thumbsup:" /></p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-0.svg" /></p>
 <p>Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
 Mais especificamente, quando as duas máquinas se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?</p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-1.svg" /></p>
+<p>Você pode se perguntar se isso realmente poderia acontecer, afinal, você não estará em dois lugares para fazer modificações concorrentes. Ignorando-se o fato de que outra pessoa poderia estar editando em paralelo, uma falha de comunicação poderia lhe permitir editar nos dois computadores <strong>concorrentemente</strong>.</p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-2.svg" /></p>
 <p>Uma possibilidade simples é sempre aceitar cada nova versão como uma modificação do arquivo.
 Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva.
-No exemplo seguinte, o resultado é o mesmo que no exemplo anterior, sem falhas.</p>
-<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-1.svg" /></p>
-<p>Contudo, se estendermos um pouco mais a descontividade do nó na parte de cima, o resultado final se inverte.</p>
-<p><img alt="Cloud Drive" src="drawings/cloud_drive.drawio-2.svg" /></p>
-<p>No Exemplo, entre as entregas da "Versão B" e "Versão A" para o servidor no centro do diagrama, vale a "Versão B".
-Também pelo gráfico, vemos que a "Versão B" foi criada <strong>depois</strong> da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
-Logo, questionamos se esta abordagem é correta.
-Afinal ordem de chegada ao servidor não serve como critério para escolha, afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram criados.</p>
-<p>Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas na <strong>criação</strong> do arquivo. Contudo, o horário de criação de um arquivo é relativo a onde foi criado e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.</p>
+No exemplo seguinte, o resultado deveria ser A, seguindo esta abordagem.</p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-3.svg" /></p>
+<p>Contudo, vemos alguns problemas pois, pelo gráfico, vemos que a "Versão B" foi criada <strong>depois</strong> da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
+Além disso, se encolhermos um pouco a desconexão do nó na parte de cima, o resultado final se inverte.</p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-4.svg" /></p>
+<p>Isso quer dizer que a decisão de qual a versão deve ser mantida depende mais da rede que das edições do arquivo em si, ou mesmo do algoritmo <strong><em>last writes wins</em></strong>.
+Logo, a ordem de chegada ao servidor não serve como critério para escolha pois a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram modificados.</p>
+<p>Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de  <strong>criação</strong> e <strong>modificação</strong> do arquivo. Contudo, o <strong>horários são relativos</strong> a onde a operação aconteceu e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.</p>
+<p><img alt="Cloud Drive" src="../drawings/cloud_drive.drawio-5.svg" /></p>
 <!--Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em *operações de modificação*, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas. , a menos que façamos com que os processo concordem na passagem do tempo.-->
 
 <p>Se for possível identificar a causalidade entre as modificações, isto é, qual versão originou qual outra, então é claro que se deve manter versões de acordo com a ordem causal.
 Contudo, edições concorrentes, como a criação das versões A e B no exemplo anterior, não tem relação de causalidade entre si.</p>
-<p>Assim,
-em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analise e decida o que fazer, que servidores git exigem que o usuário pegue a versão salva mais recentemente e compatibilize suas mudanças com ela antes de submeter novas mudanças, e o Perforce trabalha com <em>locks</em>  de arquivos.</p>
+<p>Assim, <strong>em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver</strong>, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analise e decida o que fazer, que servidores git exigem que o usuário pegue a versão salva mais recentemente e compatibilize suas mudanças com ela antes de submeter novas mudanças, e o Perforce trabalha com <em>locks</em>  de arquivos.</p>
 <p>Se pensarmos em termos não de arquivos sendo enviados para um servidor, mas de operações de modificações sendo executadas, então dada esta problemática, podemos simplificar a questão em nossas mãos.</p>
 <div class="admonition question">
 <p class="admonition-title">Como ordenar operações de clientes?</p>
 <p>Se duas operações originadas em clientes são enviadas ao servidor, qual deve ser executada primeiro?</p>
 </div>
-<p>Embora, como já vimos, usar a ordem temporal da criação das operações também seja problemático, já que relógios são dessincronizados em sistemas distribuídos típicos, alguns sistemas tentam resolver automaticamente os conflitos usando exatamente estes relógios. O CassandraDB, por exemplo, usa <strong><em>last write wins</em></strong> ou <strong><em>latest version wins</em></strong>, onde <strong><em>last</em></strong> é definido em termos do relógio do cliente.
+<p>Embora, como já vimos, usar a ordem temporal da criação das operações também seja problemático, já que relógios são dessincronizados em sistemas distribuídos típicos, alguns sistemas tentam resolver automaticamente os conflitos usando exatamente estes relógios. 
+O CassandraDB, por exemplo, usa <strong><em>last write wins</em></strong> ou <strong><em>latest version wins</em></strong>, onde <strong><em>last</em></strong> é definido em termos do relógio do cliente.
 Neste cenário, temos novo problema:</p>
 <div class="admonition question">
 <p class="admonition-title">Pergunta</p>
 <p>Como determinar qual foi enviada primeiro, em um sistema assíncrono?</p>
+</div>
+<div class="admonition sideslide">
+<p class="admonition-title">Como sincronizar?</p>
+<p>Como sincronizar relógios em um sistema distribuído?</p>
 </div>
 <p>Para usar esta abordagem, precisamos encontrar uma <strong>fonte de tempo confiável e distribuída</strong>, construída pelo uso de protocolos de <strong>sincronização de relógios físicos</strong></p>
 <h2 id="tempo-fisico">Tempo Físico</h2>
 <p>Para falarmos sobre sincronização de relógios em um cenário distribuído, primeiro devemos entender como funcionam os relógios em nível de uma única máquina, isto é, seus relógios físicos e como são usados pelo sistema operacional.</p>
 <h3 id="relogios-de-quartzo-e-atomicos">Relógios de Quartzo e Atômicos</h3>
 <p>Quando falamos em relógios, provavelmente falamos sobre relógios a base de quartzo.
-Para uma introdução rápida, assista o seguinte vídeo.</p>
+Para uma introdução rápida, assista ao seguinte vídeo.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+<div class="admonition sideslide">
+<p class="admonition-title">Quartzo</p>
+<ul>
+<li>Efeito piezoelétrico</li>
+<li>32768Hz</li>
+<li>Erro de 0,5s por dia</li>
+</ul>
+</div>
 <p>Em suma, um relógio de quartzo consiste em um <strong>diapazão de quartzo</strong> cortado a laser que, devido ao <strong>efeito Piezoelétrico</strong><sup id="fnref:piezo"><a class="footnote-ref" href="#fn:piezo">2</a></sup> e sua forma particular, vibra a <span class="arithmatex">\(32768 = 2^{15}\)</span>Hz<sup id="fnref:freq"><a class="footnote-ref" href="#fn:freq">3</a></sup>, e em um contador que conta cada vibração, medindo a passagem do tempo.
 Estes relógios erram na medição do tempo em no máximo <strong>&frac12;s por dia</strong>, desde que operem dentro da faixa de 5 a 35C, mas isso também muda com a idade do cristal, a corrente elétrica passando por ele e também devido a imperfeições no cristal<sup id="fnref:quartz"><a class="footnote-ref" href="#fn:quartz">1</a></sup>.</p>
 <p>Computadores em geral usam relógios de quartzo, por serem baratos, como base de um relógio mantido em software.
 Isto é, do ponto de vista de um computador comum, o tempo é medido com base em um relógio quartzo, cujos incrementos são capturados em um contador;
 o contador gera <strong>interrupções em intervalos programados</strong> (e.g., Linux &gt;2.6 usa 250Hz por padrão; máximo 1000Hz) e as interrupções causam ajustes em um <strong>relógio em software</strong>, um contador indireto <span class="arithmatex">\(C\)</span>.</p>
-<div class="admonition question">
+<div class="admonition sideslide">
 <p class="admonition-title">Precisão</p>
 <p>Dado a frequência padrão de 250Hz, medições de tempo menores que 4ms são altamente imprecisas.
  Como medir o tempo gasto em uma função do seu código?</p>
@@ -798,23 +830,25 @@ o contador gera <strong>interrupções em intervalos programados</strong> (e.g.,
 A taxa de erro é denominada <em>drift</em>, é representada por <span class="arithmatex">\(\rho\)</span>.</p>
 <p>Assumindo um relógio perfeito, <span class="arithmatex">\(t\)</span>, temos que <span class="arithmatex">\(1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho\)</span>.
 Assim, um <span class="arithmatex">\(\rho\)</span> de 0.1 implica em um erro de mais ou menos 10%; a figura a seguir mostra a faixa em que <span class="arithmatex">\(C\)</span> pode operar e que o erro em relação a <span class="arithmatex">\(t\)</span> vai aumentando com a passagem do tempo.</p>
-<p><img alt="Clock drift" src="drawings/clock_skew.drawio-0.svg" /></p>
+<p><img alt="Clock drift" src="../drawings/clock_skew.drawio-0.svg" /></p>
 <p>Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. 
 Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como <strong>relógios atômicos</strong>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/p2BxAu6WZI8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p>Embora muito bom, o relógio atômico também não é perfeito e, devido a várias razões, pode levar também a erros.
-Mas o quê mais se pode fazer no sentido de melhorar a precisão dos relógios? A resposta está no UTC.</p>
+<p>Embora muito bons, os relógios atômicos também não são perfeito e, devido a várias razões, podem levar também a erros.
+Mas o quê mais se pode fazer no sentido de <strong>melhorar a precisão dos relógios</strong>? A resposta está no UTC.</p>
 <h3 id="tempo-universal-coordenado">Tempo Universal Coordenado</h3>
-<p>O UTC, de uma mistura dos nomes em Inglês e Francês do Tempo Universal Coordenado, um padrão global para coordenação da medição da passagem do tempo.
+<p>O UTC, de uma mistura dos nomes em Inglês e Francês do <strong>Tempo Universal Coordenado</strong>, um padrão global para coordenação da medição da passagem do tempo.
 Segundo o UTC, o sol está a pino às 12:00 na latitude 0, ou a no máximo 1s deste instante; ao redor da latitude 0 grau estabelece-se uma faixa em que todos os pontos tem o mesmo horário, e outras 23 faixas como esta com deslocamentos consecutivos de +-1 hora.
 Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores políticos; a China, por exemplo, apesar de seu tamanho, está toda dentro de um mesmo horário, "correto" para Beijing.</p>
-<p><img alt="Fuso-horários" src="images/TimeZones.png" /></p>
-<p>Mas como o UTC é definido? Com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
+<p><img alt="Fuso-horários" src="../images/TimeZones.png" /></p>
+<p>O UTC é definido com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
 <div class="admonition quote">
 <p class="admonition-title">UTC</p>
 <p>Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.</p>
 </div>
+<p>Uma vez que tenhamos um tempo global, com o qual todos os relógios concordam, resolvemos os problemas apresentados acima, correto?
+Não exatamente, pois os relógios precisam ser sincronizados com o UTC e, como vimos, <strong>mesmo que sincronizados inicialmente, relógios podem se distanciar uns dos outros</strong> na marcação do tempo.</p>
 <h3 id="sincronizacao-de-relogios">Sincronização de Relógios</h3>
 <p>Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais, colocamos nova pergunta:</p>
 <ul>
@@ -823,37 +857,26 @@ Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores p
 <p>Embora a resposta seja negativa, no sentido de que não é possível alcançar sincronização perfeita, nada nos impede de fazer um melhor esforço e, neste sentido, também temos que nos perguntar qual a frequência de sincronização?</p>
 <div class="admonition question">
 <p class="admonition-title">Frequência de Sincronização</p>
-<p>Como garantir que dois relógios com erro máximo igual a <span class="arithmatex">\(\rho\)</span> não diferirão em mais que <span class="arithmatex">\(\delta\)</span> unidades de tempo?</p>
+<p>Como garantir que um relógio com erro máximo igual a <span class="arithmatex">\(\rho\)</span> não diferirá em mais que <span class="arithmatex">\(\delta\)</span> unidades de tempo do UTC?</p>
 </div>
-<details class="answer"><summary>Resposta</summary><p>Sincronize pelo menos a cada <span class="arithmatex">\(\frac{\delta}{2\rho}\)</span> segundos.</p>
-</details>
-<p>E se tivermos muitos relógios a serem sincronizados, o problema é mais difícil?</p>
-<div class="admonition question">
-<p class="admonition-title">Frequência de Sincronização</p>
-<p>Como garantir que dois relógios quaisquer, em um sistema com <span class="arithmatex">\(n\)</span> relógios, todos com erro máximo igual a <span class="arithmatex">\(\rho\)</span>, não diferirão em mais que <span class="arithmatex">\(\delta\)</span> unidades de tempo?</p>
-</div>
-<details class="answer"><summary>Resposta</summary><p>Se todos sincronizarem com a mesma fonte, a cada <span class="arithmatex">\(\frac{\delta}{2\rho}\)</span> segundos, seja o nó n1 aquele com maior erro em relação à fonte e n2 aquele com maior erro em relação a n1. Como ambos tem um erro máximo de <span class="arithmatex">\(\delta\)</span> em relação à fonte, o erro máximo entre os dois nós é <span class="arithmatex">\(2\delta\)</span>. Como este erro é o dobro do desejado, basta dobrar a frequência de sincronização para cortar o erro pela metade.</p>
-</details>
 <p>Vejamos um exemplo:</p>
+<ul>
+<li><span class="arithmatex">\(\rho = 0,1\)</span> (10%)</li>
+<li><span class="arithmatex">\(\delta\)</span> = 1s</li>
+<li>Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. </li>
+<li>Logo, a sincronização deve ser feita a cada 10s, i.e, <span class="arithmatex">\(\frac{\delta}{\rho} = \frac{1s}{0,1} = \frac{1s}{0,1} = 10s\)</span></li>
+</ul>
+<p>Mas, e se quisermos sincronizar dois relógios com UTC, um com erro <span class="arithmatex">\(\rho\)</span>, de forma que estes dois relógios não se distanciem mais que <span class="arithmatex">\(\delta\)</span> unidades, o problema é mais difícil?</p>
+<p>Se todos se sincronizarem com a mesma fonte, a cada <span class="arithmatex">\(\frac{\delta}{\rho}\)</span> segundos, como ambos tem um erro máximo de <span class="arithmatex">\(\delta\)</span> em relação à fonte, o erro máximo entre os dois nós é <span class="arithmatex">\(2\delta\)</span>. Como este erro é o dobro do desejado, basta dobrar a frequência de sincronização para cortar o erro pela metade. Vejamos novamente o exemplo</p>
 <ul>
 <li><span class="arithmatex">\(\rho = 0,1\)</span></li>
 <li><span class="arithmatex">\(\delta\)</span> = 1s</li>
 <li>Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. </li>
-<li>Como cada nó poderia estar errando em "direções"  diferentes, após 5s, um nó poderia se adiantar em 0,5s enquanto o outro se atrasa pela mesma quantidade de tempo, somando 1s de diferença. Logo, eles tem que se sincronizar a cada 5s, i.e, <span class="arithmatex">\(\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s\)</span></li>
+<li>Como cada nó poderia estar errando em "direções"  diferentes, após 5s, um nó poderia se adiantar em 0,5s enquanto o outro poderia se atrasar pela mesma quantidade de tempo, somando 1s de diferença. Logo, eles tem que se sincronizar a cada 5s, i.e, <span class="arithmatex">\(\frac{\delta}{2\rho} = \frac{1s}{2 \times 0,1} = \frac{1s}{0,2} = 5s\)</span></li>
 </ul>
-<p>Como última parada antes de começarmos a falar sobre a sincronização em si, devemos estabelecer alguns cuidados a serem tomados no processo.</p>
-<ul>
-<li>Nunca voltar no tempo - isso poderia levar a um dado ter data de edição anterior a data de criação.</li>
-<li>Ajustes graduais -  acelere ou desacelere o relógio (em software)<ul>
-<li>Diminua/Aumente frequência de interrupção para atrasar/adiantar relógio</li>
-<li>Diminua/Aumente incremento com cada interrupção</li>
-</ul>
-</li>
-<li>Ajustes periódicos para fazer curvas convergirem.</li>
-<li>Correção após dormir será mais drástica</li>
-</ul>
+<p>Finalmente, se considerarmos relógios com erros distintos, <span class="arithmatex">\(\rho, \rho'\)</span>, a sincronização deve ser feita pela média dos erros, isto é, <span class="arithmatex">\(\frac{\delta}{2\frac{\rho + \rho'}{2}} = \frac{\delta}{\rho + \rho'}\)</span>.</p>
 <p>Agora que você já tem uma fonte confiável de tempo, o UTC, e sabe com que frequência sincronizar os relógios, só nos falta fazer a sincronização. 
-Contudo, falta ainda definir o protocolo pelo qual a sincronização é feita e exatamente com quem, uma vez que simpleste UTC é muito genérico. 
+Contudo, falta ainda definir o protocolo pelo qual a sincronização é feita e exatamente com quem, uma vez que simplesmente UTC é muito genérico. 
 Comecemos com vetor "próximo" do UTC, os relógios atômicos em satélites GPS.</p>
 <h4 id="global-positioning-system">Global Positioning System</h4>
 <p>Receptores GPS, com seus relógios sincronizados com os dos satélites, que difundem regularmente sua posição e o instante em que a difusão é feita, determinam sua posição relativa aos satélites, em uma técnica conhecida como trilateração, que consiste em determinar a distância do receptor em termos dos eixos <span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span> e <span class="arithmatex">\(z\)</span> em relação a cada um dos satélites. </p>
@@ -875,39 +898,46 @@ Para estes computadores "de segundo escalão", a receita então é:</p>
 <li>Use a resposta para ajustar o relógio local.</li>
 <li>Considere o erro introduzido pela latência variável da rede.</li>
 </ul>
-<p>Esta receita básica pode ser ajustada de diversas formas.</p>
-<h4 id="algoritmo-de-cristian">Algoritmo de Cristian</h4>
-<p>Assumindo que o relógio da máquina se sincronizando, <span class="arithmatex">\(M_1\)</span>, é bom o suficiente para medir a passagem de tempo em períodos curtos, mesmo que tenha uma <em>drift</em> rate considerável em períodos mais longos, execute o seguinte protocolo para se sincronizar com <span class="arithmatex">\(M_2\)</span>.</p>
+<p>Sendo mais específico, nomeemos os processos como cliente, quem pergunta, e servidor, quem responde, e os instantes em que os eventos acontecem:</p>
 <ul>
-<li><span class="arithmatex">\(M_1\)</span> pergunta "que horas são?" - <span class="arithmatex">\(t_0\)</span></li>
-<li><span class="arithmatex">\(M_2\)</span> recebe pergunta - <span class="arithmatex">\(t_1\)</span></li>
-<li><span class="arithmatex">\(M_2\)</span> anota o valor do relógio - <span class="arithmatex">\(t_s\)</span></li>
-<li><span class="arithmatex">\(M_2\)</span> envia resposta - <span class="arithmatex">\(t_2\)</span></li>
-<li>
-<p><span class="arithmatex">\(M_1\)</span> recebe resposta - <span class="arithmatex">\(t_3\)</span></p>
-</li>
-<li>
-<p>Assuma <span class="arithmatex">\(t_1 = t_s = t_2\)</span></p>
-</li>
-<li>
-<p>Assuma <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> como o tempo de transmissão da resposta (média da ida e da volta)</p>
-</li>
-<li><span class="arithmatex">\(M_1\)</span> ajusta relógio para <span class="arithmatex">\(t_c = t_s + \frac{t_3-t_0}{2}\)</span></li>
+<li>Cliente pergunta "que horas são?" - <span class="arithmatex">\(t_0\)</span></li>
+<li>Servidor recebe pergunta - <span class="arithmatex">\(t_1\)</span></li>
+<li>Servidor anota o valor do relógio - <span class="arithmatex">\(t_s\)</span></li>
+<li>Servidor envia resposta - <span class="arithmatex">\(t_2\)</span></li>
+<li>Cliente recebe resposta - <span class="arithmatex">\(t_3\)</span></li>
 </ul>
-<p>Mas e a aproximação <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span>, é boa?
-Podemos estimar o erro que ela introduz na sincronização, caso as mensagens tenham tempos de ida e volta assimétricos. Apesar das diferenças no tempo de ida e volta, existe um <strong>tempo mínimo</strong> para o tráfego em cada um dos sentidos, <span class="arithmatex">\(T_{min}\)</span>.
-A figura a seguir demonstra o erro desta técnica</p>
-<p><img alt="Erro do algoritmo de Christian" src="images/cristianerror.png" /></p>
-<p><a href="https://www.cs.rutgers.edu/~pxk/417/notes/content/05-clock-synchronization-slides.pdf">Fonte</a></p>
-<p>Observe que há dois casos extremos de erro na estimativa.
-No primeiro caso, dado um tempo de ida + volta igual a <span class="arithmatex">\(T_1 - T_0\)</span>, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> é menor que o tempo de volta real.
-No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> a ser maior que tempo de transmissão real da mensagem.
-O erro, contudo, está limitado à faixa amarela no desenho, que tem duração <span class="arithmatex">\(T_1 - T_0 - 2T_{min}\)</span>. 
-O erro então varia de mais ou menos metade deste valor. </p>
+<p><img alt="Algoritmo genérico de sincronização" src="../drawings/algo_cristian.drawio-0.svg" /></p>
+<p>Esta receita básica pode ser ajustada de diversas formas, sendo a primeira dada pelo algoritmo de Cristian.</p>
+<h4 id="algoritmo-de-cristian">Algoritmo de Cristian</h4>
+<p>No algoritmo de Cristian, assumimos que o relógio do Cliente é bom o suficiente para medir a passagem de tempo em períodos curtos, mesmo que tenha uma <em>drift</em> rate considerável em períodos mais longos. Assim, podemos executar o algoritmo genérico, adicionando o seguinte:</p>
+<ul>
+<li>Assuma <span class="arithmatex">\(t_1 = t_s = t_2\)</span></li>
+<li>Assuma <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> como o tempo de transmissão da resposta (média da ida e da volta)</li>
+<li>Cliente ajusta relógio para <span class="arithmatex">\(C = t_s + \frac{t_3-t_0}{2}\)</span></li>
+</ul>
+<p><img alt="Algoritmo genérico de sincronização" src="../drawings/algo_cristian.drawio-1.svg" /></p>
+<p>Mas e a aproximação <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span>, é boa? É uma aproximação tão boa quanto possível, pois medir a latência em uma única direção demandaria relógios sincronizados, exatamente o que estamos tentando resolver com este algoritmo. Quero dizer, temos uma dependência circular aqui, como o vídeo a seguir mostra.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=pTn6Ewhb27k&list=TLPQMDcwNDIwMjEDgk_ulUs7Ig&index=2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas direções tem latências diferentes, pois sabemos que, em uma rede de larga escala, é possível e comum que pacotes tomem caminhos diferentes na ida e na volta. Neste, podemos estimar o erro que a aproximação introduz na sincronização, desde que tenhamos estimativas de tempo mínimo para a transmissão em cada sentido, <span class="arithmatex">\(T_{min}\)</span>. A figura a seguir demonstra o erro desta técnica<sup id="fnref:erro"><a class="footnote-ref" href="#fn:erro">4</a></sup>, onde </p>
+<ul>
+<li><span class="arithmatex">\(t_3 - t_0\)</span> corresponde ao tempo medido entre o envio da requisição e recepção da resposta</li>
+<li>as setas vermelhas indicam o caso em que a requisição foi muito mais rápida que resposta (<span class="arithmatex">\(T_{min}\)</span>)</li>
+<li>as setas verdes indicam o caso em que a resposta foi muito mais rápida que requisição (<span class="arithmatex">\(T_{min}\)</span>)</li>
+</ul>
+<p><img alt="Erro do algoritmo de Christian" src="../drawings/algo_cristian.drawio-2.svg" /></p>
+<p>No caso vermelho, a aproximação <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span> é muito menor que o tempo de propagação da resposta, <span class="arithmatex">\(t3 - t1\)</span>, e no caso verde a aproximação é maior que o tempo <span class="arithmatex">\(t_3 - t_2\)</span>.
+Em ambos os casos, o erro é está limitado a <span class="arithmatex">\(\frac{t_2 - t1}{2}\)</span>, ou seja, <span class="arithmatex">\(+- \frac{t_3 - t_0}{2} - T_{min}\)</span>.</p>
+<!--Observe que há dois casos extremos de erro na estimativa.
+No primeiro caso, dado um tempo de ida + volta igual a $T_1 - T_0$, na figura, a mensagem de ida trafega no tempo mínimo e a volta lentamente. Neste caso, a estimativa $\frac{t_3-t_0}{2}$ é menor que o tempo de volta real.
+No segundo caso, a mensagem de ida trafega lentamente e a de volta no tempo mínimo, levando $\frac{t_3-t_0}{2}$ a ser maior que tempo de transmissão real da mensagem.
+O erro, contudo, está limitado à faixa amarela no desenho, que tem duração $T_1 - T_0 - 2T_{min}$. 
+O erro então varia de mais ou menos metade deste valor. -->
+
 <h4 id="algoritmo-de-berkeley">Algoritmo de Berkeley</h4>
 <p>Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo assume o que não há uma "fonte da verdade" do tempo, mas sim a necessidade de que todos os processos convirjam para um mesmo valor do relógio. É como nos filmes de espião em que os relógios são sincronizados; pouco importa se a bomba explodirá 10:57 ou 10:59, desde que todos concordem quando isso vai acontecer. Isso é o que chamamos de <strong>sincronização interna</strong> em vez de externa, como provido pelo algoritmo de Cristian.</p>
 <p>O algoritmo de Berkeley requer que todo nó execute um processo de sincronização, um "daemon", e separa seus papéis em dois tipos, <strong>primário</strong> e <strong>secundário</strong>.
-O papel do primário pode ser rotacionado entre os vários processos, sem perdas para sua execução. O algoritmo então é executacomo se segue:</p>
+O papel do primário pode ser rotacionado entre os vários processos, sem perdas para sua execução. O algoritmo então é executa como se segue:</p>
 <ul>
 <li>Primário pergunta "que horas são" para cada secundário (mensages 1,2,3 e 4)</li>
 <li>Secundário responde com valor atual do relógio (mensagens 5,6,7 e 8)</li>
@@ -957,10 +987,10 @@ sequenceDiagram
 </div>
 <p>Embora interessantes, estes algoritmos não são normalmente usados, pelo menos não em sua forma "pura", em sistemas computacionais. Em vez deles, usamos o Network Time Protocol (NTP).</p>
 <h4 id="network-time-protocol">Network Time Protocol.</h4>
-<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">5</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">6</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span class="arithmatex">\(\mu\)</span>s.</p>
+<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">6</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">7</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span class="arithmatex">\(\mu\)</span>s.</p>
 <p>Os diversos componentes do NTP são organizados em camadas, ou <em>estrata</em>, de forma que a informação do tempo flui da camada 0 (<em>stratum 0</em>) até a camada 15 (<em>stratum</em> 15).
 Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de <strong>tolerância a falhas</strong> à topologia.</p>
-<p><img alt="Network Time Protocol" src="images/ntp.png" /><sup id="fnref:ntpfigure"><a class="footnote-ref" href="#fn:ntpfigure">4</a></sup></p>
+<p><img alt="Network Time Protocol" src="../images/ntp.png" /><sup id="fnref:ntpfigure"><a class="footnote-ref" href="#fn:ntpfigure">5</a></sup></p>
 <p>Esta <strong>organização hierárquica</strong> leva a cada camada garantir um nível de sincronização diferente e permite <strong>escalar o uso do protocolo para níveis globais</strong>, usando a <strong>Internet como meio</strong>.</p>
 <ul>
 <li>Stratum 0: relógios atômicos/receptores GPS</li>
@@ -991,28 +1021,33 @@ O SNTP é essencialmente o algoritmo de Cristian:</p>
 </ul>
 <p>O Comitê Gestor da Internet, <a href="https://cgi.br/">CGI</a>, mantem uma excelente página sobre o NTP, com mais detalhes do que apresentado aqui, em <a href="https://ntp.br/ntp.php">NTP.br</a>.</p>
 <h4 id="ptp-precision-time-protocol">PTP - Precision Time Protocol</h4>
-<p>Mesmo com melhoria do protocolo e baratemento de dispositivos GPS, há ainda a necessidade de sincronização sub-microssegundo e barata. O <strong><em>Precision Time Protocol</em></strong>, PTP, especificação IEEE 1588<sup id="fnref:ieee1588"><a class="footnote-ref" href="#fn:ieee1588">7</a></sup> tenta cobrir este nicho.</p>
-<p>Se escrutinizarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o <em>timestamping</em> dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub <span class="arithmatex">\(\mu\)</span> (versus ordem de <span class="arithmatex">\(ms\)</span> no NTP).
+<p>Mesmo com melhoria do protocolo e baratemento de dispositivos GPS, há ainda a necessidade de sincronização sub-microssegundo e barata. O <strong><em>Precision Time Protocol</em></strong>, PTP, especificação IEEE 1588<sup id="fnref:ieee1588"><a class="footnote-ref" href="#fn:ieee1588">8</a></sup> tenta cobrir este nicho.</p>
+<p>Se escrutinarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o <em>timestamping</em> dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub <span class="arithmatex">\(\mu\)</span> (versus ordem de <span class="arithmatex">\(ms\)</span> no NTP).
 Mais detalhes sobre o protocolo estão fora do escopo deste documento, mas podem ser facilmente encontrados nos links dados.</p>
+<h4 id="nunca-volte-no-tempo">Nunca volte no tempo</h4>
+<p>Qualquer que seja o algoritmo utilizado, é provavelmente uma boa ideia <strong>nunca voltar no tempo</strong>. 
+Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos de <strong>ajustes graduais</strong> nos relógios, que acelerem ou desacelerem o relógio <span class="arithmatex">\(C\)</span> em relação a <span class="arithmatex">\(t\)</span> (ou sua melhor aproximação, pelo <strong>ajuste frequência de interrupção para atrasar/adiantar relógio</strong> ou <strong>ajustes dos incrementos com cada interrupção</strong>. Isso fará com que as curvas no seguinte gráfico convirjam.
+A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.</p>
+<p><img alt="Clock drift" src="../drawings/clock_skew.drawio-0.svg" /></p>
 <h3 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h3>
 <p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Uma série de problemas interessantes que podem ser resolvidos,
-como <strong>autenticação</strong>, <strong>terminação de transações</strong>, <strong>alocação de <em>leases</em></strong> e diversos outros exemplos<sup id="fnref:liskov"><a class="footnote-ref" href="#fn:liskov">8</a></sup>.</p>
+como <strong>autenticação</strong>, <strong>terminação de transações</strong>, <strong>alocação de <em>leases</em></strong> e diversos outros exemplos<sup id="fnref:liskov"><a class="footnote-ref" href="#fn:liskov">9</a></sup>.</p>
 <p>Um exemplo interessante é a ordenação de eventos em um banco de dados.
 Para entender este problema, considere um cenário com um Sistema Bancário replicado, isto é, com várias cópias.
 No exemplo, nos focamos em duas cópias em lados opostos de uma rede de larga escala.
 Clientes disparam operações como saques, depósitos e transferências, por meio de mensagens para as duas cópias. 
 Mensagens para a cópia próxima do cliente (em verde) são entregues rapidamente, enquanto mensagens para a cópia distante (em vermelho), demoram mais para ser entregues.</p>
-<p><img alt="Sistema Bancário Replicado" src="drawings/dist_trans.drawio-0.svg" /></p>
-<p>Imagine que o usuário U1 envie o comando C1 "atualizar saldo da conta para USD 10<sup id="fnref:usd"><a class="footnote-ref" href="#fn:usd">9</a></sup>" e que o usuário U2 envie o comando C2 "atualizar saldo da conta para USD 20".
+<p><img alt="Sistema Bancário Replicado" src="../drawings/dist_trans.drawio-0.svg" /></p>
+<p>Imagine que o usuário U1 envie o comando C1 "atualizar saldo da conta para USD 10<sup id="fnref:usd"><a class="footnote-ref" href="#fn:usd">10</a></sup>" e que o usuário U2 envie o comando C2 "atualizar saldo da conta para USD 20".
 Se os comandos chegam primeiro para a réplica mais próxima e são executados na ordem em que chegam, ao final da execução a réplica R1 terá executado C1 seguido de C2, tendo saldo da conta como USD 20, enquanto R2 terá executado C2 seguido de C1 e terá como saldo na conta USD 10.
 O problema está na ordem de execução das operações.</p>
 <p>Assuma que relógios estão <strong>perfeitamente</strong> sincronizados e que toda mensagem/update carrega consigo o <em>timestamp</em> de quando foi enviada.
-E se as réplicas processarem mensagens na ordem que foram enviadas, como identificado pelos seus <em>timestamps</em>?<sup id="fnref:tiebreak"><a class="footnote-ref" href="#fn:tiebreak">10</a></sup>
+E se as réplicas processarem mensagens na ordem que foram enviadas, como identificado pelos seus <em>timestamps</em>?<sup id="fnref:tiebreak"><a class="footnote-ref" href="#fn:tiebreak">11</a></sup>
 Assim, se C1 foi enviado antes de C2, C1 tem um <em>timestamp</em> menor que C2 e será executada primeiro em ambas as réplicas, o que resolve nosso problema, correto?
 Parcialmente, pois ainda temos o problema de identificar que nenhuma outra mensagem ainda por ser entregue foi enviada antes. 
 Para isto, precisamos estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span class="arithmatex">\(\tau\)</span>, é finito.
 Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span>, uma réplica espera até <span class="arithmatex">\(t + \tau\)</span> antes de executá-lo, pois qualquer comando com <em>timestamp</em> <span class="arithmatex">\(t' &lt; t\)</span> deve ter sido entregue até <span class="arithmatex">\(t+\tau\)</span>.</p>
-<p><img alt="Ordenação" src="drawings/tau.drawio-0.svg" /></p>
+<p><img alt="Ordenação" src="../drawings/tau.drawio-0.svg" /></p>
 <p>Implementar este protocolo é muito simples:</p>
 <div class="admonition example">
 <p class="admonition-title">Ordenação de Mensagens por Timestamp</p>
@@ -1029,7 +1064,7 @@ Tal mensagem pode demorar até <span class="arithmatex">\(\tau\)</span> para ser
 <p>Se a réplica estiver sincronizada com cliente, então se esperar até <span class="arithmatex">\(t + \tau + \Delta\)</span> para executar o comando, o fará de forma segura. 
 Se estiver atrasada em relação ao primeiro cliente, então acabará por esperar além do necessário, mas sem violar a corretude do sistema.</p>
 <p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará <span class="arithmatex">\(t + \tau + \Delta\)</span> antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span> é o instante em que o relógio da réplica marcar <span class="arithmatex">\(t + \Delta\)</span>, e portanto deverá também ser recebido até que o mesmo relógio marque <span class="arithmatex">\(t + \tau + \Delta\)</span>. </p>
-<p><img alt="Ordenação" src="drawings/tau.drawio-1.svg" /></p>
+<p><img alt="Ordenação" src="../drawings/tau.drawio-1.svg" /></p>
 <p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span class="arithmatex">\(\Delta\)</span> é o máximo de dessincronismo entre os relógios. 
 O seguinte protocolo resolve este problema:</p>
 <div class="admonition example">
@@ -1055,9 +1090,9 @@ Que não haverão sobreposições de requisições?
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos <strong>relógios lógicos</strong>.</p>
 <h2 id="tempo-logico">Tempo Lógico</h2>
-<p>A ideia por trás do "tempo lógico" é de o que importa são eventos e não a passagem do tempo, uma vez que tempo é relativo aos processos <sup id="fnref:tempologico"><a class="footnote-ref" href="#fn:tempologico">11</a></sup>.
+<p>A ideia por trás do "tempo lógico" é de o que importa são eventos e não a passagem do tempo, uma vez que tempo é relativo aos processos <sup id="fnref:tempologico"><a class="footnote-ref" href="#fn:tempologico">12</a></sup>.
 Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante acontece.</p>
-<p>Para chegarmos aos relógios lógicos, precisamos primeiro entender a relação <strong><em>Happened-Before</em></strong>, proposta por Leslie Lamport<sup id="fnref:tcoeds"><a class="footnote-ref" href="#fn:tcoeds">12</a></sup> e que lhe rendeu um <a href="https://amturing.acm.org/">Prêmio Turing</a> em <a href="https://www.microsoft.com/en-us/research/blog/leslie-lamport-receives-turing-award/">2014</a>.
+<p>Para chegarmos aos relógios lógicos, precisamos primeiro entender a relação <strong><em>Happened-Before</em></strong>, proposta por Leslie Lamport<sup id="fnref:tcoeds"><a class="footnote-ref" href="#fn:tcoeds">13</a></sup> e que lhe rendeu um <a href="https://amturing.acm.org/">Prêmio Turing</a> em <a href="https://www.microsoft.com/en-us/research/blog/leslie-lamport-receives-turing-award/">2014</a>.
 Hoje é comum usar a relação <em>happened-before</em> e o vocabulário associado para falar sobre ordem de eventos em um sistema computacional, em especial um distribuído.</p>
 <h3 id="happened-before">Happened-Before</h3>
 <p>A relação <em>happened-before</em> captura a <strong>causalidade</strong> entre eventos.
@@ -1074,15 +1109,15 @@ Também podemos dizer que <span class="arithmatex">\(a\)</span> precede <span cl
 </div>
 <details class="todo"><summary>TODO</summary><p>Imagem somente com os eventos, sem o valor do relógio.</p>
 </details>
-<p><img alt="LC - Primeira tentativa" src="images/lc_cont.png" /></p>
+<p><img alt="LC - Primeira tentativa" src="../images/lc_cont.png" /></p>
 <p>Note que se <span class="arithmatex">\(a \rightarrow b\)</span> é falso e <span class="arithmatex">\(b \rightarrow a\)</span> é falso, então <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo.
 Ser concorrente quer dizer que um evento <span class="arithmatex">\(a\)</span> não podem ter sido a causa do evento <span class="arithmatex">\(b\)</span>, dado que os efeitos de <span class="arithmatex">\(a\)</span> não poderiam ser conhecidos pelo processo onde <span class="arithmatex">\(b\)</span> ocorreu, quando <span class="arithmatex">\(b\)</span> ocorreu.
 O cone de luz na figura seguinte mostra esta relação entre eventos.</p>
-<p><img alt="Light-cone" src="drawings/light_cone.drawio-0.svg" /></p>
+<p><img alt="Light-cone" src="../drawings/light_cone.drawio-0.svg" /></p>
 <p>Se capturarmos a causalidade de eventos, podemos usar esta informação para ordenar o se processamento, de forma a fazer sentido.
 Considere o seguinte exemplo, em que o primeiro usuário de um serviço de emails recebe primeiro a resposta da mensagem A, R:A, para somente depois receber A.
 Para que a troca de mensagens faça sentido, o usuário posterga a leitura de R:A até depois de ter lido A.</p>
-<p><img alt="Inversão causal" src="drawings/multicast.drawio-0.svg" /></p>
+<p><img alt="Inversão causal" src="../drawings/multicast.drawio-0.svg" /></p>
 <p>Observe que em nenhum momento a informação sobre <strong>quando</strong> as mensagens foram enviadas foi necessária, apenas a <strong>ordem</strong> das mesmas.
 Relógios lógicos permitem que sistemas capturem a relação de causalidade entre eventos e implementem esquemas como o apenas descrito, para coordenar as ações dos processos em sistemas distribuídos.</p>
 <h3 id="relogios-logicos">Relógios lógicos</h3>
@@ -1106,7 +1141,7 @@ Experimentemos a seguinte definição:</p>
 </div>
 <p>Observe que não há <strong>fonte da verdade</strong> em termos de tempo lógico, já que <strong>cada processo mantém seu próprio relógio</strong> que pode ser relacionado com relógios de outros processos.
 Veja um exemplo desta definição em ação.</p>
-<p><img alt="LC - Primeira tentativa" src="images/lc_cont.png" /></p>
+<p><img alt="LC - Primeira tentativa" src="../images/lc_cont.png" /></p>
 <p>É verdade neste cenário que se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>?<br />
 Observe com atenção os eventos <span class="arithmatex">\(f\)</span> e <span class="arithmatex">\(k\)</span>, pois para estes, a regra não é respeitada.</p>
 <h4 id="relogio-de-lamport">Relógio de Lamport</h4>
@@ -1134,7 +1169,7 @@ Observe com atenção os eventos <span class="arithmatex">\(f\)</span> e <span c
 </ul>
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
-<p><img alt="LC - Primeira tentativa" src="images/lc_lamport.png" /></p>
+<p><img alt="LC - Primeira tentativa" src="../images/lc_lamport.png" /></p>
 <p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(a,b\)</span>,  se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>.</p>
 <details class="todo"><summary>Todo</summary><p>Exemplo em que não é bom o suficiente.</p>
 </details>
@@ -1188,13 +1223,13 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 </ul>
 <p>Para entender melhor como esta definição funciona, considere a seguinte execução.
 O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o evendo <span class="arithmatex">\(d\)</span> como exemplo, o que quer dizer <span class="arithmatex">\(c_{P_2}[1]=2\)</span>?</p>
-<p><img alt="Relógio Vetorial" src="images/lc_vc.png" /></p>
+<p><img alt="Relógio Vetorial" src="../images/lc_vc.png" /></p>
 <p>Quer dizer que <span class="arithmatex">\(P_2\)</span> está ciente de 2 eventos locais a <span class="arithmatex">\(P_1\)</span>, assim com está ciente de 0 eventos em <span class="arithmatex">\(P_3\)</span> e de que <span class="arithmatex">\(d\)</span> é o segundo evento em <span class="arithmatex">\(P_2\)</span>.
 Logo, <span class="arithmatex">\(d\)</span> pode ter sido causado por 2 eventos de <span class="arithmatex">\(P_1\)</span>, 1 evento de <span class="arithmatex">\(P_2\)</span> e 0 de <span class="arithmatex">\(P_3\)</span>.</p>
 <p>Agora compare os eventos <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>.
 <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(d)\)</span> sejam maiores que em <span class="arithmatex">\(V(e)\)</span>, a posição 3 é menor.
 Isso quer dizer que o nem <span class="arithmatex">\(e\)</span> está ciente do evento <span class="arithmatex">\(d\)</span> e nem <span class="arithmatex">\(d\)</span> está ciente do evento <span class="arithmatex">\(e\)</span>, ou melhor, que um não pode ter causado o outro.</p>
-<p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">13</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
+<p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">14</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
 <h4 id="relogios-hibridos">Relógios Híbridos</h4>
 <p>A grande vantagem dos relógios lógicos sobre os físicos é de ignorar a passagem do tempo, só se importanto com a ordem de eventos.
@@ -1231,9 +1266,9 @@ Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará
 </li>
 </ul>
 </div>
-<p><img alt="Relógio Híbrido Simples" src="drawings/hibrido.drawio-0.svg" /></p>
+<p><img alt="Relógio Híbrido Simples" src="../drawings/hibrido.drawio-0.svg" /></p>
 <p>Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementadado muito rapidamente, perdendo a relação com o relógio físico.
-Em uma versão melhorada do algoritmo,<sup id="fnref:hlc"><a class="footnote-ref" href="#fn:hlc">14</a></sup> a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.<sup id="fnref:hlcerror"><a class="footnote-ref" href="#fn:hlcerror">15</a></sup></p>
+Em uma versão melhorada do algoritmo,<sup id="fnref:hlc"><a class="footnote-ref" href="#fn:hlc">15</a></sup> a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.<sup id="fnref:hlcerror"><a class="footnote-ref" href="#fn:hlcerror">16</a></sup></p>
 <!--![Hibrid Logical Clock](images/lc_hybrid.png) - Onde se lê 3,13, leia-se 3,10,3.-->
 
 <h3 id="comunicacao-em-grupo">Comunicação em Grupo</h3>
@@ -1255,7 +1290,7 @@ Considere um programa qualquer, que se comporte de forma determinística (isto �
 Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
 Logo, se tivermos <strong>várias cópias</strong> deste programa, executando em locais distintos, mas garantirmos que cada cópia veja exatamente a <strong>mesma entrada de dados</strong>, então garantiremos que todas as cópias <strong>transitarão pelos mesmos estados</strong> e chegarão ao mesmo estado final.
 Como difusão totalmente ordenada pode ser usado para garantir que todas as cópias receberão a mesma entrada, pode ser usado para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, <a href="https://en.wikipedia.org/wiki/State_machine_replication"><em>State Machine Replication</em></a>, ou pelo menos o seu princípio.</p>
-<p><img alt="State Machine Replication" src="drawings/multicast.drawio-1.svg" /></p>
+<p><img alt="State Machine Replication" src="../drawings/multicast.drawio-1.svg" /></p>
 <p>Mas como podemos implementar estas primitivas de difusão usando relógios lógicos? 
 Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a todos os processos, inclusive o próprio remetente.</p>
 <div class="admonition example">
@@ -1313,7 +1348,7 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 </li>
 </ul>
 </div>
-<p><img alt="causal" src="images/tanenbaum-06-13.png" /></p>
+<p><img alt="causal" src="../images/tanenbaum-06-13.png" /></p>
 <div class="admonition exercise">
 <p class="admonition-title">Difusão Causalmente Ordenada</p>
 <p>Considere <span class="arithmatex">\(c_{P_2}[0,2,2]\)</span> e <span class="arithmatex">\(ts=[1,3,0]\)</span>, de <span class="arithmatex">\(P_0\)</span>. O que <span class="arithmatex">\(P_2\)</span> está esperando? Como age ao receber mensagem com <span class="arithmatex">\(ts\)</span>?</p>
@@ -1321,7 +1356,7 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 <p>Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
 Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de <em>timestamps</em>?
 Isto pode ser feito por meio de <strong>interceptadores</strong> em uma camada de <strong><em>middleware</em></strong>.</p>
-<p><img alt="Interceptadores" src="images/tanenbaum-06-10.png" /></p>
+<p><img alt="Interceptadores" src="../images/tanenbaum-06-10.png" /></p>
 <p>Quando a aplicação envia uma mensagem, o relógio lógico mantido no <em>middleware</em> é atualizado e seu valor usado como <em>timestamp</em> em uma versão estendida da mensagem, efetivamente enviada na rede.
 Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada para o interceptador que extrai o <em>timestamp</em> e atualiza seu relógio. A mensagem sem o <em>timestamp</em> é entregue para a aplicação quando apropriado, e aplicação não percebe a manipulação.</p>
 <h3 id="exclusao-mutua-revisitada">Exclusao Mútua Revisitada</h3>
@@ -1343,41 +1378,44 @@ Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada 
 <li id="fn:freq">
 <p>32768 é a primeira potência de 2 maior que 20000, a maior frequência sonora audível aos seres humanos.&#160;<a class="footnote-backref" href="#fnref:freq" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
+<li id="fn:erro">
+<p>Adaptado das notas de aula disponíveis <a href="https://www.cs.rutgers.edu/~pxk/417/notes/content/05-clock-synchronization-slides.pdf">aqui</a>.&#160;<a class="footnote-backref" href="#fnref:erro" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
 <li id="fn:ntpfigure">
-<p><a href="https://commons.wikimedia.org/w/index.php?curid=2815097">Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick</a>&#160;<a class="footnote-backref" href="#fnref:ntpfigure" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=2815097">Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick</a>&#160;<a class="footnote-backref" href="#fnref:ntpfigure" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:rfc1305">
-<p><a href="https://datatracker.ietf.org/doc/rfc1305/">RFC 1305</a>, 1991/1992&#160;<a class="footnote-backref" href="#fnref:rfc1305" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://datatracker.ietf.org/doc/rfc1305/">RFC 1305</a>, 1991/1992&#160;<a class="footnote-backref" href="#fnref:rfc1305" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:rfc5905-5908">
-<p>RFC 5905-5908,2010&#160;<a class="footnote-backref" href="#fnref:rfc5905-5908" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>RFC 5905-5908,2010&#160;<a class="footnote-backref" href="#fnref:rfc5905-5908" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ieee1588">
-<p><a href="https://www.nist.gov/el/intelligent-systems-division-73500/ieee-1588">IEEE 1588TM Standard for A Precision Clock Synchronization Protocol for Networked Measurement and Control Systems</a>.&#160;<a class="footnote-backref" href="#fnref:ieee1588" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://www.nist.gov/el/intelligent-systems-division-73500/ieee-1588">IEEE 1588TM Standard for A Precision Clock Synchronization Protocol for Networked Measurement and Control Systems</a>.&#160;<a class="footnote-backref" href="#fnref:ieee1588" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 <li id="fn:liskov">
-<p><a href="http://rdcu.be/s4iy">Liskov, B.: Distrib Comput (1993) 6: 211. doi:10.1007/BF02242709</a>&#160;<a class="footnote-backref" href="#fnref:liskov" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p><a href="http://rdcu.be/s4iy">Liskov, B.: Distrib Comput (1993) 6: 211. doi:10.1007/BF02242709</a>&#160;<a class="footnote-backref" href="#fnref:liskov" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
 <li id="fn:usd">
-<p>Unidade Simples de Dinheiros.&#160;<a class="footnote-backref" href="#fnref:usd" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+<p>Unidade Simples de Dinheiros.&#160;<a class="footnote-backref" href="#fnref:usd" title="Jump back to footnote 10 in the text">&#8617;</a></p>
 </li>
 <li id="fn:tiebreak">
-<p>Empates são quebrados pelo identificador do processo, isto é, se duas mensagens são produzidas ao mesmo tempo por U1 e U2, então o a mensagem de U1 tem precedência na execução.&#160;<a class="footnote-backref" href="#fnref:tiebreak" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+<p>Empates são quebrados pelo identificador do processo, isto é, se duas mensagens são produzidas ao mesmo tempo por U1 e U2, então o a mensagem de U1 tem precedência na execução.&#160;<a class="footnote-backref" href="#fnref:tiebreak" title="Jump back to footnote 11 in the text">&#8617;</a></p>
 </li>
 <li id="fn:tempologico">
-<p>Reza a lenda que Leslie Lamport desenvolveu o conceito de relógios lógicos pensando na teoria da relatividade geral.&#160;<a class="footnote-backref" href="#fnref:tempologico" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+<p>Reza a lenda que Leslie Lamport desenvolveu o conceito de relógios lógicos pensando na teoria da relatividade geral.&#160;<a class="footnote-backref" href="#fnref:tempologico" title="Jump back to footnote 12 in the text">&#8617;</a></p>
 </li>
 <li id="fn:tcoeds">
-<p><a href="http://amturing.acm.org/p558-lamport.pdf">Time, Clocks and the Ordering of Events in a Distributed System. July 5, 1978</a>.&#160;<a class="footnote-backref" href="#fnref:tcoeds" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+<p><a href="http://amturing.acm.org/p558-lamport.pdf">Time, Clocks and the Ordering of Events in a Distributed System. July 5, 1978</a>.&#160;<a class="footnote-backref" href="#fnref:tcoeds" title="Jump back to footnote 13 in the text">&#8617;</a></p>
 </li>
 <li id="fn:matrix_clock">
-<p><a href="https://en.wikipedia.org/wiki/Matrix_clock">Matrix Clock</a>&#160;<a class="footnote-backref" href="#fnref:matrix_clock" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Matrix_clock">Matrix Clock</a>&#160;<a class="footnote-backref" href="#fnref:matrix_clock" title="Jump back to footnote 14 in the text">&#8617;</a></p>
 </li>
 <li id="fn:hlc">
-<p>O <a href="http://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">blog</a> de um dos autores descreve ambas as versões de forma resumida. Para a versão completa dos algoritmos, consulte o <a href="http://www.cse.buffalo.edu/tech-reports/2014-04.pdf">artigo</a>.&#160;<a class="footnote-backref" href="#fnref:hlc" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+<p>O <a href="http://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">blog</a> de um dos autores descreve ambas as versões de forma resumida. Para a versão completa dos algoritmos, consulte o <a href="http://www.cse.buffalo.edu/tech-reports/2014-04.pdf">artigo</a>.&#160;<a class="footnote-backref" href="#fnref:hlc" title="Jump back to footnote 15 in the text">&#8617;</a></p>
 </li>
 <li id="fn:hlcerror">
-<p>Tanto no artigo quanto no blog, a imagem que descreve um exemplo do HLC parece ter um erro e onde se lê (3,13) deve-se ler (3,10,3).&#160;<a class="footnote-backref" href="#fnref:hlcerror" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+<p>Tanto no artigo quanto no blog, a imagem que descreve um exemplo do HLC parece ter um erro e onde se lê (3,13) deve-se ler (3,10,3).&#160;<a class="footnote-backref" href="#fnref:hlcerror" title="Jump back to footnote 16 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
