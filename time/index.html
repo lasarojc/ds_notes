@@ -987,7 +987,7 @@ sequenceDiagram
 </div>
 <p>Embora interessantes, estes algoritmos não são normalmente usados, pelo menos não em sua forma "pura", em sistemas computacionais. Em vez deles, usamos o Network Time Protocol (NTP).</p>
 <h4 id="network-time-protocol">Network Time Protocol.</h4>
-<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">6</a></sup> e estendido pelas RFCRFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">7</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span class="arithmatex">\(\mu\)</span>s.</p>
+<p>O NTP foi especificado originalmente na RFC 1305<sup id="fnref:rfc1305"><a class="footnote-ref" href="#fn:rfc1305">6</a></sup> e estendido pelas RFC 5905-5908<sup id="fnref:rfc5905-5908"><a class="footnote-ref" href="#fn:rfc5905-5908">7</a></sup> essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10<span class="arithmatex">\(\mu\)</span>s.</p>
 <p>Os diversos componentes do NTP são organizados em camadas, ou <em>estrata</em>, de forma que a informação do tempo flui da camada 0 (<em>stratum 0</em>) até a camada 15 (<em>stratum</em> 15).
 Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de <strong>tolerância a falhas</strong> à topologia.</p>
 <p><img alt="Network Time Protocol" src="../images/ntp.png" /><sup id="fnref:ntpfigure"><a class="footnote-ref" href="#fn:ntpfigure">5</a></sup></p>
@@ -1028,7 +1028,7 @@ Mais detalhes sobre o protocolo estão fora do escopo deste documento, mas podem
 <p>Qualquer que seja o algoritmo utilizado, é provavelmente uma boa ideia <strong>nunca voltar no tempo</strong>. 
 Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos de <strong>ajustes graduais</strong> nos relógios, que acelerem ou desacelerem o relógio <span class="arithmatex">\(C\)</span> em relação a <span class="arithmatex">\(t\)</span> (ou sua melhor aproximação, pelo <strong>ajuste frequência de interrupção para atrasar/adiantar relógio</strong> ou <strong>ajustes dos incrementos com cada interrupção</strong>. Isso fará com que as curvas no seguinte gráfico convirjam.
 A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.</p>
-<p><img alt="Clock drift" src="../drawings/clock_skew.drawio-0.svg" /></p>
+<p><img alt="Clock drift" src="../drawings/clock_skew.drawio-1.svg" /></p>
 <h3 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h3>
 <p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Uma série de problemas interessantes que podem ser resolvidos,
 como <strong>autenticação</strong>, <strong>terminação de transações</strong>, <strong>alocação de <em>leases</em></strong> e diversos outros exemplos<sup id="fnref:liskov"><a class="footnote-ref" href="#fn:liskov">9</a></sup>.</p>
