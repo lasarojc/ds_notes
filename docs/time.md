@@ -290,7 +290,7 @@ Embora interessantes, estes algoritmos não são normalmente usados, pelo menos 
 
 #### Network Time Protocol.
 
-O NTP foi especificado originalmente na RFC 1305[^rfc1305] e estendido pelas RFCRFC 5905-5908[^rfc5905-5908] essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10$\mu$s.
+O NTP foi especificado originalmente na RFC 1305[^rfc1305] e estendido pelas RFC 5905-5908[^rfc5905-5908] essencialmente para suportar IPv6 e reduzir o erro de sincronização para até 10$\mu$s.
 
 Os diversos componentes do NTP são organizados em camadas, ou *estrata*, de forma que a informação do tempo flui da camada 0 (*stratum 0*) até a camada 15 (*stratum* 15).
 Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de **tolerância a falhas** à topologia.
@@ -351,7 +351,7 @@ Qualquer que seja o algoritmo utilizado, é provavelmente uma boa ideia **nunca 
 Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos de **ajustes graduais** nos relógios, que acelerem ou desacelerem o relógio $C$ em relação a $t$ (ou sua melhor aproximação, pelo **ajuste frequência de interrupção para atrasar/adiantar relógio** ou **ajustes dos incrementos com cada interrupção**. Isso fará com que as curvas no seguinte gráfico convirjam.
 A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.
 
-![Clock drift](./drawings/clock_skew.drawio)
+![Clock drift](./drawings/clock_skew.drawio#1)
 
 
 ### Usos de relógios sincronizados
