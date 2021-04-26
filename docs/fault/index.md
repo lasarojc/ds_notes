@@ -374,7 +374,7 @@ Relembrando, na difusão Totalmente Ordenada (Total Order Multicast) temos que:
 * Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)
 * Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.
 
-![Total order multicast](../time/drawings/multicast.drawio#1)
+![Total order multicast](../drawings/group_com.drawio#1)
 
 Para fazermos isso, precisamos primeiro formalizar as primitivas em vários níveis da resolução do problema.
 No nível do canal de comunicação, da rede, processos **enviam** e **recebem** mensagens.

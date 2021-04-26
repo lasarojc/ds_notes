@@ -458,12 +458,12 @@ Parece que uma opção melhor seria então usar UDP, correto?
 Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
 Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!
 
-![Multicast](../drawings/multicast.drawio#0)
+![Multicast](../drawings/group_com.drawio#0)
 
 Para terminar, lhe darei uma razão final: IP-Multicast!
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
 
-![Multicast](../drawings/multicast.drawio#1)
+![Multicast](../drawings/group_com.drawio#1)
 
 IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
