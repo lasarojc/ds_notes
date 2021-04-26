@@ -473,13 +473,20 @@
         
           <li class="md-nav__item">
   <a href="#exclusao-mutua-revisitada" class="md-nav__link">
-    Exclusao Mútua Revisitada
+    Exclusão Mútua Revisitada
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
   
 </li>
       
@@ -722,13 +729,20 @@
         
           <li class="md-nav__item">
   <a href="#exclusao-mutua-revisitada" class="md-nav__link">
-    Exclusao Mútua Revisitada
+    Exclusão Mútua Revisitada
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
   
 </li>
       
@@ -1030,22 +1044,22 @@ Mesmo que o universo não seja destruído no processo, voltar no tempo poderia l
 A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.</p>
 <p><img alt="Clock drift" src="../drawings/clock_skew.drawio-1.svg" /></p>
 <h3 id="usos-de-relogios-sincronizados">Usos de relógios sincronizados</h3>
-<p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Uma série de problemas interessantes que podem ser resolvidos,
-como <strong>autenticação</strong>, <strong>terminação de transações</strong>, <strong>alocação de <em>leases</em></strong> e diversos outros exemplos<sup id="fnref:liskov"><a class="footnote-ref" href="#fn:liskov">9</a></sup>.</p>
-<p>Um exemplo interessante é a ordenação de eventos em um banco de dados.
+<p>Assumindo que tenhamos sincronizado os relógios de um sistema computacional, o que podemos fazer agora? Há uma série de problemas interessantes que podem ser resolvidos,
+como <strong>autenticação</strong>, <strong>terminação de transações</strong>, <strong>alocação de <em>leases</em></strong> e diversos outros exemplos.<sup id="fnref:liskov"><a class="footnote-ref" href="#fn:liskov">9</a></sup>
+Um exemplo interessante é a ordenação de eventos em um banco de dados.
 Para entender este problema, considere um cenário com um Sistema Bancário replicado, isto é, com várias cópias.
-No exemplo, nos focamos em duas cópias em lados opostos de uma rede de larga escala.
+No exemplo, sem perda de generalidade, nos focamos em duas cópias em lados opostos de uma rede de larga escala.
 Clientes disparam operações como saques, depósitos e transferências, por meio de mensagens para as duas cópias. 
 Mensagens para a cópia próxima do cliente (em verde) são entregues rapidamente, enquanto mensagens para a cópia distante (em vermelho), demoram mais para ser entregues.</p>
 <p><img alt="Sistema Bancário Replicado" src="../drawings/dist_trans.drawio-0.svg" /></p>
-<p>Imagine que o usuário U1 envie o comando C1 "atualizar saldo da conta para USD 10<sup id="fnref:usd"><a class="footnote-ref" href="#fn:usd">10</a></sup>" e que o usuário U2 envie o comando C2 "atualizar saldo da conta para USD 20".
+<p>Imagine que o usuário U1 envie o comando C1 <code>atualizar saldo da conta para USD 10</code><sup id="fnref:usd"><a class="footnote-ref" href="#fn:usd">10</a></sup> e que o usuário U2 envie o comando C2 <code>atualizar saldo da conta para USD 20</code>.
 Se os comandos chegam primeiro para a réplica mais próxima e são executados na ordem em que chegam, ao final da execução a réplica R1 terá executado C1 seguido de C2, tendo saldo da conta como USD 20, enquanto R2 terá executado C2 seguido de C1 e terá como saldo na conta USD 10.
 O problema está na ordem de execução das operações.</p>
 <p>Assuma que relógios estão <strong>perfeitamente</strong> sincronizados e que toda mensagem/update carrega consigo o <em>timestamp</em> de quando foi enviada.
 E se as réplicas processarem mensagens na ordem que foram enviadas, como identificado pelos seus <em>timestamps</em>?<sup id="fnref:tiebreak"><a class="footnote-ref" href="#fn:tiebreak">11</a></sup>
 Assim, se C1 foi enviado antes de C2, C1 tem um <em>timestamp</em> menor que C2 e será executada primeiro em ambas as réplicas, o que resolve nosso problema, correto?
-Parcialmente, pois ainda temos o problema de identificar que nenhuma outra mensagem ainda por ser entregue foi enviada antes. 
-Para isto, precisamos estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span class="arithmatex">\(\tau\)</span>, é finito.
+Parcialmente, pois ainda temos o problema de <strong>identificar que nenhuma outra mensagem ainda por ser entregue</strong> foi enviada antes. 
+Para isto, precisamos <strong>estender o modelo e assumir que o tempo de propagação máximo de uma mensagem, <span class="arithmatex">\(\tau\)</span>, é finito e conhecido</strong>.
 Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span>, uma réplica espera até <span class="arithmatex">\(t + \tau\)</span> antes de executá-lo, pois qualquer comando com <em>timestamp</em> <span class="arithmatex">\(t' &lt; t\)</span> deve ter sido entregue até <span class="arithmatex">\(t+\tau\)</span>.</p>
 <p><img alt="Ordenação" src="../drawings/tau.drawio-0.svg" /></p>
 <p>Implementar este protocolo é muito simples:</p>
@@ -1057,15 +1071,15 @@ Assim, ao  receber um comando com timestamp <span class="arithmatex">\(t\)</span
 <li>Quando o relógio marcar um tempo maior que <span class="arithmatex">\(t + \tau\)</span>, onde <span class="arithmatex">\(t\)</span> é o timestamp da mensagem na cabeça da fila, retire a mensagem da cabeça da fila e execute o comando correspondente.</li>
 </ul>
 </div>
-<p>Embora correto, este protocolo, ou melhor, o modelo, não leva em consideração a dessincronização inerente dos relógios em um sistema distribuído. 
-Como fazê-lo, supondo uma divergência máxima de <span class="arithmatex">\(\Delta\)</span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span class="arithmatex">\(\frac{\Delta}{2*\rho}\)</span>.</p>
+<p>Embora correto, este protocolo, ou melhor, o modelo, <strong>não leva em consideração a dessincronização inerente dos relógios</strong> em um sistema distribuído. 
+Como fazê-lo, supondo uma divergência máxima de <span class="arithmatex">\(\Delta\)</span> entre quaisquer dois relógios, algo que pode ser arranjado, como visto antes, sincronizando-se os relógios a cada <span class="arithmatex">\(\frac{\Delta}{2\rho}\)</span>.</p>
 <p>Se <span class="arithmatex">\(\Delta\)</span> é a diferença máxima entre relógios, então se uma mensagem é enviada no instante <span class="arithmatex">\(t\)</span>, então até <span class="arithmatex">\(\Delta +t\)</span>, outro processo, atrasado em relação ao primeiro, poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span>. 
 Tal mensagem pode demorar até <span class="arithmatex">\(\tau\)</span> para ser entregue à réplica, ou seja, no instante <span class="arithmatex">\(t + \tau + \Delta\)</span>, do ponto de vista do primeiro cliente.</p>
 <p>Se a réplica estiver sincronizada com cliente, então se esperar até <span class="arithmatex">\(t + \tau + \Delta\)</span> para executar o comando, o fará de forma segura. 
 Se estiver atrasada em relação ao primeiro cliente, então acabará por esperar além do necessário, mas sem violar a corretude do sistema.</p>
 <p>Finalmente, se a réplica estiver adiantada em relação ao primeiro cliente, então seu relógio alcançará <span class="arithmatex">\(t + \tau + \Delta\)</span> antes do relógio do primeiro cliente, mas isso não é um problema. Isto porquê, o último instante em que o cliente 2 poderá enviar uma mensagem com timestamp <span class="arithmatex">\(t' &lt; t\)</span> é o instante em que o relógio da réplica marcar <span class="arithmatex">\(t + \Delta\)</span>, e portanto deverá também ser recebido até que o mesmo relógio marque <span class="arithmatex">\(t + \tau + \Delta\)</span>. </p>
 <p><img alt="Ordenação" src="../drawings/tau.drawio-1.svg" /></p>
-<p>O mesmo raciocínio pode ser usado para definir um protocolo de acesso recursos para os quais <em>leases</em> são distribuídos, onde um <em>lease</em>  é uma permissão de acesso durante uma janela de tempo, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span class="arithmatex">\(\Delta\)</span> é o máximo de dessincronismo entre os relógios. 
+<p>O mesmo raciocínio pode ser usado para definir um <strong>protocolo de acesso recursos</strong> para os quais <em>leases</em> são distribuídos, onde um <strong><em>lease</em></strong> <strong>é uma permissão de acesso durante uma janela de tempo</strong>, emitida por um coordenador (possivelmente eleito usando os algoritmos vistos anteriormente), e <span class="arithmatex">\(\Delta\)</span> é o máximo de dessincronismo entre os relógios. 
 O seguinte protocolo resolve este problema:</p>
 <div class="admonition example">
 <p class="admonition-title">Alocação de Lease</p>
@@ -1078,15 +1092,9 @@ O seguinte protocolo resolve este problema:</p>
 <p>Se relógio estiver adiantado em relação ao cliente anterior, vai achar que é <span class="arithmatex">\(t_1+\Delta\)</span> enquanto o anterior acha que é <span class="arithmatex">\(t_1\)</span>; exclusão mútua garantida.
 Se relógio estiver atrasado em relação ao cliente anterior, vai achar que é <span class="arithmatex">\(t_1 - \Delta\)</span>, e continua esperando, enquanto ele acha que já é <span class="arithmatex">\(t_1\)</span> e para de usar; exclusão mútua garantida.
 Recurso fica ocioso por <span class="arithmatex">\(\Delta\)</span>, em média, a cada lease. </p>
-<p>Devido ao alto custo de se manter o recurso não utilizado, <span class="arithmatex">\(\Delta\)</span> deve ser feito tão pequeno quanto possível. 
-Leia <a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google True Time e Spanner</a> para ver como o Google consegue manter a diferença em sub milisegundos, usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.</p>
-<details class="todo"><summary>Todo</summary><ul>
-<li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
-</ul>
-</details>
-<p>Nas soluções anteriores, um nó precisa esperar por muito tempo antes de usar um recurso. 
-E se ele aprendesse antes que os outros nós não farão requisições? 
-Que não haverão sobreposições de requisições? 
+<p>Devido ao alto custo de se manter o recurso não utilizado, <span class="arithmatex">\(\Delta\)</span> deve ser feito tão pequeno quanto possível, como feito, por exemplo, o <a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google True Time</a> que consegue manter a diferença em sub-milisegundos usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.</p>
+<p>Nas soluções anteriores, <strong>um nó precisa esperar por muito tempo antes de usar um recurso</strong>. 
+E se ele aprendesse antes que os outros nós não farão requisições, que não haverão sobreposições de requisições? 
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos <strong>relógios lógicos</strong>.</p>
 <h2 id="tempo-logico">Tempo Lógico</h2>
@@ -1102,22 +1110,21 @@ Também podemos dizer que <span class="arithmatex">\(a\)</span> precede <span cl
 <div class="admonition note">
 <p class="admonition-title">Happened-Before</p>
 <ul>
-<li>Se <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são eventos em um mesmo processo (ou <em>thread</em>) e <span class="arithmatex">\(a\)</span> foi executado antes de <span class="arithmatex">\(b\)</span>.</li>
-<li>Se <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são eventos de processos distintos e <span class="arithmatex">\(a\)</span> é o envio de uma mensagem e <span class="arithmatex">\(b\)</span> a sua recepção.</li>
-<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(c\)</span> tal que <span class="arithmatex">\(a \rightarrow c\)</span> e <span class="arithmatex">\(c \rightarrow b\)</span>.</li>
+<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos em um mesmo processo (ou <em>thread</em>) e <span class="arithmatex">\(e\)</span> foi executado antes de <span class="arithmatex">\(e'\)</span>.</li>
+<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos de processos distintos e <span class="arithmatex">\(e'\)</span> é o envio de uma mensagem e <span class="arithmatex">\(e'\)</span> a sua recepção.</li>
+<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(e''\)</span> tal que <span class="arithmatex">\(e' \rightarrow e''\)</span> e <span class="arithmatex">\(e'' \rightarrow e'\)</span>.</li>
 </ul>
 </div>
-<details class="todo"><summary>TODO</summary><p>Imagem somente com os eventos, sem o valor do relógio.</p>
-</details>
-<p><img alt="LC - Primeira tentativa" src="../images/lc_cont.png" /></p>
-<p>Note que se <span class="arithmatex">\(a \rightarrow b\)</span> é falso e <span class="arithmatex">\(b \rightarrow a\)</span> é falso, então <span class="arithmatex">\(a\)</span> e <span class="arithmatex">\(b\)</span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo.
-Ser concorrente quer dizer que um evento <span class="arithmatex">\(a\)</span> não podem ter sido a causa do evento <span class="arithmatex">\(b\)</span>, dado que os efeitos de <span class="arithmatex">\(a\)</span> não poderiam ser conhecidos pelo processo onde <span class="arithmatex">\(b\)</span> ocorreu, quando <span class="arithmatex">\(b\)</span> ocorreu.
-O cone de luz na figura seguinte mostra esta relação entre eventos.</p>
-<p><img alt="Light-cone" src="../drawings/light_cone.drawio-0.svg" /></p>
-<p>Se capturarmos a causalidade de eventos, podemos usar esta informação para ordenar o se processamento, de forma a fazer sentido.
-Considere o seguinte exemplo, em que o primeiro usuário de um serviço de emails recebe primeiro a resposta da mensagem A, R:A, para somente depois receber A.
+<p>Na figura abaixo, as três regras são exemplificadas pelos eventos de cor vermelha, amarela e verde, respectivamente.</p>
+<p><img alt="LC - Primeira tentativa" src="../drawings/clock.drawio-1.svg" /></p>
+<p>Note que se <span class="arithmatex">\(e \rightarrow e'\)</span> é falso e <span class="arithmatex">\(e' \rightarrow e\)</span> é falso, então <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo, como exemplificado na figura anterior pelos eventos de cor roxa.
+Ser concorrente quer dizer que um evento <span class="arithmatex">\(e\)</span> não pode ter influenciado o evento <span class="arithmatex">\(e'\)</span>, dado que os efeitos de <span class="arithmatex">\(e\)</span> não poderiam ser conhecidos pelo processo onde <span class="arithmatex">\(e'\)</span> ocorreu, quando <span class="arithmatex">\(e'\)</span> ocorreu.
+O cone de luz na figura seguinte mostra esta relação entre eventos. Somente os efeitos dos eventos uma distância no espaço/tempo menor ou igual às dos pontos mais distantes ao evento em questão, podem ter influenciado tal evento. No caso dos eventos <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span> na figura, os mesmos não figuram no mesmo cone de luz.</p>
+<p><img alt="Light-cone" src="../drawings/clock.drawio-2.svg" /></p>
+<p>Mas para que nos serve capturar a causalidade entre os eventos? Bem, se capturarmos a causalidade, podemos usar esta informação para ordenar os seu processamento, de forma a fazer sentido.
+Por exemplo, considere um sistema em que o primeiro usuário de um serviço de emails recebe primeiro a resposta da mensagem A, R:A, para somente depois receber A.
 Para que a troca de mensagens faça sentido, o usuário posterga a leitura de R:A até depois de ter lido A.</p>
-<p><img alt="Inversão causal" src="../drawings/multicast.drawio-0.svg" /></p>
+<p><img alt="Inversão causal" src="../drawings/group_com.drawio-0.svg" /></p>
 <p>Observe que em nenhum momento a informação sobre <strong>quando</strong> as mensagens foram enviadas foi necessária, apenas a <strong>ordem</strong> das mesmas.
 Relógios lógicos permitem que sistemas capturem a relação de causalidade entre eventos e implementem esquemas como o apenas descrito, para coordenar as ações dos processos em sistemas distribuídos.</p>
 <h3 id="relogios-logicos">Relógios lógicos</h3>
@@ -1127,7 +1134,7 @@ Estes relógios permitem associar um <em>timestamp</em> a eventos de forma a se 
 <ul>
 <li>seja <span class="arithmatex">\(e\)</span> um evento</li>
 <li>seja <span class="arithmatex">\(C(e)\)</span> o valor do relógio lógico quando associado a <span class="arithmatex">\(e\)</span></li>
-<li>se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span></li>
+<li>se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e') &lt; C(e')\)</span></li>
 </ul>
 <p>Mas como definir a função <span class="arithmatex">\(C\)</span>?
 Experimentemos a seguinte definição:</p>
@@ -1141,11 +1148,11 @@ Experimentemos a seguinte definição:</p>
 </div>
 <p>Observe que não há <strong>fonte da verdade</strong> em termos de tempo lógico, já que <strong>cada processo mantém seu próprio relógio</strong> que pode ser relacionado com relógios de outros processos.
 Veja um exemplo desta definição em ação.</p>
-<p><img alt="LC - Primeira tentativa" src="../images/lc_cont.png" /></p>
+<p><img alt="LC - Primeira tentativa" src="../drawings/clock.drawio-3.svg" /></p>
 <p>É verdade neste cenário que se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>?<br />
-Observe com atenção os eventos <span class="arithmatex">\(f\)</span> e <span class="arithmatex">\(k\)</span>, pois para estes, a regra não é respeitada.</p>
+Observe com atenção os eventos <span class="arithmatex">\(j\)</span> e <span class="arithmatex">\(q\)</span>, pois para estes, a regra não é respeitada.</p>
 <h4 id="relogio-de-lamport">Relógio de Lamport</h4>
-<p>Para que a regra <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span> seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.</p>
+<p>Para que a regra <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span> seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.</p>
 <div class="admonition example">
 <p class="admonition-title">Relógio de Lamport</p>
 <ul>
@@ -1162,18 +1169,18 @@ Observe com atenção os eventos <span class="arithmatex">\(f\)</span> e <span c
 </ul>
 </li>
 <li>Se o evento <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span><ul>
-<li><span class="arithmatex">\(c_p \gets max(c_e,ts)+1\)</span>.</li>
+<li><span class="arithmatex">\(c_p \gets max(c_p,ts)+1\)</span>.</li>
 <li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
 </ul>
 </li>
 </ul>
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
-<p><img alt="LC - Primeira tentativa" src="../images/lc_lamport.png" /></p>
+<p><img alt="LC - Primeira tentativa" src="../drawings/clock.drawio-4.svg" /></p>
 <p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(a,b\)</span>,  se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>.</p>
 <details class="todo"><summary>Todo</summary><p>Exemplo em que não é bom o suficiente.</p>
 </details>
-<p>Se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>. Contudo, a volta não é verdade, isto é, se <span class="arithmatex">\(C(a) &lt; C(b)\)</span> então <span class="arithmatex">\(a \rightarrow b\)</span>.
+<p>Se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span>. Contudo, a volta não é verdade, isto é, se <span class="arithmatex">\(C(e) &lt; C(e')\)</span> então <span class="arithmatex">\(e \rightarrow e'\)</span>.
 Esta propriedade é interessante na ordenação de eventos, pois evita que eventos concorrentes sejam ordenados.
 Entram os relógios vetoriais.</p>
 <h4 id="relogio-vetorial">Relógio Vetorial</h4>
@@ -1197,8 +1204,8 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 </ul>
 </li>
 <li>Se <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span> de <span class="arithmatex">\(q\)</span>, então<ul>
-<li><span class="arithmatex">\(c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p\)</span></li>
 <li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p\)</span></li>
 <li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
 </ul>
 </li>
@@ -1207,13 +1214,13 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 </ul>
 </div>
 <p>Uma observação interessante a ser feita aqui é que embora o algoritmo pareça indicar que cada processo precisa saber quantos mais processos existem no sistema, isto não é verdade, pois pode-se assumir que para todo processo desconhecido <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(c_p[q] = 0\)</span>.</p>
-<p>Como dito, este relógio lógico tem a propriedade <span class="arithmatex">\(a \rightarrow b \iff V(a) &lt; V(b)\)</span>, considerando-se a seguinte definição de <span class="arithmatex">\(&lt;\)</span> para vetores:</p>
+<p>Como dito, este relógio lógico tem a propriedade <span class="arithmatex">\(e \rightarrow e' \iff V(e) &lt; V(e')\)</span>, considerando-se a seguinte definição de <span class="arithmatex">\(&lt;\)</span> para vetores:</p>
 <div class="admonition note">
 <p class="admonition-title">Comparação entre vetores</p>
 <ul>
 <li><span class="arithmatex">\(v = v' \iff v[i] = v'[i], 1 \leq i \leq n\)</span></li>
 <li><span class="arithmatex">\(v \leq v' \iff v[i] \leq v'[i], 1 \leq i \leq n\)</span></li>
-<li><span class="arithmatex">\(v &lt; v' \iff v \leq v' \land v \neq V'\)</span></li>
+<li><span class="arithmatex">\(v &lt; v' \iff v \leq v' \land v \neq v'\)</span></li>
 </ul>
 </div>
 <p>Assim, sejam dois eventos <span class="arithmatex">\(e \neq e'\)</span>:</p>
@@ -1222,13 +1229,12 @@ Estas visões são atualizadas a cada recepção de mensagem, de acordo com a se
 <li>Se <span class="arithmatex">\(V(e) \not &lt; V(e')\)</span> e <span class="arithmatex">\(V(e') \not &lt; V(e)\)</span>, então <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são concorrentes.</li>
 </ul>
 <p>Para entender melhor como esta definição funciona, considere a seguinte execução.
-O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o evendo <span class="arithmatex">\(d\)</span> como exemplo, o que quer dizer <span class="arithmatex">\(c_{P_2}[1]=2\)</span>?</p>
-<p><img alt="Relógio Vetorial" src="../images/lc_vc.png" /></p>
-<p>Quer dizer que <span class="arithmatex">\(P_2\)</span> está ciente de 2 eventos locais a <span class="arithmatex">\(P_1\)</span>, assim com está ciente de 0 eventos em <span class="arithmatex">\(P_3\)</span> e de que <span class="arithmatex">\(d\)</span> é o segundo evento em <span class="arithmatex">\(P_2\)</span>.
-Logo, <span class="arithmatex">\(d\)</span> pode ter sido causado por 2 eventos de <span class="arithmatex">\(P_1\)</span>, 1 evento de <span class="arithmatex">\(P_2\)</span> e 0 de <span class="arithmatex">\(P_3\)</span>.</p>
-<p>Agora compare os eventos <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>.
-<span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(d)\)</span> sejam maiores que em <span class="arithmatex">\(V(e)\)</span>, a posição 3 é menor.
-Isso quer dizer que o nem <span class="arithmatex">\(e\)</span> está ciente do evento <span class="arithmatex">\(d\)</span> e nem <span class="arithmatex">\(d\)</span> está ciente do evento <span class="arithmatex">\(e\)</span>, ou melhor, que um não pode ter causado o outro.</p>
+O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o evento <span class="arithmatex">\(d\)</span> como exemplo, o que quer dizer <span class="arithmatex">\(V(d) = (4,1,0)\)</span>?</p>
+<p><img alt="Relógio Vetorial" src="../drawings/clock.drawio-5.svg" /></p>
+<p>Quer dizer que <span class="arithmatex">\(p1\)</span> está ciente de 1 eventos locais a <span class="arithmatex">\(p2\)</span>, assim com está ciente de 0 eventos em <span class="arithmatex">\(p3\)</span> e de que <span class="arithmatex">\(d\)</span> é o quarto evento em <span class="arithmatex">\(p1\)</span>.
+Agora compare os eventos <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span>.
+<span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(o)\)</span> sejam maiores que em <span class="arithmatex">\(V(v)\)</span>, a posição 3 é menor.
+Isso quer dizer que o nem <span class="arithmatex">\(o\)</span> está ciente do evento <span class="arithmatex">\(v\)</span> e nem <span class="arithmatex">\(v\)</span> está ciente do evento <span class="arithmatex">\(o\)</span>, ou melhor, que um não pode ter causado o outro.</p>
 <p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">14</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
 <h4 id="relogios-hibridos">Relógios Híbridos</h4>
@@ -1266,7 +1272,7 @@ Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará
 </li>
 </ul>
 </div>
-<p><img alt="Relógio Híbrido Simples" src="../drawings/hibrido.drawio-0.svg" /></p>
+<p><img alt="Relógio Híbrido Simples" src="../drawings/clock.drawio-0.svg" /></p>
 <p>Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementadado muito rapidamente, perdendo a relação com o relógio físico.
 Em uma versão melhorada do algoritmo,<sup id="fnref:hlc"><a class="footnote-ref" href="#fn:hlc">15</a></sup> a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.<sup id="fnref:hlcerror"><a class="footnote-ref" href="#fn:hlcerror">16</a></sup></p>
 <!--![Hibrid Logical Clock](images/lc_hybrid.png) - Onde se lê 3,13, leia-se 3,10,3.-->
@@ -1290,7 +1296,7 @@ Considere um programa qualquer, que se comporte de forma determinística (isto �
 Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
 Logo, se tivermos <strong>várias cópias</strong> deste programa, executando em locais distintos, mas garantirmos que cada cópia veja exatamente a <strong>mesma entrada de dados</strong>, então garantiremos que todas as cópias <strong>transitarão pelos mesmos estados</strong> e chegarão ao mesmo estado final.
 Como difusão totalmente ordenada pode ser usado para garantir que todas as cópias receberão a mesma entrada, pode ser usado para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, <a href="https://en.wikipedia.org/wiki/State_machine_replication"><em>State Machine Replication</em></a>, ou pelo menos o seu princípio.</p>
-<p><img alt="State Machine Replication" src="../drawings/multicast.drawio-1.svg" /></p>
+<p><img alt="State Machine Replication" src="../drawings/group_com.drawio-1.svg" /></p>
 <p>Mas como podemos implementar estas primitivas de difusão usando relógios lógicos? 
 Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a todos os processos, inclusive o próprio remetente.</p>
 <div class="admonition example">
@@ -1331,7 +1337,7 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 <p>É necessário que canais de comunicação sejam FIFO e confiáveis para que mensagens com <em>timestamp</em> maiores não sejam perdidas e para que mensagens com <em>timestamps</em> maiores não sejam reordenadas e entregues primeiro. </p>
 <p>Explique porquê isto seria um problema; descreva execuções problemáticas.</p>
 </div>
-<p>Vejamos um outro algoritimo, de difusão <strong>causalmente</strong> ordenada.</p>
+<p>Vejamos um outro algoritmo, de difusão <strong>causalmente</strong> ordenada.</p>
 <div class="admonition example">
 <p class="admonition-title">Difusão Causalmente Ordenada</p>
 <ul>
@@ -1348,10 +1354,10 @@ Para que isto funcione, é necessário que os canais de comunicação usados sej
 </li>
 </ul>
 </div>
-<p><img alt="causal" src="../images/tanenbaum-06-13.png" /></p>
+<p><img alt="Causal Ordering" src="../drawings/group_com.drawio-2.svg" /></p>
 <div class="admonition exercise">
 <p class="admonition-title">Difusão Causalmente Ordenada</p>
-<p>Considere <span class="arithmatex">\(c_{P_2}[0,2,2]\)</span> e <span class="arithmatex">\(ts=[1,3,0]\)</span>, de <span class="arithmatex">\(P_0\)</span>. O que <span class="arithmatex">\(P_2\)</span> está esperando? Como age ao receber mensagem com <span class="arithmatex">\(ts\)</span>?</p>
+<p>Considere <span class="arithmatex">\(c_{p3}[0,2,2]\)</span> e <span class="arithmatex">\(ts=[1,3,0]\)</span>, de <span class="arithmatex">\(p1\)</span>. O que <span class="arithmatex">\(p3\)</span> está esperando? Como age ao receber mensagem com <span class="arithmatex">\(ts\)</span>?</p>
 </div>
 <p>Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
 Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de <em>timestamps</em>?
@@ -1359,13 +1365,17 @@ Isto pode ser feito por meio de <strong>interceptadores</strong> em uma camada d
 <p><img alt="Interceptadores" src="../images/tanenbaum-06-10.png" /></p>
 <p>Quando a aplicação envia uma mensagem, o relógio lógico mantido no <em>middleware</em> é atualizado e seu valor usado como <em>timestamp</em> em uma versão estendida da mensagem, efetivamente enviada na rede.
 Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada para o interceptador que extrai o <em>timestamp</em> e atualiza seu relógio. A mensagem sem o <em>timestamp</em> é entregue para a aplicação quando apropriado, e aplicação não percebe a manipulação.</p>
-<h3 id="exclusao-mutua-revisitada">Exclusao Mútua Revisitada</h3>
+<h3 id="exclusao-mutua-revisitada">Exclusão Mútua Revisitada</h3>
 <details class="todo"><summary>Todo</summary><ul>
 <li><a href="http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf">Algoritmos de Excluão mútua baeados em LC</a></li>
 <li>Algoritmo de Lamport, Ricart e agrawalla</li>
 <li><a href="https://www.coursera.org/learn/cloud-computing-2/lecture/GMHYN/2-4-maekawas-algorithm-and-wrap-up">Algoritmo de Maekawa</a></li>
 </ul>
 </details>
+<h2 id="referencias">Referências</h2>
+<ul>
+<li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
