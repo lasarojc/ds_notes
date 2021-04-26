@@ -6,7 +6,7 @@ Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obst�
 
     
 ??? sideslide "Sistemas simples"
-     ![Lego Rainbow](../images/lego0.jpg){: style="width:300px"}
+     ![Lego Rainbow](images/lego0.jpg){: style="width:300px"}
 
 Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
 Estes são os sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.
@@ -14,7 +14,7 @@ Sejam estes sistemas construído com blocos que se encaixam perfeitamente, dispo
 
 
 ??? sideslide "Sistemas não tão simples"
-     ![Lego Hell](../images/lego3.jpg){: style="width:300px"}
+     ![Lego Hell](images/lego3.jpg){: style="width:300px"}
 
 ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
 o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolítico**.[^centr]
@@ -24,7 +24,7 @@ o resultado, contudo, continua sendo um artefato só, executado como um único p
 Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que não foram pensadas para trabalhar juntas, forçando-nos a usar um pouco de super-cola e arame. 
 
 ??? sideslide "Cable hell!"
-     ![Lego SD](../images/cablemess.jpg){: style="max-width:300px; max-height:150px;"}
+     ![Lego SD](images/cablemess.jpg){: style="max-width:300px; max-height:150px;"}
 
 Bem, na verdade, em vez de cola usamos *middleware*, como logo discutiremos, e, em vez de arame, usamos cabos de rede, o que é, 
 de fato, a principal característica de um sistema distribuído em relação a um não-distribuído: separação e dispersão de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
@@ -63,7 +63,7 @@ Eles também podem se comunicar por mensagens trocadas via uma rede de comunica�
 
 Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não tem ciência. 
 
-![Sistema Distribuído](../drawings/sis_dis.drawio)
+![Sistema Distribuído](drawings/sis_dis.drawio)
 
 ??? sideslide "Dependência"
     * Ao colaborarem, criam dependência
@@ -110,18 +110,18 @@ Mas se esta é a realidade da programação distribuída, por quê fazê-lo? A r
 
 A primeira razão é o fato é que computadores individuais tem capacidade reduzida de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.
 
-![Data Growth](../images/datagrowth.jpg){: style="max-width:500px"}
+![Data Growth](images/datagrowth.jpg){: style="max-width:500px"}
 
 Assim, precisamos crescer nosso poder computacional, mas aumentar a capacidade de um dispositivo (**scale up** ou **vertical scaling**), mesmo de forma linear, tem custo exponencial.
 
 
-![Custo de melhoria](../images/exponential.jpg){: style="max-width:300px"}
+![Custo de melhoria](images/exponential.jpg){: style="max-width:300px"}
 
 O que nos resta então é agregar o poder computacional de diversos computadores "baratos" (**scale out** ou **horizontal scaling**) para satisfazer nossas necessidades.[^scaling]
 
 [^scaling]: Mesmo que o custo não fosse um problema, seria impossível implementar *scale up* funcionalmente além de um certo limite, pois o computador teria que ser tão grande que suas partes teriam que ser tratadas independentemente, revertendo a um cenário *scale out* custoso demais.
 
-![Custo de melhoria](../images/scaleupout.jpg){: style="width:600px"}
+![Custo de melhoria](images/scaleupout.jpg){: style="width:600px"}
 
 Mesmo se pensarmos que a escala com que estes sistemas trabalham deve ser muito diferente daquela dos sistemas que nós desenvolvemos, e portanto as técnicas usadas em sua construção devem ser muito distintas do que fazemos, a verdade não poderia ser mais longe disto.
 Com a quantidade de informação armazenada a cada acesso a um sítio, a cada produto vendido, ou a cada consulta feita, praticamente qualquer sistema de informação de sucesso necessitará aplicar as técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender ao número crescente de clientes (computacionais ou humanos) e aumentar sua área de cobertura, mesmo que não chegue a escala dos exemplos acima, e melhorar ou manter a qualidade do serviço que presta.
@@ -152,11 +152,11 @@ Clusters como o da imagem a seguir, do High Performance Computing Center de Stut
 Na engenharia, por exemplo, HPC pode ser usada para testar a eficiência de projetos sem construir protótipos, seja
 
 * de uma turbina  
- ![CFD](../images/turbine.jpeg)
+ ![CFD](images/turbine.jpeg)
 * um carro  
- ![CFD](../images/cfd_car.jpg)
+ ![CFD](images/cfd_car.jpg)
 * ou uma vaca  
- ![CFD](../images/CFD_Cow.jpg)
+ ![CFD](images/CFD_Cow.jpg)
 
 Os **nós** de um cluster são normalmente divididos em três categorias: administração, computação e armazenamento.
 Nós de administração implementam um monitoramento distribuído dos demais nós, servem de ponto de entrada para usuários e provêem interface para submissão de tarefas.
@@ -164,7 +164,7 @@ O [Oscar](https://github.com/oscar-cluster/oscar), por exemplo, é uma é conjun
 Uma das ferramentas inclusas no Oscar é o OpenPBS, pelo qual tarefas são atribuídas aos diversos nós do sistema que estejam alocados para tal tarefa. O OpenPBS portanto é também um sistema distribuído.
 Finalmente, as tarefas submetidas em si são também aplicações distribuídas em que cada processo executando em uma máquina distinta é responsável por resolver uma parte do problema.
 
-![CFD](../images/cfd_domain.png)
+![CFD](images/cfd_domain.png)
 
 Este tipo de sistemas distribuídos são o que chamamos de **fortemente acoplados** pois a falha em um dos componentes leva normalmente à falha de todo o sistema.
 Do ponto de vista deste curso, estamos mais interessados em sistemas **fracamente acoplados**.
@@ -174,7 +174,7 @@ Este modelo surgiu de iniciativas como o [SETI@home](https://en.wikipedia.org/wi
 
 As grades computacionais são às vezes vistas como precursoras da **computação utilitária**, isto é, o fornecimento de recursos computacionais por provedores em troca de um pagamento proporcional à quantidade de recursos utilizados, como no fornecimento de água ou eletricidade.
 
-![tap](../images/faucet.png){: style="width:300px"}
+![tap](images/faucet.png){: style="width:300px"}
 
 A materialização recente da computação utilitária são as nuvens computacionais.
 Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.
@@ -192,7 +192,7 @@ Já este outro [sítio](https://www.google.com/about/datacenters/gallery/#/all) 
 Provavelmente mais comuns entre os profissionais da computação, os sistemas de informação distribuídos são encontrados em diversas formas. De fato, o termo "sistema de informação" é tão abrangente, que dificilmente um sistema distribuído não estaria nesta classe.
 O seguinte é um exemplo de uma arquitetura em três camadas, onde a primeira implementa a interface com o usuário, a segunda contém a lógica do negócio, e a terceira mantem os dados.
 
-[![3 Tier](../images/3tier.png)](https://en.wikipedia.org/wiki/Multitier_architecture)
+[![3 Tier](images/3tier.png)](https://en.wikipedia.org/wiki/Multitier_architecture)
 
 Peça fundamental desta abordagem, os bancos de dados na terceira camada são frequentemente transacionais.
 Isto é, eles provêem as garantias na execução de transações conhecidas como propriedades ACID.
@@ -256,14 +256,14 @@ Embora veremos isso um pouco mais para frente neste material, por enquanto, apen
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
 Também discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.
 
-![https://www.algoworks.com/blog/nosql-database/](../images/nosql.jpeg)
+![https://www.algoworks.com/blog/nosql-database/](images/nosql.jpeg)
 
 
 ### Integração de Aplicações
 
 Frequentemente é necessário integrar sistemas de informação legados com sistemas mais modernos, ou simplesmente expô-los usando uma interface mais moderna. Nestes casos, é possível integrar diversos sistemas usando um ***middleware*** que os encapsule.
 
-![01-11](../images/01-11.png)
+![01-11](images/01-11.png)
 
 
 Veremos mais adiante o que é um *middleware*; por enquanto, pense nele apenas como um camada de software que se interpõe entre os clientes e um serviço oferecido.
@@ -273,7 +273,7 @@ Outro exemplo, na imagem seguinte,  é um sistema que agrega subsistemas de dive
 Observe que nenhum departamento precisa conversar diretamente com os outros, ou mesmo conhecê-los; eles apenas **publicam** a mensagem para quem tiver interesse e aguardam um resposta também na forma de uma mensagem.
 Observe que nenhum componente tem que saber da existência do outro ou se torna indisponível caso os outros falhem, o que aumenta a escalabilidade do sistema e sua capacidade de tolerar falhas.
 
-![https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite](../images/mq.png)
+![https://www.codeproject.com/articles/297162/introducing-expert-systems-and-distributed-archite](images/mq.png)
 
 
 
@@ -308,7 +308,7 @@ A Internet das Coisas (IoT, do inglês *Internet of Things*) vai também na mesm
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT[^iot] não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.
 
-![https://www.edureka.co/blog/iot-applications/](../images/iot1.png)
+![https://www.edureka.co/blog/iot-applications/](images/iot1.png)
 
 
 
@@ -340,7 +340,7 @@ Assim, proponho visitarmos o material destas notas à luz de uma aplicação gen
 
 O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. As funcionalidades são expostas para estes usuários via duas aplicações distintas, o **portal do cliente**  e o **portal administrativo**, mas ambos manipulam a mesma base de dados. A base de dados é particionada usando *consistent hashing* e as partições são mantidas em memória apenas. Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. A imagem descreve a aplicação.
 
-![Projeto](../drawings/projeto.drawio)
+![Projeto](drawings/projeto.drawio)
 
 Apesar de introduzir complexidade extra, usaremos diversos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.
 

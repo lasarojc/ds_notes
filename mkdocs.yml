@@ -3,8 +3,8 @@ repo_url: https://github.com/lasarojc/ds_notes
 edit_uri: ""
 nav:
         - Prefácio: preface.md
-        - Introdução: intro/index.md
-        - Fundamentos: basics/index.md
+        - Introdução: intro.md
+        - Fundamentos: fundamentals.md
         - Arquiteturas: arch/index.md
         - Comunicação: comm/index.md
         - Coordenação: coord/index.md

@@ -27,7 +27,7 @@ De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltip
 Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como [Infiniband](https://en.wikipedia.org/wiki/InfiniBand) que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
 Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
 
-![Memória Compartilhada](../drawings/shared_memory.drawio#0)
+![Memória Compartilhada](drawings/shared_memory.drawio#0)
 
 
 ??? sideslide "Comunicação"
@@ -37,17 +37,17 @@ Seja como for, estes sistemas com **memória compartilhada** são normalmente us
 Por outro lado, estamos mais interessados aqui em sistemas de maior escala geográfica, o que se adequa melhor ao modelo de troca de mensagens, isto é, onde cada nó mantem controle total do seu espaço de endereçamento e só expõe seu estado via mensagens enviadas para os outros nós.
 Este modelo é mais adequado ao desenvolvimento de aplicações com componentes **fracamente acoplados**, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.
 
-![Passagem de Mensagens](../drawings/shared_memory.drawio#2)
+![Passagem de Mensagens](drawings/shared_memory.drawio#2)
 
 Memória Compartilhada Distribuída (DSM, do inglês, *Distributed Shared Memory*) é uma abordagem híbrida que tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.
 
-![Memória Compartilhada](../drawings/memory.drawio)
+![Memória Compartilhada](drawings/memory.drawio)
 
 Considere uma possível implementação em software da DSM, apresentada na próxima figura. 
 Nesta abordagem, cada *host* contribui uma porção de sua memória para um *pool* global. Processos acessam o *pool* via **gerentes de memória**, que traduzem os endereços de um espaço de endereçamento virtual para um host e um endereço local a tal host, e usam *message passing*  para implementar o acesso. 
 Esta abordagem resulta em uma arquitetura NUMA, isto é, *Non-Uniform Memory Access*, já que os acessos a endereços locais são mais rápidos que aos remotos.
 
-![Memória Compartilhada Distribuída em Software](../drawings/shared_memory.drawio#1)
+![Memória Compartilhada Distribuída em Software](drawings/shared_memory.drawio#1)
 
 
 
@@ -171,7 +171,7 @@ A Internet tem este nome por usar o protocolo de interconexão de redes independ
 Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
 Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
 
-![A Internet](../images/internet.png)[^internet]
+![A Internet](images/internet.png)[^internet]
 
 [^internet]: By User:Ludovic.ferre - Internet Connectivity Distribution&Core.svg, CC BY-SA 3.0, (https://commons.wikimedia.org/w/index.php?curid=10030716)
 
@@ -179,7 +179,7 @@ Se você se lembrar da pilha de protocolos de comunicação de referência OSI, 
 O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
 Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
 
-![Pilhas de Comunicação](../drawings/pilha.drawio#0)
+![Pilhas de Comunicação](drawings/pilha.drawio#0)
 
 São sete as camadas:
 
@@ -191,13 +191,13 @@ São sete as camadas:
 6. Apresentação: Objetos; json, xml; criptografia
 7. Aplicação: Aplicações; http, pop, ftp
 
-![Pilhas de Comunicação](../drawings/pilha.drawio#1)
+![Pilhas de Comunicação](drawings/pilha.drawio#1)
 
 Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
 Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
 pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
 
-[![OSI x IP](../drawings/pilha.drawio#2)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+[![OSI x IP](drawings/pilha.drawio#2)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
 
 Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
 Alguns exemplos de tais funcionalidades são
@@ -277,7 +277,7 @@ stateDiagram-v2
    }
 ```
 
-<!--![image](../images/04-15.png)-->
+<!--![image](images/04-15.png)-->
 
 Estabelecido o socket, o mesmo pode ser usado como um **arquivo**, isto é, lendo-se e escrevendo-se bytes.
 O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
@@ -458,12 +458,12 @@ Parece que uma opção melhor seria então usar UDP, correto?
 Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
 Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!
 
-![Multicast](../drawings/group_com.drawio#0)
+![Multicast](drawings/group_com.drawio#0)
 
 Para terminar, lhe darei uma razão final: IP-Multicast!
 Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
 
-![Multicast](../drawings/group_com.drawio#1)
+![Multicast](drawings/group_com.drawio#1)
 
 IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
@@ -672,7 +672,7 @@ Se você usar o console de desenvolvimento do navegador, verá como múltiplos a
 A figura a seguir mostra a carga do sítio da [Facom](https://www.facom.ufu.br).
 O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que isso acontece e são determinados quais os demais arquivos necessários, requisições concorrentes são disparadas, minimizando o tempo total da operação.
 
-![Facom loading times](../images/facom.png)
+![Facom loading times](images/facom.png)
 
 Como outros exemplos, considere um formulário *online* em que a validação de um campo é executada enquanto o campo seguinte está sendo preenchido, ou um serviço de email em que arquivos são carregados enquanto a mensagem é confeccionada.
 
@@ -686,7 +686,7 @@ Do lado dos servidores há diversas possibilidades de uso de threads para aument
 A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
 Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:
 
-![Single Threaded](../images/singlethreadedserver.gif)
+![Single Threaded](images/singlethreadedserver.gif)
 
 0. O servidor é iniciado, criando o socket e invocando accept
 1. o cliente envia a requisição para o servidor
@@ -705,7 +705,7 @@ Para evitar que isto ocorra, o servidor pode usar mais threads.
 O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
 Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.
 
-![Multi Threaded](../images/multithreadedserver.gif)
+![Multi Threaded](images/multithreadedserver.gif)
 
 Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
 Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
@@ -719,7 +719,7 @@ Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de con
 
 Na figura, um thread principal é encarregado de receber as requisições e colocar na fila bloqueante; se a fila fica cheia, o thread principal fica bloqueado esperando por espaço, fazendo com que novas conexões tenham que esperar.
 
-[![Pool Threaded](../images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
+[![Pool Threaded](images/poolthreadedserver.gif)](https://www3.nd.edu/~dthain/courses/cse30341/spring2009/project4/project4.html)
 
 Os threads do pool removem uma tarefa da fila, a tratam e, ao final do atendimento,  pegam nova requisição na fila, em um loop infinito; requisições que demandam menor processamento liberam o thread mais rapidamente para que pegue nova tarefa.
 Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo. Se todas são grandes, as tarefas se acumularão na fila.
@@ -734,13 +734,13 @@ Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**
 [^seda]: O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.
 
 
-[![Seda](../images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
+[![Seda](images/seda1.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
 Uma característica importante deste modelo é que cada estágio pode ser escalado individualmente de acordo com a demanda uma vez que cada estágio tem seu próprio *pool*. Por exemplo, se um estágio faz algum cálculo leve, então poucos *threads* são necessários ao mesmo. Já um estágio que precise efetuar E/S talvez precise mais *threads*, uma vez que estes ficam bloqueandos enquanto a operação é executada. [^ioasync]
 
 [^ioasync]: Pode-se argumentar que E/S assíncrona resolveria o problema aqui, mas isso não vem ao caso.
 
-[![Seda](../images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
+[![Seda](images/seda2.png)](http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png)
 
 
 
@@ -771,7 +771,7 @@ Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não
 Não exatamente, pois mesmo este código simplíssimo podemos sofrer de [falso compartilhamento](https://dzone.com/articles/false-sharing).
 Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto `X` quanto `Y` no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.
 
-![Multithreaded](../images/cache-line.png)
+![Multithreaded](images/cache-line.png)
 
 Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache; no exemplo, poderia-se definir X e Y como vetores do tamanho da linha da cache e usar efetivamente apenas a primeira posição de cada vetor.
 
@@ -779,11 +779,11 @@ Se o compartilhamento for real, por exemplo se ambos os threads usarem a variáv
 Neste caso, poder-se-ia definir afinidade entre threads, isto é, notar quais threads compartilham estado de forma que threads afins sejam colocados nos mesmos processadores e compartilhem as mesmas memórias. 
 Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto de vista do SO e hardware.
 
-![Multithreaded](../images/multithread2.png)
+![Multithreaded](images/multithread2.png)
 
 
 ???- sideslide "Multiprogramação"
-     ![Multithreaded](../images/multithreaded.jpg)
+     ![Multithreaded](images/multithreaded.jpg)
 
 Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
 Ainda assim, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
