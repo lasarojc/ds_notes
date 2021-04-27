@@ -2,6 +2,7 @@ site_name: Notas em Sistemas Distribuídos
 repo_url: https://github.com/lasarojc/ds_notes 
 edit_uri: ""
 nav:
+        - Início: index.html
         - Prefácio: preface.md
         - Introdução: intro.md
         - Fundamentos: fundamentals.md
