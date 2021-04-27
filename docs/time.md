@@ -441,15 +441,15 @@ Hoje é comum usar a relação *happened-before* e o vocabulário associado para
 ### Happened-Before
 
 A relação *happened-before* captura a **causalidade** entre eventos.
-Isto é, se um evento $a$ **aconteceu-antes** de um evento $b$, então $a$ potencialmente causou $b$.
-Também podemos dizer que $a$ precede $b$ em uma ordem causal.
+Isto é, se um evento $e$ **aconteceu-antes** de um evento $e'$, então $e$ potencialmente causou $e'$.
+Também podemos dizer que $e$ precede $e'$ em uma ordem causal.
 
 O evento $a$ aconteceu-antes $b$, notado como $a \rightarrow b$, se uma das três condições seguintes é válida:
 
 !!!note "Happened-Before"
     * Se $e$ e $e'$ são eventos em um mesmo processo (ou *thread*) e $e$ foi executado antes de $e'$.
-    * Se $e$ e $e'$ são eventos de processos distintos e $e'$ é o envio de uma mensagem e $e'$ a sua recepção.
-    * Se há transitividade, isto é, se existe um evento $e''$ tal que $e' \rightarrow e''$ e $e'' \rightarrow e'$.
+    * Se $e$ e $e'$ são eventos de processos distintos e $e$ é o envio de uma mensagem e $e'$ a sua recepção.
+    * Se há transitividade, isto é, se existe um evento $e''$ tal que $e \rightarrow e''$ e $e'' \rightarrow e'$.
 
 Na figura abaixo, as três regras são exemplificadas pelos eventos de cor vermelha, amarela e verde, respectivamente.
 
@@ -478,7 +478,7 @@ Estes relógios permitem associar um *timestamp* a eventos de forma a se garanti
 
 * seja $e$ um evento
 * seja $C(e)$ o valor do relógio lógico quando associado a $e$
-* se $e \rightarrow e'$ então $C(e') < C(e')$
+* se $e \rightarrow e'$ então $C(e) < C(e')$
 
 Mas como definir a função $C$?
 Experimentemos a seguinte definição:
@@ -508,8 +508,8 @@ Para que a regra $e \rightarrow e'$ então $C(e) < C(e')$ seja válida, precisam
     * Se o evento $e$ é o envio de uma mensagem
         * $c_p \gets c_p + 1$
         * $C(e) \gets c_p$
-        * $C(e)$ é enviado com a mensagem como seu timestamp.
-    * Se o evento $e$ é a recepção de uma mensagem com timestamp $ts$
+        * $C(e)$ é enviado com a mensagem como seu *timestamp*.
+    * Se o evento $e$ é a recepção de uma mensagem com *timestamp* $ts$
         * $c_p \gets max(c_p,ts)+1$.
         * $C(e) \gets c_p$
 
@@ -517,7 +517,7 @@ Com este ajuste, temos os **Relógios de Lamport**.
 
 ![LC - Primeira tentativa](drawings/clock.drawio#4)
 
-Neste caso, temos que para quaisquer eventos $a,b$,  se $a \rightarrow b$ então $C(a) < C(b)$.
+Neste caso, temos que para quaisquer eventos $e,e'$,  se $e \rightarrow e'$ então $C(e) < C(e')$.
 
 
 ???todo
@@ -576,7 +576,7 @@ Agora compare os eventos $o$ e $v$.
 $o$ e $v$ são concorrentes pois embora as posições 1 e 2 de $V(o)$ sejam maiores que em $V(v)$, a posição 3 é menor.
 Isso quer dizer que o nem $o$ está ciente do evento $v$ e nem $v$ está ciente do evento $o$, ou melhor, que um não pode ter causado o outro.
 
-Esta abstração simples já é muito poderosa e, embora possa ser melhorada[^matrix_clock], já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
+Esta abstração simples já é muito poderosa e, embora possa ser melhorada,[^matrix_clock] já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.
 
 [^matrix_clock]: [Matrix Clock](https://en.wikipedia.org/wiki/Matrix_clock)
