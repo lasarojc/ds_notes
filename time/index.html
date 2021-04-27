@@ -1104,15 +1104,15 @@ Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante a
 Hoje é comum usar a relação <em>happened-before</em> e o vocabulário associado para falar sobre ordem de eventos em um sistema computacional, em especial um distribuído.</p>
 <h3 id="happened-before">Happened-Before</h3>
 <p>A relação <em>happened-before</em> captura a <strong>causalidade</strong> entre eventos.
-Isto é, se um evento <span class="arithmatex">\(a\)</span> <strong>aconteceu-antes</strong> de um evento <span class="arithmatex">\(b\)</span>, então <span class="arithmatex">\(a\)</span> potencialmente causou <span class="arithmatex">\(b\)</span>.
-Também podemos dizer que <span class="arithmatex">\(a\)</span> precede <span class="arithmatex">\(b\)</span> em uma ordem causal.</p>
+Isto é, se um evento <span class="arithmatex">\(e\)</span> <strong>aconteceu-antes</strong> de um evento <span class="arithmatex">\(e'\)</span>, então <span class="arithmatex">\(e\)</span> potencialmente causou <span class="arithmatex">\(e'\)</span>.
+Também podemos dizer que <span class="arithmatex">\(e\)</span> precede <span class="arithmatex">\(e'\)</span> em uma ordem causal.</p>
 <p>O evento <span class="arithmatex">\(a\)</span> aconteceu-antes <span class="arithmatex">\(b\)</span>, notado como <span class="arithmatex">\(a \rightarrow b\)</span>, se uma das três condições seguintes é válida:</p>
 <div class="admonition note">
 <p class="admonition-title">Happened-Before</p>
 <ul>
 <li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos em um mesmo processo (ou <em>thread</em>) e <span class="arithmatex">\(e\)</span> foi executado antes de <span class="arithmatex">\(e'\)</span>.</li>
-<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos de processos distintos e <span class="arithmatex">\(e'\)</span> é o envio de uma mensagem e <span class="arithmatex">\(e'\)</span> a sua recepção.</li>
-<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(e''\)</span> tal que <span class="arithmatex">\(e' \rightarrow e''\)</span> e <span class="arithmatex">\(e'' \rightarrow e'\)</span>.</li>
+<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos de processos distintos e <span class="arithmatex">\(e\)</span> é o envio de uma mensagem e <span class="arithmatex">\(e'\)</span> a sua recepção.</li>
+<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(e''\)</span> tal que <span class="arithmatex">\(e \rightarrow e''\)</span> e <span class="arithmatex">\(e'' \rightarrow e'\)</span>.</li>
 </ul>
 </div>
 <p>Na figura abaixo, as três regras são exemplificadas pelos eventos de cor vermelha, amarela e verde, respectivamente.</p>
@@ -1134,7 +1134,7 @@ Estes relógios permitem associar um <em>timestamp</em> a eventos de forma a se 
 <ul>
 <li>seja <span class="arithmatex">\(e\)</span> um evento</li>
 <li>seja <span class="arithmatex">\(C(e)\)</span> o valor do relógio lógico quando associado a <span class="arithmatex">\(e\)</span></li>
-<li>se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e') &lt; C(e')\)</span></li>
+<li>se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span></li>
 </ul>
 <p>Mas como definir a função <span class="arithmatex">\(C\)</span>?
 Experimentemos a seguinte definição:</p>
@@ -1165,10 +1165,10 @@ Observe com atenção os eventos <span class="arithmatex">\(j\)</span> e <span c
 <li>Se o evento <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
 <li><span class="arithmatex">\(c_p \gets c_p + 1\)</span></li>
 <li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
-<li><span class="arithmatex">\(C(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
+<li><span class="arithmatex">\(C(e)\)</span> é enviado com a mensagem como seu <em>timestamp</em>.</li>
 </ul>
 </li>
-<li>Se o evento <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span><ul>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com <em>timestamp</em> <span class="arithmatex">\(ts\)</span><ul>
 <li><span class="arithmatex">\(c_p \gets max(c_p,ts)+1\)</span>.</li>
 <li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
 </ul>
@@ -1177,7 +1177,7 @@ Observe com atenção os eventos <span class="arithmatex">\(j\)</span> e <span c
 </div>
 <p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
 <p><img alt="LC - Primeira tentativa" src="../drawings/clock.drawio-4.svg" /></p>
-<p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(a,b\)</span>,  se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>.</p>
+<p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(e,e'\)</span>,  se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span>.</p>
 <details class="todo"><summary>Todo</summary><p>Exemplo em que não é bom o suficiente.</p>
 </details>
 <p>Se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span>. Contudo, a volta não é verdade, isto é, se <span class="arithmatex">\(C(e) &lt; C(e')\)</span> então <span class="arithmatex">\(e \rightarrow e'\)</span>.
@@ -1235,7 +1235,7 @@ O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o ev
 Agora compare os eventos <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span>.
 <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(o)\)</span> sejam maiores que em <span class="arithmatex">\(V(v)\)</span>, a posição 3 é menor.
 Isso quer dizer que o nem <span class="arithmatex">\(o\)</span> está ciente do evento <span class="arithmatex">\(v\)</span> e nem <span class="arithmatex">\(v\)</span> está ciente do evento <span class="arithmatex">\(o\)</span>, ou melhor, que um não pode ter causado o outro.</p>
-<p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">14</a></sup>, já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
+<p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada,<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">14</a></sup> já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
 <h4 id="relogios-hibridos">Relógios Híbridos</h4>
 <p>A grande vantagem dos relógios lógicos sobre os físicos é de ignorar a passagem do tempo, só se importanto com a ordem de eventos.
