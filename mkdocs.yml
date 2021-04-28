@@ -2,7 +2,7 @@ site_name: Notas em Sistemas Distribuídos
 repo_url: https://github.com/lasarojc/ds_notes 
 edit_uri: ""
 nav:
-        - Início: index.html
+        #- Início: index.html
         - Prefácio: preface.md
         - Introdução: intro.md
         - Fundamentos: fundamentals.md
@@ -10,7 +10,7 @@ nav:
         - Comunicação: comm/index.md
         - Coordenação: coord/index.md
         - Tempo: time.md
-        - Tolerância a Falhas: fault/index.md
+        - Tolerância a Falhas: fault.md
         - Bancos de Dados: disdb/index.md
         - Sistemas de Arquivos: disfs/index.md
         - Tecnologias: tech/index.md

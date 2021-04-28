@@ -6,9 +6,9 @@ Nós escrevemos software para que resolvam problemas de espectro bem amplo, indo
 Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
 Desta situação, surge a ideia de dependabilidade, isto é, de um sistema ter a propriedade de se poder depender do mesmo.
 
-Dizemos que um componente $C$ depende de um componente $C'$ se a corretude do comportamento de $C$ depende da corretude do componente $C'$.
-E que um componente é "dependável" (*dependable*) na medida em que outros podem depender dele.
-A dependabilidade é essencial aos componentes de sistemas distribuídos, afinal, "uma corrente é tão forte quanto seu elo mais fraco."
+Dizemos que um componente **$C$ depende de um componente $C'$** se a corretude do comportamento de $C$ depende da corretude do componente $C'$.
+Dizemos também que um componente é "dependável" (*dependable*) na medida em que outros podem depender dele.
+A dependabilidade é essencial aos componentes de sistemas distribuídos, pois como diz o ditado, uma corrente é tão forte quanto seu elo mais fraco.
 
 De acordo com [Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf), tem-se dependabilidade quando os seguintes atributos estão presentes.
 
@@ -18,18 +18,32 @@ De acordo com [Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algird
 * Integridade (*Integrity*) - Tolerância a modificações.
 * Manutenabilidade (*Maintainability*) - Facilidade de reparo.
 
-Outra propriedade importante neste contexto é a 
+Além da dependabilidade, outra propriedade importante e desejável para os sistemas é a **Confidencialidade**, que quando combinada à **Integridade** e **Confidencialidade** é também chamada de **Segurança** (*Security*). 
 
-* **Confidencialidade** (*Confidentiality*), a garantia de que a informação somente é acessível a quem é devido.
-
-A combinação de **Disponibilidade**, **Integridade** e **Confidencialidade** é também chamada de **Segurança** (*Security*).
+* Confidencialidade (*Confidentiality*), a garantia de que a informação somente é acessível a quem é devido.
 
 Mas o que significa, na prática, ser dependável e seguro (**secure**)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.
 
 ### Falhas, Erros e Defeitos
-No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as **falhas** (*defect*, *fault*, para alguns, falta), que é um erro no desenvolvimento do sistema, como *bugs* ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado. 
+No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as **falhas** (*defect*, *fault*, para alguns, falta), que é um erro no desenvolvimento do sistema, como *bugs* ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado, ou mesmo um erro na especificação.
 Uma falha existe mesmo se for raramente ativada e mesmo se seus efeitos nunca forem percebidos. 
 Por exemplo, se o código tem um `<=` em vez de `<` na especificação de uma iteração, mas se uma condição faz com que a iteração seja interrompida antes, o código ainda tem uma falha.
+
+```c++
+char minha_string[11];
+int i;
+
+initialize(minha_string);
+
+for(i = 0; i <= 10; i++){
+    if (minha_string[i] == '.')
+        break;
+
+    minha_string[i] = 'a';
+}
+
+minha_string[i] = '\0';
+```
 
 No segundo nível, temos o **erro** (*error*), que é a manifestação da falha levando a algum comportamento indevido. No exemplo acima, um erro seria quando a iteração passasse do ponto correto por causa do `<=`, por exemplo, na hora de escrever uma *string* em um array, estourando o limite do array na pilha mas sobrescrevendo uma variável que não seja mais usada.
 O erro pode passar despercebido, mas ainda assim é um erro.
@@ -54,7 +68,7 @@ Esta cadeia pode levar cenários catastróficos.
 
     === "787 Dreamliner"
 
-        O avião 787 dreamliner, da Boeing, tem um problema que tornar necessário reiniciar o sistema elétrico a cada 248 dias, ou o mesmo pode ter uma pane.
+        O avião 787 dreamliner, da Boeing, tem um problema que torna necessário reiniciar o sistema elétrico a cada 248 dias, ou o mesmo pode ter uma pane.
 
         !!!quote
              The plane’s electrical generators fall into a failsafe mode if kept continuously powered on for 248 days. The 787 has four such main generator-control units that, if powered on at the same time, could fail simultaneously and cause a complete electrical shutdown.
@@ -67,8 +81,7 @@ Esta cadeia pode levar cenários catastróficos.
 
     === "737 Max"
 
-        Neste outro caso envolvendo a Boeing, um sensor é usado para detectar se o avião estava subindo rápido demais e correndo o risco de perder sustentação, um comportamento que se verificou comum no 737 Max por causa dos grandes motores usados nele e que o diferenciam do 737 original.
-        Se o risco é detectado, um sistema automatizado força o nariz do avião para baixo para corrigir o problema. 
+        O Boeing 737 Max é uma modificação do 737 original em que o motores maiores foram usados sem modificar a estrutura do restante do avião e portanto alterando o seu centro de massa. Por causa da diferença, o avião pode subir rápido demais, correndo o risco de perder sustentação. Para auxiliar os pilotos e evitar a necessidade de treinamento específico, um sensor é usado para detectar se o avião está nesta situação e forcar o nariz do avião para baixo para corrigir o problema.
         Contudo, no 737 Max apenas um sensor é usado e no caso de falha do mesmo, o avião é forçado para baixo e em direção ao solo, o que levou à morte de centenas de pessoas.[^737max]
 
 
@@ -83,48 +96,21 @@ Esta cadeia pode levar cenários catastróficos.
 
 [^737max]: [Boeing 737 Max: why was it grounded, what has been fixed and is it enough?](https://theconversation.com/boeing-737-max-why-was-it-grounded-what-has-been-fixed-and-is-it-enough-150688)
 
-### *Root cause analysis*
-Quando defeitos aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que o levou a acontecer.
-Algumas empresas publicam a ***root cause analysis*** ou a análise *post-mortem* para a comunidade como forma de compartilhar conhecimento e também por questões de transparência.
-Veja esta [compilação](https://github.com/danluu/post-mortems) para uma extensa lista de análises.
 
 
 
-### Como alcançar dependabilidade
 
-Falhas são um fato da vida, uma constante no desenvolvimento de sistemas. Mas se o objetivo é a dependabilidade, precisamos de formas de lidar com falhas, **previnindo**, **removendo** e **tolerando**-as.
+Quando defeitos aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que os levaram a acontecer.
+Algumas empresas até publicam as ***root cause analysis*** ou a análise *post-mortem* para a comunidade como forma de compartilhar conhecimento e também por questões de transparência, mas mais importante, conhecer a causa pode ajudar a evitar que novas instâncias da mesma falha ou similares, [^rca] aumentando a dependabilidade do sistema.
 
-A **prevenção de falhas** acontece por meio de técnicas bem estabelecidas de engenharia.
-No caso de sistemas de software, modularização, linguagens de programação fortemente tipadas e encapsulamento são passos essencias. 
-Uso de especificações formais, testadas ou provadas corretas, são outro passo neste sentido. Por exemplo, diversas empresas usam a linguagem [TLA$^+$](https://lamport.azurewebsites.net/tla/tla.html) para verificar a corretude de seus algoritmos[^tla_real]. 
-Outras técnicas envolvidas na prevenção de falhas são análise estática, prova de teoremas, execução simbólica, teste de modelos, etc.
+[^rca]: [Post-mortems](https://github.com/danluu/post-mortems) para uma extensa lista de análises.
 
-[^tla_real]: [*Using TLA+ in the Real World to Understand a Glibc Bug*](https://probablydance.com/2020/10/31/using-tla-in-the-real-world-to-understand-a-glibc-bug/)
+#### Classes de Defeitos
+Falhas são um fato da vida, uma constante no desenvolvimento de sistemas, mas se precisamos lidar com elas, previnindo e tolerando sua presença, precisamos entender como se manifestam e, para isso, uma classificação é essencial.
 
-Mesmo uma especificação correta pode produzir um sistema com falhas pois a tradução de especificações formais para código é um passo complexo.
-Testes e manutenção do sistema permitem a **remoção de falhas** que passarem despercebidas pelas tentativas de prevenção.
-
-Testes, contudo, apenas aumentam a confiança no sistema, não sendo capazes de certificar a ausência de problemas.
-Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda estiverem presentes, seus efeitos não sejam percebidos como defeitos, isto é, sistemas que tenha **tolerância a falhas** (ou **prevenção de defeitos**).
-
-Para se alcançar tolerância a falhas é necessário detectar e se recuperar de erros. 
-Por exemplo, um sistema de arquivos com *journal*, como o [Ext v3](https://en.wikipedia.org/wiki/Ext3#Journaling_levels), armazena informação redundantemente e, quando **detecta** que os dados em sua forma principal estão corrompidos, usa o *journal* para **recuperar** os dados, **mascarando** o erro.
-
-De acordo como Avizienis et al, temos as seguintes técnicas para tolerar falhas:
-
-![[Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)](images/laprie_fault_tol.png)
-
-Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
-Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.
-
-
-### Classes de Defeitos
-Para previnirmos e toleramos com falhas, precisamos entender como se manifestam e, para isso, uma classificação é essencial.
-
-#### Quebra
-
-Falhas de **quebra** (***crash***) são falhas em que o componente para de funcionar, irreversivelmente.
-Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos da falha aos outros componentes.
+##### Quebra
+Defeitos de **quebra** (***crash***) são defeitos em que o componente para de funcionar, irreversivelmente.
+Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos do defeito aos outros componentes.
 Em um sistema assíncrono, contudo, não há garantias de que esta detecção do defeito será correta.
 
 Alguns sistemas, denominados ***fail-stop***, forçam-se a parar de funcionar quando percebem um defeito, imitando uma quebra, e implementando um comportamento ***fail-fast***.[^failfastfast]
@@ -134,7 +120,7 @@ Estes sistemas podem emitir um "canto do cisne" para permitir que outros compone
 
 Após pararem, alguns sistemas podem aplicar passos de recuperação e voltar a funcionar, no que é denominado ***fail-recover***. Ao retornar à operação, o processo poderia assumir uma nova identidade.
 
-#### Omissão
+##### Omissão
 
 Em um **defeito de omissão** (***omission failure***), um componente não executa alguma ação. Por exemplo, uma requisição recebida por um servidor não é executada, um disco não armazena os dados no meio magnético, ou uma mensagem não é transmitida.
 Este tipo de defeito é difícil de ser identificado pois outros componentes não necessariamente tem acesso direto ao resultado da operação.
@@ -142,44 +128,48 @@ Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, ent�
 Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, então o defeito é mascarado.
 
 
-#### Temporização
+##### Temporização
 
 Em sistemas em que há limites de tempo para a execução de ações, uma violação destes limites é **defeito de temporização**.
 Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, então houve uma falha de omissão.
 Novamente considerando problemas de transmissão de mensagens, se o meio de comunicação se recusou a entregar uma mensagem que deveria ser entregue dentro de 3ms, então houve um defeito de omissão.
-Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a mesma é entregue com 5ms, então o mesmo que após o limite para então o defeito é mascarado como um defeito de temporização.
+Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a mesma é entregue com 5ms, então o defeito é mascarado como um defeito de temporização.
+Defeitos de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto [anteriormente.](../time/#usos-de-relogios-sincronizados)
 
-#### Arbitrários
+##### Arbitrários
 Um defeito **arbitrário** ou **bizantino** é um no qual qualquer comportamento pode acontecer. 
 Por exemplo, uma mensagem pode ser modificada, um servidor pode reiniciar-se constantemente, todos os dados podem ser apagados, ou acesso pode ser dado a quem não é devido.
 Estes defeitos podem ser causados por agentes mal intencionados, como hackers e vírus.
 
 
-#### Hierarquia
+##### Hierarquia
+Os tipos de defeitos apontados acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:
+
 Fail-stop $\subset$ Quebra $\subset$ Omissão $\subset$ Temporização $\subset$ Arbitrária
 
 
-### Falhas intermitentes
+##### Defeitos intermitentes
 
-Algumas falhas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas.
-
-!!!quote "Heisenbug"
-     The name may seem to rhyme well with Heisenberg, but the Heisenbug is actually "a bug that disappears or alters its behavior when one attempts to probe or isolate it." The Freenet Project describes a Heisenbug in certain Java virtual machines.
+Alguns defeitos fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra [classificação](http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf), bem informal.
 
 !!!quote "Bohrbug"
-     The Bohrbug is a sort of antonym of the Heisenbug, as this bug does not disappear or alter its characteristics when it is researched.
+     A BohrBug is just your average, straight-forward bug. Simple like the Bohr model of the atom: A smallsphere. You push it, it moves. BohrBugs are reproducible, and hence are easily fixed once discovered. These are named after Niels Bohr, who proposed a simple and easy-to-understand atomic model in 1913. In Bohr’s model, things like the path and momentum of an electron in an atom are predictable.
 
+!!!quote "Heisenbug"
+     A bug that disappears or alters its behavior when one attempts to probe or isolate it. No matter how much time and effort is spent trying to reproduce the problem, the bug eludes us. Such bugs were named Heisenbugs, after Werner Heisenberg, who is known for his “uncertainty principle”. According to his theory, it is not possible to accurately or certainly determine the position and velocity of an electron in an atom at a particular moment.
 
 !!!quote "Mandelbug"
-      The Mandelbug, named after Benoit Mandelbrot (think Mandelbrot set), is a bug whose underlying causes are so complex and obscure as to make its behavior appear chaotic.
+      When the cause of the bug is too complex to understand, and the resulting bug appears chaotic, it is called a Mandelbug. These are named after Benoît Mandelbrot, who is considered the father of fractal geometry (fractals are complex, self-similar structures). A bug in an operating system that depends on scheduling is an example of a Mandelbug.
 
 !!!quote "Schroedinbug"
-      The Schroedinbug is a design or implementation bug in a program that doesn't manifest until someone reading source or using the program in an unusual way notices that it never should have worked, at which point the program promptly stops working for everybody until fixed. Here, an Office developer describes "stupid SQL tricks" to get rid of a "classic Schroedinbug." 
+      Sometimes, you look into the code, and find that it has a bug or a problem that should never have allowed it to work in the first place. When you try out the code, the bug promptly shows up, and the software fails! Though it sounds very uncommon, such bugs do occur and are known as Schroedinbugs. They are named after the scientist Erwin Schrödinger, who proposed that in quantum physics, quantum particles like atoms could exist in two or more quantum states.
 
+!!!quote "Fractal Bugs"
+      A bug, after which its resolution is found, reveals additional self-similar bugs elsewhere in the code, after which they are fixed, likewise appear elsewhere still.
 
-### Correlação entre falhas
+#### Correlação entre falhas
 Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas falharão uma vez que a entrada problemática acontecer.
-Este é um cenário em que as falhas não são independentes, mas correlatas. Para evitá-lo, podemos usar ***n-version programming***, que consiste basicamente em ter múltiplas implementções do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:
+Este é um cenário em que as falhas não são independentes, mas correlatas. Para evitá-lo, podemos usar ***n-version programming***, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:
 
 * múltiplos times
 * múltiplos sistemas operacionais
@@ -203,19 +193,47 @@ Dependendo dos efeitos e tratamentos.
 -->
 
 
-### Redundância de Processos
-Se remover todas as possbilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
+
+
+### Como alcançar dependabilidade
+
+Mas se o objetivo é a dependabilidade, isto é, ter o sistema pronto para uso e apto a manter este estado durante o período de uso, mesmo na presença de catástrofes, precisamos de formas de lidar com falhas, **previnindo**, **removendo** e **tolerando**-as.
+
+A **prevenção de falhas** acontece por meio de técnicas bem estabelecidas de engenharia.
+No caso de sistemas de software, modularização, uso de linguagens de programação fortemente tipadas e encapsulamento são passos importantes. 
+Outras técnicas envolvidas na prevenção de falhas são análise estática, especificação formal, teste e prova destas especificações.
+Por exemplo, diversas empresas usam linguagens como [TLA$^+$](https://lamport.azurewebsites.net/tla/tla.html)[^tla_real] e [Promela](https://en.wikipedia.org/wiki/Promela), associados a verificadores de modelo como TLC e Spin, respectivamente, para testar e verificar a corretude de seus algoritmos.
+
+
+[^tla_real]: [*Using TLA+ in the Real World to Understand a Glibc Bug*](https://probablydance.com/2020/10/31/using-tla-in-the-real-world-to-understand-a-glibc-bug/)
+
+Mesmo uma especificação correta pode produzir um sistema com falhas pois a tradução de especificações formais para código é um passo complexo.
+Testes e manutenção do sistema permitem a **remoção de falhas** que passarem despercebidas pelas tentativas de prevenção.
+
+Testes, contudo, apenas aumentam a confiança no sistema, não sendo capazes de certificar a ausência de problemas.
+Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda estiverem presentes, seus efeitos não sejam percebidos como defeitos, isto é, sistemas que tenha **tolerância a falhas** (ou **prevenção de defeitos**).
+
+Para se alcançar tolerância a falhas é necessário detectar e se recuperar de erros. 
+Por exemplo, um sistema de arquivos que mantenha um *journal*, como o [Ext v3](https://en.wikipedia.org/wiki/Ext3#Journaling_levels), armazena informação de forma redundante e, quando **detecta** que os dados em sua forma principal estão corrompidos, usa o *journal* para **recuperar** os dados, **mascarando** o erro.
+
+De acordo como Avizienis *et al.*, temos as seguintes técnicas para tolerar falhas:
+
+![[Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)](images/laprie_fault_tol.png)
+
+Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
+Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.
+
+Se remover todas as possibilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
 De forma geral, tolerância a falhas é obtida por algum tipo de **redundância**. 
 Redundância pode ser aplicada em vários níveis, por exemplo, gastando **mais tempo na especificação do projeto**, ou montando um laboratório de testes mais próximo do ambiente de produção.
 
 Outra forma óbvia de redundância é a **replicação** de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
 Replicação permite remover os **pontos únicos de falha** (SPOF, *Single Point of Failure*), ou seja, componentes não dependáveis.
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
-
-No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desevolvidos usando *n-version programming*
+No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando *n-version programming*
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.
-Dois modos clássicos de replicação são o **primário/cópia** e **ativo**.
 
+Dois modos clássicos de replicação são o **primário/cópia** e **ativo/ativo**.
 No caso da replicação **primário/cópia**, também conhecida como **mestre/escravo**, o primário é responsável por lidar com clientes e por informar cópias das modificações de estado.
 
 ![ha](images/ha-diagram-animated.gif)
@@ -233,6 +251,8 @@ No caso da replicação ativa, as **várias cópias executam todos os comandos**
 A técnica de **replicação de máquinas de estados vista no capítulo anterior** é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.
 
+
+
 ## Problemas de Acordo
 Há diversas primitivas de comunicação em grupo, das quais se destaca a **difusão atômica**, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
 Difusão atômica, por sua vez, é equivalente ao problema do **consenso distribuído**, que está no coração da classe de problemas de **acordo**.
@@ -245,7 +265,7 @@ Vejamos um exemplo.
 A despeito de sofrer de falta de água, afinal, estava no alto de uma montanha, a cidade era invejada pelos vizinhos.
 Como a cidade era muito bem fortificada, ela poderia se defender de qualquer **ataque em uma única frente**. 
 Se atacada em **duas frentes**, contudo, cairia.
-Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em **dois exércitos** sob o comando de Alice (a sociedade é muito feminista naquela época) e Bastião (sim, Bastião, não Bob).[^2generalsparadox]
+Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em **dois exércitos** sob o comando de Alice (a sociedade era feminista) e Bastião (sim, Bastião, não Bob).[^2generalsparadox]
 
 [^2generalsparadox]: Esta é uma variação do problema de coordenação de *gangsters* apresentado no em [Some constraints and trade-offs in the design of network communications](https://doi.org/10.1145%2F800213.806523)
 
@@ -254,7 +274,7 @@ Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repar
 Um complicador no ataque é que a **comunicação entre os dois exércitos é feita por mensageiros** que devem contornar a montanha para alcançar o outro exército. 
 O trajeto é complexo e cheio de armadilhas e por isso **mensageiros podem se perder** e demorar um longo tempo para chegar ou até mesmo **serem mortos** e nunca entregarem suas mensagens.
 
-Alice, a comandante mais sênior, deve decidir quando atacar, pode exemplo simplesmente ordenando "**Atacar no dia 3, ao nascer do sol.**"
+Alice, a comandante mais sênior, deve decidir quando atacar e informar a Bastião, por exemplo, simplesmente ordenando "**Atacar no dia 3, ao nascer do sol.**"
 Bastião **obedecerá** a ordem de atacar contanto que esteja certo de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
 Se mensagens podem ser perdidas, **Alice não tem garantias de que Bastião recebeu o comando** e por isso não pode simplesmente considerar como certo o ataque de Bastião.
 Como o problema pode ser resolvido?
@@ -264,10 +284,10 @@ Alice ao receber tal mensagem, sabe que Bastião executará a ordem, correto? Ma
 Lembre-se que qualquer exército que ataque sozinho, perderá, seja Alice ou Bastião. 
 Por isso, ao enviar uma mensagem de confirmação do ataque, Bastião precisa estar certo de que Alice a recebeu, ou atacará sozinho.
 Novamente podemos apelar para uma mensagem de confirmação ou, neste caso, uma confirmação da confirmação.
-E o problema se reinicia...
+E o problema se repete indefinidamente.
 
 
-???question "Paradoxo dos 2 Exércitos"
+!!!sideslide "Paradoxo dos 2 Exércitos"
     * $A$ e $B$ devem concordar na hora do ataque.
 	* $A$ ataca se estiver certo que $B$ atacará.
 	* $B$ ataca se estiver certo que $A$ atacará.
@@ -288,17 +308,18 @@ Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a ne
 
 Dado que ao final da primeira execução completa **Alice ataca**, no final da execução onde a mensagem $n$ é perdida, Alice também deve atacar.
 Mas se o algoritmo é correto, então também **Bastião ataca**, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com $n-1$ mensagens.
+
 Repetindo-se o argumento mais $n-1$ vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um **absurdo**. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é **impossível** resolver o problema.
 
 Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?
 
 ### Impossibilidade
 Quando dizemos que é impossível resolver um problema queremos dizer que é impossível produzir um algoritmo que **sempre levará a uma resposta correta**.
-Isto quer dizer que podemos produzir algoritmos, mas ou eles às vezes **levarão a respostas incorretas** ou eles às vezes **não levarão a respostas**; ambos podem ser úteis na prática.
+Isto quer dizer, ignorando-se algoritmos que sempre levarão a respostas incorretas, podemos produzir algoritmos que ou às vezes **levarão a respostas incorretas** ou que, mesmo que nunca levem a respostas incorretas, às vezes **não levarão a respostas** alguma; ambos podem ser úteis na prática.
 
 Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
-A **confiança** de Alice de que Bastião também atcaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
-Esta abordagem faria com com que o ataque funcionasse com uma **certa probabilidade**, mas com uma pequena probabilidade $P$ de levar a um ataque fracassado, onde $P$ pode ser feita **tão pequena quanto se "queira"**.
+A **confiança** de Alice de que Bastião também atacaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
+Esta abordagem faria com com que o ataque funcionasse com uma **alta probabilidade** $P$, mas com uma pequena probabilidade $P-1$ de levar a um ataque fracassado, onde $P$ pode ser feita **tão grande quanto se "queira"**.
 
 Resultados de impossibilidade abundam na área de computação distribuída[^impossibilidades] e não podem nos desencorajar de continuar a buscar soluções práticas.
 
@@ -312,17 +333,17 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 * Acordo: Se um processo decide-se por $v$ e outro por $w$, então $v = w$
 * Terminação: Todo processo não **defeituoso** decide-se.
 
-Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituso se ele parou de funcionar.
+Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.
 
-**É impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**[^flp85].
+Dependendo do modelo computacional, é possível resolver este problema. Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**[^flp85], e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, [Raft](https://raft.github.io/) e [Paxos](http://paxos.systems/index.html)
 
 
 [^flp85]: [Impossibility of Distributed Consensus with One Faulty Process](https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf). Uma explicação da prova está disponível no [Paper Trail](https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/)
 
-A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
+A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.
 
 
@@ -333,8 +354,8 @@ Um detector de defeitos pode ser visto como **oráculo distribuído**, com módu
 
 [^CT96]: [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf)
 
-???todo
-    figura igual à da dissertação.
+???todo "Figura"
+    figura 2.1 da dissertação.
 
 
 Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (*completeness*) e acurácia (*accuracy*), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:
@@ -351,25 +372,32 @@ Este detector é conhecido como $P$ ou *Perfect*.
 Infelizmente os detectores perfeitos só podem ser implementados em sistemas síncronos, onde se pode confiar que a falta de uma mensagem implica em que a mensagem não será entregue por quê o remetente deve ser defeituosos.
 Assim, é preciso se focar em detectores não perfeitos ou **não confiáveis**.
 
-Em ambientes **parcialmente síncronos**, ou seja, assíncronos aumentados com algum tipo de sincronia, já possível implementar detectores não confiáveis.
+Em ambientes **parcialmente síncronos**, ou seja, assíncronos aumentados com algum tipo de sincronia, já é possível implementar detectores não confiáveis.
 Por exemplo, se os processos dispõem de **temporizadores** precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um **limite de tempo** para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
-Esta determinação é por certo imprecisa, e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
-Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso, salvo uma restrição de que a maioria dos processos não sofra defeitos.
+Esta determinação é por certo imprecisa e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
+Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso se combinada a uma restrição de que **uma maioria dos processos não seja defeituosa**.
 
-!!!todo "Maioria"
+???todo "Maioria"
     Adicionar prova.
 
-Chandra, Hadzilacos e Toueg  demonstram que detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.[^CHT96] 
+Chandra, Hadzilacos e Toueg  demonstram que o detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.[^CHT96] 
 Este detector, conhecido como $\Diamond W$, ou *Eventual Weak*, e é implementável em sistemas nos quais há um **limite superior** de tempo para a transmissão de mensagens, **mesmo que este limite seja desconhecido**.
-Vários protocolos de consenso utilizam o detector equivalente, $\Diamond S$, equivalente ao $\Diamond W$ mas com completude forte.
-Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um **resultado errado nunca é alcançado**.
+Vários protocolos de consenso utilizam o detector equivalente, $\Diamond S$, equivalente ao $\Diamond W$ mas com completude forte, ou o eleitor de líderes $\Omega$, que usa a informação do $\Diamond S$ para sugerir um líder entre os processos.
+Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um **resultado errado nunca é alcançado**, ou seja, os protocolos sempre garantem que as propriedades de corretude não são violadas, mesmo que não garanta que a terminação será alcançada.
 
 [^CHT96]: [The Weakest Failure Detector for Solving Consensus](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf)
 
+???todo "Figura"
+    figura 2.2 da dissertação.
+
+### Paxos: Algoritmo do Sínodo
+
+???todo "Algoritmo"
+    Descrever. Por enquanto, vejam esta explicação ou [https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html] ou este vídeo [https://www.youtube.com/watch?v=JEpsBg0AO6o] ou este video [https://www.youtube.com/watch?v=s8JqcZtvnsM].
 
 ### Difusão Totalmente Ordenada
-Se pudermos resolver o consenso, podemos então resolver o problema da difusão atômica e com ela implementar a replicação de máquinas de estados.
-Relembrando, na difusão Totalmente Ordenada (Total Order Multicast) temos que:
+Se pudermos resolver o consenso, podemos então resolver o problema da **difusão totalmente ordenada** (*total order multicast*) e com ela implementar a replicação de máquinas de estados.
+Relembrando, na  temos que:
 
 * Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)
 * Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.
@@ -1231,77 +1259,59 @@ Além destas, outro projeto, o [Curator](http://curator.apache.org) se dedica ap
 #### Estudo de caso: Etcd
 
 ???todo
-     descrever o [etcd](https://etcd.io/)
+    descrever o [etcd](https://etcd.io/)
 
+
+#### Estudo de caso: Kafka
 
 ???todo
-     falhas bizantinas
+     Descrever o Kafka
+
 
 <!--
-\subsection{Tolerância a Falhas}
-\begin{frame}{O quê?}
-Manter dados/serviços disponíveis a despeito de falhas.
-\end{frame}
+O quê?
+* Manter dados/serviços disponíveis a despeito de falhas.
 
-\begin{frame}{Replicação}
-No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
-\end{frame}
+Replicação
+* No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
 
-\begin{frame}{Líder e Seguidor}
-\begin{itemize}
+Líder e Seguidor
 *  Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
 *  Consumidor conversa com líder. Líder envia dados ao consumidor.
 *  Líder replica dados para seguidores.
-\end{itemize}
-\end{frame}
 
-\begin{frame}{Replicar}
-Passo 6  ensina a criar um sistema com múltiplos brokers.
+Replicar
+* Passo 6  ensina a criar um sistema com múltiplos brokers.
 
-\begin{itemize}
 *  Identificador
 *  Porta (mesmo servidor)
 *  \alert{Log directory}
-\end{itemize}
-\end{frame}
 
-\begin{frame}{Replicar}
-\begin{itemize}
+Replicar
 *  Crie um novo tópico, com RF = 3 e duas partições
 *  \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic <topico>|
 *  Lista de réplicas
 *  Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
-\end{itemize}
-\end{frame}
 
 
-\begin{frame}{Zookeeper}
-\begin{itemize}
+Zookeeper
 *  Permite que nós do cluster se descubram
 *  Elege líder
-\end{itemize}
-\end{frame}
 
-\begin{frame}{Armazenamento}
-\begin{itemize}
+Armazenamento
 *  Dado deve ser removido depois de um tempo de ``retenção''
 *  Pode definir retenção por tamanho (por partição, não tópico)
-\end{itemize}
-\end{frame}
 
 
-\subsection{Produtor}
+Produtor
 
-\begin{frame}{Produtor}
-\begin{itemize}
 *  Produtor envia mensagens para os brokers
 *  Producer API
-*  \href{https://github.com/LearningJournal/ApacheKafkaTutorials}{Learning Journal}
-\end{itemize}
-\end{frame}
+*  [Learning Journal](https://github.com/LearningJournal/ApacheKafkaTutorials)
 
-\begin{frame}[fragile]{SimpleProducer.java}
-\begin{lstlisting}[language=Java]
+SimpleProducer.java
+
+```java
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -1327,33 +1337,25 @@ public class SimpleProducer {
   System.out.println("SimpleProducer Completed.");
  }
 }
+```
 
-\end{lstlisting}
-\end{frame}
+Workflow
+![]()images/kafka6.png)
 
-\begin{frame}{Workflow}
-\includegraphics[width=.8\textwidth]{images/kafka6}
-
-\begin{itemize}
 *  Particionador default
-	\begin{itemize}
 	*  Partition
 	*  Hash da ``chave''
 	*  Round robin
-	\end{itemize}
 *  Retry automático
-\end{itemize}
-\end{frame}
 
 
-\begin{frame}{Fire and Forget}
-Envia a mensagem e não se importa com o resultado.
-\end{frame}
+Fire and Forget
+* Envia a mensagem e não se importa com o resultado.
 
-\begin{frame}[fragile]{Synchronous Call}
-Envia a mensagem e espera para saber se foi entregue ou não.
+Synchronous Call
+* Envia a mensagem e espera para saber se foi entregue ou não.
 
-\begin{lstlisting}[language=Java]
+```java
 try{
  RecordMetadata metadata = producer.send(record).get();
  System.out.println("Message is sent to Partition no " + metadata.partition() + " and offset " + metadata.offset());
@@ -1364,16 +1366,14 @@ try{
 }finally{
  producer.close();
 }
-\end{lstlisting}
-\begin{itemize}
-*  Future
-\end{itemize}
-\end{frame}
+```
 
-\begin{frame}[fragile]{Callback}
+*  Future
+
+Callback
 Envia a mensagem e é invocado depois de receber um ACK
 
-\begin{lstlisting}[language=Java]
+```
 producer.send(record, new MyProducerCallback());
 
 ...
@@ -1387,21 +1387,17 @@ class MyProducerCallback implements Callback{
    System.out.println("AsynchronousProducer call Success:");
  }
 }
-\end{lstlisting}
-\begin{itemize}
+```
+
 *  max.in.flight.requests.per.connection
-\end{itemize}
-\end{frame}
 
 
-\begin{frame}{Default Partitioner}
-\includegraphics[width=.8\textwidth]{images/kafka6}
+Default Partitioner
+![](images/kafka6.png)
 
-\begin{itemize}
 *  Partition
 *  Hash da ``chave'' \% \#partition
 *  Round robin
-\end{itemize}
 
 \href{https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo de Custom Partitioner}
 \end{frame}
@@ -1807,8 +1803,9 @@ http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
 
 
 
+-->
 
 
-### Estudo de caso: Kafka
+
 ???todo
->
+     falhas bizantinas
