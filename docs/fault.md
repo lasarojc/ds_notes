@@ -20,7 +20,7 @@ De acordo com [Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algird
 
 Além da dependabilidade, outra propriedade importante e desejável para os sistemas é a **Confidencialidade**, que quando combinada à **Integridade** e **Confidencialidade** é também chamada de **Segurança** (*Security*). 
 
-* Confidencialidade (*Confidentiality*), a garantia de que a informação somente é acessível a quem é devido.
+* Confidencialidade (*Confidentiality*) -- informação somente é acessível a quem é devido.
 
 Mas o que significa, na prática, ser dependável e seguro (**secure**)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.
 
@@ -220,7 +220,7 @@ De acordo como Avizienis *et al.*, temos as seguintes técnicas para tolerar fal
 
 ![[Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)](images/laprie_fault_tol.png)
 
-Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
+Um sistema que sofra de defeitos recorrentes é um bom candidato a previsão de defeitos, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.
 
 Se remover todas as possibilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
@@ -230,7 +230,7 @@ Redundância pode ser aplicada em vários níveis, por exemplo, gastando **mais 
 Outra forma óbvia de redundância é a **replicação** de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
 Replicação permite remover os **pontos únicos de falha** (SPOF, *Single Point of Failure*), ou seja, componentes não dependáveis.
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
-No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando *n-version programming*
+No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando *n-version programming*.
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.
 
 Dois modos clássicos de replicação são o **primário/cópia** e **ativo/ativo**.
