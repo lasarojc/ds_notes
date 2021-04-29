@@ -977,7 +977,7 @@ A dependabilidade é essencial aos componentes de sistemas distribuídos, pois c
 </ul>
 <p>Além da dependabilidade, outra propriedade importante e desejável para os sistemas é a <strong>Confidencialidade</strong>, que quando combinada à <strong>Integridade</strong> e <strong>Confidencialidade</strong> é também chamada de <strong>Segurança</strong> (<em>Security</em>). </p>
 <ul>
-<li>Confidencialidade (<em>Confidentiality</em>), a garantia de que a informação somente é acessível a quem é devido.</li>
+<li>Confidencialidade (<em>Confidentiality</em>) -- informação somente é acessível a quem é devido.</li>
 </ul>
 <p>Mas o que significa, na prática, ser dependável e seguro (<strong>secure</strong>)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.</p>
 <h3 id="falhas-erros-e-defeitos">Falhas, Erros e Defeitos</h3>
@@ -1141,7 +1141,7 @@ Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda esti
 Por exemplo, um sistema de arquivos que mantenha um <em>journal</em>, como o <a href="https://en.wikipedia.org/wiki/Ext3#Journaling_levels">Ext v3</a>, armazena informação de forma redundante e, quando <strong>detecta</strong> que os dados em sua forma principal estão corrompidos, usa o <em>journal</em> para <strong>recuperar</strong> os dados, <strong>mascarando</strong> o erro.</p>
 <p>De acordo como Avizienis <em>et al.</em>, temos as seguintes técnicas para tolerar falhas:</p>
 <p><img alt="Avizienis et al" src="../images/laprie_fault_tol.png" /></p>
-<p>Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
+<p>Um sistema que sofra de defeitos recorrentes é um bom candidato a previsão de defeitos, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.</p>
 <p>Se remover todas as possibilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
 De forma geral, tolerância a falhas é obtida por algum tipo de <strong>redundância</strong>. 
@@ -1149,7 +1149,7 @@ Redundância pode ser aplicada em vários níveis, por exemplo, gastando <strong
 <p>Outra forma óbvia de redundância é a <strong>replicação</strong> de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
 Replicação permite remover os <strong>pontos únicos de falha</strong> (SPOF, <em>Single Point of Failure</em>), ou seja, componentes não dependáveis.
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
-No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando <em>n-version programming</em>
+No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando <em>n-version programming</em>.
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.</p>
 <p>Dois modos clássicos de replicação são o <strong>primário/cópia</strong> e <strong>ativo/ativo</strong>.
 No caso da replicação <strong>primário/cópia</strong>, também conhecida como <strong>mestre/escravo</strong>, o primário é responsável por lidar com clientes e por informar cópias das modificações de estado.</p>
