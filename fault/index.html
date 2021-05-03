@@ -316,8 +316,6 @@
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           Tolerância a Falhas
@@ -332,8 +330,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -342,12 +338,19 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tolerancia-a-falhas" class="md-nav__link">
+    Tolerância a Falhas
+  </a>
+  
+    <nav class="md-nav" aria-label="Tolerância a Falhas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dependabilidade" class="md-nav__link">
     Dependabilidade
   </a>
   
-    <nav class="md-nav" aria-label="Dependabilidade">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#falhas-erros-e-defeitos" class="md-nav__link">
@@ -425,8 +428,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#como-alcancar-dependabilidade" class="md-nav__link">
-    Como alcançar dependabilidade
+  <a href="#como-lidar-com-falhas" class="md-nav__link">
+    Como lidar com falhas?
   </a>
   
 </li>
@@ -668,8 +671,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -678,12 +679,19 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tolerancia-a-falhas" class="md-nav__link">
+    Tolerância a Falhas
+  </a>
+  
+    <nav class="md-nav" aria-label="Tolerância a Falhas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#dependabilidade" class="md-nav__link">
     Dependabilidade
   </a>
   
-    <nav class="md-nav" aria-label="Dependabilidade">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#falhas-erros-e-defeitos" class="md-nav__link">
@@ -761,8 +769,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#como-alcancar-dependabilidade" class="md-nav__link">
-    Como alcançar dependabilidade
+  <a href="#como-lidar-com-falhas" class="md-nav__link">
+    Como lidar com falhas?
   </a>
   
 </li>
@@ -957,13 +965,15 @@
        as the main headline.
     -->
 
+  <h1>Tolerância a Falhas</h1>
+
 
   <!-- Content -->
-  <h1 id="tolerancia-a-falhas">Tolerância a Falhas</h1>
-<h2 id="dependabilidade">Dependabilidade</h2>
+  <h2 id="tolerancia-a-falhas">Tolerância a Falhas</h2>
 <p>Nós escrevemos software para que resolvam problemas de espectro bem amplo, indo, do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
 Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
 Desta situação, surge a ideia de dependabilidade, isto é, de um sistema ter a propriedade de se poder depender do mesmo.</p>
+<h3 id="dependabilidade">Dependabilidade</h3>
 <p>Dizemos que um componente <strong><span class="arithmatex">\(C\)</span> depende de um componente <span class="arithmatex">\(C'\)</span></strong> se a corretude do comportamento de <span class="arithmatex">\(C\)</span> depende da corretude do componente <span class="arithmatex">\(C'\)</span>.
 Dizemos também que um componente é "dependável" (<em>dependable</em>) na medida em que outros podem depender dele.
 A dependabilidade é essencial aos componentes de sistemas distribuídos, pois como diz o ditado, uma corrente é tão forte quanto seu elo mais fraco.</p>
@@ -979,7 +989,13 @@ A dependabilidade é essencial aos componentes de sistemas distribuídos, pois c
 <ul>
 <li>Confidencialidade (<em>Confidentiality</em>) -- informação somente é acessível a quem é devido.</li>
 </ul>
-<p>Mas o que significa, na prática, ser dependável e seguro (<strong>secure</strong>)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.</p>
+<p>Aqui nós nos focaremos apenas na disponibilidade que, por si só, é bem abrangente:</p>
+<div class="admonition quote">
+<p class="admonition-title">Disponibilidade</p>
+<p>The term 'availability' means ensuring timely and reliable access to and use of information.</p>
+<p><a href="https://doi.org/10.6028/NIST.SP.800-59">NIST SP 800-59</a>, no termo Availability <a href="https://www.gpo.gov/fdsys/granule/USCODE-2011-title44/USCODE-2011-title44-chap35-subchapIII-sec3542">44 U.S.C., Sec. 3542 (b)(1)(C))</a></p>
+</div>
+<p>Mais especificamente, sobre como manter um sistema online para que possa responder a requisições, mesmo quando problemas aparecem. Mas para isso, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.</p>
 <h3 id="falhas-erros-e-defeitos">Falhas, Erros e Defeitos</h3>
 <p>No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as <strong>falhas</strong> (<em>defect</em>, <em>fault</em>, para alguns, falta), que é um erro no desenvolvimento do sistema, como <em>bugs</em> ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado, ou mesmo um erro na especificação.
 Uma falha existe mesmo se for raramente ativada e mesmo se seus efeitos nunca forem percebidos. 
@@ -1127,7 +1143,7 @@ Dependendo dos efeitos e tratamentos.
 * Quebradiço (*brittle*) - não resiliente a falhas
 -->
 
-<h3 id="como-alcancar-dependabilidade">Como alcançar dependabilidade</h3>
+<h3 id="como-lidar-com-falhas">Como lidar com falhas?</h3>
 <p>Mas se o objetivo é a dependabilidade, isto é, ter o sistema pronto para uso e apto a manter este estado durante o período de uso, mesmo na presença de catástrofes, precisamos de formas de lidar com falhas, <strong>previnindo</strong>, <strong>removendo</strong> e <strong>tolerando</strong>-as.</p>
 <p>A <strong>prevenção de falhas</strong> acontece por meio de técnicas bem estabelecidas de engenharia.
 No caso de sistemas de software, modularização, uso de linguagens de programação fortemente tipadas e encapsulamento são passos importantes. 
@@ -1208,6 +1224,10 @@ Em uma execução em que todas as <span class="arithmatex">\(n\)</span> mensagen
 <p>Dado que ao final da primeira execução completa <strong>Alice ataca</strong>, no final da execução onde a mensagem <span class="arithmatex">\(n\)</span> é perdida, Alice também deve atacar.
 Mas se o algoritmo é correto, então também <strong>Bastião ataca</strong>, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span class="arithmatex">\(n-1\)</span> mensagens.</p>
 <p>Repetindo-se o argumento mais <span class="arithmatex">\(n-1\)</span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um <strong>absurdo</strong>. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
+<div class="admonition sideslide">
+<p class="admonition-title">Impossibilidades</p>
+<p>Impossibilidade de resolução x resolução na prática.</p>
+</div>
 <p>Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?</p>
 <h3 id="impossibilidade">Impossibilidade</h3>
 <p>Quando dizemos que é impossível resolver um problema queremos dizer que é impossível produzir um algoritmo que <strong>sempre levará a uma resposta correta</strong>.
@@ -1226,17 +1246,28 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 </ul>
 <p>Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.</p>
-<p>Dependendo do modelo computacional, é possível resolver este problema. Contudo, <strong>é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong><sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">7</a></sup>, e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
+<div class="admonition sideslide">
+<p class="admonition-title">Terminação</p>
+<p>Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.</p>
+</div>
+<p>Dependendo do modelo computacional, é possível resolver este problema. Contudo, <strong>é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong>,<sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">7</a></sup> e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, <a href="https://raft.github.io/">Raft</a> e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
 <h3 id="detectores-de-defeitos-de-defeito-nao-confiaveis">Detectores de Defeitos de Defeito não Confiáveis</h3>
-<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">8</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong>. 
-Um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.</p>
-<details class="todo"><summary>Figura</summary><p>figura 2.1 da dissertação.</p>
-</details>
-<p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:</p>
+<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">8</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
+Assim, um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.</p>
+<p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-0.svg" /></p>
+<p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
+Embora não seja obrigatório, detectores de falhas são normalmente implementados por meio de trocas de mensagens de <em>heartbeat</em>.
+Mensagens são esperadas em momentos específicos para sugerir que o remetente continua funcional.</p>
+<p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-1.svg" /></p>
+<p>Quando os <em>heartbeats</em> não chegam até o limite de tempo, o processo remetente passa a ser considerado <strong>suspeito</strong> de falha.</p>
+<p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-2.svg" /></p>
+<p><em>Heartbeats</em>  que chegam depois podem corrigir erros, mas também podem levar a atrasos na detecção de defeitos.</p>
+<p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-3.svg" /></p>
+<p>Os níveis destas propriedades são os seguintes:</p>
 <ul>
 <li>Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.</li>
 <li>Completude Fraca - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por algum processo correto.</li>
