@@ -1,11 +1,10 @@
-# Tolerância a Falhas
-
-## Dependabilidade
+## Tolerância a Falhas
 
 Nós escrevemos software para que resolvam problemas de espectro bem amplo, indo, do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
 Independentemente do problema sendo resolvido, gostaríamos de poder contar com o sistema, de poder depender nele para executar sua tarefa.
 Desta situação, surge a ideia de dependabilidade, isto é, de um sistema ter a propriedade de se poder depender do mesmo.
 
+### Dependabilidade
 Dizemos que um componente **$C$ depende de um componente $C'$** se a corretude do comportamento de $C$ depende da corretude do componente $C'$.
 Dizemos também que um componente é "dependável" (*dependable*) na medida em que outros podem depender dele.
 A dependabilidade é essencial aos componentes de sistemas distribuídos, pois como diz o ditado, uma corrente é tão forte quanto seu elo mais fraco.
@@ -22,7 +21,14 @@ Além da dependabilidade, outra propriedade importante e desejável para os sist
 
 * Confidencialidade (*Confidentiality*) -- informação somente é acessível a quem é devido.
 
-Mas o que significa, na prática, ser dependável e seguro (**secure**)? Para respondermos a esta questão, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.
+Aqui nós nos focaremos apenas na disponibilidade que, por si só, é bem abrangente:
+
+!!!quote "Disponibilidade"
+    The term 'availability' means ensuring timely and reliable access to and use of information.
+    
+    [NIST SP 800-59](https://doi.org/10.6028/NIST.SP.800-59), no termo Availability [44 U.S.C., Sec. 3542 (b)(1)(C))](https://www.gpo.gov/fdsys/granule/USCODE-2011-title44/USCODE-2011-title44-chap35-subchapIII-sec3542)
+
+Mais especificamente, sobre como manter um sistema online para que possa responder a requisições, mesmo quando problemas aparecem. Mas para isso, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.
 
 ### Falhas, Erros e Defeitos
 No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as **falhas** (*defect*, *fault*, para alguns, falta), que é um erro no desenvolvimento do sistema, como *bugs* ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado, ou mesmo um erro na especificação.
@@ -195,7 +201,7 @@ Dependendo dos efeitos e tratamentos.
 
 
 
-### Como alcançar dependabilidade
+### Como lidar com falhas?
 
 Mas se o objetivo é a dependabilidade, isto é, ter o sistema pronto para uso e apto a manter este estado durante o período de uso, mesmo na presença de catástrofes, precisamos de formas de lidar com falhas, **previnindo**, **removendo** e **tolerando**-as.
 
@@ -311,6 +317,9 @@ Mas se o algoritmo é correto, então também **Bastião ataca**, mesmo sem ter 
 
 Repetindo-se o argumento mais $n-1$ vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um **absurdo**. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é **impossível** resolver o problema.
 
+!!!sideslide "Impossibilidades"
+    Impossibilidade de resolução x resolução na prática.
+
 Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?
 
 ### Impossibilidade
@@ -336,7 +345,10 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.
 
-Dependendo do modelo computacional, é possível resolver este problema. Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**[^flp85], e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
+!!!sideslide "Terminação"
+    Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.
+
+Dependendo do modelo computacional, é possível resolver este problema. Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**,[^flp85] e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, [Raft](https://raft.github.io/) e [Paxos](http://paxos.systems/index.html)
 
@@ -349,16 +361,32 @@ Os detectores de defeito abstraem este problema.
 
 ### Detectores de Defeitos de Defeito não Confiáveis
 
-Chandra e Toueg [^CT96] introduziram o conceito de **Detectores de Defeitos**. 
-Um detector de defeitos pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha determinando o estado funcional dos outros processos.
+Chandra e Toueg [^CT96] introduziram o conceito de **Detectores de Defeitos** como forma de encapsular a percepção do estado funcional dos outros processos.
+Assim, um detector de defeitos pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.
 
 [^CT96]: [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf)
 
-???todo "Figura"
-    figura 2.1 da dissertação.
+![Failure Detector](drawings/failure_detector.drawio#0)
 
 
-Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (*completeness*) e acurácia (*accuracy*), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. Alguns níveis destas propriedades são descritos a seguir:
+Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (*completeness*) e acurácia (*accuracy*), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
+Embora não seja obrigatório, detectores de falhas são normalmente implementados por meio de trocas de mensagens de *heartbeat*.
+Mensagens são esperadas em momentos específicos para sugerir que o remetente continua funcional.
+
+![Failure Detector](drawings/failure_detector.drawio#1)
+
+Quando os *heartbeats* não chegam até o limite de tempo, o processo remetente passa a ser considerado **suspeito** de falha.
+
+![Failure Detector](drawings/failure_detector.drawio#2)
+
+*Heartbeats*  que chegam depois podem corrigir erros, mas também podem levar a atrasos na detecção de defeitos.
+
+![Failure Detector](drawings/failure_detector.drawio#3)
+
+
+
+
+Os níveis destas propriedades são os seguintes:
 
 * Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.
 * Completude Fraca - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por algum processo correto.
