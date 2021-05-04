@@ -469,8 +469,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detectores-de-defeitos-de-defeito-nao-confiaveis" class="md-nav__link">
-    Detectores de Defeitos de Defeito não Confiáveis
+  <a href="#detectores-de-defeitos-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos não Confiáveis
   </a>
   
 </li>
@@ -810,8 +810,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detectores-de-defeitos-de-defeito-nao-confiaveis" class="md-nav__link">
-    Detectores de Defeitos de Defeito não Confiáveis
+  <a href="#detectores-de-defeitos-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos não Confiáveis
   </a>
   
 </li>
@@ -1255,8 +1255,8 @@ Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a f
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, <a href="https://raft.github.io/">Raft</a> e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
-<h3 id="detectores-de-defeitos-de-defeito-nao-confiaveis">Detectores de Defeitos de Defeito não Confiáveis</h3>
-<p>Chandra e Toueg <sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">8</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
+<h3 id="detectores-de-defeitos-nao-confiaveis">Detectores de Defeitos não Confiáveis</h3>
+<p>Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">8</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.</p>
 <p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-0.svg" /></p>
 <p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
@@ -1267,6 +1267,7 @@ Mensagens são esperadas em momentos específicos para sugerir que o remetente c
 <p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-2.svg" /></p>
 <p><em>Heartbeats</em>  que chegam depois podem corrigir erros, mas também podem levar a atrasos na detecção de defeitos.</p>
 <p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-3.svg" /></p>
+<p>Para capturar estas combinações de eventos, foram definidos os seguintes níveis de </p>
 <p>Os níveis destas propriedades são os seguintes:</p>
 <ul>
 <li>Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.</li>
