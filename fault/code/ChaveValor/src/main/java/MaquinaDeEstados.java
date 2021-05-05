@@ -18,7 +18,7 @@ public class MaquinaDeEstados extends BaseStateMachine
         final String[] opKey = request.getContent().toString(Charset.defaultCharset()).split(":");
         final String result = opKey[0]+ ":"+ key2values.get(opKey[1]);
 
-        LOG.debug("{}: {} = {}", opKey[0], opKey[1], result);
+        LOG.info("{}: {} = {}", opKey[0], opKey[1], result);
         return CompletableFuture.completedFuture(Message.valueOf(result));
     }
 

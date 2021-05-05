@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-server:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-thirdparty-misc:0.6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-proto:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-common:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-client:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-server-api:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.29" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-metrics:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:3.2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-netty:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.ratis:ratis-grpc:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.beust:jcommander:1.78" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.logging.log4j:log4j-core:2.14.1" level="project" />
+  </component>
+</module>

@@ -32,7 +32,7 @@ public class Servidor
 
         List<RaftPeer> addresses = id2addr.entrySet()
                                           .stream()
-                                          .map(e -> new RaftPeer(RaftPeerId.valueOf(e.getKey()), e.getValue()))
+                                          .map(e -> RaftPeer.newBuilder().setId(e.getKey()).setAddress(e.getValue()).build())
                                           .collect(Collectors.toList());
 
         //Setup for this node.
