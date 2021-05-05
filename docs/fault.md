@@ -199,6 +199,10 @@ Dependendo dos efeitos e tratamentos.
 -->
 
 
+#### Falhas Bizantinas
+???todo
+    * exércitos bizantino
+
 
 
 ### Como lidar com falhas?
@@ -493,7 +497,7 @@ end
 Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro $m$ e depois $m'$.
 Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.
 
-#### Estudo de Caso do Raft
+#### Estudo de Caso: Raft
 
 Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
 Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
@@ -893,7 +897,8 @@ Também é necessário o identificador do processo que está se conectando ao gr
 ```
 
 Uma vez criado o cliente, podemos fazer invocações de operações nos servidores. Cada operação será invocada em todos os servidores, na mesma ordem.
-Este protótipo suporta duas operações, `add` e `get`. A operação `add` é codificada como uma `String`, `add:k:v`, onde `k` e `v` são do tipo `String`. `add:k:v` adiciona uma entrada em um mapa implementado pelo nosso servidor com chave `k` e valor `v`.
+Este protótipo suporta duas operações, `add` e `get`, incluindo algumas variações, que ignoraremos por enquanto.
+A operação `add` é codificada como uma `String`, `add:k:v`, onde `k` e `v` são do tipo `String`. `add:k:v` adiciona uma entrada em um mapa implementado pelo nosso servidor com chave `k` e valor `v`.
 Já a operação `get:k` recupera o valor `v` associado à chave `k`, se presente no mapa.
 
 O método `RaftClient.io().send` é usado para enviar modificações para as réplicas e deve, necessariamente, passar pelo protocolo Raft.
@@ -903,6 +908,7 @@ O código é auto explicativo.
 
 ```java
         RaftClientReply getValue;
+        CompletableFuture<RaftClientReply> compGetValue;
         String response;
         switch (args[0]){
             case "add":
@@ -1107,9 +1113,23 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2
 
 Todo o código está disponível no [Github](https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor)
 
-???todo "Exerício"
-    * Adicionar operações
-    * Passar operação como parâmetro do cliente.
+???todo "Exercício"
+    * Adicionar operações 
+        * `del`
+        * `clear`
+
+###### Operações assíncronas
+???todo "TODO"
+    * Operações assíncronas usando `async()` em vez de `io()`.
+    * `CompletableFuture`
+
+
+###### Leituras "velhas"
+???todo "TODO"
+    * *stale reads* usando `sendStaleRead` em vez de `sendRead`.
+    * índice inicial
+    * nó
+    * `java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get_stale  k1 p1`
 
 
 #### Estudo de caso: Zookeeper
@@ -1118,7 +1138,7 @@ Porquê sistemas distribuídos são como zoológicos, com animais de diversas es
 
 ![http://zookeeper.apache.org/](images/zklogo.jpeg)
 
-##### Visão Geral
+###### Visão Geral
 
 De acordo com os criadores
 !!!quote "O quê?"
@@ -1178,7 +1198,7 @@ Em geral, todas as configurações apresentam melhor desempenho quando há uma p
 Mas observe como as curvas se invertem, se focando primeiro na curva para 3 servidores: quando todas as operações são de escrita, e portanto precisam passar pelo protocolo de difusão atômica, esta curva apresenta os melhores resultados. Isto ocorre porquê o *overhead* de executar o protocolo é mais baixo entre 3 servidores que entre 13. Em compensação, quando temos mais leituras, que não precisam de sincronização, então ter mais servidores é mais vantajoso pois sobre menos carga de trabalho para cada servidor.
 
 
-##### Laboratório
+###### Laboratório
 
 Instale o Zookeeper em sua máquina seguindo estas instruções.
 
@@ -1223,7 +1243,7 @@ Nós **efêmeros**, criados com a flag `-e`, p.e., `create -ef /teste/noefemero 
 
 
 
-##### Cluster tolerante a falhas
+###### Cluster tolerante a falhas
 
 Observe que você está executando o Zookeeper em apenas um nó, ou seja, não há tolerância a falhas alguma aqui.
 Para tolerar falhas, você precisa de um cluster multi-nós, mesmo que seja em uma única máquina. 
@@ -1247,7 +1267,7 @@ Execute servidores.
 Ainda que tenha três servidores executando em uma mesma máquina, seu cluster parará de funcionar se a máquina parar de funcionar. O ideal é que cada servidor execute em uma máquina distinta.
 
 
-##### Receitas
+###### Receitas
 
 É possível resolver diversos problemas encontrados em sistemas distribuídos usando-se o ZooKeeper, por exemplo, o problema de descoberta de processos.
 
@@ -1849,8 +1869,3 @@ http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
 
 
 -->
-
-
-
-???todo
-     falhas bizantinas
