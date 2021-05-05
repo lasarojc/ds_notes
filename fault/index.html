@@ -422,6 +422,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -491,8 +498,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#estudo-de-caso-do-raft" class="md-nav__link">
-    Estudo de Caso do Raft
+  <a href="#estudo-de-caso-raft" class="md-nav__link">
+    Estudo de Caso: Raft
   </a>
   
 </li>
@@ -542,40 +549,6 @@
   <a href="#estudo-de-caso-zookeeper" class="md-nav__link">
     Estudo de caso: Zookeeper
   </a>
-  
-    <nav class="md-nav" aria-label="Estudo de caso: Zookeeper">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#visao-geral" class="md-nav__link">
-    Visão Geral
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#laboratorio" class="md-nav__link">
-    Laboratório
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-tolerante-a-falhas" class="md-nav__link">
-    Cluster tolerante a falhas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#receitas" class="md-nav__link">
-    Receitas
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -763,6 +736,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -832,8 +812,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#estudo-de-caso-do-raft" class="md-nav__link">
-    Estudo de Caso do Raft
+  <a href="#estudo-de-caso-raft" class="md-nav__link">
+    Estudo de Caso: Raft
   </a>
   
 </li>
@@ -883,40 +863,6 @@
   <a href="#estudo-de-caso-zookeeper" class="md-nav__link">
     Estudo de caso: Zookeeper
   </a>
-  
-    <nav class="md-nav" aria-label="Estudo de caso: Zookeeper">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#visao-geral" class="md-nav__link">
-    Visão Geral
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#laboratorio" class="md-nav__link">
-    Laboratório
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cluster-tolerante-a-falhas" class="md-nav__link">
-    Cluster tolerante a falhas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#receitas" class="md-nav__link">
-    Receitas
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1143,6 +1089,11 @@ Dependendo dos efeitos e tratamentos.
 * Quebradiço (*brittle*) - não resiliente a falhas
 -->
 
+<h4 id="falhas-bizantinas">Falhas Bizantinas</h4>
+<details class="todo"><summary>Todo</summary><ul>
+<li>exércitos bizantino</li>
+</ul>
+</details>
 <h3 id="como-lidar-com-falhas">Como lidar com falhas?</h3>
 <p>Mas se o objetivo é a dependabilidade, isto é, ter o sistema pronto para uso e apto a manter este estado durante o período de uso, mesmo na presença de catástrofes, precisamos de formas de lidar com falhas, <strong>previnindo</strong>, <strong>removendo</strong> e <strong>tolerando</strong>-as.</p>
 <p>A <strong>prevenção de falhas</strong> acontece por meio de técnicas bem estabelecidas de engenharia.
@@ -1361,7 +1312,7 @@ end
 </div>
 <p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span class="arithmatex">\(m\)</span> e depois <span class="arithmatex">\(m'\)</span>.
 Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.</p>
-<h4 id="estudo-de-caso-do-raft">Estudo de Caso do Raft</h4>
+<h4 id="estudo-de-caso-raft">Estudo de Caso: Raft</h4>
 <p>Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
 Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
 Um mandato se estende enquanto o líder mantiver seus seguidores cientes de sua presença, o que faz pelo envio periódico de <em>heartbeats</em>.
@@ -1882,7 +1833,8 @@ Também é necessário o identificador do processo que está se conectando ao gr
 </code></pre></div>
 </td></tr></table>
 <p>Uma vez criado o cliente, podemos fazer invocações de operações nos servidores. Cada operação será invocada em todos os servidores, na mesma ordem.
-Este protótipo suporta duas operações, <code>add</code> e <code>get</code>. A operação <code>add</code> é codificada como uma <code>String</code>, <code>add:k:v</code>, onde <code>k</code> e <code>v</code> são do tipo <code>String</code>. <code>add:k:v</code> adiciona uma entrada em um mapa implementado pelo nosso servidor com chave <code>k</code> e valor <code>v</code>.
+Este protótipo suporta duas operações, <code>add</code> e <code>get</code>, incluindo algumas variações, que ignoraremos por enquanto.
+A operação <code>add</code> é codificada como uma <code>String</code>, <code>add:k:v</code>, onde <code>k</code> e <code>v</code> são do tipo <code>String</code>. <code>add:k:v</code> adiciona uma entrada em um mapa implementado pelo nosso servidor com chave <code>k</code> e valor <code>v</code>.
 Já a operação <code>get:k</code> recupera o valor <code>v</code> associado à chave <code>k</code>, se presente no mapa.</p>
 <p>O método <code>RaftClient.io().send</code> é usado para enviar modificações para as réplicas e deve, necessariamente, passar pelo protocolo Raft.
 Já o método <code>RaftClient.io().sendReadOnly</code> é usado para enviar consultas a qualquer das réplicas.
@@ -1918,7 +1870,9 @@ O código é auto explicativo.</p>
 28
 29
 30
-31</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="n">RaftClientReply</span> <span class="n">getValue</span><span class="p">;</span>
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>        <span class="n">RaftClientReply</span> <span class="n">getValue</span><span class="p">;</span>
+        <span class="n">CompletableFuture</span><span class="o">&lt;</span><span class="n">RaftClientReply</span><span class="o">&gt;</span> <span class="n">compGetValue</span><span class="p">;</span>
         <span class="n">String</span> <span class="n">response</span><span class="p">;</span>
         <span class="k">switch</span> <span class="p">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">){</span>
             <span class="k">case</span> <span class="s">&quot;add&quot;</span><span class="p">:</span>
@@ -2189,15 +2143,32 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2
 </code></pre></div>
 </td></tr></table>
 <p>Todo o código está disponível no <a href="https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor">Github</a></p>
-<details class="todo"><summary>Exerício</summary><ul>
-<li>Adicionar operações</li>
-<li>Passar operação como parâmetro do cliente.</li>
+<details class="todo"><summary>Exercício</summary><ul>
+<li>Adicionar operações <ul>
+<li><code>del</code></li>
+<li><code>clear</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<h6>Operações assíncronas</h6>
+<details class="todo"><summary>TODO</summary><ul>
+<li>Operações assíncronas usando <code>async()</code> em vez de <code>io()</code>.</li>
+<li><code>CompletableFuture</code></li>
+</ul>
+</details>
+<h6>Leituras "velhas"</h6>
+<details class="todo"><summary>TODO</summary><ul>
+<li><em>stale reads</em> usando <code>sendStaleRead</code> em vez de <code>sendRead</code>.</li>
+<li>índice inicial</li>
+<li>nó</li>
+<li><code>java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get_stale  k1 p1</code></li>
 </ul>
 </details>
 <h4 id="estudo-de-caso-zookeeper">Estudo de caso: Zookeeper</h4>
 <p>Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural, foi criado o <a href="http://zookeeper.apache.org/">Zookeeper</a>.</p>
 <p><img alt="http://zookeeper.apache.org/" src="../images/zklogo.jpeg" /></p>
-<h5 id="visao-geral">Visão Geral</h5>
+<h6>Visão Geral</h6>
 <div class="admonition quote">
 <p class="admonition-title">O quê?</p>
 <p>ZooKeeper is a <strong>centralized</strong> service for maintaining <strong>configuration</strong> information, <strong>naming</strong>, providing distributed <strong>synchronization</strong>, and providing <strong>group services</strong>. All of these kinds of services are used in some form or another by <strong>distributed applications</strong>. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them, which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management <strong>complexity</strong> when the applications are deployed.</p>
@@ -2244,7 +2215,7 @@ As diferentes curvas mostram diferentes configurações do sistema, indo de 3 a 
 <p><img alt="" src="../images/zkperfRW_3_2.jpg" /></p>
 <p>Em geral, todas as configurações apresentam melhor desempenho quando há uma percentagem maior de leituras.
 Mas observe como as curvas se invertem, se focando primeiro na curva para 3 servidores: quando todas as operações são de escrita, e portanto precisam passar pelo protocolo de difusão atômica, esta curva apresenta os melhores resultados. Isto ocorre porquê o <em>overhead</em> de executar o protocolo é mais baixo entre 3 servidores que entre 13. Em compensação, quando temos mais leituras, que não precisam de sincronização, então ter mais servidores é mais vantajoso pois sobre menos carga de trabalho para cada servidor.</p>
-<h5 id="laboratorio">Laboratório</h5>
+<h6>Laboratório</h6>
 <p>Instale o Zookeeper em sua máquina seguindo estas instruções.</p>
 <ul>
 <li>Baixe: <code>wget www-eu.apache.org/dist/zookeeper/zookeeper-3.6.2</code></li>
@@ -2292,7 +2263,7 @@ Vejamos alguns exemplos básicos.</p>
 <li>Reconecte o primeiro cliente</li>
 </ul>
 </div>
-<h5 id="cluster-tolerante-a-falhas">Cluster tolerante a falhas</h5>
+<h6>Cluster tolerante a falhas</h6>
 <p>Observe que você está executando o Zookeeper em apenas um nó, ou seja, não há tolerância a falhas alguma aqui.
 Para tolerar falhas, você precisa de um cluster multi-nós, mesmo que seja em uma única máquina. 
 Neste caso, crie três arquivos de configuração, <code>zoo1.cfg</code>, <code>zoo2.cfg</code> e <code>zoo3.cfg</code>. O arquivo <code>zooX.cfg</code>, onde <code>1 &lt;= X &lt;= 3</code>, fica assim:</p>
@@ -2313,7 +2284,7 @@ Neste caso, crie três arquivos de configuração, <code>zoo1.cfg</code>, <code>
 <li><code>./bin/zkServer.sh start conf/zooX.cfg</code></li>
 </ul>
 <p>Ainda que tenha três servidores executando em uma mesma máquina, seu cluster parará de funcionar se a máquina parar de funcionar. O ideal é que cada servidor execute em uma máquina distinta.</p>
-<h5 id="receitas">Receitas</h5>
+<h6>Receitas</h6>
 <p>É possível resolver diversos problemas encontrados em sistemas distribuídos usando-se o ZooKeeper, por exemplo, o problema de descoberta de processos.</p>
 <div class="admonition example">
 <p class="admonition-title">Rendezvous</p>
@@ -2949,8 +2920,6 @@ http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
 
 -->
 
-<details class="todo"><summary>Todo</summary><p>falhas bizantinas</p>
-</details>
 <div class="footnote">
 <hr />
 <ol>
