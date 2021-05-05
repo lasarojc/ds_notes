@@ -359,9 +359,9 @@ A grande razão para que seja impossível chegar a um acordo entre processos nes
 Os detectores de defeito abstraem este problema.
 
 
-### Detectores de Defeitos de Defeito não Confiáveis
+### Detectores de Defeitos não Confiáveis
 
-Chandra e Toueg [^CT96] introduziram o conceito de **Detectores de Defeitos** como forma de encapsular a percepção do estado funcional dos outros processos.
+Chandra e Toueg[^CT96] introduziram o conceito de **Detectores de Defeitos** como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de defeitos pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.
 
 [^CT96]: [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf)
@@ -384,7 +384,7 @@ Quando os *heartbeats* não chegam até o limite de tempo, o processo remetente 
 ![Failure Detector](drawings/failure_detector.drawio#3)
 
 
-
+Para capturar estas combinações de eventos, foram definidos os seguintes níveis de 
 
 Os níveis destas propriedades são os seguintes:
 
@@ -460,9 +460,7 @@ O módulo ABCast2 insiste na difusão de $m'$, propondo-a na próxima instância
 sequenceDiagram
     participant App1
     participant ABCast1
-    participant Cons1
-    participant Cons3
-    participant Cons2
+    participant Consenso
     participant ABCast2
     participant App2
 
@@ -471,21 +469,21 @@ sequenceDiagram
 	  App2 -->>+ ABCast2: difundir m'
 
 rect rgb(100,255,255)
-    ABCast1 ->>+ Cons1: propor m na inst 1
-    ABCast2 ->>+ Cons2: propor m' na inst 1
+    ABCast1 ->>+ Consenso: propor m na inst 1
+    ABCast2 ->>+ Consenso: propor m' na inst 1
 
      
-    Cons1 ->>- ABCast1: decidir m
-    Cons2 ->>- ABCast2: decidir m
+    Consenso ->>- ABCast1: decidir m
+    Consenso ->>- ABCast2: decidir m
 end
     ABCast1 -->>- App1: entregar m
 	  ABCast2 -->> App2: entregar m
 
 rect rgba(255,0,0,.5)
-    ABCast2 ->>+ Cons2: propor m' na inst 2
+    ABCast2 ->>+ Consenso: propor m' na inst 2
 
-    Cons1 ->> ABCast1: decidir m'
-    Cons2 ->>- ABCast2: decidir m'
+    Consenso ->> ABCast1: decidir m'
+    Consenso ->>- ABCast2: decidir m'
 end
     ABCast1 -->> App1: entregar m'
 	  ABCast2 -->>- App2: entregar m'
@@ -542,9 +540,9 @@ Seja implementando a replicação de máquinas de estados, seja implementando um
 
 #### Estudo de caso: Copycat 
 
-[Copycat ](http://atomix.io/copycat/) é um arcabouço de replicação de máquinas de estados implementada pela [Página Web](http://atomix.io/)Atomix.
+[Copycat](http://atomix.io/copycat/) é um arcabouço de replicação de máquinas de estados implementada pela [Atomix](http://atomix.io/).
 Na base do Copycat está uma implementação do Raft.
-Sobre o Raft, uma API simples permite a criação de máquinas de estados replicadas usando uma API simples mas moderna, com uso pesado de **lambdas**, **futures**, e do estilo **fluent** de encadeamento de invocações.
+Sobre o Raft, uma API simples mas moderna permite a criação de máquinas de estados usando **lambdas**, **futures**, e o estilo **fluent** de encadeamento de invocações.
 
 !!!note ""
     === "Lambda"
@@ -628,6 +626,7 @@ Há várias versões do Copycat disponíveis, com vantagens e desvantagens.
     === "Versão 3"
         * em Go
         * evolução rápida
+        * o código é a documentação
 
 
 Aqui usaremos a versão 1.1.4, que apesar de antiga, é a melhor documentada atualmente, pelo tutorial referenciado acima.
@@ -730,7 +729,7 @@ mvn exec:java \\
 
 #### Estudo de caso: Ratis
 
-[Ratis](https://ratis.incubator.apache.org/) é um arcabouço de coordenação atualmente encubado como um projeto no [Apache](https://apache.org).
+[Ratis](http://ratis.apache.org/) é um arcabouço de coordenação recentemente emancipado como um projeto no [Apache](https://apache.org).
 Embora mal documentado, o projeto tem alguns exemplos que demonstram como usar abstrações já implementadas. 
 A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis para implementar uma máquina de estados replicada.
 
@@ -746,19 +745,19 @@ Abra o arquivo `pom.xml` do seu projeto e adicione o seguinte trecho, com as dep
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-server</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.ratis/ratis-netty -->
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-netty</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-grpc</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0</version>
     </dependency>
     <dependency>
         <groupId>com.beust</groupId>
@@ -770,16 +769,23 @@ Abra o arquivo `pom.xml` do seu projeto e adicione o seguinte trecho, com as dep
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.25</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>2.14.1</version>
         <scope>compile</scope>
     </dependency>
     <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.14.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.14.1</version>
+        <scope>provided</scope>
     </dependency>
 </dependencies>
 ```
@@ -843,7 +849,7 @@ public class Cliente
 {
 ```
 
-O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um memsmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
+O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um mesmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
 
 `id2addr` é um mapa do identificador de cada processo no cluster para seu endereço IP + Porta.
 Aqui usei várias portas distintas porquê todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IP distintos, poderia usar a mesma porta em todos.
@@ -865,7 +871,7 @@ O campo `raftGroup` é uma referência a todos os servidores, associados ao iden
 
         List<RaftPeer> addresses = id2addr.entrySet()
                 .stream()
-                .map(e -> new RaftPeer(RaftPeerId.valueOf(e.getKey()), e.getValue()))
+                .map(e -> RaftPeer.newBuilder().setId(e.getKey()).setAddress(e.getValue()).build())
                 .collect(Collectors.toList());
 
         final RaftGroup raftGroup = RaftGroup.valueOf(RaftGroupId.valueOf(ByteString.copyFromUtf8(raftGroupId)), addresses);
@@ -890,8 +896,8 @@ Uma vez criado o cliente, podemos fazer invocações de operações nos servidor
 Este protótipo suporta duas operações, `add` e `get`. A operação `add` é codificada como uma `String`, `add:k:v`, onde `k` e `v` são do tipo `String`. `add:k:v` adiciona uma entrada em um mapa implementado pelo nosso servidor com chave `k` e valor `v`.
 Já a operação `get:k` recupera o valor `v` associado à chave `k`, se presente no mapa.
 
-O método `RaftClient::send` é usado para enviar modificações para as réplicas e deve, necessariament, passar pelo protocolo Raft.
-Já o método `RaftClient::sendReadOnly` é usado para enviar consultas a qualquer das réplicas.
+O método `RaftClient.io().send` é usado para enviar modificações para as réplicas e deve, necessariamente, passar pelo protocolo Raft.
+Já o método `RaftClient.io().sendReadOnly` é usado para enviar consultas a qualquer das réplicas.
 Ambos os métodos codificam o comando sendo enviado (`add:k:v` ou `get:k`) no formato interno do Ratis para as réplicas e retorna um objeto `RaftClientReply`, que pode ser usado para pegar a resposta da operação. 
 O código é auto explicativo.
 
@@ -900,14 +906,25 @@ O código é auto explicativo.
         String response;
         switch (args[0]){
             case "add":
-                getValue = client.send(Message.valueOf("add:" + args[1] + ":" + args[2]));
+                getValue = client.io().send(Message.valueOf("add:" + args[1] + ":" + args[2]));
                 response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
                 System.out.println("Resposta:" + response);
                 break;
             case "get":
-                getValue = client.sendReadOnly(Message.valueOf("get:" + args[1]));
+                getValue = client.io().sendReadOnly(Message.valueOf("get:" + args[1]));
                 response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
                 System.out.println("Resposta:" + response);
+                break;
+            case "add_async":
+                compGetValue = client.async().send(Message.valueOf("add:" + args[1] + ":" + args[2]));
+                getValue = compGetValue.get();
+                response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
+                System.out.println("Resposta: " + response);
+                break;
+            case "get_stale":
+                getValue = client.io().sendStaleRead(Message.valueOf("get:" + args[1]), 0, RaftPeerId.valueOf(args[2]));
+                response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
+                System.out.println("Resposta: " + response);
                 break;
             default:
                 System.out.println("comando inválido");
@@ -956,7 +973,7 @@ public class Servidor
 
         List<RaftPeer> addresses = id2addr.entrySet()
                                           .stream()
-                                          .map(e -> new RaftPeer(RaftPeerId.valueOf(e.getKey()), e.getValue()))
+                                          .map(e -> RaftPeer.newBuilder().setId(e.getKey()).setAddress(e.getValue()).build())
                                           .collect(Collectors.toList());
 ```
 

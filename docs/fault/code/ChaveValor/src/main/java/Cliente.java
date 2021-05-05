@@ -8,17 +8,17 @@ import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class Cliente
 {
 
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         String raftGroupId = "raft_group____um"; // 16 caracteres.
 
         Map<String,InetSocketAddress> id2addr = new HashMap<>();
@@ -28,7 +28,7 @@ public class Cliente
 
         List<RaftPeer> addresses = id2addr.entrySet()
                 .stream()
-                .map(e -> new RaftPeer(RaftPeerId.valueOf(e.getKey()), e.getValue()))
+                .map(e -> RaftPeer.newBuilder().setId(e.getKey()).setAddress(e.getValue()).build())
                 .collect(Collectors.toList());
 
         final RaftGroup raftGroup = RaftGroup.valueOf(RaftGroupId.valueOf(ByteString.copyFromUtf8(raftGroupId)), addresses);
@@ -42,20 +42,32 @@ public class Cliente
                                       .build();
 
         RaftClientReply getValue;
+        CompletableFuture<RaftClientReply> compGetValue;
         String response;
         switch (args[0]){
             case "add":
-                getValue = client.send(Message.valueOf("add:" + args[1] + ":" + args[2]));
+                getValue = client.io().send(Message.valueOf("add:" + args[1] + ":" + args[2]));
                 response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
-                System.out.println("Resposta:" + response);
+                System.out.println("Resposta: " + response);
                 break;
             case "get":
-                getValue = client.sendReadOnly(Message.valueOf("get:" + args[1]));
+                getValue = client.io().sendReadOnly(Message.valueOf("get:" + args[1]));
                 response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
-                System.out.println("Resposta:" + response);
+                System.out.println("Resposta: " + response);
+                break;
+            case "add_async":
+                compGetValue = client.async().send(Message.valueOf("add:" + args[1] + ":" + args[2]));
+                getValue = compGetValue.get();
+                response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
+                System.out.println("Resposta: " + response);
+                break;
+            case "get_stale":
+                getValue = client.io().sendStaleRead(Message.valueOf("get:" + args[1]), 0, RaftPeerId.valueOf(args[2]));
+                response = getValue.getMessage().getContent().toString(Charset.defaultCharset());
+                System.out.println("Resposta: " + response);
                 break;
             default:
-                System.out.println("comando inválido");
+                System.out.println("Comando inválido");
         }
 
         client.close();
