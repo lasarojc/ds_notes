@@ -17,12 +17,13 @@
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-common:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-client:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-server-api:2.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.29" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-metrics:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: io.dropwizard.metrics:metrics-core:3.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-netty:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ratis:ratis-grpc:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.beust:jcommander:1.78" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.logging.log4j:log4j-core:2.14.1" level="project" />
   </component>

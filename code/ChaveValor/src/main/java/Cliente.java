@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class Cliente
 {
-
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
         String raftGroupId = "raft_group____um"; // 16 caracteres.
 
