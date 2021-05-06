@@ -140,7 +140,7 @@ Em sistemas em que há limites de tempo para a execução de ações, uma viola�
 Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, então houve uma falha de omissão.
 Novamente considerando problemas de transmissão de mensagens, se o meio de comunicação se recusou a entregar uma mensagem que deveria ser entregue dentro de 3ms, então houve um defeito de omissão.
 Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a mesma é entregue com 5ms, então o defeito é mascarado como um defeito de temporização.
-Defeitos de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto [anteriormente.](../time/#usos-de-relogios-sincronizados)
+Defeitos de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto [anteriormente.](time/#usos-de-relogios-sincronizados)
 
 ##### Arbitrários
 Um defeito **arbitrário** ou **bizantino** é um no qual qualquer comportamento pode acontecer. 
@@ -297,7 +297,7 @@ Novamente podemos apelar para uma mensagem de confirmação ou, neste caso, uma 
 E o problema se repete indefinidamente.
 
 
-!!!sideslide "Paradoxo dos 2 Exércitos"
+!!! info inline end "Paradoxo dos 2 Exércitos"
     * $A$ e $B$ devem concordar na hora do ataque.
 	* $A$ ataca se estiver certo que $B$ atacará.
 	* $B$ ataca se estiver certo que $A$ atacará.
@@ -321,7 +321,7 @@ Mas se o algoritmo é correto, então também **Bastião ataca**, mesmo sem ter 
 
 Repetindo-se o argumento mais $n-1$ vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um **absurdo**. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é **impossível** resolver o problema.
 
-!!!sideslide "Impossibilidades"
+!!!info inline end "Impossibilidades"
     Impossibilidade de resolução x resolução na prática.
 
 Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. Como reconciliar estes dois fatos?
@@ -349,7 +349,7 @@ Neste problema, cada um de um conjunto de processos propõe um único valor, sua
 Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
 Um processo que não é defeituoso é um processo correto.
 
-!!!sideslide "Terminação"
+!!! info inline end "Terminação"
     Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.
 
 Dependendo do modelo computacional, é possível resolver este problema. Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**,[^flp85] e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
@@ -434,7 +434,7 @@ Relembrando, na  temos que:
 * Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)
 * Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.
 
-![Total order multicast](../drawings/group_com.drawio#1)
+![Total order multicast](drawings/group_com.drawio#1)
 
 Para fazermos isso, precisamos primeiro formalizar as primitivas em vários níveis da resolução do problema.
 No nível do canal de comunicação, da rede, processos **enviam** e **recebem** mensagens.
@@ -1015,7 +1015,8 @@ A máquina de estados em si é especificada no próximo excerto, em `setStateMac
         final RaftGroup raftGroup = RaftGroup.valueOf(RaftGroupId.valueOf(ByteString.copyFromUtf8(raftGroupId)), id2addr);
         RaftServer raftServer = RaftServer.newBuilder()
                 .setServerId(myId)
-                .setStateMachine(new MaquinaDeEstados()).setProperties(properties)
+                .setStateMachine(new MaquinaDeEstados())
+                .setProperties(properties)
                 .setGroup(raftGroup)
                 .build();
         raftServer.start();

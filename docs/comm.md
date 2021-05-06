@@ -23,7 +23,7 @@ Neste cenário, vários fatores precisam ser levados em consideração na hora d
 * little endian, como x64 e IA-32, ou  big endian como SPARC (< V9), Motorola e PowerPC? ou ainda, flexível como  ARM,  MIPS ou  IA-64?
 * fim de linha com crlf (DOS) x lf (Unix)?
 * fragmentação de dados na rede   
-  [![Fragmentação](../images/ipfrag.png)](http://www.acsa.net/IP/)
+  [![Fragmentação](images/ipfrag.png)](http://www.acsa.net/IP/)
 
 ###### Representação Textual
 
@@ -244,7 +244,7 @@ Estas funcionalidades são normalmente implementadas por *frameworks* de comunic
 
 ## Middleware e Transparência
 
-??? sideslide "Middleware"
+??? info inline end "Middleware"
     * software
     * hardware/OS
     * aplicação
@@ -260,7 +260,7 @@ Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular *
 A figura seguinte   mostra um exemplo com três aplicações executando sobre um *middleware*, que por sua vez é executado sobre diferentes sistemas operacionais, em *hosts*  conectados por uma rede de comunicação. 
 
 
-![Middleware](../images/01-01.png){: style="width:500px"}[^0101]
+![Middleware](images/01-01.png){: style="width:500px"}[^0101]
 
 [^0101]: Distributed Systems: Principles and Paradigms. Capítulo 1, Figura 1.
 
@@ -277,7 +277,7 @@ Desenvolver sistemas distribuídos sem usar um *middleware* é como desenvolver 
 Idealmente, com o *middleware*, o desenvolvedor conseguiria facilmente implementar uma aplicação em que a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como **um sistema único**, monolítico.
 Pense no browser e na WWW, por exemplo: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de **transparência**.
 
-??? sideslide "Transparência Total"
+??? info inline end "Transparência Total"
     Acesso + Localização + Relocação + Migração + Replicação + Falha
 
 Se não há qualquer indício de que a aplicação é distribuída, então temos **transparência total**.  
@@ -287,7 +287,7 @@ Vejamos cada uma destas separadamente.
 
 ###### Transparência de Acesso
 
-??? sideslide "Transparência de Acesso"
+??? info inline end "Transparência de Acesso"
     * como se apresenta
     * representação de dados
         * arquitetura
@@ -333,7 +333,7 @@ Para se tentar obter transparência de acesso, é importante que se use **padrõ
 
 ###### Transparência de Localização
 
-??? sideslide "Transparência de localização"
+??? info inline end "Transparência de localização"
     * onde está o objeto
     * latência
         * cache
@@ -378,7 +378,7 @@ De forma geral, pense em esconder latência pelos seguintes passos:
 
 ###### Transparência de Relocação
 
-??? sideslide "Transparência de relocação"
+??? info inline end "Transparência de relocação"
     * como se movimenta
     * visto por clientes
 
@@ -394,7 +394,7 @@ Se implementadas corretamente, as técnicas que entregam transparência de local
 
 ###### Transparência de Migração
 
-??? sideslide "Transparência de migração"
+??? info inline end "Transparência de migração"
     * como se movimenta
     * visto por si mesmo
 
@@ -403,13 +403,13 @@ Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando
 Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
 Veja o exemplo do VMotion da VMware.
 
-![http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg](../images/vmotion.jpg)
+![http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg](images/vmotion.jpg)
 
 Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.
 
 ###### Transparência de Replicação
 
-??? sideslide "Transparência de replicação"
+??? info inline end "Transparência de replicação"
     * redundância
     * visto por clientes
 
@@ -424,7 +424,7 @@ Outras aplicações são normalmente construídas com requisitos de consistênci
 Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de *frameworks* de **comunicação em grupo**, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
 Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada [**replicação de máquinas de estado**](https://en.wikipedia.org/wiki/State_machine_replication).
 
-??? sideslide "Replicação de Máquina de Estados"
+??? info inline end "Replicação de Máquina de Estados"
     * determinística
     * mesmo estado inicial
     * mesmos eventos
@@ -460,7 +460,7 @@ Mitigações incluem uso de réplicas temporárias, protocolos de invalidação 
 
 ###### Transparência de Concorrência
 
-??? sideslide "Transparência de concorrência"
+??? info inline end "Transparência de concorrência"
     * obliviedade a outros serviços
     * visto por clientes
 
@@ -471,7 +471,7 @@ Nuvens computacionais são um exemplo de onde este tipo de transparência é ess
 Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um *wrapper* ao redor do SGBD que se comprava e instalava *in-house* anteriormente.
 Para se tornar viável, contudo, uma mesma instância deve servir múltiplos clientes, os *tenants*, sem que a carga de trabalho introduzida por um, interfira no desempenho do outro. No meio, chamamos esta propriedade de *multi-tenancy*, mas é apenas um exemplo de transparência de concorrência.
 
-* ![https://cdn.jjude.com/mt-models.png](../images/multitenancy_models.png)
+* ![https://cdn.jjude.com/mt-models.png](images/multitenancy_models.png)
 
 
 Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos *pool* de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (*scale up*) e separe as cargas (*sharding*); se menos clientes estão presentes, então desligue algumas máquinas (*scale down*) e consolide recursos.
@@ -509,24 +509,24 @@ Contudo, *sockets* são uma abstração de baixo nível, difíceis de se usar co
 Subindo as camadas de abstração uma tecnologia interessante é a ***Message Passing Interface***, muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (*high performance computing*). 
 Quatro das operações providas pelas implementações de MPI são mostradas na figura a seguir, responsáveis por espalhar dados (***broadcast***), fragmentos dos dados (***scatter***), coletar e compor fragmentos (***gather***), ou reduzir resultados parciais (***reduce***).
 
-![CFD](../images/mpi.jpeg)
+![CFD](images/mpi.jpeg)
 
 Por exemplo, suponha que você esteja desenvolvendo uma aplicação que fará buscas de caminhos em grafos, com várias propriedades distintas.
 Digamos que precise calcular uma rota entre vários vértices do grafo usando caminhadas aleatórias. Usando a função *broadcast*, você pode enviar uma cópia do grafo para cada processo disponível para que independentemente calcule alguma rota. 
 
-![MPI](../drawings/mpi.drawio#0)
+![MPI](drawings/mpi.drawio#0)
 
 Ao final do cálculo, um processo pode coletar os resultados de cada processo e escolher a melhor entre as rotas encontradas usando a função *reduction*.
 
-![MPI](../drawings/mpi.drawio#3)
+![MPI](drawings/mpi.drawio#3)
 
 Se preferir que cada busca se restrinja a um subgrafo, onde os vários subgrafos são complementares, então a função *scatter* seria usada.[^scatter]
 
-![MPI](../drawings/mpi.drawio#1)
+![MPI](drawings/mpi.drawio#1)
 
 Finalmente, a função *gather* poderia ser usada para coletar subgrafos com rotas encontradas e montar um grafo com todas as alternativas.
 
-![MPI](../drawings/mpi.drawio#2)
+![MPI](drawings/mpi.drawio#2)
 
 
 [^scatter]: O particionamento básico provido pela MPI é simplesmente uma divisão do buffer com os dados entre os vários processos, então para fragmentar um grafo, você teria um pouco de trabalho.
@@ -544,7 +544,7 @@ Na arquitetura *publish/subscribe* (ou *pub/sub*), há também a figura de um pr
 Em primeiro lugar, os dois processos nunca comunicam diretamente e não precisam nem saber da existência do outro ou sequer executarem ao mesmo tempo, estando **desacoplados**.
 Em segundo lugar, mensagens são associadas a **tópicos**, aos quais os ***subscribers*** se subscrevem; somente tópicos de interesse são entregues aos *subscribers*, em um tipo de **filtragem**.
 
-![https://aws.amazon.com/pub-sub-messaging/](../images/aws_pubsub.png)
+![https://aws.amazon.com/pub-sub-messaging/](images/aws_pubsub.png)
 
 
 ###### Desacoplamento
@@ -566,14 +566,14 @@ O *broker* tem um papel fundamental pois permite a especificação de diversos n
 
 Observe que uma mesma mensagem pode ser entregue a múltiplos *subscribers* se pertencer a um tópico de interesse em comum e que um mesmo *subscriber* pode se interessar por diversos tópicos.
 
-![https://cloud.google.com/pubsub/docs/overview](../images/google_pubsub.svg)
+![https://cloud.google.com/pubsub/docs/overview](images/google_pubsub.svg)
 
 
 #### Arquiteturas baseadas em Pub/Sub
 
 Embora simples, frameworks pub/sub permitem a implementação de arquiteturas complexas, como o exemplo da figura a seguir.
 
-![https://cloud.google.com/pubsub/docs/overview](../images/google_pubsub2.svg)
+![https://cloud.google.com/pubsub/docs/overview](images/google_pubsub2.svg)
 
 
 
@@ -626,7 +626,7 @@ Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmen
 
 [^marshal]: Marshalling: representar parâmetros de forma própria para transmissão "no fio".
 
-![RPC](../drawings/rpc.drawio#0)
+![RPC](drawings/rpc.drawio#0)
 
 |Stub cliente    | Stub servidor  |
 |----------------|----------------|
@@ -659,7 +659,7 @@ O código `x = substring(a,3,c);`, que procura `*c` em `*a`, é traduzido nos se
 * salte de volta recuperando o endereço de retorno da pilha e ajustando o IP
 * coloque resultado em `x`
 
-![RPC](../drawings/rpc.drawio#4)
+![RPC](drawings/rpc.drawio#4)
 
 
 O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que 
@@ -668,12 +668,12 @@ O problema é que há uma distinção clara em pelo menos dois processos e se pe
 * processos independentes não compartilham uma pilha.
 
 
-![RPC](../drawings/rpc.drawio#1)
+![RPC](drawings/rpc.drawio#1)
 
 Assim, como fica a **passagem de parâmetro por referência**, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
 Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, **o valor apontado pelo ponteiro é passado para o servidor**, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.
 
-![RPC](../drawings/rpc.drawio#2)
+![RPC](drawings/rpc.drawio#2)
 
 Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
 Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
@@ -693,7 +693,7 @@ Birrel e Nelson propuseram um serviço de **Páginas Amarelas**, no qual cliente
 Esta abordagem tem seus próprios problemas, como por exemplo determinar **quem administra** o serviço para incluir novos servidores.
 E como determinar qual serviço acessar, caso hajam **múltiplas opções de servidores**.
 
-![RPC](../drawings/rpc.drawio#3)
+![RPC](drawings/rpc.drawio#3)
 
 Apesar dos problemas, **páginas amarelas** foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo [Web Services Discovery](https://en.wikipedia.org/wiki/Web_Services_Discovery), que permite a descoberta de Web Services em escala global, e [Java Remote Object Registry](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html) que permite a descoberta de objetos remotos Java.
 
@@ -734,7 +734,7 @@ Se o cliente havia invocado uma operação mas percebeu o erro antes de receber 
 * (i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,
 * (ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.
 
-![RPC](../drawings/rpc.drawio#5)
+![RPC](drawings/rpc.drawio#5)
 
 O cliente tem que tratar o erro, mas como?
 Se a operação **precisa** ser executada **a qualquer custo**, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
@@ -742,15 +742,15 @@ Neste caso, se o que de fato aconteceu foi a situação (i), então retentar gar
 Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
 Esta abordagem é o que garantirá que a execução acontece **pelo menos 1 vez**.
 
-![RPC](../drawings/rpc.drawio#6)
+![RPC](drawings/rpc.drawio#6)
 
 Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
 Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
 
-![RPC](../drawings/rpc.drawio#6)
+![RPC](drawings/rpc.drawio#6)
 
-!!!sideslide "Quantidade de execuções"
+!!!info inline end "Quantidade de execuções"
     * No máximo uma - não retentar
     * Exatamente uma - impedir que falhas aconteçam :white_frowning_face:
     * Pelo menos uma - retentar até ter confirmação
@@ -803,7 +803,7 @@ Há várias IDL definidas, para os diversos *frameworks* disponíveis.
 
 A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.
 
-![IDL](../images/idl.png)
+![IDL](images/idl.png)
 
 O fluxo de processamento é o seguinte:
 

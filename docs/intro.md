@@ -5,7 +5,7 @@ Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obst�
 ## O quê são Sistemas Distribuídos?
 
     
-??? sideslide "Sistemas simples"
+??? info inline end "Sistemas simples"
      ![Lego Rainbow](images/lego0.jpg){: style="width:300px"}
 
 Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
@@ -13,7 +13,7 @@ Estes são os sistemas que contém em um único processo toda a lógica de negó
 Sejam estes sistemas construído com blocos que se encaixam perfeitamente, disponibilizados basicamente pela biblioteca da linguagem que está utilizando;
 
 
-??? sideslide "Sistemas não tão simples"
+??? info inline end "Sistemas não tão simples"
      ![Lego Hell](images/lego3.jpg){: style="width:300px"}
 
 ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
@@ -23,7 +23,7 @@ o resultado, contudo, continua sendo um artefato só, executado como um único p
 
 Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que não foram pensadas para trabalhar juntas, forçando-nos a usar um pouco de super-cola e arame. 
 
-??? sideslide "Cable hell!"
+??? info inline end "Cable hell!"
      ![Lego SD](images/cablemess.jpg){: style="max-width:300px; max-height:150px;"}
 
 Bem, na verdade, em vez de cola usamos *middleware*, como logo discutiremos, e, em vez de arame, usamos cabos de rede, o que é, 
@@ -44,7 +44,7 @@ Assim, uma possível definição de Sistema Distribuído, que me agrada, é a se
 !!! note "Sistema Distribuído"
     **Coleção** de sistemas computacionais (software ou hardware), **independentes** mas com alguma forma de **comunicação**, que **colaboram** na execução de alguma **tarefa**.
 
-??? sideslide "Componentes"
+??? info inline end "Componentes"
     * hospedeiro
     * nó
 
@@ -54,7 +54,7 @@ Contudo, nada impede que possivelmente múltiplos nós possam ser executados em 
 
 [^embed]: Escolhemos aqui ignorar o argumento muito plausível de que um algoritmo distribuído poderia ser executado entre, por exemplo, diversos chips em uma mesma placa.
 
-??? sideslide "Comunicação"
+??? info inline end "Comunicação"
     * memória compartilhada
     * mensagens
 
@@ -65,7 +65,7 @@ Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes troc
 
 ![Sistema Distribuído](drawings/sis_dis.drawio)
 
-??? sideslide "Dependência"
+??? info inline end "Dependência"
     * Ao colaborarem, criam dependência
     * Falha pode parar o sistema
 
@@ -73,7 +73,7 @@ Neste exemplo, cada celular, o processo que implementa o serviço de email e o s
 Observe que o nó do serviço de email é responsável por receber os emails e encaminhá-los para o banco em um sentido, bem como ler emails do banco e entregar para os destinatários, no outro.
 Observe também que se o banco de dados para de funcionar, o serviço de email passa a ser inútil, uma vez que não pode armazenar novas mensagens e nem recuperar mensagens já armazenadas. 
 
-??? sideslide "Disponibilidade"
+??? info inline end "Disponibilidade"
     * falhas
     * dependabilidade
 
@@ -93,7 +93,7 @@ Observe que estar sempre funcional implica em continuar provendo o serviço mesm
 [^failures]: [What Can We Learn from Four Years of Data Center Hardware Failures?](http://people.iiis.tsinghua.edu.cn/~weixu/Krvdro9c/dsn17-wang.pdf)
 
 
-??? sideslide "Um "bom" sistema"
+??? info inline end "Um "bom" sistema"
      * Disponível
          * Falhas
      * Rápido
@@ -126,7 +126,7 @@ O que nos resta então é agregar o poder computacional de diversos computadores
 Mesmo se pensarmos que a escala com que estes sistemas trabalham deve ser muito diferente daquela dos sistemas que nós desenvolvemos, e portanto as técnicas usadas em sua construção devem ser muito distintas do que fazemos, a verdade não poderia ser mais longe disto.
 Com a quantidade de informação armazenada a cada acesso a um sítio, a cada produto vendido, ou a cada consulta feita, praticamente qualquer sistema de informação de sucesso necessitará aplicar as técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender ao número crescente de clientes (computacionais ou humanos) e aumentar sua área de cobertura, mesmo que não chegue a escala dos exemplos acima, e melhorar ou manter a qualidade do serviço que presta.
 
-??? sideslide "PQ?"
+??? info inline end "PQ?"
      * escalabilidade
      * tolerância a falhas
 

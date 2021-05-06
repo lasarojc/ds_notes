@@ -15,7 +15,7 @@ Antes de distribuir nosso sistema, isto é, dividir a computação/armazenamento
 * Os relógios dos hospedeiros marcam o mesmo valor no mesmo instante, ou melhor, são sincronizados?
 * Há agentes que possam querer perturbar o sistema, por exemplo para ganhar acesso a mais recursos do que seria justo?
 
-??? sideslide "Modelos"
+??? info inline end "Modelos"
     * Comunicação
     * Sincronismo
     * Falhas
@@ -30,7 +30,7 @@ Seja como for, estes sistemas com **memória compartilhada** são normalmente us
 ![Memória Compartilhada](drawings/shared_memory.drawio#0)
 
 
-??? sideslide "Comunicação"
+??? info inline end "Comunicação"
     * memória compartilhada
     * troca de mensagens
 
@@ -53,7 +53,7 @@ Esta abordagem resulta em uma arquitetura NUMA, isto é, *Non-Uniform Memory Acc
 
 ### Sincronismo
 
-??? sideslide "Sincronismo"
+??? info inline end "Sincronismo"
     * operações
     * comunicação
     * relógio
@@ -71,7 +71,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 
 [^falham]: [Annual failure rates - servers](https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/)
 
-??? sideslide "Falhas"
+??? info inline end "Falhas"
     * detectável
     * temporização
     * quebras
@@ -82,7 +82,7 @@ Para lidar com falhas, precisamos entender quais são suas possíveis formas, is
 
 ### Modelo Assumido
 
-??? sideslide "Outros"
+??? info inline end "Outros"
     * carga de trabalho
 
 Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? *Black friday*?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.
@@ -96,7 +96,7 @@ Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde o
 
 [^recursos]: Os recursos compartilhados vão desde alguns óbvios, como **capacidade de armazenamento** e de **processamento**, a própria **localização** de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.
 
-??? sideslide "Abstrações"
+??? info inline end "Abstrações"
     * Comunicação
         * Ordenação
         * Confiabilidade
@@ -782,7 +782,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 ![Multithreaded](images/multithread2.png)
 
 
-???- sideslide "Multiprogramação"
+???- info inline end "Multiprogramação"
      ![Multithreaded](images/multithreaded.jpg)
 
 Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
@@ -798,7 +798,7 @@ Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso d
 A questão das regiões críticas está intimamente relacionada à questão da manutenção de estado nos servidores.
 Quanto a este respeito, podemos classificar servidores como **stateful** e **stateless**, dois termos que ouvirão frequentemente enquanto trabalhando com SD.
 
-???- sideslide "To state or not to state?"
+???- info inline end "To state or not to state?"
       * Complexidade e desempenho
       * Falhas
       * Balanceamento

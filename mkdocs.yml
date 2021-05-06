@@ -6,14 +6,14 @@ nav:
         - Prefácio: preface.md
         - Introdução: intro.md
         - Fundamentos: fundamentals.md
-        - Arquiteturas: arch/index.md
-        - Comunicação: comm/index.md
-        - Coordenação: coord/index.md
+        - Arquiteturas: arch.md
+        - Comunicação: comm.md
+        - Coordenação: coord.md
         - Tempo: time.md
         - Tolerância a Falhas: fault.md
-        - Bancos de Dados: disdb/index.md
-        - Sistemas de Arquivos: disfs/index.md
-        - Tecnologias: tech/index.md
+        - Bancos de Dados: disdb.md
+        - Sistemas de Arquivos: disfs.md
+        - Tecnologias: tech.md
 
 theme:
         name: material

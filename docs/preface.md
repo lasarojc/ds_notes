@@ -2,14 +2,14 @@
 
 ## Por quê ler estas notas?
 
-???- sideslide "Computação distribuída"
+???- info inline end "Computação distribuída"
     * Área extremamente ativa
     * Diferencial
 
 As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e tem atraído mais e mais profissionais, mais ou menos qualificados, tornando este **mercado cada vez mais competitivo**.
 Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é um dos tópicos mais "quentes" e ter conhecimentos específicos desta subárea pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
 
-???- sideslide "Fundamental a outras áreas"
+???- info inline end "Fundamental a outras áreas"
     * Aprendizado de máquina
     * Ciência de dados
     * Computação gráfica
@@ -18,7 +18,7 @@ Se estiver se perguntando do que estou falando, sobre como posso dizer que é qu
 Veja, por exemplo, a seguinte descrição dos *skills* necessários para se atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro de software no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
 É fato que aplicações distribuídos já são parte inexpurgável da infraestrutura computacional que usamos para resolver os mais diversos problemas.
 
-???- sideslide "Este curso"
+???- info inline end "Este curso"
     * A teoria por baixo dos *frameworks* que **já** usam
 
 Assim, respondendo à pergunta acima, entendo que ler estas notas lhe permitirá mergulhar rapidamente no coração da computação distribuída, para entender os fundamentos de como as grandes infra-estruturas computacionais que usamos hoje funcionam, muito além das anotações do [Springboot]() e dos clientes de bancos de dados.
@@ -27,7 +27,7 @@ Isso, de uma forma muito direta e mais simples de digerir quer as fontes onde me
 
 ## Estrutura
 
-???- sideslide "Por quê?"
+???- info inline end "Por quê?"
     * Visão geral
     * Teoria
     * Prática
@@ -70,7 +70,7 @@ Neste documento, usamos diversos recursos visuais com diferentes propósitos.
     !!!exercise "Exercício"
         Isso é um exercício!
 
-???- sideslide "Resumo"
+???- info inline end "Resumo"
     * Elementos visuais
 
 * Caixas alinhadas à direita podem ser vistas como um sumário executivo do que está sendo apresentado no texto próximo.

@@ -1010,7 +1010,7 @@ Se um processo lê um item $x$, então escritas sucessivas no mesmo item só pod
 
 ##### Mais informações:
 * [Aqui](https://aphyr.com/posts/313-strong-consistency-models)
-* [e aqui](./file/../files/encyclopedia18.pdf)
+* [e aqui](refs/encyclopedia18.pdf)
 
 ## Posicionamento de Réplicas
 

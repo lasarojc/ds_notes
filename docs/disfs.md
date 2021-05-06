@@ -4,7 +4,7 @@ Em construção.
 
 ## Leitura
 
-[Conceitos básicos](./files/dsdc-coulouris-ch12.pdf)
+[Conceitos básicos](refs/dsdc-coulouris-ch12.pdf)
 
 ## Google File System
 

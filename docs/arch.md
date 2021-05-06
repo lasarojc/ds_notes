@@ -29,11 +29,11 @@ Dependendo de como são conectados, haverá maior ou menor dependência entre os
 Quando houver forte dependência, diremos que os componentes estão **fortemente acoplados** (*tightly coupled*). Caso contrário, diremos que estão **fracamente acoplados** (*loosely coupled*).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de uma falha.
 
-![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](../images/loosetight.png)
+![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](images/loosetight.png)
 
 Certos *middleware* permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.
 
-![Desacoplamento](../images/component2.png)
+![Desacoplamento](images/component2.png)
 
 Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
 
@@ -54,7 +54,7 @@ Com a redução dos computadores, surgiram as primeiras redes de computadores e 
 Com os sockets, vem uma grande flexibilidade, pois um processo não precisa saber como o outro manuseia os dados que lhe cabem, desde que siga um protocolo pré-estabelecido na comunicação. Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter [transparência de acesso](../intro/#transparencia).
 Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.
 
-![http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html](../images/cs.png)
+![http://psspol.blogspot.com.br/2015/07/difference-between-client-server.html](images/cs.png)
 
 Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 De forma genérica, estas interações acontecem como na figura a seguir.
@@ -112,7 +112,7 @@ Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muit
 Pense por exemplo no serviço de email do Google, o Gmail. Com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço.
 Provavelmente estes diversos servidores ficam atrás do que chamamos de um balanceador de carga, que roteia as requisições seguindo diferentes políticas, por exemplo, *round robin*.
 
-![http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/](../images/lb.jpg)
+![http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/](images/lb.jpg)
 
 
 Exemplos cotidianos disto são servidores de bancos de dados, de páginas Web e email.
@@ -137,15 +137,15 @@ A seguir, exploraremos as arquiteturas construídas sobre cliente/servidor.
 Outra forma de hibridismo que podemos citar é quando um componente haje tanto como cliente quanto como servidor. 
 Veja o seguinte exemplo, conhecido no meio como arquitetura em 3-camadas (3 *tiers*).
 
-[![3 Tiers](../images/3tierb.gif)](https://managementmania.com/en/three-tier-architecture)
+[![3 Tiers](images/3tierb.gif)](https://managementmania.com/en/three-tier-architecture)
 
 Neste caso, é interessante notar que esta disposição dos componentes é independente da disposição física. De fato, as três camadas podem estar em um mesmo nó, ou combinadas duas a duas, neste último caso resultando em duas camadas.
 
-![2 Tiers](../images/02-05.png)
+![2 Tiers](images/02-05.png)
 
 Por outro lado, cada camada pode ser subdividida em mais componentes, resultando em múltiplos tiers, como neste exemplo de um sistema de busca na Web.
 
-![Multi-tier](../images/02-04.png)
+![Multi-tier](images/02-04.png)
 
 
 
@@ -182,7 +182,7 @@ Nestas redes são executados diversos algoritmos, como de descoberta de nós, ro
 Uma vez que as **conexões na rede sobreposta não correspondem a conexões físicas**, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
 Isto também implica que a **otimização da rota lógica não necessariamente leva à otimização da rota física**.
 
-[![Por Gustavo Lacerda - UFRJ, Domínio público](../images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
+[![Por Gustavo Lacerda - UFRJ, Domínio público](images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
 
 Dependendo em como esta rede é organizada (ou não), a mesma é classificada como **estruturada** ou **não-estruturada**.
 
@@ -192,7 +192,7 @@ Dependendo em como esta rede é organizada (ou não), a mesma é classificada co
 Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
-[![Não-estruturada](../images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
+[![Não-estruturada](images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
 
 Suponha que esta rede seja usada para armazenar e consultar dados.
 Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
@@ -214,12 +214,12 @@ Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente p
 A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.
 
 
-![](../images/05-04.png)
+![](images/05-04.png)
 
 
 Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.
 
-![](../images/02-08.png)
+![](images/02-08.png)
 
 Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.
 
@@ -244,15 +244,15 @@ Distâncias entre nós são medidas como a soma das distâncias em $x$ mais a di
 * $d_y(a,b) = min(|y - y'|, N - |y - y'|)$
 * $d(a,b) = d_x(a,b) + d_y(a,b)$
 
-![Grade NxN](../drawings/estruturada.drawio#0)
+![Grade NxN](drawings/estruturada.drawio#0)
 
 Suponha que cada divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
 
-![](../images/02-10.png)
+![](images/02-10.png)
 
 O módulo de descoberta leva inicialmente ao estabelecimento de conexões aleatórias e à formação de uma rede sobreposta não estruturada como, por exemplo, a seguinte.
 
-![Grade NxN](../drawings/estruturada.drawio#1)
+![Grade NxN](drawings/estruturada.drawio#1)
 
 Após as conexões inicias, cada um dos nós executa o seguinte protocolo iteradamente.
 
@@ -262,11 +262,11 @@ Após as conexões inicias, cada um dos nós executa o seguinte protocolo iterad
 Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), como no exemplo, e o módulo de seleção sempre mantiver quatro conexões, ao final do processo os vizinhos serão os nós à direita, esquerda, acima e abaixo.
 Se a rede não for completa ou se menos conexões forem mantidas, uma aproximação será obtida.
 
-![Grade NxN](../drawings/estruturada.drawio#2)
+![Grade NxN](drawings/estruturada.drawio#2)
 
 A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.
 
-[![Fujitsu and RIKEN, 2009](../images/3d-torus.jpg)](https://clusterdesign.org/torus/)
+[![Fujitsu and RIKEN, 2009](images/3d-torus.jpg)](https://clusterdesign.org/torus/)
 
 Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura,[^hyper] no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
 
@@ -274,10 +274,10 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 [^icpc_hyper]: Neste [problema](https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf) do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.
 
-[![By Spiritia](../images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
+[![By Spiritia](images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
 
 
-!!! sideslide "Sistemas P2P"
+!!! info inline end "Sistemas P2P"
     * Arquitetura decentralizada;
     * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
     * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo;
@@ -372,7 +372,7 @@ Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsá
 Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como *finger table*.
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos **cordas** sobre o mesmo, o que explica o nome do sistema.
 
-![Chord](../images/chord.png)
+![Chord](images/chord.png)
 
 
 
@@ -388,14 +388,14 @@ A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (
 Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.
 [^chord_dist]: Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcional à diferença numérica entre os identificadores.
 
-![Anel Chord](../drawings/chord.drawio#0)
+![Anel Chord](drawings/chord.drawio#0)
 
 Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
 A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 O dado com chave $k$ é responsabilidade do nó com menor identificador $i \geq k$, aka, **sucessor de $k$** ($i = suc(k)$), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.
 
-![Anel com Chaves no Chord](../drawings/chord.drawio#1)
+![Anel com Chaves no Chord](drawings/chord.drawio#1)
 
 
 ##### Roteamento
@@ -413,7 +413,7 @@ Em outras palavras, cada nó mantem uma **tabela de rotas** com uma ou duas entr
 Com uma rede com milhares de nós, uma solução $O(n)$ saltos, onde cada pode levar **ao outro lado do planeta**, operações teriam uma latência muito alta.
 Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como *finger-table*, que aponta para nós no anel com distâncias que se dobram a cada entrada.
 
-![Anel com Chaves no Chord](../drawings/chord.drawio#2)
+![Anel com Chaves no Chord](drawings/chord.drawio#2)
 
 A *finger-table* é construída da seguinte forma, onde $m$ é a quantidade de bits usados para identificar nós no sistema:
 
@@ -435,11 +435,11 @@ Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pe
 
 Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.
 
-![](../images/05-04.png)
+![](images/05-04.png)
 
 Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, $31 < 0$. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?
 
-![](../images/05-04.png)
+![](images/05-04.png)
 
 A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de $p$ pode ser incompleta para partes distantes do anel.
 Tente identificar exemplos no anel a seguir onde este comportamento seria errado.
@@ -543,7 +543,7 @@ No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao us
 Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
 Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar, e também do Cassandra, que veremos a seguir.
 
-![CassandraDB](../drawings/cassandra_hibrido.drawio)
+![CassandraDB](drawings/cassandra_hibrido.drawio)
 
 #### Estudo de Caso: Cassandra
 Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
@@ -555,15 +555,15 @@ Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvi
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas **column-families** e seu conjunto **keyspace**. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. 
 
-![keyspace](../images/cass_keyspace.jpg)
+![keyspace](images/cass_keyspace.jpg)
 
 
 Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.
 
-![Column-family](../images/cass_column_family.jpg)
+![Column-family](images/cass_column_family.jpg)
 
 Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um *timestamp*.  
-![timestamps](../images/cass_column.jpg).  
+![timestamps](images/cass_column.jpg).  
 Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
 Devido a possibilidade de valores serem escritos para diferentes colunas independentemente, valores válidos e inválidos podem ter o mesmo *timestamp*.
 Por exemplo, considere os seguintes dados escritos no banco:
@@ -608,7 +608,7 @@ Isso é um atestado do que uma [especificação](http://bittorrent.org/beps/bep_
 Observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
 Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.
 
-![Bittorrent](../images/bittorrent.png)
+![Bittorrent](images/bittorrent.png)
 
 Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.
@@ -638,7 +638,7 @@ Diversas outras arquiteturas podem e foram propostas para o desenvolvimento de S
 A moda da vez é a chamada arquitetura de **microsserviços**, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemente.
 Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.
 
-![Microserviços](../images/microservice_sample.png)
+![Microserviços](images/microservice_sample.png)
 
 No dia 3 de Junho de 2020, o termo **microservice** resultava em 6.6 milhões de resultados no [Google](https://www.bing.com/search?q=microservice&PC=U316&FORM=CHROMN).
 Isso porquê a organização de aplicações distribuídas na forma de "pequenos" processos, especializados e independentes e que colaboram para implementar um serviço maior, se tornou um padrão importante no desenvolvimento de novas aplicações.
@@ -647,13 +647,13 @@ Exatamente por isso, precisamos começar com um aviso: diversas tecnologias surg
 Este fenômeno é capturado pelas várias fases do *hype-cycle* da Gartner.[^hype_gartner]
 [^hype_gartner]: "The hype cycle is a branded graphical presentation developed and used by the American research, advisory and information technology firm Gartner, for representing the maturity, adoption and social application of specific technologies."
 
-[![Hype Cycle](../images/gartner-hype-cycle-overview.png)](https://www.gartner.com/en/research/methodologies/gartner-hype-cycle)
+[![Hype Cycle](images/gartner-hype-cycle-overview.png)](https://www.gartner.com/en/research/methodologies/gartner-hype-cycle)
 
 A Arquitetura Orientada a microsserviços, tendo atingido o pico das expectativas infladas[^gartner_inflated] em 2017, está deslizando na [Trough of Desillusionment](https://www.gartner.com/en/documents/3955980/hype-cycle-for-application-architecture-and-development-)[^gartner_inflated] em 2019.
 Isto é, este modelo de desenvolvimento não é mais propagandeado como uma bala de prata para todas as aplicações distribuídas.
 Ainda assim, é um importante modelo. Mas afinal, o que é a arquitetura de microsserviços?
 Em vez de explicar diretamente o que são, pode ser mais fácil pensar primeiro termos do que não são, em termos de sistemas monolíticos.   
-[![2001 Space Odyssey](../images/monolith_2001.jpg)](http://www.imdb.com/title/tt0062622/)   
+[![2001 Space Odyssey](images/monolith_2001.jpg)](http://www.imdb.com/title/tt0062622/)   
 
 [^gartner_inflated]: * Peak of Inflated - Expectations	Early publicity produces a number of success stories—often accompanied by scores of failures. Some companies take action; most don't.
 * Technology Trigger -- A potential technology breakthrough kicks things off. Early proof-of-concept stories and media interest trigger significant publicity. Often no usable products exist and commercial viability is unproven.
@@ -674,7 +674,7 @@ O barramento então serve de canal de comunicação, entregando as mensagens pub
 Muitas aplicações seguem o modelo de 3 camadas em que em um dos extremos tem-se a interface com os usuários, materializada normalmente por um navegador, no outro tem-se um SGBD onde são armazenados os dados da aplicação, e, no meio, a lógica do negócio.
 A camada central, implementada por um único processo, que alimenta a interface com o usuário, manipula o modelo de dados, e onde reside a lógica do negócio, é um **monolito**.
 
-[![Monolitos](../images/monolith_arc.png)](http://nodexperts.com/blog/microservice-vs-monolithic/)
+[![Monolitos](images/monolith_arc.png)](http://nodexperts.com/blog/microservice-vs-monolithic/)
 
 Monolitos seguem um modelo simples e largamente utilizado de desenvolvimento em que vários contribuidores implementam partes distintas da lógica, que são compiladas em conjunto e colocadas em produção de forma atômica:   
 
@@ -701,7 +701,7 @@ De acordo com [Lewis & Fowler](https://martinfowler.com/articles/microservices.h
 
 Em outras palavras, com os microsserviços, quebra-se o monolito em diferentes processos, "*small autonomous services that work together, modelled around a business domain*", cada um gerenciando os dados relevantes para aquela parte do sistema e, possivelmente, sua própria interação com o usuário.
 Com o uso de microsserviços, se dá mais um passo em direção à máxima escalabilidade do sistema.
-[![Escala de Microsserviços](../images/microservices_scale.png)](https://thenewstack.io/from-monolith-to-microservices/)
+[![Escala de Microsserviços](images/microservices_scale.png)](https://thenewstack.io/from-monolith-to-microservices/)
 
 Este modelo tem implicações diretas no desenvolvimento: cada processo é desenvolvido por um time diferente, que mantem controle sobre desenvolvimento, teste, e manutenção em produção, o que é factível já que cada serviço é simples e focado em um problema pequeno e ninguém tem que entender em detalhes o funcionamento de todo o sistema.
 
@@ -709,7 +709,7 @@ Além disso, quando um serviço precisa ser atualizado, se bem projetados, todos
 
 Quanto à escalabilidade, esta é feita independentemente também; no exemplo na imagem seguinte, é provável que o serviço de acesso ao catálogo seja mais utilizado que os demais e portanto merecedor de mais recursos e mais cópias.
 
-[![](../images/microservice_sample.png)](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design)
+[![](images/microservice_sample.png)](https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/microservice-application-design)
 
 Como se percebe facilmente, o uso de microsserviços pode ser relacionado às técnicas de processamento paralelo: trate dados diferentes em blocos diferentes (paralelismo de dados ou replicação) e trate funções diferentes em blocos diferentes (paralelismo de tarefas ou *sharding*).
 Como na computação paralela, na "componentização" é importante considerar os requisitos das diferentes tarefas em termos de CPU, E/S, e memória, para que possam escalar independentemente e não gerar gargalos desnecessários.

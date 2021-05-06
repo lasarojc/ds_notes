@@ -56,7 +56,7 @@ Neste cenário, temos novo problema:
 !!!question "Pergunta"
       Como determinar qual foi enviada primeiro, em um sistema assíncrono?
 
-!!!sideslide "Como sincronizar?"
+!!!info inline end "Como sincronizar?"
     Como sincronizar relógios em um sistema distribuído?
 
 Para usar esta abordagem, precisamos encontrar uma **fonte de tempo confiável e distribuída**, construída pelo uso de protocolos de **sincronização de relógios físicos**
@@ -73,7 +73,7 @@ Para uma introdução rápida, assista ao seguinte vídeo.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-!!!sideslide "Quartzo"
+!!!info inline end "Quartzo"
     * Efeito piezoelétrico
     * 32768Hz
     * Erro de 0,5s por dia
@@ -90,7 +90,7 @@ Computadores em geral usam relógios de quartzo, por serem baratos, como base de
 Isto é, do ponto de vista de um computador comum, o tempo é medido com base em um relógio quartzo, cujos incrementos são capturados em um contador;
 o contador gera **interrupções em intervalos programados** (e.g., Linux >2.6 usa 250Hz por padrão; máximo 1000Hz) e as interrupções causam ajustes em um **relógio em software**, um contador indireto $C$.
 
-!!!sideslide "Precisão"
+!!!info inline end "Precisão"
      Dado a frequência padrão de 250Hz, medições de tempo menores que 4ms são altamente imprecisas.
      Como medir o tempo gasto em uma função do seu código?
 
