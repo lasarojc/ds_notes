@@ -68,6 +68,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#casos-de-uso" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -357,12 +362,147 @@
   
 
     
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Projeto
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Projeto
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#casos-de-uso" class="md-nav__link">
+    Casos de Uso
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interacao-entre-portais" class="md-nav__link">
+    Interação entre portais
+  </a>
+  
+    <nav class="md-nav" aria-label="Interação entre portais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-usuariosportais" class="md-nav__link">
+    Etapa 1 - Usuários/Portais
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-cache" class="md-nav__link">
+    Etapa 2 - Cache
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
                 </div>
               </div>
             
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#casos-de-uso" class="md-nav__link">
+    Casos de Uso
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interacao-entre-portais" class="md-nav__link">
+    Interação entre portais
+  </a>
+  
+    <nav class="md-nav" aria-label="Interação entre portais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etapa-1-usuariosportais" class="md-nav__link">
+    Etapa 1 - Usuários/Portais
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-2-cache" class="md-nav__link">
+    Etapa 2 - Cache
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
             
           
           <div class="md-content" data-md-component="content">
@@ -382,160 +522,325 @@
 
 
   <!-- Content -->
-  <p>no sql cresceram rapidamente em uso e implementacoes.a facilidade e familiaridade do sql tem atrativos fortes. cockroach and yugabyte.
-entender como funcionam é importate para qquer um interessado em SD.</p>
-<p>In this project we will develop a rudimentary no SQL database and use that many difficulties to implement such a project to introduce concepts and frameworks related to the development of distributing systems. We will start by exploring the Waze stocked each other in a Distributed system. Then we will Dan will be explored different Architectures used to combine the efforts of components in the distributed system. Next we explore the guarantees that databases can provide to their users and how these guarantees are insured. </p>
-<p>To do move the session to an introductory part with either the preface or introduction itself.</p>
-<p>O objetivo deste projeto é praticar o projeto de sistemas distribuídos, usando várias arquiteturas e tecnologias.
-A ideia é implementar um banco de dados NoSQL (Not only SQL) rudimentar.
-Mesmo uma versão simples de um banco de dados distribuído é um sistema complexo e por isso você deverá trabalhar em fases. Infelizmnte enquanto esta abordagem facilita a jornada, ela poderá levar a um pouco de retrabalho no final.</p>
-<p>Para garantir que todo o seu esforço será concentrado no lugar certo e que sua avaliação seja justa, atente-se aos detalhes e aos passos na especificação abaixo.</p>
+  <p>A área de computação distribuída é rica em aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
+Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.</p>
+<p>O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. 
+Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. 
+As funcionalidades são expostas para estes usuários via duas aplicações distintas, o <strong>portal do cliente</strong>  e o <strong>portal administrativo</strong>, mas ambos manipulam a mesma base de dados. 
+A base de dados é particionada usando <em>consistent hashing</em> e as partições são mantidas em memória apenas, um cache.
+Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. 
+A imagem descreve a aplicação.</p>
+<p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
+<p>A arquitetura do sistema será híbrida, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.
+Apesar de introduzir complexidade extra, também usaremos múltiplos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.</p>
+<p>O sistemas tem duas aplicações clientes, CLI ou GUI, para os dois tipos de usuários do sistema, clientes, e administradores.
+Estas aplicações se comunicarão com os portais clientes para manipular os dados dos clientes e associados a cada cliente.</p>
+<p>O cadastro do cliente inclui a provisão de um identificador único do cliente CID (<em>client id</em>).
+Os dados dos clientes são mantidos em uma tabela CID -&gt; Dados do Cliente, em memória (use uma tabela hash). 
+O CID tem tipo BigInteger<sup id="fnref:int64"><a class="footnote-ref" href="#fn:int64">1</a></sup>. O dados são um <code>array</code> de bytes.
+A comunicação entre Administrador e portal Administrativo se dá por gRPC.</p>
+<p>Somente clientes devidamente cadastrados no sistema podem ter suas operações executadas.
+O CID do invocador deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
+A comunicação entre Cliente e portal Cliente se dá por sockets TCP.</p>
+<p>O Cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto.
+Aqui chamarei cada entrada no saco de "tarefa". Tarefas podem ser, por exemplo, eventos em um calendário, compras a serem feitas, dados de pacientes em um consultório.
+Cada tarefa tem um título, que serve de identificador da tarefa, e um corpo; ambos são do tipo <code>String</code>.
+Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa. 
+Por exemplo, para representar duas tarefas, <code>t1</code> e <code>t2</code>, com corpos <code>c1</code> e <code>c2</code>, associadas ao cliente <code>cliente1</code>, podemos ter as seguintes entradas.</p>
 <ul>
-<li>
-<p>Etapa 1 - Cliente/Servidor usando RPC</p>
+<li><code>cliente1 -&gt; [t1,t2]</code></li>
+<li><code>cliente1:t1 -&gt; c1</code></li>
+<li><code>cliente1:t2 -&gt; c2</code></li>
+</ul>
+<p>Com este formato, podemos identificar os títulos das tarefas associadas ao <code>cliente1</code> e, a partir desta lista, identificar o conteúdo associado a cada tarefa.
+Este formato também permite que múltiplos clientes tenham tarefas com o mesmo título.
+O formato exato em que os dados serão armazenados pode variar e, por isso, nos casos de uso apresentados a seguir, as API usadas devem ser consideradas intenções e não necessariamente o que será implementado no seu trabalho.</p>
+<h2 id="casos-de-uso">Casos de Uso</h2>
+<details class="todo"><summary>Todo</summary><ul>
+<li>Diagramas de interação.</li>
+</ul>
+</details>
+<h6>Manipulação Clientes</h6>
 <ul>
-<li>Objetivos<ul>
-<li>Hash Table acessível remotamente por interface CRUD usando gRPC.</li>
-<li>Armazenamento em disco com recuperação de dados no caso de falhas</li>
+<li>Inserção de Cliente<ul>
+<li>Administrador<ul>
+<li>Gera um CID para cada cliente, baseado em seu nome ou outro atributo único.</li>
+<li><code>inserirCliente(CID, "dados do cliente")</code></li>
+<li>Informa o CID para o cliente</li>
 </ul>
 </li>
-<li>Desafios<ul>
-<li>Especificação do protocolo para dados genéricos</li>
-<li>Armazenamento atômico no disco</li>
-<li>Multithreading para garantir escalabilidade</li>
-<li>Controle de concorrência para garantir corretude nos dados armazenados.</li>
-</ul>
-</li>
-<li>
-<p>Servidor</p>
-<ul>
-<li>Todos os dados devem ser armazenados em um mapa Chave-Valor (Dicionário)</li>
-<li>Chave é um número de precisão arbitrária do tipo BigInteger</li>
-<li>Valor é uma tripla (Versão, Timestamp, Dados)<ul>
-<li>Versão é um inteiro com 64 bits (long)</li>
-<li>Timestamp é um inteiro com 64 bits (long)</li>
-<li>Dados é um vetor de bytes (byte[]) de tamanho arbitrário</li>
-</ul>
-</li>
-<li>O servidor implementa a seguinte API:<ul>
-<li>set(k,ts,d):(e,v') <ul>
-<li>adiciona ao mapa a entrada k-v, caso não exista uma entrada com a chave k, onde v=(1,ts,d)</li>
-<li>retorna a tupla (e,v') onde e=SUCCESS e v'=NULL se k-v foi inserido</li>
-<li>retorna a tupla (e,v') onde e=ERROR e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada</li>
-</ul>
-</li>
-<li>get(k):(e,v') <ul>
-<li>retorna a tupla (e,v') onde e=ERROR e v'=NULL se não há entrada no banco de dados com chave k</li>
-<li>retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada </li>
-</ul>
-</li>
-<li>del(k):(e,v')<ul>
-<li>remove a entrada k-v' do banco de dados se existir</li>
-<li>retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada </li>
-<li>retorna a tupla (e,v') onde e=ERROR e v'=NULL se não existia entrada com chave k no banco de dados.</li>
-</ul>
-</li>
-<li>del(k,vers):(e,v')<ul>
-<li>remove a entrada k-v' do banco de dados se existir e tiver versão v</li>
-<li>retorna a tupla (e,v') onde e=SUCCESS e v'=(vers,ts,data) se já existia uma entrada no banco de dados com a chave k e vers e ts e data correspondem, respectivamente, timestamp e dados de tal entrada </li>
-<li>retorna a tupla (e,v') onde e=ERROR_NE e v'=NULL se não existia entrada com chave k no banco de dados.</li>
-<li>retorna a tupla (e,v') onde e=ERROR_WV e v'=(ver',ts,data) se já existia uma entrada no banco de dados com a chave k  version vers' not equal to vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada</li>
-</ul>
-</li>
-<li>testAndSet(k,v,vers):(e,v')<ul>
-<li>atualiza o mapa se a versão atual no sistema corresponde à versão especificada.</li>
-<li>retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e version vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada</li>
-<li>retorna a tupla (e,v') onde e=ERROR_NE e v'=NULL se não existia uma entrada no banco com chave k;</li>
-<li>retorna a tupla (e,v') onde e=ERROR_WV e v'=(ver',ts,data) se já existia uma entrada no banco de dados com a chave k  version vers' not equal to vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>O mapa deve ser salvo em disco<ul>
-<li>Com periodicidade configurável, os dados do mapa devem ser salvos em disco.</li>
-<li>Os dados em disco devem corresponder a uma versão dos dados em memória. Para entender, veja a seguinte sequência de eventos, que leva a uma versão em disco que nunca ocorreu em memória.<ul>
-<li>Dados em memória (1/lala, 2/lele, 3/lili)</li>
-<li>Cópia para disco iniciada</li>
-<li>Dados em disco (1/lala)</li>
-<li>Dados em memória (1/lolo, 2/lele, 3/lili)</li>
-<li>Dados em disco (1/lala, 2/lele)</li>
-<li>Dados em memória (1/lolo, 2/lele, 3/lulu)</li>
-<li>Dados em disco (1/lala, 2/lele, 3/lulu)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Cliente</p>
-<ul>
-<li>O cliente deve implementar uma UI que permita a interação com o banco de dados usando todas as API</li>
-</ul>
-</li>
-<li>Testes<ul>
-<li>Um segundo cliente implementará as seguintes baterias de testes no sistema<ul>
-<li>Teste de todas as API levando a todos os tipos de resultados (sucesso e erro)</li>
-<li>Teste de estresse em que a API seja exercitada pelo menos 1000 vezes e o resultado final deve ser demonstrado como esperado (por exemplo, inserir 1000 entradas com chaves distintas, atualizar a todas as entradas, ler todas a entradas e verificar que o valor, isto é, versão e dados, correspondem aos esperados.</li>
-</ul>
-</li>
-<li>Todos os testes apresentam os resultados esperados mesmo quando múltiplos clientes de teste são executados em paralelo.</li>
-</ul>
-</li>
-<li>Comunicação<ul>
-<li>Toda a comunicação entre cliente e servidor deve ser feita usando gRPC</li>
-</ul>
-</li>
-<li>Apresentação<ul>
-<li>Demonstrar que todos os itens da especificação foram seguidos</li>
-<li>Demonstrar a corretude do sistema frente aos testes</li>
-<li>Enumerar outros testes e casos cobertos implemententados</li>
-<li>Demonstrar comportamento quando comunicação é interrompida no meio do teste</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Etapa 2 - Tolerância a Falhas</p>
-<ul>
-<li>Objetivos <ul>
-<li>Replicar o servidor para obter tolerância a falhas.</li>
-</ul>
-</li>
-<li>Desafios<ul>
-<li>Certificar-se de que o servidor é uma máquina de estados determinística</li>
-<li>Compreender o uso de Difusão Atômica em nível teórico</li>
-<li>Compreender o uso de Difusão Atômica em nível prático (Via <a href="https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis">Ratis</a>)</li>
-<li>Aplicar difusão atômica na replicação do servidor</li>
-</ul>
-</li>
-<li>Servidor<ul>
-<li>A API permanece a mesma e implementada via gRPC.</li>
-<li>Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).  </li>
-<li>Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.</li>
+<li>Portal Administrador<ul>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
 </ul>
 </li>
 <li>Cliente<ul>
-<li>Sem alteração.</li>
-</ul>
-</li>
-<li>Testes<ul>
-<li>O mesmo <em>framework</em> de testes deve continuar funcional</li>
-</ul>
-</li>
-<li>Comunicação<ul>
-<li>Entre cliente e servidor, usar gRPC</li>
-<li>Entre servidores, usar Ratis</li>
-</ul>
-</li>
-<li>Apresentação<ul>
-<li>Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.</li>
+<li>Recebe CID diretamente do administrador</li>
 </ul>
 </li>
 </ul>
 </li>
+<li>Modificação de Cliente<ul>
+<li>Administrador<ul>
+<li>Determina CID de cliente a ser modificado.</li>
+<li><code>modificarCliente(CID, "novos dados do cliente")</code></li>
 </ul>
+</li>
+<li>Portal Administrador<ul>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Recuperação de Clientes<ul>
+<li>Administrador<ul>
+<li>Determina CID de cliente a ser recuperado</li>
+<li><code>recuperarCliente(CID)</code></li>
+</ul>
+</li>
+<li>Portal Administrador<ul>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Remoção de Cliente<ul>
+<li>Administrador<ul>
+<li>Determina CID de cliente a ser removido</li>
+<li><code>apagarCliente(CID)</code></li>
+</ul>
+</li>
+<li>Portal Administrador<ul>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h6>Manipulação de Tarefas dos Clientes</h6>
+<ul>
+<li>
+<p>Inserção de tarefa</p>
+<ul>
+<li>Cliente<ul>
+<li>Usa o CID informado pelo administrador</li>
+<li><code>inserirTarefa(CID, "titulo da tarefa", "descrição da tarefa")</code></li>
+</ul>
+</li>
+<li>Portal Cliente<ul>
+<li>Autentica o cliente</li>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Modificação de tarefa</p>
+<ul>
+<li>Cliente<ul>
+<li>Usa o CID informado pelo administrador</li>
+<li><code>modificarTarefa(CID, "titulo da tarefa", "nova descrição da tarefa")</code></li>
+</ul>
+</li>
+<li>Portal Cliente<ul>
+<li>Autentica o cliente</li>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Enumeração de tarefas<ul>
+<li>Cliente<ul>
+<li>Usa o CID informado pelo administrador</li>
+<li><code>listarTarefas(CID)</code></li>
+</ul>
+</li>
+<li>Portal Cliente<ul>
+<li>Autentica o cliente</li>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Remoção de todas as tarefas<ul>
+<li>Cliente<ul>
+<li>Usa o CID informado pelo administrador</li>
+<li><code>apagarTarefas(CID)</code></li>
+</ul>
+</li>
+<li>Portal Cliente<ul>
+<li>Autentica o cliente</li>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Remoção de tarefa<ul>
+<li>Cliente<ul>
+<li>Usa o CID informado pelo administrador</li>
+<li><code>apagarTarefa(CID, "titulo da tarefa")</code></li>
+</ul>
+</li>
+<li>Portal Cliente<ul>
+<li>Autentica o cliente</li>
+<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Propaga modificações para a Cache</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="interacao-entre-portais">Interação entre portais</h2>
+<p>Os portais armazenam seus dados em tabelas hash posicionadas remotamente, nos Cache.
+Toda comunicação entre portais e Cache é feita via <em>Publish-Subscribe</em>/Fila de mensagens.
+Quaisquer modificações feitas em uma instância Cache é propagada para as outras usando ou <em>Publish-Subscribe</em>/Fila de mensagens ou protocolo de difusão totalmente ordenada, dependendo da necessidade de consistência entre as instâncias.</p>
+<h3 id="etapa-1-usuariosportais">Etapa 1 - Usuários/Portais</h3>
+<ul>
+<li>Implementar os casos de uso usando como cache tabelas hash locais aos portais Cliente e Administrador.<ul>
+<li>Usar MQTTP ou Kafka para sincronizar cache.</li>
+</ul>
+</li>
+<li>Se certificar de que cada operação use uma API distinta na comunicação via gRPC.</li>
+<li>Se certificar de que todas as API possam retornar erros/exceções e que estas são tratadas; explicar sua decisão de tratamento dos erros.</li>
+<li>Implementar testes automatizados de sucesso e falha de cada uma das operações na API.</li>
+<li>Documentar o esquema de dados usados nas tabelas.</li>
+</ul>
+<h3 id="etapa-2-cache">Etapa 2 - Cache</h3>
+<p>Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar comuniquem-se uns com os outros usando difusão totalmente ordenada.
+As tabelas hash serão então cópias umas das outras, provendo tolerância a falhas ao sistema.</p>
+<ul>
+<li>Remover a comunicação via MQTTP</li>
+<li>Toda modificação dos dados deve ser encaminhada a todos os processos usando <em>framework</em> de comunicação em grupo, p.e., Ratis ou Open Replica.</li>
+<li>O sistema deve permitir a execução de múltiplos cliente, administradores, portais cliente e portais administrador.</li>
+<li>A arquitetura resultante é uma simplificação da inicialmente proposta.</li>
+</ul>
+<p><img alt="Projeto" src="../drawings/projeto.drawio-1.svg" /></p>
 <!--
+
+
+### Etapa 2 - Cache
+
+Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar os dados em tabelas hash locais, o façam em uma tabela remota, compartilhada entre os portais.
+A tabela hash remota é particionada para permitir o armazenamento de mais dados do que caberiam em apenas um computador. Isto é, é essencialmente uma Distributed Hash Table, a base dos bancos de dados NoSQL como Redis, Memcached ou Cassandra.
+
+* Portais
+    * Os dados são armazenados no banco distribuído
+    * A comunicação com o banco é feita via MQTTP ou Kafka
+* Banco
+    * As partições usam *consistent hashing*  para distribuir os dados
+    * Uma requisição feita para a partição errada deve ser encaminhada para a partição correta usando o algoritmo de roteamento Chord.
+
+### Etapa 3 - Durabilidade
+
+Nesta etapa tornaremos todas as operações feitas no banco de dados permanentes por meio de um log remoto[^log] ou pela replicação das partições. Mais detalhes se seguirão.
+
+
+## Versão independente
+
+no sql cresceram rapidamente em uso e implementacoes.a facilidade e familiaridade do sql tem atrativos fortes. cockroach and yugabyte.
+entender como funcionam é importate para qquer um interessado em SD.
+
+In this project we will develop a rudimentary no SQL database and use that many difficulties to implement such a project to introduce concepts and frameworks related to the development of distributing systems. We will start by exploring the Waze stocked each other in a Distributed system. Then we will Dan will be explored different Architectures used to combine the efforts of components in the distributed system. Next we explore the guarantees that databases can provide to their users and how these guarantees are insured. 
+
+To do move the session to an introductory part with either the preface or introduction itself.
+
+O objetivo deste projeto é praticar o projeto de sistemas distribuídos, usando várias arquiteturas e tecnologias.
+A ideia é implementar um banco de dados NoSQL (Not only SQL) rudimentar.
+Mesmo uma versão simples de um banco de dados distribuído é um sistema complexo e por isso você deverá trabalhar em fases. Infelizmnte enquanto esta abordagem facilita a jornada, ela poderá levar a um pouco de retrabalho no final.
+
+Para garantir que todo o seu esforço será concentrado no lugar certo e que sua avaliação seja justa, atente-se aos detalhes e aos passos na especificação abaixo.
+
+* Etapa 1 - Cliente/Servidor usando RPC
+    * Objetivos
+        * Hash Table acessível remotamente por interface CRUD usando gRPC.
+        * Armazenamento em disco com recuperação de dados no caso de falhas
+    * Desafios
+        * Especificação do protocolo para dados genéricos
+        * Armazenamento atômico no disco
+        * Multithreading para garantir escalabilidade
+        * Controle de concorrência para garantir corretude nos dados armazenados.
+    * Servidor
+        * Todos os dados devem ser armazenados em um mapa Chave-Valor (Dicionário)
+        * Chave é um número de precisão arbitrária do tipo BigInteger
+        * Valor é uma tripla (Versão, Timestamp, Dados)
+             * Versão é um inteiro com 64 bits (long)
+             * Timestamp é um inteiro com 64 bits (long)
+             * Dados é um vetor de bytes (byte[]) de tamanho arbitrário
+        * O servidor implementa a seguinte API:
+             * set(k,ts,d):(e,v') 
+                 * adiciona ao mapa a entrada k-v, caso não exista uma entrada com a chave k, onde v=(1,ts,d)
+                 * retorna a tupla (e,v') onde e=SUCCESS e v'=NULL se k-v foi inserido
+                 * retorna a tupla (e,v') onde e=ERROR e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada
+             * get(k):(e,v') 
+                 * retorna a tupla (e,v') onde e=ERROR e v'=NULL se não há entrada no banco de dados com chave k
+                 * retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada 
+             * del(k):(e,v')
+                 * remove a entrada k-v' do banco de dados se existir
+                 * retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e vers, ts e data correspondem, respectivamente, à versão, timestamp e dados de tal entrada 
+                 * retorna a tupla (e,v') onde e=ERROR e v'=NULL se não existia entrada com chave k no banco de dados.
+             * del(k,vers):(e,v')
+                 * remove a entrada k-v' do banco de dados se existir e tiver versão v
+                 * retorna a tupla (e,v') onde e=SUCCESS e v'=(vers,ts,data) se já existia uma entrada no banco de dados com a chave k e vers e ts e data correspondem, respectivamente, timestamp e dados de tal entrada 
+                 * retorna a tupla (e,v') onde e=ERROR_NE e v'=NULL se não existia entrada com chave k no banco de dados.
+                 * retorna a tupla (e,v') onde e=ERROR_WV e v'=(ver',ts,data) se já existia uma entrada no banco de dados com a chave k  version vers' not equal to vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada
+             * testAndSet(k,v,vers):(e,v')
+                 * atualiza o mapa se a versão atual no sistema corresponde à versão especificada.
+                 * retorna a tupla (e,v') onde e=SUCCESS e v'=(ver,ts,data) se já existia uma entrada no banco de dados com a chave k e version vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada
+                 * retorna a tupla (e,v') onde e=ERROR_NE e v'=NULL se não existia uma entrada no banco com chave k;
+                 * retorna a tupla (e,v') onde e=ERROR_WV e v'=(ver',ts,data) se já existia uma entrada no banco de dados com a chave k  version vers' not equal to vers, e  ts e data correspondem, respectivamente, timestamp e dados de tal entrada
+        * O mapa deve ser salvo em disco
+            * Com periodicidade configurável, os dados do mapa devem ser salvos em disco.
+            * Os dados em disco devem corresponder a uma versão dos dados em memória. Para entender, veja a seguinte sequência de eventos, que leva a uma versão em disco que nunca ocorreu em memória.
+                * Dados em memória (1/lala, 2/lele, 3/lili)
+                * Cópia para disco iniciada
+                * Dados em disco (1/lala)
+                * Dados em memória (1/lolo, 2/lele, 3/lili)
+                * Dados em disco (1/lala, 2/lele)
+                * Dados em memória (1/lolo, 2/lele, 3/lulu)
+                * Dados em disco (1/lala, 2/lele, 3/lulu)
+
+    * Cliente
+        * O cliente deve implementar uma UI que permita a interação com o banco de dados usando todas as API
+    * Testes
+        * Um segundo cliente implementará as seguintes baterias de testes no sistema
+            * Teste de todas as API levando a todos os tipos de resultados (sucesso e erro)
+            * Teste de estresse em que a API seja exercitada pelo menos 1000 vezes e o resultado final deve ser demonstrado como esperado (por exemplo, inserir 1000 entradas com chaves distintas, atualizar a todas as entradas, ler todas a entradas e verificar que o valor, isto é, versão e dados, correspondem aos esperados.
+        * Todos os testes apresentam os resultados esperados mesmo quando múltiplos clientes de teste são executados em paralelo.
+    * Comunicação
+        * Toda a comunicação entre cliente e servidor deve ser feita usando gRPC
+    * Apresentação
+        * Demonstrar que todos os itens da especificação foram seguidos
+        * Demonstrar a corretude do sistema frente aos testes
+        * Enumerar outros testes e casos cobertos implemententados
+        * Demonstrar comportamento quando comunicação é interrompida no meio do teste
+
+* Etapa 2 - Tolerância a Falhas
+    * Objetivos 
+         * Replicar o servidor para obter tolerância a falhas.
+    * Desafios
+         * Certificar-se de que o servidor é uma máquina de estados determinística
+         * Compreender o uso de Difusão Atômica em nível teórico
+         * Compreender o uso de Difusão Atômica em nível prático (Via [Ratis](https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis))
+         * Aplicar difusão atômica na replicação do servidor
+    * Servidor
+         * A API permanece a mesma e implementada via gRPC.
+         * Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).  
+         * Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.
+    * Cliente
+         * Sem alteração.
+    * Testes
+         * O mesmo *framework* de testes deve continuar funcional
+    * Comunicação
+         * Entre cliente e servidor, usar gRPC
+         * Entre servidores, usar Ratis
+    * Apresentação
+         * Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.
+
 * Etapa 2 - P2P
     * Objetivos
         * DHT com roteamento estilo Chord
@@ -546,7 +851,18 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
         * Uso do log + snapshots para recuperação
         * Roteamento no anel
         * Bootstrap dos processos
-        * Log Structured Merge Tree -->
+        * Log Structured Merge Tree
+
+-->
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:int64">
+<p>Inteiro de 64 bits não é BigInteger.&#160;<a class="footnote-backref" href="#fnref:int64" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
   <!-- Last update of source file -->
 
@@ -564,6 +880,25 @@ Mesmo uma versão simples de um banco de dados distribuído é um sistema comple
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../tech/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Tecnologias
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

@@ -328,40 +328,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#projeto" class="md-nav__link">
-    Projeto
-  </a>
-  
-    <nav class="md-nav" aria-label="Projeto">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#etapa-1-usuariosportais" class="md-nav__link">
-    Etapa 1 - Usuários/Portais
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-2-cache" class="md-nav__link">
-    Etapa 2 - Cache
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-3-durabilidade" class="md-nav__link">
-    Etapa 3 - Durabilidade
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#referencias" class="md-nav__link">
     Referências
   </a>
@@ -511,6 +477,21 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -603,40 +584,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#projeto" class="md-nav__link">
-    Projeto
-  </a>
-  
-    <nav class="md-nav" aria-label="Projeto">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#etapa-1-usuariosportais" class="md-nav__link">
-    Etapa 1 - Usuários/Portais
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-2-cache" class="md-nav__link">
-    Etapa 2 - Cache
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-3-durabilidade" class="md-nav__link">
-    Etapa 3 - Durabilidade
-  </a>
   
 </li>
         
@@ -930,7 +877,7 @@ Para que seja realizada, a computação pervasiva requer que dispositivos <stron
 <p>Eu vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subsessão de Sistemas Pervasivos.
 Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "leêm" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
 A Internet das Coisas (IoT, do inglês <em>Internet of Things</em>) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
-"Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT<sup id="fnref:iot"><a class="footnote-ref" href="#fn:iot">7</a></sup> não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
+"Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT<sup id="fnref:iot"><a class="footnote-ref" href="#fn:iot">6</a></sup> não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.</p>
 <p><img alt="https://www.edureka.co/blog/iot-applications/" src="../images/iot1.png" /></p>
 <div class="admonition example">
@@ -956,80 +903,6 @@ Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos preci
 <li><a href="https://www.nytimes.com/2017/07/25/technology/roomba-irobot-data-privacy.html">Your Roomba May Be Mapping Your Home, Collecting Data That Could Be Shared</a>.</li>
 </ul>
 </div>
-<h2 id="projeto">Projeto</h2>
-<p>Como puderam ver até agora, a área de computação distribuída é rica aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
-Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.</p>
-<p>O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. As funcionalidades são expostas para estes usuários via duas aplicações distintas, o <strong>portal do cliente</strong>  e o <strong>portal administrativo</strong>, mas ambos manipulam a mesma base de dados. A base de dados é particionada usando <em>consistent hashing</em> e as partições são mantidas em memória apenas. Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. A imagem descreve a aplicação.</p>
-<p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
-<p>Apesar de introduzir complexidade extra, usaremos diversos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.</p>
-<ul>
-<li>Cliente &lt;-&gt; Portal cliente - Sockets</li>
-<li>Administrador &lt;-&gt; Portal administrativo - RPC</li>
-<li>Portais &lt;-&gt; Cache - <em>Publish-Subscribe</em>/Fila de mensagens</li>
-<li>Cache &lt;-&gt; Banco de dados - Comunicação em grupo</li>
-</ul>
-<p>A arquitetura também será híbrida, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.</p>
-<h3 id="etapa-1-usuariosportais">Etapa 1 - Usuários/Portais</h3>
-<ul>
-<li>
-<p>Portal Cliente</p>
-<ul>
-<li>O Cliente possui identificador único, CID</li>
-<li>O Cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto.<ul>
-<li>inserirTarefa(CID, "titulo da tarefa", "descrição da tarefa"): Sucesso/Falha</li>
-<li>modificarTarefa(CID, "titulo da tarefa", "nova descrição da tarefa"): Sucesso/Falha</li>
-<li>listarTarefas(CID): Lista de tuplas (titulo,Descrição)</li>
-<li>apagarTarefas(CID): Sucesso/Falha</li>
-<li>apagarTarefa(CID, "titulo da tarefa"): Sucesso/Falha</li>
-</ul>
-</li>
-<li>Os dados são mantidos em uma tabela hash (BigInteger<sup id="fnref2:int64"><a class="footnote-ref" href="#fn:int64">5</a></sup>,Bytes)</li>
-<li>A comunicação entre cliente e portal cliente se dá por sockets TCP/IP.</li>
-</ul>
-</li>
-<li>
-<p>Portal Administrativo</p>
-<ul>
-<li>O Administrador gera um CID para cada cliente, baseado em seu nome ou outro atributo único.</li>
-<li>O Administrador manipula clientes<ul>
-<li>inserirCliente(CID, "dados do cliente"): Sucesso/Falha</li>
-<li>modificarCliente(CID, "novos dados do cliente"): Sucesso/Falha</li>
-<li>recuperarCliente(CID): "dados do cliente"</li>
-<li>apagarCliente(CID): Sucesso/Falha</li>
-</ul>
-</li>
-<li>Os dados são mantidos em uma tabela hash (BigInteger<sup id="fnref:int64"><a class="footnote-ref" href="#fn:int64">5</a></sup>,Bytes)</li>
-<li>A comunicação entre Administrador e portal Administrativo se dá por gRPC.</li>
-</ul>
-</li>
-<li>
-<p>Os portais sicronizam suas bases de dados</p>
-<ul>
-<li>A sincronização acontece via MQTTP ou Kafka.</li>
-<li>As bases poderão ficar inconsistentes, mas isso será resolvido na etapa 2.</li>
-</ul>
-</li>
-<li>
-<p>Clientes e Administradores devem ter uma aplicação para acesso aos portais.</p>
-</li>
-</ul>
-<h3 id="etapa-2-cache">Etapa 2 - Cache</h3>
-<p>Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar os dados em tabelas hash locais, o façam em uma tabela remota, compartilhada entre os portais.
-A tabela hash remota é particionada para permitir o armazenamento de mais dados do que caberiam em apenas um computador. Isto é, é essencialmente uma Distributed Hash Table, a base dos bancos de dados NoSQL como Redis, Memcached ou Cassandra.</p>
-<ul>
-<li>Portais<ul>
-<li>Os dados são armazenados no banco distribuído</li>
-<li>A comunicação com o banco é feita via MQTTP ou Kafka</li>
-</ul>
-</li>
-<li>Banco<ul>
-<li>As partições usam <em>consistent hashing</em>  para distribuir os dados</li>
-<li>Uma requisição feita para a partição errada deve ser encaminhada para a partição correta usando o algoritmo de roteamento Chord.</li>
-</ul>
-</li>
-</ul>
-<h3 id="etapa-3-durabilidade">Etapa 3 - Durabilidade</h3>
-<p>Nesta etapa tornaremos todas as operações feitas no banco de dados permanentes por meio de um log remoto<sup id="fnref:log"><a class="footnote-ref" href="#fn:log">6</a></sup> ou pela replicação das partições. Mais detalhes se seguirão.</p>
 <h2 id="referencias">Referências</h2>
 <div class="footnote">
 <hr />
@@ -1046,14 +919,11 @@ A tabela hash remota é particionada para permitir o armazenamento de mais dados
 <li id="fn:scaling">
 <p>Mesmo que o custo não fosse um problema, seria impossível implementar <em>scale up</em> funcionalmente além de um certo limite, pois o computador teria que ser tão grande que suas partes teriam que ser tratadas independentemente, revertendo a um cenário <em>scale out</em> custoso demais.&#160;<a class="footnote-backref" href="#fnref:scaling" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
-<li id="fn:int64">
-<p>Inteiro de 64 bits não é BigInteger.&#160;<a class="footnote-backref" href="#fnref:int64" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:int64" title="Jump back to footnote 5 in the text">&#8617;</a></p>
-</li>
 <li id="fn:log">
-<p><a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">The Log: What every software engineer should know about real-time data's unifying abstraction</a>&#160;<a class="footnote-backref" href="#fnref:log" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying">The Log: What every software engineer should know about real-time data's unifying abstraction</a>&#160;<a class="footnote-backref" href="#fnref:log" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:iot">
-<p><a href="https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc">Vision and challenges for realising the Internet of things</a>&#160;<a class="footnote-backref" href="#fnref:iot" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://publications.europa.eu/en/publication-detail/-/publication/ed079554-72c3-4b4e-98f3-34d2780c28fc">Vision and challenges for realising the Internet of things</a>&#160;<a class="footnote-backref" href="#fnref:iot" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
