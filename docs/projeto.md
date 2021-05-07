@@ -1,3 +1,182 @@
+A área de computação distribuída é rica em aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
+Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.
+
+O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. 
+Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. 
+As funcionalidades são expostas para estes usuários via duas aplicações distintas, o **portal do cliente**  e o **portal administrativo**, mas ambos manipulam a mesma base de dados. 
+A base de dados é particionada usando *consistent hashing* e as partições são mantidas em memória apenas, um cache.
+Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. 
+A imagem descreve a aplicação.
+
+![Projeto](drawings/projeto.drawio#0)
+
+A arquitetura do sistema será híbrida, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.
+Apesar de introduzir complexidade extra, também usaremos múltiplos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.
+
+O sistemas tem duas aplicações clientes, CLI ou GUI, para os dois tipos de usuários do sistema, clientes, e administradores.
+Estas aplicações se comunicarão com os portais clientes para manipular os dados dos clientes e associados a cada cliente.
+
+O cadastro do cliente inclui a provisão de um identificador único do cliente CID (*client id*).
+Os dados dos clientes são mantidos em uma tabela CID -> Dados do Cliente, em memória (use uma tabela hash). 
+O CID tem tipo BigInteger[^int64]. O dados são um `array` de bytes.
+A comunicação entre Administrador e portal Administrativo se dá por gRPC.
+
+[^int64]: Inteiro de 64 bits não é BigInteger.
+
+Somente clientes devidamente cadastrados no sistema podem ter suas operações executadas.
+O CID do invocador deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
+A comunicação entre Cliente e portal Cliente se dá por sockets TCP.
+
+O Cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto.
+Aqui chamarei cada entrada no saco de "tarefa". Tarefas podem ser, por exemplo, eventos em um calendário, compras a serem feitas, dados de pacientes em um consultório.
+Cada tarefa tem um título, que serve de identificador da tarefa, e um corpo; ambos são do tipo `String`.
+Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa. 
+Por exemplo, para representar duas tarefas, `t1` e `t2`, com corpos `c1` e `c2`, associadas ao cliente `cliente1`, podemos ter as seguintes entradas.
+
+* `cliente1 -> [t1,t2]`
+* `cliente1:t1 -> c1`
+* `cliente1:t2 -> c2`
+
+Com este formato, podemos identificar os títulos das tarefas associadas ao `cliente1` e, a partir desta lista, identificar o conteúdo associado a cada tarefa.
+Este formato também permite que múltiplos clientes tenham tarefas com o mesmo título.
+O formato exato em que os dados serão armazenados pode variar e, por isso, nos casos de uso apresentados a seguir, as API usadas devem ser consideradas intenções e não necessariamente o que será implementado no seu trabalho.
+
+## Casos de Uso
+
+???todo
+    * Diagramas de interação.
+
+###### Manipulação Clientes
+* Inserção de Cliente
+    * Administrador
+        * Gera um CID para cada cliente, baseado em seu nome ou outro atributo único.
+        * `inserirCliente(CID, "dados do cliente")`
+        * Informa o CID para o cliente
+    * Portal Administrador
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+    * Cliente
+        * Recebe CID diretamente do administrador
+* Modificação de Cliente
+    * Administrador
+        * Determina CID de cliente a ser modificado.
+        * `modificarCliente(CID, "novos dados do cliente")`
+    * Portal Administrador
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+* Recuperação de Clientes
+    * Administrador
+        * Determina CID de cliente a ser recuperado
+        * `recuperarCliente(CID)`
+    * Portal Administrador
+        * Executa a operação e retorna código de erro/sucesso.
+* Remoção de Cliente
+    * Administrador
+        * Determina CID de cliente a ser removido
+        * `apagarCliente(CID)`
+    * Portal Administrador
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+
+###### Manipulação de Tarefas dos Clientes
+
+* Inserção de tarefa
+    * Cliente
+        * Usa o CID informado pelo administrador
+        * `inserirTarefa(CID, "titulo da tarefa", "descrição da tarefa")`
+    * Portal Cliente
+        * Autentica o cliente
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+
+* Modificação de tarefa
+    * Cliente
+        * Usa o CID informado pelo administrador
+        * `modificarTarefa(CID, "titulo da tarefa", "nova descrição da tarefa")`
+    * Portal Cliente
+        * Autentica o cliente
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+* Enumeração de tarefas
+    * Cliente
+        * Usa o CID informado pelo administrador
+        * `listarTarefas(CID)`
+    * Portal Cliente
+        * Autentica o cliente
+        * Executa a operação e retorna código de erro/sucesso.
+* Remoção de todas as tarefas
+    * Cliente
+        * Usa o CID informado pelo administrador
+        * `apagarTarefas(CID)`
+    * Portal Cliente
+        * Autentica o cliente
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+* Remoção de tarefa
+    * Cliente
+        * Usa o CID informado pelo administrador
+        * `apagarTarefa(CID, "titulo da tarefa")`
+    * Portal Cliente
+        * Autentica o cliente
+        * Executa a operação e retorna código de erro/sucesso.
+        * Propaga modificações para a Cache
+
+
+## Interação entre portais
+
+Os portais armazenam seus dados em tabelas hash posicionadas remotamente, nos Cache.
+Toda comunicação entre portais e Cache é feita via *Publish-Subscribe*/Fila de mensagens.
+Quaisquer modificações feitas em uma instância Cache é propagada para as outras usando ou *Publish-Subscribe*/Fila de mensagens ou protocolo de difusão totalmente ordenada, dependendo da necessidade de consistência entre as instâncias.
+
+
+### Etapa 1 - Usuários/Portais
+
+* Implementar os casos de uso usando como cache tabelas hash locais aos portais Cliente e Administrador.
+    *  Usar MQTTP ou Kafka para sincronizar cache.
+* Se certificar de que cada operação use uma API distinta na comunicação via gRPC.
+* Se certificar de que todas as API possam retornar erros/exceções e que estas são tratadas; explicar sua decisão de tratamento dos erros.
+* Implementar testes automatizados de sucesso e falha de cada uma das operações na API.
+* Documentar o esquema de dados usados nas tabelas.
+
+
+
+### Etapa 2 - Cache
+
+Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar comuniquem-se uns com os outros usando difusão totalmente ordenada.
+As tabelas hash serão então cópias umas das outras, provendo tolerância a falhas ao sistema.
+
+* Remover a comunicação via MQTTP
+* Toda modificação dos dados deve ser encaminhada a todos os processos usando *framework* de comunicação em grupo, p.e., Ratis ou Open Replica.
+* O sistema deve permitir a execução de múltiplos cliente, administradores, portais cliente e portais administrador.
+* A arquitetura resultante é uma simplificação da inicialmente proposta.
+
+
+![Projeto](drawings/projeto.drawio#1)
+
+
+
+<!--
+
+
+### Etapa 2 - Cache
+
+Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar os dados em tabelas hash locais, o façam em uma tabela remota, compartilhada entre os portais.
+A tabela hash remota é particionada para permitir o armazenamento de mais dados do que caberiam em apenas um computador. Isto é, é essencialmente uma Distributed Hash Table, a base dos bancos de dados NoSQL como Redis, Memcached ou Cassandra.
+
+* Portais
+    * Os dados são armazenados no banco distribuído
+    * A comunicação com o banco é feita via MQTTP ou Kafka
+* Banco
+    * As partições usam *consistent hashing*  para distribuir os dados
+    * Uma requisição feita para a partição errada deve ser encaminhada para a partição correta usando o algoritmo de roteamento Chord.
+
+### Etapa 3 - Durabilidade
+
+Nesta etapa tornaremos todas as operações feitas no banco de dados permanentes por meio de um log remoto[^log] ou pela replicação das partições. Mais detalhes se seguirão.
+
+
+## Versão independente
+
 no sql cresceram rapidamente em uso e implementacoes.a facilidade e familiaridade do sql tem atrativos fortes. cockroach and yugabyte.
 entender como funcionam é importate para qquer um interessado em SD.
 
@@ -97,7 +276,6 @@ Para garantir que todo o seu esforço será concentrado no lugar certo e que sua
     * Apresentação
          * Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.
 
-<!--
 * Etapa 2 - P2P
     * Objetivos
         * DHT com roteamento estilo Chord
@@ -108,4 +286,6 @@ Para garantir que todo o seu esforço será concentrado no lugar certo e que sua
         * Uso do log + snapshots para recuperação
         * Roteamento no anel
         * Bootstrap dos processos
-        * Log Structured Merge Tree -->
+        * Log Structured Merge Tree
+
+-->
