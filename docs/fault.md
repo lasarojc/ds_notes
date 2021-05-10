@@ -263,7 +263,7 @@ Como vimos anteriormente, replicação de máquinas de estados utiliza primitiva
 
 
 
-## Problemas de Acordo
+## Acordo
 Há diversas primitivas de comunicação em grupo, das quais se destaca a **difusão atômica**, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
 Difusão atômica, por sua vez, é equivalente ao problema do **consenso distribuído**, que está no coração da classe de problemas de **acordo**.
 Problemas de acordo são aqueles em que processos devem concordar em quais ações executar.
@@ -1134,8 +1134,7 @@ Todo o código está disponível no [Github](https://github.com/lasarojc/ds_note
 
 
 #### Estudo de caso: Zookeeper
-Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural, foi criado o [Zookeeper](http://zookeeper.apache.org/).
-
+O [Zookeeper](http://zookeeper.apache.org/) foi criado para coordenar as ações dos componentes de sistemas distribuídos, porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural.
 
 ![http://zookeeper.apache.org/](images/zklogo.jpeg)
 
@@ -1150,13 +1149,13 @@ O arcabouço foi criado pelo [Yahoo!](http://www.yahoo.com) para servir como pe�
 !!!quote "Por quê?"
 	  Coordination services are notoriously hard to get right. They are especially prone to errors such as race conditions and deadlock. The motivation behind ZooKeeper is to relieve distributed applications the responsibility of implementing coordination services from scratch.
 
-Mais tarde o sistema tornou-se *Open Source* e tornou-se parte de diversos projetos, também abertos e proprietários.
+Mais tarde o sistema tornou-se *Open Source* e parte de diversos projetos, tanto abertos quanto proprietários.
 A razão de seu sucesso, arrisco dizer, é a simplicidade de sua API, semelhante a um sistema de arquivos.
 
 !!!quote "Como?"
-     ZooKeeper is a **distributed**, open-source **coordination service for distributed applications**. It exposes a **simple set of primitives** that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar **directory tree structure of file systems*. It runs in Java and has bindings for both **Java** and **C**.
+    [ZooKeeper] exposes a **simple set of primitives** that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar **directory tree structure of file systems**. It runs in Java and has bindings for both **Java** and **C**.
 
-     ZooKeeper allows distributed processes to coordinate with each other through a **shared hierarchal namespace which is organized similarly to a standard file system**. The name space consists of data registers - called **znodes**, in ZooKeeper parlance - and these are **similar to files and directories**. Unlike a typical file system, which is designed for storage, ZooKeeper data is kept **in-memory**, which means ZooKeeper can achieve **high throughput and low latency** numbers.
+     ZooKeeper allows distributed processes to coordinate with each other through a **shared hierarchal namespace which is organized similarly to a standard file system**. ... Unlike a typical file system, which is designed for storage, ZooKeeper data is kept **in-memory**, which means ZooKeeper can achieve **high throughput and low latency** numbers.
 
 O sistema de arquivos do Zookeeper tem nós denominados **znodes**, em referência aos i-nodes do mundo Unix.
 O znode raiz é denominado `/` e um filho da raiz nomeado `teste` é referido como `/teste`.
@@ -1164,11 +1163,7 @@ Cada znode pode ser visto como **arquivo** e **diretório** ao mesmo tempo.
 
 ![](images/zknamespace.jpg)
 
-O sistema de arquivos do Zookeeper é replicado em vários nós.
-
-![](images/zkservice.jpg)
-
-Znodes são manipulados, essencialmente, por 4 operações
+Znodes são manipulados, essencialmente, por 4 operações, implementando CRUD, e uma quinta operação que lista os znodes filhos de um dado znode.
 
 * C: create
 * R: get
@@ -1178,8 +1173,14 @@ Znodes são manipulados, essencialmente, por 4 operações
 
 Znodes são lidos e escritos sempre integralmente. Isto é, não se pode escrever apenas parte do conteúdo do "arquivo". Por isso, recomenda-se que os arquivos sejam sempre pequenos, onde pequeno é relativo.
 
-Os comandos que atualizam dados, como **create** e **delete** são enviados para todas as réplicas via o protocolo ZAB, Zookeeper Atomic Broadcast, que entrega as mensagens de forma totalmente ordenada. O sistema de arquivos é, portanto, uma máquina de estados replicada.
-Já comandos de leitura são executados direto na réplica que os recebe.
+O sistema de arquivos do Zookeeper é replicado em vários nós, usando a técnica de replicação de máquinas de estados estudada. 
+A difusão ordenada de comandos é implementadas O protocolo utilizado é pelo protocolo de difusão atômica próprio do Zookeeper, ZAB ([*Zookeeper Atomic Broadcast*](https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_atomicBroadcast)).
+
+Comandos de modificação do sistema de arquivos, como **create** e **delete**, podem ser enviados para qualquer das réplicas, mas serão internamente encaminhados para um processos líder e de lá replicados.
+
+![](images/zkservice.jpg)
+
+Já comandos de leitura são executados direto na réplica que os recebe, sendo respondidos mais rapidamente mas que, devido à assincronia do sistema, podem ser respondidos com dados antigos. Por este motivo, clientes sempre conversam com o mesmo servidor, a não ser que sejam forçados a estabelecer nova conexão, e só emitem novos comandos depois que o anterior tiver sido respondido. Este comportamento resulta em garantias de consistência específicas, denominadas [consistência sequencial ordenada](https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_consistency).
 
 ![](images/zkcomponents.jpg)
 
@@ -1325,14 +1326,18 @@ Além destas, outro projeto, o [Curator](http://curator.apache.org) se dedica ap
 #### Estudo de caso: Etcd
 
 ???todo
-    descrever o [etcd](https://etcd.io/)
+    [etcd](https://etcd.io/)
 
 
 #### Estudo de caso: Kafka
 
 ???todo
-     Descrever o Kafka
+    [Kafka](https://kafka.apache.org/)
 
+#### Estudo de caso BFT-Smart
+
+???todo
+    [BFT-Smart](https://github.com/bft-smart/library)
 
 <!--
 O quê?
