@@ -448,11 +448,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#problemas-de-acordo" class="md-nav__link">
-    Problemas de Acordo
+  <a href="#acordo" class="md-nav__link">
+    Acordo
   </a>
   
-    <nav class="md-nav" aria-label="Problemas de Acordo">
+    <nav class="md-nav" aria-label="Acordo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -563,6 +563,13 @@
           <li class="md-nav__item">
   <a href="#estudo-de-caso-kafka" class="md-nav__link">
     Estudo de caso: Kafka
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-bft-smart" class="md-nav__link">
+    Estudo de caso BFT-Smart
   </a>
   
 </li>
@@ -778,11 +785,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#problemas-de-acordo" class="md-nav__link">
-    Problemas de Acordo
+  <a href="#acordo" class="md-nav__link">
+    Acordo
   </a>
   
-    <nav class="md-nav" aria-label="Problemas de Acordo">
+    <nav class="md-nav" aria-label="Acordo">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -893,6 +900,13 @@
           <li class="md-nav__item">
   <a href="#estudo-de-caso-kafka" class="md-nav__link">
     Estudo de caso: Kafka
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-bft-smart" class="md-nav__link">
+    Estudo de caso BFT-Smart
   </a>
   
 </li>
@@ -1147,7 +1161,7 @@ Caso contrário, podem ser direcionadas aos processos na <strong>cauda</strong>,
 <p>No caso da replicação ativa, as <strong>várias cópias executam todos os comandos</strong> enviados para o sistema, estando assim todas aptas a continuar a executar o serviço. 
 A técnica de <strong>replicação de máquinas de estados vista no capítulo anterior</strong> é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
-<h2 id="problemas-de-acordo">Problemas de Acordo</h2>
+<h2 id="acordo">Acordo</h2>
 <p>Há diversas primitivas de comunicação em grupo, das quais se destaca a <strong>difusão atômica</strong>, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
 Difusão atômica, por sua vez, é equivalente ao problema do <strong>consenso distribuído</strong>, que está no coração da classe de problemas de <strong>acordo</strong>.
 Problemas de acordo são aqueles em que processos devem concordar em quais ações executar.
@@ -2185,7 +2199,7 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2
 </ul>
 </details>
 <h4 id="estudo-de-caso-zookeeper">Estudo de caso: Zookeeper</h4>
-<p>Porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural, foi criado o <a href="http://zookeeper.apache.org/">Zookeeper</a>.</p>
+<p>O <a href="http://zookeeper.apache.org/">Zookeeper</a> foi criado para coordenar as ações dos componentes de sistemas distribuídos, porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural.</p>
 <p><img alt="http://zookeeper.apache.org/" src="../images/zklogo.jpeg" /></p>
 <h6>Visão Geral</h6>
 <div class="admonition quote">
@@ -2197,20 +2211,18 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2
 <p class="admonition-title">Por quê?</p>
 <p>Coordination services are notoriously hard to get right. They are especially prone to errors such as race conditions and deadlock. The motivation behind ZooKeeper is to relieve distributed applications the responsibility of implementing coordination services from scratch.</p>
 </div>
-<p>Mais tarde o sistema tornou-se <em>Open Source</em> e tornou-se parte de diversos projetos, também abertos e proprietários.
+<p>Mais tarde o sistema tornou-se <em>Open Source</em> e parte de diversos projetos, tanto abertos quanto proprietários.
 A razão de seu sucesso, arrisco dizer, é a simplicidade de sua API, semelhante a um sistema de arquivos.</p>
 <div class="admonition quote">
 <p class="admonition-title">Como?</p>
-<p>ZooKeeper is a <strong>distributed</strong>, open-source <strong>coordination service for distributed applications</strong>. It exposes a <strong>simple set of primitives</strong> that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar <strong>directory tree structure of file systems*. It runs in Java and has bindings for both **Java</strong> and <strong>C</strong>.</p>
-<p>ZooKeeper allows distributed processes to coordinate with each other through a <strong>shared hierarchal namespace which is organized similarly to a standard file system</strong>. The name space consists of data registers - called <strong>znodes</strong>, in ZooKeeper parlance - and these are <strong>similar to files and directories</strong>. Unlike a typical file system, which is designed for storage, ZooKeeper data is kept <strong>in-memory</strong>, which means ZooKeeper can achieve <strong>high throughput and low latency</strong> numbers.</p>
+<p>[ZooKeeper] exposes a <strong>simple set of primitives</strong> that distributed applications can build upon to implement higher level services for synchronization, configuration maintenance, and groups and naming. It is designed to be easy to program to, and uses a data model styled after the familiar <strong>directory tree structure of file systems</strong>. It runs in Java and has bindings for both <strong>Java</strong> and <strong>C</strong>.</p>
+<p>ZooKeeper allows distributed processes to coordinate with each other through a <strong>shared hierarchal namespace which is organized similarly to a standard file system</strong>. ... Unlike a typical file system, which is designed for storage, ZooKeeper data is kept <strong>in-memory</strong>, which means ZooKeeper can achieve <strong>high throughput and low latency</strong> numbers.</p>
 </div>
 <p>O sistema de arquivos do Zookeeper tem nós denominados <strong>znodes</strong>, em referência aos i-nodes do mundo Unix.
 O znode raiz é denominado <code>/</code> e um filho da raiz nomeado <code>teste</code> é referido como <code>/teste</code>.
 Cada znode pode ser visto como <strong>arquivo</strong> e <strong>diretório</strong> ao mesmo tempo.</p>
 <p><img alt="" src="../images/zknamespace.jpg" /></p>
-<p>O sistema de arquivos do Zookeeper é replicado em vários nós.</p>
-<p><img alt="" src="../images/zkservice.jpg" /></p>
-<p>Znodes são manipulados, essencialmente, por 4 operações</p>
+<p>Znodes são manipulados, essencialmente, por 4 operações, implementando CRUD, e uma quinta operação que lista os znodes filhos de um dado znode.</p>
 <ul>
 <li>C: create</li>
 <li>R: get</li>
@@ -2219,8 +2231,11 @@ Cada znode pode ser visto como <strong>arquivo</strong> e <strong>diretório</st
 <li>ls *: get children</li>
 </ul>
 <p>Znodes são lidos e escritos sempre integralmente. Isto é, não se pode escrever apenas parte do conteúdo do "arquivo". Por isso, recomenda-se que os arquivos sejam sempre pequenos, onde pequeno é relativo.</p>
-<p>Os comandos que atualizam dados, como <strong>create</strong> e <strong>delete</strong> são enviados para todas as réplicas via o protocolo ZAB, Zookeeper Atomic Broadcast, que entrega as mensagens de forma totalmente ordenada. O sistema de arquivos é, portanto, uma máquina de estados replicada.
-Já comandos de leitura são executados direto na réplica que os recebe.</p>
+<p>O sistema de arquivos do Zookeeper é replicado em vários nós, usando a técnica de replicação de máquinas de estados estudada. 
+A difusão ordenada de comandos é implementadas O protocolo utilizado é pelo protocolo de difusão atômica próprio do Zookeeper, ZAB (<a href="https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_atomicBroadcast"><em>Zookeeper Atomic Broadcast</em></a>).</p>
+<p>Comandos de modificação do sistema de arquivos, como <strong>create</strong> e <strong>delete</strong>, podem ser enviados para qualquer das réplicas, mas serão internamente encaminhados para um processos líder e de lá replicados.</p>
+<p><img alt="" src="../images/zkservice.jpg" /></p>
+<p>Já comandos de leitura são executados direto na réplica que os recebe, sendo respondidos mais rapidamente mas que, devido à assincronia do sistema, podem ser respondidos com dados antigos. Por este motivo, clientes sempre conversam com o mesmo servidor, a não ser que sejam forçados a estabelecer nova conexão, e só emitem novos comandos depois que o anterior tiver sido respondido. Este comportamento resulta em garantias de consistência específicas, denominadas <a href="https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_consistency">consistência sequencial ordenada</a>.</p>
 <p><img alt="" src="../images/zkcomponents.jpg" /></p>
 <p>Por causa do custo em termos de mensagens trocadas entre os processos para mensagens de atualização e pelo baixo custo das mensagens de leitura, o zookeeper é recomendado para cargas de trabalho com poucas escritas.</p>
 <div class="admonition quote">
@@ -2352,10 +2367,13 @@ Monitore o zNode. Se ele sumir, eleja outro líder.</p>
 </ul>
 <p>Além destas, outro projeto, o <a href="http://curator.apache.org">Curator</a> se dedica apenas a colecionar implementações corretas de receitas para o Zookeeper.</p>
 <h4 id="estudo-de-caso-etcd">Estudo de caso: Etcd</h4>
-<details class="todo"><summary>Todo</summary><p>descrever o <a href="https://etcd.io/">etcd</a></p>
+<details class="todo"><summary>Todo</summary><p><a href="https://etcd.io/">etcd</a></p>
 </details>
 <h4 id="estudo-de-caso-kafka">Estudo de caso: Kafka</h4>
-<details class="todo"><summary>Todo</summary><p>Descrever o Kafka</p>
+<details class="todo"><summary>Todo</summary><p><a href="https://kafka.apache.org/">Kafka</a></p>
+</details>
+<h4 id="estudo-de-caso-bft-smart">Estudo de caso BFT-Smart</h4>
+<details class="todo"><summary>Todo</summary><p><a href="https://github.com/bft-smart/library">BFT-Smart</a></p>
 </details>
 <!--
 O quê?
