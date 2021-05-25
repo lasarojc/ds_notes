@@ -581,7 +581,7 @@ Embora simples, frameworks pub/sub permitem a implementação de arquiteturas co
 
 
 ???todo "TODO"
-    Material
+    http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.148.101
 
 
 ## Comunicação Orientada a Fluxos

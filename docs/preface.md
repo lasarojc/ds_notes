@@ -56,6 +56,16 @@ Em resumo, durante este curso você irá:
       Estruturar melhor esta seção uma vez que a estrutura do documento tenha estabilizado mais.
 
 
+Um aviso aos incautos: é impossível falar sobre sistemas distribuídos sem algumas indas e vindas. 
+Quando iniciarmos nosso estudo, falaremos sobre *sockets* como forma de comunicação entre processos para que possamos rapidamente começar a experimentar e praticar a construção de sistemas distribuídos.
+Ao falarmos de *sockets*, seremos naturalmente obrigados a discutir a arquitetura **cliente/servidor**, antes mesmo de falarmos de arquiteturas.
+Quando falarmos em arquiteturas, falaremos sobre sistemas P2P e de como, nestes sistemas, processos são organizados de forma plana em vez de hierárquica.
+Ao falarmos sobre P2P, seremos foçados a mencionar seus representantes mais relevantes atualmente, os bancos de dados NOSQL, isto antes mesmo de falarmos sobre sistemas de bancos de dados distribuídos.
+Mais tarde, quando voltar a falar sobre bancos de dados distribuídos, nos focaremos não na arquitetura dos bancos de dados, mas como bancos de dados são vistos pelos outros componentes do sistema distribuído. Isto é, nos focaremos nos contratos que levam os bancos de dados a se comportem da maneira que esperamos que se comportem, ou não.
+Finalmente, quando discutirmos como o banco implementa os contratos, seremos conduzidos a falar sobre *locks* distribuídos e problemas de acordo, abstrações que terão sido discutidas discutidas anteriormente.
+O ponto aqui é todos os tópicos acabam sendo fortemente relacionados uns com os outros e mesclar o que estudamos de forma consistente é um processo iterativo.
+
+
 ## Convenções
 
 Neste documento, usamos diversos recursos visuais com diferentes propósitos.
