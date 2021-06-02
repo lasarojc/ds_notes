@@ -14,6 +14,7 @@ nav:
         - Consistência: consistency.md
         - Bancos de Dados: disdb.md
         - Sistemas de Arquivos: disfs.md
+        #- Estudos de Caso: cases.md
         - Tecnologias: tech.md
         - Projeto: projeto.md
 

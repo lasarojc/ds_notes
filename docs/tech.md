@@ -1,6 +1,8 @@
-# Tecnologias
-
 O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e interessantes na área de sistemas distribuídos. Não espere então que as várias seções sejam conexas umas com as outras.
+
+
+
+
 
 
 
