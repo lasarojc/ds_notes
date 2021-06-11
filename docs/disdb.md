@@ -783,9 +783,17 @@ Por exemplo, com um filtro com $m = 2^{24}b = 2MB$, após 1 milhão de inserçõ
 
 ## CAP
 
+![CAP](drawings/cap.drawio#0)
+
+* [CAP theorem NoSQL database types](https://www.ibm.com/cloud/learn/cap-theorem#toc-cap-theore-ovhB7WL3)
+* [Weak Consistency and CAP Implications](https://www.igvita.com/2010/06/24/weak-consistency-and-cap-implications/)
+
+
+
+## BASE
+
 ???todo "TODO"
      Incluir explicação
-
 
 
 

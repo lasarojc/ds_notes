@@ -3,11 +3,126 @@ O objetivo deste capítulo é visitar algumas técnicas e tecnologias recentes e
 
 
 
+## Blockchain
+
+Em uma cadeia de suprimentos (*supply chain*) temos, em vários níveis, **Clientes**, **Vendedores** e **Fornecedores**, que estabelecem **contratos** de **bens** e **serviços**.
+As interações multipartido de trocas de bens podem ser registradas em **livros razão** mantidos independentemente pelos participantes, registrando cada troca de bens envolvendo o participante responsável.
+Considere o bem "bananas".
+Assim, o produtor registra quantas carretas de bananas vendeu e o atravessador quantas comprou, ainda na roça.
+O atravessador registra quantas carretas vendeu para o exportador e o exportador quantas comprou, no porto.
+O exportador registra quantas toneladas exportou e o importador quantas recebeu.
+O importador registra quantos cachos entregou para cada cadeia de supermercado, e assim por diante até que chegue ao consumidor.
+
+
+A um consumidor, o cliente final na cadeia, seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte foi feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. 
+Essencialmente, seria interessante rastrear como o bem "bananas" foi transferido de mão em mão até chegar à feira livre, para decidir se deve ou não comprá-lo, pelo preço pedido.
+
+Além de bananas, há diversos outros **bens** dos quais precisamos rastrear a proveniência, tanto bens tangíveis (e.g., **casa**) quanto intangíveis (e.g., **patente**),  nominais (e.g., **promissória**) e ao portador (e.g., **dinheiro "vivo"**), etc.
+Esta abordagem **dificilmente permitiria aos participantes ou auditores reconstruir todo o trajeto**, que dirá um consumidor na ponta, além ser **suscetível a modificações**, intencionais ou não.
+
+
+***Blockchains*** são uma alternativa para a construção de um "livro razão" que é **compartilhado**, **incorruptível**, **decentralizado** e "facilmente" auditável.
+A primeira blockchain foi introduzida por Satoshi Nakamoto[^nakamoto] no artigo [Bitcoin: A Peer-to-Peer Electronic Cash System](https://bitcoin.org/bitcoin.pdf), destinada a "rastrear" a troca da moeda digital [bitcoin](https://bitcoin.org).
+Desde então, diversas outras *blockchains*, como evidenciado nesta [lista](https://medium.com/wikidlt/a-complete-list-of-blockchain-platforms-2020-49cf01ee6688), foram desenvolvidas com diferentes usos e funcionalidades.
+De forma geral, podemos caracterizar blockchains como tendo as seguintes propriedades:
+
+* Decentralização: os dados são mantidos por centenas ou milhares de nós, usando protocolo P2P, e o sistemas não é facilmente subjugável.
+* Consenso: todos os participantes vêem, eventualmente, a mesma sequência de transações.
+* Proveniência: todo o histórico de um bem é mantido na *blockchain* e pode ser lido.
+* Imutabilidade: entradas na blockchain não podem ser alteradas.
+* Finalidade: entradas na blockchain não podem ser refutadas (o que impede o gasto duplo).
+
+[^nakamoto]: Pseudônimo. Possivelmente mais de uma pessoa.
+
+John Oliver, apresentador do *Last Week Tonight*, descreveu bitcoin em março de 2018 como sendo 
+
+> Everything you don't understand about money, combined with everything you don't understand about technology.
+
+A complexidade aumenta com as funcionalidades das demais blockchains, pois nestas, diferentes tipos de bens podem ser registrados, usuários podem ser identificáveis, os registros podem ser auditáveis sobe certas circunstâncias, e o consumo de energia exorbitante pode ser drasticamente reduzido.
+Mas começemos do começo e falemos sobre Bitcoin.
+
+### Bitcoin
+
+Bitcoin é uma moeda digital, usada para comprar [pizzas](https://www.moneytimes.com.br/ha-11-anos-duas-pizzas-foram-compradas-por-10-btc-agora-equivalentes-a-us-377-milhoes/), [drogas](https://www.reuters.com/article/mexico-bitcoin-insight-idUSKBN28I1KD) e [~~teslas~~](https://www.bbc.com/news/business-57096305).
+Também é tido por muitos como investimento, mas neste aspecto, veja o gráfico e tire suas próprias conclusões.
+
+<div style="height:560px; background-color: #FFFFFF; overflow:hidden; box-sizing: border-box; border: 1px solid #56667F; border-radius: 4px; text-align: right; line-height:14px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #56667F;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:540px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=chart&theme=light&coin_id=859&pref_coin_id=1505" width="100%" height="536px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;line-height:14px;"></iframe></div><div style="color: #FFFFFF; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #FFFFFF; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
+
+Mas como funciona a blockchain do bitcoin?
+Vejamos um exemplo, nos mesmos moldes da cadeia da bitcoin.
+Em primeiro lugar, para a construção da cadeia, precisamos de funções hash.
+Como sabem, pequenas modificações na entrada da função hash levam a grandes alterações na saída.
+Por exemplo, 
+
+* $sha256(lasaro) = 0490cc073d98dad147ec3d7348bfd54759ce7ef0134d02f28641c8cede61e5f4$
+* $sha256(lásaro) = dc2a5d1a6fb23c8449d0be17d412309a97b208efbec67254524bdac0a9dcf1ae$.
+
+https://andersbrownworth.com/blockchain/hash
+
+Tendo funções hash, podemos construir blocos da cadeia.
+A princípio, cada cada bloco na cadeia tem
+
+* um identificador único
+* um conjunto de transações, no estilo passe 10 moedas do Jaquim para o José
+* um número aleatório conhecido como **nonce**, um tempero para o bloco.
+
+Para cada bloco, precisamos calcular também seu hash. Dada a propriedade vista acima, sabemos que pequenas modificações nos dados de um bloco levam a grandes modificações no hash do bloco em si.
+Logo, pequenas modificações em qualquer dos campos descritos, leva a mudanças no hash do bloco.
+
+https://andersbrownworth.com/blockchain/block
+
+Como próximo passo, precisamos encadear os blocos e, para isto, usamos identificadores sequenciais e adicionamos a cada bloco o hash do bloco anterior.
+Isto é, cada bloco referencia o anterior, guardando um resumo do mesmo.
+
+https://andersbrownworth.com/blockchain/blockchain
+
+Dado que modificações no bloco mudam seu hash, alterações em um bloco da cadeia leva o bloco seguinte a ter um hash anterior inválido, quebrando a cadeia.
+É esta característica que leva à imutabilidade de partes antigas da cadeia.
+
+Mas como os blocos são construídos? Este é um processo conhecido como mineração.
+
+https://andersbrownworth.com/blockchain/blockchain
+
+É com a mineração que novos blocos são construídos mas não adianta minerar se os blocos não forem aceitos pela comunidade.
+
+https://andersbrownworth.com/blockchain/distributed
+
+Assim, embora partes antigas da cadeia sejam estáveis, partes recentes podem ser modificadas, uma vez que processos podem mudar de opinião sobre quais os últimos blocos na cadeia.
+
+
+
+### Contratos inteligentes
+
+Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."
+
+Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/) artigos sobre *blockchain*.
+
+
+
+
+
+???todo
+    * NFT
+    * Smart-contracts
+	* grupos pequenos e aleatórios como certificadores.
+	* proof-of-stake
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 ## Como sincronizar duas máquinas?
+
+
 
 * Abordagem 1
     * Copie os arquivos da fonte para o destino
@@ -49,52 +164,13 @@ A conclusão é que blocos com tamanho pré-definido são problemáticos e que p
 
 
 
-## Blockchain
-
-Uma cadeia de fornecimento (*supply chain*), temos, em vários níveis, **Clientes**, **Vendedores** e **Fornecedores**, que estabelecem **contratos** de bens e serviços.
-A um consumidor seria interessante saber quem produziu o cacho de bananas que está comprando, se a produção é livre de trabalho escravo, se o transporte foi feito dentro de parâmetros corretos de temperatura, se não violou tratados de rotas marítimas para proteger baleias, e assim por diante. Essencialmente, seria interessante rastrear como o bem "bananas" foi transferido de mão em mão até chegar à feira livre. 
-Há diversos tipos de **bens**, tangíveis (e.g., **casa**) e intangíveis (e.g., **patente**),  nominais (e.g., **promissória**) e ao portador (e.g., **dinheiro "vivo"**), etc.
-
-As interações multipartido podem ser registradas em **livros razão** mantidos pelos independentemente pelos participantes, registrando cada troca bens envolvendo o participante responsável.
-Esta abordagem **dificilmente permitiria aos participantes ou auditores reconstruir todo o trajeto**, que dirá um consumidor na ponta, além ser **suscetível a modificações**, intencionais ou não.
-
-***Blockchains*** provêem um "livro razão" **incorruptível**, **decentralizado** e "facilmente" auditável.
-Desde que Nakamoto introduziu a primeira *blockchain*[^nakamoto], destinada a "rastrear" a troca de uma moeda digital, a [bitcoin](https://bitcoin.org), [diversas outras *blockchains*](https://medium.com/wikidlt/a-complete-list-of-blockchain-platforms-2020-49cf01ee6688) foram desenvolvidas, para diferentes usos e com diferentes funcionalidades.
-
-[^nakamoto]: [Bitcoin: A Peer-to-Peer Electronic Cash System](https://bitcoin.org/bitcoin.pdf)
-
-Algumas características comuns, ou pelo menos desejáveis, das *blockchains* são
-
-* Decentralizado - Replicado usando P2P e não facilmente subjugável. (Hyperledger, da IBM, não é.)
-* Consenso - acordo na transação
-* Proveniência - todo o histórico de um bem é mantido na *blockchain*
-* Imutabilidade - entradas não podem ser alteradas
-* Finalidade - entradas não podem ser refutadas
-
-!!!quote "Bitcoin"
-    Everything you don't understand about money, combined with everything you don't understand about technology.
-
-    Joh Oliver, Last Week Tonight, Março 2018.
-
-Além disso, no mundo dos negócios, é interessante que possa usar a **blockchain** para diferentes tipos de bens (na *bitcoin*, só a *bitcoin*), que as partes sejam **identificáveis** (na *bitcoin*, os usuários são anônimos), e que não gaste muito energia (*bitcoin* usa *proof-of-work*, que gasta muita, muita energia).
-
-Vejamos um [exemplo de como uma blockchain funciona](https://andersbrownworth.com/blockchain/).
-
-Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."
-	
-
-Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/) artigos sobre *blockchain*.
 
 
 
-![](images/bitcoin_jun_2018.png)
 
 
 
-???todo
-    * Smart-contracts
-	* proof-of-stake
-	* grupos pequenos como certificadores.
+
 
 
 
@@ -165,51 +241,7 @@ Como lidar?
 * MapReduce
 * ...
 
-Google FS
 
-* Google, 2003
-* File System
-* Dados recuperados da Internet usados em consultas
-* Milhões de arquivos de múltiplos GB
-* Chunks de 64MB (``blocos do disco'')
-* Operações comuns são appends ou reads
-* Servidores/discos/memórias estão sempre falhando
-* Centenas de clientes concorrentes no mesmo arquivo
-
-![](images/gfs3.png)
-
-![](images/gfs2.png)
-
-* Clusters de nós ``comuns''
-* Master node: metadata
-* Chunk servers: data
-* Permite usar um cluster como um único HD elástico na rede.
-
-[Fonte](https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html)
-
-![](images/gfs3.png)
-
-*  Apps recebem \emph{leases} de acesso direto aos dados
-*  Atomic commitment garante consistência entre réplicas
-
-[Fonte](http://google-file-system.wikispaces.asu.edu/)
-
-* Consistência 
-![](images/gfs6.png)
-
-* Application sends the file name and data to the GFS client.
-* GFS Client send the file name and chunk index to master
-* Master sends the identity of the primary and other secondary replicas to the client.
-* Client caches this information. Client contacts master again only when primary is unreachable or it sends a reply saying it does not holds the lease anymore.
-* Considering the network topology the client sends the data to all the replicas.This improves performance. GFS separates data flow from the control flow. Replicas store the data in their LRU buffers till it is used.
-* After all replicas receiving of the data, client sends write request to the primary. Primary decides the mutation order. It applies this order to its local copy.
-* Primary sends the write request to all the secondary replicas. They perform write according to serial order decided by the primary.
-* After completing the operation all secondary acknowledge primary.
-* Primary replies the client about completion of the operation. In case of the errors that is when some of the secondary fail to write client request is supposed to be fail.This leaves modified chunk inconsistent. 
-* Client handles this by retrying the failed mutation. 
-
-
-[Fonte](http://google-file-system.wikispaces.asu.edu/)
 
 
 Map Reduce
