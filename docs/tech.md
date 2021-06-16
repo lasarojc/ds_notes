@@ -175,13 +175,6 @@ A conclusão é que blocos com tamanho pré-definido são problemáticos e que p
 
 
 
-
-
-
-------
-
-
-
 ## A Small Piece of Big Data
 
 !!!quote "[Big-Data](https://en.wikipedia.org/wiki/Big_data)"
@@ -254,8 +247,9 @@ Map Reduce
 
 Chubby
 
-	*  Google, 2006
-	![](images/chubby1.png)
+* Google, 2006
+
+![](images/chubby1.png)
 
 
 Hadoop
@@ -408,7 +402,7 @@ https://youtu.be/DJPwV2ge9m0?list=PLkz1SCf5iB4dw3jbRo0SYCk2urRESUA3v
 
 ## Estudo de caso: Kafka
 
-![](images/kafka0.png
+![](images/kafka0.png)
 
 !!!quote
      Kafka is a distributed streaming platform.
@@ -493,3 +487,56 @@ Siga o [tutorial](http://kafka.apache.org/quickstart), até o passo 5.
 *  Inicie um consumidor (Terminal 4)
 
 
+
+
+
+
+## Serverless
+
+Quando voce está desenvolvendo uma aplicação distribuída, você provavelmente pensa em clientes e servidores.
+Quando se foca nos servidores, você pensa em um processo, escutando em uma porta, em leituras em sockets, *parsing* de requisições, invocações de métodos, cálculo de resultados e envio de uma resposta.
+Mesmo que você use *frameworks* que simplifiquem parte deste fluxo, como o gRPC, você ainda deve pensar na criação do servidor, no transporte utilizado, e outros detalhes que não tem a ver com a operação a ser executada.
+
+A ideia da computação "sem servidor" (*serverless*) e remover todos estes detalhes do seu caminho e deixar que você se preocupe exclusivamente com as operações a serem executadas, as **funções** que tratam suas requisições.
+Um dos exemplos desta arquitetura popularizados pela AWS é o seguinte:
+
+* envie uma imagem para armazenamento na nuvem
+* quando a mensagem é recebida, várias funções são disparadas para analisá-la
+    * tagging automático: Tem água? Gato? Rosto? Uberlândia?
+    * sugestão de edições: Horizonte inclinado? Super ou sub-exposta?
+    * sentimento
+    * duplicatas
+    * etc
+
+Na arquitetura normal, você deveria escrever um programa que possivelmente siga o seguinte fluxo:
+
+* Enquanto houver dados a serem lidos
+    * Leia imagem do socket
+    * Salve imagem
+* Para toda imagem $i$ salva
+    * auto_tag($i$)
+    * auto_edit($i$)
+    * analise_sentimento($i$)
+    * teste_duplicata($i$)
+    * ...
+
+Já na arquitetura *serverless*, você só precisa escrever as funções em si e associá-las a eventos **nova imagem** e toda vez que uma nova imagem for submetida para o sistema, possivelmente sem ter que escrever código do lado do servidor também, as funções serão executadas na imagem.
+
+![Serverless](drawings/serverless.drawio)
+
+O primeiro serviço deste tipo criado foi o AWS Lambda, que permite que suas funções sejam criadas em diferentes linguagens e enviadas para a nuvem para aguardarem suas entradas.
+Obviamente, o **servidor ainda existe**, mas ele é gerado e executado pelo provedor. 
+Quando uma nova função é registrada, o servidor é capaz de **multiplexar** novos dados para esta função.
+O servidor também é responsável por **limitar o tempo de execução** da função e por calcular por quanto **tempo** a função executou para executar o **faturamento** da mesma.
+
+Amazon pode até ter dado o pontapé inicial da computação *serverless*, mas a ideia se espalhou e hoje há diversos sistemas equivalentes, tanto no mundo dos provedores de computação em nuvem quanto na comunidade software livre, por exemplo:
+
+* [KNative](https://knative.dev/)
+* [OpenFaaS](https://docs.openfaas.com/)
+* [OpenWhisk](https://openwhisk.apache.org/)
+
+A grande vantagem do uso destas soluções livres está no uso de *containers* para executar seu código, e como containers são suportados em praticamente todos os provedores hoje, é possível migrar suas funções entre provedores ou mesmo combinar diversos provedores em uma única aplicação.
+
+Para overview rápido de um destes projetos, OpenFaaS, assista ao seguinte video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yOpYYYRuDQ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
