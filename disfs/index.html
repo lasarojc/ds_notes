@@ -502,11 +502,57 @@
 
   <!-- Content -->
   <h1 id="sistemas-de-arquivos-distribuidos">Sistemas de Arquivos Distribuídos</h1>
-<p>Em construção.</p>
 <h2 id="leitura">Leitura</h2>
-<p><a href="../refs/dsdc-coulouris-ch12.pdf">Conceitos básicos</a></p>
+<ul>
+<li><a href="http://csis.pace.edu/~marchese/CS865/Lectures/Chap11/Chapter11.htm">Sistemas Distribuídos: princípios e paradigmas, 2a edição. Capítulo 11: Sistemas de Arquivos Distribuídos. </a></li>
+<li><a href="../refs/dsdc-coulouris-ch12.pdf">Distributed Systems: Concepts and Designs. Capítulo 12: Distributed File Systems.</a></li>
+</ul>
 <h2 id="google-file-system">Google File System</h2>
 <p><a href="https://research.google/pubs/pub51.pdf">Google file system</a></p>
+<ul>
+<li>Google, 2003</li>
+<li>File System</li>
+<li>Dados recuperados da Internet usados em consultas</li>
+<li>Milhões de arquivos de múltiplos GB</li>
+<li>Chunks de 64MB (``blocos do disco'')</li>
+<li>Operações comuns são appends ou reads</li>
+<li>Servidores/discos/memórias estão sempre falhando</li>
+<li>Centenas de clientes concorrentes no mesmo arquivo</li>
+</ul>
+<p><img alt="" src="../images/gfs3.png" /></p>
+<p><img alt="" src="../images/gfs2.png" /></p>
+<ul>
+<li>Clusters de nós ``comuns''</li>
+<li>Master node: metadata</li>
+<li>Chunk servers: data</li>
+<li>Permite usar um cluster como um único HD elástico na rede.</li>
+</ul>
+<p><a href="https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html">Fonte</a></p>
+<p><img alt="" src="../images/gfs3.png" /></p>
+<ul>
+<li>Apps recebem \emph{leases} de acesso direto aos dados</li>
+<li>Atomic commitment garante consistência entre réplicas</li>
+</ul>
+<p><a href="http://google-file-system.wikispaces.asu.edu/">Fonte</a></p>
+<ul>
+<li>
+<p>Consistência 
+<img alt="" src="../images/gfs6.png" /></p>
+</li>
+<li>
+<p>Application sends the file name and data to the GFS client.</p>
+</li>
+<li>GFS Client send the file name and chunk index to master</li>
+<li>Master sends the identity of the primary and other secondary replicas to the client.</li>
+<li>Client caches this information. Client contacts master again only when primary is unreachable or it sends a reply saying it does not holds the lease anymore.</li>
+<li>Considering the network topology the client sends the data to all the replicas.This improves performance. GFS separates data flow from the control flow. Replicas store the data in their LRU buffers till it is used.</li>
+<li>After all replicas receiving of the data, client sends write request to the primary. Primary decides the mutation order. It applies this order to its local copy.</li>
+<li>Primary sends the write request to all the secondary replicas. They perform write according to serial order decided by the primary.</li>
+<li>After completing the operation all secondary acknowledge primary.</li>
+<li>Primary replies the client about completion of the operation. In case of the errors that is when some of the secondary fail to write client request is supposed to be fail.This leaves modified chunk inconsistent. </li>
+<li>Client handles this by retrying the failed mutation. </li>
+</ul>
+<p><a href="http://google-file-system.wikispaces.asu.edu/">Fonte</a></p>
 
   <!-- Last update of source file -->
 
