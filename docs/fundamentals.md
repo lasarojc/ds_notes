@@ -1,10 +1,57 @@
 # Fundamentos
 
 Uma vez que estejam convencidos de que não temos alternativas à distribuição se queremos sistemas escaláveis e tolerantes a falhas, o próximo passo é entender como podemos implementá-los e quais desafios encontraremos. 
-O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades. Isto é, precisamos definir um **modelo computacional**, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.
+O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades e, para isso, precisamos entender como a computação é executada em cada uma das partes do sistema.
+
+## Do processador à nuvem em 42 passos
+
+
+=== "1"
+     ![Animação](drawings/virtualization.drawio#1)
+
+=== "2"
+     ![Animação](drawings/virtualization.drawio#2)
+
+=== "3"
+     ![Animação](drawings/virtualization.drawio#3)
+
+=== "4"
+     ![Animação](drawings/virtualization.drawio#4)
+
+=== "5"
+     ![Animação](drawings/virtualization.drawio#5)
+
+=== "6"
+     ![Animação](drawings/virtualization.drawio#6)
+
+=== "7"
+     ![Animação](drawings/virtualization.drawio#7)
+
+=== "8"
+     ![Animação](drawings/virtualization.drawio#8)
+
+=== "9"
+     ![Animação](drawings/virtualization.drawio#9)
+
+=== "10"
+     ![Animação](drawings/virtualization.drawio#10)
+
+=== "42"
+     ![Animação](drawings/virtualization.drawio#11)
+
+
+
+
+
+
+
+Agora que relembramos como a computação é executada, podemos abstrair boa parte do que revimos na forma de um **modelo computacional**, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.
 
 
 ## Modelos computacionais
+
+
+
 
 Antes de distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas, precisamos responder a algumas perguntas:
 
