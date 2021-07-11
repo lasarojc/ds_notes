@@ -5,18 +5,18 @@ nav:
         #- Início: index.html
         - Prefácio: preface.md
         - Introdução: intro.md
-        - Fundamentos: fundamentals.md
-        - Arquiteturas: arch.md
-        - Comunicação: comm.md
-        - Coordenação: coord.md
-        - Tempo: time.md
-        - Tolerância a Falhas: fault.md
-        - Consistência: consistency.md
-        - Bancos de Dados: disdb.md
-        - Sistemas de Arquivos: disfs.md
+        #- Fundamentos: fundamentals.md
+        #- Arquiteturas: arch.md
+        #- Comunicação: comm.md
+        #- Coordenação: coord.md
+        #- Tempo: time.md
+        #- Tolerância a Falhas: fault.md
+        #- Consistência: consistency.md
+        #- Bancos de Dados: disdb.md
+        #- Sistemas de Arquivos: disfs.md
         #- Estudos de Caso: cases.md
-        - Tecnologias: tech.md
-        - Projeto: projeto.md
+        #- Tecnologias: tech.md
+        #- Projeto: projeto.md
 
 theme:
         name: material
