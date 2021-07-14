@@ -1,0 +1,906 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>P2P - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rede-sobreposta-overlay" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              P2P
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../preface/" class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentals/" class="md-nav__link">
+        Modelos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          P2P
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        P2P
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rede-sobreposta-overlay" class="md-nav__link">
+    Rede Sobreposta (Overlay)
+  </a>
+  
+    <nav class="md-nav" aria-label="Rede Sobreposta (Overlay)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-nao-estruturada" class="md-nav__link">
+    Rede Não-Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rede-estruturada" class="md-nav__link">
+    Rede Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-nao-estruturada-a-estruturada" class="md-nav__link">
+    De não estruturada a estruturada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabelas-de-espalhamento-distribuidas-dht" class="md-nav__link">
+    Tabelas de Espalhamento Distribuídas (DHT)
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabelas de Espalhamento Distribuídas (DHT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    Identificação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#divisao-da-carga" class="md-nav__link">
+    Divisão da carga
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservices/" class="md-nav__link">
+        Microsserviços
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fault/" class="md-nav__link">
+        Tolerância a Falhas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consistency/" class="md-nav__link">
+        Consistência
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cases/" class="md-nav__link">
+        Estudos de Caso
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rede-sobreposta-overlay" class="md-nav__link">
+    Rede Sobreposta (Overlay)
+  </a>
+  
+    <nav class="md-nav" aria-label="Rede Sobreposta (Overlay)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rede-nao-estruturada" class="md-nav__link">
+    Rede Não-Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rede-estruturada" class="md-nav__link">
+    Rede Estruturada
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-nao-estruturada-a-estruturada" class="md-nav__link">
+    De não estruturada a estruturada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tabelas-de-espalhamento-distribuidas-dht" class="md-nav__link">
+    Tabelas de Espalhamento Distribuídas (DHT)
+  </a>
+  
+    <nav class="md-nav" aria-label="Tabelas de Espalhamento Distribuídas (DHT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identificacao" class="md-nav__link">
+    Identificação
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#divisao-da-carga" class="md-nav__link">
+    Divisão da carga
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+  <h1>P2P</h1>
+
+
+  <!-- Content -->
+  <p>Antes de nos aprofundarmos nos exemplos, precisamos entender o conceito das redes <strong>sobrepostas</strong>.</p>
+<h3 id="rede-sobreposta-overlay">Rede Sobreposta (<em>Overlay</em>)</h3>
+<p>Os componentes de um sistema P2P se organizam em uma rede lógica, sobreposta à rede física.
+Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente na forma de conexões TCP/IP.
+Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
+Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.</p>
+<p>Uma vez que as <strong>conexões na rede sobreposta não correspondem a conexões físicas</strong>, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Isto também implica que a <strong>otimização da rota lógica não necessariamente leva à otimização da rota física</strong>.</p>
+<p><a href="https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg"><img alt="Por Gustavo Lacerda - UFRJ, Domínio público" src="../images/overlay.jpg" /></a></p>
+<p>Dependendo em como esta rede é organizada (ou não), a mesma é classificada como <strong>estruturada</strong> ou <strong>não-estruturada</strong>.</p>
+<h4 id="rede-nao-estruturada">Rede Não-Estruturada</h4>
+<p>Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede <strong>não-estruturada</strong>. 
+A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.</p>
+<p><a href="http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf"><img alt="Não-estruturada" src="../images/unstructured.png" /></a></p>
+<p>Suponha que esta rede seja usada para armazenar e consultar dados.
+Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
+Os objetos amarelo e vermelho foram inseridos desta forma, e copiados em nós próximos para tolerar a falha de alguns hosts sem perder os dados.
+Buscas, contudo, terão que vasculhar a rede usando algoritmos como <strong>busca em largura</strong>, <strong>busca em profundidade</strong> ou <strong>caminhada aleatória</strong> (resposta probabilística).</p>
+<h4 id="rede-estruturada">Rede Estruturada</h4>
+<p>Se as conexões são construídas e mantidas de forma a gerar uma <strong>topologia bem definida</strong>, chamamos esta rede de <strong>estruturada</strong>.
+Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
+A estrutura geralmente serve ao propósito de associar os nós aos dados de uma forma planejada. 
+Por exemplo, nós próximos na rede podem ser responsáveis por dados logicamente próximos.
+Claramente, a inserção e acesso a dados nesta rede é mais custosa, pois independentemente de onde a requisição é feita, isto é, a partir de qual nó, ela deverá ser atendida por um nó específico. </p>
+<p>Veja o exemplo do Chord, uma rede P2P em que os nós formam um anel lógico, cujos detalhes veremos adiante.
+Cada nó é responsável pela faixa de valores indexados por chaves entre o identificador do nó e o do nó anterior.
+Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente para um determinado nó, e deve ser <strong>roteada</strong> para o mesmo.
+A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.</p>
+<p><img alt="" src="../images/05-04.png" /></p>
+<p>Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.</p>
+<p><img alt="" src="../images/02-08.png" /></p>
+<p>Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.</p>
+<h4 id="de-nao-estruturada-a-estruturada">De não estruturada a estruturada</h4>
+<p>A seguinte tabela resume as diferenças entre os dois tipos de redes sobrepostas.</p>
+<table>
+<thead>
+<tr>
+<th>Estruturada</th>
+<th>Não-Estruturada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estrutura bem definida</td>
+<td>Estrutura aleatória</td>
+</tr>
+<tr>
+<td>Adição de dados é lenta</td>
+<td>Adição de dados é rápida</td>
+</tr>
+<tr>
+<td>Adição de nós é lenta</td>
+<td>Adição de nós é rápida</td>
+</tr>
+<tr>
+<td>Busca por dados é rápida</td>
+<td>Busca por dados lenta</td>
+</tr>
+</tbody>
+</table>
+<p>Mas, e se pudéssemos juntar o melhor dos dois mundos em um único sistema? Isso é possível em certos cenários. 
+Por exemplo, seja uma grade <span class="arithmatex">\(N \times N\)</span> em que nós  em uma borda da matriz conseguem se conectar aos nós da borda oposta.
+Distâncias entre nós são medidas como a soma das distâncias em <span class="arithmatex">\(x\)</span> mais a distância em <span class="arithmatex">\(y\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(a = (x,y), b = (x', y')\)</span></li>
+<li><span class="arithmatex">\(d_x(a,b) = min(|x - x'|, N - |x - x'|)\)</span></li>
+<li><span class="arithmatex">\(d_y(a,b) = min(|y - y'|, N - |y - y'|)\)</span></li>
+<li><span class="arithmatex">\(d(a,b) = d_x(a,b) + d_y(a,b)\)</span></li>
+</ul>
+<p><img alt="Grade NxN" src="../drawings/estruturada.drawio-0.svg" /></p>
+<p>Suponha que cada divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.</p>
+<p><img alt="" src="../images/02-10.png" /></p>
+<p>O módulo de descoberta leva inicialmente ao estabelecimento de conexões aleatórias e à formação de uma rede sobreposta não estruturada como, por exemplo, a seguinte.</p>
+<p><img alt="Grade NxN" src="../drawings/estruturada.drawio-1.svg" /></p>
+<p>Após as conexões inicias, cada um dos nós executa o seguinte protocolo iteradamente.</p>
+<ul>
+<li>O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.</li>
+<li>O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância.</li>
+</ul>
+<p>Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), como no exemplo, e o módulo de seleção sempre mantiver quatro conexões, ao final do processo os vizinhos serão os nós à direita, esquerda, acima e abaixo.
+Se a rede não for completa ou se menos conexões forem mantidas, uma aproximação será obtida.</p>
+<p><img alt="Grade NxN" src="../drawings/estruturada.drawio-2.svg" /></p>
+<p>A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.</p>
+<p><a href="https://clusterdesign.org/torus/"><img alt="Fujitsu and RIKEN, 2009" src="../images/3d-torus.jpg" /></a></p>
+<p>Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura,<sup id="fnref:hyper"><a class="footnote-ref" href="#fn:hyper">1</a></sup> no qual diversos <a href="https://en.wikipedia.org/wiki/Hypercube_internetwork_topology">esquemas de roteamento eficientes podem ser usados</a>.<sup id="fnref:icpc_hyper"><a class="footnote-ref" href="#fn:icpc_hyper">2</a></sup></p>
+<p><a href="https://commons.wikimedia.org/w/index.php?curid=5071550"><img alt="By Spiritia" src="../images/hypercube.png" /></a></p>
+<div class="admonition info inline end">
+<p class="admonition-title">Sistemas P2P</p>
+<ul>
+<li>Arquitetura decentralizada;</li>
+<li>Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;</li>
+<li>Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo;</li>
+<li>Pode haver entrada e saída de nós do sistema com alta frequência; </li>
+<li>Nós se organizam em redes sobrepostas (em inglês, <em>overlay</em>), redes lógicas sobre as redes físicas;</li>
+<li>Auto-administração.</li>
+<li>Resiliente a falhas</li>
+</ul>
+</div>
+<h3 id="tabelas-de-espalhamento-distribuidas-dht">Tabelas de Espalhamento Distribuídas (DHT)</h3>
+<p>A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuídas (DHT, do inglês, <em>Distributed Hash Tables</em>).</p>
+<p>As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
+Em essência, estas tabelas são funções que <strong>mapeiam</strong> uma chave para um valor, uma função <span class="arithmatex">\(f\)</span> tal que</p>
+<ul>
+<li><span class="arithmatex">\(f(K): V \cup \{null\}\)</span></li>
+<li><span class="arithmatex">\(K\)</span>: Universo de chaves</li>
+<li><span class="arithmatex">\(V\)</span>: Universo de valores</li>
+</ul>
+<p>isto é, <span class="arithmatex">\(f(k) = v, k\in K, v \in V\)</span> ou <span class="arithmatex">\(v =\)</span> null.</p>
+<p>Na prática, são estruturas de dados adaptáveis, com um API muito simples, e com operações de tempo (mais ou menos) constante para fazer CRUD de pares chave/valor.
+Tanto <span class="arithmatex">\(K\)</span> quanto <span class="arithmatex">\(V\)</span> são <strong>blobs</strong> de dados, isto é, sem nenhuma forma distinta, e por isso podem ser usadas para resolver uma gama de problemas.</p>
+<div class="admonition note">
+<p class="admonition-title">API</p>
+<ul>
+<li>sejam <span class="arithmatex">\(k \in K\)</span> e <span class="arithmatex">\(v,w \in V\)</span></li>
+<li><span class="arithmatex">\(put(k,v)\)</span>: <ul>
+<li>if <span class="arithmatex">\(f(k) = w \neq null\)</span> then return <span class="arithmatex">\(w\)</span></li>
+<li>else <span class="arithmatex">\(f(k) \rightarrow v\)</span>;  return <span class="arithmatex">\(null\)</span></li>
+</ul>
+</li>
+<li><span class="arithmatex">\(update(k,v)\)</span>: <ul>
+<li>if <span class="arithmatex">\(f(k) = w \neq null\)</span> then return <span class="arithmatex">\(w\)</span>; <span class="arithmatex">\(f(k) \rightarrow v\)</span></li>
+<li>else return <span class="arithmatex">\(null\)</span></li>
+</ul>
+</li>
+<li><span class="arithmatex">\(get(k)\)</span>: <ul>
+<li>if <span class="arithmatex">\(f(k) = w \neq null\)</span> then return <span class="arithmatex">\(w\)</span></li>
+<li>else return <span class="arithmatex">\(null\)</span> </li>
+</ul>
+</li>
+<li><span class="arithmatex">\(del(k)\)</span>:<ul>
+<li>if <span class="arithmatex">\(f(k) = w \neq null\)</span> then return <span class="arithmatex">\(w\)</span> </li>
+<li>else return <span class="arithmatex">\(null\)</span></li>
+</ul>
+</li>
+<li>execução <span class="arithmatex">\(O(1)\)</span></li>
+</ul>
+</div>
+<p>Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser <strong>tolerante a falhas</strong> e ter <strong>escalabilidade linear</strong>.
+É justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas, estruturas de dados que mantém <strong>a mesma API</strong> e funcionalidades de tabelas de espalhamento, mas que <strong>agrega capacidades de diversos hosts</strong>.</p>
+<p>Dentre os desafios na implementação de uma DHT estão</p>
+<ul>
+<li>O que usar como chave? Uma DHT deve ser versátil para ser utilizada para vários fins, então a chave precisa ser independente da aplicação.</li>
+<li>Como dividir a carga entre hosts? É preciso balancear a carga para que um lado da rede não se torne mais importante que o outro e para não levar a uma hierarquização entre os nós.</li>
+<li>Como rotear requisições para o host correto? Uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade, como encontrar o nó onde determinado dado está or deveria estar?</li>
+</ul>
+<h4 id="identificacao">Identificação</h4>
+<p>A identificação de objetos precisa ser facilmente <strong>determinável pela aplicação</strong> para permitir a recuperação precisa dos dados. 
+Por exemplo, podemos usar o identificador único CPF como chave para dados de pessoas e dividir seus possíveis valores em faixas, atribuídas a diferentes nós do sistema.</p>
+<ul>
+<li>000.000.000-00 - 111.111.111-00: nó 1</li>
+<li>111.111.111-01 - 222.222.222-00: nó 2</li>
+<li>222.222.222-01 - 333.333.333-00: nó 3</li>
+<li>...</li>
+</ul>
+<p>Contudo, esta chave é ruim pois não propicia uma distribuição uniforme da carga de trabalho entre os hosts; como CPF são gerados sequencialmente, os hosts iniciais seriam responsáveis por mais dados que os demais.</p>
+<p>Mas mesmo que a geração de CPF fosse aleatória, ainda teríamos outro problema com seu uso como chave: o CPF só se aplica a pessoas e portanto não é usável em outras aplicações.
+Para resolver estes três problemas, recorremos a uma abordagem usada na literatura da área, dividindo a identificação em duas camadas:</p>
+<ul>
+<li>Seja <span class="arithmatex">\(i\)</span> o identificador do objeto, dado pela aplicação (e.g., CPF, nome, telefone)</li>
+<li>Seja <span class="arithmatex">\(h\)</span> uma função <em>hash</em> criptográfica</li>
+<li>O objeto identificado por <span class="arithmatex">\(i\)</span> na aplicação será identificado por <span class="arithmatex">\(k = h(i)\)</span> dentro da DHT.</li>
+</ul>
+<h4 id="divisao-da-carga">Divisão da carga</h4>
+<p>Se usarmos, por exemplo, MD5, é fato que <span class="arithmatex">\(k\)</span> tem distribuição uniforme no espaço de 0 a <span class="arithmatex">\(2^{160}-1\)</span> possíveis valores.
+Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de <span class="arithmatex">\(k\)</span>.
+Alguns exemplos de divisão são:</p>
+<ul>
+<li>defina <em>buckets</em> para cada host e atribua o dado com chave <span class="arithmatex">\(k\)</span> para bucket <span class="arithmatex">\(k \% b\)</span>, onde <span class="arithmatex">\(b\)</span> é o número de buckets</li>
+<li>divida a faixa de valores em <span class="arithmatex">\(b\)</span> segmentos e atribua a cada host uma faixa</li>
+<li>dados <span class="arithmatex">\(2^n\)</span> hosts, atribua ao host <span class="arithmatex">\(0 &lt; x &lt; 2^n-1\)</span> os dados cujas chaves terminem com o valor <span class="arithmatex">\(x\)</span>.</li>
+</ul>
+<p>São várias as formas de se dividir os dados e estas estão intimamente ligadas à rede sobreposta que se pretende montar e a como o roteamento será feito.</p>
+<h4 id="roteamento">Roteamento</h4>
+<p>Para estudar o desafio do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:hyper">
+<p>No caso da grade 4x4, a o hipercubo é topologicamente igual à rede obtida pela distância cartesiana como mostrado no exemplo acima.&#160;<a class="footnote-backref" href="#fnref:hyper" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:icpc_hyper">
+<p>Neste <a href="https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf">problema</a> do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.&#160;<a class="footnote-backref" href="#fnref:icpc_hyper" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../comm/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Comunicação
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../microservices/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              Microsserviços
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>

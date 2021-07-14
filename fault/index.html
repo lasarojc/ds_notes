@@ -14,7 +14,7 @@
     
     
       
-        <title>Fault - Notas em Sistemas Distribuídos</title>
+        <title>Tolerância a Falhas - Notas em Sistemas Distribuídos</title>
       
     
     
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fault
+              Tolerância a Falhas
             
           </span>
         </div>
@@ -222,6 +222,476 @@
     <li class="md-nav__item">
       <a href="../intro/" class="md-nav__link">
         Introdução
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fundamentals/" class="md-nav__link">
+        Modelos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comm/" class="md-nav__link">
+        Comunicação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../p2p/" class="md-nav__link">
+        P2P
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../microservices/" class="md-nav__link">
+        Microsserviços
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tolerância a Falhas
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Tolerância a Falhas
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tolerancia-a-falhas" class="md-nav__link">
+    Tolerância a Falhas
+  </a>
+  
+    <nav class="md-nav" aria-label="Tolerância a Falhas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dependabilidade" class="md-nav__link">
+    Dependabilidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falhas-erros-e-defeitos" class="md-nav__link">
+    Falhas, Erros e Defeitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Falhas, Erros e Defeitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes-de-defeitos" class="md-nav__link">
+    Classes de Defeitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes de Defeitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quebra" class="md-nav__link">
+    Quebra
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#omissao" class="md-nav__link">
+    Omissão
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporizacao" class="md-nav__link">
+    Temporização
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arbitrarios" class="md-nav__link">
+    Arbitrários
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hierarquia" class="md-nav__link">
+    Hierarquia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defeitos-intermitentes" class="md-nav__link">
+    Defeitos intermitentes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correlacao-entre-falhas" class="md-nav__link">
+    Correlação entre falhas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-lidar-com-falhas" class="md-nav__link">
+    Como lidar com falhas?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acordo" class="md-nav__link">
+    Acordo
+  </a>
+  
+    <nav class="md-nav" aria-label="Acordo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uma-historia-de-tres-exercitos" class="md-nav__link">
+    Uma história de três exércitos
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impossibilidade" class="md-nav__link">
+    Impossibilidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consenso" class="md-nav__link">
+    Consenso
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detectores-de-defeitos-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos não Confiáveis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paxos-algoritmo-do-sinodo" class="md-nav__link">
+    Paxos: Algoritmo do Sínodo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
+    Difusão Totalmente Ordenada
+  </a>
+  
+    <nav class="md-nav" aria-label="Difusão Totalmente Ordenada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-raft" class="md-nav__link">
+    Estudo de Caso: Raft
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-paxos" class="md-nav__link">
+    Estudo de Caso: Paxos
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outras-ordenacoes" class="md-nav__link">
+    Outras Ordenações
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arcaboucos-para-coordenacao" class="md-nav__link">
+    Arcabouços para coordenação
+  </a>
+  
+    <nav class="md-nav" aria-label="Arcabouços para coordenação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-copycat" class="md-nav__link">
+    Estudo de caso: Copycat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-ratis" class="md-nav__link">
+    Estudo de caso: Ratis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-zookeeper" class="md-nav__link">
+    Estudo de caso: Zookeeper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-etcd" class="md-nav__link">
+    Estudo de caso: Etcd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-kafka" class="md-nav__link">
+    Estudo de caso: Kafka
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estudo-de-caso-bft-smart" class="md-nav__link">
+    Estudo de caso BFT-Smart
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consistency/" class="md-nav__link">
+        Consistência
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cases/" class="md-nav__link">
+        Estudos de Caso
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tech/" class="md-nav__link">
+        Tecnologias
       </a>
     </li>
   
@@ -517,7 +987,7 @@
        as the main headline.
     -->
 
-  <h1>Fault</h1>
+  <h1>Tolerância a Falhas</h1>
 
 
   <!-- Content -->
@@ -2591,6 +3061,39 @@ Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class=
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../time/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Tempo
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../consistency/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              Consistência
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
