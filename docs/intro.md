@@ -19,7 +19,8 @@ Sejam estes sistemas construído com blocos que se encaixam perfeitamente, dispo
 ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
 o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolítico**.[^centr]
 
-[^centr]: Neste ponto, devo estressar que muitos se referem a sistemas não-distribuídos como **centralizados** mas preferimos reservar este termo para sistemas distribuídos que usam um processo centralizador. O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sentimos que este uso está de acordo com o uso que fazemos aqui.
+[^centr]: Neste ponto, devo estressar que muitos se referem a sistemas não-distribuídos como **centralizados** mas prefiro reservar este termo para sistemas distribuídos que usam um processo centralizador. 
+O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sinto que este uso está de acordo com o uso que fazemos aqui.
 
 Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que não foram pensadas para trabalhar juntas, forçando-nos a usar um pouco de super-cola e arame. 
 
@@ -300,7 +301,7 @@ Para que seja realizada, a computação pervasiva requer que dispositivos **dete
         Para quem viu o filme [Minority Report](https://www.imdb.com/title/tt0181689/) e sonhou com as UI do futuro, aqui vai um *reality check*. Para quem não viu ainda, corrija esta falha em sua formação técnica o mais rapidamente possível.
         <iframe width="560" height="315" src="https://www.youtube.com/embed/RJ4KxaWraJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Redes de Sensores e Internet das Coisas
+###### Redes de Sensores e Internet das Coisas
 
 Eu vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subsessão de Sistemas Pervasivos.
 Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "leêm" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
@@ -322,7 +323,7 @@ Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, an
     * [link](https://beebom.com/examples-of-internet-of-things-technology/)
 
 
-#### Uma nota sobre privacidade nos sistemas pervasivos
+###### Uma nota sobre privacidade nos sistemas pervasivos
 
 À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.

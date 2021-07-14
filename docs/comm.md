@@ -1,4 +1,476 @@
-# Comunicação
+As camadas de abstração mais básicas do desenvolvimento de SD estão **na rede de computadores**, que servem de substrato a todo e qualquer sistema distribuído, afinal, a pedra fundamental da construção de sistemas distribuídos é a capacidade de comunicação entre seus componentes.
+
+## Canais e Protocolos
+
+Para que os componentes de um sistema distribuído se comuniquem, é necessário que seus *hosts* possuam **interfaces de rede** e que estas interfaces estejam ligadas a uma rede com capacidade de roteamento de dados, estabelecendo um **canal de comunicação** entre os componentes.
+Além do canal, é também necessário que se estabeleça um **protocolo de comunicação**, que define as regras para que a comunicação aconteça, por exemplo, a gramática para formação de mensagens.
+Por exemplo, quando você fala com uma pessoa, cara-a-cara, o meio de comunicação é o ar e o protocolo utilizado é a linguagem conhecida pelas duas partes, o Português por exemplo.
+Na prática, canais de comunicação podem ter diversas topologias e características, por exemplo:
+
+| Ponto-a-ponto  | Barramento Compartilhado | Token Ring |
+|----------------|--------------------------|------------|
+| Sem colisões   | Com colisões             | Sem colisões|
+| Roteamento trivial | Roteamento complexo | Roteamento simples|
+| Caro (exponencial) | Barato (linear) | Barato (linear)|
+
+Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**, mesmo que este esteja por vezes escondido.
+Sobre este meio, são usados protocolos para, por exemplo,
+
+* Controle de acesso ao meio 
+* Transmissão de mensagens
+* Evitar e tratar colisões
+
+As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, ***gateways*** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro, via tais intermediários.
+
+Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de **comutação de pacotes** (*packet switching*) ou de **circuitos** (*circuit switching*).
+
+| Comutação de pacotes | Comutação de circuito |
+|-|-|
+| Cada pacote viaja independentemente | Todo pacote viaja por caminho predefinido|
+| Latência variável | Latência mais constante|
+| Banda não reservada | Banda reservada |
+| Banda não desperdiçada | Banda desperdiçada |
+
+
+Outro fator importante é a **unidade máxima de transmissão** (*maximum transmission unit*, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
+
+Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a **mensagem pode ser perdida** no meio.
+
+Felizmente boa parte da **complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
+Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.
+
+
+## A Internet
+
+A Internet tem este nome por usar o protocolo de interconexão de redes independentes, o *internetworking protocol*, ou IP.
+Para a aplicação usando o IP, todas as redes se comportam como uma única e coerente rede, exceto por alguns detalhes.
+Os elementos que conectam as diversas redes são denominados **roteadores** e fazem um **melhor esforço** para encaminhar os pacotes de dados do remetente ao destinatário.
+
+![A Internet](images/internet.png)[^internet]
+
+[^internet]: By User:Ludovic.ferre - Internet Connectivity Distribution&Core.svg, CC BY-SA 3.0, (https://commons.wikimedia.org/w/index.php?curid=10030716)
+
+Se você se lembrar da pilha de protocolos de comunicação de referência OSI, lembrará que há uma organização em camadas em que cada camada é responsável pela comunicação em um nível e serve de fundação para a funcionalidade da camada de cima, isto é, cada camada é responsável pela comunicação em um nível de abstração que serve de base para o nível imediatamente superior:
+O protocolo de cada camada inclui **cabeçalhos** (*header*) e **carga** (*payload*) e o conjunto de cabeçalho + carga de uma camada é considerado carga da camada inferior.
+Assim, embora tenha-se a impressão de que cada camada conversa com a equivalente do outro lado da comunicação, na prática, a comunicação desce e sobe a pilha. 
+
+![Pilhas de Comunicação](drawings/pilha.drawio#0)
+
+São sete as camadas:
+
+1. Física: Bits
+2. Enlace: Frames/quadros; controle de fluxo; acesso ao meio.
+3. Rede: Datagramas/pacotes; roteamento
+4. Transporte: Controle de fluxo; fim a fim; confiabilidade; tcp e udp
+5. Sessão: Streams/fluxos; conexões lógicas; restart; checkpoint; http, ssl
+6. Apresentação: Objetos; json, xml; criptografia
+7. Aplicação: Aplicações; http, pop, ftp
+
+![Pilhas de Comunicação](drawings/pilha.drawio#1)
+
+Embora o IP se refira estritamente ao protocolo da camada 3 da pilha, nos referimos à pilha que usa este protocolo como a pilha IP.
+Comparada à pilha OSI, a IP é mais simples, como se vê na figura, 
+pois as camadas 5 e 6 não estão presentes na pilha IP e as funcionalidades correspondentes são implementadas na camada 7, de aplicaçao.
+
+[![OSI x IP](drawings/pilha.drawio#2)](http://computing.dcu.ie/~humphrys/Notes/Networks/intro.2.html)
+
+Contudo, não tema! Estas funcionalidades podem se normalmente implementadas por meio de *frameworks* ou do *middleware* em uso.
+Alguns exemplos de tais funcionalidades são
+
+* (De)Serialização - conversão de estruturas complexas, e.g., objetos e estruturas, em sequência de bytes.
+* Nomeamento - identificação de *hosts*
+* Criptografia - ocultação dos dados trafegados
+* Replicação - comunicação com múltiplos interlocutores
+* Invocação remota de procedimentos - abstração de protocolos de comunicação
+
+A grande vantagem desta abordagem é que se pode implementar exatamente e somente as funcionalidades desejadas.
+Este característica é conhecida como o [argumento fim-a-fim no projeto de sistemas](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf); uma análise recente deste argumento foi feita [aqui](https://blog.acolyer.org/2014/11/14/end-to-end-arguments-in-system-design/).
+
+
+Como usuários da pilha IP, temos que entender como a camada 3 funciona, mas dificilmente interagiremos com algo além da camada 4, a camada de **transporte**.
+
+### Sockets
+
+Na prática, para implementarmos a comunicação entre processos, usamos **sockets**.
+Para se definir um socket a partir de um ***host*** é necessário identificar o outro fim da comunicação, isto é, o outro *host*, ou melhor, uma de suas interfaces de rede.
+Os sockets são então a abstração dos canais de comunicação, mas como dito antes, é necessário definir também os protocolos usados por estes sockets.
+O primeiro protocolo é o de endereçamento, que define qual pilha de protocolos usar, na camada 3.
+No caso da pilha IP, usa-se o protocolo AF\_INET ou PF\_INET.
+Escolhido o protocolo, 
+
+* cada interface tem um endereço MAC, na camada 2, que a identifica entre as interfaces na mesma rede local, e 
+* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.[^ippub]
+
+[^ippub]:Endereços IP não públicos não servem como identificadores únicos na Internet.
+
+Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
+Isto é feito pela definição uma porta:
+
+* Porta: inteiro de 16 bits
+* Associadas a serviços pela [Internet Assigned Numbers Authority](http://www.iana.org), IANA.
+     * Portas "Bem conhecidas": 0-1023
+     * Portas Proprietárias: 49151
+     * Portas Dinâmicas: 65535
+
+Também é necessário definir o protocolo de transporte dos dados, na camada 4.
+Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UDP (**SOCK\_DGRAM**).
+
+A API usada para estabelecer a conversa via socket tem várias chamadas, que devem ser executadas na ordem certa no processo iniciando a conversa e naquele que aceita participar da mesma. Comecemos estudando o TCP.
+
+### TCP
+
+O fluxograma da criação de um socket TCP é apresentado na seguinte figura:
+```mermaid
+stateDiagram-v2
+   Servidor --> Entrada/Saída
+   Cliente --> Entrada/Saída
+   Entrada/Saída --> Encerramento
+
+   state Servidor {
+     ss: Cria socket
+     sb: Associa porta
+     sl: Escuta conexões
+     sa: Aceita conexões
+     ss --> sb 
+     sb --> sl
+     sl --> sa
+   }
+
+   state Entrada/Saída {
+     leitura --> escrita
+     escrita --> leitura
+   }
+
+   state Cliente {   
+     cs: Cria socket
+     cc: Inicia conexão
+     cs --> cc
+   }
+
+   state Encerramento {
+       sc: Fecha conexão
+   }
+```
+
+<!--![image](images/04-15.png)-->
+
+Estabelecido o socket, o mesmo pode ser usado como um **arquivo**, isto é, lendo-se e escrevendo-se bytes.
+O que exatamente deve ser escrito e como o que é lido deve ser interpretado é o protocolo da camada 7, **sua responsabilidade**.
+
+Vejamos um exemplo do uso de sockets, em Python, descrito no arquivo `server.py`.[^pyname]
+
+[^pyname]:Você pode usar outro nome, desde que não seja `socket.py`, e que adapte o comando para sua execução.
+
+```python
+#server.py
+#!/usr/bin/python                           # This is server.py file
+
+import socket                               # Import socket module
+
+s = socket.socket()                         # Create a socket object
+host = socket.gethostname()	                # Get local machine name
+port = 12345                                # Reserve a port for your service.
+s.bind((host, port))                        # Bind to the port
+
+s.listen(5)                                 # Now wait for client connections.
+while True:
+   c, addr = s.accept()                     # Establish connection with client.
+   print('Got connection from', addr)
+   c.send('Thank you for connecting'.encode())
+   c.close()                                # Close the connection
+```
+
+Para executá-lo, execute o seguinte comando em um terminal. 
+
+```bash
+python server.py
+```
+
+Em outro terminal, execute **um dos** dois comandos a seguir. [^telnet]
+
+[^telnet]:O programa `telnet` é normalmente instalado por padrão tanto no Windows, OSX quanto no Linux. Já o `netcat` normalmente precisa ser instalado por você. Em alguns sistemas, em vez de `netcat` o comando é o `nc`.
+
+```bash
+telnet localhost 12345
+```
+
+```bash
+netcat localhost 12345
+```
+
+No segundo terminal a mensagem 
+`Thank you for connecting`
+será impressa, enquanto no primeiro veremos algo como 
+ `('Got connection from', ('127.0.0.1', 57801))` 
+ 
+O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
+Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
+Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
+Simples, não é mesmo?
+
+Duas observações importantes a serem feitas aqui. 
+A primeira é que, em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
+
+
+Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
+Do lado cliente, estabelece-se uma conexão apontando-se para onde está o servidor.
+```Python
+#client.py
+
+#!/usr/bin/python                      # This is client.py file
+
+import socket                          # Import socket module
+
+s = socket.socket()                    # Create a socket object
+host = socket.gethostname()            # Get local machine name
+port = 12345                           # Reserve a port for your service.
+
+s.connect((host, port))
+data = s.recv(1024)
+print(data.decode())
+s.close()                              # Close the socket when done
+```
+
+E para se executar o cliente, faça:
+```bash
+python client.py
+```
+
+Observe que o `socket.close()` encerra a conexão do lado de quem invoca. Na contraparte, invocações a `socket.recv()` retornam com 0 bytes lidos.
+
+A título de comparação, em Java, a criação do socket do lado do servidor seria muito mais simples, consistindo apenas em: 
+```Java
+Socket s = new ServerSocket(port);
+```
+
+O cliente em Java também é simplificado.
+```Java
+Socket s = new Socket(hostname,port);
+```
+
+!!! question "Exercício: Múltiplos Pacotes"
+    Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim
+
+    ```Python
+    ...
+    c.send('Thank you for connecting'.encode())
+    c.send('Come back often'.encode())
+    ...
+    ```
+
+    Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
+
+    Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
+    ```Python
+    ...
+    print("1")
+    data = s.recv(1024)
+    print(data.decode())
+    print("2")
+    data = s.recv(1024)
+    print(data.decode())
+    ...
+    ```
+
+    E agora, o que acontece? A saída é como esperava? Como explica este fenômeno e como poderia corrigí-lo?
+
+!!! question "Exercício: Ping-Pong"
+
+    Modifique cliente e servidor tal que o cliente envie uma mensagem passada na linha de comando ao servidor e fique esperando uma resposta, e tal que o servidor fique esperando uma mensagem e então solicite ao operador que digite uma resposta e a envie para o cliente. O loop continua até que o usuário digite SAIR, e a conexão seja encerrada.
+
+
+    | Terminal 1                 |  Terminal 2 |
+    |----------------------------|-------------|
+    | python server.py           | python client.py| 
+    | Esperando conexão.         | conectando-se ao servidor |
+    | Conectado                  | Conectado                 |
+    | Esperando mensagem         | Digite mensagem: lalala   |
+    |                            | Mensagem enviada          |
+    | Mensagem recebida: lalala  | Esperando resposta        |
+    | Digite resposta: lelele    |                           |
+    | Resposta enviada.          |  Resposta recebida: lelele|
+    |                            |  Digite mensagem: SAIR    |
+    |                            |  Desconectando.           |
+    | Conexão encerrada.         |                           |
+    | Esperando conexão.         |                           |
+  
+    Observe que para ler do teclado em Python 2 você deve usar `#!py3 x = raw_input()`, enquanto que em Python 3 seria `#!py3 x = input()`. Além disso, em Python 2, você deve remover as invocações para `encode` e `decode`.
+
+
+
+### UDP 
+
+No exemplo anterior, usamos o protocolo TCP (o padrão da API). Caso quiséssemos usar UDP, precisaríamos nos atentar a alguns detalhes.
+
+A criação do socket é feita explicitando-se o uso de **datagramas**: `#!py3 s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)`
+
+Um servidor UDP não executa `listen` ou `accept` e, em Python, simplesmente executa `#!py3 data, addr = sock.recvfrom(4096)` para receber o datagrama, onde `data` é o conteúdo recebido e  `addr` o endereço de quem enviou o datagrama.
+
+Neste caso, um mesmo socket é usado para manter comunicação com múltiplos interlocutores. Para enviar uma resposta a um interlocutor em específico, `addr` é usado: `#!py3 sent = sock.sendto(data, addr)`, onde `sent` é a quantidade de bytes enviados.
+
+Além deste detalhe, é importante manter em mente outras características do UDP:
+
+* falta de ordem
+* falta de confiabilidade
+* menos dados lidos que enviados.
+* mais dados lidos que enviados (pode acontecer também no TCP)
+
+Com tantas dificuldades para se usar o UDP, fica a questão: **para que serve UDP?**
+
+!!! question "Exercício: Ping-Pong UDP"
+    Modifique o código do exercício Ping-Pong para usar UDP em vez de TCP na comunicação entre nós.
+    Execute múltiplos clientes ao mesmo tempo. Como o seu servidor lida com isso? Modifique-o para mandar um "eco" da mensagem recebida de volta ao remetente. 
+
+
+### IP-Multicast
+
+Imagine que você tenha que enviar um *stream* de vídeo para um amigo mostrando como você está jogando o mais novo jogo da velha no mercado.
+Qual protocolo de transporte você usaria? TCP, provavelmente, já que garante a entrega ordenada dos pacotes do vídeo.
+Como você já sabe, o TCP envia confirmações de pacotes recebidos e usa uma janela deslizante para determinar quais pacotes reenviar, o que pode causar interrupções na execução do vídeo.
+Além do mais, as pessoas provavelmente preferirão perder alguns quadros que perder a sincronia com sua excitante partida.
+Parece que uma opção melhor seria então usar UDP, correto?
+
+Imagine agora que os mesmos dados devam ser enviados para múltiplos destinatários (você está ficando famoso!)
+Com múltiplos destinatários, múltiplos controles precisariam ser mantidos no TCP, o que pode se tornar custoso; mais uma razão para usar UDP!
+
+![Multicast](drawings/group_com.drawio#0)
+
+Para terminar, lhe darei uma razão final: IP-Multicast!
+Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um grupo de destinatários, em vez de apenas um. 
+
+![Multicast](drawings/group_com.drawio#1)
+
+IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
+Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
+A seguinte tabela descreve os usos das sub-faixas de endereços.[^multicast_use]
+[^multicast_use]:  [Understanding IP Multicast](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
+
+| Endereço | Uso |
+|----------|-----|
+|224.0.0.0-224.0.0.255| Multicast local - Usado por protocolos L2, como EIGRP e OSPF|
+|224.0.1.0-224.0.1.255| Multicast roteaddo - Usado por protocolos L3| 
+|232.0.0.0-232.255.255.255| *Source Specific Multicast* - Receptores definem fontes confiáveis|
+|233.0.0.0-233.255.255.255| Reservado para detentores *Autonomous Systems* |
+|239.0.0.0-239.255.255.255| Reservado para IANA |
+|Resto | Uso geral|
+
+
+
+Quando um pacote é enviado para o endereço do grupo, **todos** os membros do grupo recebem tal mensagem.
+Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos falando de UDP, **é possível que alguns não recebam**.
+Além disso, **não há garantia qualquer sobre a ordem de recepção das mensagens**.
+
+Apenas reforçando, IP-Multicast só funciona com UDP, pois lidar com retransmissões em um grupo grande levaria a um estado imenso sendo mantido na origem dos dados.
+Outro ponto importante é que pelo podencial desestabilizador do IP-Multicast, ele é normalemente limitado à pequenas seções das redes.
+
+Mas experimentemos com esta tecnologia na prática.
+Criemos um programa que **criar Socket UDP**, **associa-o a um grupo**, e **recebe pacotes** destinados ao grupo.
+
+```Java
+// MReceiver.java
+import java.io.*;
+import java.net.*;
+
+public class MReceiver {
+  public static void main(String[] args) {
+    byte[] inBuf = new byte[256];
+    try {
+      MulticastSocket socket = new MulticastSocket(8888);
+      InetAddress address = InetAddress.getByName("224.2.2.3");
+      socket.joinGroup(address);
+      while (true) {
+        DatagramPacket inPacket = new DatagramPacket(inBuf, inBuf.length);
+        socket.receive(inPacket);
+        String msg = new String(inBuf, 0, inPacket.getLength());
+        System.out.println("From " + inPacket.getAddress() + " Msg : " + msg);
+      }
+    }catch (IOException ioe) {
+      System.out.println(ioe);
+    }
+  }
+}
+```
+
+Instancie múltiplos processos deste, na mesma máquina e em máquinas distintas.
+Agora criemos um programa que envia pacotes para o dito grupo.
+
+```Java 
+// MSender.java
+import java.io.*;
+import java.net.*;
+public class MSender {
+ public static void main(String[] args) {
+  byte[] outBuf;
+  final int PORT = 8888;
+  try {
+   DatagramSocket socket = new DatagramSocket();
+   long counter = 0;
+   InetAddress address = InetAddress.getByName("224.2.2.3");
+   while (true) {
+    counter++;
+    outBuf = ("Multicast numero " + counter + " " + address).getBytes();
+    DatagramPacket outPacket = new DatagramPacket(outBuf, outBuf.length, address, PORT);
+    socket.send(outPacket);
+    try { Thread.sleep(500); }catch (InterruptedException ie) {}
+   }
+  } catch (IOException ioe) { System.out.println(ioe); }
+ }
+}
+```
+
+Observe como a mesma mensagem é recebida pelos vários membros e que como diferentes fontes tem seus pacotes recebidos.
+
+A título de curiosidade, IP-Multicast também está presente em IPv6, mas com algumas pequenas diferenças 
+
+!!! tip "IP-Multicast em IPv6[^ipv6multi]"
+    In IPv6, the left-most bits of an address are used to determine its type. For a multicast address, the first 8 bits are all ones, i.e. FF00::/8. Further, bit 113-116 represent the scope of the address, which can be either one of the following 4: Global, Site-local, Link-local, Node-local.
+
+    In addition to unicast and multicast, IPv6 also supports anycast, in which a packet can be sent to any member of the group, but need not be sent to all members.''
+
+[^ipv6multi]: [IP-Multicast em IPv6](http://www.baeldung.com/java-broadcast-multicast)
+
+
+!!! question "Exercício: IP-Multicast"
+    Implemente e teste o seguinte **receiver**, colocando várias instâncias para executar em múltiplos terminais, ao mesmo tempo.
+
+    ```Python
+    import socket
+    import struct
+
+    MCAST_GRP = '224.1.1.1'
+    MCAST_PORT = 5007
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind(('', MCAST_PORT))
+    mreq = struct.pack("=4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
+    #4 bytes (4s) seguidos de um long (l), usando ordem nativa (=)
+
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+
+    while True:
+        print(sock.recv(10240).decode())
+    ```
+
+    Implemente e teste o seguinte **sender**.
+
+    ```Python
+    import socket
+
+    MCAST_GRP = '224.1.1.1'
+    MCAST_PORT = 5007
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+    sock.sendto(input().encode(), (MCAST_GRP, MCAST_PORT))
+    ```
+
+
+
+
+## Além dos Sockets
+
 
 O desenvolvimento de sistemas distribuídos usando diretamente Sockets como forma de comunicação entre componentes não é para os fracos de coração.
 Sua grande vantagem está no **acesso baixo nível à rede**, e todo o ganho de desempenho que isso pode trazer.
@@ -12,7 +484,7 @@ Suas desvantagens, entretanto, são várias:
 Enquanto se poderia argumentar que algumas destas desvantagens podem ser descartadas em função da discussão de incluir ou não API na comunicação [fim-a-fim](http://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf), é certo que algumas funcionalidades são ubíquas em aplicações distribuídas.
 Foquemo-nos agora na necessidade de representar dados complexos em formato inteligível pelos vários componentes da aplicação distribuída.
 
-## Representação de dados
+### Representação de dados
 
 Exceto por aplicações muito simples, processos em um sistema distribuído trocam dados complexos, por exemplo estruturas ou classes com diversos campos, incluindo valores numéricos de diversos tipos, strings e vetores de bytes, com diversos níveis de aninhamento e somando vários KB.
 Neste cenário, vários fatores precisam ser levados em consideração na hora de colocar esta estrutura *no fio*, como:
@@ -824,606 +1296,13 @@ O fluxo de processamento é o seguinte:
     * Conexões
 
 
-## Estudos de Caso
-
-### RPC: gRPC
-
-gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
-Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.
-
-O sítio [gRPC.io](https://grpc.io) documenta muito bem o gRPC, inclusive os [princípios](https://grpc.io/blog/principles/) que nortearam seu projeto.
-
-O seu uso segue, em linhas gerais, o modelo discutido nas seções anteriores, isto é, inicia-se pela definição de estruturas de dados e serviços, "compila-se" a definição para gerar stubs na linguagem desejada, e compila-se os stubs juntamente com os códigos cliente e servidor para gerar os binários correspondentes.
-Vejamos a seguir um tutorial passo a passo, em Java, baseado no [quickstart guide](https://grpc.io/docs/quickstart/java.html).
-
-#### Instalação
-
-Os procedimentos de instalação dependem da linguagem em que pretende usar o gRPC, tanto para cliente quanto para servidor.
-No caso do **Java**, **não há instalação propriamente dita**.
-
-#### Exemplo Java
-
-Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.
-
-##### Pegando o código
-
-Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.
-
-```bash
-git clone -b v1.33.0 https://github.com/grpc/grpc-java
-```
-
-Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.
-
-```bash
-cd grpc-java/examples
-git checkout v1.36.0
-```
-
-##### Compilando e executando
-
-O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
-
-
-```bash
-cd grpc-java/examples
-./gradlew installDist -PskipAndroid=true
-```
-
-Caso esteja na UFU, coloque também informação sobre o proxy no comando.
-
-```bash
-./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
-```
-
-Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.
-
-```bash
-./build/install/examples/bin/hello-world-server
-```
-
-Agora, em **um terminal distinto** e a partir da mesma localização, execute o cliente, quantas vezes quiser.
-
-```bash
-./build/install/examples/bin/hello-world-client
-```
-
-##### O serviço
-
-O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
-O serviço é definido no seguinte arquivo `.proto`, localizado em `./src/main/proto/helloworld.proto`.
-
-```protobuf
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-
-
-// The greeting service definition.
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-}
-```
-
-No arquivo, inicialmente são definidas duas mensagens, usadas como requisição (cliente para servidor) e outra como resposta (servidor para cliente) do serviço definido em seguida.
-
-A mensagem `HelloRequest` tem apenas um campo denominado `name`, do tipo `string`. Esta mensagem conterá o nome do cliente, usado na resposta gerada pelo servidor.
-
-A mensagem `HelloReply` também tem um campo do tipo `string`, denominado `message`, que conterá a resposta do servidor.
-
-O serviço disponível é definido pela palavra chave `service`e de nome `Greeter`; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.
-
-O serviço possui apenas uma operação, `SayHello`, que recebe como entrada uma mensagem `HelloRequest` e gera como resposta uma mensagem `HelloReply`.
-Caso a operação precisasse de mais do que o conteúdo de `name` para executar, a mensagem `HelloRequest` deveria ser estendida, pois não há passar mais de uma mensagem para a operação.
-Por outro lado, embora seja possível passar zero mensagens, esta não é uma prática recomendada.
-Isto porquê caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
-Assim, caso não haja a necessidade de se passar qualquer informação para a operação, recomenda-se que seja usada uma mensagem de entrada vazia, que poderia ser estendida no futuro.
-O mesmo se aplica ao resultado da operação.
-
-Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
-Por exemplo, para definir uma versão em português da operação `SayHello`, podemos fazer da seguinte forma.
-
-```protobuf
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
-  string message = 1;
-}
-
-message OlaRequest {     // <<<<<====
-  string name = 1;
-}
-
-message OlaReply {       // <<<<<====
-  string message = 1;
-}
-
-service Greeter {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
-  rpc DigaOla (OlaRequest) returns (OlaReply) {}// <<<<<====
-}
-...
-```
-
-Observe que a nova operação recebe como entrada  mensagens `OlaRequest` e `OlaReply`, que tem definições exatamente iguais a `HellorRequest` e `HelloReply`.
-Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
-Apenas reforçando, é boa prática definir *requests* e *responses* para cada método, a não ser que não haja dúvida de que serão para sempre iguais.
-
-
-##### Implementando um serviço
-
-Agora modifique o arquivo `.proto` como acima, para incluir a operação `DigaOla`, recompile e reexecute o serviço.
-Não dá certo, não é mesmo? Isto porquê você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
-Façamos então a modificação do código, começando por `./src/main/java/io/grpc/examples/helloworld/HelloWorldServer.java`.
-Este arquivo define a classe que **implementa** o serviço `Greeter`, `GreeterImpl`, com um método para cada uma das operações definidas. 
-Para confirmar, procure por `sayHello`para encontrar a implementação de `SayHello`; observe que a diferença do `casing` vem das boas práticas de Java, de definir métodos e variáveis em *Camel casing*.
-
-Para que sua versão estendida do serviço `Greeter` funcione, defina um método correspondendo à `DigaOla`, sem consultar o código exemplo abaixo, mas usando o código de `sayHello` como base; não se importe por enquanto com os métodos sendo invocados.
-Note que os `...` indicam que parte do código, que não sofreu modificações, foi omitido.
-
-```java
-...
-private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
-...
-
-  @Override
-  public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-      ...
-  }
-
-  @Override
-  public void digaOla(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-    OlaReply reply = 
-      OlaReply.newBuilder().setMessage("Ola " + req.getName()).build();
-    responseObserver.onNext(reply);
-    responseObserver.onCompleted();
-  }
-}
-```
-
-Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em `src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java`, novamente se baseando no código existente e não se preocupando com "detalhes".
-
-```java
-public void greet(String name) {
-  logger.info("Will try to greet " + name + " ...");
-...
-  OlaRequest request2 = OlaRequest.newBuilder().setName(name).build();
-  OlaReply response2;
-  try {
-    response2 = blockingStub.digaOla(request2);
-  } catch (StatusRuntimeException e) {
-    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-   return;
-  }
-  logger.info("Greeting: " + response2.getMessage());
-}
-```
-
-Agora sim, você pode reexecutar cliente e servidor.
-
-```bash
-./gradlew installDist
-./build/install/examples/bin/hello-world-server &
-./build/install/examples/bin/hello-world-client
-```
-
-Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes, começando sobre como um servidor gRPC é criado.
-Observe que um objeto `Server` é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo `.proto`. O `start()` também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratada.
-
-```java
-import io.grpc.Server;
-...
-private Server server;
-...
- server = ServerBuilder.forPort(port)
-                       .addService(new GreeterImpl())
-                       .build()
-                       .start();
-...
-```
-
-Do lado do cliente, é criado um `ManagedChannel` e com este um `GreeterBlockingStub`, um *stub* em cujas chamadas são bloqueantes.
-Finalmente, no *stub* são invocados os serviços definidos na IDL.
-
-```java
-import io.grpc.Channel;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-...
-ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-                                              .usePlaintext()
-                                              .build();
-...                                              
-private final GreeterGrpc.GreeterBlockingStub blockingStub = GreeterGrpc.newBlockingStub(channel);
-...
-HelloRequest request = HelloRequest.newBuilder()
-                                   .setName(name)
-                                   .build();
-HelloReply response;
-try {
-    response = blockingStub.sayHello(request);
-} catch (StatusRuntimeException e) {
-    logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-    return;
-}
-logger.info("Greeting: " + response.getMessage());
-```
-
-!!!exercise "Diga Olás!"
-    Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação `DigaOlas` em que uma **lista** de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string**cumprimentando todos os nomes, um após o outro.
-
-    ???tip "Só abra depois de pensar em como resolver o problema"
-        Você pode usar `repeated` no campo `message` do tipo `HelloRequest`.
-
-
-!!!exercise "Stream"
-    Para terminar este estudo de caso, modifique a função definida no exercício anterior para gerar múltiplas respostas, uma para cada nome passado, em vez de uma única, longa, resposta.
-
-    ???tip "Só abra depois de pensar em como resolver o problema"
-        Você deverá usar *streams*.
-
-        ```protobuf
-        rpc DigaOlas (OlaRequest) returns (stream OlaReply) {}
-        ```
-
-        - Do lado do servidor   
-        ```java
-        List<String> listOfHi = Arrays.asList("e aih", "ola", "ciao", "bao", "howdy", "s'up");
-
-        @Override
-        public void digaOlas(OlaRequest req, StreamObserver<OlaReply> responseObserver) {
-           for (String hi: listOfHi)
-           {
-              OlaReply reply = OlaReply.newBuilder().setMessage(hi + ", " req.getName()).build();
-              responseObserver.onNext(reply);
-           }
-           responseObserver.onCompleted();
-        }
-        ```   
-        - Do lado do cliente   
-        ```java
-        OlaRequest request = OlaRequest.newBuilder().setName(name).build();
-        try {
-            Iterator<OlaReply> it = blockingStub.digaOlas(request);
-            while (it.hasNext()){
-               OlaReply response = it.next();
-               logger.info("Greeting: " + response.getMessage());
-            }
-        } catch (StatusRuntimeException e) {
-            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-            return;
-        }
-        ```
-
-
-!!!exercise "Desafio de Interoperabilidade"
-    Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em java.
-
-    ```bash
-    apt-get install python3
-    apt-get install python3-pip
-    python3 -m pip install --upgrade pip
-    python3 -m pip install grpcio
-    python3 -m pip install grpcio-tools
-
-    git clone -b v1..x https://github.com/grpc/grpc
-    cd grpc/examples/python/helloworld
-    python3 greeter\_server.py
-    python3 greeter\_client.py
-    ```
-
-    Para recompilar os *stubs*, faça
-
-    ```bash
-    python3 -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/helloworld.proto
-    ```
-
-    Modifique o servidor
-
-    ```Python
-    def DigaOla(self, request, context):
-        return helloworld_pb2.OlaReply(message='Ola, %s!' + request.name)
-    ```
-
-    Modifique o cliente
-
-    ```Python
-    response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
-    print("Greeter client received: " + response.message)
-    ```
-
-### RPC: Thrift
-
-[Thrift](https://thrift.apache.org/)
-
-#### Instalação
-
-* [Baixe](http://www.apache.org/dyn/closer.cgi?path=/thrift/0.13.0/thrift-0.13.0.tar.gz) e compile o thrift
-* ou instale-o usando apt-get, por exemplo. `apt-get install thrift-compiler`
-* execute "thrift" na linha de comando.
-* Para thrift com Java, também precisarão dos seguintes arquivos
-  * [slf4j](http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21)
-  * [libthrift0.13.0.jar](https://mvnrepository.com/artifact/org.apache.thrift/libthrift/0.13.0)
-  * coloque-os na pasta `jars`
-
-
-#### IDL Thrift
-
-* Serviços
-```thrift
-service ChaveValor {
-    void set(1:i32 key, 2:string value),
-    string get(1:i32 key) throws (1:KeyNotFound knf),
-    void delete(1:i32 key)
-}
-```
-* **Não se pode retornar NULL!!!**
-* Exceções
-```thrift
-exception KeyNotFound {
-   1:i64 hora r,
-   2:string chaveProcurada="thrifty"
-}
-```
-
-Exemplo: chavevalor.thrift
-
-```Thrift
-namespace java chavevalor
-namespace py chavevalor
-
-
-exception KeyNotFound
-{
-}
-
-
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
-``` 	
-
-Compilação
-
-`thrift --gen java chavevalor.thrift`
-
-`thrift --gen py chavevalor.thrift`
-
-ChaveValorHandler.java
-```Java
-namespace java chavevalor
-namespace py chavevalor
-
-
-exception KeyNotFound
-{
-}
-
-
-service ChaveValor
-{
-    string getKV(1:i32 key) throws (1:KeyNotFound knf),
-    bool setKV(1:i32 key, 2:string value),
-    void delKV(1:i32 key)
-}  
- 	
-package chavevalor;
-
-import org.apache.thrift.TException;
-import java.util.HashMap;
-import chavevalor.*;
-
-public class ChaveValorHandler implements ChaveValor.Iface {
-   private HashMap<Integer,String> kv = new HashMap<>();
-   @Override
-   public String getKV(int key) throws TException {
-       if(kv.containsKey(key))
-          return kv.get(key);
-       else
-          throw new KeyNotFound();
-   }
-   @Override
-   public boolean setKV(int key, String valor) throws TException {
-       kv.put(key,valor);
-       return true;
-   }
-   @Override
-   public void delKV(int key) throws TException {
-       kv.remove(key);
-   }    
-}
-```
-
-#### Arquitetura 
-
-* Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas
-* Protocol -- responsável pela serializaçãoo dos dados
-    * TBinaryProtocol
-	* TJSONProtocol
-	* TDebugProtocol
-	* ...
-* Transport -- I/O no ``fio''
-    * TSocket
-	* TFramedTransport (non-blocking server)
-	* TFileTransport
-	* TMemoryTransport
-* Processor -- Conecta protocolos de entrada e saída com o \emph{handler}
-		
-* Handler -- Implementação das operações oferecidas
-* Server -- Escuta portas e repassa dados (protocolo) para o processors
-    * TSimpleServer
-	* TThreadPool
-	* TNonBlockingChannel
-
-
-
-#### Classpath
-
-```bash
-javac  -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java  -d . *.java 
-java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorServer
-java -cp jars/libthrift0.9.3.jar:jars/slf4japi1.7.21.jar:gen-java:. chavevalor.ChaveValorClient	
-```
-
-
-### RPC: Remote Method Invocation
-
-??? bug "TODO"
-    Como usar RMI.
-
-
-
-
-### Pub/Sub: MosQuiTTo
-
->[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
-
-MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
-É leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
-
->MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.
-
-O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.
-
-
-
-###### Instalação
-
-* Ubuntu: `apt-get install mosquitto`
-* MacOS: brew install mosquitto
-* Windows: baixe [mosquitto-2.0.9a-install-windows-x64.exe](http://mosquitto.org/download)
-
-###### Inicializando o serviço
-
-O arquivo `mosquito.conf` contém as configurações para o *broker*. 
-As configurações funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
-Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que ocorre internamente.
-
-* Ubuntu: `mosquitto -v`
-* MacOS: `/usr/local/sbin/mosquitto -c /usr/local/etc/mosquitto/mosquitto.conf`
-
-
-###### Publicando
-
-Para publicar uma mensagem, o *publisher* deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se `localhost:1883`.
-No MacOS, adicione `/usr/local/opt/mosquitto/bin/mosquitto_sub` ao *path*.
-
-```bash
-# publicando valor de 40 para tópicos 'sensor/temperature/1' e 'sensor/temperature/2'
-mosquitto_pub -t sensor/temperature/1 -m 40
-mosquitto_pub -t sensor/temperature/2 -m 32
-```
-
-Caso o *subscriber* não esteja em execução, adicione a opção `-r` para que o broker retenha a mensagem.
-
-###### Consumindo
-
-O consumidor funciona de maneira semelhante, informando o tópico de interesse:
-
-```bash
-# consumindo mensagens de tópico /sensor/temperature/*
-mosquito_pub -t sensor/temperature/+
-```
-
-###### Programando
-
-Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
-A biblioteca pode ser baixada [aqui](https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar).
-
-
-```java
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-
-public class MqttPublishSample {
-
-  public static void main(String[] args) {
-    String topic        = "MQTT Examples";
-    String content      = "Message from MqttPublishSample";
-    int qos             = 2;
-    String broker       = "tcp://mqtt.eclipse.org:1883";
-    String clientId     = "JavaSample";
-    MemoryPersistence persistence = new MemoryPersistence();
-
-    try {
-      MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
-      MqttConnectOptions connOpts = new MqttConnectOptions();
-      connOpts.setCleanSession(true);
-      System.out.println("Connecting to broker: "+broker);
-      sampleClient.connect(connOpts);
-      System.out.println("Connected");
-      System.out.println("Publishing message: "+content);
-      MqttMessage message = new MqttMessage(content.getBytes());
-      message.setQos(qos);
-      sampleClient.publish(topic, message);
-      System.out.println("Message published");
-      sampleClient.disconnect();
-      System.out.println("Disconnected");
-      System.exit(0);
-    } catch(MqttException me) {
-      System.out.println("reason "+me.getReasonCode());
-      System.out.println("msg "+me.getMessage());
-      System.out.println("loc "+me.getLocalizedMessage());
-      System.out.println("cause "+me.getCause());
-      System.out.println("excep "+me);
-      me.printStackTrace();
-    }
-  }
-}
-```
-
-???todo "Hive"
-     * `/usr/local/opt/mosquitto/bin/mosquitto_sub -h broker.hivemq.com  -p 1883 -t esportes/+/flamengo`
-     * `/usr/local/opt/mosquitto/bin/mosquitto_pub -t esportes/nadacao/flamengo -m "perdeu mais uma vez" -r -h broker.hivemq.com`
-
-
-<!-- Distinction from message queues
-There is a lot of confusion about the name MQTT and whether the protocol is implemented as a message queue or not. We will try to shed some light on the topic and explain the differences. In our last post, we mentioned that MQTT refers to the MQseries product from IBM and has nothing to do with “message queue“. Regardless of where the name comes from, it’s useful to understand the differences between MQTT and a traditional message queue:
-
-A message queue stores message until they are consumed When you use a message queue, each incoming message is stored in the queue until it is picked up by a client (often called a consumer). If no client picks up the message, the message remains stuck in the queue and waits to be consumed. In a message queue, it is not possible for a message not to be processed by any client, as it is in MQTT if nobody subscribes to a topic.
-
-A message is only consumed by one client 
-Another big difference is that in a traditional message queue a message can be processed by one consumer only. The load is distributed between all consumers for a queue. In MQTT the behavior is quite the opposite: every subscriber that subscribes to the topic gets the message.
-
-Queues are named and must be created explicitly 
-A queue is far more rigid than a topic. Before a queue can be used, the queue must be created explicitly with a separate command. Only after the queue is named and created is it possible to publish or consume messages. In contrast, MQTT topics are extremely flexible and can be created on the fly.
-
-If you can think of any other differences that we overlooked, we would love to hear from you in the comments. -->
-
-
-
-
-
-
-!!! question "Exercícios - RPC e Publish/Subscribe"
-    * Usando *thrift* e a linguagem Java, estenda o serviço ChaveValor para retornar o valor antigo de uma determinada chave na operação `setKV()`  caso a chave já exista.
-    * Usando o *broker* mosquitto instalado localmente, faça em Java um *publisher* que simula um sensor de temperatura e publica valores aleatórios entre 15 e 45 a cada segundo.
-    * Faça o *subscriber* que irá consumir esses dados de temperatura.
-
 
 
 ## Referências
 * [The call Stack](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
-* [What is gRPC: introduction](https://grpc.io/docs/what-is-grpc/introduction/)
-* [Thrift: the missing guide](https://diwakergupta.github.io/thrift-missing-guide/)
-* [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
-* [MQTT Client in Java](https://www.baeldung.com/java-mqtt-client)
 * [Message Oriented Middleware](https://en.wikipedia.org/wiki/Message-oriented_middleware)
 * [Enterprise Message Bus](https://en.wikipedia.org/wiki/Enterprise_service_bus)
 * [To Message Bus or Not: distributed system design](https://www.netlify.com/blog/2017/03/02/to-message-bus-or-not-distributed-systems-design/)
-* [Thrift Tutorial](http://thrift-tutorial.readthedocs.org/en/latest/index.html)
 
 
 
