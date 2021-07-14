@@ -442,7 +442,66 @@
 
 
   <!-- Content -->
-  <p>, como mostra a hierarquia a seguir, adaptada de <a href="https://jepsen.io/consistency">jepsen.io</a>.</p>
+  <div class="mermaid">graph LR
+  A[Cliente] --&gt;|Requisição| B{Monitor de Transações}
+  B --&gt;|Resposta| A
+  B --&gt;|Requisição| C[(Servidor 1)]
+  B --&gt;|Requisição| D[(Servidor 2)]
+  B --&gt;|Requisição| E[(Servidor 3)]
+
+  C --&gt;|Resposta| B
+  D --&gt;|Resposta| B
+  E --&gt;|Resposta| B</div>
+<p>transacionais.
+Isto é, eles provêem as garantias na execução de transações conhecidas como propriedades ACID.</p>
+<div class="admonition note">
+<p class="admonition-title">ACID</p>
+<ul>
+<li>Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.</li>
+<li>Consistência: transações levam banco de um estado consistente a outro. E.g., <code>x == 2*y</code></li>
+<li>Isolamento: transações não vêem dados não comitados umas das outras.</li>
+<li>Durabilidade: os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.</li>
+</ul>
+</div>
+<p>Para relembrar no que implica ACID, considere a seguinte sequência de operações, onde X e Y são valores guardados pelo banco de dados, a, b e c são variáveis definidas no programa, e SELECT e SET são comandos para ler e modificar o banco de dados.</p>
+<p><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>1: a = SELECT X
+2: c = a * 2
+3: b = c + 10
+4: SET X=c
+5: SET Y=b
+</code></pre></div>
+</td></tr></table>
+Suponha duas instâncias desta sequência, <span class="arithmatex">\(T_1\)</span> e <span class="arithmatex">\(T_2\)</span>, concorrentes, em que as operações escalonadas da seguinte forma.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>   T1                T2
+1: a = SELECT X
+2: c = a * 2
+3: b = c + 10
+4: SET X=c
+5:                    a = SELECT X
+6:                    c = a * 2
+7:                    b = c + 10
+8:                    SET X=c
+9:                    SET Y=b
+10:SET Y=b
+</code></pre></div>
+</td></tr></table>
+<p>Ao final da execução, X terá o valor atribuído por <span class="arithmatex">\(T_2\)</span>, mas <span class="arithmatex">\(Y\)</span> terá o valor de <span class="arithmatex">\(T_1\)</span>. 
+Este escalonamento violou a <strong>consistência</strong> do banco de dados por quê as operações não foram executadas <strong>isoladamente</strong>.</p>
+<p>, como mostra a hierarquia a seguir, adaptada de <a href="https://jepsen.io/consistency">jepsen.io</a>.</p>
 <div class="mermaid">graph BT
     S --&gt; SS[Strict Serializable]
     RU[Read Uncommitted] --&gt; RC[Read Committed]
