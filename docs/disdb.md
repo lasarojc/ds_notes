@@ -1,7 +1,6 @@
 Voltemo-nos agora aos bancos de dados mais tradicionais, isto é, bancos de dados relacionais.
 Destaco que quando falamos em bancos de dados relacionais, geralmente pensamos em bancos de dados transacionais, mas o que são transações?
 
-
 ## Transações
 No banco de dados vistos no capítulo anterior, **operações** são enviadas **individualmente** para as réplicas do banco.
 Já no modelo transacional, normalmente pensamos em **conjunto de operações** em vez de operações individuais; estes conjuntos de operações são as **transações**.
