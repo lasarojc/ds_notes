@@ -1,0 +1,1 @@
+Neste capítulo, visitamos diversos estudos de caso das tecnologias vistas em outras seções.

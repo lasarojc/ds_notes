@@ -5,10 +5,19 @@ nav:
         #- Início: index.html
         - Prefácio: preface.md
         - Introdução: intro.md
+        - Comunicação:
+                - Introdução: comm/index.md
+                - Redes: comm/redes.md
+                - Internet: comm/internet.md
+                - Sockets: comm/sockets.md
+                - Middlewares: comm/middleware.md
+                - RPC: comm/rpc.md
+                - MOM: comm/mom.md
+                - Epidêmicos: comm/epidemics.md
+                - Referências: comm/refs.md
+
         - Arquiteturas: arch.md
         - Modelos: fundamentals.md
-
-        - Comunicação: comm.md
 
         - P2P: p2p.md
         - Microsserviços: microservices.md
@@ -24,11 +33,20 @@ nav:
         
         - Sistemas de Arquivos: disfs.md
 
-        - Estudos de Caso: cases.md
+        - Estudos de Caso: 
+                - Introdução: cases/index.md
+                - Cassandra: cases/cassandra.md
+                - Chord: cases/chord.md
+                - Dynamo: cases/dynamo.md
+                - gRPC: cases/grpc.md
+                - Mosquito: cases/mosquito.md
+                - RMI: cases/rmi.md
+                - Thrift: cases/thrift.md
+                - Referências: cases/refs.md
         
         - Tecnologias: tech.md
         
-        #- Projeto: projeto.md
+        - Projeto: projeto.md
 
 theme:
         name: material
