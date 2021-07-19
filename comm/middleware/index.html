@@ -1,0 +1,1128 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.3">
+    
+    
+      
+        <title>Middlewares - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e35208c4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+      
+        
+<script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","G-PJX835H7DP","lasarojc.github.org/dsnotes"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#middleware-e-transparencia" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Middlewares
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preface/" class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Comunicação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Comunicação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Comunicação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redes/" class="md-nav__link">
+        Redes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internet/" class="md-nav__link">
+        Internet
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sockets/" class="md-nav__link">
+        Sockets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Middlewares
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpc/" class="md-nav__link">
+        RPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mom/" class="md-nav__link">
+        MOM
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../epidemics/" class="md-nav__link">
+        Epidêmicos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/" class="md-nav__link">
+        Arquiteturas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fundamentals/" class="md-nav__link">
+        Modelos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../p2p/" class="md-nav__link">
+        P2P
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../microservices/" class="md-nav__link">
+        Microsserviços
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/" class="md-nav__link">
+        Tempo
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/" class="md-nav__link">
+        Tolerância a Falhas
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/" class="md-nav__link">
+        Consistência
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_14" type="checkbox" id="__nav_14" >
+      
+      <label class="md-nav__link" for="__nav_14">
+        Estudos de Caso
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Estudos de Caso" data-md-level="1">
+        <label class="md-nav__title" for="__nav_14">
+          <span class="md-nav__icon md-icon"></span>
+          Estudos de Caso
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/cassandra/" class="md-nav__link">
+        Cassandra
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
+        Chord
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/dynamo/" class="md-nav__link">
+        Dynamo
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/grpc/" class="md-nav__link">
+        gRPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/mosquito/" class="md-nav__link">
+        Mosquito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/rmi/" class="md-nav__link">
+        RMI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/thrift/" class="md-nav__link">
+        Thrift
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="middleware-e-transparencia">Middleware e Transparência</h1>
+<details class="info inline end"><summary>Middleware</summary><ul>
+<li>software</li>
+<li>hardware/OS</li>
+<li>aplicação</li>
+<li>diversas funcionalidades</li>
+</ul>
+</details>
+<p>De acordo com <a href="https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&amp;me=&amp;qid=">Tanenbaum &amp; Van Steen</a>, <em>middleware</em> é </p>
+<blockquote>
+<p>... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.</p>
+</blockquote>
+<p>Isto é, o <em>middleware</em> é a camada <em>ware</em> que fica no <em>middle</em>, entre, o <em>software</em> e o <em>hardware</em>. 
+Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a <strong>abstração</strong> do <em>host</em> em que se executam os componentes, provida pelo sistema operacional.
+Uso aqui o termo <strong>abstração</strong> porquê o sistema operacional pode encapsular <em>hardware</em> real, mas também pode encapsular outra abstração de <em>hardware</em>, por exemplo, uma máquina virtual ou contêiner.</p>
+<p>A figura seguinte   mostra um exemplo com três aplicações executando sobre um <em>middleware</em>, que por sua vez é executado sobre diferentes sistemas operacionais, em <em>hosts</em>  conectados por uma rede de comunicação. </p>
+<p><img alt="Middleware" src="../../images/01-01.png" style="width:500px" /><sup id="fnref:0101"><a class="footnote-ref" href="#fn:0101">1</a></sup></p>
+<p>Com este cenário em mente, é importante entender o que diz <a href="https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/">Sacha Krakowiak</a> quando afirma que as principais funções do <em>middleware</em> são:</p>
+<ul>
+<li>esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,</li>
+<li>esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação</li>
+<li>prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.</li>
+</ul>
+<p>Assim, os <em>middleware</em> facilitam a conexão entre componentes e permitem o uso de protocolos mais abstratos que as operações de  <code>write(byte[])</code> e <code>read(): byte[]</code> dos protocolos de baixo nível, escondendo a complexidade da coordenação de sistemas independentes.
+Desenvolver sistemas distribuídos sem usar um <em>middleware</em> é como desenvolver um aplicativo sem usar quaisquer bibliotecas: possível, mas complicado, e estará certamente reinventando a roda. Isto é, você praticamente tem que refazer o <em>middleware</em> antes de desenvolver o sistema em si.</p>
+<p>Idealmente, com o <em>middleware</em>, o desenvolvedor conseguiria facilmente implementar uma aplicação em que a distribuição fosse totalmente transparente, levando o sistema, uma coleção de sistemas computacionais (software ou hardware) independentes, a se apresentar para o usuário como <strong>um sistema único</strong>, monolítico.
+Pense no browser e na WWW, por exemplo: o quanto você sabe sobre as páginas estarem particionadas em milhões de servidores? Isso é o que chamamos de <strong>transparência</strong>.</p>
+<details class="info inline end"><summary>Transparência Total</summary><p>Acesso + Localização + Relocação + Migração + Replicação + Falha</p>
+</details>
+<p>Se não há qualquer indício de que a aplicação é distribuída, então temos <strong>transparência total</strong>.<br />
+Podemos quebrar esta transparência total em várias transparências mais simples: <strong>Acesso</strong>, <strong>Localização</strong>, <strong>Relocação</strong>,
+<strong>Migração</strong>, <strong>Replicação</strong>, e <strong>Falha</strong>.
+Vejamos cada uma destas separadamente.</p>
+<h6>Transparência de Acesso</h6>
+<details class="info inline end"><summary>Transparência de Acesso</summary><ul>
+<li>como se apresenta</li>
+<li>representação de dados<ul>
+<li>arquitetura</li>
+<li>OS</li>
+<li>linguagem</li>
+</ul>
+</li>
+<li>padrões abertos e bem conhecidos.</li>
+</ul>
+</details>
+<p>A transparência de acesso diz respeito à representação de dados e mecanismos de invocação (arquitetura, formatos, linguagens...).
+Cada computador tem uma arquitetura e uma forma de representar seus dados. Por exemplo, considere os padrões para representação de números em ponto flutuante IEEE e IBM. Ambos dividem os bits em sinal, expoente e mantissa, mas com tamanhos diferentes.</p>
+<div class="admonition note">
+<p class="admonition-title">IEEE<sup id="fnref:IEEEFP"><a class="footnote-ref" href="#fn:IEEEFP">2</a></sup></p>
+<table>
+<thead>
+<tr>
+<th align="center">Precisão</th>
+<th align="center">Tamanho total (bits)</th>
+<th align="center">Sinal (bits)</th>
+<th align="center">Expoente (bits)</th>
+<th align="center">Mantissa (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Half</td>
+<td align="center">16</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">Single</td>
+<td align="center">32</td>
+<td align="center">1</td>
+<td align="center">8</td>
+<td align="center">23</td>
+</tr>
+<tr>
+<td align="center">Double</td>
+<td align="center">64</td>
+<td align="center">1</td>
+<td align="center">11</td>
+<td align="center">52</td>
+</tr>
+<tr>
+<td align="center">Quadruple</td>
+<td align="center">128</td>
+<td align="center">1</td>
+<td align="center">15</td>
+<td align="center">112</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">IBM<sup id="fnref:IBMFP"><a class="footnote-ref" href="#fn:IBMFP">3</a></sup></p>
+<table>
+<thead>
+<tr>
+<th align="center">Precisão</th>
+<th align="center">Tamanho total (bits)</th>
+<th align="center">Sinal (bits)</th>
+<th align="center">Expoente (bits)</th>
+<th align="center">Mantissa (bits)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Single</td>
+<td align="center">32</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">24</td>
+</tr>
+<tr>
+<td align="center">Double</td>
+<td align="center">64</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">56</td>
+</tr>
+<tr>
+<td align="center">Quadruple</td>
+<td align="center">128</td>
+<td align="center">1</td>
+<td align="center">7</td>
+<td align="center">112 (8b ignorados)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>E se dois componentes de um SD executam em máquinas com arquiteturas diferentes, como trocam números em ponto flutuante?
+É preciso que usem um padrão conhecido por ambos os <em>hosts</em>, seja o padrão a arquitetura "nativa" do host ou um padrão intermediário, definido pelo <em>middleware</em>.</p>
+<p>A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
+No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com o mesmo.
+Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um <code>\0</code>, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html">char é um código 16 bits</a> representativo de um código Unicode<sup id="fnref:stringjava"><a class="footnote-ref" href="#fn:stringjava">4</a></sup>.
+Como transferir strings entre duas plataformas?  Não fazê-lo? Simplificar a string Java?  Estender a string C?<br />
+Para se tentar obter transparência de acesso, é importante que se use <strong>padrões</strong> implementados em múltiplas arquiteturas, <strong>abertos</strong>  e bem conhecidos, com <strong>interfaces bem definidas</strong>.</p>
+<h6>Transparência de Localização</h6>
+<details class="info inline end"><summary>Transparência de localização</summary><ul>
+<li>onde está o objeto</li>
+<li>latência<ul>
+<li>cache</li>
+<li>paralelismo</li>
+<li>programação assíncrona</li>
+<li>arquiteturas reativas</li>
+</ul>
+</li>
+</ul>
+</details>
+<p>A transparência de localização diz respeito a onde está o objeto acessado pela aplicação, seja um BD, página Web ou serviço de echo: pouco importa ao usuário, se está dentro da mesma máquina de onde executa o acesso, se na sala ao lado ou em um servidor do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
+A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.</p>
+<h6># Escondendo a Latência</h6>
+<p>Para se esconder a latência, várias táticas são utilizáveis:</p>
+<ul>
+<li><em>Caching</em> de dados<ul>
+<li>Em vez de sempre buscar os dados no servidor, mantenha cópias locais dos dados que mudam menos (e.g., o CSS do <em>stack overflow</em>).</li>
+</ul>
+</li>
+<li>Use paralelismo<ul>
+<li>Em vez de validar formulário após preenchimento de cada campo, valide em paralelo enquanto usuário preenche o campo seguinte.</li>
+<li>Use <em>callbacks</em> para indicar campos com problemas a serem corrigidos.</li>
+<li>Saiba que nem todo problema é paralelizável, por exemplo, autenticação</li>
+</ul>
+</li>
+<li>Use programação assíncrona<ul>
+<li>AsyncIO</li>
+<li>C# <a href="https://docs.microsoft.com/en-us/dotnet/csharp/async">await/async</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Futures_and_promises">Futures e Promises</a></li>
+</ul>
+</li>
+</ul>
+<p>Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
+Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
+Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário<sup id="fnref:stadia"><a class="footnote-ref" href="#fn:stadia">5</a></sup>.
+Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.</p>
+<p>De forma geral, pense em esconder latência pelos seguintes passos:</p>
+<ul>
+<li>Distribua tarefas</li>
+<li>Delegue computação aos clientes (e.g., JavaScript e Applets Java)</li>
+<li>Particione dados entre servidores (e.g., Domain Name Service e World Wide Web) para dividir a carga e aumentar a vazão</li>
+<li>Aproxime dados dos clientes</li>
+<li>Mantenha cópias de dados em múltiplos lugares.</li>
+<li>Atualize dados de acordo com necessidade (e.g., cache do navegador, com código do google.com sendo atualizado a cada 4 dias)</li>
+</ul>
+<h6>Transparência de Relocação</h6>
+<details class="info inline end"><summary>Transparência de relocação</summary><ul>
+<li>como se movimenta</li>
+<li>visto por clientes</li>
+</ul>
+</details>
+<p>As vezes componentes do sistema distribuído precisam ser movimentados de uma localização à outra, por exemplo porquê um novo <em>host</em> foi contratado.
+Se implementadas corretamente, as técnicas que entregam transparência de localização não deixam que o cliente perceba a movimentação, no que chamamos transparência de Relocação.</p>
+<ul>
+<li>Rede de baixa latência</li>
+<li>Distribuição inteligente<ul>
+<li>E.g: Serviços de nome</li>
+</ul>
+</li>
+<li>Múltiplas cópias<ul>
+<li>Cópias temporárias</li>
+</ul>
+</li>
+</ul>
+<h6>Transparência de Migração</h6>
+<details class="info inline end"><summary>Transparência de migração</summary><ul>
+<li>como se movimenta</li>
+<li>visto por si mesmo</li>
+</ul>
+</details>
+<p>Do ponto de vista do próprio serviço, não perceber que se está sendo movimentado é chamado transparência de Migração.
+Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando a mudança acontece.
+Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
+Veja o exemplo do VMotion da VMware.</p>
+<p><img alt="http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg" src="../../images/vmotion.jpg" /></p>
+<p>Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.</p>
+<h6>Transparência de Replicação</h6>
+<details class="info inline end"><summary>Transparência de replicação</summary><ul>
+<li>redundância</li>
+<li>visto por clientes</li>
+</ul>
+</details>
+<p>A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
+Isto porquê para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.</p>
+<p>Dependendo das garantias desejadas na manutenção da <strong>consistência</strong> entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um <strong>atraso</strong> entre elas de no máximo <span class="arithmatex">\(X\)</span> minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.</p>
+<p>Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da <a href="https://www.allthingsdistributed.com/2008/12/eventually_consistent.html">Amazon.com</a>, que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.</p>
+<p>Outras aplicações são normalmente construídas com requisitos de consistência forte entre as réplicas, como sistemas financeiros.
+Para estas aplicações, uma técnica importante para se conseguir replicação é o uso de <em>frameworks</em> de <strong>comunicação em grupo</strong>, que entregam para múltiplas instâncias de um mesmo serviço, as mesmas mensagens, permitindo que elas se mantenham como cópias.
+Esta técnica funciona se os serviços forem máquinas de estado determinísticas, que consideram como eventos as mensagens entregues pelo protocolo de comunicação em grupo e é denominada <a href="https://en.wikipedia.org/wiki/State_machine_replication"><strong>replicação de máquinas de estado</strong></a>.</p>
+<details class="info inline end"><summary>Replicação de Máquina de Estados</summary><ul>
+<li>determinística</li>
+<li>mesmo estado inicial</li>
+<li>mesmos eventos</li>
+<li>mesmo estado final</li>
+<li>atraso entre réplicas</li>
+</ul>
+</details>
+<div class="mermaid">stateDiagram
+    ei: Estado Inicial
+    e1: Estado 1
+    e2: Estado 2
+    e3: Estado 3
+    en: Estado N
+
+    ei --&gt; e1
+    e1 --&gt; e2
+    e2 --&gt; e1
+    e2 --&gt; e3
+    e3 --&gt; e2
+    e1 --&gt; en
+    e3 --&gt; en</div>
+<details class="todo"><summary>Todo</summary><p>Figura com state machine replication</p>
+</details>
+<p>Novamente é preciso chamar à atenção a questão dos custos desta técnica.
+Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema onde inconsistências são absolutamente caras demais para sere permitidas.
+Isto porquê manter múltiplas cópias <span class="arithmatex">\(\Rightarrow\)</span> sincronização <span class="arithmatex">\(\Rightarrow\)</span> custos. 
+Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
+Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.</p>
+<h6>Transparência de Concorrência</h6>
+<details class="info inline end"><summary>Transparência de concorrência</summary><ul>
+<li>obliviedade a outros serviços</li>
+<li>visto por clientes</li>
+</ul>
+</details>
+<p>Outra transparência almejável é de concorrência, isto é, imperceptibilidade quanto ao fato de que o serviço está executando concorrentemente a outros serviços e sendo acessado por outros clientes.
+Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto tem termos de desempenho.
+Nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.</p>
+<p>Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um <em>wrapper</em> ao redor do SGBD que se comprava e instalava <em>in-house</em> anteriormente.
+Para se tornar viável, contudo, uma mesma instância deve servir múltiplos clientes, os <em>tenants</em>, sem que a carga de trabalho introduzida por um, interfira no desempenho do outro. No meio, chamamos esta propriedade de <em>multi-tenancy</em>, mas é apenas um exemplo de transparência de concorrência.</p>
+<ul>
+<li><img alt="https://cdn.jjude.com/mt-models.png" src="../../images/multitenancy_models.png" /></li>
+</ul>
+<p>Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos <em>pool</em> de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (<em>scale up</em>) e separe as cargas (<em>sharding</em>); se menos clientes estão presentes, então desligue algumas máquinas (<em>scale down</em>) e consolide recursos.</p>
+<h6>Desafios para se obter transparência</h6>
+<p>Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
+Isto porquê, do <strong>ponto de vista de usuários</strong> espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.</p>
+<p>Do <strong>ponto de vista do desenvolvedor</strong>, é preciso tomar decisões baseado em premissas ligadas à realidade da rede. Por exemplo, se uma requisição não foi respondida, quanto tempo um cliente deve esperar antes de reenviá-la, possivelmente para outro servidor, sem incorrer em risco significativo da requisição ser processada duas vezes? A resposta para esta pergunta é muito mais complicada do que pode parecer.</p>
+<p><strong>De forma geral</strong>, qualquer aumento de transparência tem um custo, seja em termos monetários (e.g., contratação de enlace dedicado ou de <em>host</em> em outra posição geográfica), ou em termos de desempenho (e.g., coordenar a entrega de mensagens em sistemas de comunicação em grupo).</p>
+<p>Provavelmente os maiores obstáculos para se alcançar os diversos tipos de  transparência são impostos pela parte da infraestrutura que torna o sistema distribuído possível, a rede.
+Para entender o porquê, vejamos algumas premissas normalmente assumidas sobre a rede que não são, definitivamente, verdade:</p>
+<ul>
+<li>A latência é zero.</li>
+<li>A largura de banda é infinita.</li>
+<li>A rede é confiável.</li>
+<li>A rede é segura.</li>
+<li>A rede é homogênea.</li>
+<li>A rede é estática.</li>
+<li>A rede tem acesso grátis.</li>
+<li>A rede é administrada por você ou alguém acessível.</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:0101">
+<p>Distributed Systems: Principles and Paradigms. Capítulo 1, Figura 1.&#160;<a class="footnote-backref" href="#fnref:0101" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:IEEEFP">
+<p><a href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations">IEEE Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IEEEFP" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:IBMFP">
+<p><a href="https://en.wikipedia.org/wiki/IBM_hexadecimal_floating_point#Single-precision_32-bit">IBM Floating Point</a>&#160;<a class="footnote-backref" href="#fnref:IBMFP" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:stringjava">
+<p>Simplificações são possíveis, mas introduzem outras complexidades.&#160;<a class="footnote-backref" href="#fnref:stringjava" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:stadia">
+<p>O <a href="https://stadia.google.com/">Google stadia</a> é uma plataforma de jogos que vai na contramão desta ideia, levando todo o processamento pesado para a nuvem.&#160;<a class="footnote-backref" href="#fnref:stadia" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../sockets/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Sockets
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../rpc/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              RPC
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4ea5477f.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>
