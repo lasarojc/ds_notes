@@ -422,6 +422,9 @@ Estes protocolos são escritos de forma que se o limite superior não existe, o 
 ???todo "Figura"
     figura 2.2 da dissertação.
 
+???todo "SWIM"
+    https://www.youtube.com/watch?v=0bAJ4iNnf5M
+
 ### Paxos: Algoritmo do Sínodo
 
 ???todo "Algoritmo"

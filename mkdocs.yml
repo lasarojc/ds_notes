@@ -10,6 +10,7 @@ nav:
                 - Redes: comm/redes.md
                 - Internet: comm/internet.md
                 - Sockets: comm/sockets.md
+                - Representação: comm/datarep.md
                 - Middlewares: comm/middleware.md
                 - RPC: comm/rpc.md
                 - MOM: comm/mom.md
