@@ -316,6 +316,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../datarep/" class="md-nav__link">
+        Representação
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../middleware/" class="md-nav__link">
         Middlewares
       </a>
@@ -740,6 +752,7 @@
 <table>
 <thead>
 <tr>
+<th></th>
 <th>Ponto-a-ponto</th>
 <th>Barramento Compartilhado</th>
 <th>Token Ring</th>
@@ -747,19 +760,22 @@
 </thead>
 <tbody>
 <tr>
-<td>Sem colisões</td>
-<td>Com colisões</td>
-<td>Sem colisões</td>
+<td><strong>Colisões</strong></td>
+<td>Sem</td>
+<td>Com</td>
+<td>Sem</td>
 </tr>
 <tr>
-<td>Roteamento trivial</td>
-<td>Roteamento complexo</td>
-<td>Roteamento simples</td>
+<td><strong>Roteamento</strong></td>
+<td>Trivial</td>
+<td>Complexo</td>
+<td>Simples</td>
 </tr>
 <tr>
-<td>Caro (exponencial)</td>
-<td>Barato (linear)</td>
-<td>Barato (linear)</td>
+<td><strong># Conexões</strong></td>
+<td>Exponencial</td>
+<td>Linear</td>
+<td>Linear</td>
 </tr>
 </tbody>
 </table>
@@ -770,8 +786,10 @@ Sobre este meio, são usados protocolos para, por exemplo,</p>
 <li>Transmissão de mensagens</li>
 <li>Evitar e tratar colisões</li>
 </ul>
-<p>As redes Ethernet, contudo, cobrem pequenas áreas e para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, <strong><em>gateways</em></strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro, via tais intermediários.</p>
+<p>As redes Ethernet, contudo, cobrem pequenas áreas e, para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
+A conversa então é feita por meio de intermediários, <strong><em>gateways</em></strong> que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam <strong>roteadas</strong> para o outro.</p>
+<details class="todo"><summary>Gateway</summary><p>Drawing.</p>
+</details>
 <p>Um exemplo interessante das questões ligadas à manutenção da conversa entre dois pontos é a decisão sobre o uso de <strong>comutação de pacotes</strong> (<em>packet switching</em>) ou de <strong>circuitos</strong> (<em>circuit switching</em>).</p>
 <table>
 <thead>
@@ -787,7 +805,7 @@ A conversa então é feita por meio de intermediários, <strong><em>gateways</em
 </tr>
 <tr>
 <td>Latência variável</td>
-<td>Latência mais constante</td>
+<td>Latência "constante"</td>
 </tr>
 <tr>
 <td>Banda não reservada</td>
@@ -799,10 +817,14 @@ A conversa então é feita por meio de intermediários, <strong><em>gateways</em
 </tr>
 </tbody>
 </table>
-<p>Outro fator importante é a <strong>unidade máxima de transmissão</strong> (<em>maximum transmission unit</em>, MTU), o tamanho máximo de um pacote em determinada rede. É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
+<p>Outro fator importante é a <strong>unidade máxima de transmissão</strong> (<em>maximum transmission unit</em>, MTU), o tamanho máximo de um pacote em determinada rede. 
+É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. 
+Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.</p>
+<details class="todo"><summary>Fragmentação</summary><p>Drawing.</p>
+</details>
 <p>Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a <strong>mensagem pode ser perdida</strong> no meio.</p>
-<p>Felizmente boa parte da <strong>complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos</strong>, isto é, você, lhe cabendo apenas a decisão de qual protocolo utilizar.
-Nas redes atuais, a conversa em componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
+<p>Felizmente boa parte da <strong>complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos</strong>, isto é, você, cabendo-lhe apenas a decisão de qual protocolo utilizar.
+Nas redes atuais, a conversa entre componentes será feita, em algum nível, por meio dos protocolos da arquitetura <strong>Internet</strong>.</p>
 
   <!-- Last update of source file -->
 
