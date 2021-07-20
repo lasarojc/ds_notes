@@ -940,7 +940,7 @@ Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
 Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
-<p><img alt="Chord" src="images/chord.png" /></p>
+<p><img alt="Chord" src="../../images/chord.png" /></p>
 <h3 id="identificacao">Identificação</h3>
 <p>No Chord o problema da identificação dos dados é resolvido usando-se chaves de <strong><span class="arithmatex">\(m\)</span> bits</strong>, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
 Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
@@ -950,12 +950,12 @@ Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de um
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
 A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">1</a></sup>
 Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.</p>
-<p><img alt="Anel Chord" src="drawings/chord.drawio-0.svg" /></p>
+<p><img alt="Anel Chord" src="../../drawings/chord.drawio-0.svg" /></p>
 <p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
 A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="Anel com Chaves no Chord" src="drawings/chord.drawio-1.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-1.svg" /></p>
 <h3 id="roteamento">Roteamento</h3>
 <p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
@@ -968,7 +968,7 @@ Observe que o custo em termos de espaço para se implementar esta solução é <
 Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
 <p>Com uma rede com milhares de nós, uma solução <span class="arithmatex">\(O(n)\)</span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
 Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
-<p><img alt="Anel com Chaves no Chord" src="drawings/chord.drawio-2.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-2.svg" /></p>
 <p>A <em>finger-table</em> é construída da seguinte forma, onde <span class="arithmatex">\(m\)</span> é a quantidade de bits usados para identificar nós no sistema:</p>
 <ul>
 <li>seja <span class="arithmatex">\(F_p\)</span> a <em>finger-table</em> do processo <span class="arithmatex">\(p\)</span>;</li>
@@ -987,9 +987,9 @@ Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos 
 <li>senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.</li>
 </ul>
 <p>Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.</p>
-<p><img alt="" src="images/05-04.png" /></p>
+<p><img alt="" src="../../images/05-04.png" /></p>
 <p>Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, <span class="arithmatex">\(31 &lt; 0\)</span>. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?</p>
-<p><img alt="" src="images/05-04.png" /></p>
+<p><img alt="" src="../../images/05-04.png" /></p>
 <p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span class="arithmatex">\(p\)</span> pode ser incompleta para partes distantes do anel.
 Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
 <p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
@@ -1080,7 +1080,7 @@ O carrinho é <strong>modificado atomicamente</strong>, isto é, sobrescrito por
 No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao usuário na forma de um carrinho de compras com a união dos itens nos respectivos carrinhos, de forma que o usuário possa corrigí-lo. Na pior das hipóteses, uma compra com erros será feita, e necessitará de uma atividade compensatória para o usuário, como um brinde.</p>
 <p>Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
 Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar, e também do Cassandra, que veremos a seguir.</p>
-<p><img alt="CassandraDB" src="drawings/cassandra_hibrido.drawio-0.svg" /></p>
+<p><img alt="CassandraDB" src="../../drawings/cassandra_hibrido.drawio-0.svg" /></p>
 <h2 id="sistema-p2p-cassandra">Sistema P2P: Cassandra</h2>
 <p>Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
 O custo do roteamento, neste caso, é <span class="arithmatex">\(O(1)\)</span>, muito mais rápido que na abordagem anterior. O custo de armazenamento da <em>tabela de rotas</em> é, contudo, <span class="arithmatex">\(O(n)\)</span>, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (<em>single-hop</em> DHT).</p>
@@ -1089,11 +1089,11 @@ Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dyn
 Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.<br />
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas <strong>column-families</strong> e seu conjunto <strong>keyspace</strong>. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. </p>
-<p><img alt="keyspace" src="images/cass_keyspace.jpg" /></p>
+<p><img alt="keyspace" src="../../images/cass_keyspace.jpg" /></p>
 <p>Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.</p>
-<p><img alt="Column-family" src="images/cass_column_family.jpg" /></p>
+<p><img alt="Column-family" src="../../images/cass_column_family.jpg" /></p>
 <p>Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um <em>timestamp</em>.<br />
-<img alt="timestamps" src="images/cass_column.jpg" />.<br />
+<img alt="timestamps" src="../../images/cass_column.jpg" />.<br />
 Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
 Devido a possibilidade de valores serem escritos para diferentes colunas independentemente, valores válidos e inválidos podem ter o mesmo <em>timestamp</em>.
 Por exemplo, considere os seguintes dados escritos no banco:</p>

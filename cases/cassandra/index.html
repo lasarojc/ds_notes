@@ -796,11 +796,11 @@ Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dyn
 Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.<br />
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas <strong>column-families</strong> e seu conjunto <strong>keyspace</strong>. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. </p>
-<p><img alt="keyspace" src="images/cass_keyspace.jpg" /></p>
+<p><img alt="keyspace" src="../../images/cass_keyspace.jpg" /></p>
 <p>Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.</p>
-<p><img alt="Column-family" src="images/cass_column_family.jpg" /></p>
+<p><img alt="Column-family" src="../../images/cass_column_family.jpg" /></p>
 <p>Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um <em>timestamp</em>.<br />
-<img alt="timestamps" src="images/cass_column.jpg" />.<br />
+<img alt="timestamps" src="../../images/cass_column.jpg" />.<br />
 Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
 Devido a possibilidade de valores serem escritos para diferentes colunas independentemente, valores válidos e inválidos podem ter o mesmo <em>timestamp</em>.
 Por exemplo, considere os seguintes dados escritos no banco:</p>

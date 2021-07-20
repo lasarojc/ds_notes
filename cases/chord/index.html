@@ -862,7 +862,7 @@ Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
 Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
-<p><img alt="Chord" src="images/chord.png" /></p>
+<p><img alt="Chord" src="../../images/chord.png" /></p>
 <h3 id="identificacao">Identificação</h3>
 <p>No Chord o problema da identificação dos dados é resolvido usando-se chaves de <strong><span class="arithmatex">\(m\)</span> bits</strong>, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
 Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
@@ -872,12 +872,12 @@ Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de um
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
 A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">1</a></sup>
 Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.</p>
-<p><img alt="Anel Chord" src="drawings/chord.drawio-0.svg" /></p>
+<p><img alt="Anel Chord" src="../../drawings/chord.drawio-0.svg" /></p>
 <p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
 A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
 O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="Anel com Chaves no Chord" src="drawings/chord.drawio-1.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-1.svg" /></p>
 <h3 id="roteamento">Roteamento</h3>
 <p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
@@ -890,7 +890,7 @@ Observe que o custo em termos de espaço para se implementar esta solução é <
 Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
 <p>Com uma rede com milhares de nós, uma solução <span class="arithmatex">\(O(n)\)</span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
 Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
-<p><img alt="Anel com Chaves no Chord" src="drawings/chord.drawio-2.svg" /></p>
+<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-2.svg" /></p>
 <p>A <em>finger-table</em> é construída da seguinte forma, onde <span class="arithmatex">\(m\)</span> é a quantidade de bits usados para identificar nós no sistema:</p>
 <ul>
 <li>seja <span class="arithmatex">\(F_p\)</span> a <em>finger-table</em> do processo <span class="arithmatex">\(p\)</span>;</li>
@@ -909,9 +909,9 @@ Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos 
 <li>senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.</li>
 </ul>
 <p>Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.</p>
-<p><img alt="" src="images/05-04.png" /></p>
+<p><img alt="" src="../../images/05-04.png" /></p>
 <p>Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, <span class="arithmatex">\(31 &lt; 0\)</span>. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?</p>
-<p><img alt="" src="images/05-04.png" /></p>
+<p><img alt="" src="../../images/05-04.png" /></p>
 <p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span class="arithmatex">\(p\)</span> pode ser incompleta para partes distantes do anel.
 Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
 <p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
