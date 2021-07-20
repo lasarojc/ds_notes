@@ -208,7 +208,7 @@ Há várias IDL definidas, para os diversos *frameworks* disponíveis.
 
 A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.
 
-![../IDL](images/idl.png)
+![../IDL](../images/idl.png)
 
 O fluxo de processamento é o seguinte:
 

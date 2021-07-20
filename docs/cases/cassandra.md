@@ -9,15 +9,15 @@ Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvi
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.
 A combinação chave-colunas são denominadas **column-families** e seu conjunto **keyspace**. Estas duas estruturas são equivalente às tabelas/relações e aos bancos de dados, dos bancos de dados  relacionais. 
 
-![keyspace](images/cass_keyspace.jpg)
+![keyspace](../images/cass_keyspace.jpg)
 
 
 Uma diferença fundamental entre column-families e relações é que as últimas precisam de um esquema pré-definido, enquanto que as primeiras não tem um esquema. Isto quer dizer que novas colunas podem ser adicionadas dinamicamente e que nem todas precisam estar presentes para cada chave. De fato, múltiplos registros com a mesma chave, ou linhas, podem ter conjuntos de colunas diferentes.
 
-![Column-family](images/cass_column_family.jpg)
+![Column-family](../images/cass_column_family.jpg)
 
 Para que o correto conjunto de colunas associado a uma chave possa ser apurado, após múltiplas escritas com a mesma chave tenham ocorrido, a cada tupla (chave,coluna,valor) é associado também um *timestamp*.  
-![timestamps](images/cass_column.jpg).  
+![timestamps](../images/cass_column.jpg).  
 Assim, dados uma mesma chave e coluna, o valor válido é o com o maior timestamp.
 Devido a possibilidade de valores serem escritos para diferentes colunas independentemente, valores válidos e inválidos podem ter o mesmo *timestamp*.
 Por exemplo, considere os seguintes dados escritos no banco:

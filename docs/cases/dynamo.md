@@ -27,4 +27,4 @@ No caso de conflitos, as múltiplas cópias concorrentes são apresentadas ao us
 Na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função, sendo efetivamente sistemas híbridos. 
 Este é o caso dos bancos de dados NOSQL, como o Dynamo, que acabamos de estudar, e também do Cassandra, que veremos a seguir.
 
-![CassandraDB](drawings/cassandra_hibrido.drawio)
+![CassandraDB](../drawings/cassandra_hibrido.drawio)
