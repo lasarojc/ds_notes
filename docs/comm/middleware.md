@@ -100,7 +100,7 @@ Para se tentar obter transparência de acesso, é importante que se use **padrõ
 A transparência de localização diz respeito a onde está o objeto acessado pela aplicação, seja um BD, página Web ou serviço de echo: pouco importa ao usuário, se está dentro da mesma máquina de onde executa o acesso, se na sala ao lado ou em um servidor do outro lado do globo, desde que o serviço seja provido de forma rápida e confiável.
 A esta transparência é essencial uma boa distribuição do serviço, sobre uma rede com baixa latência, ou o uso de técnicas que permitam esconder a latência.
 
-####### Escondendo a Latência
+###### Escondendo a Latência
 
 Para se esconder a latência, várias táticas são utilizáveis:
 
