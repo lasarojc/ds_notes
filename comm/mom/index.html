@@ -844,11 +844,12 @@ Digamos que precise calcular uma rota entre vários vértices do grafo usando ca
 <p><img alt="Message Queues" src="../../drawings/message_queue.drawio-2.svg" /></p>
 <p>Estes <em>middleware</em> permitem enfrentar uma das dificuldades de se implementar sistemas distribuídos hoje, advinda do número cada vez maior de componentes, o fato de que componentes em saem do sistema frequentemente, por diversas razões, e que é difícil garantir que componentes que precisam interagir estarão online ao mesmo tempo.
 Por exemplo, imagine se redes sociais tivessem o mesmo problema, isto é, se suas mensagens só pudessem ser entregues se tanto você quanto o destinatário estivessem <em>online</em> ao mesmo tempo.
-O modelo de caixa de entrada, contudo, permite que haja um <strong>desacoplamento temporal</strong> das contrapartes na conversa ao armazenar mensagens até que o destinatário esteja apto a recebê-las.</p>
+O modelo de caixa de entrada, contudo, permite que haja um <strong>desacoplamento temporal</strong> das contrapartes na conversa ao armazenar mensagens até que o destinatário esteja apto a recebê-las.
+Obviamente o desacoplamento temporal vale somente para remetentes e destinatários; os processos implementando o canal de comunicação onde as caixas de entrada residem, os <strong><em>brokers</em></strong>, devem se manter online para permitir a comunicação.</p>
 <p>As filas de mensagem, existentes há muito tempo, ganharam mais notoriedade recentemente, com a expansão de seu uso em sistemas com arquiteturas microsserviços, que estudaremos mais tarde.</p>
 <details class="todo"><summary>Exemplos</summary><ul>
-<li>RabitMQ</li>
-<li>AMQP</li>
+<li>RabbitMQ</li>
+<li>ZeroMQ</li>
 <li>IBM Websphere</li>
 <li>Estudos de caso</li>
 </ul>
@@ -856,31 +857,28 @@ O modelo de caixa de entrada, contudo, permite que haja um <strong>desacoplament
 <p>Contudo, mesmo com as filas, outro problema permanece: com mais e mais componentes, é difícil fazer com que todos se conheçam e que cada um saiba exatamente qual informação deve disponibilizar para cada outro. Este problema seria semelhante a exigir que toda vez que fosse expressar sua opinião na internet sobre variabilidade da taxa de geração de memes nos fins de semana, tivesse que contactar individualmente cada um dos usuários da mesma rede para perguntar se está interessado.
 Felizmente, também assim como nas redes sociais, outro MOM permite que mensagens sejam ofertadas no sistema distribuído e que somente aqueles processos que tenham se declarado interessados no tópico as receberão.</p>
 <h2 id="publishsubscribe">Publish/Subscribe</h2>
-<p>Em capítulos anteriores, estudamos a arquitetura cliente/servidor, em que o cliente envia mensagens diretamente ao um servidor para que este, em reação à mensagem, realize alguma operação.
-Na arquitetura <em>publish/subscribe</em> (ou <em>pub/sub</em>), há também a figura de um processo envia mensagens, o <strong><em>publisher</em></strong>, e a figura do que recebe mensagens, o <strong><em>subscriber</em></strong>, mas com pelo menos duas diferenças fundamentais que fazem com pub/sub se apresente como uma alternativa à cliente/servidor.
-Em primeiro lugar, os dois processos nunca comunicam diretamente e não precisam nem saber da existência do outro ou sequer executarem ao mesmo tempo, estando <strong>desacoplados</strong>.
-Em segundo lugar, mensagens são associadas a <strong>tópicos</strong>, aos quais os <strong><em>subscribers</em></strong> se subscrevem; somente tópicos de interesse são entregues aos <em>subscribers</em>, em um tipo de <strong>filtragem</strong>.</p>
-<p><img alt="https://aws.amazon.com/pub-sub-messaging/" src="../../images/aws_pubsub.png" /></p>
-<h6>Desacoplamento</h6>
-<p>Um dos aspectos mais importantes proporcionados pelo padrão <em>pub/sub</em> é o desacoplamento entre as partes envolvidas, o qual ocorre em várias dimensões:</p>
+<p>Os mecanismos de comunicação estudados até agora exigem que os processos se identifiquem e se enderecem para que haja troca de informação.
+Quando falamos de comunicação <em>publish/subscribe</em> (ou <em>pub/sub</em>), esta este requisito não está mais presente. 
+Isto porquê neste modelo o processo que envia uma mensagem, <strong><em>publisher</em></strong>, não envia mensagens para um destinatário. 
+Em vez disso, publica mensagens com um <strong>tópicos</strong>, aos quais os <strong><em>subscribers</em></strong> se subscrevem.
+Assim, a comunicação não acontece diretamente mas via <em>brokers</em> <em>publishers</em> e <em>subscribers</em> não precisam executar ao mesmo tempo ou sequer saber da existência um do outro.</p>
+<p><a href="https://aws.amazon.com/pub-sub-messaging/"><img alt="" src="../../images/aws_pubsub.png" /></a></p>
+<p>Desta forma, um dos aspectos mais importantes proporcionados pelo padrão <em>pub/sub</em> é o desacoplamento em várias dimensões das partes envolvidas.</p>
 <ul>
 <li>Espaço: <em>publishers</em> e <em>subscribers</em> não precisam se conhecer (por exemplo, não há necessidade de informar endereço IP e porta de cada um).</li>
 <li>Tempo: <em>publishers</em> e <em>subscribers</em> não precisam nem estar em execução ao mesmo tempo.</li>
-<li>Sincronização: operações em cada componente não precisa ser interrompida durante a publicação ou recebimento.</li>
+<li>Sincronização: operações em cada componente não precisam ser interrompida durante a publicação ou recebimento.</li>
 </ul>
-<p>Este desacoplamento é implementado por meio de <strong><em>brokers</em></strong>, processos especiais que servem de ponto de conexão entre <em>publishers</em>  e <em>subscribers</em>, que dão persistência às mensagens (caso necessário), e distribuem as mensagens a quem devido.</p>
-<h6>Filtragem</h6>
-<p>O <em>broker</em> tem um papel fundamental pois permite a especificação de diversos níveis de filtragem:</p>
+<p>Além disso, os <em>brokers</em> que servem de ponto de conexão entre <em>publishers</em>  e <em>subscribers</em> e que dão persistência às mensagens (caso necessário) e distribuem as mensagens a quem devido, também permitem especificação de filtros de mensagens associados às subscrições, em diversos níveis.</p>
 <ul>
 <li>Baseada em assunto: <em>subscribers</em> se registram para receber mensagens de um ou mais tópicos de interesse. Em geral esses tópicos são strings com um formato hierárquico, por exemplo <code>/devices/sensor/+/temperature</code>.</li>
 <li>Baseada em conteúdo: baseada em linguagem de filtragem de conteúdo específica. <em>Downside:</em> mensagem não pode ser criptografada.</li>
 <li>Baseada em tipo: leva em consideração o tipo ou classe de uma mensagem ou evento, como o tipo <em>Exception</em> e subtipos, por exemplo.</li>
 </ul>
 <p>Observe que uma mesma mensagem pode ser entregue a múltiplos <em>subscribers</em> se pertencer a um tópico de interesse em comum e que um mesmo <em>subscriber</em> pode se interessar por diversos tópicos.</p>
-<p><img alt="https://cloud.google.com/pubsub/docs/overview" src="../../images/google_pubsub.svg" /></p>
-<h6>Arquiteturas baseadas em Pub/Sub</h6>
-<p>Embora simples, frameworks pub/sub permitem a implementação de arquiteturas complexas, como o exemplo da figura a seguir.</p>
-<p><img alt="https://cloud.google.com/pubsub/docs/overview" src="../../images/google_pubsub2.svg" /></p>
+<p><a href="https://cloud.google.com/pubsub/docs/overview"><img alt="" src="../../images/google_pubsub.svg" /></a></p>
+<p>Embora simples, frameworks pub/sub permitem a implementação de arquiteturas complexas, como o exemplo da figura a seguir e como estudaremos mais adiante.</p>
+<p><a href="https://cloud.google.com/pubsub/docs/overview"><img alt="" src="../../images/google_pubsub2.svg" /></a></p>
 <div class="footnote">
 <hr />
 <ol>
