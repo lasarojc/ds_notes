@@ -87,6 +87,9 @@ Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve
 Java "resolve" o problema da passagem de parâmetro por referência passando todo o grafo do objeto passado como parâmetro para o servidor. Isto é, além de serializar o objeto apontado no parâmetro, se o mesmo aponta para outros objetos, estes também serão serializados e transferidos; o servidor irá então reconstruir todo o grafo e passar para o método sendo invocado.
 É muito fácil ver que esta abordagem pode se tornar inviável rapidamente. Quando for o caso, Java permite marcar objetos como **remotos** e, em vez de serializar este objeto e enviar para o servidor, envia informação suficiente para que o servidor possa invocar métodos em tal objeto no cliente, tornando nebulosa a definição de quem é quem.
 
+![RPC](../drawings/rpc.drawio#8)
+
+
 Outros fatores também trabalham contra a transparência para o desenvolvedor.
 
 ###### Descoberta de Serviços
@@ -111,7 +114,7 @@ Assim, o que era um simples `x = substring(a,3,c);` passa para algo assim (em um
 ```c
 int x = -2;
 try {
-    x = substring(a,3,c);`
+    x = substring(a,3,c);
 } catch(CommunicationFailureException cfe) {
     log_error("Como pode substring falhar? Desespero!!!");
 }
@@ -153,7 +156,7 @@ Imagine que a operação se tratasse de uma transferência de saldo, ou a encome
 Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
 
-![RPC](../drawings/rpc.drawio#6)
+![RPC](../drawings/rpc.drawio#7)
 
 !!!info inline end "Quantidade de execuções"
     * No máximo uma - não retentar
@@ -229,7 +232,20 @@ O fluxo de processamento é o seguinte:
     * Conexões
 
 
-<!--Além das funcionalidades equivalentes a protobuf, thrift também provê funcionalidades similares a gRPC, para definir serviços que manipulam estes dados, mas voltaremos a este ponto mais adiante. 
 
-Como discutiremos mais adiante, Protobuf é normalmente utilizado como uma peça na construção de serviços utilizando [gRPC](https://grpc.io/). -->
+## Variações de processamento
 
+Invocações de procedimentos e métodos são geralmente síncronas, o que quer dizer que o chamador do procedimento normalmente espera a conclusão do procedimento para continuar a executar.
+
+![RPC](../drawings/rpc.drawio#9)
+
+Essa abordagem é necessária quando o chamador precisa do resultado do procedimento para continuar, mas deixa de fazer sentido quando ou o procedimento não tem um resultado ... 
+
+![RPC](../drawings/rpc.drawio#10)
+
+... ou quando o resultado só será necessário mais tarde, podendo ser recebido via um *callback*.
+
+![RPC](../drawings/rpc.drawio#11)
+
+Independentemente de qual abordagem for utilizada, ambos os processos, chamador e chamado, precisam estar ativos ao mesmo tempo para que a comunicação aconteça, isto é, os processos estão **acoplados no tempo**.
+Nas seções seguintes veremos como este requisito pode ser relaxado, permitindo que os processos sejam desacoplados no tempo.
