@@ -821,11 +821,14 @@
 
   <!-- Content -->
   <h1 id="message-oriented-middleware">Message Oriented Middleware</h1>
-<p>Nesta seção, discutiremos <em>middleware</em> focados nas mensagens trocadas entre processos e não em como estas mensagens são tratadas, diferentemente de quando revisamos <em>sockets que, afinal, são uma tecnologia para a troca de mensagens entre processos.
-Como *sockets</em> são uma abstração de baixo nível, difíceis de se usar corretamente, precisamos de abstrações de mais alto nível.</p>
+<p>Nesta seção, discutiremos <strong><em>Message Oriente Middleware</em></strong> (MOM), <em>middlewares</em> focados nas mensagens trocadas entre processos em um nível mais alto do que quando revisamos <em>sockets</em>, que também são uma tecnologia para a troca de mensagens entre processos em um nível de abstração mais baixo e mais difícil de usar corretamente.</p>
+<p>MOM apresentam-se em muitas formas, deste a <strong><em>Message Passing Interface</em></strong> (MPI), usada em aplicações HPC (<em>high performance computing</em>), quanto os sistemas de <strong><em>Message Queues</em></strong> (MQ) e <strong><em>Publisher/Subscriber</em></strong> (PubSub), usados em sistemas de informação, <strong><em>Internet of Things</em></strong> (IOT) e <strong><em>Big Data</em></strong>.</p>
 <h2 id="message-passing-interface">Message Passing Interface</h2>
-<p>Subindo as camadas de abstração uma tecnologia interessante é a <strong><em>Message Passing Interface</em></strong>, muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (<em>high performance computing</em>). 
-Quatro das operações providas pelas implementações de MPI são mostradas na figura a seguir, responsáveis por espalhar dados (<strong><em>broadcast</em></strong>), fragmentos dos dados (<strong><em>scatter</em></strong>), coletar e compor fragmentos (<strong><em>gather</em></strong>), ou reduzir resultados parciais (<strong><em>reduce</em></strong>).</p>
+<p><strong><em>Message Passing Interface</em></strong> é uma tecnologia muito usada para coordenar a distribuição e agregação de dados em aplicações em HPC (<em>high performance computing</em>). </p>
+<p>Com este foco em HPC, é natural implementações se concentram em torno das linguagens percebidas como de melhor desempenho e mais usadas pelas comunidades que fazer uso de HPC, como C, C++ e Fortran. Por exemplo, <strong><em><a href="https://www.open-mpi.org/">OpenMPI</a></em></strong>, que se destaca como implementação de MPI por ser de código livre e bem mantida pela sua comunidade, é focada nestas três linguagens, contudo, há também uma versão para Java.</p>
+<p>Sistemas usando MPI normalmente implementam o paradigma <strong><em>Single Program Multiple Data</em></strong>, em que o mesmo binário é executado em vários computadores diferentes, simultaneamente.
+Os processos então recebem <strong>parte</strong> do volume total de dados a serem processados, e os processam da mesma forma (<strong>paralelismo de dados</strong>: mesma tarefa, mas dados diferentes) ou recebem todos os dados mas executam processamentos diferentes (<strong>parelelismo de tarefas</strong>: mesmos dados mas tarefas diferentes).
+Quatro das operações providas pelas implementações de MPI, mostradas na figura a seguir, provêem as ferramentas para espalhar dados (<strong><em>broadcast</em></strong>), fragmentos dos dados (<strong><em>scatter</em></strong>), coletar e compor fragmentos (<strong><em>gather</em></strong>), ou reduzir resultados parciais (<strong><em>reduce</em></strong>).</p>
 <p><img alt="CFD" src="../../images/mpi.jpeg" /></p>
 <p>Por exemplo, suponha que você esteja desenvolvendo uma aplicação que fará buscas de caminhos em grafos, com várias propriedades distintas.
 Digamos que precise calcular uma rota entre vários vértices do grafo usando caminhadas aleatórias. Usando a função <em>broadcast</em>, você pode enviar uma cópia do grafo para cada processo disponível para que independentemente calcule alguma rota. </p>
@@ -837,11 +840,21 @@ Digamos que precise calcular uma rota entre vários vértices do grafo usando ca
 <p>Finalmente, a função <em>gather</em> poderia ser usada para coletar subgrafos com rotas encontradas e montar um grafo com todas as alternativas.</p>
 <p><img alt="MPI" src="../../drawings/mpi.drawio-2.svg" /></p>
 <h2 id="filas-de-mensagem">Filas de mensagem</h2>
-<details class="todo"><summary>TODO</summary><ul>
-<li>Conteúdo. </li>
-<li>Gancho para pub/sub.</li>
+<p><strong>Filas de mensagem</strong> provêm uma forma de encaminhar dados para nós específicos sem a necessidade de conexão direta com os mesmos, através de <strong>caixas de entrada</strong>, funcionando como um serviço de correio, parecido o serviço de email ou mesmo as redes sociais para trocas de mensagens.</p>
+<p><img alt="Message Queues" src="../../drawings/message_queue.drawio-2.svg" /></p>
+<p>Estes <em>middleware</em> permitem enfrentar uma das dificuldades de se implementar sistemas distribuídos hoje, advinda do número cada vez maior de componentes, o fato de que componentes em saem do sistema frequentemente, por diversas razões, e que é difícil garantir que componentes que precisam interagir estarão online ao mesmo tempo.
+Por exemplo, imagine se redes sociais tivessem o mesmo problema, isto é, se suas mensagens só pudessem ser entregues se tanto você quanto o destinatário estivessem <em>online</em> ao mesmo tempo.
+O modelo de caixa de entrada, contudo, permite que haja um <strong>desacoplamento temporal</strong> das contrapartes na conversa ao armazenar mensagens até que o destinatário esteja apto a recebê-las.</p>
+<p>As filas de mensagem, existentes há muito tempo, ganharam mais notoriedade recentemente, com a expansão de seu uso em sistemas com arquiteturas microsserviços, que estudaremos mais tarde.</p>
+<details class="todo"><summary>Exemplos</summary><ul>
+<li>RabitMQ</li>
+<li>AMQP</li>
+<li>IBM Websphere</li>
+<li>Estudos de caso</li>
 </ul>
 </details>
+<p>Contudo, mesmo com as filas, outro problema permanece: com mais e mais componentes, é difícil fazer com que todos se conheçam e que cada um saiba exatamente qual informação deve disponibilizar para cada outro. Este problema seria semelhante a exigir que toda vez que fosse expressar sua opinião na internet sobre variabilidade da taxa de geração de memes nos fins de semana, tivesse que contactar individualmente cada um dos usuários da mesma rede para perguntar se está interessado.
+Felizmente, também assim como nas redes sociais, outro MOM permite que mensagens sejam ofertadas no sistema distribuído e que somente aqueles processos que tenham se declarado interessados no tópico as receberão.</p>
 <h2 id="publishsubscribe">Publish/Subscribe</h2>
 <p>Em capítulos anteriores, estudamos a arquitetura cliente/servidor, em que o cliente envia mensagens diretamente ao um servidor para que este, em reação à mensagem, realize alguma operação.
 Na arquitetura <em>publish/subscribe</em> (ou <em>pub/sub</em>), há também a figura de um processo envia mensagens, o <strong><em>publisher</em></strong>, e a figura do que recebe mensagens, o <strong><em>subscriber</em></strong>, mas com pelo menos duas diferenças fundamentais que fazem com pub/sub se apresente como uma alternativa à cliente/servidor.
