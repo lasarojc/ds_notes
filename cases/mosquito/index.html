@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pubsub-mosquitto" class="md-skip">
+        <a href="#pubsub-mqtt-e-mosquitto" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -624,6 +624,8 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           Mosquito
@@ -639,19 +641,14 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Índice
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pubsub-mosquitto" class="md-nav__link">
-    Pub/Sub: MosQuiTTo
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#referencias" class="md-nav__link">
@@ -756,19 +753,14 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Índice
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#pubsub-mosquitto" class="md-nav__link">
-    Pub/Sub: MosQuiTTo
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#referencias" class="md-nav__link">
@@ -798,20 +790,17 @@
        as the main headline.
     -->
 
-  <h1>Mosquito</h1>
-
 
   <!-- Content -->
-  <h3 id="pubsub-mosquitto">Pub/Sub: MosQuiTTo</h3>
-<blockquote>
-<p><a href="https://mosquitto.org">Eclipse Mosquitto</a> is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.</p>
-</blockquote>
-<p>MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
-É leve, aberto e fácil de implementar, ideal para comunicação <em>Machine to Machine</em> (M2M) e uso no contexto de Internet das Coisas (<em>Internet of Things - I0T</em>).</p>
+  <h1 id="pubsub-mqtt-e-mosquitto">Pub/Sub: MQTT e MosQuiTTo</h1>
+<p>MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor, definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. 
+A especificação atual é a de número 5, lançada em março de 2019.
+O protocolo é leve, aberto e fácil de implementar, ideal para comunicação <em>Machine to Machine</em> (M2M) e uso no contexto de Internet das Coisas (<em>Internet of Things - I0T</em>).</p>
 <blockquote>
 <p>MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.</p>
 </blockquote>
-<p>O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.</p>
+<p>O <a href="https://mosquitto.org">Eclipse Mosquitto</a> é um <em>broker</em> de código livre que implementa o protocolo MQTT v5.0, v3.1.1 e v3.1.
+Por ser mínimo, o Mosquitto é ideal para uso em dispositivos pequenos e com pouca capacidade energética, como computadores <strong>low power single board</strong>, mas flexível o suficiente para ser usado em aplicações de larga escala.</p>
 <h6>Instalação</h6>
 <ul>
 <li>Ubuntu: <code>apt-get install mosquitto</code></li>
