@@ -830,7 +830,7 @@ mosquitto_pub -t sensor/temperature/2 -m <span class="m">32</span>
 <p>O consumidor funciona de maneira semelhante, informando o tópico de interesse:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="c1"># consumindo mensagens de tópico /sensor/temperature/*</span>
-mosquito_pub -t sensor/temperature/+
+mosquitto_sub -t sensor/temperature/+
 </code></pre></div>
 </td></tr></table>
 <h6>Programando</h6>
