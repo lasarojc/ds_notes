@@ -1,13 +1,15 @@
-### Pub/Sub: MosQuiTTo
+# Pub/Sub: MQTT e MosQuiTTo
 
->[Eclipse Mosquitto](https://mosquitto.org) is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
-
-MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor.
-É leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
+MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor, definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. 
+A especificação atual é a de número 5, lançada em março de 2019.
+O protocolo é leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
 
 >MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.
 
-O padrão é definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. A especificação atual é a de número 5, lançada em março de 2019.
+O [Eclipse Mosquitto](https://mosquitto.org) é um *broker* de código livre que implementa o protocolo MQTT v5.0, v3.1.1 e v3.1.
+Por ser mínimo, o Mosquitto é ideal para uso em dispositivos pequenos e com pouca capacidade energética, como computadores **low power single board**, mas flexível o suficiente para ser usado em aplicações de larga escala.
+
+
 
 
 
@@ -46,7 +48,7 @@ O consumidor funciona de maneira semelhante, informando o tópico de interesse:
 
 ```bash
 # consumindo mensagens de tópico /sensor/temperature/*
-mosquito_pub -t sensor/temperature/+
+mosquitto_sub -t sensor/temperature/+
 ```
 
 ###### Programando

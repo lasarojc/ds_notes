@@ -240,6 +240,3 @@ Observe que além do uso de coleções e enumerações, demonstradas no exemplo,
 
 Uma vez que tenhamos facilidades para representar dados complexos e transformá-los em sequências de bytes, e de volta, pensemos em como podemos definir, de forma simplificada, serviços que manipulam estes dados.
 Estas funcionalidades são normalmente implementadas por *frameworks* de comunicação de mais alto nível que, jargão da área de sistemas distribuídos, são denominados ***middleware***.
-
-
-

@@ -10,7 +10,7 @@ MOM apresentam-se em muitas formas, deste a ***Message Passing Interface*** (MPI
 Com este foco em HPC, é natural implementações se concentram em torno das linguagens percebidas como de melhor desempenho e mais usadas pelas comunidades que fazer uso de HPC, como C, C++ e Fortran. Por exemplo, ***[OpenMPI](https://www.open-mpi.org/)***, que se destaca como implementação de MPI por ser de código livre e bem mantida pela sua comunidade, é focada nestas três linguagens, contudo, há também uma versão para Java.
 
 Sistemas usando MPI normalmente implementam o paradigma ***Single Program Multiple Data***, em que o mesmo binário é executado em vários computadores diferentes, simultaneamente.
-Os processos então recebem **parte** do volume total de dados a serem processados, e os processam da mesma forma (**paralelismo de dados**: mesma tarefa, mas dados diferentes) ou recebem todos os dados mas executam processamentos diferentes (**parelelismo de tarefas**: mesmos dados mas tarefas diferentes).
+Os processos então recebem **parte** do volume total de dados a serem processados, e os processam da mesma forma (**paralelismo de dados**: mesma tarefa, mas dados diferentes) ou recebem todos os dados mas executam processamentos diferentes (**paralelismo de tarefas**: mesmos dados mas tarefas diferentes).
 Quatro das operações providas pelas implementações de MPI, mostradas na figura a seguir, provêem as ferramentas para espalhar dados (***broadcast***), fragmentos dos dados (***scatter***), coletar e compor fragmentos (***gather***), ou reduzir resultados parciais (***reduce***).
 
 ![CFD](../images/mpi.jpeg)
