@@ -174,7 +174,7 @@ Alguns defeitos fogem à classificação acima por terem um comportamento especi
       A bug, after which its resolution is found, reveals additional self-similar bugs elsewhere in the code, after which they are fixed, likewise appear elsewhere still.
 
 #### Correlação entre falhas
-Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas falharão uma vez que a entrada problemática acontecer.
+Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. Para evitá-lo, podemos usar ***n-version programming***, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:
 
 * múltiplos times
@@ -201,7 +201,7 @@ Dependendo dos efeitos e tratamentos.
 
 #### Falhas Bizantinas
 ???todo
-    * exércitos bizantino
+    * exércitos bizantinos
 
 
 
@@ -226,9 +226,11 @@ Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda esti
 Para se alcançar tolerância a falhas é necessário detectar e se recuperar de erros. 
 Por exemplo, um sistema de arquivos que mantenha um *journal*, como o [Ext v3](https://en.wikipedia.org/wiki/Ext3#Journaling_levels), armazena informação de forma redundante e, quando **detecta** que os dados em sua forma principal estão corrompidos, usa o *journal* para **recuperar** os dados, **mascarando** o erro.
 
-De acordo como Avizienis *et al.*, temos as seguintes técnicas para tolerar falhas:
+De acordo como Avizienis *et al.*,[^avizienis] temos as seguintes técnicas para tolerar falhas:
 
-![[Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)](images/laprie_fault_tol.png)
+[^avizienis]: [Basic Concepts and Taxonomy of Dependable and Secure Computing](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)
+
+[![Avizienis et al](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)](images/laprie_fault_tol.png)
 
 Um sistema que sofra de defeitos recorrentes é um bom candidato a previsão de defeitos, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.
