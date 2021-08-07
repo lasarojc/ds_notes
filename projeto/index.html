@@ -739,8 +739,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etapa-2-cache" class="md-nav__link">
-    Etapa 2 - Cache
+  <a href="#etapa-2-banco-de-dados" class="md-nav__link">
+    Etapa 2 - Banco de dados.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-3-replicacao" class="md-nav__link">
+    Etapa 3 - Replicação
   </a>
   
 </li>
@@ -804,8 +811,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etapa-2-cache" class="md-nav__link">
-    Etapa 2 - Cache
+  <a href="#etapa-2-banco-de-dados" class="md-nav__link">
+    Etapa 2 - Banco de dados.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etapa-3-replicacao" class="md-nav__link">
+    Etapa 3 - Replicação
   </a>
   
 </li>
@@ -842,29 +856,29 @@
   <!-- Content -->
   <p>A área de computação distribuída é rica em aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
 Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.</p>
-<p>O projeto consiste em uma aplicação com dois tipos de usuários, os clientes e os administradores. 
-Você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo. 
-As funcionalidades são expostas para estes usuários via duas aplicações distintas, o <strong>portal do cliente</strong>  e o <strong>portal administrativo</strong>, mas ambos manipulam a mesma base de dados. 
-A base de dados é particionada usando <em>consistent hashing</em> e as partições são mantidas em memória apenas, um cache.
-Uma terceira camada provê persistência de dados e tolerância a falhas, replicando os dados. 
-A imagem descreve a aplicação.</p>
+<p>O projeto consiste em uma aplicação com dois tipos de usuários, os <strong>clientes</strong> e os <strong>administradores</strong>, que você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo, dependendo da aplicação que <strong>você</strong> resolver implementar.</p>
+<p>As funcionalidades são expostas para estes usuários via <strong>dois tipos</strong> de  aplicações distintas, o <strong>portal do cliente</strong>  e o <strong>portal administrativo</strong>, mas ambos manipulam a <strong>mesma base de dados</strong>.
+Múltiplas instâncias de cada portal podem existir e cada instância mantém um <strong>cache</strong> da base de dados em memória, com as entradas mais recentemente acessadas.</p>
+<p>A totalidade da base é particionada usando <strong><em>consistent hashing</em></strong>.
+Cada partição é replicada em outros nós usando um protocolo de <strong>difusão atômica</strong>.</p>
 <p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
-<p>A arquitetura do sistema será híbrida, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.
-Apesar de introduzir complexidade extra, também usaremos múltiplos mecanismos para a comunicação entre as partes, para que possam experimentar com diversas abordagens.</p>
-<p>O sistemas tem duas aplicações clientes, CLI ou GUI, para os dois tipos de usuários do sistema, clientes, e administradores.
-Estas aplicações se comunicarão com os portais clientes para manipular os dados dos clientes e associados a cada cliente.</p>
+<p>A arquitetura do sistema será <strong>híbrida</strong>, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.
+Apesar de introduzir complexidade extra, também usaremos <strong>múltiplos mecanismos para a comunicação</strong> entre as partes, para que possam experimentar com diversas abordagens.</p>
+<p>O sistemas tem duas <strong>aplicações</strong>, CLI ou GUI, para os dois tipos de usuários do sistema, clientes, e administradores.
+Estas aplicações se comunicarão com os portais para manipular os dados dos clientes e associados a cada cliente.
+A aplicação do administrador manipula clientes, isto é, permite o CRUD de clientes.
+A aplicação do cliente permite manipular os dados associados aos clientes.</p>
 <p>O cadastro do cliente inclui a provisão de um identificador único do cliente CID (<em>client id</em>).
 Os dados dos clientes são mantidos em uma tabela CID -&gt; Dados do Cliente, em memória (use uma tabela hash). 
-O CID tem tipo BigInteger<sup id="fnref:int64"><a class="footnote-ref" href="#fn:int64">1</a></sup>. O dados são um <code>array</code> de bytes.
-A comunicação entre Administrador e portal Administrativo se dá por gRPC.</p>
+O CID tem tipo BigInteger ou equivalente<sup id="fnref:int64"><a class="footnote-ref" href="#fn:int64">1</a></sup>; <strong>você</strong> deve decidir o que compõe os dados do cliente, mass eles <strong>devem</strong> ser armazenados como uma string JSON.
+A comunicação entre administradores e portal Administrativo se dá por uso direto de <em>sockets</em> e TCP, ou middleware pub/sub Mosquitto, ou gRPC.</p>
 <p>Somente clientes devidamente cadastrados no sistema podem ter suas operações executadas.
-O CID do invocador deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
-A comunicação entre Cliente e portal Cliente se dá por sockets TCP.</p>
-<p>O Cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto.
-Aqui chamarei cada entrada no saco de "tarefa". Tarefas podem ser, por exemplo, eventos em um calendário, compras a serem feitas, dados de pacientes em um consultório.
-Cada tarefa tem um título, que serve de identificador da tarefa, e um corpo; ambos são do tipo <code>String</code>.
-Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa. 
-Por exemplo, para representar duas tarefas, <code>t1</code> e <code>t2</code>, com corpos <code>c1</code> e <code>c2</code>, associadas ao cliente <code>cliente1</code>, podemos ter as seguintes entradas.</p>
+A comunicação entre cliente e portal Cliente se dá por de <em>sockets</em> e TCP, ou middleware pub/sub Mosquitto, ou gRPC.
+O CID do cliente executando operações no porta cliente deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
+O cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto; cada entrada corresponde a uma entrada no banco de dados, mantido em memória (use uma <strong>tabela hash</strong>).</p>
+<p>Aqui chamarei cada entrada no saco de "tarefa", mas dependendo da aplicação que <strong>você</strong> escolher, tarefas podem ser, por exemplo, eventos em um calendário ou entradas em uma lista compras.
+Cada tarefa tem um título, que serve de identificador da tarefa, e um corpo; ambos são do tipo <code>String</code>, JSON ou não.
+Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa, isto é, algumas entradas podem ser de metadados, por exemplo, índice Por exemplo, para representar duas tarefas, <code>t1</code> e <code>t2</code>, com corpos <code>c1</code> e <code>c2</code>, associadas ao cliente <code>cliente1</code>, podemos ter as seguintes entradas.</p>
 <ul>
 <li><code>cliente1 -&gt; [t1,t2]</code></li>
 <li><code>cliente1:t1 -&gt; c1</code></li>
@@ -872,7 +886,7 @@ Por exemplo, para representar duas tarefas, <code>t1</code> e <code>t2</code>, c
 </ul>
 <p>Com este formato, podemos identificar os títulos das tarefas associadas ao <code>cliente1</code> e, a partir desta lista, identificar o conteúdo associado a cada tarefa.
 Este formato também permite que múltiplos clientes tenham tarefas com o mesmo título.
-O formato exato em que os dados serão armazenados pode variar e, por isso, nos casos de uso apresentados a seguir, as API usadas devem ser consideradas intenções e não necessariamente o que será implementado no seu trabalho.</p>
+<strong>O formato exato em que os dados serão armazenados pode variar</strong> e, por isso, nos casos de uso apresentados a seguir, <strong>as API usadas devem ser consideradas intenções</strong> e não necessariamente o que será implementado no seu trabalho.</p>
 <h2 id="casos-de-uso">Casos de Uso</h2>
 <details class="todo"><summary>Todo</summary><ul>
 <li>Diagramas de interação.</li>
@@ -888,8 +902,11 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 </ul>
 </li>
 <li>Portal Administrador<ul>
-<li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
+<li>Executa a operação e retorna código de erro/sucesso.<ul>
+<li>Se cliente existia, falha a operação.</li>
+<li>Se cliente não existia, insere dados no banco e atualiza a cache.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>Cliente<ul>
@@ -905,8 +922,11 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 </ul>
 </li>
 <li>Portal Administrador<ul>
-<li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
+<li>Executa a operação e retorna código de erro/sucesso.<ul>
+<li>Se cliente existe, atualiza o cliente e atualiza a cache.</li>
+<li>Se cliente não existe, retorna erro.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -918,7 +938,11 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 </ul>
 </li>
 <li>Portal Administrador<ul>
-<li>Executa a operação e retorna código de erro/sucesso.</li>
+<li>Executa a operação e retorna código de erro/sucesso.<ul>
+<li>Se cliente não existe na cache, pesquisa banco de dados e atualiza a cache caso encontre.</li>
+<li>Se cliente (não) existe na cache, retorna (erro) informação.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -930,14 +954,18 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 </ul>
 </li>
 <li>Portal Administrador<ul>
-<li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
+<li>Executa a operação e retorna código de erro/sucesso.<ul>
+<li>Apaga dados do banco.</li>
+<li>Apaga dados da cache, se existe.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h6>Manipulação de Tarefas dos Clientes</h6>
+<p>Nesta descrição, a interação com a cache foi omitida, mas deverá ser implementada.</p>
 <ul>
 <li>
 <p>Inserção de tarefa</p>
@@ -950,7 +978,6 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 <li>Portal Cliente<ul>
 <li>Autentica o cliente</li>
 <li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
 </ul>
 </li>
 </ul>
@@ -966,7 +993,6 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 <li>Portal Cliente<ul>
 <li>Autentica o cliente</li>
 <li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
 </ul>
 </li>
 </ul>
@@ -993,7 +1019,6 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 <li>Portal Cliente<ul>
 <li>Autentica o cliente</li>
 <li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
 </ul>
 </li>
 </ul>
@@ -1007,37 +1032,30 @@ O formato exato em que os dados serão armazenados pode variar e, por isso, nos 
 <li>Portal Cliente<ul>
 <li>Autentica o cliente</li>
 <li>Executa a operação e retorna código de erro/sucesso.</li>
-<li>Propaga modificações para a Cache</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="interacao-entre-portais">Interação entre portais</h2>
-<p>Os portais armazenam seus dados em tabelas hash posicionadas remotamente, nos Cache.
-Toda comunicação entre portais e Cache é feita via <em>Publish-Subscribe</em>/Fila de mensagens.
-Quaisquer modificações feitas em uma instância Cache é propagada para as outras usando ou <em>Publish-Subscribe</em>/Fila de mensagens ou protocolo de difusão totalmente ordenada, dependendo da necessidade de consistência entre as instâncias.</p>
 <h3 id="etapa-1-usuariosportais">Etapa 1 - Usuários/Portais</h3>
 <ul>
-<li>Implementar os casos de uso usando como cache tabelas hash locais aos portais Cliente e Administrador.<ul>
-<li>Usar MQTTP ou Kafka para sincronizar cache.</li>
-</ul>
-</li>
-<li>Se certificar de que cada operação use uma API distinta na comunicação via gRPC.</li>
+<li>Implementar os casos de uso usando como cache tabelas hash locais aos portais Cliente e Administrador.</li>
+<li>Se certificar de que cada operação use uma API distinta na comunicação via gRPC ou uma mensagem distinta no uso de pub/sub.</li>
 <li>Se certificar de que todas as API possam retornar erros/exceções e que estas são tratadas; explicar sua decisão de tratamento dos erros.</li>
 <li>Implementar testes automatizados de sucesso e falha de cada uma das operações na API.</li>
 <li>Documentar o esquema de dados usados nas tabelas.</li>
-</ul>
-<h3 id="etapa-2-cache">Etapa 2 - Cache</h3>
-<p>Nesta segunda etapa você modificará o sistema para que os portais, em vez de armazenar comuniquem-se uns com os outros usando difusão totalmente ordenada.
-As tabelas hash serão então cópias umas das outras, provendo tolerância a falhas ao sistema.</p>
-<ul>
-<li>Remover a comunicação via MQTTP</li>
-<li>Toda modificação dos dados deve ser encaminhada a todos os processos usando <em>framework</em> de comunicação em grupo, p.e., Ratis ou Open Replica.</li>
+<li>Usar dois tipos de comunicação distintos entre clientes e portais.</li>
 <li>O sistema deve permitir a execução de múltiplos cliente, administradores, portais cliente e portais administrador.</li>
-<li>A arquitetura resultante é uma simplificação da inicialmente proposta.</li>
+<li>Implementar a propagação de informação entre as diversas caches do sistema. Sugiro usar pubsub, já que a comunicação é de 1 para muitos.</li>
 </ul>
 <p><img alt="Projeto" src="../drawings/projeto.drawio-1.svg" /></p>
+<h3 id="etapa-2-banco-de-dados">Etapa 2 - Banco de dados.</h3>
+<p>Nesta etapa você modificará o sistema para que modificações dos dados sejam refletidas no banco de dados particionado implementado usando <em>consistent hashing</em>.</p>
+<p><img alt="Projeto" src="../drawings/projeto.drawio-2.svg" /></p>
+<h3 id="etapa-3-replicacao">Etapa 3 - Replicação</h3>
+<p>Nesta etapa você modificará o sistema para que todas as modificações nas partições do banco de dados sejam replicadas em outras partições.</p>
+<p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
 <!--
 
 

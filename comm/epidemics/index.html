@@ -363,9 +363,46 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Epidêmicos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Epidêmicos
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algoritmo" class="md-nav__link">
+    Algoritmo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemplos" class="md-nav__link">
+    Exemplos
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -726,6 +763,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algoritmo" class="md-nav__link">
+    Algoritmo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemplos" class="md-nav__link">
+    Exemplos
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -748,16 +807,128 @@
 
   <!-- Content -->
   <h1 id="protocolos-epidemicos">Protocolos Epidêmicos</h1>
-<details class="todo"><summary>TODO</summary><ul>
-<li><a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.148.101">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.148.101</a></li>
-<li><a href="http://disi.unitn.it/~montreso/ds/papers/montresor17.pdf">http://disi.unitn.it/~montreso/ds/papers/montresor17.pdf</a></li>
-<li><a href="https://www.kth.se/social/upload/51647982f276546170461c46/4-gossip.pdf">https://www.kth.se/social/upload/51647982f276546170461c46/4-gossip.pdf</a></li>
-<li><a href="https://codesync.global/media/understanding-gossip-protocols-felix-lopez/">https://codesync.global/media/understanding-gossip-protocols-felix-lopez/</a></li>
-<li><a href="https://www.youtube.com/watch?v=-36j_DGXEwE">https://www.youtube.com/watch?v=-36j_DGXEwE</a></li>
-<li><a href="https://codesync.global/media/understanding-gossip-protocols-felix-lopez/">https://codesync.global/media/understanding-gossip-protocols-felix-lopez/</a></li>
-<li><a href="https://www.youtube.com/watch?v=0bAJ4iNnf5M">https://www.youtube.com/watch?v=0bAJ4iNnf5M</a></li>
+<p>Há várias formas de se propagar informação entre nó de um sistema distribuído.
+Uma forma particularmente interessante é espelhada no modo como boatos ou doenças se propagam entre um conjunto de indivíduos; este tipo de protocolo é conhecido como <strong><em>gossiping</em></strong> (fofoca) ou <strong>epidêmico</strong>.</p>
+<div class="admonition note inline end">
+<p class="admonition-title">Gossiping</p>
+<ul>
+<li>Epidemia ou fofoca</li>
+<li>Multicast</li>
+<li>Tolerante a falhas</li>
+<li>Sem entidade central</li>
 </ul>
-</details>
+</div>
+<p>Algumas características fundamentais dos protocolos epidêmicos os distinguem de outros protocolos e frameworks de comunicação.
+Primeiro, estes protocolos resolvem um problema de <strong><em>multicast</em></strong> de mensagens, isto é, de comunicação um para muitos, em oposição ao <strong><em>unicast</em></strong> das conexões TCP ou às invocações remotas do RPC.</p>
+<p>Segundo, não há a figura de uma entidade coordenadora, como os <em>brokers</em> nas filas de mensagens e sistemas pubsub.</p>
+<p>Finalmente, a entrega de mensagens é garantida probabilísticamente, o que quer dizer que quando uma mensagem é enviada, há uma probabilidade dela ser entregue pelos demais processos, mas não há garantias de que o mesmo acontecerá.
+A despeito do que isso possa dar entender, estes protocolos podem ser configurados para uma taxa de entrega tão alta quanto se queira e funcionam muito bem em redes não confiáveis, isto é, onde há perda de mensagens individuais.</p>
+<p>Na prática, estes protocolos são usados na descoberta de nó em um sistema distribuído, para propagar informações sobre seus estados individuais e para computar informações globais.</p>
+<h2 id="algoritmo">Algoritmo</h2>
+<p>Imagine uma pessoa contaminada por um vírus; a medida que o tempo passa, esta pessoa tem contato com outras pessoas que, com certa probabilidade, se tornam também infectadas.
+Cada novo infectado passa a propagar o vírus nos seus contatos e, assim, depois de alguns ciclos, toda a população é infectada.
+Nós podemos então modelar estes protocolos com o seguinte algoritmo básico, que executa em rodadas.</p>
+<div class="admonition example">
+<p class="admonition-title">Algoritmo básico</p>
+<ul>
+<li>A cada rodada<ul>
+<li>para cada nó <span class="arithmatex">\(p\)</span> infectado com o vírus <span class="arithmatex">\(v\)</span><ul>
+<li>escolha <span class="arithmatex">\(F\)</span> outros processos, <span class="arithmatex">\(\{p_1,p_2,p_3,...,p_f\}, p_i \neq p\)</span>, aleatoriamente<ul>
+<li>para cada <span class="arithmatex">\(p_i\)</span>, contamine <span class="arithmatex">\(p_i\)</span> com <span class="arithmatex">\(v\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Agora vamos dissecar este algoritmo.</p>
+<h6>Rodadas</h6>
+<p>Em primeiro lugar, por quê a execução em rodadas em vez de propagar imediatamente qualquer nova informação que receber?
+Há muitos vírus por aí, ou melhor dizendo, muitas informações a serem propagadas, e portanto faz sentido ter intervalos entre as propagações para permitir que um conjunto de novos dados seja consolidado para aproveitar cada interação para passar um pacote já consolidado de dados adiante. 
+Dito isso, cada ciclo pode ser feito arbitrariamente curto, acelerando a dispersão das informações.
+Além disso, na prática cada nó executa as suas rodadas independentemente dos outros, mas sincronizar os ciclos facilita a análise dos algoritmos.</p>
+<h6>Fanout</h6>
+<p>Em segundo lugar, por quê limitar as interações em cada ciclo a <span class="arithmatex">\(F\)</span>?
+O objetivo deste tipo de algoritmo é escalar para centenas, milhares ou até milhões de processos. 
+Logo, é preciso limitar a quantidade de interações a cada ciclo por razões práticas.</p>
+<p>Dito isso, podemos ajustar o <span class="arithmatex">\(F\)</span>, conhecido como o <strong><em>fanout</em></strong> do algoritmo, para cima para acelerar a difusão tanto quanto quisermos.
+Considere o caso em que <span class="arithmatex">\(F=2\)</span>; no início do algoritmo, temos 1 processo infectado.
+Durante o primeiro ciclo, o processo infectado propaga a informação para outros dois, elevando o número de infectados a 3.
+No próximo ciclo, cada um destes infectados infecta outros dois, módulo interações entre nós já infectados e que desperdiçam oportunidades de propagação.
+Se imaginarmos estes ciclos como uma árvore em que cada ciclo corresponde a um ciclo, em que os nós contaminados no final do ciclo são os nós da árvore, e que as interações são arestas, temos o seguinte.</p>
+<p><img alt="" src="../../drawings/epidemics.drawio-0.svg" /></p>
+<div class="admonition note inline end">
+<p class="admonition-title">Ciclos</p>
+<ul>
+<li><span class="arithmatex">\(n\)</span> nós</li>
+<li><span class="arithmatex">\(F\)</span> fanout</li>
+<li><span class="arithmatex">\(log_F(n)\)</span> ciclos</li>
+</ul>
+</div>
+<p>Depois de <span class="arithmatex">\(c\)</span> ciclos, teremos <span class="arithmatex">\(c^F\)</span>  nós contaminados ou, de forma inversa, se para contaminar <span class="arithmatex">\(n\)</span> nós, são necessários <span class="arithmatex">\(log_F(n)\)</span> ciclos.</p>
+<div class="admonition note">
+<p class="admonition-title">Gossip Simulator: <a href="https://flopezluis.github.io/gossip-simulator/">https://flopezluis.github.io/gossip-simulator/</a></p>
+<ul>
+<li>Escolha a quantidade de <strong><em>nodes</em></strong> e um <strong><em>fanout</em></strong>. Clique em um dos nós para infectá-lo e clique <strong><em>play</em></strong> para animar.</li>
+</ul>
+<p><iframe src="https://flopezluis.github.io/gossip-simulator/" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></p>
+</div>
+<h6>Push x Pull</h6>
+<div class="admonition note inline end">
+<p class="admonition-title">Push x Pull</p>
+<ul>
+<li>Push <span class="arithmatex">\(\rightarrow\)</span></li>
+<li>Pull <span class="arithmatex">\(\leftarrow\)</span></li>
+<li>Push/Pull <span class="arithmatex">\(\leftrightarrow\)</span></li>
+</ul>
+</div>
+<p>Alguns aspectos do algoritmo básico podem ser alterados, como a decisão sobre quais nós contatam quais nós e como a informação flui na comunicação.
+No algoritmo básico, somente nós infectados contatam outros nós para então fazer um <strong><em>push</em></strong> do vírus.
+Para acelerar a propagação, processos saudáveis podem tentar se infectar contactando outros nós e fazendo um <strong><em>pull</em></strong> dos vírus presentes no outro.
+Ou, como é frequentemente verdade, a melhor abordagem pode ser um misto das duas anteriores, isto é, uma em que todos os nós são ativos em causar contatos e a propagação da informação acontece nos dois sentidos, isto é, <strong><em>push/pull</em></strong>, o que faz mais sentido em um ambiente com múltiplos vírus circulando.</p>
+<h6>Múltiplos vírus</h6>
+<p>Em um sistema real, a cada momento diversas informações distintas devem estar sendo propagadas, o que é equivalente a ter múltiplos vírus circulando na mesma população.
+Por exemplo, cada processo pode gerar periodicamente um resumo da carga de trabalho com a qual está lidando (taxa de escrita em disco, taxa de utilização de CPU, etc) e propagar este resumo para todo o sistema, para ser usado como entrada em uma política de balanceamento de carga.</p>
+<p>Assim, um modelo comum de representação dos dados em cada nó é um mapa, um banco de dados <strong>chave/valor</strong>, onde a chave é um identificador único da informação e o valor é dado em si, por exemplo ("ABCD1234_CPU%","90%").
+A cada contato, um nó faz um <em>pull</em> das entradas cujas chaves desconhece e um <em>push</em> das que a contraparte não conhece.</p>
+<p><img alt="" src="../../drawings/epidemics.drawio-1.svg" /></p>
+<h6>Fofoca antiga</h6>
+<p>Uma razão para protocolos epidêmicos serem também chamados de <strong><em>gossiping</em></strong> é o fato de que informações envelhecem e devem parar de ser propagadas quando deixam de ser relevantes.
+Algumas estratégias se complementam para implementar este comportamento.</p>
+<ul>
+<li><strong>Frescor da informação</strong>: se cada nó registra o instante em que primeiro recebeu uma informação, pode então determinar um limiar de tempo dentro do qual repassará a informação em seus contatos. Depois deste tempo a informação não mais se propaga pois não é mais uma "fofoca quente" ou porquê o nó deixou de ser "contagioso" para aquele vírus.</li>
+<li><strong>Coleta de lixo</strong>: para restringir a quantidade de espaço usado pelo nó, informações muito antigas devem ser esquecidas em algum momento. Este processo pode ser gradual, por exemplo excluindo os dados após algum tempo, mas mantendo as chaves, efetivamente tornando o nó não infectado mas <strong>imune</strong> ao vírus. Mesmo que as chaves sejam armazenadas de forma eficiente, por exemplo via uso de <a href=""><strong>filtros de bloom</strong></a>, elas devem ser completamente esquecidas em algum momento, a partir do qual uma reinfecção é possível já que uma nova exposição seria indistinguível da exposição inicial.</li>
+</ul>
+<p><img alt="" src="../../drawings/epidemics.drawio-2.svg" /></p>
+<h6>Versões</h6>
+<p>Em certas aplicações, como a propagação da carga de trabalho de um processo, faz sentido que as informações sejam atualizadas. Por exemplo, mesmo que a informação sobre a carga de trabalho do processo às 10:00hs ainda esteja sendo propagada, se a carga às 10:01hs se torna conhecida, pode não ser mais necessário propagar a anterior.
+Este mecanismo pode se implementado facilmente estendendo-se o par (identificador,valor) para uma tripla (identificador,<em>timestamp</em>/versão,valor), onde <em>timestamp</em>/versão pode ser o valor do relógio quando a informação foi gerada ou simplesmente um contador incrementado a cada geração.</p>
+<h6>Pontos negativos</h6>
+<p>Obviamente nem tudo são flores no uso destes protocolos e algumas desvantagens devem ser destacadas.</p>
+<ul>
+<li>
+<p>Velocidade: dado a escolha aleatória das infecções, à medida que o número de infectados aumenta, mais e mais contatos não levam a mais infecções, desacelerando a propagação para outros nós. Por outro lado, com tantos infectados, em algum momento os não infectados acabaram tendo "azar".</p>
+<div class="admonition note">
+<p class="admonition-title">Convergence Simulator: <a href="https://www.serf.io/docs/internals/simulator.html">https://www.serf.io/docs/internals/simulator.html</a></p>
+<p>Este simulador do Serf permite ver o quão rápido a informação atinge qual percentagem dos nós do sistema; no exemplo, após 0,5s, 50% dos 30 nós estavam infectados.</p>
+<p><img alt="https://www.serf.io/docs/internals/simulator.html" src="../../images/serf.png" /></p>
+<p>No sítio é possível ajustar o número de nós, duração da rodada, perda de pacotes e nós defeituosos.</p>
+</div>
+</li>
+<li>
+<p>Depuração: devido à imprevisibilidade da comunicação, é difícil reproduzir execuções do protocolo e depurar no caso de comportamentos estranhos.</p>
+</li>
+<li>Descoberta inicial: encontros entre nós só são possíveis se estes já se conhecerem, o que implica que de alguma forma os nós precisam ser inicializados para se contactarem ao sistema. Isto é normalmente feito usando-se uma lista de nós <strong>semente</strong>, com grande probabilidade de estar presentes no sistema, o que enfraquece a premissa de falta de entidades coordenadoras.</li>
+</ul>
+<h2 id="exemplos">Exemplos</h2>
+<p>Protocolos epidêmicos são amplamente usados na indústria, com diferentes aplicações na indústria, desde replicação de bancos de dados sem requisitos de consistência forte, quando na descoberta de processos e detecção de defeitos em <em>clusters</em>, quanto em outras aplicações de disseminação de informação.</p>
+<ul>
+<li>CassandraDB: O Cassandra é um banco de dados peer-2-peer em que nós entram e saem do sistema e por isso podem não estar presentes para armazenar dados de sua responsabilidade. 
+Quando um nó do sistema volta a ficar online, <em>gossiping</em> é usado para identificar e propagar os dados para as réplicas devidas.</li>
+<li><a href="https://www.serf.io/">Serf</a>: Este sistema de gerenciamento de clusters usa <em>gossiping</em> para descobrir nós, detectar se estão funcionais ou não, ou mesmo propagar perguntas e respostas aos nós do sistema, por exemplo "quanto espaço em disco você tem livre?"</li>
+</ul>
 
   <!-- Last update of source file -->
 

@@ -1415,7 +1415,7 @@ Estes defeitos podem ser causados por agentes mal intencionados, como hackers e 
 <p>A bug, after which its resolution is found, reveals additional self-similar bugs elsewhere in the code, after which they are fixed, likewise appear elsewhere still.</p>
 </div>
 <h4 id="correlacao-entre-falhas">Correlação entre falhas</h4>
-<p>Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas falharão uma vez que a entrada problemática acontecer.
+<p>Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. Para evitá-lo, podemos usar <strong><em>n-version programming</em></strong>, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:</p>
 <ul>
 <li>múltiplos times</li>
@@ -1440,7 +1440,7 @@ Dependendo dos efeitos e tratamentos.
 
 <h4 id="falhas-bizantinas">Falhas Bizantinas</h4>
 <details class="todo"><summary>Todo</summary><ul>
-<li>exércitos bizantino</li>
+<li>exércitos bizantinos</li>
 </ul>
 </details>
 <h3 id="como-lidar-com-falhas">Como lidar com falhas?</h3>
@@ -1455,8 +1455,8 @@ Testes e manutenção do sistema permitem a <strong>remoção de falhas</strong>
 Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda estiverem presentes, seus efeitos não sejam percebidos como defeitos, isto é, sistemas que tenha <strong>tolerância a falhas</strong> (ou <strong>prevenção de defeitos</strong>).</p>
 <p>Para se alcançar tolerância a falhas é necessário detectar e se recuperar de erros. 
 Por exemplo, um sistema de arquivos que mantenha um <em>journal</em>, como o <a href="https://en.wikipedia.org/wiki/Ext3#Journaling_levels">Ext v3</a>, armazena informação de forma redundante e, quando <strong>detecta</strong> que os dados em sua forma principal estão corrompidos, usa o <em>journal</em> para <strong>recuperar</strong> os dados, <strong>mascarando</strong> o erro.</p>
-<p>De acordo como Avizienis <em>et al.</em>, temos as seguintes técnicas para tolerar falhas:</p>
-<p><img alt="Avizienis et al" src="../images/laprie_fault_tol.png" /></p>
+<p>De acordo como Avizienis <em>et al.</em>,<sup id="fnref:avizienis"><a class="footnote-ref" href="#fn:avizienis">5</a></sup> temos as seguintes técnicas para tolerar falhas:</p>
+<p><a href="../images/laprie_fault_tol.png"><img alt="Avizienis et al" src="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf" /></a></p>
 <p>Um sistema que sofra de defeitos recorrentes é um bom candidato a previsão de defeitos, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.</p>
 <p>Se remover todas as possibilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
@@ -1490,7 +1490,7 @@ Vejamos um exemplo.</p>
 A despeito de sofrer de falta de água, afinal, estava no alto de uma montanha, a cidade era invejada pelos vizinhos.
 Como a cidade era muito bem fortificada, ela poderia se defender de qualquer <strong>ataque em uma única frente</strong>. 
 Se atacada em <strong>duas frentes</strong>, contudo, cairia.
-Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em <strong>dois exércitos</strong> sob o comando de Alice (a sociedade era feminista) e Bastião (sim, Bastião, não Bob).<sup id="fnref:2generalsparadox"><a class="footnote-ref" href="#fn:2generalsparadox">5</a></sup></p>
+Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em <strong>dois exércitos</strong> sob o comando de Alice (a sociedade era feminista) e Bastião (sim, Bastião, não Bob).<sup id="fnref:2generalsparadox"><a class="footnote-ref" href="#fn:2generalsparadox">6</a></sup></p>
 <p><img alt="Paradoxo dos 2 Generais" src="../drawings/2generals.drawio-0.svg" /></p>
 <p>Um complicador no ataque é que a <strong>comunicação entre os dois exércitos é feita por mensageiros</strong> que devem contornar a montanha para alcançar o outro exército. 
 O trajeto é complexo e cheio de armadilhas e por isso <strong>mensageiros podem se perder</strong> e demorar um longo tempo para chegar ou até mesmo <strong>serem mortos</strong> e nunca entregarem suas mensagens.</p>
@@ -1535,7 +1535,7 @@ Isto quer dizer, ignorando-se algoritmos que sempre levarão a respostas incorre
 <p>Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
 A <strong>confiança</strong> de Alice de que Bastião também atacaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
 Esta abordagem faria com com que o ataque funcionasse com uma <strong>alta probabilidade</strong> <span class="arithmatex">\(P\)</span>, mas com uma pequena probabilidade <span class="arithmatex">\(P-1\)</span> de levar a um ataque fracassado, onde <span class="arithmatex">\(P\)</span> pode ser feita <strong>tão grande quanto se "queira"</strong>.</p>
-<p>Resultados de impossibilidade abundam na área de computação distribuída<sup id="fnref:impossibilidades"><a class="footnote-ref" href="#fn:impossibilidades">6</a></sup> e não podem nos desencorajar de continuar a buscar soluções práticas.</p>
+<p>Resultados de impossibilidade abundam na área de computação distribuída<sup id="fnref:impossibilidades"><a class="footnote-ref" href="#fn:impossibilidades">7</a></sup> e não podem nos desencorajar de continuar a buscar soluções práticas.</p>
 <h3 id="consenso">Consenso</h3>
 <p>O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
 Neste problema, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong>. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.</p>
@@ -1550,13 +1550,13 @@ Um processo que não é defeituoso é um processo correto.</p>
 <p class="admonition-title">Terminação</p>
 <p>Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.</p>
 </div>
-<p>Dependendo do modelo computacional, é possível resolver este problema. Contudo, <strong>é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong>,<sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">7</a></sup> e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
+<p>Dependendo do modelo computacional, é possível resolver este problema. Contudo, <strong>é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong>,<sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">8</a></sup> e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
 Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
 Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, <a href="https://raft.github.io/">Raft</a> e <a href="http://paxos.systems/index.html">Paxos</a></p>
 <p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
 Os detectores de defeito abstraem este problema.</p>
 <h3 id="detectores-de-defeitos-nao-confiaveis">Detectores de Defeitos não Confiáveis</h3>
-<p>Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">8</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
+<p>Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">9</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.</p>
 <p><img alt="Failure Detector" src="../drawings/failure_detector.drawio-0.svg" /></p>
 <p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
@@ -1587,7 +1587,7 @@ Esta determinação é por certo imprecisa e os detectores podem voltar atrás e
 Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso se combinada a uma restrição de que <strong>uma maioria dos processos não seja defeituosa</strong>.</p>
 <details class="todo"><summary>Maioria</summary><p>Adicionar prova.</p>
 </details>
-<p>Chandra, Hadzilacos e Toueg  demonstram que o detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">9</a></sup> 
+<p>Chandra, Hadzilacos e Toueg  demonstram que o detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">10</a></sup> 
 Este detector, conhecido como <span class="arithmatex">\(\Diamond W\)</span>, ou <em>Eventual Weak</em>, e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
 Vários protocolos de consenso utilizam o detector equivalente, <span class="arithmatex">\(\Diamond S\)</span>, equivalente ao <span class="arithmatex">\(\Diamond W\)</span> mas com completude forte, ou o eleitor de líderes <span class="arithmatex">\(\Omega\)</span>, que usa a informação do <span class="arithmatex">\(\Diamond S\)</span> para sugerir um líder entre os processos.
 Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um <strong>resultado errado nunca é alcançado</strong>, ou seja, os protocolos sempre garantem que as propriedades de corretude não são violadas, mesmo que não garanta que a terminação será alcançada.</p>
@@ -1695,8 +1695,8 @@ Contudo, estes protocolos são mais complexos de se implementar e por isso raram
 <li><code>rm /tmp/file1</code></li>
 </ul>
 <h3 id="arcaboucos-para-coordenacao">Arcabouços para coordenação</h3>
-<p>Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema<sup id="fnref:cons_core"><a class="footnote-ref" href="#fn:cons_core">11</a></sup>.
-Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">10</a></sup>. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.</p>
+<p>Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema<sup id="fnref:cons_core"><a class="footnote-ref" href="#fn:cons_core">12</a></sup>.
+Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">11</a></sup>. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.</p>
 <h4 id="estudo-de-caso-copycat">Estudo de caso: Copycat</h4>
 <p><a href="http://atomix.io/copycat/">Copycat</a> é um arcabouço de replicação de máquinas de estados implementada pela <a href="http://atomix.io/">Atomix</a>.
 Na base do Copycat está uma implementação do Raft.
@@ -3292,30 +3292,33 @@ http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
 <li id="fn:tla_real">
 <p><a href="https://probablydance.com/2020/10/31/using-tla-in-the-real-world-to-understand-a-glibc-bug/"><em>Using TLA+ in the Real World to Understand a Glibc Bug</em></a>&#160;<a class="footnote-backref" href="#fnref:tla_real" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
+<li id="fn:avizienis">
+<p><a href="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf">Basic Concepts and Taxonomy of Dependable and Secure Computing</a>&#160;<a class="footnote-backref" href="#fnref:avizienis" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
 <li id="fn:2generalsparadox">
-<p>Esta é uma variação do problema de coordenação de <em>gangsters</em> apresentado no em <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>Esta é uma variação do problema de coordenação de <em>gangsters</em> apresentado no em <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:impossibilidades">
-<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:flp85">
-<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>. Uma explicação da prova está disponível no <a href="https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/">Paper Trail</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>. Uma explicação da prova está disponível no <a href="https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/">Paper Trail</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 <li id="fn:CT96">
-<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 9 in the text">&#8617;</a></p>
 </li>
 <li id="fn:CHT96">
-<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 10 in the text">&#8617;</a></p>
 </li>
 <li id="fn:paxosmade">
-<p>Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em <a href="https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf">Paxos Made Live - An Engineering Perspective</a>.&#160;<a class="footnote-backref" href="#fnref:paxosmade" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+<p>Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em <a href="https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf">Paxos Made Live - An Engineering Perspective</a>.&#160;<a class="footnote-backref" href="#fnref:paxosmade" title="Jump back to footnote 11 in the text">&#8617;</a></p>
 </li>
 <li id="fn:cons_core">
-<p><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html">Consistent Core</a>&#160;<a class="footnote-backref" href="#fnref:cons_core" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+<p><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html">Consistent Core</a>&#160;<a class="footnote-backref" href="#fnref:cons_core" title="Jump back to footnote 12 in the text">&#8617;</a></p>
 </li>
 <li id="fn:\\">
 <p>O <code>\\</code> no final da linha é só para mostrar que o comando continua na próxima e facilitar a visualização. 
-Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class="footnote-backref" href="#fnref:\\" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+Na hora de executar, use apenas uma linha, sem o <code>\\</code>.&#160;<a class="footnote-backref" href="#fnref:\\" title="Jump back to footnote 13 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
