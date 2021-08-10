@@ -18,11 +18,12 @@ nav:
                 - Epidêmicos: comm/epidemics.md
                 - Referências: comm/refs.md
 
-        - Arquiteturas: arch.md
-        - Modelos: fundamentals.md
+        - Arquiteturas: 
+                - Introdução: arch.md
+                - P2P: p2p.md
+                - Microsserviços: microservices.md
 
-        - P2P: p2p.md
-        - Microsserviços: microservices.md
+        - Modelos: fundamentals.md
 
         - Coordenação: coord.md
         
@@ -44,6 +45,7 @@ nav:
                 - Mosquito: cases/mosquito.md
                 - RMI: cases/rmi.md
                 - Thrift: cases/thrift.md
+                - Kafka: cases/kafka.md
                 - Referências: cases/refs.md
         
         - Tecnologias: tech.md
