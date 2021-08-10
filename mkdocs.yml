@@ -47,6 +47,7 @@ nav:
                 - Thrift: cases/thrift.md
                 - Kafka: cases/kafka.md
                 - Referências: cases/refs.md
+		- Swim: cases/swim.md
         
         - Tecnologias: tech.md
         
