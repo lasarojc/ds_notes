@@ -1,8 +1,10 @@
-Antes de nos aprofundarmos nos exemplos, precisamos entender o conceito das redes **sobrepostas**.
+# Sistemas Peer-2-Peer
 
-### Rede Sobreposta (*Overlay*)
+Nesta seção, nos aprofundaremos no estudo de sistemas P2P, começando pelo fato de que seus componentes se organizam em redes lógica, sobrepostas à rede física.
 
-Os componentes de um sistema P2P se organizam em uma rede lógica, sobreposta à rede física.
+
+## Rede Sobreposta (*Overlay*)
+
 Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente na forma de conexões TCP/IP.
 Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
 Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
@@ -15,7 +17,7 @@ Isto também implica que a **otimização da rota lógica não necessariamente l
 Dependendo em como esta rede é organizada (ou não), a mesma é classificada como **estruturada** ou **não-estruturada**.
 
 
-#### Rede Não-Estruturada
+###### Rede Não-Estruturada
 
 Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
@@ -28,7 +30,7 @@ Os objetos amarelo e vermelho foram inseridos desta forma, e copiados em nós pr
 Buscas, contudo, terão que vasculhar a rede usando algoritmos como **busca em largura**, **busca em profundidade** ou **caminhada aleatória** (resposta probabilística).
 
 
-#### Rede Estruturada
+###### Rede Estruturada
 
 Se as conexões são construídas e mantidas de forma a gerar uma **topologia bem definida**, chamamos esta rede de **estruturada**.
 Nesta rede, a inserção de nós requer a propagação desta informação para outros nós e a atualização das conexões para manter a estrutura.
@@ -52,7 +54,7 @@ Como outro exemplo considere uma rede em que os nós armazenam informações sob
 Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.
 
 
-#### De não estruturada a estruturada
+###### De não estruturada a estruturada
 
 A seguinte tabela resume as diferenças entre os dois tipos de redes sobrepostas.
 
@@ -116,7 +118,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 
 
-### Tabelas de Espalhamento Distribuídas (DHT)
+## Tabelas de Espalhamento Distribuídas (DHT)
 
 A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuídas (DHT, do inglês, *Distributed Hash Tables*).
 
@@ -157,7 +159,7 @@ Dentre os desafios na implementação de uma DHT estão
 * Como dividir a carga entre hosts? É preciso balancear a carga para que um lado da rede não se torne mais importante que o outro e para não levar a uma hierarquização entre os nós.
 * Como rotear requisições para o host correto? Uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade, como encontrar o nó onde determinado dado está or deveria estar?
 
-#### Identificação
+###### Identificação
 
 A identificação de objetos precisa ser facilmente **determinável pela aplicação** para permitir a recuperação precisa dos dados. 
 Por exemplo, podemos usar o identificador único CPF como chave para dados de pessoas e dividir seus possíveis valores em faixas, atribuídas a diferentes nós do sistema.
@@ -176,7 +178,7 @@ Para resolver estes três problemas, recorremos a uma abordagem usada na literat
 * Seja $h$ uma função *hash* criptográfica
 * O objeto identificado por $i$ na aplicação será identificado por $k = h(i)$ dentro da DHT.
 
-#### Divisão da carga
+###### Divisão da carga
 Se usarmos, por exemplo, MD5, é fato que $k$ tem distribuição uniforme no espaço de 0 a $2^{160}-1$ possíveis valores.
 Para dividirmos os dados entre os hosts também uniformemente, distribua os valores entre os hosts em função de $k$.
 Alguns exemplos de divisão são:
@@ -187,6 +189,6 @@ Alguns exemplos de divisão são:
 
 São várias as formas de se dividir os dados e estas estão intimamente ligadas à rede sobreposta que se pretende montar e a como o roteamento será feito.
 
-#### Roteamento
+###### Roteamento
 Para estudar o desafio do roteamento, nas seções seguintes estudaremos o Chord, um sistema P2P que surgiu no meio acadêmico mas cujo design influenciou fortemente a indústria no desenvolvimento dos bancos dados distribuídos NOSQL, como Cassandra, Dynamo, e Redis.
 
