@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#sistema-p2p-chord" class="md-skip">
+        <a href="#p2p-chord" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -609,6 +609,8 @@
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           Chord
@@ -624,6 +626,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -632,43 +636,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sistema-p2p-chord" class="md-nav__link">
-    Sistema P2P: Chord
-  </a>
-  
-    <nav class="md-nav" aria-label="Sistema P2P: Chord">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#identificacao" class="md-nav__link">
     Identificação
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#divisao-de-carga" class="md-nav__link">
     Divisão de carga
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#roteamento" class="md-nav__link">
     Roteamento
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#churn" class="md-nav__link">
     Churn
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -828,6 +819,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -836,43 +829,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sistema-p2p-chord" class="md-nav__link">
-    Sistema P2P: Chord
-  </a>
-  
-    <nav class="md-nav" aria-label="Sistema P2P: Chord">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#identificacao" class="md-nav__link">
     Identificação
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#divisao-de-carga" class="md-nav__link">
     Divisão de carga
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#roteamento" class="md-nav__link">
     Roteamento
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#churn" class="md-nav__link">
     Churn
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -897,21 +877,19 @@
        as the main headline.
     -->
 
-  <h1>Chord</h1>
-
 
   <!-- Content -->
-  <h2 id="sistema-p2p-chord">Sistema P2P: Chord</h2>
+  <h1 id="p2p-chord">P2P: Chord</h1>
 <p>Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do <a href="https://www.csail.mit.edu/">CSAIL</a>, do MIT, e publicado em 2001. 
 Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
 Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
 Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
 <p><img alt="Chord" src="../../images/chord.png" /></p>
-<h3 id="identificacao">Identificação</h3>
+<h2 id="identificacao">Identificação</h2>
 <p>No Chord o problema da identificação dos dados é resolvido usando-se chaves de <strong><span class="arithmatex">\(m\)</span> bits</strong>, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
 Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
-<h3 id="divisao-de-carga">Divisão de carga</h3>
+<h2 id="divisao-de-carga">Divisão de carga</h2>
 <p>A cada nó é atribuído um identificador único de <strong><span class="arithmatex">\(m\)</span> bits</strong>, gerado aleatoriamente. 
 Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
@@ -923,7 +901,7 @@ A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos 
 O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
 Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
 <p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-1.svg" /></p>
-<h3 id="roteamento">Roteamento</h3>
+<h2 id="roteamento">Roteamento</h2>
 <p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
 Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
@@ -960,7 +938,7 @@ Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos 
 <p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span class="arithmatex">\(p\)</span> pode ser incompleta para partes distantes do anel.
 Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
 <p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
-<h3 id="churn">Churn</h3>
+<h2 id="churn">Churn</h2>
 <p>Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.</p>
 <p>Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:</p>
 <ul>
