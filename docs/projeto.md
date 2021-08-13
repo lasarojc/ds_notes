@@ -142,6 +142,9 @@ Nesta descrição, a interação com a cache foi omitida, mas deverá ser implem
 
 ![Projeto](drawings/projeto.drawio#1)
 
+Uma possível instância desta etapa do projeto seria a seguinte
+
+![Projeto](drawings/instancia_projeto.drawio#0)
 
 ### Etapa 2 - Banco de dados.
 Nesta etapa você modificará o sistema para que modificações dos dados sejam refletidas no banco de dados particionado implementado usando *consistent hashing*.

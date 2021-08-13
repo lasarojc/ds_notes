@@ -1,5 +1,5 @@
 
-## Sistema P2P: Chord
+# P2P: Chord
 Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do [CSAIL](https://www.csail.mit.edu/), do MIT, e publicado em 2001. 
 Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
 Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
@@ -10,11 +10,11 @@ Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos *
 
 
 
-### Identificação
+## Identificação
 No Chord o problema da identificação dos dados é resolvido usando-se chaves de **$m$ bits**, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
 Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.
 
-### Divisão de carga
+## Divisão de carga
 A cada nó é atribuído um identificador único de **$m$ bits**, gerado aleatoriamente. 
 Como $m$ normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
 Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um **anel lógico**, em que os nós aparecem ordenadamente de acordo com seus identificadores.
@@ -32,7 +32,7 @@ Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó 
 ![Anel com Chaves no Chord](../drawings/chord.drawio#1)
 
 
-### Roteamento
+## Roteamento
 Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor $v$ associado à chave $k$.
 A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por $k$.
 Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
@@ -80,7 +80,7 @@ Tente identificar exemplos no anel a seguir onde este comportamento seria errado
 
 A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como **espalhamento consistente**, do inglês, *consistent hashing*.
 
-### Churn
+## Churn
 Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.
 
 Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:
