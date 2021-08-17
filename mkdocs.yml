@@ -19,13 +19,15 @@ nav:
                 - Referências: comm/refs.md
 
         - Arquiteturas: 
-                - Introdução: arch.md
-                - P2P: p2p.md
-                - Microsserviços: microservices.md
+                - Introdução: arch/arch.md
+                - P2P: arch/p2p.md
+                - Microsserviços: arch/microservices.md
 
         - Modelos: fundamentals.md
 
-        - Coordenação: coord.md
+        - Coordenação:
+                - Concorrência: coord/concurrency.md
+                - Coordenação: coord/coord.md
         
         - Tempo: time.md
         

@@ -45,14 +45,14 @@ A razão óbvia para preferir sistemas fracamente conectados é sua capacidade d
 Considere por exemplo o sistema na figura a seguir.
 Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o *backend*, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cda uma das API e uma troca em um dos serviços do *backend* exige ajustes em todas as aplicações.
 
-![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](images/loosetight.png)
+![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](../images/loosetight.png)
 
 Já no lado direito, um conector foi colocado entre as aplicações e o *backend*, oferecendo uma interface única para todos os clientes.
 A responsabilidade de conhecer as API específicas dos componentes do *backend* passa a ser então do conector, e quais quer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.
 
 Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento, como os sistemas pubsub discutidos anteriormente.
 
-![Desacoplamento](images/component2.png)
+![Desacoplamento](../images/component2.png)
 
 Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
 
@@ -76,7 +76,7 @@ Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, perm
 
 Exemplos desta arquitetura são abundantes, incluindo um navegador que se comunica com um servidor Apache para recuperar uma página Web ou em um aplicativo móvel que solicita ao servidor de aplicações que dispare uma transferência de fundos.
 
-![Cliente/Servidor](drawings/cliente_servidor.drawio#0)
+![Cliente/Servidor](../drawings/cliente_servidor.drawio#0)
 
 Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 De forma genérica, estas interações acontecem como na figura a seguir.
@@ -133,7 +133,7 @@ Veja por exemplo o caso de um banco de dados, que precisa garantir que a requisi
 Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muitas aplicações modernas, múltiplos servidores atenderão ao conjunto de clientes.
 Pense por exemplo no serviço de email do Google, o Gmail; com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço e certamente estes diversos servidores ficam atrás do que chamamos de um **balanceador de carga**, que roteia as requisições seguindo diferentes políticas, por exemplo, *round robin*.
 
-![http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/](images/lb.jpg)
+![http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/](../images/lb.jpg)
 
 Mesmo que comum, em certas situações, esta divisão entre clientes e servidores pode se tornar confusa.
 Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
@@ -151,16 +151,16 @@ A seguir, exploraremos algumas destas arquiteturas.
 Se organizarmos clientes e servidores em camadas em vez de *hub-n-spoke* como na imagem anterior, podemos dizer que temos uma arquitetura com duas camadas.
 Se os na camada de servidores agirem como clientes para outra camada, uma arquitetura com 3 camadas e assim por diante.
 
-[![3 Tiers](images/3tierb.gif)](https://managementmania.com/en/three-tier-architecture)
+[![3 Tiers](../images/3tierb.gif)](https://managementmania.com/en/three-tier-architecture)
 
 Observe que as camadas lógicas do sistema não necessariamente tem que casar com as camadas "físicas". 
 É possível até que camadas lógicas sejam particionadas entre os *hosts* do sistema, como nestas possíveis configurações de duas camadas.
 
-![2 Tiers](images/02-05.png)
+![2 Tiers](../images/02-05.png)
 
 Por outro lado, cada camada lógica pode ser subdividida em mais componentes, resultando em múltiplos *tiers*, como neste exemplo de um sistema de busca na Web.
 
-![Multi-tier](images/02-04.png)
+![Multi-tier](../images/02-04.png)
 
 
 
@@ -194,7 +194,7 @@ Isso é um atestado do que uma [especificação](http://bittorrent.org/beps/bep_
 Observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
 Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.
 
-![Bittorrent](images/bittorrent.png)
+![Bittorrent](../images/bittorrent.png)
 
 Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.
@@ -241,7 +241,7 @@ Um último exemplo é o sistema que suporta a criptomoeda Bitcoin, em que milhar
 A moda da vez é a chamada arquitetura de **microsserviços**, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemente.
 Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.
 
-![Microserviços](images/microservice_sample.png)
+![Microserviços](../images/microservice_sample.png)
 
 
 

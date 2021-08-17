@@ -12,7 +12,7 @@ Nestas redes são executados diversos algoritmos, como de descoberta de nós, ro
 Uma vez que as **conexões na rede sobreposta não correspondem a conexões físicas**, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
 Isto também implica que a **otimização da rota lógica não necessariamente leva à otimização da rota física**.
 
-[![Por Gustavo Lacerda - UFRJ, Domínio público](images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
+[![Por Gustavo Lacerda - UFRJ, Domínio público](../images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
 
 Dependendo em como esta rede é organizada (ou não), a mesma é classificada como **estruturada** ou **não-estruturada**.
 
@@ -22,7 +22,7 @@ Dependendo em como esta rede é organizada (ou não), a mesma é classificada co
 Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
 A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
-[![Não-estruturada](images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
+[![Não-estruturada](../images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
 
 Suponha que esta rede seja usada para armazenar e consultar dados.
 Inserções de dados podem ser feitas muito rapidamente, armazenando-os no primeiro nó disponível encontrado.
@@ -44,12 +44,12 @@ Logo, qualquer inserção ou consulta de dados, deve ser feita especificamente p
 A estrutura da rede permite que tal roteamento seja feito eficientemente, no nível da rede sobreposta.
 
 
-![](images/05-04.png)
+![](../images/05-04.png)
 
 
 Como outro exemplo considere uma rede em que os nós armazenam informações sobre os dados de uma certa área geográfica e que nós vizinhos na rede sejam aqueles responsáveis por áreas que se tocam.
 
-![](images/02-08.png)
+![](../images/02-08.png)
 
 Neste exemplo, para se acessar os dados de um certo ponto no mapa, basta rotear a requisição para o vizinho mais próximo do ponto; necessariamente a requisição chegará ao nó correto.
 
@@ -74,15 +74,15 @@ Distâncias entre nós são medidas como a soma das distâncias em $x$ mais a di
 * $d_y(a,b) = min(|y - y'|, N - |y - y'|)$
 * $d(a,b) = d_x(a,b) + d_y(a,b)$
 
-![Grade NxN](drawings/estruturada.drawio#0)
+![Grade NxN](../drawings/estruturada.drawio#0)
 
 Suponha que cada divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
 
-![](images/02-10.png)
+![](../images/02-10.png)
 
 O módulo de descoberta leva inicialmente ao estabelecimento de conexões aleatórias e à formação de uma rede sobreposta não estruturada como, por exemplo, a seguinte.
 
-![Grade NxN](drawings/estruturada.drawio#1)
+![Grade NxN](../drawings/estruturada.drawio#1)
 
 Após as conexões inicias, cada um dos nós executa o seguinte protocolo iteradamente.
 
@@ -92,11 +92,11 @@ Após as conexões inicias, cada um dos nós executa o seguinte protocolo iterad
 Ao final de múltiplas interações, cada nó terá como seus vizinhos, os nós mais próximos. Se a rede for completa (um nó em cada posição da grade), como no exemplo, e o módulo de seleção sempre mantiver quatro conexões, ao final do processo os vizinhos serão os nós à direita, esquerda, acima e abaixo.
 Se a rede não for completa ou se menos conexões forem mantidas, uma aproximação será obtida.
 
-![Grade NxN](drawings/estruturada.drawio#2)
+![Grade NxN](../drawings/estruturada.drawio#2)
 
 A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.
 
-[![Fujitsu and RIKEN, 2009](images/3d-torus.jpg)](https://clusterdesign.org/torus/)
+[![Fujitsu and RIKEN, 2009](../images/3d-torus.jpg)](https://clusterdesign.org/torus/)
 
 Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura,[^hyper] no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
 
@@ -104,7 +104,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 [^icpc_hyper]: Neste [problema](https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf) do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.
 
-[![By Spiritia](images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
+[![By Spiritia](../images/hypercube.png)](https://commons.wikimedia.org/w/index.php?curid=5071550)
 
 
 !!! info inline end "Sistemas P2P"
