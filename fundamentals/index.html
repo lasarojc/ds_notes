@@ -406,7 +406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../arch/" class="md-nav__link">
+      <a href="../arch/arch/" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -418,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../p2p/" class="md-nav__link">
+      <a href="../arch/p2p/" class="md-nav__link">
         P2P
       </a>
     </li>
@@ -430,7 +430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../microservices/" class="md-nav__link">
+      <a href="../arch/microservices/" class="md-nav__link">
         Microsserviços
       </a>
     </li>
@@ -549,10 +549,49 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Coordenação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Coordenação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Coordenação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../coord/" class="md-nav__link">
+      <a href="../coord/concurrency/" class="md-nav__link">
+        Concorrência
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coord/coord/" class="md-nav__link">
         Coordenação
       </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -927,10 +966,10 @@
 
 
   <!-- Content -->
-  <p>Uma vez que estejam convencidos de que não temos alternativas à distribuição se queremos sistemas escaláveis e tolerantes a falhas, o próximo passo é entender como podemos implementá-los e quais desafios encontraremos. 
+  <p>Agora que já estão convencidos de que não temos alternativas à distribuição, conhecem algumas das arquiteturas algumas das tecnologias usadas, vamos dar um passo para trás e para entendermos os fundamentos necessários à criação de sistemas escaláveis e tolerantes a falhas.
 O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades e, para isso, precisamos entender como a computação é executada em cada uma das partes do sistema.</p>
 <h2 id="do-processador-a-nuvem-em-42-passos">Do processador à nuvem em 42 passos</h2>
-<div class="tabbed-set" data-tabs="1:11"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">1</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="1:12"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">1</label><div class="tabbed-content">
 <p><img alt="Animação" src="../drawings/virtualization.drawio-1.svg" /></p>
 </div>
 <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">2</label><div class="tabbed-content">
@@ -960,8 +999,11 @@ O primeiro desafio é entender o ambiente no qual estão inseridos, suas limita�
 <input id="__tabbed_1_10" name="__tabbed_1" type="radio" /><label for="__tabbed_1_10">10</label><div class="tabbed-content">
 <p><img alt="Animação" src="../drawings/virtualization.drawio-10.svg" /></p>
 </div>
-<input id="__tabbed_1_11" name="__tabbed_1" type="radio" /><label for="__tabbed_1_11">42</label><div class="tabbed-content">
+<input id="__tabbed_1_11" name="__tabbed_1" type="radio" /><label for="__tabbed_1_11">11</label><div class="tabbed-content">
 <p><img alt="Animação" src="../drawings/virtualization.drawio-11.svg" /></p>
+</div>
+<input id="__tabbed_1_12" name="__tabbed_1" type="radio" /><label for="__tabbed_1_12">42</label><div class="tabbed-content">
+<p><img alt="Animação" src="../drawings/virtualization.drawio-12.svg" /></p>
 </div>
 </div>
 <p>Agora que relembramos como a computação é executada, podemos abstrair boa parte do que revimos na forma de um <strong>modelo computacional</strong>, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.</p>
@@ -1009,11 +1051,11 @@ Esta abordagem resulta em uma arquitetura NUMA, isto é, <em>Non-Uniform Memory 
 <li>sincronização</li>
 </ul>
 </details>
-<p>Quanto ao sincronismo, considera-se os processos tem a capacidade de medir a passagem de tempo, isto é, tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
+<p>Quanto ao sincronismo, se considera se os processos tem a <strong>capacidade de medir a passagem de tempo</strong>, isto é, se tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
 Além disso, considera-se a existência de limites de tempo para execução de operações, por exemplo, o tempo um processador leva para executar uma operação de soma de dois inteiros, ou o tempo necessário para a entrega de uma mensagem ou acesso a uma região de memória.</p>
 <h3 id="falhas">Falhas</h3>
-<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, falhando; e estejam certos, estas falhas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">1</a></sup> 
-Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada e sem comprometer a corretude do sistema.</p>
+<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, apresentando problemas; e estejam certos, problemas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">1</a></sup> 
+Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada, mas sem comprometer a corretude do sistema.</p>
 <details class="info inline end"><summary>Falhas</summary><ul>
 <li>detectável</li>
 <li>temporização</li>
@@ -1028,7 +1070,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 <li>carga de trabalho</li>
 </ul>
 </details>
-<p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional não amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.</p>
+<p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.</p>
 <h3 id="sd-sao-como-cebolas">SD são como cebolas!</h3>
 <p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
 Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
@@ -1090,7 +1132,7 @@ Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../microservices/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../arch/microservices/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1105,13 +1147,13 @@ Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade
         </a>
       
       
-        <a href="../coord/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../coord/concurrency/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Coordenação
+              Concorrência
             </div>
           </div>
           <div class="md-footer__button md-icon">
