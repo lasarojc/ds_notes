@@ -451,7 +451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fundamentals/" class="md-nav__link">
+      <a href="../../models/" class="md-nav__link">
         Modelos
       </a>
     </li>
@@ -522,18 +522,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cliente" class="md-nav__link">
-    Cliente
+  <a href="#threads-no-cliente" class="md-nav__link">
+    Threads no Cliente
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#servidor" class="md-nav__link">
-    Servidor
+  <a href="#threads-servidor" class="md-nav__link">
+    Threads Servidor
   </a>
   
-    <nav class="md-nav" aria-label="Servidor">
+    <nav class="md-nav" aria-label="Threads Servidor">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -564,43 +564,16 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#desafios" class="md-nav__link">
     Desafios
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#estado" class="md-nav__link">
     Estado
-  </a>
-  
-    <nav class="md-nav" aria-label="Estado">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sessao" class="md-nav__link">
-    Sessão
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falhas" class="md-nav__link">
-    Falhas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stateless-x-stateful" class="md-nav__link">
-    Stateless x Stateful
   </a>
   
 </li>
@@ -635,13 +608,6 @@
           <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coordenacao" class="md-nav__link">
-    Coordenação
   </a>
   
 </li>
@@ -977,18 +943,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cliente" class="md-nav__link">
-    Cliente
+  <a href="#threads-no-cliente" class="md-nav__link">
+    Threads no Cliente
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#servidor" class="md-nav__link">
-    Servidor
+  <a href="#threads-servidor" class="md-nav__link">
+    Threads Servidor
   </a>
   
-    <nav class="md-nav" aria-label="Servidor">
+    <nav class="md-nav" aria-label="Threads Servidor">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1019,43 +985,16 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#desafios" class="md-nav__link">
     Desafios
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#estado" class="md-nav__link">
     Estado
-  </a>
-  
-    <nav class="md-nav" aria-label="Estado">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sessao" class="md-nav__link">
-    Sessão
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#falhas" class="md-nav__link">
-    Falhas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#stateless-x-stateful" class="md-nav__link">
-    Stateless x Stateful
   </a>
   
 </li>
@@ -1090,13 +1029,6 @@
           <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#coordenacao" class="md-nav__link">
-    Coordenação
   </a>
   
 </li>
@@ -1137,11 +1069,12 @@
 
   <!-- Content -->
   <h1 id="concorrencia">Concorrência</h1>
-<p>Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.</p>
-<p>É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos e em termos de múltiplos <em>threads</em> nos processos.
-Os exemplos apresentados até agora, consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, <em>lock-step</em>, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
-Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.</p>
+<p>Quando pensamos um sistema distribuído, é natural que o façamos em termos do paralelismo inato que surge do uso de múltiplos processos executando ao mesmo tempo em (normalmente) diferentes <em>hosts</em>.
+Contudo, é importante pensar também em termos de paralelismo dentro de cada um dos processos que compõem o sistema pois, no mínimo, componentes podem necessitar manter várias "conversas" em paralelo uns com os outros.
+Por isso, é "impossível" pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos <em>threads</em> nos processos.</p>
+<p>Relembremos o exemplo de sistema implementado usando sockets, em que um processo cliente se conecta ao servidor para receber uma saudação.
+A interação entre tais processos acontece de forma sincronizada, <em>lock-step</em>, em que o cliente requisita o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento (<code>printf</code>), e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
+Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processos distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.</p>
 <div class="mermaid">sequenceDiagram
     activate Cliente
     note left of Cliente: Ativo gerando requisição
@@ -1173,10 +1106,10 @@ O principal ponto positivo desta estratégia é a <strong>simplicidade do códig
 Estes eventos correspondem tanto a requisições quanto a respostas (efetivamente tornando difícil a distinção).</p>
 <p>No modelo bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
 Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer <strong>E/S assíncrona</strong>.</p>
-<p>Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono<sup id="fnref:asyncio"><a class="footnote-ref" href="#fn:asyncio">1</a></sup> e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de <em>multithreading</em> e as várias formas em que aparecem nos sistemas.</p>
+<p>Dado que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamente sobre E/S assíncrono<sup id="fnref:asyncio"><a class="footnote-ref" href="#fn:asyncio">1</a></sup> e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de <em>multithreading</em> e as várias formas em que aparecem nos sistemas.</p>
 <p>Há duas razões claras para estudarmos <em>multithreading</em>. 
 A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
-A segunda, didática, é o fato que muitos dos problemas que aparecem em programação <em>multithread</em>, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
+A segunda, didática, é o fato que <strong>muitos dos problemas que aparecem em programação <em>multithread</em>, aparecem em programação multi-processo</strong> (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas a abstração é essencialmente a mesma:</p>
 <table>
 <thead>
@@ -1188,7 +1121,7 @@ Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas 
 </thead>
 <tbody>
 <tr>
-<td>Definição</td>
+<td><em>Quasi</em> definição</td>
 <td>Instância de um programa</td>
 <td>"Processo leve"</td>
 </tr>
@@ -1223,7 +1156,7 @@ Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas 
 <td>Posix, C++, Java, ...</td>
 </tr>
 <tr>
-<td>Bloqueio</td>
+<td>Efeito de E/S</td>
 <td>Mudança de contexto para outro thread mesmo sem terminar quantum</td>
 <td>Mudança de contexto para outro thread do mesmo processo</td>
 </tr>
@@ -1238,16 +1171,16 @@ Para relembrar, há várias diferenças entre <em>threads</em> e processos, mas 
 Considere os exemplos de clientes e servidores vistos <a href="#tcp">anteriormente</a>.
 Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma página Web.
 Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requisição <code>GET arquivo.html</code> será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.</p>
-<h3 id="cliente">Cliente</h3>
+<h2 id="threads-no-cliente">Threads no Cliente</h2>
 <p>Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com <strong>várias tarefas concorrentemente</strong>, por exemplo solicitar CSS, HTML e imagens concorrentemente, <strong>escondendo latência</strong> das várias operações, e permite <strong>organizar código</strong> em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. 
 A figura a seguir mostra a carga do sítio da <a href="https://www.facom.ufu.br">Facom</a>.
 O primeiro arquivo, <code>index.html</code> é baixado individualmente, mas uma vez que isso acontece e são determinados quais os demais arquivos necessários, requisições concorrentes são disparadas, minimizando o tempo total da operação.</p>
 <p><img alt="Facom loading times" src="../../images/facom.png" /></p>
 <p>Como outros exemplos, considere um formulário <em>online</em> em que a validação de um campo é executada enquanto o campo seguinte está sendo preenchido, ou um serviço de email em que arquivos são carregados enquanto a mensagem é confeccionada.</p>
-<h3 id="servidor">Servidor</h3>
+<h2 id="threads-servidor">Threads Servidor</h2>
 <p>Do lado dos servidores há diversas possibilidades de uso de threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis e melhorando a experiência do usuário.</p>
-<h4 id="single-threaded">Single-threaded</h4>
+<h3 id="single-threaded">Single-threaded</h3>
 <p>A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
 Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:</p>
 <p><img alt="Single Threaded" src="../../images/singlethreadedserver.gif" /></p>
@@ -1264,14 +1197,14 @@ Considere um servidor Web com esta esta característica; o fluxo no tratamento d
 <p>Se novas requisições forem recebidas enquanto o servidor está executando os passos de 2 a 6, sejam requisições paralelas do mesmo cliente ou de um outro cliente, estas ficarão bloqueadas. 
 A espera será maior quanto mais o servidor demorar para atender à primeira requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
 Para evitar que isto ocorra, o servidor pode usar mais threads.</p>
-<h4 id="thread-per-request">Thread per request</h4>
+<h3 id="thread-per-request">Thread per request</h3>
 <p>O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
 Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.</p>
 <p><img alt="Multi Threaded" src="../../images/multithreadedserver.gif" /></p>
 <p>Lembre-se, entretanto, que o número de threads que se pode criar em um SO é limitado, pois cada thread usa recursos do SO. 
 Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
 Se possível, devemos evitar a criação de novos threads em aplicações com requisitos de desempenho, e recliclá-los pode ser uma boa estratégia.</p>
-<h4 id="thread-pool">Thread pool</h4>
+<h3 id="thread-pool">Thread pool</h3>
 <p>Para reciclarmos threads, podemos criar <em>pools</em>, um balde de threads que são usados quando necessário e devolvidos para o balde quando não mais.
 No cerne desta abordagem, junto com o <em>pool</em> de threads, fica uma fila bloquenante na qual tarefas são inseridas e de onde os threads tentam retirá-las.</p>
 <p>Como a fila é bloqueante, se estiver vazia, o thread é bloqueado e para de consumir recursos. Tão logo nova tarefa seja inserida, a fila acorda os threads para que a processem. Para garantir a corretude no processamento, a fila deve ser <strong>thread-safe</strong>, isto é, que se mantem correta mesmo quando múltiplos threads operam nela tanto para inserir quanto remover tarefas.</p>
@@ -1282,7 +1215,7 @@ Se todas as tarefas são pequenas, os threds ficarão bloqueados por muito tempo
 Por isso é importante dimensionar bem o tamanho to <em>pool</em>, ou mesmo torná-lo dinâmico para que use menos recursos (threads) quando não necessário e não deixe tarefas pendentes por muito tempo. </p>
 <p>Se considerarmos que cada tarefa na verdade tem várias partes, 
 é possível refinar mais este modelo, quebrando o processamento em vários pools.</p>
-<h4 id="estagios">Estágios</h4>
+<h3 id="estagios">Estágios</h3>
 <p>Na arquitetura baseada em estágios, e.g.,  <strong>Staged Event-Driven Architecture</strong>, SEDA, cada <strong>estágio</strong>, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.<sup id="fnref:seda"><a class="footnote-ref" href="#fn:seda">2</a></sup></p>
 <p><a href="http://images.cnitblog.com/blog/13665/201306/15180500-a54c8eb3d73246469f1b74ee74f2119b.png"><img alt="Seda" src="../../images/seda1.png" /></a></p>
 <p>Uma característica importante deste modelo é que cada estágio pode ser escalado individualmente de acordo com a demanda uma vez que cada estágio tem seu próprio <em>pool</em>. Por exemplo, se um estágio faz algum cálculo leve, então poucos <em>threads</em> são necessários ao mesmo. Já um estágio que precise efetuar E/S talvez precise mais <em>threads</em>, uma vez que estes ficam bloqueandos enquanto a operação é executada. <sup id="fnref:ioasync"><a class="footnote-ref" href="#fn:ioasync">3</a></sup></p>
@@ -1322,7 +1255,7 @@ Vejamos por exemplo o problema do falso compartilhamento; considere o seguinte p
 </code></pre></div>
 </td></tr></table>
 <p>Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
-Não exatamente, pois mesmo este código simplíssimo podemos sofrer de <a href="https://dzone.com/articles/false-sharing">falso compartilhamento</a>.
+Não exatamente, pois mesmo este código simplíssimo pode sofrer de <a href="https://dzone.com/articles/false-sharing">falso compartilhamento</a>.
 Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto <code>X</code> quanto <code>Y</code> no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.</p>
 <p><img alt="Multithreaded" src="../../images/cache-line.png" /></p>
 <p>Para que isto não ocorra, é preciso se certificar que as variáveis fiquem em linhas diferentes da cache; no exemplo, poderia-se definir X e Y como vetores do tamanho da linha da cache e usar efetivamente apenas a primeira posição de cada vetor.</p>
@@ -1332,7 +1265,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 <p><img alt="Multithreaded" src="../../images/multithread2.png" /></p>
 <details class="- info inline end"><summary>Multiprogramação</summary><p><img alt="Multithreaded" src="../../images/multithreaded.jpg" /></p>
 </details>
-<p>Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
+<p>Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os outros. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
 Ainda assim, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a <strong>inconsistências</strong> na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como <strong>deadlocks</strong> e <strong>inanição</strong>.
 Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.</p>
@@ -1347,9 +1280,10 @@ Quanto a este respeito, podemos classificar servidores como <strong>stateful</st
 <li>Balanceamento</li>
 </ul>
 </details>
-<p>O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
-Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
-Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span class="arithmatex">\(n\)</span> novas linhas para processar e, quando estiver pronto, requisite <span class="arithmatex">\(n\)</span> novas linhas.
+<p>O <strong>state</strong> nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
+Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.</p>
+<h6>Stateless</h6>
+<p>Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe <span class="arithmatex">\(n\)</span> novas linhas para processar e, quando estiver pronto, requisite <span class="arithmatex">\(n\)</span> novas linhas.
 Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:</p>
 <ol>
 <li>receba requisição informando a última linha lida</li>
@@ -1358,6 +1292,7 @@ Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:</p>
 <li>retorne as próximas <span class="arithmatex">\(n\)</span> linhas para o cliente</li>
 <li>feche o resultado da consulta.</li>
 </ol>
+<h6>Stateful</h6>
 <p>Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma <em>visão</em>  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes <span class="arithmatex">\(n\)</span> entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
 Por outro lado, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?</p>
 <p>Também a complexidade do servidor aumenta. Considere as algumas de muitas perguntas possíveis neste cenário:</p>
@@ -1366,12 +1301,11 @@ Por outro lado, considere que múltiplos clientes fazem consultas concorrentemen
 <li>Se múltiplos servidores existem, como compartilhar os estado entre os mesmos?</li>
 <li>Se o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava, por quanto tempo o servidor deve manter a visão aberta?</li>
 </ul>
-<p>Você já deve ter adivinhado que no primeiro exemplo temos um servidor <em>stateless</em> e no segundo um <em>stateful</em>, e percebido que cada um tem suas vantagens e desvantagens.
-Vejamos mais algumas.</p>
-<h4 id="sessao">Sessão</h4>
+<p>Como você já deve ter percebido, ambas as abordagens, <em>stateless</em> e <em>stateful</em>, tem suas vantagens e desvantagens.</p>
+<h6>Sessão</h6>
 <p>Essencialmente, o servidor <em>stateless</em> não mantem informação sobre a sessão do cliente e requer que a cada nova requisição, quaisquer informações necessárias para realizar a tarefa requisitada sejam novamente fornecidas ao servidor.
 No caso <em>stateful</em>, o servidor pode se lembrar, como no exemplo anterior, até onde o trabalho já foi executado, quais arquivos o cliente manipulou (e mantê-los abertos), qual o endereço o cliente e enviar-lhe notificações importantes (e.g., "Novo dado inserido!").</p>
-<h4 id="falhas">Falhas</h4>
+<h6>Falhas</h6>
 <p>Enquanto servidores <em>stateful</em> obviamente levam a melhor desempenho no <em>happy path</em> (contanto que recursos suficientes sejam providos), no caso de falhas, serviços <em>stateless</em> tendem a voltar ao ar mais rapidamente, uma vez que não há estado que precise ser recuperado.
 Pela mesma razão, clientes que percebem que um servidor falhou podem rapidamente se dirigir a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.</p>
 <p>Lidar com falhas também introduz outro requisito aos servidores: memória estável.
@@ -1379,9 +1313,9 @@ Para que possa o recuperar o estado anterior à falha, o servidor precisa coloca
 <a href="https://en.wikipedia.org/wiki/Non-volatile_random-access_memory">nvRAM</a>, <a href="https://en.wikipedia.org/wiki/Solid-state_drive">SSD</a> ou <a href="https://en.wikipedia.org/wiki/Hard_disk_drive#Spindle">spindles</a>.
 A perda deste estado implicaria na incapacidade de prover o serviço corretamente.
 Um projeto <em>stateless</em> não depende deste estado e por isso pode ser mais rapidamente recuperado, replicado ou substituído.</p>
-<h4 id="stateless-x-stateful">Stateless x Stateful</h4>
+<h6>Stateless x Stateful</h6>
 <p>Não surpreendentemente, a resposta para "qual abordagem é melhor, <em>stateful</em> ou <em>stateless</em>?" é <strong>depende</strong>.
-Ambos as opções tem suas vantagens e desvantagens e para algums serviços apenas uma opção será viável.
+Ambos as opções tem suas vantagens e desvantagens e para alguns serviços apenas uma opção será viável.
 Se seu serviço precisa manter estado (um SGBD, por exemplo), ele terá que manter estado, mesmo que não sobre clientes.
 Veja um pequeno comparativo das características das duas abordagens.</p>
 <table>
@@ -1418,8 +1352,8 @@ Veja um pequeno comparativo das características das duas abordagens.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="multithread-na-pratica">Multithread na prática</h3>
-<h4 id="posix">POSIX</h4>
+<h2 id="multithread-na-pratica">Multithread na prática</h2>
+<h3 id="posix">POSIX</h3>
 <p><a href="https://en.wikipedia.org/wiki/POSIX_Threads">POSIX Threads</a> ou PThreads, são uma definição <strong>aberta</strong> de como <em>threads</em> devem funcionar em sistemas operacionais.
 Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, que se esforçam para ser compatíveis com especifições POSIX, mas também para Windows, via subsistemas que compatibilizam diferentes API.
 Além disso, mesmo implementações não POSIX tem funcionalidade equivalentes e, por este motivo, entender POSIX servirá de base para entender quaisquer API para programação <em>multi-threaded</em>.</p>
@@ -1527,7 +1461,7 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 <p><code>pthread_attr_setaffinity_np</code> - ajusta afinidade dos threads.</p>
 </li>
 </ul>
-<h4 id="python">Python</h4>
+<h3 id="python">Python</h3>
 <p>Em Python, como seria de se esperar, há várias formas de se trabalhar com <em>threads</em>. 
 O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envólucro POSIX.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
@@ -1646,7 +1580,7 @@ O exemplo a seguir usa o pacote <code>thread</code> e é essencialmente um envó
 </code></pre></div>
 </td></tr></table>
 <p>Uma consequência desta divisão é que um mesmo objeto do tipo <code>Thread</code> pode ser reciclado e executado várias vezes.</p>
-<h4 id="java">Java</h4>
+<h3 id="java">Java</h3>
 <p>Outro exemplo importante de API para multithreading é a do Java, pois nesta linguagem há, essencialmente, duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe <code>Thread</code> e, a segunda, via abstrações de mais alto nível, os <code>Executors</code>.
 Aqui nos focaremos em aspectos básicos de concorrência na linguagem, mas esteja ciente de que a mesma é muito rica neste tópico, por exemplo provendo diversas estruturas para comunicação e coordenação de <em>threads</em> no pacote <code>java.util.concurrent</code>.
@@ -2029,7 +1963,7 @@ else
 <span class="n">executorService</span><span class="p">.</span><span class="na">scheduleAtFixedRate</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">);</span>
 </code></pre></div>
 </td></tr></table>
-<h4 id="coordenacao">Coordenação</h4>
+<h6>Coordenação</h6>
 <p>Como visto no exercício anterior, a execução de <em>threads</em> é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. </p>
 <p>Há várias astrações que podem ser usadas para coordenar as operações de <em>threads</em>, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são <em>locks</em>, variáveis de condição e semáforos.</p>
 <p>Especificamente em Java, provavelmente a abstração mais simples são os blocos <code>synchronized</code>.</p>
@@ -2398,7 +2332,7 @@ Veja um exemplo de uso, notando o idioma de uso dentro de block <code>try/catch/
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../../fundamentals/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../../models/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
