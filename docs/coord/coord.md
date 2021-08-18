@@ -1,6 +1,4 @@
 # Coordenação
-
-
 Como visto na seção sobre [concorrência](../fundamentals/#concorrencia), diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. 
 
 Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, ainda por cima, espalhados geograficamente. 
@@ -366,7 +364,7 @@ Isto porquê, dados os dois quóruns, todos os processos na interseção foram r
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quóruns, de tamanho $m$, que se sobrepõem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
 
-![Quoruns](drawings/quorum_k.drawio#0)
+![Quoruns](../drawings/quorum_k.drawio#0)
 
 Seja a $P$ a probabilidade de **um coordenador em específico falhar** e se recuperar dentro de uma janela de tempo $\delta t$. Temos
 
@@ -450,7 +448,7 @@ Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor cri
 Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
 Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
 
-[![](images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
+[![](../images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
 
 A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.
 
@@ -487,7 +485,7 @@ Observe que os processos não sabem a priori como os eventos aconteceram e apena
 6. 4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.
 7. 4 se declara líder e envia (COORD,4) a todos os processos. 
 
-![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](images/bully.png)
+![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](../images/bully.png)
 
 
 Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
@@ -498,7 +496,7 @@ Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder
 Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
 Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.
 
-![Why you bully?](images/why-you-bully-meme.jpg)  
+![Why you bully?](../images/why-you-bully-meme.jpg)  
 
 Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.
 
@@ -530,7 +528,7 @@ Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicial
 
 Imagine um cenário com dois processos, como na imagem a seguir. 
 Os nomes dos processos são apenas para facilitar o entendimento do fluxo de mensagens e não estão acessíveis aos processos.   
-![](drawings/anel1.drawio)   
+![](../drawings/anel1.drawio)   
 Executando o algoritmo Anel 1, os processos enviam ($\rightarrow$) e recebem ($\leftarrow$) as seguintes mensagens e ajustam $C$ da seguinte forma.
 
 | 1 | 2 |
@@ -625,7 +623,7 @@ Observe o papel do nó no centro, supondo que tem o maior identificador entre to
 Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
 Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, que também se inativam.
 
-![Algoritmo de Franklin](drawings/leaderelection.drawio#0)
+![Algoritmo de Franklin](../drawings/leaderelection.drawio#0)
 
 Observe o seguinte:
 
@@ -703,7 +701,7 @@ Vejamos o algoritmo em mais detalhes.
 
 Veja um exemplo com 3 processos em destaque, uma fonte, um interno e um vertedouro.
 
-![Algoritmo do YoYo](drawings/leaderelection.drawio#1)
+![Algoritmo do YoYo](../drawings/leaderelection.drawio#1)
 
 Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do problema de eleição de líderes.
 
@@ -714,7 +712,7 @@ Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do
 * e) Inativação dos vertedouros
 
 Exemplo: 
-![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](images/yoyo.png)
+![[Fonte: Hemis62 - Own work, CC BY-SA 4.0](https://commons.wikimedia.org/w/index.php?curid=36757409)](../images/yoyo.png)
 
 
 

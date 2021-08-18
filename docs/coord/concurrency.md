@@ -1,13 +1,11 @@
 # Concorrência
+Quando pensamos um sistema distribuído, é natural que o façamos em termos do paralelismo inato que surge do uso de múltiplos processos executando ao mesmo tempo em (normalmente) diferentes *hosts*.
+Contudo, é importante pensar também em termos de paralelismo dentro de cada um dos processos que compõem o sistema pois, no mínimo, componentes podem necessitar manter várias "conversas" em paralelo uns com os outros.
+Por isso, é "impossível" pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos *threads* nos processos.
 
-Também importantes, de um ponto de vista prático do desenvolvimento, são os conceitos de concorrência e paralelismo, pois componentes pode necessitar manter várias "conversas" em paralelo com múltiplos outros componentes.
-
-
-
-É impossível pensar em sistemas distribuídos sem pensar em concorrência na forma de múltiplos processos executando (normalmente) em hosts distintos e em termos de múltiplos *threads* nos processos.
-Os exemplos apresentados até agora, consistem todos em um processo cliente requisitando ações de algum processo servidor.
-Apesar disso, a interação entre tais processos aconteceu sempre de forma sincronizada, *lock-step*, em que o cliente requisitava o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento, e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
-Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processadores distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.
+Relembremos o exemplo de sistema implementado usando sockets, em que um processo cliente se conecta ao servidor para receber uma saudação.
+A interação entre tais processos acontece de forma sincronizada, *lock-step*, em que o cliente requisita o serviço e ficava bloqueado esperando a resposta do servidor para então prosseguir em seu processamento (`printf`), e o servidor fica bloqueado esperando requisições que atende e então volta a dormir.
+Este cenário, apresentado na figura a seguir, mostra que apesar do uso de processos distintos e da concorrência na execução dos processos, temos um baixo grau de efetivo paralelismo; a requisição (2) só é processada depois que a resposta (1) é enviada.
 
 ```mermaid
 sequenceDiagram
@@ -47,25 +45,25 @@ Estes eventos correspondem tanto a requisições quanto a respostas (efetivament
 No modelo bloqueante, quando um evento é disparado (no exemplo, a requisição), o sistema fica bloqueado até que um evento específico seja observado (no exemplo, a chegada da resposta).
 Sempre que possível, um componente não deve ficar esperando por eventos em específico, aproveitando a chance executar outras tarefas; quando eventos são recebidos, são então atendidos. Esta é a forma de fazer **E/S assíncrona**.
 
-Dada que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamene sobre E/S assíncrono[^asyncio] e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de *multithreading* e as várias formas em que aparecem nos sistemas.
+Dado que processos interagem com a rede usando sockets, cuja interface mais simples para operações de leitura é bloqueante, neste curso não falaremos especificamente sobre E/S assíncrono[^asyncio] e por isso, para vermos como aumentar a concorrência no sistema, é necessário falar de *multithreading* e as várias formas em que aparecem nos sistemas.
 
 [^asyncio]: Um bom ponto de partida para o tópico é a sua entrada na [wikipedia](https://en.wikipedia.org/wiki/Asynchronous_I/O).
 
 Há duas razões claras para estudarmos *multithreading*. 
 A primeira, de ordem prática, é a discutida acima: permitir o desenvolvimento de componentes que utilizem "melhormente" os recursos em um host.
-A segunda, didática, é o fato que muitos dos problemas que aparecem em programação *multithread*, aparecem em programação multi-processo (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
+A segunda, didática, é o fato que **muitos dos problemas que aparecem em programação *multithread*, aparecem em programação multi-processo** (como nos sistemas distribuídos), apenas em um grau de complexidade maior.
 Para relembrar, há várias diferenças entre *threads* e processos, mas a abstração é essencialmente a mesma:
 
 || Processo | Thread |
 -|----------|--------
-Definição | Instância de um programa | "Processo leve"
+*Quasi* definição | Instância de um programa | "Processo leve"
 Função de entrada | `main` | função "qualquer"
 Compartilhamento de código e dados | Privado ao processo | Compartilhado pelos threads
 Estado | Código, Stack, Heap, descritores (e.g, file descriptors), controle de acesso | Stack, variáveis locais 
 Comunicação| IPC (*Inter Process Communication*): sockets, FIFO, memória compartilhada, etc  | IPC, mutex, variáveis de condição, semáforos, etc
 Nível da implementação | Sistema operacional | Diferentes implementações 
 API || Posix, C++, Java, ...
-Bloqueio | Mudança de contexto para outro thread mesmo sem terminar quantum | Mudança de contexto para outro thread do mesmo processo
+Efeito de E/S | Mudança de contexto para outro thread mesmo sem terminar quantum | Mudança de contexto para outro thread do mesmo processo
 Tempo de criação, terminação e mudança de contexto| Demora mais | Demora menos
 
 
@@ -74,7 +72,7 @@ Considere os exemplos de clientes e servidores vistos [anteriormente](#tcp).
 Imagine que em vez do serviço simples feito no exemplo, o servidor retorne uma página Web.
 Detalhes do protocolo seguido por navegadores e servidores serão vistos mais tarde. Por agora, considere apenas que uma requisição `GET arquivo.html` será enviada para o servidor que lerá o arquivo especificado do sistema de arquivos; como você sabe, ler um arquivo é uma operação lenta e que não requer CPU.
 
-### Cliente
+## Threads no Cliente
 
 Do ponto de vista do cliente, a vantagem do uso de múltiplos threads são claras: permite lidar com **várias tarefas concorrentemente**, por exemplo solicitar CSS, HTML e imagens concorrentemente, **escondendo latência** das várias operações, e permite **organizar código** em blocos/módulos.
 Se você usar o console de desenvolvimento do navegador, verá como múltiplos arquivos são baixados em paralelo quando acessa um sítio. 
@@ -86,12 +84,11 @@ O primeiro arquivo, `index.html` é baixado individualmente, mas uma vez que iss
 Como outros exemplos, considere um formulário *online* em que a validação de um campo é executada enquanto o campo seguinte está sendo preenchido, ou um serviço de email em que arquivos são carregados enquanto a mensagem é confeccionada.
 
 
-### Servidor
+## Threads Servidor
 
 Do lado dos servidores há diversas possibilidades de uso de threads para aumentar o paralelismo no processamento de requisições, melhor utilizando recursos disponíveis e melhorando a experiência do usuário.
 
-
-#### Single-threaded
+### Single-threaded
 A estratégia mais simples de se implementar é a de usar apenas um thread, como temos feito até agora.
 Considere um servidor Web com esta esta característica; o fluxo no tratamento de uma requisição é exemplificado na pela figura a seguir:
 
@@ -110,7 +107,7 @@ Se novas requisições forem recebidas enquanto o servidor está executando os p
 A espera será maior quanto mais o servidor demorar para atender à primeira requisição, por exemplo, se precisar consultar um banco de dados ou carregar o arquivo requisitado do disco.
 Para evitar que isto ocorra, o servidor pode usar mais threads.
 
-#### Thread per request
+### Thread per request
 O servidor pode criar um novo thread para cada nova requisição, permitindo que múltiplas requisições sejam tratadas concorrentemente.
 Isto é, mesmo que um thread do servidor seja bloqueado por muito tempo, somente um cliente terá sua resposta atrasada (excluindo-se necessidades de coordenação entre múltiplos threads) e outros clientes podem continuar sendo atendidos normalmente, como mostrado na figura a seguir.
 
@@ -120,7 +117,7 @@ Lembre-se, entretanto, que o número de threads que se pode criar em um SO é li
 Além disso, a criação e destruição de threads é cara pois é feita por meio de uma chamada de sistema, pelo kernel, e portanto implica em alternar entre modo usuário e modo protegido.
 Se possível, devemos evitar a criação de novos threads em aplicações com requisitos de desempenho, e recliclá-los pode ser uma boa estratégia.
 
-#### Thread pool
+### Thread pool
 Para reciclarmos threads, podemos criar *pools*, um balde de threads que são usados quando necessário e devolvidos para o balde quando não mais.
 No cerne desta abordagem, junto com o *pool* de threads, fica uma fila bloquenante na qual tarefas são inseridas e de onde os threads tentam retirá-las.
 
@@ -137,7 +134,7 @@ Por isso é importante dimensionar bem o tamanho to *pool*, ou mesmo torná-lo d
 Se considerarmos que cada tarefa na verdade tem várias partes, 
 é possível refinar mais este modelo, quebrando o processamento em vários pools.
 
-#### Estágios
+### Estágios
 Na arquitetura baseada em estágios, e.g.,  **Staged Event-Driven Architecture**, SEDA, cada **estágio**, cada estágio é responsável por processar uma parte da tarefa, passada adiante até que seja completada.[^seda]
 
 [^seda]: O artigo [SEDA: An Architecture for Well-Conditioned, Scalable Internet Services](http://www.sosp.org/2001/papers/welsh.pdf) descreve em detalhes a arquitetura SEDA.
@@ -177,7 +174,7 @@ void threadfunction(int32 * exclusivo) {
 ```
 
 Cada um dos threads criados acessa exclusivamente uma das variáveis. Logo, não há interferência entre as threads e se cada uma for colocada em um processador diferente, executarão no máximo de seu potencial, correto?
-Não exatamente, pois mesmo este código simplíssimo podemos sofrer de [falso compartilhamento](https://dzone.com/articles/false-sharing).
+Não exatamente, pois mesmo este código simplíssimo pode sofrer de [falso compartilhamento](https://dzone.com/articles/false-sharing).
 Isto acontece, por exemplo, se cada linha da cache do sistema onde este programa executa tiver 8 ou mais bytes de comprimento. Como tanto `X` quanto `Y` no programa tem 4 bytes, as duas variáveis poderão ficar na mesma linha da cache e toda vez que uma thread modificar uma variável a cache da outra será invalidada para leitura.
 
 ![Multithreaded](../images/cache-line.png)
@@ -194,7 +191,7 @@ Isto torna muito mais fácil e eficiente o controle de concorrência, do ponto d
 ???- info inline end "Multiprogramação"
      ![Multithreaded](../images/multithreaded.jpg)
 
-Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
+Fazer esta divisão pode ser complicado pois a relação de compartilhamento entre threads pode ser complexa em função da tarefa sendo resolvida, por exemplo, se diferentes threads compartilharem diferentes variáveis uns com os outros. Ainda que que uma configuração ótima em termos de afinidade exista, encontrá-la pode ser custo.
 Ainda assim, precisamos lidar com estado compartilhado e enfrentar condições de corrida de forma a não levar a **inconsistências** na executação de tarefas, nos referindo a inconsistência aqui como qualquer desvio no comportamento do programa daquilo que foi especificado pelo desenvolvedor.
 Para isso, usamos as primitivas de controle de concorrência que estudaram em SO, que também tem seus problemas em potencial, como **deadlocks** e **inanição**.
 Veja o seguinte vídeo para uma análise de diversos pontos importantes no uso de multithreads.
@@ -212,8 +209,10 @@ Quanto a este respeito, podemos classificar servidores como **stateful** e **sta
       * Falhas
       * Balanceamento
 
-O "state" nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
+O **state** nos dois nomes se refere ao estado mantido por um serviço para atender a requisições.
 Caso mantenha estado, por exemplo informando em quais arquivos o cliente está interessado, fica mais fácil para o servidor continuar o trabalho feito em requisições anteriores.
+
+###### Stateless
 Imagine por exemplo que um cliente esteja acessando linhas em um banco de dados, de forma paginada: a cada requisição, o cliente recebe $n$ novas linhas para processar e, quando estiver pronto, requisite $n$ novas linhas.
 Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:
 
@@ -223,6 +222,7 @@ Imagine quão infeficiente seria se o servidor seguisse o seguinte fluxo:
 4. retorne as próximas $n$ linhas para o cliente
 5. feche o resultado da consulta.
 
+###### Stateful
 Se em vez disso o servidor mantiver um mapa com consultas recentes, em que a chave seja algum identificador do cliente e o valor uma *visão*  dos resultados; a cada nova requisição, basta o servidor resgatar a visão usando o identificador do cliente e selecionar as seguintes $n$ entradas da visão. Manter o mapa como estado acelera o processamento e melhora a experiência do usuário, neste caso.
 Por outro lado, considere que múltiplos clientes fazem consultas concorrentemente: quanto recurso seria necessário para que o servidor mantenha a visão de todos os clientes?
 
@@ -232,15 +232,14 @@ Também a complexidade do servidor aumenta. Considere as algumas de muitas pergu
 * Se múltiplos servidores existem, como compartilhar os estado entre os mesmos?
 * Se o cliente resolva não fazer mais requisições, por exemplo por ter encontrado o que procurava, por quanto tempo o servidor deve manter a visão aberta?
 
-Você já deve ter adivinhado que no primeiro exemplo temos um servidor *stateless* e no segundo um *stateful*, e percebido que cada um tem suas vantagens e desvantagens.
-Vejamos mais algumas.
+Como você já deve ter percebido, ambas as abordagens, *stateless* e *stateful*, tem suas vantagens e desvantagens.
 
-#### Sessão
+###### Sessão
 
 Essencialmente, o servidor *stateless* não mantem informação sobre a sessão do cliente e requer que a cada nova requisição, quaisquer informações necessárias para realizar a tarefa requisitada sejam novamente fornecidas ao servidor.
 No caso *stateful*, o servidor pode se lembrar, como no exemplo anterior, até onde o trabalho já foi executado, quais arquivos o cliente manipulou (e mantê-los abertos), qual o endereço o cliente e enviar-lhe notificações importantes (e.g., "Novo dado inserido!").
 
-#### Falhas
+###### Falhas
 
 Enquanto servidores *stateful* obviamente levam a melhor desempenho no *happy path* (contanto que recursos suficientes sejam providos), no caso de falhas, serviços *stateless* tendem a voltar ao ar mais rapidamente, uma vez que não há estado que precise ser recuperado.
 Pela mesma razão, clientes que percebem que um servidor falhou podem rapidamente se dirigir a outros servidores e continuar suas requisições de onde estavam, uma vez que são detentores de toda a informação necessária para o próximo passo do processamento.
@@ -251,10 +250,10 @@ Para que possa o recuperar o estado anterior à falha, o servidor precisa coloca
 A perda deste estado implicaria na incapacidade de prover o serviço corretamente.
 Um projeto *stateless* não depende deste estado e por isso pode ser mais rapidamente recuperado, replicado ou substituído.
 
-#### Stateless x Stateful
+###### Stateless x Stateful
 
 Não surpreendentemente, a resposta para "qual abordagem é melhor, *stateful* ou *stateless*?" é **depende**.
-Ambos as opções tem suas vantagens e desvantagens e para algums serviços apenas uma opção será viável.
+Ambos as opções tem suas vantagens e desvantagens e para alguns serviços apenas uma opção será viável.
 Se seu serviço precisa manter estado (um SGBD, por exemplo), ele terá que manter estado, mesmo que não sobre clientes.
 Veja um pequeno comparativo das características das duas abordagens.
 
@@ -269,9 +268,9 @@ Veja um pequeno comparativo das características das duas abordagens.
 | re-autenticação (mesmo que simplficada) a cada requisição | Autentica no começo da sessão |
 
 
-### Multithread na prática
+## Multithread na prática
 
-#### POSIX
+### POSIX
 
 [POSIX Threads](https://en.wikipedia.org/wiki/POSIX_Threads) ou PThreads, são uma definição **aberta** de como *threads* devem funcionar em sistemas operacionais.
 Várias implementações desta especificação estão disponíveis tanto para sistemas Unix, que se esforçam para ser compatíveis com especifições POSIX, mas também para Windows, via subsistemas que compatibilizam diferentes API.
@@ -356,7 +355,7 @@ Mas isto não quer dizer que estamos "órfãos" de API; várias outras operaçõ
 	
 * `pthread_attr_setaffinity_np` - ajusta afinidade dos threads.
 
-#### Python
+### Python
 
 Em Python, como seria de se esperar, há várias formas de se trabalhar com *threads*. 
 O exemplo a seguir usa o pacote `thread` e é essencialmente um envólucro POSIX.
@@ -427,7 +426,7 @@ print "Exiting Main Thread"
 
 Uma consequência desta divisão é que um mesmo objeto do tipo `Thread` pode ser reciclado e executado várias vezes.
 
-#### Java
+### Java
 
 Outro exemplo importante de API para multithreading é a do Java, pois nesta linguagem há, essencialmente, duas formas de se conseguir concorrência. 
 A primeira é via instâncias explícitas da classe `Thread` e, a segunda, via abstrações de mais alto nível, os `Executors`.
@@ -691,7 +690,7 @@ executorService.scheduleAtFixedRate(r1, 1000, 5000, TimeUnit.MILLISECONDS);
 ```
 
 
-#### Coordenação
+###### Coordenação
 Como visto no exercício anterior, a execução de *threads* é não determinística. Contudo, estas execuções frequentemente precisam ser coordenadas para que não pisem uns nos calcanhares dos outros, por exemplo, decidindo quem deve ser o próximo a entrar em uma região crítica ou será o responsável por uma determinada tarefa. 
 
 Há várias astrações que podem ser usadas para coordenar as operações de *threads*, como deve se lembrar no estudo de Sistemas Operacionais. Alguns exemplos são *locks*, variáveis de condição e semáforos.
