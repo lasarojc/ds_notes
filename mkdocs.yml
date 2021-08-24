@@ -29,7 +29,10 @@ nav:
                 - Concorrência: coord/concurrency.md
                 - Coordenação: coord/coord.md
         
-        - Tempo: time.md
+        - Tempo: 
+		- Introdução: time.md
+		- Tempo Físico: physical.md
+		- Tempo Lógico: logical.md
         
         - Tolerância a Falhas: fault.md
 
