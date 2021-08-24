@@ -1,37 +1,10 @@
 
-## Projeto
-* [Uma HT cliente/servidor](./notes/projeto/projeto.md)
-
-
-
 ## Arquiteturas
-
-Reestruturar em uma past
-
-#TODO: Trazer parte da discussão sobre cliente servidor para cá e atualizar.
-
-### Peer-2-Peer
-
-
-#* [Sistemas Par-a-Par](./notes/0_intro.md)
-#* [Tabelas de Espalhamento Distribuídas](./notes/p2p/1_dht.md)
-#  * [Estudo de Caso: Chord](./notes/p2p/1_1_chord.md)
-#  * [Estudo de Caso: Dynamo](./notes/p2p/1_2_dynamo.md)
-#  * [Estudo de Caso: Cassandra](./notes/p2p/1_1_cassandra.md)
-#* [Estruturas de Dados para P2P e outros SD](./p2p/2_ed_sd.md)
-
-## Projeto
-* [Uma DHT propriamente dita](./projeto/p2p.md)
 
 ### Microsserviços
 #* [Visão Geral](./notes/microservices/0_intro.md)
 
 ## Event-sourcing
-
-## gossiping
-https://flopezluis.github.io/gossip-simulator/
-https://github.com/mohitisrani/DOS-Gossip-Simulator
-https://www.serf.io/docs/internals/simulator.html
 
 # Coordenação
 TODO: usar consistência entre réplicas da DHT para motivar a sincronização.
@@ -45,7 +18,7 @@ Indistinquishability - https://youtu.be/cRQQL7r2L1w
 
 * [Dependabilidade](./ft/dependabilidade.md)
 * [Modelos](./ft/modelos.md)
-* [Comunicação em Grupo](./ft/comunicao_grupo.md)
+* [Comunicação em Grupo](./ft/comunicacao_grupo.md)
   * [Replicação de Máquinas de Estados](./ft/smr.md)
   * [Estudo de Caso: Raft](./fr/raft.md)
   * [Estudo de Caso: Zookeeper](./ft/zookeeper.md)
@@ -65,8 +38,6 @@ Indistinquishability - https://youtu.be/cRQQL7r2L1w
 * Netty
 
 
-
-
 Gossiping 
 
 * http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.148.101
@@ -74,3 +45,19 @@ Gossiping
 * https://www.kth.se/social/upload/51647982f276546170461c46/4-gossip.pdf
 * https://www.youtube.com/watch?v=-36j_DGXEwE
 * https://www.youtube.com/watch?v=0bAJ4iNnf5M
+
+
+# Introdução
+
+* Relacionar com outros cursos do currículo
+   * programação paralela
+   * SGBD
+   * sistemas operacionais
+   * redes de computadores
+   * segurança da informação
+* Deficiências do curso
+   * Cloud
+
+
+# Modelos
+Trazer para primeira semana?

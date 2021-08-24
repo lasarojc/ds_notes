@@ -487,6 +487,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#uma-historia-de-tres-exercitos" class="md-nav__link">
+    Uma história de três exércitos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#modelos-computacionais" class="md-nav__link">
     Modelos computacionais
   </a>
@@ -894,6 +901,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#uma-historia-de-tres-exercitos" class="md-nav__link">
+    Uma história de três exércitos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#modelos-computacionais" class="md-nav__link">
     Modelos computacionais
   </a>
@@ -1006,9 +1020,63 @@ O primeiro desafio é entender o ambiente no qual estão inseridos, suas limita�
 <p><img alt="Animação" src="../drawings/virtualization.drawio-12.svg" /></p>
 </div>
 </div>
-<p>Agora que relembramos como a computação é executada, podemos abstrair boa parte do que revimos na forma de um <strong>modelo computacional</strong>, sabendo que alguns problemas tem soluções triviais ou inexistentes, dependendo do modelo.</p>
+<p>Agora que relembramos como a computação é executada em nível de infraestrutura, consideremos um problema abstrato.</p>
+<h2 id="uma-historia-de-tres-exercitos">Uma história de três exércitos</h2>
+<p><strong>Era uma vez</strong> uma cidade estado no alto de uma montanha. 
+A despeito de sofrer de falta de água, afinal, estava no alto de uma montanha, a cidade era invejada pelos vizinhos.
+Como a cidade era muito bem fortificada, ela poderia se defender de qualquer <strong>ataque em uma única frente</strong>. 
+Se atacada em <strong>duas frentes</strong>, contudo, cairia.
+Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em <strong>dois exércitos</strong> sob o comando de Alice (a sociedade era feminista) e Bastião (sim, Bastião, não Bob).<sup id="fnref:2generalsparadox"><a class="footnote-ref" href="#fn:2generalsparadox">1</a></sup></p>
+<p><img alt="Paradoxo dos 2 Generais" src="../drawings/2generals.drawio-0.svg" /></p>
+<p>Um complicador no ataque é que a <strong>comunicação entre os dois exércitos é feita por mensageiros</strong> que devem contornar a montanha para alcançar o outro exército. 
+O trajeto é complexo e cheio de armadilhas e por isso <strong>mensageiros podem se perder</strong> e demorar um longo tempo para chegar ou até mesmo <strong>serem mortos</strong> e nunca entregarem suas mensagens.</p>
+<p>Alice, a comandante mais sênior, deve decidir quando atacar e informar a Bastião, por exemplo, simplesmente ordenando "<strong>Atacar no dia 3, ao nascer do sol.</strong>"
+Bastião <strong>obedecerá</strong> a ordem de atacar contanto que esteja certo de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
+Se mensagens podem ser perdidas, <strong>Alice não tem garantias de que Bastião recebeu o comando</strong> e por isso não pode simplesmente considerar como certo o ataque de Bastião.
+Como o problema pode ser resolvido?</p>
+<p>Uma resposta natural é usar <strong>mensagens de confirmação</strong>. Isto é, quando Bastião recebe uma ordem, envia um mensageiro de volta para Alice com uma confirmação da recepção.
+Alice ao receber tal mensagem, sabe que Bastião executará a ordem, correto? Mas não é tão simples assim no caso da ordem de atacar.
+Lembre-se que qualquer exército que ataque sozinho, perderá, seja Alice ou Bastião. 
+Por isso, ao enviar uma mensagem de confirmação do ataque, Bastião precisa estar certo de que Alice a recebeu, ou atacará sozinho.
+Novamente podemos apelar para uma mensagem de confirmação ou, neste caso, uma confirmação da confirmação.
+E o problema se repete indefinidamente.</p>
+<div class="admonition info inline end">
+<p class="admonition-title">Paradoxo dos 2 Exércitos</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(B\)</span> devem concordar na hora do ataque.</li>
+<li><span class="arithmatex">\(A\)</span> ataca se estiver certo que <span class="arithmatex">\(B\)</span> atacará.</li>
+<li><span class="arithmatex">\(B\)</span> ataca se estiver certo que <span class="arithmatex">\(A\)</span> atacará.</li>
+<li>A comunicação por troca de mensagens.</li>
+<li>Mensagens podem ser arbitrariamente atrasadas.</li>
+<li>Mensagens podem ser perdidas.</li>
+</ul>
+<p>Como um exército tem certeza que o outro irá atacar?</p>
+</div>
+<p>Suponhamos que <strong>há um algoritmo correto</strong> que executa uma sequência finita de troca de mensagens em que ao final tanto Alice quanto Bastião estão seguros, e corretos em sua segurança, de que o outro também atacará. Seja <span class="arithmatex">\(n\)</span> o número máximo de mensagens trocadas. 
+Em uma execução em que todas as <span class="arithmatex">\(n\)</span> mensagens possíveis são usadas, suponha sem perda de generalidade que Alice enviou a <span class="arithmatex">\(n\)</span>-ésima mensagem.</p>
+<p><img alt="Paradoxo dos 2 Generais" src="../drawings/2generals.drawio-1.svg" /></p>
+<p>Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida, é indistinguível de uma execução em que a <span class="arithmatex">\(n\)</span>-ésima mensagem é perdida.</p>
+<p><img alt="Paradoxo dos 2 Generais" src="../drawings/2generals.drawio-2.svg" /></p>
+<p>Dado que ao final da primeira execução completa <strong>Alice ataca</strong>, no final da execução onde a mensagem <span class="arithmatex">\(n\)</span> é perdida, Alice também deve atacar.
+Mas se o algoritmo é correto, então também <strong>Bastião ataca</strong>, mesmo sem ter recebido a enésima mensagem. Logo, a enésima mensagem é desnecessária ao algoritmo, que deve funcionar com <span class="arithmatex">\(n-1\)</span> mensagens.</p>
+<p>Repetindo-se o argumento mais <span class="arithmatex">\(n-1\)</span> vezes, temos que o algoritmo deve funcionar com zero mensagens, o que é um <strong>absurdo</strong>. Logo não existem algoritmos corretos para o problema como definido, isto é, em que mensagens podem ser perdidas; é <strong>impossível</strong> resolver o problema.</p>
+<div class="admonition info inline end">
+<p class="admonition-title">Impossibilidades</p>
+<p>Impossibilidade de resolução x resolução na prática.</p>
+</div>
+<p>Apesar de ser impossível resolver este problema aparentemente simples, devemos fazê-lo frequentemente no mundo real. 
+A resposta está no que consideramos como premissas válidas no ambiente em que tentamos solucionar o problema e quais exatamente são as propriedades de uma solução aceitável.</p>
+<h6>Impossibilidade</h6>
+<p>Quando dizemos que é impossível resolver um problema queremos dizer que é impossível produzir um algoritmo que <strong>sempre levará a uma resposta correta</strong>.
+Isto quer dizer, ignorando-se algoritmos que sempre levarão a respostas incorretas, podemos produzir algoritmos que ou às vezes <strong>levarão a respostas incorretas</strong> ou que, mesmo que nunca levem a respostas incorretas, às vezes <strong>não levarão a respostas</strong> alguma; ambos podem ser úteis na prática.</p>
+<p>Por exemplo, ainda no problema dos exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
+A <strong>confiança</strong> de Alice de que Bastião também atacaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
+Esta abordagem faria com com que o ataque funcionasse com uma <strong>alta probabilidade</strong> <span class="arithmatex">\(P\)</span>, mas com uma pequena probabilidade <span class="arithmatex">\(P-1\)</span> de levar a um ataque fracassado, onde <span class="arithmatex">\(P\)</span> pode ser feita <strong>tão grande quanto se "queira"</strong>.</p>
+<p>Resultados de impossibilidade abundam na área de computação distribuída<sup id="fnref:impossibilidades"><a class="footnote-ref" href="#fn:impossibilidades">2</a></sup> e não podem nos desencorajar de continuar a buscar soluções práticas.</p>
 <h2 id="modelos-computacionais">Modelos computacionais</h2>
-<p>Antes de distribuir nosso sistema, isto é, dividir a computação/armazenamento em diversas máquinas, e coordenar suas ações para que sejam consistentes com a especificação, de forma a minimizar o tempo que o serviço fica fora do ar, entregando o serviço de acordo com expectativas especificadas, precisamos responder a algumas perguntas:</p>
+<p>Dado a quantidade de ambientes reais em que as soluções dos nossos problemas abstratos precisam executar, com sua diversidade de sistemas operacionais, latências de rede, tamanhos de mensagens, etc, seria praticamente impossível provar alguma coisa geral e interessante sobre os algoritmos, como por exemplo se ele <strong>funciona</strong>.
+Por isso, em vez de considerar cada ambiente específico, abstraímos os ambientes por meio de <strong>modelos computacionais</strong>, que capturam as premissas gerais dos ambientes, e só então escrevemos os algoritmos para tais modelos.</p>
+<p>Isso que dizer que, na prática, antes de distribuir a computação/armazenamento em diversas máquinas e de forma a coordenar ações das diversas partes de forma a entregar o serviço de acordo com expectativas dos usuários, precisamos responder a algumas perguntas:</p>
 <ul>
 <li>Qual a probabilidade de um nó parar de funcionar?</li>
 <li>Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?</li>
@@ -1054,7 +1122,7 @@ Esta abordagem resulta em uma arquitetura NUMA, isto é, <em>Non-Uniform Memory 
 <p>Quanto ao sincronismo, se considera se os processos tem a <strong>capacidade de medir a passagem de tempo</strong>, isto é, se tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
 Além disso, considera-se a existência de limites de tempo para execução de operações, por exemplo, o tempo um processador leva para executar uma operação de soma de dois inteiros, ou o tempo necessário para a entrega de uma mensagem ou acesso a uma região de memória.</p>
 <h3 id="falhas">Falhas</h3>
-<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, apresentando problemas; e estejam certos, problemas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">1</a></sup> 
+<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, apresentando problemas; e estejam certos, problemas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">3</a></sup> 
 Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada, mas sem comprometer a corretude do sistema.</p>
 <details class="info inline end"><summary>Falhas</summary><ul>
 <li>detectável</li>
@@ -1074,7 +1142,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
 <h3 id="sd-sao-como-cebolas">SD são como cebolas!</h3>
 <p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
 Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
-Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">2</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
+Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">4</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
 <details class="info inline end"><summary>Abstrações</summary><ul>
 <li>Comunicação<ul>
 <li>Ordenação</li>
@@ -1096,19 +1164,25 @@ Implementar estas abstrações em si já é uma tarefa complicada, pois é preci
 <p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
 Dado que a complexidade de se implementar estas abstrações já é grande por si só, se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
 Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup>
+Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">5</a></sup>
 Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.</p>
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:2generalsparadox">
+<p>Esta é uma variação do problema de coordenação de <em>gangsters</em> apresentado no em <a href="https://doi.org/10.1145%2F800213.806523">Some constraints and trade-offs in the design of network communications</a>&#160;<a class="footnote-backref" href="#fnref:2generalsparadox" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:impossibilidades">
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/MIT-LCS-TM-394.pdf">Hundred Impossibility Proofs for Distributed Computing</a>, <a href="https://doi.org/10.2200/S00551ED1V01Y201311DCT012">Impossibility Results for Distributed Computing</a>&#160;<a class="footnote-backref" href="#fnref:impossibilidades" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
 <li id="fn:falham">
-<p><a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">Annual failure rates - servers</a>&#160;<a class="footnote-backref" href="#fnref:falham" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">Annual failure rates - servers</a>&#160;<a class="footnote-backref" href="#fnref:falham" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:recursos">
-<p>Os recursos compartilhados vão desde alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, a própria <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.&#160;<a class="footnote-backref" href="#fnref:recursos" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Os recursos compartilhados vão desde alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, a própria <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.&#160;<a class="footnote-backref" href="#fnref:recursos" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:ogros">
-<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
