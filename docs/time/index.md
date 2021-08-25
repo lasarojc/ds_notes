@@ -7,34 +7,34 @@ No exemplo a seguir, um arquivo é sincronizado com uma nova cópia, Cliente 1, 
 Na sequência, um novo cliente se registra, Cliente 2, recebe o arquivo, o altera e sincroniza com o servidor, que propaga a nova versão para Cliente 1.
 Ao final da execução, todos os envolvidos tem cópias idênticas do arquivo. :thumbsup:
 
-![Cloud Drive](drawings/cloud_drive.drawio#0)
+![Cloud Drive](../drawings/cloud_drive.drawio#0)
 
 Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
 Mais especificamente, quando as duas máquinas se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?
 
-![Cloud Drive](drawings/cloud_drive.drawio#1)
+![Cloud Drive](../drawings/cloud_drive.drawio#1)
 
 Você pode se perguntar se isso realmente poderia acontecer, afinal, você não estará em dois lugares para fazer modificações concorrentes. Ignorando-se o fato de que outra pessoa poderia estar editando em paralelo, uma falha de comunicação poderia lhe permitir editar nos dois computadores **concorrentemente**.
 
-![Cloud Drive](drawings/cloud_drive.drawio#2)
+![Cloud Drive](../drawings/cloud_drive.drawio#2)
 
 Uma possibilidade simples é sempre aceitar cada nova versão como uma modificação do arquivo.
 Assim, efetivamente, quando a primeira versão for entregue, será aceita e viverá momentaneamente até que a outra versão seja recebida e a sobrescreva.
 No exemplo seguinte, o resultado deveria ser A, seguindo esta abordagem.
 
-![Cloud Drive](drawings/cloud_drive.drawio#3)
+![Cloud Drive](../drawings/cloud_drive.drawio#3)
 
 Contudo, vemos alguns problemas pois, pelo gráfico, vemos que a "Versão B" foi criada **depois** da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
 Além disso, se encolhermos um pouco a desconexão do nó na parte de cima, o resultado final se inverte.
 
-![Cloud Drive](drawings/cloud_drive.drawio#4)
+![Cloud Drive](../drawings/cloud_drive.drawio#4)
 
 Isso quer dizer que a decisão de qual a versão deve ser mantida depende mais da rede que das edições do arquivo em si, ou mesmo do algoritmo ***last writes wins***.
 Logo, a ordem de chegada ao servidor não serve como critério para escolha pois a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram modificados.
 
 Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de  **criação** e **modificação** do arquivo. Contudo, o **horários são relativos** a onde a operação aconteceu e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.
 
-![Cloud Drive](drawings/cloud_drive.drawio#5)
+![Cloud Drive](../drawings/cloud_drive.drawio#5)
 
 <!--Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em *operações de modificação*, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas. , a menos que façamos com que os processo concordem na passagem do tempo.-->
 

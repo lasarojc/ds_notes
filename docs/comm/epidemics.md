@@ -48,7 +48,7 @@ Durante o primeiro ciclo, o processo infectado propaga a informação para outro
 No próximo ciclo, cada um destes infectados infecta outros dois, módulo interações entre nós já infectados e que desperdiçam oportunidades de propagação.
 Se imaginarmos estes ciclos como uma árvore em que cada ciclo corresponde a um ciclo, em que os nós contaminados no final do ciclo são os nós da árvore, e que as interações são arestas, temos o seguinte.
 
-![](../../drawings/epidemics.drawio#0)
+![](../drawings/epidemics.drawio#0)
 
 !!!note inline end "Ciclos"
     * $n$ nós
@@ -83,7 +83,7 @@ Por exemplo, cada processo pode gerar periodicamente um resumo da carga de traba
 Assim, um modelo comum de representação dos dados em cada nó é um mapa, um banco de dados **chave/valor**, onde a chave é um identificador único da informação e o valor é dado em si, por exemplo ("ABCD1234_CPU%","90%").
 A cada contato, um nó faz um *pull* das entradas cujas chaves desconhece e um *push* das que a contraparte não conhece.
 
-![](../../drawings/epidemics.drawio#1)
+![](../drawings/epidemics.drawio#1)
 
 
 ###### Fofoca antiga
@@ -93,7 +93,7 @@ Algumas estratégias se complementam para implementar este comportamento.
 * **Frescor da informação**: se cada nó registra o instante em que primeiro recebeu uma informação, pode então determinar um limiar de tempo dentro do qual repassará a informação em seus contatos. Depois deste tempo a informação não mais se propaga pois não é mais uma "fofoca quente" ou porquê o nó deixou de ser "contagioso" para aquele vírus.
 * **Coleta de lixo**: para restringir a quantidade de espaço usado pelo nó, informações muito antigas devem ser esquecidas em algum momento. Este processo pode ser gradual, por exemplo excluindo os dados após algum tempo, mas mantendo as chaves, efetivamente tornando o nó não infectado mas **imune** ao vírus. Mesmo que as chaves sejam armazenadas de forma eficiente, por exemplo via uso de [**filtros de bloom**](), elas devem ser completamente esquecidas em algum momento, a partir do qual uma reinfecção é possível já que uma nova exposição seria indistinguível da exposição inicial.
 
-![](../../drawings/epidemics.drawio#2)
+![](../drawings/epidemics.drawio#2)
 
 ###### Versões
 Em certas aplicações, como a propagação da carga de trabalho de um processo, faz sentido que as informações sejam atualizadas. Por exemplo, mesmo que a informação sobre a carga de trabalho do processo às 10:00hs ainda esteja sendo propagada, se a carga às 10:01hs se torna conhecida, pode não ser mais necessário propagar a anterior.

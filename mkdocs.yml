@@ -30,9 +30,9 @@ nav:
                 - Coordenação: coord/coord.md
         
         - Tempo: 
-		- Introdução: time.md
-		- Tempo Físico: physical.md
-		- Tempo Lógico: logical.md
+                - Introdução: time/index.md
+                - Tempo Físico: time/physical.md
+                - Tempo Lógico: time/logical.md
         
         - Tolerância a Falhas: fault.md
 
@@ -61,11 +61,21 @@ nav:
 theme:
         name: material
         palette:
-            scheme: default 
-            accent: deep orange
-            primary: blue grey
+           - scheme: default
+             toggle:
+                icon: material/toggle-switch-off-outline
+                name: Switch to dark mode
+                accent: deep orange
+                primary: blue grey
+           - scheme: slate
+             toggle:
+                icon: material/toggle-switch
+                name: Switch to light mode
         language: pt
         custom_dir: overrides
+        features:
+           - search.suggest
+           - search.highlight
 
 plugins:
         - search

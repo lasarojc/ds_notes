@@ -36,7 +36,7 @@ A taxa de erro é denominada *drift*, é representada por $\rho$.
 Assumindo um relógio perfeito, $t$, temos que $1 - \rho \leq \frac{dC}{dt} \leq 1 + \rho$.
 Assim, um $\rho$ de 0.1 implica em um erro de mais ou menos 10%; a figura a seguir mostra a faixa em que $C$ pode operar e que o erro em relação a $t$ vai aumentando com a passagem do tempo.
 
-![Clock drift](./drawings/clock_skew.drawio)
+![Clock drift](../drawings/clock_skew.drawio)
 
 Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. 
 Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como **relógios atômicos**.
@@ -127,7 +127,7 @@ Sendo mais específico, nomeemos os processos como cliente, quem pergunta, e ser
 * Servidor envia resposta - $t_2$
 * Cliente recebe resposta - $t_3$
 
-![Algoritmo genérico de sincronização](./drawings/algo_cristian.drawio#0)
+![Algoritmo genérico de sincronização](../drawings/algo_cristian.drawio#0)
 
 Esta receita básica pode ser ajustada de diversas formas, sendo a primeira dada pelo algoritmo de Cristian.
 
@@ -139,7 +139,7 @@ No algoritmo de Cristian, assumimos que o relógio do Cliente é bom o suficient
 * Assuma $\frac{t_3-t_0}{2}$ como o tempo de transmissão da resposta (média da ida e da volta)
 * Cliente ajusta relógio para $C = t_s + \frac{t_3-t_0}{2}$
 
-![Algoritmo genérico de sincronização](./drawings/algo_cristian.drawio#1)
+![Algoritmo genérico de sincronização](../drawings/algo_cristian.drawio#1)
 
 Mas e a aproximação $\frac{t_3-t_0}{2}$, é boa? É uma aproximação tão boa quanto possível, pois medir a latência em uma única direção demandaria relógios sincronizados, exatamente o que estamos tentando resolver com este algoritmo. Quero dizer, temos uma dependência circular aqui, como o vídeo a seguir mostra.
 
@@ -151,7 +151,7 @@ Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas dire�
 * as setas vermelhas indicam o caso em que a requisição foi muito mais rápida que resposta ($T_{min}$)
 * as setas verdes indicam o caso em que a resposta foi muito mais rápida que requisição ($T_{min}$)
 
-![Erro do algoritmo de Christian](./drawings/algo_cristian.drawio#2)
+![Erro do algoritmo de Christian](../drawings/algo_cristian.drawio#2)
 
 No caso vermelho, a aproximação $\frac{t_3-t_0}{2}$ é muito menor que o tempo de propagação da resposta, $t3 - t1$, e no caso verde a aproximação é maior que o tempo $t_3 - t_2$.
 Em ambos os casos, o erro é está limitado a $\frac{t_2 - t1}{2}$, ou seja, $+- \frac{t_3 - t_0}{2} - T_{min}$.
@@ -231,7 +231,7 @@ O NTP foi especificado originalmente na RFC 1305[^rfc1305] e estendido pelas RFC
 Os diversos componentes do NTP são organizados em camadas, ou *estrata*, de forma que a informação do tempo flui da camada 0 (*stratum 0*) até a camada 15 (*stratum* 15).
 Os componentes não estão presos a camadas, que podem ser alteradas a medida que falhas acontecem e são dedicadas, e novos caminhos são encontrados usando-se o algoritmo de árvore geradora mínima Bellman-Ford, além de caminhos redundantes que conferem propriedades de **tolerância a falhas** à topologia.
 
-![Network Time Protocol](./images/ntp.png)[^ntpfigure]
+![Network Time Protocol](../images/ntp.png)[^ntpfigure]
 
 [^ntpfigure]: [Fonte: Benjamin D. Esham, (bdesham) - Based upon Ntp.png by Kim Meyrick](https://commons.wikimedia.org/w/index.php?curid=2815097)
 
@@ -287,7 +287,7 @@ Qualquer que seja o algoritmo utilizado, é provavelmente uma boa ideia **nunca 
 Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos de **ajustes graduais** nos relógios, que acelerem ou desacelerem o relógio $C$ em relação a $t$ (ou sua melhor aproximação, pelo **ajuste frequência de interrupção para atrasar/adiantar relógio** ou **ajustes dos incrementos com cada interrupção**. Isso fará com que as curvas no seguinte gráfico convirjam.
 A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.
 
-![Clock drift](./drawings/clock_skew.drawio#1)
+![Clock drift](../drawings/clock_skew.drawio#1)
 
 
 ### Usos de relógios sincronizados
