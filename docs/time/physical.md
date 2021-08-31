@@ -43,7 +43,7 @@ Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termo
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/p2BxAu6WZI8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Embora muito bons, os relógios atômicos também não são perfeito e, devido a várias razões, podem levar também a erros.
+Embora muito bons, os relógios atômicos também não são perfeitos e, devido a várias razões, podem levar também a erros.
 Mas o quê mais se pode fazer no sentido de **melhorar a precisão dos relógios**? A resposta está no UTC.
 
 ### Tempo Universal Coordenado 
@@ -54,7 +54,10 @@ Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores p
 ![[Fuso-horários](https://commons.wikimedia.org/w/index.php?curid=42165217)](../images/TimeZones.png)
 
 
-O UTC é definido com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.
+O UTC é definido com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. 
+O TAI mede "perfeitamente" a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. 
+Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. 
+Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.
 
 !!!quote "UTC"
      Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.
@@ -78,7 +81,7 @@ Vejamos um exemplo:
 * $\rho = 0,1$ (10%)
 * $\delta$ = 1s
 * Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. 
-* Logo, a sincronização deve ser feita a cada 10s, i.e, $\frac{\delta}{\rho} = \frac{1s}{0,1} = \frac{1s}{0,1} = 10s$
+* Logo, a sincronização deve ser feita a cada 10s, i.e, $\frac{\delta}{\rho} = \frac{1s}{0,1} = \frac{1s}{\frac{1}{10}} = 10s$
 
 Mas, e se quisermos sincronizar dois relógios com UTC, um com erro $\rho$, de forma que estes dois relógios não se distanciem mais que $\delta$ unidades, o problema é mais difícil?
 
@@ -104,7 +107,7 @@ Com um terceiro satélite, a posição é reduzida a dois pontos, a interseção
 
 ![Funcionamento de GPS](https://gisgeography.com/wp-content/uploads/2016/11/GPS-Trilateration-Feature-678x322.png)
 
-Contudo, para que funcione, relógios dos satélites e receptores precisam estar sincronizados para que o cálculo da distância possa ser feito, mas sincronizar os relógios é exatamente o problema que estamos tentando resolver. Para contornar esta restrição, usa-se um quarto satélite, para determinar a distância no "eixo temporal".
+Contudo, para que funcione, relógios dos satélites e receptores precisam estar sincronizados para que o cálculo da distância possa ser feito, mas sincronizar os relógios é exatamente o problema que estamos tentando resolver. Para contornar esta restrição, usa-se um quarto satélite, para determinar a distância na **dimensão do tempo**.
 
 Assim, temos uma receita simples para sincronização de relógios com UTC:
 
@@ -143,9 +146,10 @@ No algoritmo de Cristian, assumimos que o relógio do Cliente é bom o suficient
 
 Mas e a aproximação $\frac{t_3-t_0}{2}$, é boa? É uma aproximação tão boa quanto possível, pois medir a latência em uma única direção demandaria relógios sincronizados, exatamente o que estamos tentando resolver com este algoritmo. Quero dizer, temos uma dependência circular aqui, como o vídeo a seguir mostra.
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=pTn6Ewhb27k&list=TLPQMDcwNDIwMjEDgk_ulUs7Ig&index=2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pTn6Ewhb27k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas direções tem latências diferentes, pois sabemos que, em uma rede de larga escala, é possível e comum que pacotes tomem caminhos diferentes na ida e na volta. Neste, podemos estimar o erro que a aproximação introduz na sincronização, desde que tenhamos estimativas de tempo mínimo para a transmissão em cada sentido, $T_{min}$. A figura a seguir demonstra o erro desta técnica[^erro], onde 
+Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas direções tem latências diferentes, pois sabemos que, em uma rede de larga escala, é possível e comum que pacotes tomem caminhos diferentes na ida e na volta.
+Neste caso, podemos estimar o erro que a aproximação introduz na sincronização, desde que tenhamos estimativas de tempo mínimo para a transmissão em cada sentido, $T_{min}$. A figura a seguir demonstra o erro desta técnica[^erro], onde 
 
 * $t_3 - t_0$ corresponde ao tempo medido entre o envio da requisição e recepção da resposta
 * as setas vermelhas indicam o caso em que a requisição foi muito mais rápida que resposta ($T_{min}$)
@@ -361,4 +365,8 @@ Nas soluções anteriores, **um nó precisa esperar por muito tempo antes de usa
 E se ele aprendesse antes que os outros nós não farão requisições, que não haverão sobreposições de requisições? 
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos **relógios lógicos**.
+
+## Referências
+
+* [Google TrueTime](https://cloud.google.com/spanner/docs/true-time-external-consistency)
 

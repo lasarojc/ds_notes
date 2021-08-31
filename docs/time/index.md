@@ -29,10 +29,11 @@ Além disso, se encolhermos um pouco a desconexão do nó na parte de cima, o re
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#4)
 
-Isso quer dizer que a decisão de qual a versão deve ser mantida depende mais da rede que das edições do arquivo em si, ou mesmo do algoritmo ***last writes wins***.
-Logo, a ordem de chegada ao servidor não serve como critério para escolha pois a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram modificados.
+Isso quer dizer que a decisão de qual a versão deve ser mantida depende mais da rede que das edições do arquivo em si.
+Mas isso não parece fazer sentido, certo? Afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram modificados.
 
-Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de  **criação** e **modificação** do arquivo. Contudo, o **horários são relativos** a onde a operação aconteceu e não ao grupo de processos que compõe o sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um observador externo, a ter um horário de criação oficial anterior.
+Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de  **criação** e **modificação** do arquivo. 
+Contudo, o **horários são relativos** a onde a operação aconteceu e não aos componentes do sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um **observador externo**, a ter um horário de criação oficial anterior.
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#5)
 
