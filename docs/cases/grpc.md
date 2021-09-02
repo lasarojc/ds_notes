@@ -310,3 +310,7 @@ logger.info("Greeting: " + response.getMessage());
     response = stub.DigaOla(helloworld_pb2.OlaRequest(name='zelelele'))
     print("Greeter client received: " + response.message)
     ```
+
+
+    ### Outros modos de trabalho
+    gRPC é um *framework* bem flexível e para entender como é possível usá-lo para estabelecer canais de comunicação para fluxos, além da documentação já apontada, sugiro o artigo [gRPC: A Deep Dive into the Communication Pattern](https://thenewstack.io/grpc-a-deep-dive-into-the-communication-pattern/), que a detalha.

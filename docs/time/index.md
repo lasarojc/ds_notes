@@ -1,11 +1,18 @@
 # Tempo
 
-Neste capítulo discutiremos como o **tempo** é importante no desenvolvimento de sistemas distribuídos.
+Mesmo sem nos aprofundarmos na natureza do tempo, uma discussão muito filosófica[^tempo] para este curso, é fácil perceber que este tem implicações na forma como os sistemas distribuídos funcionam.
+Para nós, como colocado por Einstein,
+
+> Tempo é o que os relógios medem.
+
+Neste capítulo discutiremos como o **tempo** e os **relógios** são importantes no desenvolvimento de sistemas distribuídos.
 Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o **armazenamento de arquivos na nuvem**, sincronizado com o sistema de arquivos local. 
 Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de **cloud-drive**.
 No exemplo a seguir, um arquivo é sincronizado com uma nova cópia, Cliente 1, que altera o arquivo e sincroniza de volta com o servidor.
 Na sequência, um novo cliente se registra, Cliente 2, recebe o arquivo, o altera e sincroniza com o servidor, que propaga a nova versão para Cliente 1.
 Ao final da execução, todos os envolvidos tem cópias idênticas do arquivo. :thumbsup:
+
+[^tempo]: [The New Thermodynamic Understanding of Clocks](https://www.quantamagazine.org/the-new-science-of-clocks-prompts-questions-about-the-nature-of-time-20210831/)
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#0)
 
