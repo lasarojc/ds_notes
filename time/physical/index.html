@@ -700,6 +700,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1079,6 +1086,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1136,14 +1150,17 @@ Assim, um <span class="arithmatex">\(\rho\)</span> de 0.1 implica em um erro de 
 Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como <strong>relógios atômicos</strong>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/p2BxAu6WZI8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p>Embora muito bons, os relógios atômicos também não são perfeito e, devido a várias razões, podem levar também a erros.
+<p>Embora muito bons, os relógios atômicos também não são perfeitos e, devido a várias razões, podem levar também a erros.
 Mas o quê mais se pode fazer no sentido de <strong>melhorar a precisão dos relógios</strong>? A resposta está no UTC.</p>
 <h3 id="tempo-universal-coordenado">Tempo Universal Coordenado</h3>
 <p>O UTC, de uma mistura dos nomes em Inglês e Francês do <strong>Tempo Universal Coordenado</strong>, um padrão global para coordenação da medição da passagem do tempo.
 Segundo o UTC, o sol está a pino às 12:00 na latitude 0, ou a no máximo 1s deste instante; ao redor da latitude 0 grau estabelece-se uma faixa em que todos os pontos tem o mesmo horário, e outras 23 faixas como esta com deslocamentos consecutivos de +-1 hora.
 Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores políticos; a China, por exemplo, apesar de seu tamanho, está toda dentro de um mesmo horário, "correto" para Beijing.</p>
 <p><img alt="Fuso-horários" src="../../images/TimeZones.png" /></p>
-<p>O UTC é definido com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. O TAI mede perfeitamente a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
+<p>O UTC é definido com base no TAI, Tempo Atômico Internacional, calculado como a média dos valores de relógios atômicos espalhados pelo globo. 
+O TAI mede "perfeitamente" a passagem do tempo, mas como a rotação da terra é irregular, medir perfeitamente não é o adequado. 
+Assim, o UTC leva em consideração o fato do dia não ter exatamente 24 horas e, de fato, não ter duração constante. 
+Por exemplo, após um grande terremoto o centro de massa da terra pode ser alterado e a rotação ter sua velocidade aumentada ou diminuída.</p>
 <div class="admonition quote">
 <p class="admonition-title">UTC</p>
 <p>Nearly all UTC days contain exactly 86,400 SI seconds with exactly 60 seconds in each minute. However, because the mean solar day is slightly longer than 86,400 SI seconds, occasionally the last minute of a UTC day is adjusted to have 61 seconds. The extra second is called a leap second. It accounts for the grand total of the extra length (about 2 milliseconds each) of all the mean solar days since the previous leap second. The last minute of a UTC day is permitted to contain 59 seconds to cover the remote possibility of the Earth rotating faster, but that has not yet been necessary.</p>
@@ -1165,7 +1182,7 @@ Não exatamente, pois os relógios precisam ser sincronizados com o UTC e, como 
 <li><span class="arithmatex">\(\rho = 0,1\)</span> (10%)</li>
 <li><span class="arithmatex">\(\delta\)</span> = 1s</li>
 <li>Após 10s, um nó com estas características se dessincronizaria em, no máximo, 1s em relação ao UTC. </li>
-<li>Logo, a sincronização deve ser feita a cada 10s, i.e, <span class="arithmatex">\(\frac{\delta}{\rho} = \frac{1s}{0,1} = \frac{1s}{0,1} = 10s\)</span></li>
+<li>Logo, a sincronização deve ser feita a cada 10s, i.e, <span class="arithmatex">\(\frac{\delta}{\rho} = \frac{1s}{0,1} = \frac{1s}{\frac{1}{10}} = 10s\)</span></li>
 </ul>
 <p>Mas, e se quisermos sincronizar dois relógios com UTC, um com erro <span class="arithmatex">\(\rho\)</span>, de forma que estes dois relógios não se distanciem mais que <span class="arithmatex">\(\delta\)</span> unidades, o problema é mais difícil?</p>
 <p>Se todos se sincronizarem com a mesma fonte, a cada <span class="arithmatex">\(\frac{\delta}{\rho}\)</span> segundos, como ambos tem um erro máximo de <span class="arithmatex">\(\delta\)</span> em relação à fonte, o erro máximo entre os dois nós é <span class="arithmatex">\(2\delta\)</span>. Como este erro é o dobro do desejado, basta dobrar a frequência de sincronização para cortar o erro pela metade. Vejamos novamente o exemplo</p>
@@ -1185,7 +1202,7 @@ Comecemos com vetor "próximo" do UTC, os relógios atômicos em satélites GPS.
 Combinando a informação de 2 satélites, a posição do receptor é limitada a uma circunferência, isto é, a interseção de duas esferas. 
 Com um terceiro satélite, a posição é reduzida a dois pontos, a interseção de uma esfera e uma circunferência, sendo um no espaço e que pode ser facilmente descartado. </p>
 <p><img alt="Funcionamento de GPS" src="https://gisgeography.com/wp-content/uploads/2016/11/GPS-Trilateration-Feature-678x322.png" /></p>
-<p>Contudo, para que funcione, relógios dos satélites e receptores precisam estar sincronizados para que o cálculo da distância possa ser feito, mas sincronizar os relógios é exatamente o problema que estamos tentando resolver. Para contornar esta restrição, usa-se um quarto satélite, para determinar a distância no "eixo temporal".</p>
+<p>Contudo, para que funcione, relógios dos satélites e receptores precisam estar sincronizados para que o cálculo da distância possa ser feito, mas sincronizar os relógios é exatamente o problema que estamos tentando resolver. Para contornar esta restrição, usa-se um quarto satélite, para determinar a distância na <strong>dimensão do tempo</strong>.</p>
 <p>Assim, temos uma receita simples para sincronização de relógios com UTC:</p>
 <ul>
 <li>Coloque um receptor GPS em cada nó do seu sistema</li>
@@ -1218,9 +1235,10 @@ Para estes computadores "de segundo escalão", a receita então é:</p>
 </ul>
 <p><img alt="Algoritmo genérico de sincronização" src="../../drawings/algo_cristian.drawio-1.svg" /></p>
 <p>Mas e a aproximação <span class="arithmatex">\(\frac{t_3-t_0}{2}\)</span>, é boa? É uma aproximação tão boa quanto possível, pois medir a latência em uma única direção demandaria relógios sincronizados, exatamente o que estamos tentando resolver com este algoritmo. Quero dizer, temos uma dependência circular aqui, como o vídeo a seguir mostra.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=pTn6Ewhb27k&list=TLPQMDcwNDIwMjEDgk_ulUs7Ig&index=2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pTn6Ewhb27k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p>Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas direções tem latências diferentes, pois sabemos que, em uma rede de larga escala, é possível e comum que pacotes tomem caminhos diferentes na ida e na volta. Neste, podemos estimar o erro que a aproximação introduz na sincronização, desde que tenhamos estimativas de tempo mínimo para a transmissão em cada sentido, <span class="arithmatex">\(T_{min}\)</span>. A figura a seguir demonstra o erro desta técnica<sup id="fnref:erro"><a class="footnote-ref" href="#fn:erro">4</a></sup>, onde </p>
+<p>Bom, na verdade no nosso caso é um pouco mais fácil de dizer que as duas direções tem latências diferentes, pois sabemos que, em uma rede de larga escala, é possível e comum que pacotes tomem caminhos diferentes na ida e na volta.
+Neste caso, podemos estimar o erro que a aproximação introduz na sincronização, desde que tenhamos estimativas de tempo mínimo para a transmissão em cada sentido, <span class="arithmatex">\(T_{min}\)</span>. A figura a seguir demonstra o erro desta técnica<sup id="fnref:erro"><a class="footnote-ref" href="#fn:erro">4</a></sup>, onde </p>
 <ul>
 <li><span class="arithmatex">\(t_3 - t_0\)</span> corresponde ao tempo medido entre o envio da requisição e recepção da resposta</li>
 <li>as setas vermelhas indicam o caso em que a requisição foi muito mais rápida que resposta (<span class="arithmatex">\(T_{min}\)</span>)</li>
@@ -1384,6 +1402,10 @@ Recurso fica ocioso por <span class="arithmatex">\(\Delta\)</span>, em média, a
 E se ele aprendesse antes que os outros nós não farão requisições, que não haverão sobreposições de requisições? 
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos <strong>relógios lógicos</strong>.</p>
+<h2 id="referencias">Referências</h2>
+<ul>
+<li><a href="https://cloud.google.com/spanner/docs/true-time-external-consistency">Google TrueTime</a></li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
