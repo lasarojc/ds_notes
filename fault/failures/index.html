@@ -1,0 +1,1822 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Falhas/Erros/Defeitos - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+      
+  
+
+
+
+  
+  
+
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-PJX835H7DP"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-PJX835H7DP",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJX835H7DP"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#falhas-erros-e-defeitos" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Falhas/Erros/Defeitos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Limpar" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preface/" class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Comunicação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Comunicação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Comunicação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/redes/" class="md-nav__link">
+        Redes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/internet/" class="md-nav__link">
+        Internet
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/sockets/" class="md-nav__link">
+        Sockets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/datarep/" class="md-nav__link">
+        Representação
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/middleware/" class="md-nav__link">
+        Middlewares
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/rpc/" class="md-nav__link">
+        RPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/mom/" class="md-nav__link">
+        MOM
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/epidemics/" class="md-nav__link">
+        Epidêmicos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Arquiteturas
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Arquiteturas" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Arquiteturas
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/arch/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/p2p/" class="md-nav__link">
+        P2P
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/microservices/" class="md-nav__link">
+        Microsserviços
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/" class="md-nav__link">
+        Modelos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Coordenação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Coordenação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Coordenação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/concurrency/" class="md-nav__link">
+        Concorrência
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Tempo
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tempo" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Tempo
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/physical/" class="md-nav__link">
+        Tempo Físico
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/logical/" class="md-nav__link">
+        Tempo Lógico
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      <label class="md-nav__link" for="__nav_8">
+        Tolerância a Falhas
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tolerância a Falhas" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Tolerância a Falhas
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependability/" class="md-nav__link">
+        Dependabilidade
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Falhas/Erros/Defeitos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Falhas/Erros/Defeitos
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes-de-defeitos" class="md-nav__link">
+    Classes de Defeitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes de Defeitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quebra" class="md-nav__link">
+    Quebra
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#omissao" class="md-nav__link">
+    Omissão
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporizacao" class="md-nav__link">
+    Temporização
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arbitrarios" class="md-nav__link">
+    Arbitrários
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hierarquia" class="md-nav__link">
+    Hierarquia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defeitos-intermitentes" class="md-nav__link">
+    Defeitos intermitentes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlacao-entre-falhas" class="md-nav__link">
+    Correlação entre falhas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-lidar-com-falhas" class="md-nav__link">
+    Como lidar com falhas?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reconfiguracao" class="md-nav__link">
+    Reconfiguração
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agreement/" class="md-nav__link">
+        Acordo
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/" class="md-nav__link">
+        Consistência
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      <label class="md-nav__link" for="__nav_12">
+        Estudos de Caso
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Estudos de Caso" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Estudos de Caso
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/cassandra/" class="md-nav__link">
+        Cassandra
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
+        Chord
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/dynamo/" class="md-nav__link">
+        Dynamo
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/grpc/" class="md-nav__link">
+        gRPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/mosquito/" class="md-nav__link">
+        Mosquito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/rmi/" class="md-nav__link">
+        RMI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/thrift/" class="md-nav__link">
+        Thrift
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/kafka/" class="md-nav__link">
+        Kafka
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/swim/" class="md-nav__link">
+        Swim
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/copycat/" class="md-nav__link">
+        Copycat
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/ratis/" class="md-nav__link">
+        Ratis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/bftsmart/" class="md-nav__link">
+        BFT-Smart
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/etcd/" class="md-nav__link">
+        Etcd
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/zookeeper/" class="md-nav__link">
+        Zookeeper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes-de-defeitos" class="md-nav__link">
+    Classes de Defeitos
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes de Defeitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quebra" class="md-nav__link">
+    Quebra
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#omissao" class="md-nav__link">
+    Omissão
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporizacao" class="md-nav__link">
+    Temporização
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arbitrarios" class="md-nav__link">
+    Arbitrários
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hierarquia" class="md-nav__link">
+    Hierarquia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defeitos-intermitentes" class="md-nav__link">
+    Defeitos intermitentes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correlacao-entre-falhas" class="md-nav__link">
+    Correlação entre falhas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#falhas-bizantinas" class="md-nav__link">
+    Falhas Bizantinas
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-lidar-com-falhas" class="md-nav__link">
+    Como lidar com falhas?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reconfiguracao" class="md-nav__link">
+    Reconfiguração
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="falhas-erros-e-defeitos">Falhas, Erros e Defeitos</h1>
+<p>Para que possamos pensar em sistemas que atendam a qualquer requisito de qualidade de serviço na presença de problemas, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.</p>
+<p>No nível mais básico dos problemas a serem contornados para se obter dependabilidade, temos as <strong>falhas</strong> (<em>defect</em>, <em>fault</em>, para alguns, falta), que é um erro no desenvolvimento do sistema, como <em>bugs</em> ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado, ou mesmo um erro na especificação.
+Uma falha existe mesmo se for raramente ativada e mesmo se seus efeitos nunca forem percebidos. 
+Por exemplo, se o código tem um <code>&lt;=</code> em vez de <code>&lt;</code> na especificação de uma iteração, mas se uma condição faz com que a iteração seja interrompida antes, o código ainda tem uma falha.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">char</span> <span class="n">minha_string</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+<span class="n">initialize</span><span class="p">(</span><span class="n">minha_string</span><span class="p">);</span>
+
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minha_string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;.&#39;</span><span class="p">)</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="n">minha_string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">minha_string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+<p>No segundo nível, temos o <strong>erro</strong> (<em>error</em>), que é a manifestação da falha levando a algum comportamento indevido. No exemplo acima, um erro seria quando a iteração passasse do ponto correto por causa do <code>&lt;=</code>, por exemplo, na hora de escrever uma <em>string</em> em um array, estourando o limite do array na pilha mas sobrescrevendo uma variável que não seja mais usada.
+O erro pode passar despercebido, mas ainda assim é um erro.</p>
+<p>Finalmente, no terceiro nível, temos os <strong>defeitos</strong> (<em>failure</em>, para alguns, falha), um erro percebido pelo usuário. 
+Continuando o exemplo, um <em>stack overflow</em> que leva a uma falha de segmentação, leva a um defeito.</p>
+<p>Quando um componente manifesta um defeito, outros componentes que dele dependem, internalizarão entradas indevidas, uma falha externa, o que levará a seu próprio estado interno a estar errôneo e possivelmente também manifestar um defeito. 
+Esta cadeia pode levar cenários catastróficos.</p>
+<div class="admonition example">
+<p class="admonition-title">Falhas famosas</p>
+<div class="tabbed-set" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Ariane 5</label><div class="tabbed-content">
+<p>O Ariane 5 foi um foguete desenvolvido pela agencia espacial européia que explodiu durante o lançamento.</p>
+<div class="admonition quote">
+<p class="admonition-title">The Explosion of the Ariane 5</p>
+<p>On June 4, 1996 an unmanned Ariane 5 rocket launched by the European Space Agency exploded just forty seconds after its lift-off [...] after a decade of development costing $7B. The destroyed rocket and its cargo were valued at $500M. [...] the failure was a software error [...] a 64 bit floating point number [...] was converted to a 16 bit signed integer. The number was larger than 32,767, the largest integer storeable in a 16 bit signed integer, and thus the conversion failed.</p>
+</div>
+<p><img alt="Explosão" src="../../images/ariane5.jpg" /></p>
+<p>O erro gerado foi tratado como input, causando outros erros, que geraram instabilidade e que levou o sistema a se auto-destruir.</p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">787 Dreamliner</label><div class="tabbed-content">
+<p>O avião 787 dreamliner, da Boeing, tem um problema que torna necessário reiniciar o sistema elétrico a cada 248 dias, ou o mesmo pode ter uma pane.</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>The plane’s electrical generators fall into a failsafe mode if kept continuously powered on for 248 days. The 787 has four such main generator-control units that, if powered on at the same time, could fail simultaneously and cause a complete electrical shutdown.</p>
+</div>
+<p>Segundo as "más línguas", o problema é que acontece um <em>overflow</em> em um contador de tempo</p>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p><blockquote class="twitter-tweet"><p lang="en" dir="ltr">248 days == 2^31 100ths of a second.<br><br>even in 2015, our airplanes have integer overflow bugs <a href="https://t.co/6Z8d4y9gjM"><a href="https://t.co/6Z8d4y9gjM">https://t.co/6Z8d4y9gjM</a></a></p>&mdash; Fiora @ 日本語でFF14 (@FioraAeterna) <a href="https://twitter.com/FioraAeterna/status/594110518203260929?ref_src=twsrc%5Etfw">May 1, 2015</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+</div>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">737 Max</label><div class="tabbed-content">
+<p>O Boeing 737 Max é uma modificação do 737 original em que o motores maiores foram usados sem modificar a estrutura do restante do avião e portanto alterando o seu centro de massa. Por causa da diferença, o avião pode subir rápido demais, correndo o risco de perder sustentação. Para auxiliar os pilotos e evitar a necessidade de treinamento específico, um sensor é usado para detectar se o avião está nesta situação e forcar o nariz do avião para baixo para corrigir o problema.
+Contudo, no 737 Max apenas um sensor é usado e no caso de falha do mesmo, o avião é forçado para baixo e em direção ao solo, o que levou à morte de centenas de pessoas.<sup id="fnref:737max"><a class="footnote-ref" href="#fn:737max">1</a></sup></p>
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Subaru SUV</label><div class="tabbed-content">
+<p>Em 2018 a Subaru fez um <em>recall</em> gigante, de mais de 1 milhão de unidades de um seus modelos de SUV, porquê uma falha em um software fez com que soldagens fossem feitas incorretamente no chassis dos veículos.
+O erro era irreparável, levando a grandes prejuízos.</p>
+<p><img alt="[Recall Subaru()https://spectrum.ieee.org/riskfactor/computing/it/coding-error-leads-293-subaru-ascents-to-the-car-crusher)]" src="../../images/subaru.png" /></p>
+<!--Car Hack -- 2017, images/carhack, https://www.wired.com/story/car-hack-shut-down-safety-features/-->
+</div>
+<input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><label for="__tabbed_1_5">Shark atack!</label><div class="tabbed-content">
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/VVJlKJi9FWU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</div>
+</div>
+</div>
+<p>Quando defeitos aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que os levaram a acontecer.
+Algumas empresas até publicam as <strong><em>root cause analysis</em></strong> ou a análise <em>post-mortem</em> para a comunidade como forma de compartilhar conhecimento e também por questões de transparência, mas mais importante, conhecer a causa pode ajudar a evitar que novas instâncias da mesma falha ou similares, <sup id="fnref:rca"><a class="footnote-ref" href="#fn:rca">2</a></sup> aumentando a dependabilidade do sistema.</p>
+<h4 id="classes-de-defeitos">Classes de Defeitos</h4>
+<p>Falhas são um fato da vida, uma constante no desenvolvimento de sistemas, mas se precisamos lidar com elas, previnindo e tolerando sua presença, precisamos entender como se manifestam e, para isso, uma classificação é essencial.</p>
+<h5 id="quebra">Quebra</h5>
+<p>Defeitos de <strong>quebra</strong> (<strong><em>crash</em></strong>) são defeitos em que o componente para de funcionar, irreversivelmente.
+Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos do defeito aos outros componentes.
+Em um sistema assíncrono, contudo, não há garantias de que esta detecção do defeito será correta.</p>
+<p>Alguns sistemas, denominados <strong><em>fail-stop</em></strong>, forçam-se a parar de funcionar quando percebem um defeito, imitando uma quebra, e implementando um comportamento <strong><em>fail-fast</em></strong>.<sup id="fnref:failfastfast"><a class="footnote-ref" href="#fn:failfastfast">3</a></sup>
+Estes sistemas podem emitir um "canto do cisne" para permitir que outros componentes detectem o defeito.</p>
+<p>Após pararem, alguns sistemas podem aplicar passos de recuperação e voltar a funcionar, no que é denominado <strong><em>fail-recover</em></strong>. Ao retornar à operação, o processo poderia assumir uma nova identidade.</p>
+<h5 id="omissao">Omissão</h5>
+<p>Em um <strong>defeito de omissão</strong> (<strong><em>omission failure</em></strong>), um componente não executa alguma ação. Por exemplo, uma requisição recebida por um servidor não é executada, um disco não armazena os dados no meio magnético, ou uma mensagem não é transmitida.
+Este tipo de defeito é difícil de ser identificado pois outros componentes não necessariamente tem acesso direto ao resultado da operação.
+Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, então houve um defeito de omissão.
+Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, então o defeito é mascarado.</p>
+<h5 id="temporizacao">Temporização</h5>
+<p>Em sistemas em que há limites de tempo para a execução de ações, uma violação destes limites é <strong>defeito de temporização</strong>.
+Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, então houve uma falha de omissão.
+Novamente considerando problemas de transmissão de mensagens, se o meio de comunicação se recusou a entregar uma mensagem que deveria ser entregue dentro de 3ms, então houve um defeito de omissão.
+Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a mesma é entregue com 5ms, então o defeito é mascarado como um defeito de temporização.
+Defeitos de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto <a href="time/#usos-de-relogios-sincronizados">anteriormente.</a></p>
+<h5 id="arbitrarios">Arbitrários</h5>
+<p>Um defeito <strong>arbitrário</strong> ou <strong>bizantino</strong> é um no qual qualquer comportamento pode acontecer. 
+Por exemplo, uma mensagem pode ser modificada, um servidor pode reiniciar-se constantemente, todos os dados podem ser apagados, ou acesso pode ser dado a quem não é devido.
+Estes defeitos podem ser causados por agentes mal intencionados, como hackers e vírus.</p>
+<h5 id="hierarquia">Hierarquia</h5>
+<p>Os tipos de defeitos apontados acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:</p>
+<p>Fail-stop <span class="arithmatex">\(\subset\)</span> Quebra <span class="arithmatex">\(\subset\)</span> Omissão <span class="arithmatex">\(\subset\)</span> Temporização <span class="arithmatex">\(\subset\)</span> Arbitrária</p>
+<h5 id="defeitos-intermitentes">Defeitos intermitentes</h5>
+<p>Alguns defeitos fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra <a href="http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf">classificação</a>, bem informal.</p>
+<div class="admonition example">
+<p class="admonition-title">Tipos de bugs</p>
+<div class="tabbed-set" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Bohrbug</label><div class="tabbed-content">
+<p>A BohrBug is just your average, straight-forward bug. Simple like the Bohr model of the atom: A smallsphere. You push it, it moves. BohrBugs are reproducible, and hence are easily fixed once discovered. These are named after Niels Bohr, who proposed a simple and easy-to-understand atomic model in 1913. In Bohr’s model, things like the path and momentum of an electron in an atom are predictable.</p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Heisenbug</label><div class="tabbed-content">
+<p>A bug that disappears or alters its behavior when one attempts to probe or isolate it. No matter how much time and effort is spent trying to reproduce the problem, the bug eludes us. Such bugs were named Heisenbugs, after Werner Heisenberg, who is known for his “uncertainty principle”. According to his theory, it is not possible to accurately or certainly determine the position and velocity of an electron in an atom at a particular moment.</p>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Mandelbug</label><div class="tabbed-content">
+<p>When the cause of the bug is too complex to understand, and the resulting bug appears chaotic, it is called a Mandelbug. These are named after Benoît Mandelbrot, who is considered the father of fractal geometry (fractals are complex, self-similar structures). A bug in an operating system that depends on scheduling is an example of a Mandelbug.</p>
+</div>
+<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Schroedinbug</label><div class="tabbed-content">
+<p>Sometimes, you look into the code, and find that it has a bug or a problem that should never have allowed it to work in the first place. When you try out the code, the bug promptly shows up, and the software fails! Though it sounds very uncommon, such bugs do occur and are known as Schroedinbugs. They are named after the scientist Erwin Schrödinger, who proposed that in quantum physics, quantum particles like atoms could exist in two or more quantum states.</p>
+</div>
+<input id="__tabbed_2_5" name="__tabbed_2" type="radio" /><label for="__tabbed_2_5">Fractal Bugs</label><div class="tabbed-content">
+<p>A bug, after which its resolution is found, reveals additional self-similar bugs elsewhere in the code, after which they are fixed, likewise appear elsewhere still.</p>
+</div>
+</div>
+</div>
+<h4 id="correlacao-entre-falhas">Correlação entre falhas</h4>
+<p>Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
+Este é um cenário em que as falhas não são independentes, mas correlatas. Para evitá-lo, podemos usar <strong><em>n-version programming</em></strong>, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:</p>
+<ul>
+<li>múltiplos times</li>
+<li>múltiplos sistemas operacionais</li>
+<li>múltiplas linguagens de programação.</li>
+</ul>
+<p>Esta técnica é interessante mais raramente usada, basicamente pelo seu alto custo.
+Além disso, erros de especificação são reproduzidos e levam times diferentes a produzir erros iguais.</p>
+<!--
+### Degradação graciosa
+
+Dependendo dos efeitos e tratamentos.
+
+* Fail safe - defeito não leva a comportamento inseguro (sistema de entretenimento no avião)
+* Fail soft - graceful degradation (sistema de controle de vôo)
+* Fail fast - para o fluxo de defeitos (e possível reinício)
+![Cadeia de supervisão](../images/httpatomoreillycomsourceoreillyimages300817.jpg)
+
+* Robusto - erros não atrapalham execução (tratamento de exceções)
+* Quebradiço (*brittle*) - não resiliente a falhas
+-->
+
+<h4 id="falhas-bizantinas">Falhas Bizantinas</h4>
+<!--
+Uma história de três exércitos -- Versão 2}
+Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.
+
+Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.
+
+Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.
+
+Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.
+
+Fonte: \href{http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}
+
+
+Generais e Tenentes
+Problema pode ser mudado para:
+
+    * Comandante envia ordem.
+    * Todos os tenentes leais executam ordem recebida.
+    * Comandante pode ser traidor.
+
+
+
+
+Generais e Tenentes
+Suponha 3 exércitos. \\
+Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\\
+Ou \\
+Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.
+
+ E se os tenentes trocarem informações?
+
+ Como diferenciar casos em que Comandante ou Tenente é traidor?
+
+
+
+
+
+Generais e Tenentes
+Só há solução se mais de $\frac{2}{3}$ dos Generais/Tenentes são leais.
+
+
+%http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5
+
+Comunicação}
+
+    * Toda mensagem enviada é entregue corretamente.
+    * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+
+
+
+
+4/0}
+General manda ordens.
+
+Ausência de ordem = Retirada
+
+Tenente repassa ordens
+
+Maioria de comandos é comando a ser seguido
+
+
+
+4/0}
+General manda ordens.
+
+Ausência de ordem = Retirada
+
+Tenente repassa ordens
+
+Maioria de comandos é comando a ser seguido
+
+
+
+Comunicação}
+
+    * Toda mensagem enviada é entregue corretamente.
+    * Toda mensagem é assinada.
+    * A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
+
+
+ É possível detectar inconsistências e processos bizantinos.
+
+
+
+%http://cs.brown.edu/courses/cs138/s16/lectures/19consen-notes.pdf
+
+
+-->
+
+<h3 id="como-lidar-com-falhas">Como lidar com falhas?</h3>
+<p>Mas se o objetivo é a dependabilidade, isto é, ter o sistema pronto para uso e apto a manter este estado durante o período de uso, mesmo na presença de catástrofes, precisamos de formas de lidar com falhas, <strong>previnindo</strong>, <strong>removendo</strong> e <strong>tolerando</strong>-as.</p>
+<p>A <strong>prevenção de falhas</strong> acontece por meio de técnicas bem estabelecidas de engenharia.
+No caso de sistemas de software, modularização, uso de linguagens de programação fortemente tipadas e encapsulamento são passos importantes. 
+Outras técnicas envolvidas na prevenção de falhas são análise estática, especificação formal, teste e prova destas especificações.
+Por exemplo, diversas empresas usam linguagens como <a href="https://lamport.azurewebsites.net/tla/tla.html">TLA<span class="arithmatex">\(^+\)</span></a><sup id="fnref:tla_real"><a class="footnote-ref" href="#fn:tla_real">4</a></sup> e <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>, associados a verificadores de modelo como TLC e Spin, respectivamente, para testar e verificar a corretude de seus algoritmos.</p>
+<p>Mesmo uma especificação correta pode produzir um sistema com falhas pois a tradução de especificações formais para código é um passo complexo.
+Testes e manutenção do sistema permitem a <strong>remoção de falhas</strong> que passarem despercebidas pelas tentativas de prevenção.</p>
+<p>Testes, contudo, apenas aumentam a confiança no sistema, não sendo capazes de certificar a ausência de problemas.
+Assim, tenta-se desenvolver os sistemas de forma que, mesmo se falhas ainda estiverem presentes, seus efeitos não sejam percebidos como defeitos, isto é, sistemas que tenha <strong>tolerância a falhas</strong> (ou <strong>prevenção de defeitos</strong>).</p>
+<p>Para se alcançar tolerância a falhas é necessário detectar e se recuperar de erros. 
+Por exemplo, um sistema de arquivos que mantenha um <em>journal</em>, como o <a href="https://en.wikipedia.org/wiki/Ext3#Journaling_levels">Ext v3</a>, armazena informação de forma redundante e, quando <strong>detecta</strong> que os dados em sua forma principal estão corrompidos, usa o <em>journal</em> para <strong>recuperar</strong> os dados, <strong>mascarando</strong> o erro.</p>
+<p>De acordo como Avizienis <em>et al.</em>,<sup id="fnref:avizienis"><a class="footnote-ref" href="#fn:avizienis">5</a></sup> temos as seguintes técnicas para tolerar falhas:</p>
+<p><a href="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf"><img alt="" src="../../images/laprie_fault_tol.png" /></a></p>
+<p>Um sistema que sofra de defeitos recorrentes é um bom candidato a previsão de defeitos, em que se estima quando uma falha ocorrerá baseado no histórico.
+Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.</p>
+<p>Se remover todas as possibilidades de defeitos de um componente é algo difícil, apostemos na tolerância a falhas.
+De forma geral, tolerância a falhas é obtida por algum tipo de <strong>redundância</strong>. 
+Redundância pode ser aplicada em vários níveis, por exemplo, gastando <strong>mais tempo na especificação do projeto</strong>, ou montando um laboratório de testes mais próximo do ambiente de produção.</p>
+<p>Outra forma óbvia de redundância é a <strong>replicação</strong> de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
+Replicação permite remover os <strong>pontos únicos de falha</strong> (SPOF, <em>Single Point of Failure</em>), ou seja, componentes não dependáveis.
+Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
+No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas, mesmo que não desenvolvidos usando <em>n-version programming</em>.
+Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.</p>
+<p>Dois modos clássicos de replicação são o <strong>primário/cópia</strong> e <strong>ativo/ativo</strong>.
+No caso da replicação <strong>primário/cópia</strong>, também conhecida como <strong>mestre/escravo</strong>, o primário é responsável por lidar com clientes e por informar cópias das modificações de estado.</p>
+<p><img alt="ha" src="../../images/ha-diagram-animated.gif" /></p>
+<p>Como as atualizações de estado fluem do primário para a cópia, é possível que a cópia não tenha o estado mais atual.
+Para visualizarmos melhor esta situação, vejamos a <strong>replicação em cadeia</strong>, uma generalização de primário/cópia em que os processos se organizam em um sequência para executar operações.</p>
+<p><img alt="Chain replication" src="../../images/chain.png" /></p>
+<p><strong>Atualizações</strong> no sistema são sempre <strong>direcionadas ao primário</strong>, a cabeça da sequência. 
+<strong>Leituras</strong>, se absolutamente necessitarem dos dados escritos mais recentemente, também devem ser direcionadas à <strong>cabeça</strong>. 
+Caso contrário, podem ser direcionadas aos processos na <strong>cauda</strong>, diminuindo a carga de trabalho na cabeça.</p>
+<p>No caso da replicação ativa, as <strong>várias cópias executam todos os comandos</strong> enviados para o sistema, estando assim todas aptas a continuar a executar o serviço. 
+A técnica de <strong>replicação de máquinas de estados vista no capítulo anterior</strong> é uma materialização da replicação ativa.
+Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
+<h2 id="reconfiguracao">Reconfiguração</h2>
+<!--
+
+\subsection{Reconfiguração}
+
+Reconfiguração da Aplicação}
+Na segunda entrega do projeto, você distribuiu a carga do seu banco de dados entre vários nós. Caso um nó falhe, parte dos seus dados será perdida.
+
+Para corrigir esta deficiência, na terceira entrega, cada nó será replicado em três vias e, assim, caso um nó falhe, outros dois continuarão a manter o dado.
+
+
+
+Reconfiguração da Aplicação}
+Ainda assim, há problemas. E se mais de um, de um mesmo conjunto de réplicas, falhar? 
+
+ Embora seja pequena a probabilidade de dois nós de um mesmo grupo falharem em instantes próximos, dado tempo suficiente, qualquer evento com probabilidade diferente de 0 acontecerá.
+
+ Precisamos de uma forma de trocar nós da aplicação que falharam por novos nós. 
+
+Este é problema denominado Pertinência de Grupo ou \emph{Group Membership}
+
+
+
+Group Membership}
+Para não correr o risco, retire o processo falhos do grupo e coloque outro no lugar!
+
+I.e., mude a visão que o sistema de quem é o grupo.
+
+
+
+
+Visões}
+\includegraphics[width=.7\textwidth]{images/vc}
+
+Fonte: \href{https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul Krzyzanowski}
+
+$G$ é o grupo de processos participando do sistema, é a Visão do Sistema.
+
+
+Inicialmente, $G$ consiste de apenas o processo $p$, como o processo que cria o cluster no Atomix. Na sequência, outros processo vão se unindo ao grupo através de View Changes. Uma vez que $p$ e $q$ estão no grupo, inicia-se a comunicação entre eles. Quando $r, s$ e $t$ aparecem, também entram no grupo por meio de uma nova visão.
+
+Finalmente, quando ambos $p$ e $q$ falham, os outros processo os excluem da visão, e continuam funcionando normalmente.
+
+
+Impossibilidade de Detecção de Falhas}
+Em um sistema distribuído assíncrono, é impossível distinguir com toda certeza um processo falho (parou de funcionar) de um que está lento.
+
+ Como decidir se mudar ou não de visão?
+
+
+Ou aceita a imprecisão e muda quando suspeitar de uma falha, ou corre o risco de ficar esperando \emph{ad eternum} e não mudar, mesmo quando uma falha aconteceu.
+
+Uma ``solução''!}
+Quando suspeitar de falha, reporte suspeita a outros processos, que também passarão a suspeitar.
+
+Tome decisão baseado na suspeita, isto é, troque de visão quando houver suspeita.
+
+Pague o preço de uma suspeita errada, isto é, quando um processo for removido da visão indevidamente, adicione-o novamente.
+
+
+
+Sincronismos Virtual}
+Gerenciamento de Grupo/Group Membership e Comunicação em Grupo
+
+    * Processos se unem ao grupo
+    * Processos saem do grupo
+    * Processos enviam mensagens para o grupo
+    * Diferentes ordenações
+
+            * Atomic Multicast
+
+
+
+
+Visão de Grupo}
+
+    * Visão: conjunto de processos no sistema.
+    * Multicast feito para processos na visão.
+    * Visão é consistente entre os processos.
+    * Entrada e saída de processos muda a visão.
+
+
+
+Eventos}
+
+    * Mensagem
+    * Mudança de Visão
+    * Checkpoint
+
+
+
+Visões}
+\includegraphics[width=.7\textwidth]{images/vc}
+
+Fonte: \href{https://www.cs.rutgers.edu/~pxk/417/notes/virtual_synchrony.html}{Paul Krzyzanowski}
+
+
+Sincronismo Virtual}
+Deve satisfazer
+
+    * Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.
+    * Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.
+    * Se um processo não recebe a mensagem, ele não estará na próxima visão.
+    * Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.
+
+
+A troca de Visão é uma barreira.
+
+
+ISIS Toolkit}
+    Sistema de Sincronismo Virtual tolerante a falhas desenvolvido por Ken Birman, Cornell University (\url{http://www.cs.cornell.edu/Info/Projects/Isis/})\\
+    ISIS: An Environment for Constructing Fault-Tolerant Distributed Systems. Kenneth Birman, D. Skeen, A. El Abbadi, W. C. Dietrich and T. Raeuchle. May 1983.
+
+
+    * 100.000's/s
+    * Em uso até 2009
+    * NY Stock Exchange
+    * Swiss Exchange
+    * US Navy
+    * Precursos de sistemas como Zookeeker
+    * Totem, ISIS, Horus, Transis (Partições), \alert{Spread}, \alert{Ensamble}, \alert{JGroups}, Appia, QuickSilver, vSynch (née ISIS 2)
+
+
+
+Difusão Totalmente Ordenada}
+
+    * Corretude: Se um processo $p$ envia uma mensagem $m$ para processos no grupo $G$, então se $p$ não falha, todos os processos corretos em $G$ recebem a mensagem.
+
+    * Acordo: Se um processo correto em $G$ recebe uma mensagem $m$, então todo processo correto em $G$ recebe $m$
+
+    * Ordenação: Se um processo recebe mensagem $m$ e depois $n$, então qualquer processo que receba a mensagem $n$ deve primeiro receber $m$
+
+    * Validade: Somente mensagens difundidas são entregues.
+
+
+E se mandarmos mensagens do tipo ``A partir da entrega desta mensagem, o grupo de processos é $G$.''
+
+
+Sincronismo Virtual}
+Deve satisfazer
+
+    * Se uma mensagem é enviada em uma visão, ela só pode ser entregue naquela visão.\\
+    Mensagens de troca de visão podem incrementar um contador\\
+    Mensagens normais carregam o valor atual do contador\\
+    Mensagem descartada se valor na mensagem é maior contador no destinatário
+
+    * Se uma mensagem é entregue a um processo correto em uma visão, então é entregue a todos os processos corretos naquela visão.\\
+    Pela difusão, se a mensagem de troca for entregue para um processo, será entregue para todos os corretos, na mesma ordem
+    Se mensagem comum for entregue antes para algum, será entregue ante para todos.
+
+    * Se um processo não recebe a mensagem, ele não estará na próxima visão.\\
+    Se um processo não recebe uma mensagem comum que foi entregue pelos outros, então ele não troca de visão.
+
+    * Ao entrar em uma visão, o processo recebe o estado dos outros processos e seu estado se torna equivalente ao de um processo que recebeu todas as mensagens já entregues.\\
+    Caso contrário, não haveria porquê trocar os processos
+
+
+
+State Transfer}
+\includegraphics[width=.7\textwidth]{images/state_transfer}
+
+
+\href{http://www.gsd.inesc-id.pt/~ler/docencia/tfd0405/bib/BSRNA.pdf}{Building Secure and Reliable Network Applications}
+
+
+
+Difusão Atômica $\equiv$ Sincronismo Virtual?}
+Seria uma boa aproximação, mas que poderia ser relaxada. 
+
+Em certas aplicações, FIFO ou Causal seriam suficientes dentro da visão, desde que a mensagem de mudança da visão seja totalmente ordenada com as comuns.
+
+
+
+Particionamento}
+E se dois subconjuntos mutuamente exclusivos se formarem e criarem visões independentes?
+
+ \emph{Primary Partition Model} -- Somente a partição primária pode mudar de visão.
+
+ Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.
+
+
+
+Extended Virtual Synchrony}
+\emph{Primary Partition Model} -- Não é adequado a uma rede geograficamente distribuída (Internet scale).
+
+ Lembram-se que no Raft somente uma partição com uma maioria de processo pode decidir? É exatamente a mesma situação, pois os processos estão chegando a um Consenso sobre quem é a nova visão.
+
+
+É possível que no trabalho dois, alguns de vocês tenham tentado gerar locks do sistema para manipular objetos distribuídos no sistema. Esse locks são perigosos por quê processos pode travar/quebrar/falhar e nunca liberarem os locks. O uso de um algoritmo VS poderia ser usado para resolver o problema.\right 
+
+
+
+
+http://courses.cs.vt.edu/cs5204/fall05-gback/lectures/Lecture8.pdf
+
+
+
+-->
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:737max">
+<p><a href="https://theconversation.com/boeing-737-max-why-was-it-grounded-what-has-been-fixed-and-is-it-enough-150688">Boeing 737 Max: why was it grounded, what has been fixed and is it enough?</a>&#160;<a class="footnote-backref" href="#fnref:737max" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:rca">
+<p><a href="https://github.com/danluu/post-mortems">Post-mortems</a> para uma extensa lista de análises.&#160;<a class="footnote-backref" href="#fnref:rca" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:failfastfast">
+<p><a href="https://pathelland.substack.com/p/fail-fast-is-failing-fast">Fail Fast Is Failing… Fast!</a>&#160;<a class="footnote-backref" href="#fnref:failfastfast" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:tla_real">
+<p><a href="https://probablydance.com/2020/10/31/using-tla-in-the-real-world-to-understand-a-glibc-bug/"><em>Using TLA+ in the Real World to Understand a Glibc Bug</em></a>&#160;<a class="footnote-backref" href="#fnref:tla_real" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:avizienis">
+<p><a href="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf">Basic Concepts and Taxonomy of Dependable and Secure Computing</a>&#160;<a class="footnote-backref" href="#fnref:avizienis" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Rodapé">
+      
+        
+        <a href="../dependability/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Dependabilidade" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Dependabilidade
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../agreement/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Acordo" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              Acordo
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>

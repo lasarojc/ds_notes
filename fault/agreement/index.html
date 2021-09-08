@@ -14,7 +14,7 @@
     
     
       
-        <title>Chord - Notas em Sistemas Distribuídos</title>
+        <title>Acordo - Notas em Sistemas Distribuídos</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#p2p-chord" class="md-skip">
+        <a href="#acordo" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chord
+              Acordo
             
           </span>
         </div>
@@ -621,12 +621,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
       
       <label class="md-nav__link" for="__nav_8">
         Tolerância a Falhas
@@ -644,7 +646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -656,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/dependability/" class="md-nav__link">
+      <a href="../dependability/" class="md-nav__link">
         Dependabilidade
       </a>
     </li>
@@ -668,7 +670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/failures/" class="md-nav__link">
+      <a href="../failures/" class="md-nav__link">
         Falhas/Erros/Defeitos
       </a>
     </li>
@@ -678,11 +680,106 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../fault/agreement/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Acordo
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Acordo
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#consenso" class="md-nav__link">
+    Consenso
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detectores-de-defeitos-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos não Confiáveis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paxos-algoritmo-do-sinodo" class="md-nav__link">
+    Paxos: Algoritmo do Sínodo
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
+    Difusão Totalmente Ordenada
+  </a>
+  
+    <nav class="md-nav" aria-label="Difusão Totalmente Ordenada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paxos-difusao-atomica" class="md-nav__link">
+    Paxos: Difusão atômica
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raft-difusao-atomica" class="md-nav__link">
+    Raft: Difusão atômica
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outras-ordenacoes" class="md-nav__link">
+    Outras Ordenações
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arcaboucos-para-coordenacao" class="md-nav__link">
+    Arcabouços para coordenação
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -744,14 +841,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
       <label class="md-nav__link" for="__nav_12">
         Estudos de Caso
@@ -769,7 +864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../cases/" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -781,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cassandra/" class="md-nav__link">
+      <a href="../../cases/cassandra/" class="md-nav__link">
         Cassandra
       </a>
     </li>
@@ -791,72 +886,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Chord
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
         Chord
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#identificacao" class="md-nav__link">
-    Identificação
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#divisao-de-carga" class="md-nav__link">
-    Divisão de carga
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roteamento" class="md-nav__link">
-    Roteamento
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn" class="md-nav__link">
-    Churn
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -866,7 +900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dynamo/" class="md-nav__link">
+      <a href="../../cases/dynamo/" class="md-nav__link">
         Dynamo
       </a>
     </li>
@@ -878,7 +912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../grpc/" class="md-nav__link">
+      <a href="../../cases/grpc/" class="md-nav__link">
         gRPC
       </a>
     </li>
@@ -890,7 +924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mosquito/" class="md-nav__link">
+      <a href="../../cases/mosquito/" class="md-nav__link">
         Mosquito
       </a>
     </li>
@@ -902,7 +936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rmi/" class="md-nav__link">
+      <a href="../../cases/rmi/" class="md-nav__link">
         RMI
       </a>
     </li>
@@ -914,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../thrift/" class="md-nav__link">
+      <a href="../../cases/thrift/" class="md-nav__link">
         Thrift
       </a>
     </li>
@@ -926,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kafka/" class="md-nav__link">
+      <a href="../../cases/kafka/" class="md-nav__link">
         Kafka
       </a>
     </li>
@@ -938,7 +972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../swim/" class="md-nav__link">
+      <a href="../../cases/swim/" class="md-nav__link">
         Swim
       </a>
     </li>
@@ -950,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../copycat/" class="md-nav__link">
+      <a href="../../cases/copycat/" class="md-nav__link">
         Copycat
       </a>
     </li>
@@ -962,7 +996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ratis/" class="md-nav__link">
+      <a href="../../cases/ratis/" class="md-nav__link">
         Ratis
       </a>
     </li>
@@ -974,7 +1008,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../bftsmart/" class="md-nav__link">
+      <a href="../../cases/bftsmart/" class="md-nav__link">
         BFT-Smart
       </a>
     </li>
@@ -986,7 +1020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../etcd/" class="md-nav__link">
+      <a href="../../cases/etcd/" class="md-nav__link">
         Etcd
       </a>
     </li>
@@ -998,7 +1032,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../zookeeper/" class="md-nav__link">
+      <a href="../../cases/zookeeper/" class="md-nav__link">
         Zookeeper
       </a>
     </li>
@@ -1010,7 +1044,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../refs/" class="md-nav__link">
+      <a href="../../cases/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -1079,29 +1113,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#identificacao" class="md-nav__link">
-    Identificação
+  <a href="#consenso" class="md-nav__link">
+    Consenso
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#divisao-de-carga" class="md-nav__link">
-    Divisão de carga
+  <a href="#detectores-de-defeitos-nao-confiaveis" class="md-nav__link">
+    Detectores de Defeitos não Confiáveis
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#roteamento" class="md-nav__link">
-    Roteamento
+  <a href="#paxos-algoritmo-do-sinodo" class="md-nav__link">
+    Paxos: Algoritmo do Sínodo
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#churn" class="md-nav__link">
-    Churn
+  <a href="#difusao-totalmente-ordenada" class="md-nav__link">
+    Difusão Totalmente Ordenada
+  </a>
+  
+    <nav class="md-nav" aria-label="Difusão Totalmente Ordenada">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paxos-difusao-atomica" class="md-nav__link">
+    Paxos: Difusão atômica
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raft-difusao-atomica" class="md-nav__link">
+    Raft: Difusão atômica
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outras-ordenacoes" class="md-nav__link">
+    Outras Ordenações
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arcaboucos-para-coordenacao" class="md-nav__link">
+    Arcabouços para coordenação
   </a>
   
 </li>
@@ -1129,136 +1197,190 @@
 
 
   <!-- Content -->
-  <h1 id="p2p-chord">P2P: Chord</h1>
-<p>Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do <a href="https://www.csail.mit.edu/">CSAIL</a>, do MIT, e publicado em 2001. 
-Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
-Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
-Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
-Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
-<p><img alt="Chord" src="../../images/chord.png" /></p>
-<h2 id="identificacao">Identificação</h2>
-<p>No Chord o problema da identificação dos dados é resolvido usando-se chaves de <strong><span class="arithmatex">\(m\)</span> bits</strong>, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
-Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
-<h2 id="divisao-de-carga">Divisão de carga</h2>
-<p>A cada nó é atribuído um identificador único de <strong><span class="arithmatex">\(m\)</span> bits</strong>, gerado aleatoriamente. 
-Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
-Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">1</a></sup>
-Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.</p>
-<p><img alt="Anel Chord" src="../../drawings/chord.drawio-0.svg" /></p>
-<p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
-A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
-O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
-Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-1.svg" /></p>
-<h2 id="roteamento">Roteamento</h2>
-<p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
-A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
-Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
-Caso contrário, a requisição deve repassada ou <strong>roteada</strong> para o nó correto.</p>
-<p>Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para um dos vizinhos e assim sucessivamente até que alcance o nó correto. 
-Esta solução, correta, tem custo da ordem do número de nós no sistema, <span class="arithmatex">\(O(n)\)</span>.
-Em uma instância com milhares de nós, <span class="arithmatex">\(O(n)\)</span> é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
-Observe que o custo em termos de espaço para se implementar esta solução é <span class="arithmatex">\(O(1)\)</span> para cada nó do sistema.
-Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
-<p>Com uma rede com milhares de nós, uma solução <span class="arithmatex">\(O(n)\)</span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
-Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
-<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-2.svg" /></p>
-<p>A <em>finger-table</em> é construída da seguinte forma, onde <span class="arithmatex">\(m\)</span> é a quantidade de bits usados para identificar nós no sistema:</p>
+  <h1 id="acordo">Acordo</h1>
+<p>Há diversas primitivas de comunicação em grupo, das quais se destaca a <strong>difusão atômica</strong>, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
+Difusão atômica, por sua vez, é equivalente ao problema do <strong>consenso distribuído</strong>, que está no coração da classe de problemas de <strong>acordo</strong>.
+Problemas de acordo são aqueles em que processos devem concordar em quais ações executar.
+Dependendo do modelo computacional em que o problema deve ser resolvido, soluções vão de triviais a impossíveis.
+Vejamos um exemplo.</p>
+<h3 id="consenso">Consenso</h3>
+<p>O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
+Neste problema, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong>. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.</p>
 <ul>
-<li>seja <span class="arithmatex">\(F_p\)</span> a <em>finger-table</em> do processo <span class="arithmatex">\(p\)</span>;</li>
-<li>seja <span class="arithmatex">\(F_p[i]\)</span> a <span class="arithmatex">\(i\)</span>-ésima da tabela; e,</li>
-<li><span class="arithmatex">\(F_p[i] = suc(p+2^{i-1})\)</span>.</li>
+<li>Validade: Somente um valor proposto pode ser decidido.</li>
+<li>Acordo: Se um processo decide-se por <span class="arithmatex">\(v\)</span> e outro por <span class="arithmatex">\(w\)</span>, então <span class="arithmatex">\(v = w\)</span></li>
+<li>Terminação: Todo processo não <strong>defeituoso</strong> decide-se.</li>
 </ul>
-<p>Observe que nesta tabela, a <span class="arithmatex">\(i\)</span>-ésima entrada aponta para o processo que no que sucede <span class="arithmatex">\(p\)</span> pelo menos <span class="arithmatex">\(2^{i-1}\)</span>, e que esta distância de sucessão aumenta exponencialmente. 
-Observe também que a maior distância é proporcional a metade do tamanho do anel.
-Isto quer dizer que o último <em>finger</em> da tabela proporciona um salto de <span class="arithmatex">\(1/2\)</span> anel, o penúltimo <span class="arithmatex">\(1/4\)</span> do anel, o ante-penúltimo <span class="arithmatex">\(1/8\)</span>, e assim sucessivamente.
-Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo <span class="arithmatex">\(O(log n)\)</span>.</p>
-<p>Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo <span class="arithmatex">\(p\)</span>:</p>
+<p>Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
+Um processo que não é defeituoso é um processo correto.</p>
+<div class="admonition info inline end">
+<p class="admonition-title">Terminação</p>
+<p>Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.</p>
+</div>
+<p>Dependendo do modelo computacional, é possível resolver este problema. Contudo, <strong>é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas</strong>,<sup id="fnref:flp85"><a class="footnote-ref" href="#fn:flp85">1</a></sup> e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
+Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
+Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, <a href="https://raft.github.io/">Raft</a> e <a href="http://paxos.systems/index.html">Paxos</a></p>
+<p>A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
+Os detectores de defeito abstraem este problema.</p>
+<h3 id="detectores-de-defeitos-nao-confiaveis">Detectores de Defeitos não Confiáveis</h3>
+<p>Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">2</a></sup> introduziram o conceito de <strong>Detectores de Defeitos</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
+Assim, um detector de defeitos pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.</p>
+<p><img alt="Failure Detector" src="../../drawings/failure_detector.drawio-0.svg" /></p>
+<p>Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
+Embora não seja obrigatório, detectores de falhas são normalmente implementados por meio de trocas de mensagens de <em>heartbeat</em>.
+Mensagens são esperadas em momentos específicos para sugerir que o remetente continua funcional.</p>
+<p><img alt="Failure Detector" src="../../drawings/failure_detector.drawio-1.svg" /></p>
+<p>Quando os <em>heartbeats</em> não chegam até o limite de tempo, o processo remetente passa a ser considerado <strong>suspeito</strong> de falha.</p>
+<p><img alt="Failure Detector" src="../../drawings/failure_detector.drawio-2.svg" /></p>
+<p><em>Heartbeats</em>  que chegam depois podem corrigir erros, mas também podem levar a atrasos na detecção de defeitos.</p>
+<p><img alt="Failure Detector" src="../../drawings/failure_detector.drawio-3.svg" /></p>
+<p>Para capturar estas combinações de eventos, foram definidos os seguintes níveis de </p>
+<p>Os níveis destas propriedades são os seguintes:</p>
 <ul>
-<li>seja <span class="arithmatex">\(k\)</span> a chave para qual estamos procurando o sucessor;</li>
-<li>itere pela tabela até achar a primeira entrada cujo valor, i.e., o identificador de um nó, é maior que <span class="arithmatex">\(k\)</span>;</li>
-<li>se a entrada é a primeira da tabela, então encaminhe a requisição para o nó apontado, pois ele é o sucessor de <span class="arithmatex">\(k\)</span>, até onde <span class="arithmatex">\(p\)</span> consegue determinar;</li>
-<li>senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.</li>
+<li>Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.</li>
+<li>Completude Fraca - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por algum processo correto.</li>
+<li>Precisão Forte - Todos os processos são suspeitos somente após terem apresentado defeito.</li>
+<li>Precisão Fraca - Algum processo correto nunca é suspeito de ter apresentado defeito.</li>
+<li>Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após apresentarem defeito.</li>
+<li>Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.</li>
 </ul>
-<p>Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.</p>
-<p><img alt="" src="../../images/05-04.png" /></p>
-<p>Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, <span class="arithmatex">\(31 &lt; 0\)</span>. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?</p>
-<p><img alt="" src="../../images/05-04.png" /></p>
-<p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span class="arithmatex">\(p\)</span> pode ser incompleta para partes distantes do anel.
-Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
-<p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
-<h2 id="churn">Churn</h2>
-<p>Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.</p>
-<p>Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:</p>
+<p>Um detector ideal seria um com Completude Forte e Precisão Forte, pois detectaria somente processos defeituosos e todos os processos defeituosos.
+Este detector é conhecido como <span class="arithmatex">\(P\)</span> ou <em>Perfect</em>.
+Infelizmente os detectores perfeitos só podem ser implementados em sistemas síncronos, onde se pode confiar que a falta de uma mensagem implica em que a mensagem não será entregue por quê o remetente deve ser defeituosos.
+Assim, é preciso se focar em detectores não perfeitos ou <strong>não confiáveis</strong>.</p>
+<p>Em ambientes <strong>parcialmente síncronos</strong>, ou seja, assíncronos aumentados com algum tipo de sincronia, já é possível implementar detectores não confiáveis.
+Por exemplo, se os processos dispõem de <strong>temporizadores</strong> precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um <strong>limite de tempo</strong> para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
+Esta determinação é por certo imprecisa e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
+Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso se combinada a uma restrição de que <strong>uma maioria dos processos não seja defeituosa</strong>.</p>
+<details class="todo"><summary>Maioria</summary><p>Adicionar prova.</p>
+</details>
+<p>Chandra, Hadzilacos e Toueg  demonstram que o detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.<sup id="fnref:CHT96"><a class="footnote-ref" href="#fn:CHT96">3</a></sup> 
+Este detector, conhecido como <span class="arithmatex">\(\Diamond W\)</span>, ou <em>Eventual Weak</em>, e é implementável em sistemas nos quais há um <strong>limite superior</strong> de tempo para a transmissão de mensagens, <strong>mesmo que este limite seja desconhecido</strong>.
+Vários protocolos de consenso utilizam o detector equivalente, <span class="arithmatex">\(\Diamond S\)</span>, equivalente ao <span class="arithmatex">\(\Diamond W\)</span> mas com completude forte, ou o eleitor de líderes <span class="arithmatex">\(\Omega\)</span>, que usa a informação do <span class="arithmatex">\(\Diamond S\)</span> para sugerir um líder entre os processos.
+Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um <strong>resultado errado nunca é alcançado</strong>, ou seja, os protocolos sempre garantem que as propriedades de corretude não são violadas, mesmo que não garanta que a terminação será alcançada.</p>
+<details class="todo"><summary>Figura</summary><p>figura 2.2 da dissertação.</p>
+</details>
+<details class="todo"><summary>SWIM</summary><p><a href="https://www.youtube.com/watch?v=0bAJ4iNnf5M">https://www.youtube.com/watch?v=0bAJ4iNnf5M</a></p>
+</details>
+<h3 id="paxos-algoritmo-do-sinodo">Paxos: Algoritmo do Sínodo</h3>
+<details class="todo"><summary>Algoritmo</summary><p>Descrever. 
+Por enquanto, vejam esta explicação ou [<a href="https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html">https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html</a>] ou este vídeo [<a href="https://www.youtube.com/watch?v=JEpsBg0AO6o">https://www.youtube.com/watch?v=JEpsBg0AO6o</a>] ou este video [<a href="https://www.youtube.com/watch?v=s8JqcZtvnsM">https://www.youtube.com/watch?v=s8JqcZtvnsM</a>].</p>
+</details>
+<h3 id="difusao-totalmente-ordenada">Difusão Totalmente Ordenada</h3>
+<p>Se pudermos resolver o consenso, podemos então resolver o problema da <strong>difusão totalmente ordenada</strong> (<em>total order multicast</em>) e com ela implementar a replicação de máquinas de estados.
+Relembrando, na  temos que:</p>
 <ul>
-<li>Escolher um novo Identificador <span class="arithmatex">\(I\)</span></li>
-<li>Identificar o sucessor <span class="arithmatex">\(S\)</span> de <span class="arithmatex">\(I\)</span></li>
-<li>Identificar o antecessor <span class="arithmatex">\(A\)</span> de <span class="arithmatex">\(I\)</span></li>
-<li>Informar <span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(S\)</span> de sua entrada, para que ajustem suas tabelas de rota.</li>
-<li><span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(S\)</span> propagam a informação da entrada de <span class="arithmatex">\(I\)</span> para seus vizinhos, permitindo que ajustem suas tabelas de rota.</li>
+<li>Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)</li>
+<li>Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.</li>
 </ul>
-<p>Além disto, a reorganização dos nós exige movimentação de dados, pois parte dos dados armazenados em <span class="arithmatex">\(S\)</span>, com chaves menores que <span class="arithmatex">\(I\)</span>, precisam ser copiadas para <span class="arithmatex">\(I\)</span>, o novo responsável.
-As principais questões a serem respondidas durante a movimentação dos dados são</p>
-<ul>
-<li>como manter os dados disponíveis para inserção e consulta durante todo o processo, e</li>
-<li>como minimizar o impacto da reorganização nos nós vizinhos ao novo nó</li>
-</ul>
-<p>Quanto à primeira questão, pode-se rotear as requisições para os dois nós responsáveis, o atual e o novo, e combinar as respostas, mantendo os dados mais recentes.
-Quanto à segunda, uma opção é fazer com que cada novo nó assuma diversas posições no anel, com identificadores distintos, passando a "incomodar" múltiplos processos, mas de forma mais suave.</p>
-<p>Embora se possa "facilmente" resolver os problemas da entrada de nós, os da saída são mais complexos, principalmente porquê a saída acontece geralmente bruscamente, por exemplo por falhas no sistema.
-Quanto à reorganização das tabelas de rota, cada nó precisa monitorar os nós que figuram em sua tabela e, caso pareçam indisponíveis, ajustar par apontar para outro nó.
-Contudo, caso a suspeita seja indevida, isto pode levar a dados serem consultados e armazenados nos nós errados.
-Também com relação aos dados, há o problema de não perdê-los quando o nó responsável se torna indisponível.
-O tratamento destes problemas está relacionado e é feito pelo replicação dos dados em múltiplos nós. Isto é feito no Chord, por exemplo, da seguinte forma:</p>
-<ul>
-<li>para cada dado, com chave <span class="arithmatex">\(k\)</span>, há <span class="arithmatex">\(r\)</span> cópias;</li>
-<li>a primeira cópia é mantida no sucessor de <span class="arithmatex">\(k\)</span>;</li>
-<li>a segunda cópia, no sucessor do sucessor de <span class="arithmatex">\(k\)</span>, e assim por diante;</li>
-<li>cada escrita é feita na primeira cópia, respondida, e replicada para as demais cópias;</li>
-<li>cada leitura é feita na cópia com menor identificador.</li>
-</ul>
-<p>No caso de falha de uma cópia, há <span class="arithmatex">\(r-1\)</span> cópias ainda disponíveis para responder à requisição, mantendo o sistema disponível a despeito de (<span class="arithmatex">\(r-1\)</span>) falhas, no que se chama de <strong>degradação graciosa</strong>.
-Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequência de passos, em um sistema com <span class="arithmatex">\(r=2\)</span>.</p>
-<ul>
-<li>escrita na cópia 1;</li>
-<li>resposta ao cliente;</li>
-<li>replicação para cópia 2;</li>
-<li>escrita na cópia 1;</li>
-<li>resposta ao cliente;</li>
-<li>falha da cópia 1;</li>
-<li>leitura na cópia 2.</li>
-</ul>
-<p>O cliente, ao ler o dado, lê uma versão antiga do mesmo, inconsistente com a visão que tinha do sistema.
-De fato, este tipo de sistema é chamado de eventualmente consistente pois somente na <strong>ausência de falhas e de escritas</strong> as diversas réplicas serão consistentes umas com as outras.
-Continuemos a sequência:</p>
-<ul>
-<li>escrita na cópia 2;</li>
-<li>cópia 1 volta a funcionar;</li>
-<li>leitura na cópia 1.</li>
-</ul>
-<p>Neste caso, a cópia "secundária" 2 tem um dado mais atual, que precisa ser repassado para a cópia 1; este movimento de convergência de dados é conhecido como anti-entropia.
-Finalmente, continuemos a sequência:</p>
-<ul>
-<li>escrita na cópia 1, por outro cliente.</li>
-</ul>
-<p>Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um <strong>conflito</strong>.
-Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.
-O Dynamo, que veremos a seguir, é um destes sistemas.</p>
+<p><img alt="Total order multicast" src="../../drawings/group_com.drawio-1.svg" /></p>
+<p>Para fazermos isso, precisamos primeiro formalizar as primitivas em vários níveis da resolução do problema.
+No nível do canal de comunicação, da rede, processos <strong>enviam</strong> e <strong>recebem</strong> mensagens.
+No nível do consenso, processos fazem <strong>propostas</strong> e <strong>aprendem</strong> um valor decidido. Para chegar a uma única decisão, várias mensagens podem ser enviadas e recebidas.
+No nível da difusão atômica, mensagens são <strong>difundidas</strong> e <strong>entregues</strong>. Se implementado sobre o consenso, para uma difusão ser bem sucedida, uma instância de consenso é necessária.</p>
 <div class="admonition note">
-<p class="admonition-title">Espalhamento Consistente</p>
+<p class="admonition-title">Primitivas de comunicação</p>
 <ul>
-<li>Carga uniforme entre nós.</li>
-<li>Todos os nós sabem como rotear requisições</li>
-<li>Número de saltos médio é conhecido.</li>
-<li>O sistema se adapta a entrada e saída de nós, por falhas ou não.</li>
+<li>enviar &amp; receber (<em>send &amp; receive</em>) - rede</li>
+<li>propor &amp; decidir (<em>propose &amp; decide</em>) - consenso</li>
+<li>difundir &amp; entregar (<em>broadcast &amp; deliver</em>) - difusão</li>
 </ul>
 </div>
+<p><img alt="Total order multicast" src="../../drawings/abcast2.drawio-0.svg" /></p>
+<p>Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:</p>
+<ul>
+<li>Ordene as instâncias de consenso.</li>
+<li>Para difundir mensagem <span class="arithmatex">\(m\)</span>, proponha a mensagem na menor instância <span class="arithmatex">\(i\)</span> em que não tiver visto uma decisão.</li>
+<li>Se a decisão de <span class="arithmatex">\(i\)</span> não é <span class="arithmatex">\(m\)</span>, volte para o passo anterior.</li>
+<li>Entregue as decisões na ordem das instâncias.</li>
+</ul>
+<p>No exemplo a seguir, duas mensagens, <span class="arithmatex">\(m\)</span> e <span class="arithmatex">\(m'\)</span> foram <strong>difundidas</strong> pelas aplicações App1 e App2, respectivamente, por meio do módulo de difusão atômica junto a cada aplicação.
+O módulo de difusão determina qual a menor instância de consenso ainda não decidida, azul, em que propõem as mensagens.
+Ao final da instância de conseno, <span class="arithmatex">\(m\)</span> é decidida e é entregue pelos módulos de difusão.
+O módulo ABCast2 insiste na difusão de <span class="arithmatex">\(m'\)</span>, propondo-a na próxima instância, vermelha, que decide <span class="arithmatex">\(m'\)</span> e leva esta mensagem a ser entregue.</p>
+<div class="mermaid">sequenceDiagram
+    participant App1
+    participant ABCast1
+    participant Consenso
+    participant ABCast2
+    participant App2
+
+
+    App1 --&gt;&gt;+ ABCast1: difundir m
+      App2 --&gt;&gt;+ ABCast2: difundir m'
+
+rect rgb(100,255,255)
+    ABCast1 -&gt;&gt;+ Consenso: propor m na inst 1
+    ABCast2 -&gt;&gt;+ Consenso: propor m' na inst 1
+
+
+    Consenso -&gt;&gt;- ABCast1: decidir m
+    Consenso -&gt;&gt;- ABCast2: decidir m
+end
+    ABCast1 --&gt;&gt;- App1: entregar m
+      ABCast2 --&gt;&gt; App2: entregar m
+
+rect rgba(255,0,0,.5)
+    ABCast2 -&gt;&gt;+ Consenso: propor m' na inst 2
+
+    Consenso -&gt;&gt; ABCast1: decidir m'
+    Consenso -&gt;&gt;- ABCast2: decidir m'
+end
+    ABCast1 --&gt;&gt; App1: entregar m'
+      ABCast2 --&gt;&gt;- App2: entregar m'
+</div>
+<p>Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro <span class="arithmatex">\(m\)</span> e depois <span class="arithmatex">\(m'\)</span>.
+Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.</p>
+<h4 id="paxos-difusao-atomica">Paxos: Difusão atômica</h4>
+<details class="todo"><summary>Paxos</summary><ul>
+<li>Difusão Atômica</li>
+</ul>
+</details>
+<h4 id="raft-difusao-atomica">Raft: Difusão atômica</h4>
+<p>Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
+Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
+Um mandato se estende enquanto o líder mantiver seus seguidores cientes de sua presença, o que faz pelo envio periódico de <em>heartbeats</em>.
+Atrasos na comunicação ou a falha do líder atual levam a uma suspeita de que o líder falhou, levando a nova eleição e novo mandado.
+A comunicação necessária para implementar a difusão atômica acontece em <em>piggyback</em> nos <em>heartbeats</em>.</p>
+<p>No tutorial <a href="http://thesecretlivesofdata.com/raft/">The Secret lives of data</a>, podemos ver com mais detalhes como o protocolo funciona.
+O tutorial, entretando, foge da nomenclatura padrão da área usando <em>log-replication</em> no lugar de difusão atômica (ou totalmente ordenada).</p>
+<h3 id="outras-ordenacoes">Outras Ordenações</h3>
+<p>Como colocado diversas vezes, se todos os processos executam a mesma sequência de comandos determinísticos, todos avançam pelos mesmos estados, implementando a técnica da replicação de máquinas de estados.
+Se usada em um sistema de arquivos, por exemplo, a seguinte sequência de comandos levará sempre ao estado final em que há um arquivo <code>/tmp/file2</code> e uma pasta denominada <code>/dir1</code>.</p>
+<ul>
+<li><code>touch /tmp/file1</code></li>
+<li><code>echo "teste testando" &gt;&gt; /tmp/file2</code></li>
+<li><code>rm /tmp/file1</code></li>
+<li><code>mkdir /dir1</code></li>
+</ul>
+<p>Há outras ordens dos mesmos comandos que levariam ao mesmo efeito, como a seguinte. Alguns protocolos de replicação de máquinas de estados permitem que reordenações ocorram, desde que não afetem o resultado final dos comandos. 
+Contudo, estes protocolos são mais complexos de se implementar e por isso raramente usados.</p>
+<ul>
+<li><code>echo "teste testando" &gt;&gt; /tmp/file2</code></li>
+<li><code>mkdir /dir1</code></li>
+<li><code>touch /tmp/file1</code></li>
+<li><code>rm /tmp/file1</code></li>
+</ul>
+<h3 id="arcaboucos-para-coordenacao">Arcabouços para coordenação</h3>
+<p>Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema<sup id="fnref:cons_core"><a class="footnote-ref" href="#fn:cons_core">5</a></sup>.
+Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata<sup id="fnref:paxosmade"><a class="footnote-ref" href="#fn:paxosmade">4</a></sup>. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.</p>
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:chord_dist">
-<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcional à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<li id="fn:flp85">
+<p><a href="https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf">Impossibility of Distributed Consensus with One Faulty Process</a>. Uma explicação da prova está disponível no <a href="https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/">Paper Trail</a>&#160;<a class="footnote-backref" href="#fnref:flp85" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:CT96">
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf">Unreliable Failure Detectors for Reliable Distributed Systems</a>&#160;<a class="footnote-backref" href="#fnref:CT96" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:CHT96">
+<p><a href="https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf">The Weakest Failure Detector for Solving Consensus</a>&#160;<a class="footnote-backref" href="#fnref:CHT96" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:paxosmade">
+<p>Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em <a href="https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf">Paxos Made Live - An Engineering Perspective</a>.&#160;<a class="footnote-backref" href="#fnref:paxosmade" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:cons_core">
+<p><a href="https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html">Consistent Core</a>&#160;<a class="footnote-backref" href="#fnref:cons_core" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
@@ -1283,7 +1405,7 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../cassandra/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Cassandra" rel="prev">
+        <a href="../failures/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Falhas/Erros/Defeitos" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1292,20 +1414,20 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Cassandra
+              Falhas/Erros/Defeitos
             </div>
           </div>
         </a>
       
       
         
-        <a href="../dynamo/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Dynamo" rel="next">
+        <a href="../../consistency/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Consistência" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Dynamo
+              Consistência
             </div>
           </div>
           <div class="md-footer__button md-icon">

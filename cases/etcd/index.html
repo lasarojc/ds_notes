@@ -14,7 +14,7 @@
     
     
       
-        <title>Chord - Notas em Sistemas Distribuídos</title>
+        <title>Etcd - Notas em Sistemas Distribuídos</title>
       
     
     
@@ -77,11 +77,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#p2p-chord" class="md-skip">
-          Ir para o conteúdo
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -108,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chord
+              Etcd
             
           </span>
         </div>
@@ -791,72 +786,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Chord
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../chord/" class="md-nav__link">
         Chord
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#identificacao" class="md-nav__link">
-    Identificação
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#divisao-de-carga" class="md-nav__link">
-    Divisão de carga
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roteamento" class="md-nav__link">
-    Roteamento
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn" class="md-nav__link">
-    Churn
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -984,11 +918,19 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../etcd/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Etcd
       </a>
+      
     </li>
   
 
@@ -1060,59 +1002,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#identificacao" class="md-nav__link">
-    Identificação
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#divisao-de-carga" class="md-nav__link">
-    Divisão de carga
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#roteamento" class="md-nav__link">
-    Roteamento
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#churn" class="md-nav__link">
-    Churn
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -1127,141 +1016,12 @@
        as the main headline.
     -->
 
+  <h1>Etcd</h1>
+
 
   <!-- Content -->
-  <h1 id="p2p-chord">P2P: Chord</h1>
-<p>Chord é uma sistema P2P de múltiplas aplicações desenvolvido pelos membros do <a href="https://www.csail.mit.edu/">CSAIL</a>, do MIT, e publicado em 2001. 
-Desde então, inspirou diversos outros sistemas, tornando-se sinônimo com P2P.
-Neste sistema, nós organizam-se em um anel lógico e cada um torna-se responsável por um dos segmentos do anel adjacente a onde se encontra no mesmo.
-Requisições para correspondentes a um segmento são roteados para o nó responsável usando uma tabela de rotas conhecida como <em>finger table</em>.
-Se traçarmos os caminhos apontados por esta tabela sobre o anel, desenharemos <strong>cordas</strong> sobre o mesmo, o que explica o nome do sistema.</p>
-<p><img alt="Chord" src="../../images/chord.png" /></p>
-<h2 id="identificacao">Identificação</h2>
-<p>No Chord o problema da identificação dos dados é resolvido usando-se chaves de <strong><span class="arithmatex">\(m\)</span> bits</strong>, geradas por meio de uma função hash criptográfica a partir de chaves que faça sentido para a aplicação, por exemplo nome, telefone, ou CPF.
-Como a função hash é criptográfica, uma pequena variação na entrada implica em grande variação na saída e, para quem observa apenas a saída da função, uma sequência de chaves é indistinguível de uma sequência aleatória.</p>
-<h2 id="divisao-de-carga">Divisão de carga</h2>
-<p>A cada nó é atribuído um identificador único de <strong><span class="arithmatex">\(m\)</span> bits</strong>, gerado aleatoriamente. 
-Como <span class="arithmatex">\(m\)</span> normalmente é grande, com mais de uma centena de bits, a probabilidade de dois nós terem o mesmo identificar é desprezível.
-Além disso, os nós se organizam em uma rede sobreposta estruturada na forma de um <strong>anel lógico</strong>, em que os nós aparecem ordenadamente de acordo com seus identificadores.
-A figura a seguir mostra um anel em cujo os nós tem identificadores de 8 bits (0 a 255), com cinco nós.<sup id="fnref:chord_dist"><a class="footnote-ref" href="#fn:chord_dist">1</a></sup>
-Assumamos inicialmente que os nós só estão cientes dos seus vizinhos imediatos no anel.</p>
-<p><img alt="Anel Chord" src="../../drawings/chord.drawio-0.svg" /></p>
-<p>Cada chave é associada a um nó, responsável por atender requisições de criação, consulta, modificação e remoção dos dados relacionados àquela chave.
-A pseudo aleatoriedade na geração da chave e a aleatoriedade na geração dos identificadores de nós faz com que a distribuição de carga entre os nós seja uniforme.
-O dado com chave <span class="arithmatex">\(k\)</span> é responsabilidade do nó com menor identificador <span class="arithmatex">\(i \geq k\)</span>, aka, <strong>sucessor de <span class="arithmatex">\(k\)</span></strong> (<span class="arithmatex">\(i = suc(k)\)</span>), no anel.
-Na figura a seguir, é apresentado junto a cada nó as chaves pelas quais o nó é responsável.</p>
-<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-1.svg" /></p>
-<h2 id="roteamento">Roteamento</h2>
-<p>Suponha que um cliente solicite ao Chord do exemplo anterior que armazene o valor <span class="arithmatex">\(v\)</span> associado à chave <span class="arithmatex">\(k\)</span>.
-A solicitação é feita pelo contato a um dos nós no sistema, que pode ou não ser o responsável por <span class="arithmatex">\(k\)</span>.
-Caso seja o responsável, a solicitação é executada localmente e uma resposta devolvida ao cliente.
-Caso contrário, a requisição deve repassada ou <strong>roteada</strong> para o nó correto.</p>
-<p>Na rede estruturada definida até agora, uma opção óbvia é repassar a requisição para um dos vizinhos e assim sucessivamente até que alcance o nó correto. 
-Esta solução, correta, tem custo da ordem do número de nós no sistema, <span class="arithmatex">\(O(n)\)</span>.
-Em uma instância com milhares de nós, <span class="arithmatex">\(O(n)\)</span> é um custo muito alto, ainda mais se considerarmos que cada salto na rede sobreposta potencialmente cruza toda a Internet, uma vez que, reforçando, a proximidade na rede sobreposta não implica em proximidade na rede física abaixo.
-Observe que o custo em termos de espaço para se implementar esta solução é <span class="arithmatex">\(O(1)\)</span> para cada nó do sistema.
-Em outras palavras, cada nó mantem uma <strong>tabela de rotas</strong> com uma ou duas entradas, apontando para seus vizinhos.</p>
-<p>Com uma rede com milhares de nós, uma solução <span class="arithmatex">\(O(n)\)</span> saltos, onde cada pode levar <strong>ao outro lado do planeta</strong>, operações teriam uma latência muito alta.
-Para amenizar o custo, Chord propõe a criação de uma tabela de rotas, também conhecida como <em>finger-table</em>, que aponta para nós no anel com distâncias que se dobram a cada entrada.</p>
-<p><img alt="Anel com Chaves no Chord" src="../../drawings/chord.drawio-2.svg" /></p>
-<p>A <em>finger-table</em> é construída da seguinte forma, onde <span class="arithmatex">\(m\)</span> é a quantidade de bits usados para identificar nós no sistema:</p>
-<ul>
-<li>seja <span class="arithmatex">\(F_p\)</span> a <em>finger-table</em> do processo <span class="arithmatex">\(p\)</span>;</li>
-<li>seja <span class="arithmatex">\(F_p[i]\)</span> a <span class="arithmatex">\(i\)</span>-ésima da tabela; e,</li>
-<li><span class="arithmatex">\(F_p[i] = suc(p+2^{i-1})\)</span>.</li>
-</ul>
-<p>Observe que nesta tabela, a <span class="arithmatex">\(i\)</span>-ésima entrada aponta para o processo que no que sucede <span class="arithmatex">\(p\)</span> pelo menos <span class="arithmatex">\(2^{i-1}\)</span>, e que esta distância de sucessão aumenta exponencialmente. 
-Observe também que a maior distância é proporcional a metade do tamanho do anel.
-Isto quer dizer que o último <em>finger</em> da tabela proporciona um salto de <span class="arithmatex">\(1/2\)</span> anel, o penúltimo <span class="arithmatex">\(1/4\)</span> do anel, o ante-penúltimo <span class="arithmatex">\(1/8\)</span>, e assim sucessivamente.
-Outra forma de se ver esta tabela é como proporcionando um salto de pelo menos metade da distância restante para o nó responsável pela chave, resultando em um roteamento com custo <span class="arithmatex">\(O(log n)\)</span>.</p>
-<p>Mas como este potencial é explorado? Usando-se o seguinte algoritmo de busca pela entrada correta na tabela de roteamento, do ponto de vista do processo <span class="arithmatex">\(p\)</span>:</p>
-<ul>
-<li>seja <span class="arithmatex">\(k\)</span> a chave para qual estamos procurando o sucessor;</li>
-<li>itere pela tabela até achar a primeira entrada cujo valor, i.e., o identificador de um nó, é maior que <span class="arithmatex">\(k\)</span>;</li>
-<li>se a entrada é a primeira da tabela, então encaminhe a requisição para o nó apontado, pois ele é o sucessor de <span class="arithmatex">\(k\)</span>, até onde <span class="arithmatex">\(p\)</span> consegue determinar;</li>
-<li>senão, encaminhe a requisição para a entrada anterior, pois o nó referenciado está mais próximo do sucessor para determiná-lo com segurança.</li>
-</ul>
-<p>Considere no exemplo a seguir a busca pelo sucessor de 26, iniciada pelo nó 1.</p>
-<p><img alt="" src="../../images/05-04.png" /></p>
-<p>Duas observações são importantes aqui. A primeira, é que as comparações para se encontrar a entrada correta, deve respeitar o anel, por exemplo, em um anel com 32 posições, por exemplo, <span class="arithmatex">\(31 &lt; 0\)</span>. No seguinte exemplo, considere por exemplo a busca que o nó 21 faz pelo sucessor de 31; qual deve ser a entrada selecionada?</p>
-<p><img alt="" src="../../images/05-04.png" /></p>
-<p>A segunda observação é que não se pode encaminhar a requisição diretamente para o nó apontado na entrada encontrada, pois a visão de <span class="arithmatex">\(p\)</span> pode ser incompleta para partes distantes do anel.
-Tente identificar exemplos no anel a seguir onde este comportamento seria errado.</p>
-<p>A organização dos nós em um anel virtual e a distribuição da responsabilidade dos dados pelo particionamento do espaço das chaves de forma correspondente às faixas no anel lógico é a técnica conhecida como <strong>espalhamento consistente</strong>, do inglês, <em>consistent hashing</em>.</p>
-<h2 id="churn">Churn</h2>
-<p>Apesar do espalhamento consistente ser uma técnica muito útil, ela não resolve todos os problemas. Aliás, vários outros problemas precisam ser resolvidos, sendo o primeiro deles lidar com a entrada e saída de nós, principalmente por falhas de nós e comunicação.</p>
-<p>Quando um novo nó entra do sistema, ele precisa seguir os seguintes passos:</p>
-<ul>
-<li>Escolher um novo Identificador <span class="arithmatex">\(I\)</span></li>
-<li>Identificar o sucessor <span class="arithmatex">\(S\)</span> de <span class="arithmatex">\(I\)</span></li>
-<li>Identificar o antecessor <span class="arithmatex">\(A\)</span> de <span class="arithmatex">\(I\)</span></li>
-<li>Informar <span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(S\)</span> de sua entrada, para que ajustem suas tabelas de rota.</li>
-<li><span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(S\)</span> propagam a informação da entrada de <span class="arithmatex">\(I\)</span> para seus vizinhos, permitindo que ajustem suas tabelas de rota.</li>
-</ul>
-<p>Além disto, a reorganização dos nós exige movimentação de dados, pois parte dos dados armazenados em <span class="arithmatex">\(S\)</span>, com chaves menores que <span class="arithmatex">\(I\)</span>, precisam ser copiadas para <span class="arithmatex">\(I\)</span>, o novo responsável.
-As principais questões a serem respondidas durante a movimentação dos dados são</p>
-<ul>
-<li>como manter os dados disponíveis para inserção e consulta durante todo o processo, e</li>
-<li>como minimizar o impacto da reorganização nos nós vizinhos ao novo nó</li>
-</ul>
-<p>Quanto à primeira questão, pode-se rotear as requisições para os dois nós responsáveis, o atual e o novo, e combinar as respostas, mantendo os dados mais recentes.
-Quanto à segunda, uma opção é fazer com que cada novo nó assuma diversas posições no anel, com identificadores distintos, passando a "incomodar" múltiplos processos, mas de forma mais suave.</p>
-<p>Embora se possa "facilmente" resolver os problemas da entrada de nós, os da saída são mais complexos, principalmente porquê a saída acontece geralmente bruscamente, por exemplo por falhas no sistema.
-Quanto à reorganização das tabelas de rota, cada nó precisa monitorar os nós que figuram em sua tabela e, caso pareçam indisponíveis, ajustar par apontar para outro nó.
-Contudo, caso a suspeita seja indevida, isto pode levar a dados serem consultados e armazenados nos nós errados.
-Também com relação aos dados, há o problema de não perdê-los quando o nó responsável se torna indisponível.
-O tratamento destes problemas está relacionado e é feito pelo replicação dos dados em múltiplos nós. Isto é feito no Chord, por exemplo, da seguinte forma:</p>
-<ul>
-<li>para cada dado, com chave <span class="arithmatex">\(k\)</span>, há <span class="arithmatex">\(r\)</span> cópias;</li>
-<li>a primeira cópia é mantida no sucessor de <span class="arithmatex">\(k\)</span>;</li>
-<li>a segunda cópia, no sucessor do sucessor de <span class="arithmatex">\(k\)</span>, e assim por diante;</li>
-<li>cada escrita é feita na primeira cópia, respondida, e replicada para as demais cópias;</li>
-<li>cada leitura é feita na cópia com menor identificador.</li>
-</ul>
-<p>No caso de falha de uma cópia, há <span class="arithmatex">\(r-1\)</span> cópias ainda disponíveis para responder à requisição, mantendo o sistema disponível a despeito de (<span class="arithmatex">\(r-1\)</span>) falhas, no que se chama de <strong>degradação graciosa</strong>.
-Há contudo, um problema introduzido por esta abordagem. Assuma a seguinte sequência de passos, em um sistema com <span class="arithmatex">\(r=2\)</span>.</p>
-<ul>
-<li>escrita na cópia 1;</li>
-<li>resposta ao cliente;</li>
-<li>replicação para cópia 2;</li>
-<li>escrita na cópia 1;</li>
-<li>resposta ao cliente;</li>
-<li>falha da cópia 1;</li>
-<li>leitura na cópia 2.</li>
-</ul>
-<p>O cliente, ao ler o dado, lê uma versão antiga do mesmo, inconsistente com a visão que tinha do sistema.
-De fato, este tipo de sistema é chamado de eventualmente consistente pois somente na <strong>ausência de falhas e de escritas</strong> as diversas réplicas serão consistentes umas com as outras.
-Continuemos a sequência:</p>
-<ul>
-<li>escrita na cópia 2;</li>
-<li>cópia 1 volta a funcionar;</li>
-<li>leitura na cópia 1.</li>
-</ul>
-<p>Neste caso, a cópia "secundária" 2 tem um dado mais atual, que precisa ser repassado para a cópia 1; este movimento de convergência de dados é conhecido como anti-entropia.
-Finalmente, continuemos a sequência:</p>
-<ul>
-<li>escrita na cópia 1, por outro cliente.</li>
-</ul>
-<p>Assim, ambas as cópias, 1 e 2, tem dados derivados da primeira escrita, mas feitos "concorrentemente", um <strong>conflito</strong>.
-Qual dos dois é o correto neste contexto? É impossível apresentar uma estratégia genérica para resolver esta situação, mas alguns sistemas usarão uma estratégia do tipo "a última escrita vence", onde a última escrita pode ser determinada em por relógios lógicos, vetoriais, tempo, e uma pitada de "arranjo técnico" para quebrar empates.
-O Dynamo, que veremos a seguir, é um destes sistemas.</p>
-<div class="admonition note">
-<p class="admonition-title">Espalhamento Consistente</p>
-<ul>
-<li>Carga uniforme entre nós.</li>
-<li>Todos os nós sabem como rotear requisições</li>
-<li>Número de saltos médio é conhecido.</li>
-<li>O sistema se adapta a entrada e saída de nós, por falhas ou não.</li>
-</ul>
-</div>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:chord_dist">
-<p>Observe que as distâncias entre os nós no anel foram desenhadas de forma proporcional à diferença numérica entre os identificadores.&#160;<a class="footnote-backref" href="#fnref:chord_dist" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+  <details class="todo"><summary>Todo</summary><p><a href="https://etcd.io/">etcd</a></p>
+</details>
 
   <!-- Last update of source file -->
 
@@ -1283,7 +1043,7 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../cassandra/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Cassandra" rel="prev">
+        <a href="../bftsmart/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: BFT-Smart" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1292,20 +1052,20 @@ O Dynamo, que veremos a seguir, é um destes sistemas.</p>
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Cassandra
+              BFT-Smart
             </div>
           </div>
         </a>
       
       
         
-        <a href="../dynamo/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Dynamo" rel="next">
+        <a href="../zookeeper/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Zookeeper" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Dynamo
+              Zookeeper
             </div>
           </div>
           <div class="md-footer__button md-icon">
