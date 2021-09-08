@@ -34,7 +34,11 @@ nav:
                 - Tempo Físico: time/physical.md
                 - Tempo Lógico: time/logical.md
         
-        - Tolerância a Falhas: fault.md
+        - Tolerância a Falhas: 
+                - Introdução: fault/index.md
+                - Dependabilidade: fault/dependability.md
+                - Falhas/Erros/Defeitos: fault/failures.md
+                - Acordo: fault/agreement.md
 
         - Consistência: consistency.md
         - Bancos de Dados: disdb.md
@@ -51,8 +55,14 @@ nav:
                 - RMI: cases/rmi.md
                 - Thrift: cases/thrift.md
                 - Kafka: cases/kafka.md
-                - Referências: cases/refs.md
                 - Swim: cases/swim.md
+                - Copycat: cases/copycat.md
+                - Ratis: cases/ratis.md
+                - BFT-Smart: cases/bftsmart.md
+                - Etcd: cases/etcd.md
+                - Zookeeper: cases/zookeeper.md
+
+                - Referências: cases/refs.md
         
         - Tecnologias: tech.md
         
