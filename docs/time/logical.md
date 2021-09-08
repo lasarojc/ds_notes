@@ -274,7 +274,3 @@ Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada 
 
 
 
-## Referências
-
-* [Google TrueTime](https://cloud.google.com/spanner/docs/true-time-external-consistency)
-
