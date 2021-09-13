@@ -2,12 +2,11 @@
 
 Há diversas primitivas de comunicação em grupo, das quais se destaca a **difusão atômica**, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
 Difusão atômica, por sua vez, é equivalente ao problema do **consenso distribuído**, que está no coração da classe de problemas de **acordo**.
-Problemas de acordo são aqueles em que processos devem concordar em quais ações executar.
+Problemas de acordo são aqueles em que processos devem **concordar** em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
 Dependendo do modelo computacional em que o problema deve ser resolvido, soluções vão de triviais a impossíveis.
-Vejamos um exemplo.
 
 
-### Consenso
+## Consenso
 O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
 Neste problema, cada um de um conjunto de processos propõe um único valor, sua **proposta**. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.
 
@@ -32,7 +31,7 @@ A grande razão para que seja impossível chegar a um acordo entre processos nes
 Os detectores de defeito abstraem este problema.
 
 
-### Detectores de Defeitos não Confiáveis
+## Detectores de Defeitos não Confiáveis
 
 Chandra e Toueg[^CT96] introduziram o conceito de **Detectores de Defeitos** como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de defeitos pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.
@@ -185,7 +184,7 @@ Atrasos na comunicação ou a falha do líder atual levam a uma suspeita de que 
 A comunicação necessária para implementar a difusão atômica acontece em *piggyback* nos *heartbeats*.
 
 No tutorial [The Secret lives of data](http://thesecretlivesofdata.com/raft/), podemos ver com mais detalhes como o protocolo funciona.
-O tutorial, entretando, foge da nomenclatura padrão da área usando *log-replication* no lugar de difusão atômica (ou totalmente ordenada).
+O tutorial, entretanto, foge da nomenclatura padrão da área usando *log-replication* no lugar de difusão atômica (ou totalmente ordenada).
 
 
 

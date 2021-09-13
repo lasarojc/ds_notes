@@ -93,5 +93,3 @@ Calcular estas métricas para sistemas com múltiplos componentes, como um siste
 Além da dependabilidade, outra propriedade importante e desejável para os sistemas é a **Confidencialidade**, que quando combinada à **Integridade** é também chamada de **Segurança** (*Security*). 
 
 * Confidencialidade (*Confidentiality*) -- informação somente é acessível a quem é devido.
-
-Mais especificamente, sobre como manter um sistema online para que possa responder a requisições, mesmo quando problemas aparecem. Mas para isso, primeiro precisamos entender os tipos de problemas que aparecem em vários níveis, desde o seu desenvolvimento até seu uso.

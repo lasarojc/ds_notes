@@ -1,7 +1,98 @@
 
-https://kafka.apache.org/
+# Fila de Mensagens/PubSub: Kafka
+
+![](../images/kafka0.png)
+
+!!!quote
+     Kafka is a distributed streaming platform.
+
+*  LinkedIn
+*  OpenSource em 2011
+*  Projeto Apache em ????
+
+
+![](../images/kafka1.png)
+
+![](../images/kafka2.png)
+
+
+Producers x Message Broker x Consumers
+
+![](../images/kafka3.png)
+
+*  Produtores: enviam dados/mensagens/records (array de bytes)
+*  Consumidores: recebem dados
+*  Cluster/Broker: distribuído e tolerantes a falhas.
+*  Conectores: integração simplificada com outras aplicações 
+*  Stream processors: spark ou outros frameworks; transformam dados
+
+
+
+Brokers
+
+*  Cluster de brokers
+*  Distribuído
+*  Tolerante a falhas
+*  Desacoplamento espacial
+*  Desacoplamento temporal
+*  Tópicos, não endereços
+
+
+Tópicos
+
+*  Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
+*  Quantidade pode ser imensa.
+
+
+Partição
+
+*  Subdivisões de tópicos
+*  Número de partições é definido por usuário
+*  Cada partição está associada a um único servidor
+
+
+Offset
+
+*  Índice de uma mensagem em uma partição
+*  Índices atribuídos na ordem de chegada
+*  Offsets são locais às partições
+*  Mensagens são unicamente identificadas por (tópico, partição, índice)
+
+![](../images/kafka4.png)
+
+Consumer group
+
+*  Carga pode ser muito grande para um consumidor
+*  Compartilham o processamento de um tópico
+*  Cada mensagem é processada por um membro do grupo
+*  A mesma mensagem pode ser processada por múltiplos grupos
+*  Número de consumidores $\leq$ partições no tópico
+*  Máximo de dois consumidores por partição (mantem pos. de cada um)
+
+
+![](../images/kafka5.png)
+
+
+Siga o [tutorial](http://kafka.apache.org/quickstart), até o passo 5.
+
+*  Baixe e descompacte
+*  Rode o zookeeper (Terminal 1)
+*  Rode o Kafka (Terminal 2)
+*  Crie um tópico (Terminal 3) - 
+		Mais de uma partição em um servidor
+* Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?
+*  Liste os tópicos criados
+*  Envie algumas mensagens
+*  Inicie um consumidor (Terminal 4)
+
+
+
+
+
 
 ???todo "TODO"
+     https://kafka.apache.org/
+
 
 
 

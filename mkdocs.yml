@@ -23,7 +23,10 @@ nav:
                 - P2P: arch/p2p.md
                 - Microsserviços: arch/microservices.md
 
-        - Modelos: models.md
+        - Modelos: 
+                - Introdução: models/index.md
+                - Tipos: models/models.md
+                - Processador: models/processor.md
 
         - Coordenação:
                 - Concorrência: coord/concurrency.md
@@ -34,11 +37,15 @@ nav:
                 - Tempo Físico: time/physical.md
                 - Tempo Lógico: time/logical.md
         
-        - Tolerância a Falhas: 
+        - Tolerância a Faltas: 
                 - Introdução: fault/index.md
-                - Dependabilidade: fault/dependability.md
-                - Falhas/Erros/Defeitos: fault/failures.md
+                - Falta/Erros/Falhas: fault/failures.md
+                - Replicação: fault/replication.md
                 - Acordo: fault/agreement.md
+                - Detectores de Falhas: fault/failuredetector.md
+                - Reconfiguração: fault/reconfiguration.md
+                - Falhas bizantinas: fault/bizantine.md
+                - Dependabilidade: fault/dependability.md
 
         - Consistência: consistency.md
         - Bancos de Dados: disdb.md
@@ -86,6 +93,7 @@ theme:
         features:
            - search.suggest
            - search.highlight
+           - navigation.indexes
 
 plugins:
         - search
@@ -142,5 +150,3 @@ extra_javascript:
 
 extra_css:
         - css/extra.css
-
-google_analytics: ['G-PJX835H7DP', 'lasarojc.github.org/dsnotes']

@@ -198,7 +198,7 @@ Em uma versão melhorada do algoritmo,[^hlc] a distância entre os dois relógio
 ### Comunicação em Grupo
 
 Relógios lógicos podem e são usados diretamente em sistemas, por exemplo, para controlar versões no sistema de identidade da Microsoft, [Active Directory](https://cdn.ttgtmedia.com/searchwin2000/downloads/pdfs/ImplementingtheAD202014.pdf).
-Outra forma de uso é como block de construção de outras abstrações, por exemplo, primitivas de comunicação em grupo, pelas quais um processo envia mensagens para um conjunto de processos.
+Outra forma de uso é como bloco de construção de outras abstrações, por exemplo, primitivas de comunicação em grupo, pelas quais um processo envia mensagens para um conjunto de processos.
 
 * Difusão Totalmente Ordenada (*Total Order Multicast*):
     * Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)
@@ -256,11 +256,14 @@ Vejamos um outro algoritmo, de difusão **causalmente** ordenada.
      Considere $c_{p3}[0,2,2]$ e $ts=[1,3,0]$, de $p1$. O que $p3$ está esperando? Como age ao receber mensagem com $ts$?
 
 
+
+###### Interceptadores
 Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
 Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de *timestamps*?
 Isto pode ser feito por meio de **interceptadores** em uma camada de ***middleware***.
 
-![Interceptadores](../images/tanenbaum-06-10.png)
+![Interceptadores](../drawings/group_com.drawio#3)
+
 
 Quando a aplicação envia uma mensagem, o relógio lógico mantido no *middleware* é atualizado e seu valor usado como *timestamp* em uma versão estendida da mensagem, efetivamente enviada na rede.
 Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada para o interceptador que extrai o *timestamp* e atualiza seu relógio. A mensagem sem o *timestamp* é entregue para a aplicação quando apropriado, e aplicação não percebe a manipulação.
