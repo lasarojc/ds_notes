@@ -40,17 +40,6 @@
     
     
       
-  
-
-
-
-  
-  
-
-
-
-  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-PJX835H7DP"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-PJX835H7DP",{page_path:t.pathname})})})</script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PJX835H7DP"></script>
 
 
     
@@ -487,10 +476,61 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Modelos
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Modelos" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Modelos
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
     <li class="md-nav__item">
       <a href="../models/" class="md-nav__link">
-        Modelos
+        Introdução
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/models/" class="md-nav__link">
+        Tipos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../models/processor/" class="md-nav__link">
+        Processador
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -631,13 +671,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
       
       <label class="md-nav__link" for="__nav_8">
-        Tolerância a Falhas
+        Tolerância a Faltas
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Tolerância a Falhas" data-md-level="1">
+      <nav class="md-nav" aria-label="Tolerância a Faltas" data-md-level="1">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
-          Tolerância a Falhas
+          Tolerância a Faltas
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -668,8 +708,8 @@
   
   
     <li class="md-nav__item">
-      <a href="dependability/" class="md-nav__link">
-        Dependabilidade
+      <a href="failures/" class="md-nav__link">
+        Falta/Erros/Falhas
       </a>
     </li>
   
@@ -680,8 +720,8 @@
   
   
     <li class="md-nav__item">
-      <a href="failures/" class="md-nav__link">
-        Falhas/Erros/Defeitos
+      <a href="replication/" class="md-nav__link">
+        Replicação
       </a>
     </li>
   
@@ -694,6 +734,54 @@
     <li class="md-nav__item">
       <a href="agreement/" class="md-nav__link">
         Acordo
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="failuredetector/" class="md-nav__link">
+        Detectores de Falhas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reconfiguration/" class="md-nav__link">
+        Reconfiguração
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bizantine/" class="md-nav__link">
+        Falhas bizantinas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dependability/" class="md-nav__link">
+        Dependabilidade
       </a>
     </li>
   
@@ -1043,8 +1131,18 @@
 
   <!-- Content -->
   <h1 id="tolerancia-a-falhas">Tolerância a Falhas</h1>
-<p>Sistemas distribuídos são usados para resolver problemas de um espectro bem amplo, indo do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
-Independentemente do problema, um dos objetivos no desenvolvimento é ter o sistema funcional quando precisarmos dele, isto é, o sistema ser tal que possamos depender dele, que tenha <strong>dependabilidade</strong> mesmo quando problemas aparecem.</p>
+<p>Sistemas distribuídos são usados para resolver problemas de um espectro muito amplo, indo do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
+Cada um destes serviços tem seus próprios requisitos de qualidade de serviço, isto é, enquanto você perder uma partida de truco porquê a conexão caiu pode ter deixar chateado, certamente há de convir que perder a conexão com um robô segurando um bisturi sobre uma pessoa é algo bem mais grave.</p>
+<p>Independentemente do problema, um dos objetivos no desenvolvimento é ter o sistema funcional quando precisarmos dele, mesmo quando fontes queimem, discos deixem de girar, fontes parem de alimentar, <em>coolers</em> parem de refrigerar, administradores parem de manter o sistema, hackers façam o que fazem, fibras sejam rompidas, satélites saiam de órbita, funcionários demitidos se revoltem, etc.</p>
+<p>A lista de problemas que podem afligir sistemas é tão grande, que há uma área da computação (e não somente da computação) dedicada somente a lidar com estes problemas, a área de tolerância a faltas.<sup id="fnref:faltas"><a class="footnote-ref" href="#fn:faltas">1</a></sup> </p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:faltas">
+<p>Ou falhas, dependendo de a quem você perguntar.&#160;<a class="footnote-backref" href="#fnref:faltas" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
   <!-- Last update of source file -->
 
@@ -1082,13 +1180,13 @@ Independentemente do problema, um dos objetivos no desenvolvimento é ter o sist
       
       
         
-        <a href="dependability/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Dependabilidade" rel="next">
+        <a href="failures/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Falta/Erros/Falhas" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Dependabilidade
+              Falta/Erros/Falhas
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1117,7 +1215,7 @@ Independentemente do problema, um dos objetivos no desenvolvimento é ter o sist
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.56a63758.min.js"></script>

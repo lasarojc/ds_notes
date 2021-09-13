@@ -1,0 +1,1456 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+    
+    
+      
+        <title>Replicação - Notas em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#replicacao" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Replicação
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Limpar" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notas em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Notas em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preface/" class="md-nav__link">
+        Prefácio
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Comunicação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Comunicação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Comunicação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/redes/" class="md-nav__link">
+        Redes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/internet/" class="md-nav__link">
+        Internet
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/sockets/" class="md-nav__link">
+        Sockets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/datarep/" class="md-nav__link">
+        Representação
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/middleware/" class="md-nav__link">
+        Middlewares
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/rpc/" class="md-nav__link">
+        RPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/mom/" class="md-nav__link">
+        MOM
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/epidemics/" class="md-nav__link">
+        Epidêmicos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Arquiteturas
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Arquiteturas" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Arquiteturas
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/arch/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/p2p/" class="md-nav__link">
+        P2P
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/microservices/" class="md-nav__link">
+        Microsserviços
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Modelos
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Modelos" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Modelos
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/models/" class="md-nav__link">
+        Tipos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/processor/" class="md-nav__link">
+        Processador
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Coordenação
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Coordenação" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Coordenação
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/concurrency/" class="md-nav__link">
+        Concorrência
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/coord/" class="md-nav__link">
+        Coordenação
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Tempo
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tempo" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Tempo
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/physical/" class="md-nav__link">
+        Tempo Físico
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/logical/" class="md-nav__link">
+        Tempo Lógico
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" checked>
+      
+      <label class="md-nav__link" for="__nav_8">
+        Tolerância a Faltas
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tolerância a Faltas" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Tolerância a Faltas
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../failures/" class="md-nav__link">
+        Falta/Erros/Falhas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Replicação
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Replicação
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multi-escritores" class="md-nav__link">
+    Multi-Escritores
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Escritores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encaminhamento-de-mensagens" class="md-nav__link">
+    Encaminhamento de mensagens
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-entropia" class="md-nav__link">
+    Anti-entropia
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unico-escritor" class="md-nav__link">
+    Único Escritor
+  </a>
+  
+    <nav class="md-nav" aria-label="Único Escritor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primariosecundario" class="md-nav__link">
+    Primário/Secundário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replicacao-em-cadeia" class="md-nav__link">
+    Replicação em Cadeia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lidando-com-falhas" class="md-nav__link">
+    Lidando com falhas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicacao-ativa" class="md-nav__link">
+    Replicação ativa
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agreement/" class="md-nav__link">
+        Acordo
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../failuredetector/" class="md-nav__link">
+        Detectores de Falhas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reconfiguration/" class="md-nav__link">
+        Reconfiguração
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bizantine/" class="md-nav__link">
+        Falhas bizantinas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependability/" class="md-nav__link">
+        Dependabilidade
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/" class="md-nav__link">
+        Consistência
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disdb/" class="md-nav__link">
+        Bancos de Dados
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../disfs/" class="md-nav__link">
+        Sistemas de Arquivos
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
+      
+      <label class="md-nav__link" for="__nav_12">
+        Estudos de Caso
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Estudos de Caso" data-md-level="1">
+        <label class="md-nav__title" for="__nav_12">
+          <span class="md-nav__icon md-icon"></span>
+          Estudos de Caso
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/" class="md-nav__link">
+        Introdução
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/cassandra/" class="md-nav__link">
+        Cassandra
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
+        Chord
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/dynamo/" class="md-nav__link">
+        Dynamo
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/grpc/" class="md-nav__link">
+        gRPC
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/mosquito/" class="md-nav__link">
+        Mosquito
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/rmi/" class="md-nav__link">
+        RMI
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/thrift/" class="md-nav__link">
+        Thrift
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/kafka/" class="md-nav__link">
+        Kafka
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/swim/" class="md-nav__link">
+        Swim
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/copycat/" class="md-nav__link">
+        Copycat
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/ratis/" class="md-nav__link">
+        Ratis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/bftsmart/" class="md-nav__link">
+        BFT-Smart
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/etcd/" class="md-nav__link">
+        Etcd
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/zookeeper/" class="md-nav__link">
+        Zookeeper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/refs/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech/" class="md-nav__link">
+        Tecnologias
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/" class="md-nav__link">
+        Projeto
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multi-escritores" class="md-nav__link">
+    Multi-Escritores
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Escritores">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encaminhamento-de-mensagens" class="md-nav__link">
+    Encaminhamento de mensagens
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anti-entropia" class="md-nav__link">
+    Anti-entropia
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unico-escritor" class="md-nav__link">
+    Único Escritor
+  </a>
+  
+    <nav class="md-nav" aria-label="Único Escritor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primariosecundario" class="md-nav__link">
+    Primário/Secundário
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replicacao-em-cadeia" class="md-nav__link">
+    Replicação em Cadeia
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lidando-com-falhas" class="md-nav__link">
+    Lidando com falhas
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replicacao-ativa" class="md-nav__link">
+    Replicação ativa
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="replicacao">Replicação</h1>
+<p>Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema.
+Mas para que tenhamos realmente cópias, é preciso que toda ação tomada por um componente seja também tomada pelas réplicas, e há várias possibilidades de como fazê-lo, cada uma com seus prós e contras.</p>
+<h2 id="multi-escritores">Multi-Escritores</h2>
+<h3 id="encaminhamento-de-mensagens">Encaminhamento de mensagens</h3>
+<p>A abordagem mais básica para a replicação consiste em permitir que todas as réplicas aceitem operações dos clientes e fazer com que as réplicas <strong>repassem</strong> as operações que receberam para as demais.
+Esta abordagem pode ser implementada com diferentes mecanismo de comunicação, com diferentes resultados.
+Por exemplo, se implementada o uso de UDP, todas as réplicas receberão as mesmas operações, exceto por alguma eventualmente perdida.
+Se em vez disso usarem várias conexões TCP conectado todas as réplicas, desde que as réplicas estejam sempre ativas, todas receberão, em algum momento, todas as operações enviadas pelos clientes.</p>
+<p><img alt="" src="../../drawings/replication.drawio-0.svg" /></p>
+<p>Mesmo que todas as mensagens sejam entregues, a falta de ordenação no processamento de operações pode levar a estados inconsistentes entre as réplicas.
+Por exemplo, se dois comandos são enviados, um para esvaziar o conteúdo de um arquivo e o outro pra apagá-lo, o processamento desordenado poderá levar uma réplica a ter um arquivo vazio e a outra a não ter o arquivo.</p>
+<p><img alt="" src="../../drawings/replication.drawio-1.svg" /></p>
+<h3 id="anti-entropia">Anti-entropia</h3>
+<p>Para corrigir inconsistências, réplicas podem comunicar-se frequentemente identificando e corrigindo divergências em seus dados.
+Este tipo de protocolo, denominado Anti-Entropia, pode ser implementado com um mecanismo de <a href="../../comm/epidemics/"><em>gossiping</em></a> e usando <a href="../../time/logical/">relógios vetoriais</a> para concordar nas versões de dados conflitantes a se manter.
+Usando anti-entropia réplicas podem garantir que, se novas operações cessarem, em algum momento estarão consistentes.
+O termo em inglês para esta garantia é <strong><em>eventual consistency</em></strong><sup id="fnref:eventual"><a class="footnote-ref" href="#fn:eventual">1</a></sup> e é como funcionam diversos bancos de dados não relacionais como Cassandra, Redis e Dynamo.</p>
+<p><img alt="" src="../../drawings/replication.drawio-2.svg" /></p>
+<p>Apesar de levar à consistência entre réplicas, o estado alcançado não necessariamente faz sentido do ponto de vista da aplicação pois pode corresponder, por exemplo, a uma ordenação errada dos comandos emitidos por um dado cliente.
+Por isso, esta técnica não pode ser aplicada em todas as situações.</p>
+<p><img alt="" src="../../drawings/replication.drawio-3.svg" /></p>
+<h2 id="unico-escritor">Único Escritor</h2>
+<h3 id="primariosecundario">Primário/Secundário</h3>
+<p>Nos foquemos na raiz do problema que aparentemente é a ordenação das operações.
+Se cada processo pode receber as mensagens em qualquer ordem, ou seja, cada uma tem uma fila de mensagens independente, então as réplicas podem chegar a estados distintos.</p>
+<p><img alt="Primário/Backup" src="../../drawings/replication.drawio-4.svg" /></p>
+<p>Mas e se tivéssemos uma fila única?
+No caso da replicação <strong>primário/cópia</strong>,<sup id="fnref:mestreescravo"><a class="footnote-ref" href="#fn:mestreescravo">2</a></sup> o primário é responsável por lidar com clientes e por informar cópias das modificações de estado, efetivamente mantendo a fila única e impondo uma ordenação de operações que faz sentido, correspondendo a ordem de entrega das mensagens.</p>
+<p><img alt="Primário/Backup" src="../../drawings/replication.drawio-5.svg" /></p>
+<p>Algumas observações são importantes sobre a forma como as operações são repassadas para as réplicas aqui.</p>
+<h6>Operações x Estado</h6>
+<p>Outro fator importante é que o primário não necessariamente precisa repassar a operação para réplica, podendo passar algo equivalente.
+Por exemplo, se a operação é um comando SQL que demanda muito tempo para executar mas que altera poucos dados no banco, então o primário poderia enviar as atualizações para réplicas em vez de lhes exigir que reexecutem o SQL.
+Por outro lado, um pequeno comando SQL poderia gerar uma grande modificação nos dados e, neste caso, repassar o SQL seria mais econômico em termos de comunicação.
+A melhor abordagem depende de cada aplicação.</p>
+<h6>Cópias desatualizadas</h6>
+<p>Operações que levam a atualizações nos dados devem ser feitas sempre no processo primário, ou este não processaria as operações, podendo levar o primário a virar um gargalo do sistema.
+Para amenizar esta situação, operações que apenas leiam dados poderiam ser enviadas para as réplicas, em vez de para o primário.
+Contudo, como o primário primeiro executa a operação antes de repassá-la para as réplicas, há um atraso na execução pelas réplicas, o que quer dizer que as leituras poderiam retornar dados antigos.</p>
+<h3 id="replicacao-em-cadeia">Replicação em Cadeia</h3>
+<p>A <strong>replicação em cadeia</strong> é uma generalização de primário/cópia em que os processos se organizam em um sequência para executar operações.</p>
+<p><img alt="Chain replication" src="../../drawings/replication.drawio-6.svg" /></p>
+<p>Como na abordagem original, <strong>atualizações</strong> no sistema são sempre <strong>direcionadas ao primário</strong>, a cabeça da sequência. 
+<strong>Leituras</strong>, se absolutamente necessitarem dos dados escritos mais recentemente, também devem ser direcionadas à <strong>cabeça</strong>. 
+Caso contrário, podem ser direcionadas aos processos na <strong>cauda</strong>, diminuindo a carga de trabalho na cabeça; quanto mais relaxado for a exigência de "frescor" dos dados, mais para o fim da cauda a requisição pode ser enviada.</p>
+<h3 id="lidando-com-falhas">Lidando com falhas</h3>
+<p>Em abordagens baseadas em um primário, um passo essencial é identificar as falhas do processo primário para ativar um backup para que tome seu lugar.</p>
+<p><img alt="ha" src="../../images/ha-diagram-animated.gif" /></p>
+<p>Nesta situação, o primeiro desafio está em identificar a falha.
+Como já mencionamos e ainda iremos discutir, identificar corretamente a falha de um processo em um ambiente onde a comunicação acontece por troca de mensagens e assíncrono é impossível, pois não se pode diferenciar um processo falho de um lento.</p>
+<p>Mesmo que a identificação fosse perfeita, ainda temos o problema das operações que já foram entregues para o primário mas que ainda não foram propagadas para as réplicas.
+Quanto o backup assume, ele terá então um estado que está no passado do estado o primário, o que pode levar comportamento inaceitável.
+Se este for o caso, replicação ativa pode ser usada.</p>
+<h2 id="replicacao-ativa">Replicação ativa</h2>
+<p>No caso da replicação ativa, as <strong>várias cópias executam todos os comandos</strong> enviados para o sistema, estando assim todas aptas a continuar a executar o serviço a qualquer instante, pelo menos se as operações de leitura forem enfileiradas também, ou poderiam chegar a uma réplica antes de uma escrita disparada anteriormente.</p>
+<p><img alt="Replicação ativa" src="../../drawings/replication.drawio-7.svg" /></p>
+<p>A técnica de replicação de <a href="../time/logical/#comunicacao-em-grupo">máquinas de estados</a>, brevemente discutida anteriormente é uma materialização da replicação ativa.
+Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as primitivas vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. 
+Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:eventual">
+<p><em>Eventual</em>, no inglês, quer dizer que algo vai acontecer, embora não se saiba quando.&#160;<a class="footnote-backref" href="#fnref:eventual" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:mestreescravo">
+<p>Esta técnica também é conhecida como <strong>mestre/escravo</strong>, mas esta nomenclatura tem caído em desuso por razões óbvias.&#160;<a class="footnote-backref" href="#fnref:mestreescravo" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Rodapé">
+      
+        
+        <a href="../failures/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Falta/Erros/Falhas" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Falta/Erros/Falhas
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../agreement/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Acordo" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              Acordo
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>
