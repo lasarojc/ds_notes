@@ -1,4 +1,4 @@
-# Tolerância a Falhas
+# Tolerância a Faltas
 
 Sistemas distribuídos são usados para resolver problemas de um espectro muito amplo, indo do controle de braços robóticos em cirurgias remotas à sistemas de comércio eletrônico, do controle de usinas hidroelétricas à jogos de truco online.
 Cada um destes serviços tem seus próprios requisitos de qualidade de serviço, isto é, enquanto você perder uma partida de truco porquê a conexão caiu pode ter deixar chateado, certamente há de convir que perder a conexão com um robô segurando um bisturi sobre uma pessoa é algo bem mais grave.

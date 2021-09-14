@@ -1,6 +1,108 @@
 site_name: Notas em Sistemas Distribuídos
+site_url: https://lasarojc.github.io/ds_notes
+site_description: Notas de aula do curso de Sistemas Distribuídos da FACOM/UFU
+
 repo_url: https://github.com/lasarojc/ds_notes 
 edit_uri: ""
+
+extra_javascript:
+        - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
+        - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+        - javascripts/mathjaxhelper.js
+
+extra_css:
+        - css/extra.css
+
+theme:
+        name: material
+        palette:
+           - scheme: default
+             toggle:
+                icon: material/toggle-switch-off-outline
+                name: Switch to dark mode
+                accent: deep orange
+                primary: blue grey
+           - scheme: slate
+             toggle:
+                icon: material/toggle-switch
+                name: Switch to light mode
+        language: pt
+        custom_dir: overrides
+        features:
+           - search.suggest
+           - search.highlight
+           - navigation.indexes
+
+markdown_extensions:
+        - toc:
+            toc_depth: 5
+        - attr_list
+        - mdx_math
+        - admonition
+        - footnotes
+        - pymdownx.arithmatex:
+               generic: true
+        - pymdownx.betterem:
+               smart_enable: all
+        - pymdownx.caret
+        - pymdownx.critic
+        - pymdownx.details
+        - pymdownx.emoji:
+            emoji_index: !!python/name:materialx.emoji.twemoji
+            emoji_generator: !!python/name:materialx.emoji.to_svg
+        - pymdownx.highlight:
+             linenums: true
+        - pymdownx.inlinehilite
+        - pymdownx.magiclink
+        - pymdownx.mark
+        - pymdownx.smartsymbols
+        - pymdownx.superfences:
+              custom_fences:
+                   - name: mermaid
+                     class: mermaid
+                     format: !!python/name:pymdownx.superfences.fence_div_format
+        - pymdownx.tasklist:
+            custom_checkbox: true
+        - pymdownx.tabbed
+        - pymdownx.tilde
+
+copyright: "Copyright © 2021 Lásaro Camargos"
+
+extra:
+  social:
+#    - icon: fontawesome/brands/twitter
+#      link: https://twitter.com/...
+    - icon: fontawesome/brands/github
+      link: https://github.com/lasarojc/ds_notes 
+      name: These notes on Github
+#    - icon: fontawesome/brands/slack
+#      link: https://slack.knative.dev
+#      name: Slack
+  # TODO: Replace with https://github.com/mkdocs/mkdocs/pull/2267 once mkdocs 1.2 is out.
+#  version_warning: !!python/object/apply:os.getenv ["VERSION_WARNING"]
+#  knative_version: !!python/object/apply:os.getenv ["KNATIVE_VERSION"]
+#  branch: !!python/object/apply:os.getenv ["SAMPLES_BRANCH", "mkdocs"]
+  analytics:
+    provider: google
+    property: G-65TK61CS8M
+  version:
+    provider: mike
+
+plugins:
+        - search
+#        - bibtex:
+#            bib_file: "refs.bib"
+#            cite_style: "pandoc"
+        - drawio-exporter:
+                cache_dir: 'drawio-exporter'
+                drawio_executable: null
+                drawio_args:
+                    - --no-sandbox
+                format: svg
+                sources: '*.drawio'
+
+
+        
 nav:
         #- Início: index.html
         - Prefácio: preface.md
@@ -74,79 +176,3 @@ nav:
         - Tecnologias: tech.md
         
         - Projeto: projeto.md
-
-theme:
-        name: material
-        palette:
-           - scheme: default
-             toggle:
-                icon: material/toggle-switch-off-outline
-                name: Switch to dark mode
-                accent: deep orange
-                primary: blue grey
-           - scheme: slate
-             toggle:
-                icon: material/toggle-switch
-                name: Switch to light mode
-        language: pt
-        custom_dir: overrides
-        features:
-           - search.suggest
-           - search.highlight
-           - navigation.indexes
-
-plugins:
-        - search
-#        - bibtex:
-#            bib_file: "refs.bib"
-#            cite_style: "pandoc"
-        - drawio-exporter:
-                cache_dir: 'drawio-exporter'
-                drawio_executable: null
-                drawio_args:
-                    - --no-sandbox
-                format: svg
-                sources: '*.drawio'
-
-markdown_extensions:
-        - toc:
-            toc_depth: 5
-        - attr_list
-        - mdx_math
-        - admonition
-        - footnotes
-        - pymdownx.arithmatex:
-               generic: true
-        - pymdownx.betterem:
-               smart_enable: all
-        - pymdownx.caret
-        - pymdownx.critic
-        - pymdownx.details
-        - pymdownx.emoji:
-            emoji_index: !!python/name:materialx.emoji.twemoji
-            emoji_generator: !!python/name:materialx.emoji.to_svg
-            #emoji_index: !!python/name:pymdownx.emoji.twemoji
-            #emoji_generator: !!python/name:pymdownx.emoji.to_svg
-        - pymdownx.highlight:
-             linenums: true
-        - pymdownx.inlinehilite
-        - pymdownx.magiclink
-        - pymdownx.mark
-        - pymdownx.smartsymbols
-        - pymdownx.superfences:
-              custom_fences:
-                   - name: mermaid
-                     class: mermaid
-                     format: !!python/name:pymdownx.superfences.fence_div_format
-        - pymdownx.tasklist:
-            custom_checkbox: true
-        - pymdownx.tabbed
-        - pymdownx.tilde
-
-extra_javascript:
-        - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
-        - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-        - javascripts/mathjaxhelper.js
-
-extra_css:
-        - css/extra.css

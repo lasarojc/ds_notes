@@ -98,3 +98,11 @@ Como vimos anteriormente, replicação de máquinas de estados utiliza primitiva
 Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.
 
 
+## *Event sourcing*
+
+???todo "TODO"
+    * Relacionar primitivas de comunicação com filas de mensagem
+    * Relacionar filas de mensagens com um log
+    * Relacionar log com event sourcing e stream processing
+    * Usar time warp como exemplo (Jefferson 1985)
+    * Usar Kafka como exemplo
