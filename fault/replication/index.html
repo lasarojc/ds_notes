@@ -845,8 +845,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../agreement/" class="md-nav__link">
-        Acordo
+      <a href="../failuredetector/" class="md-nav__link">
+        Detectores de Falhas
       </a>
     </li>
   
@@ -857,8 +857,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../failuredetector/" class="md-nav__link">
-        Detectores de Falhas
+      <a href="../agreement/" class="md-nav__link">
+        Acordo
       </a>
     </li>
   
@@ -1327,9 +1327,12 @@
 
   <!-- Content -->
   <h1 id="replicacao">Replicação</h1>
-<p>Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema.
-Mas para que tenhamos realmente cópias, é preciso que toda ação tomada por um componente seja também tomada pelas réplicas, e há várias possibilidades de como fazê-lo, cada uma com seus prós e contras.</p>
+<p>Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema, a implementação pode estar longe de ser trivial, pois para que tenhamos realmente cópias, é preciso que as ações tomada por um componente sejam também tomadas pelas réplicas.
+Há várias possibilidades de como replicar, em um grau ou em outro de corretude, cada uma com seus prós e contras.</p>
+<p>Uma forma de olhar para este problema é considerar em quais réplicas as operações de modificação de dados podem ser inicialmente executadas, levando a distinção entre sistema com múltiplos ou simplesmente um escritor (do inglês, <em>multi</em> ou <em>single</em>  <em>writer</em> ).</p>
 <h2 id="multi-escritores">Multi-Escritores</h2>
+<p>Nos sistemas multi-escritores, clientes podem disparar operações de modificações de dados (escritas) e de recuperação de dados (leituras) para qualquer réplica.</p>
+<p><img alt="" src="../../drawings/replication.drawio-8.svg" /></p>
 <h3 id="encaminhamento-de-mensagens">Encaminhamento de mensagens</h3>
 <p>A abordagem mais básica para a replicação consiste em permitir que todas as réplicas aceitem operações dos clientes e fazer com que as réplicas <strong>repassem</strong> as operações que receberam para as demais.
 Esta abordagem pode ser implementada com diferentes mecanismo de comunicação, com diferentes resultados.
@@ -1349,6 +1352,8 @@ O termo em inglês para esta garantia é <strong><em>eventual consistency</em></
 Por isso, esta técnica não pode ser aplicada em todas as situações.</p>
 <p><img alt="" src="../../drawings/replication.drawio-3.svg" /></p>
 <h2 id="unico-escritor">Único Escritor</h2>
+<p>No caso de único escritor, as operações de escrita são direcionadas para uma única réplica e, dependendo dos requisitos de <strong>consistência</strong> dos clientes, as operações e leitura podem ser direcionadas à mesma réplica ou a quaisquer das réplicas.</p>
+<p><img alt="" src="../../drawings/replication.drawio-9.svg" /></p>
 <h3 id="primariosecundario">Primário/Secundário</h3>
 <p>Nos foquemos na raiz do problema que aparentemente é a ordenação das operações.
 Se cada processo pode receber as mensagens em qualquer ordem, ou seja, cada uma tem uma fila de mensagens independente, então as réplicas podem chegar a estados distintos.</p>
@@ -1443,13 +1448,13 @@ Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
       
       
         
-        <a href="../agreement/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Acordo" rel="next">
+        <a href="../failuredetector/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Detectores de Falhas" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Acordo
+              Detectores de Falhas
             </div>
           </div>
           <div class="md-footer__button md-icon">

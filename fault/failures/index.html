@@ -766,13 +766,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#degradacao-graciosa" class="md-nav__link">
-    Degradação graciosa
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -798,8 +791,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../agreement/" class="md-nav__link">
-        Acordo
+      <a href="../failuredetector/" class="md-nav__link">
+        Detectores de Falhas
       </a>
     </li>
   
@@ -810,8 +803,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../failuredetector/" class="md-nav__link">
-        Detectores de Falhas
+      <a href="../agreement/" class="md-nav__link">
+        Acordo
       </a>
     </li>
   
@@ -1202,13 +1195,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#degradacao-graciosa" class="md-nav__link">
-    Degradação graciosa
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1380,16 +1366,22 @@ Por exemplo, um sistema de arquivos que mantenha um <em>journal</em>, como o <a 
 <p><a href="https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf"><img alt="" src="../../images/laprie_fault_tol.png" /></a></p>
 <p>Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.</p>
-<p>Se remover todas as possibilidades de falhas de um componente é algo difícil, apostemos na tolerância a faltas.
-De forma geral, tolerância a faltas é obtida por algum tipo de <strong>redundância</strong>. </p>
+<h6>Degradação Graciosa</h6>
+<p>Se remover todas as possibilidades de falhas de um componente é algo difícil, ao tolerar faltas permitimos permitirá que o sistema continue funcional ainda que forma degradada, o que denominamos uma <strong>degradação graciosa</strong> (do inglês <em>graceful degradation</em>).</p>
+<p>Quando não for possível tolerar a falha, o sistema será <strong>quebradiço</strong> (do inglês <em>brittle</em>). 
+Neste caso, pode ser melhor fazer com o que o sistema pare de funcionar ao primeiro sinal de problema, falhando rapidamente (do inglês <em>fail-fast</em>) e evitando que erros se propagem.</p>
 <h6>Redundância</h6>
-<p>Redundância pode ser aplicada em vários níveis, por exemplo, gastando <strong>mais tempo na especificação do projeto</strong>, ou montando um laboratório de testes mais próximo do ambiente de produção.</p>
-<p>Outra forma óbvia de redundância é a <strong>replicação</strong> de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
+<p>De forma geral, qualquer processo para melhorar um sistema demandará redundância. 
+Para prevenir faltas, redundância de tempo para refinar projetos. Para removê-las, redundância de tempo e recursos para executar mais testes.
+Para lidar com erros, redundância de código, seja código para tratamento de exceções seja para <strong>replicar</strong> componentes. 
+Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
 Replicação permite remover os <strong>pontos únicos de falha</strong> (SPOF, <em>Single Point of Failure</em>).
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
 No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas.
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.</p>
 <h2 id="correlacao-entre-falhas">Correlação entre falhas</h2>
+<details class="todo"><summary>TODO</summary><p>Mover este texto para cima, para antes do gancho para replicação.</p>
+</details>
 <p>Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. 
 Para tentar evitá-lo, podemos usar técnicas como o <strong><em>n-version programming</em></strong>, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:</p>
@@ -1399,20 +1391,6 @@ Para tentar evitá-lo, podemos usar técnicas como o <strong><em>n-version progr
 <li>múltiplas linguagens de programação.</li>
 </ul>
 <p>Esta técnica é interessante mas raramente usada devido ao seu alto custo e não ser garantia de sucesso pois, por exemplo, erros de especificação são reproduzidos em todas as especificações e múltiplas versões serem faltosas.</p>
-<h2 id="degradacao-graciosa">Degradação graciosa</h2>
-<!--
-
-Dependendo dos efeitos e tratamentos.
-
-* Fail safe - defeito não leva a comportamento inseguro (sistema de entretenimento no avião)
-* Fail soft - graceful degradation (sistema de controle de vôo)
-* Fail fast - para o fluxo de defeitos (e possível reinício)
-![Cadeia de supervisão](../images/httpatomoreillycomsourceoreillyimages300817.jpg)
-
-* Robusto - erros não atrapalham execução (tratamento de exceções)
-* Quebradiço (*brittle*) - não resiliente a falhas
--->
-
 <div class="footnote">
 <hr />
 <ol>
