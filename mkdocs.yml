@@ -143,8 +143,8 @@ nav:
                 - Introdução: fault/index.md
                 - Falta/Erros/Falhas: fault/failures.md
                 - Replicação: fault/replication.md
-                - Acordo: fault/agreement.md
                 - Detectores de Falhas: fault/failuredetector.md
+                - Acordo: fault/agreement.md
                 - Reconfiguração: fault/reconfiguration.md
                 - Falhas bizantinas: fault/bizantine.md
                 - Dependabilidade: fault/dependability.md

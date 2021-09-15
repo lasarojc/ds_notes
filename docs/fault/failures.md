@@ -194,13 +194,18 @@ De acordo como Avizienis *et al.*,[^avizienis] temos as seguintes técnicas para
 Um sistema que sofra de falhas recorrentes é um bom candidato a previsão de falhas, em que se estima quando uma falha ocorrerá baseado no histórico.
 Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez dias em uso, pode ser reiniciado no nono dia, em condições controladas, para evitar problemas maiores enquanto a razão do uso excessivo de memória é corrigido.
 
-Se remover todas as possibilidades de falhas de um componente é algo difícil, apostemos na tolerância a faltas.
-De forma geral, tolerância a faltas é obtida por algum tipo de **redundância**. 
+
+###### Degradação Graciosa
+Se remover todas as possibilidades de falhas de um componente é algo difícil, ao tolerar faltas permitimos permitirá que o sistema continue funcional ainda que forma degradada, o que denominamos uma **degradação graciosa** (do inglês *graceful degradation*).
+
+Quando não for possível tolerar a falha, o sistema será **quebradiço** (do inglês *brittle*). 
+Neste caso, pode ser melhor fazer com o que o sistema pare de funcionar ao primeiro sinal de problema, falhando rapidamente (do inglês *fail-fast*) e evitando que erros se propagem.
 
 ###### Redundância
-Redundância pode ser aplicada em vários níveis, por exemplo, gastando **mais tempo na especificação do projeto**, ou montando um laboratório de testes mais próximo do ambiente de produção.
-
-Outra forma óbvia de redundância é a **replicação** de componentes. Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
+De forma geral, qualquer processo para melhorar um sistema demandará redundância. 
+Para prevenir faltas, redundância de tempo para refinar projetos. Para removê-las, redundância de tempo e recursos para executar mais testes.
+Para lidar com erros, redundância de código, seja código para tratamento de exceções seja para **replicar** componentes. 
+Por exemplo, pense no pneu estepe de um carro, no gerador de eletricidade de um hospital.
 Replicação permite remover os **pontos únicos de falha** (SPOF, *Single Point of Failure*).
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
 No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas.
@@ -209,6 +214,9 @@ Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro po
 
 
 ## Correlação entre falhas
+???todo "TODO"
+    Mover este texto para cima, para antes do gancho para replicação.
+    
 Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. 
 Para tentar evitá-lo, podemos usar técnicas como o ***n-version programming***, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:
@@ -218,20 +226,3 @@ Para tentar evitá-lo, podemos usar técnicas como o ***n-version programming***
 * múltiplas linguagens de programação.
 
 Esta técnica é interessante mas raramente usada devido ao seu alto custo e não ser garantia de sucesso pois, por exemplo, erros de especificação são reproduzidos em todas as especificações e múltiplas versões serem faltosas.
-
-## Degradação graciosa
-
-
-<!--
-
-Dependendo dos efeitos e tratamentos.
-
-* Fail safe - defeito não leva a comportamento inseguro (sistema de entretenimento no avião)
-* Fail soft - graceful degradation (sistema de controle de vôo)
-* Fail fast - para o fluxo de defeitos (e possível reinício)
-![Cadeia de supervisão](../images/httpatomoreillycomsourceoreillyimages300817.jpg)
-
-* Robusto - erros não atrapalham execução (tratamento de exceções)
-* Quebradiço (*brittle*) - não resiliente a falhas
--->
-

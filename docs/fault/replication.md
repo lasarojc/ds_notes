@@ -1,9 +1,16 @@
 # Replicação
-Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema.
-Mas para que tenhamos realmente cópias, é preciso que toda ação tomada por um componente seja também tomada pelas réplicas, e há várias possibilidades de como fazê-lo, cada uma com seus prós e contras.
+Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema, a implementação pode estar longe de ser trivial, pois para que tenhamos realmente cópias, é preciso que as ações tomada por um componente sejam também tomadas pelas réplicas.
+Há várias possibilidades de como replicar, em um grau ou em outro de corretude, cada uma com seus prós e contras.
+
+Uma forma de olhar para este problema é considerar em quais réplicas as operações de modificação de dados podem ser inicialmente executadas, levando a distinção entre sistema com múltiplos ou simplesmente um escritor (do inglês, *multi* ou *single*  *writer* ).
 
 
 ## Multi-Escritores
+Nos sistemas multi-escritores, clientes podem disparar operações de modificações de dados (escritas) e de recuperação de dados (leituras) para qualquer réplica.
+
+![](../drawings/replication.drawio#8)
+
+
 ### Encaminhamento de mensagens
 A abordagem mais básica para a replicação consiste em permitir que todas as réplicas aceitem operações dos clientes e fazer com que as réplicas **repassem** as operações que receberam para as demais.
 Esta abordagem pode ser implementada com diferentes mecanismo de comunicação, com diferentes resultados.
@@ -35,6 +42,10 @@ Por isso, esta técnica não pode ser aplicada em todas as situações.
 
 
 ## Único Escritor
+No caso de único escritor, as operações de escrita são direcionadas para uma única réplica e, dependendo dos requisitos de **consistência** dos clientes, as operações e leitura podem ser direcionadas à mesma réplica ou a quaisquer das réplicas.
+
+![](../drawings/replication.drawio#9)
+
 ### Primário/Secundário
 Nos foquemos na raiz do problema que aparentemente é a ordenação das operações.
 Se cada processo pode receber as mensagens em qualquer ordem, ou seja, cada uma tem uma fila de mensagens independente, então as réplicas podem chegar a estados distintos.
