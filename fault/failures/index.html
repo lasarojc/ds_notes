@@ -1256,7 +1256,7 @@ Por exemplo, se o código tem um <code>&lt;=</code> em vez de <code>&lt;</code> 
 No exemplo acima, um erro seria quando a iteração passasse do ponto correto por causa do <code>&lt;=</code>, por exemplo, na hora de escrever uma <em>string</em> em um array, estourando o limite do array na pilha mas sobrescrevendo uma variável que não seja mais usada.
 O erro pode passar despercebido, mas ainda assim é um erro.</p>
 <h6>Falha</h6>
-<p>Finalmente, no terceiro nível, temos os <strong>falha</strong> (<em>failure</em>, defeito, falha),<sup id="fnref:failure"><a class="footnote-ref" href="#fn:failure">2</a></sup> um erro percebido pelo usuário. 
+<p>Finalmente, no terceiro nível, temos os <strong>falha</strong> (<em>failure</em>, defeito),<sup id="fnref:failure"><a class="footnote-ref" href="#fn:failure">2</a></sup> um erro percebido pelo usuário. 
 Continuando o exemplo, um <em>stack overflow</em> que leva a uma falta de segmentação, leva a uma falha.</p>
 <p>Quando um componente manifesta um falha, outros componentes que dele dependem, internalizarão entradas indevidas, uma falta externa, o que levará a seu próprio estado interno a estar errôneo e possivelmente também manifestar uma falha. 
 Esta cadeia pode levar cenários catastróficos.</p>

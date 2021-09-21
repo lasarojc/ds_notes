@@ -1388,7 +1388,7 @@ Se este for o caso, replicação ativa pode ser usada.</p>
 <h2 id="replicacao-ativa">Replicação ativa</h2>
 <p>No caso da replicação ativa, as <strong>várias cópias executam todos os comandos</strong> enviados para o sistema, estando assim todas aptas a continuar a executar o serviço a qualquer instante, pelo menos se as operações de leitura forem enfileiradas também, ou poderiam chegar a uma réplica antes de uma escrita disparada anteriormente.</p>
 <p><img alt="Replicação ativa" src="../../drawings/replication.drawio-7.svg" /></p>
-<p>A técnica de replicação de <a href="../time/logical/#comunicacao-em-grupo">máquinas de estados</a>, brevemente discutida anteriormente é uma materialização da replicação ativa.
+<p>A técnica de replicação de <a href="../time/logical/#comunicacao-em-grupo">máquinas de estados</a>, brevemente discutida anteriormente, é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as primitivas vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. 
 Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.</p>
 <h2 id="event-sourcing"><em>Event sourcing</em></h2>
