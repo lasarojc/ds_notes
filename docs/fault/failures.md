@@ -31,7 +31,7 @@ No exemplo acima, um erro seria quando a iteração passasse do ponto correto po
 O erro pode passar despercebido, mas ainda assim é um erro.
 
 ###### Falha
-Finalmente, no terceiro nível, temos os **falha** (*failure*, defeito, falha),[^failure] um erro percebido pelo usuário. 
+Finalmente, no terceiro nível, temos os **falha** (*failure*, defeito),[^failure] um erro percebido pelo usuário. 
 Continuando o exemplo, um *stack overflow* que leva a uma falta de segmentação, leva a uma falha.
 
 [^failure]: Observe que o termo falha é usado em dois lugares. Isso é basicamente um problema de tradução da nomenclatura em inglês, *fault-error-failure* que levou a uma hierarquia mais comum falha-erro-defeito e outra mais correta falta-erro-falha. Os adeptos da primeira falam em tolerância a falhas, enquanto os da última falam em tolerância a faltas.
@@ -216,7 +216,7 @@ Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro po
 ## Correlação entre falhas
 ???todo "TODO"
     Mover este texto para cima, para antes do gancho para replicação.
-    
+
 Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. 
 Para tentar evitá-lo, podemos usar técnicas como o ***n-version programming***, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:

@@ -1,106 +1,104 @@
-# Acordo
+# Problemas de Acordo
+Implementar a replicação de processos consiste basicamente em fazer com que múltiplos processos entrem em **acordo** quanto a uma sequência de comandos a serem processados por todos, na mesma ordem.
+Como vimos, esta sequência pode ser construída por primitivas de comunicação em grupo, dentre as quais se destaca a **difusão atômica**, primitiva que garante a entrega confiável e ordenada de mensagens.
 
-Há diversas primitivas de comunicação em grupo, das quais se destaca a **difusão atômica**, primitiva pela qual se pode facilmente implementar replicação de máquina de estados.
-Difusão atômica, por sua vez, é equivalente ao problema do **consenso distribuído**, que está no coração da classe de problemas de **acordo**.
+A difusão atômica é um problema de acordo, mas não é o único.
+Esta primitiva é equivalente ao problema do **consenso distribuído**, que é um problema com especificação mais simples e que está no cerne da classe de problemas de acordo.
 Problemas de acordo são aqueles em que processos devem **concordar** em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
 Dependendo do modelo computacional em que o problema deve ser resolvido, soluções vão de triviais a impossíveis.
 
 
 ## Consenso
-O problema que os comandantes estão tentando resolver é, essencialmente, o problema do Consenso Distribuído.
-Neste problema, cada um de um conjunto de processos propõe um único valor, sua **proposta**. O objetivo é decidir um dentre os valores propostos, garantindo as seguintes propriedades.
+No problema do Consenso Distribuído, cada um de um conjunto de processos propõe um único valor, sua **proposta** e, ao final do protocolo, um dentre os valores propostos é elevado ao status de **decisão**, reconhecido por todos os processos que a uma decisão.
+Formalmente, algoritmos para este problema devem garantir as seguintes propriedades.
 
 * Validade: Somente um valor proposto pode ser decidido.
 * Acordo: Se um processo decide-se por $v$ e outro por $w$, então $v = w$
-* Terminação: Todo processo não **defeituoso** decide-se.
+* Terminação: Todo processo não **falho** decide-se.
 
-Um processo é defeituoso se apresentou um defeito; como estamos considerando apenas defeitos do tipo quebra, um processo é defeituoso se ele parou de funcionar.
-Um processo que não é defeituoso é um processo correto.
+Um processo é **falho** se apresentou uma falha; como estamos considerando apenas falhas do tipo quebra, um processo é falho se ele parou de funcionar.
+Um processo que não é falho é um processo **correto**.
 
 !!! info inline end "Terminação"
     Na prática, algoritmos exploram oportunidades para progredir, mesmo que não garantam que vão terminar.
 
-Dependendo do modelo computacional, é possível resolver este problema. Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**,[^flp85] e assíncrono sujeito a falhas é exatamente o que temos, a rigor, na Internet.
-Mas o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas. Isso porque normalmente estes sistemas se comportam sincronamente.
-Há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, [Raft](https://raft.github.io/) e [Paxos](http://paxos.systems/index.html)
-
+Dependendo do modelo computacional, é possível resolver este problema. 
+Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**,[^flp85] e assíncrono sujeito a faltas é exatamente o que temos, a rigor, na Internet.
+A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos falhos de processos corretos, mas lentos: a mensagem não chegou porquê o processo falhou ou porquê o processo está lento ou a mensagem ainda está em trânsito?
 
 [^flp85]: [Impossibility of Distributed Consensus with One Faulty Process](https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf). Uma explicação da prova está disponível no [Paper Trail](https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/)
 
-A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos defeituosos de processos corretos, mas lentos. Em termos do paradoxo dos 2 generais, a resposta do comandante não chegou porquê ele morreu ou porquê ele está demorando para responder?
-Os detectores de defeito abstraem este problema.
+!!!todo "FLP85"
+    * Considere o consenso binário (0 e 1 são as únicas propostas válidas).
+    * Pela validade, se todos as propostas são 1, a decisão deve ser 1.
+    * Pela validade, se todos as propostas são 0, a decisão deve ser 0.
+    * Se começarmos com todos os valores 1 formos trocando um-a-um por 0, em algum momento sairemos de uma entrada que necessariamente leva a 1 para uma que pode levar a 0.
+    * Uma execução em que o último valor alterado pertence a um processo correto/falho pode ser construída de forma que leve a uma decisão 1/0.
+    * Como os processos não tem certeza se ele falhou o não, ambas as decisões deve ser possíveis neste cenário, pois são indistinguíveis.
+    * Logo, há um estado bivalente, decidido pela troca de mensagens e não pelos valores iniciais.
+
+    * Dado um estado bivalente, sempre é possível forçar um próximo estado bivalente.
 
 
-## Detectores de Defeitos não Confiáveis
-
-Chandra e Toueg[^CT96] introduziram o conceito de **Detectores de Defeitos** como forma de encapsular a percepção do estado funcional dos outros processos.
-Assim, um detector de defeitos pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.
-
-[^CT96]: [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf)
-
-![Failure Detector](../drawings/failure_detector.drawio#0)
+A despeito desta impossibilidade, o consenso é resolvido frequentemente em sistemas assíncronos sujeitos a falhas! 
+Isso porque normalmente estes sistemas se comportam sincronamente e há diversos algoritmos de consenso que terminam quando o sistema se comporta bem, sendo os mais famosos, atualmente, [Raft](https://raft.github.io/) e [Paxos](http://paxos.systems/index.html)
 
 
-Chandra e Toueg classificaram os detectores de defeitos segundo suas características de completude (*completeness*) e acurácia (*accuracy*), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
-Embora não seja obrigatório, detectores de falhas são normalmente implementados por meio de trocas de mensagens de *heartbeat*.
-Mensagens são esperadas em momentos específicos para sugerir que o remetente continua funcional.
-
-![Failure Detector](../drawings/failure_detector.drawio#1)
-
-Quando os *heartbeats* não chegam até o limite de tempo, o processo remetente passa a ser considerado **suspeito** de falha.
-
-![Failure Detector](../drawings/failure_detector.drawio#2)
-
-*Heartbeats*  que chegam depois podem corrigir erros, mas também podem levar a atrasos na detecção de defeitos.
-
-![Failure Detector](../drawings/failure_detector.drawio#3)
 
 
-Para capturar estas combinações de eventos, foram definidos os seguintes níveis de 
 
-Os níveis destas propriedades são os seguintes:
 
-* Completude Forte - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por todos os processos corretos.
-* Completude Fraca - A partir de algum instante futuro, todo processo defeituoso é suspeito permanentemente por algum processo correto.
-* Precisão Forte - Todos os processos são suspeitos somente após terem apresentado defeito.
-* Precisão Fraca - Algum processo correto nunca é suspeito de ter apresentado defeito.
-* Precisão Eventual Forte - A partir de algum instante futuro, todos os processos são suspeitos somente após apresentarem defeito.
-* Precisão Eventual Fraca - A partir de algum instante futuro, algum processo ativo nunca é suspeito antes de ter apresentado defeito.
-
-Um detector ideal seria um com Completude Forte e Precisão Forte, pois detectaria somente processos defeituosos e todos os processos defeituosos.
-Este detector é conhecido como $P$ ou *Perfect*.
-Infelizmente os detectores perfeitos só podem ser implementados em sistemas síncronos, onde se pode confiar que a falta de uma mensagem implica em que a mensagem não será entregue por quê o remetente deve ser defeituosos.
-Assim, é preciso se focar em detectores não perfeitos ou **não confiáveis**.
-
-Em ambientes **parcialmente síncronos**, ou seja, assíncronos aumentados com algum tipo de sincronia, já é possível implementar detectores não confiáveis.
-Por exemplo, se os processos dispõem de **temporizadores** precisos, um detector pode contar a passagem do tempo nos intervalos de comunicação com outros processos e, considerando um **limite de tempo** para estes intervalos, tentar determinar se tais processos encontram-se defeituosos ou não. 
-Esta determinação é por certo imprecisa e os detectores podem voltar atrás em suas suspeitas tão logo percebam um erro. 
-Entretanto, a despeito desta incerteza, a informação provida por estes detectores já pode ser suficiente para que se alcance o consenso se combinada a uma restrição de que **uma maioria dos processos não seja defeituosa**.
+Chandra, Hadzilacos e Toueg demonstraram que o detector mais fraco com o qual se pode resolver consenso em um sistema distribuído assíncrono e sujeito a falhas é o $\Diamond W$, que tem as propriedades de Completude Fraca e Acurácia Eventual Fraca. [^CHT96]
+Mesmo com este detector, outras limitações existem, sendo uma fundamental o fato de que pelo menos uma maioria dos processos deve ser correta para que o processo não viole a propriedade de acordo.
 
 ???todo "Maioria"
-    Adicionar prova.
-
-Chandra, Hadzilacos e Toueg  demonstram que o detector mais fraco com o qual se pode resolver consenso tem as propriedades de Completude Fraca e Acurácia Eventual Fraca.[^CHT96] 
-Este detector, conhecido como $\Diamond W$, ou *Eventual Weak*, e é implementável em sistemas nos quais há um **limite superior** de tempo para a transmissão de mensagens, **mesmo que este limite seja desconhecido**.
-Vários protocolos de consenso utilizam o detector equivalente, $\Diamond S$, equivalente ao $\Diamond W$ mas com completude forte, ou o eleitor de líderes $\Omega$, que usa a informação do $\Diamond S$ para sugerir um líder entre os processos.
-Estes protocolos são escritos de forma que se o limite superior não existe, o protocolo não termina e um **resultado errado nunca é alcançado**, ou seja, os protocolos sempre garantem que as propriedades de corretude não são violadas, mesmo que não garanta que a terminação será alcançada.
+    * Se falhas são possíveis e um detector de falhas não confiável é usado, então qualquer protocolo que termine com menos de uma maioria pq suspeita que os outros processos estão falhos pode estar errado pois os outros processos podem estar na mesma situação de decidir um valor diferente.
 
 [^CHT96]: [The Weakest Failure Detector for Solving Consensus](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/weakestfd.pdf)
 
-???todo "Figura"
-    figura 2.2 da dissertação.
+
+### Chandra & Toueg
 
 
-???todo "SWIM"
-    https://www.youtube.com/watch?v=0bAJ4iNnf5M
+O algoritmo de Chandra e Toueg [^CT96] é executado em rodadas assíncronas, sendo cada uma dividida em quatro fases. 
+A comunicação é centralizada em um coordenador, isto é, toda comunicação ou parte de ou é direcionada ao coordenador. 
+O coordenador $c_p$ é pré-determinado, por exemplo, pela função $c_p = r_p~\text{mod}~n$, sendo $r_p$ a rodada atual e $n$ o número de processos que participam do consenso. 
+O algoritmo considera a existência de um detector de falhas da classe $\Diamond S$.
+
+[^CT96]: [Unreliable Failure Detectors for Reliable Distributed Systems](https://www.cs.utexas.edu/~lorenzo/corsi/cs380d/papers/p225-chandra.pdf)
+
+* Fase 1: Todos os processos enviam sua estimativa corrente e o número da última rodada na qual a estimativa foi atualizada (*timestamp*), para o coordenador.
+* Fase 2 : O coordenador recolhe uma maioria ($\lceil \frac{n+1}{2}\rceil$) de estimativas e propõe um dos valores com o maior timestamp.
+* Fase 3 : Todos os processos esperam a proposta do coordenador, enviando uma mensagem de reconhecimento quando a recebem (Ack) e assumindo a proposta do coordenador como sua estimativa corrente. 
+    Se o processo, antes de receber a mensagem, suspeita que o coordenador falhou, então envia uma mensagem de NAck para todos os processos, levando todos a passarem para uma nova rodada.
+* Fase 4 : O coordenador espera por ($\lceil \frac{n+1}{2}\rceil$) mensagens. 
+    Se nenhuma mensagem recebida for do tipo NAck, o coordenador envia sua estimativa como decisão para todos os processos via difusão confiável. 
+    Caso contrário, procede para uma nova rodada. 
+    Qualquer processo que receba a decisão do coordenador decide-se automaticamente pelo mesmo valor.
+
+Uma instância de execução do algoritmo, exemplificando seu padrão de mensagens, é exibida na figura adiante. 
+Mensagens da primeira e segunda rodadas trafegam ao mesmo tempo nos canais de comunicação. 
+Na parte esquerda da figura, o algoritmo transcorre sem falhas. 
+Na parte direita, o processo P1, o coordenador inicial em ambas as execuções, falha.
+
+![](../images/chandratoueg.png)
+
+
+<!--Uma propriedade interessante deste algoritmo é o travamento de um valor tão logo uma maioria o tenha aceitado, isto é, tão logo $\lceil \frac{n+1}{2}\rceil$ processos tenham aceitado um valor como suas estimativas, este torna-se o único valor possível de ser decidido. 
+Isso ocorre pois o coordenador, ao esperar uma maioria de estimativas e usar as que foram resultado de atualizações mais recentes, necessariamente escolhe este valor como sua proposição.-->
+
+O algoritmo de Chandra e Toueg é facilmente ludibriado por suspeitas incorretas, que levam à emissão de NAck’s. 
+Se um número suficiente de Ack’s foi gerado, mas um único NAck é recebido antes que todos os Ack’s tenham chegado ao coordenador, então a rodada é abandonada. 
+
 
 ### Paxos: Algoritmo do Sínodo
 
 ???todo "Algoritmo"
-    Descrever. 
-    Por enquanto, vejam esta explicação ou [https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html] ou este vídeo [https://www.youtube.com/watch?v=JEpsBg0AO6o] ou este video [https://www.youtube.com/watch?v=s8JqcZtvnsM].
+    * Descrever. 
+    * Por enquanto, vejam esta explicação ou [https://www.cs.rutgers.edu/~pxk/417/notes/paxos.html] 
+    * ou este vídeo [https://www.youtube.com/watch?v=JEpsBg0AO6o] ou este video [https://www.youtube.com/watch?v=s8JqcZtvnsM].
 
-### Difusão Totalmente Ordenada
+## Difusão Totalmente Ordenada
 Se pudermos resolver o consenso, podemos então resolver o problema da **difusão totalmente ordenada** (*total order multicast*) e com ela implementar a replicação de máquinas de estados.
 Relembrando, na  temos que:
 
@@ -170,12 +168,12 @@ end
 Ambas as aplicações, embora tivessem intenções diferentes sobre qual deveria ser a próxima mensagem entregue, entregam-nas na mesma ordem, isto é, primeiro $m$ e depois $m'$.
 Se forem usadas como entrada para algum processamento, na ordem em que foram entregues, as aplicações chegarão ao mesmo estado, em algum momento.
 
-#### Paxos: Difusão atômica
+### Paxos: Difusão atômica
 
 ???todo "Paxos"
     * Difusão Atômica
 
-#### Raft: Difusão atômica
+### Raft: Difusão atômica
 
 Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
 Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
@@ -206,7 +204,7 @@ Contudo, estes protocolos são mais complexos de se implementar e por isso raram
 * `rm /tmp/file1`
 
 
-### Arcabouços para coordenação
+## Arcabouços para coordenação
 Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema[^cons_core].
 Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata[^paxosmade]. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.
 

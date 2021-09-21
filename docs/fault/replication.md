@@ -104,7 +104,7 @@ No caso da replicação ativa, as **várias cópias executam todos os comandos**
 ![Replicação ativa](../drawings/replication.drawio#7)
 
 
-A técnica de replicação de [máquinas de estados](../time/logical/#comunicacao-em-grupo), brevemente discutida anteriormente é uma materialização da replicação ativa.
+A técnica de replicação de [máquinas de estados](../time/logical/#comunicacao-em-grupo), brevemente discutida anteriormente, é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as primitivas vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. 
 Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.
 
