@@ -1550,9 +1550,9 @@ Seja <span class="arithmatex">\(T\)</span> uma transação que incrementa o valo
 <p><span class="arithmatex">\(a = R(C); W(C)a+1\)</span></p>
 <p>Imagine duas instâncias desta transação executando serialmente. 
 Ao final da execução o saldo foi acrescido de 2, como esperado.</p>
-<p><img alt="transações" src="drawings/transactions.drawio-0.svg" /></p>
+<p><img alt="transações" src="../../drawings/transactions.drawio-0.svg" /></p>
 <p>Se em vez disso as duas instâncias executassem concorrentemente, teríamos um resultado diverso, mesmo que o esperado fosse o mesmo resultado.</p>
-<p><img alt="transações" src="drawings/transactions.drawio-1.svg" /></p>
+<p><img alt="transações" src="../../drawings/transactions.drawio-1.svg" /></p>
 <p>Ao final da execução, apesar do valor ter sido modificado duas vezes, o saldo teria sido acrescido de 1.
 Esta diferença entre o esperado e o real está enraizada nas garantias dadas por bancos de dados tradicionais, conhecidas como ACID, acrônimo para <strong>Atomicidade, Consistência, Isolamento e Durabilidade</strong>.</p>
 <details class="sideslide"><summary>ACID</summary><ul>
@@ -2017,16 +2017,16 @@ Esta estratégia pode ser implementada da seguinte forma: </p>
 <li>repita passo anterior.</li>
 </ul>
 <p>Graficamente, podemos ver o exemplo acima assim, tanto no caso de commit quando de abort da segunda transação.</p>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-2.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-2.svg" /></p>
 <p>Apesar de correta, esta abordagem tem um caso patológico que leva a <strong>abortos em Cascata</strong>: 
 se T1 lê algo que T2 escreveu, e T2 lê algo que T3 escreveu, e assim por diante, se a última transação nesta cadeia de dependências for abortada, todas deverão ser abortadas.</p>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-3.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-3.svg" /></p>
 <p>Mas, e se evitarmos dirty reads em vez de tratarmos? Podemos fazê-lo com a seguinte estratégia:</p>
 <ul>
 <li>quando um transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.</li>
 <li>quando transação T2 for terminada, continue a execução de T1.</li>
 </ul>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-3.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-3.svg" /></p>
 <p>O que estamos tentando obter aqui é uma <strong>execução estrita</strong>, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garante Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
 Fica então a pergunta: <strong>como implementar execuções estritas eficientes</strong>?
 A resposta está no controle de concorrência das transações.</p>
@@ -2040,11 +2040,11 @@ A resposta está no controle de concorrência das transações.</p>
 <h3 id="locking">Locking</h3>
 <p>Nesta abordagem, todos os objetos usados por uma transação são trancados, impedindo que sejam acessados por outras transações, até que sejam destrancados.
 Contudo, se os objetos são destrancados tão logo não sejam mais usados na transação, continuamos a ter <em>dirty reads</em>, como a operação em vermelho na figura a seguir.</p>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-4.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-4.svg" /></p>
 <p>Mesmo que se tentasse abortar a transação que executou a <em>dirty read</em>, poderia ser tarde demais, como no exemplo a seguir que demonstra uma <strong>escrita prematura</strong>.</p>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-5.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-5.svg" /></p>
 <p>Estes problemas podem ser evitados com o uso de <strong><em>strict two phase locking</em></strong>, em que as transações <strong>trancam o objeto quando primeiro acessado</strong> e só <strong>destrancam ao final da transação</strong>, atomicamente com a terminação.</p>
-<p><img alt="suspended execution" src="drawings/transactions.drawio-6.svg" /></p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-6.svg" /></p>
 <p>Já para aumentar a concorrência, é possível usar locks para leitura, compartilhados, e para escrita, exclusivos.</p>
 <details class="sideslide"><summary>Read/Write locks</summary><ul>
 <li>dois níveis de acesso</li>
@@ -2077,7 +2077,7 @@ Entretanto, se houver muitos conflitos, o trabalho da transação é todo desper
 <li>t1/t2 não deve escrever dados escritos por t2/t1</li>
 </ul>
 <p>Na imagem a seguir, a transação <strong>preta</strong> precisa ser validada ou frente às transações <strong>concorrentes</strong> vermelhas, já comitadas, ou às azuis, ainda por comitar.</p>
-<p><img alt="" src="images/trans_validation.png" /></p>
+<p><img alt="" src="../../images/trans_validation.png" /></p>
 <p>No caso da validação com transações já comitadas (<strong><em>backward validation</em></strong>) a validação pode ser simplificada assim:</p>
 <ul>
 <li>t1: transação sendo validada</li>
@@ -2111,7 +2111,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>em que foram comitados</li>
 <li>e em que foram lidos</li>
 </ul>
-<p><img alt="" src="images/timestamp1.png" /></p>
+<p><img alt="" src="../../images/timestamp1.png" /></p>
 <ul>
 <li>consistência é testado na execução da operação</li>
 </ul>
@@ -2120,16 +2120,16 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>escritas tem sucesso somente se versão sendo escrita é maior que versões lidas</li>
 <li>se versão sendo escrita é menor que versão já escrita, ignore e continue</li>
 </ul>
-<p><img alt="" src="images/timestamp1.png" /></p>
+<p><img alt="" src="../../images/timestamp1.png" /></p>
 <h3 id="como-implementar-leitura">como implementar -- leitura</h3>
 <ul>
 <li>leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada</li>
 <li>leitura com versão v é suspensa se maior versão é não comitada e menor que v</li>
 </ul>
-<p><img alt="" src="images/timestamp2.png" /></p>
+<p><img alt="" src="../../images/timestamp2.png" /></p>
 <ul>
 <li>leitura com versão v é abortada se maior versão comitada é maior que v
-<img alt="" src="images/timestamp3.png" /></li>
+<img alt="" src="../../images/timestamp3.png" /></li>
 </ul>
 <h2 id="bancos-de-dados-distribuidos">Bancos de dados distribuídos</h2>
 <p>Agora que relembramos como transações funcionam e temos uma noção de como podem ser implementadas em um sistema centralizado, vamos tentar entender como fazê-lo em um sistema distribuído.</p>
@@ -2152,7 +2152,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>servidor: <em>resource managers</em></li>
 <li>servidor: <em>transaction monitor/manager</em></li>
 </ul>
-<p><img alt="" src="images/01-10.png" /></p>
+<p><img alt="" src="../../images/01-10.png" /></p>
 <p>Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.</p>
 <p>O grande problema no bd distribuído é garantir o <em>acordo</em> na terminação.</p>
 <h3 id="comprometimento-distribuido">Comprometimento distribuído</h3>
@@ -2228,8 +2228,8 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </thead>
 <tbody>
 <tr>
-<td><img alt="" src="images/08-18a.png" /></td>
-<td><img alt="" src="images/08-18b.png" /></td>
+<td><img alt="" src="../../images/08-18a.png" /></td>
+<td><img alt="" src="../../images/08-18b.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -2325,8 +2325,8 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </thead>
 <tbody>
 <tr>
-<td><img alt="" src="images/08-22a.png" /></td>
-<td><img alt="" src="images/08-22b.png" /></td>
+<td><img alt="" src="../../images/08-22a.png" /></td>
+<td><img alt="" src="../../images/08-22b.png" /></td>
 </tr>
 </tbody>
 </table>
@@ -2378,36 +2378,36 @@ Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma <st
 Usando LSMT, os dados são mantidos em memória principal em estruturas de dados denominadas <em>memory table</em>, ou simplesmente <strong>memtables</strong>.
 Operações de escrita são "logadas" e um <strong><em>commit log</em></strong>, em disco, antes de serem aplicadas às memtables e confirmadas para o cliente.
 Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rapidamente.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-0.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-0.svg" /></p>
 <p>No caso de uma reinicialização do processo, a reexecução do <em>commit log</em> restaurará o estado da memtable.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-1.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-1.svg" /></p>
 <p>Observe que a leitura do <em>commit log</em> é sequencial, o que acelera a reexecução.
 Ainda assim, se o <em>commit log</em> for extenso, reexecutá-lo demandará um tempo significativo.
 Uma forma de acelerar o processo é fazer <strong><em>snapshots</em></strong> da memtable de forma sincronizada com a escrita no log.
 Isto é, digamos que todas as operações de escrita, até a décima, estão salvas no commit log e refletidas na memtable.
 Digamos também que todas as operações são modificações da mesma linha do banco de dados em memória.
 Se um <em>snapshot</em>  é tomado, ele será correspondente ao commit log, isto é, conterá o efeito de exatamente as mesmas 10 operações, mas de forma mais compacta que o log, uma vez que o log conterá dez operações e o snapshot somente uma linha de dados.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-2.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-2.svg" /></p>
 <p>Após o snapshot ser concluído, o log correspondente pode ser apagado, assim como snapshots anteriores.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-3.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-3.svg" /></p>
 <p>Novas operações de escrita devem ser armazenadas em um novo log e, no caso de uma reinicialização, primeiro se deve restaurar o <em>snapshot</em> e então o novo log.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-4.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-4.svg" /></p>
 <p>Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter mais do que o último log e <em>snapshot</em>, já que a recuperação do estado exigiria voltar mais atrás na reexecução de operações.</p>
 <p>Observe que, além da escrita dos logs, todos os outros acessos ao disco também são sequenciais, seja o <em>flush</em> das memtables, ou a leitura dos snapshots para recuperação e do commit log para reexecução e, já que operações de leitura são todas respondidas da memória, o sistema terá um excelente desempenho.
 Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. 
 Isto é, se os dados não cabem em memória, <em>snapshots</em>  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.</p>
 <p>Consideremos então um cenário em que a memtable cabe apenas <em>n</em> entradas; quando a operação para adicionar <span class="arithmatex">\(n+1\)</span>-ésima entrada à memtable é recebida, um <strong><em>flushs</em></strong> dos dados para um novo <em>snapshot</em> é feito e a memtable é <em>resetada</em>, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do <em>caminho crítico</em> da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-5.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-5.svg" /></p>
 <p>Neste novo fluxo, os arquivos em disco não correspondem mais a <em>snapshots</em> do banco de dados mas a porções dos dados, então nos referiremos a eles como <em>stable storage tables</em>, ou <strong>sstables</strong>, em oposição às <em>memtables</em>, pelo menos por enquanto.</p>
 <h5 id="compactacoes">Compactações</h5>
 <p>Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nosso banco de dados, ele traz problemas para o fluxo de leitura.
 Digamos que a chave <span class="arithmatex">\(k\)</span> teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
 O primeiro problema aqui é que há vários valores antigos associados a <span class="arithmatex">\(k\)</span>, inutilmente e ocupando espaço, isto é, lixo.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-6.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-6.svg" /></p>
 <p>O segundo é que caso o valor associado a <span class="arithmatex">\(k\)</span> seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
 Para lidar com ambos os problemas, podemos <strong>compactar</strong> as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
 Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no <em>merge sort</em>, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.</p>
-<p><img alt="LSMT" src="drawings/lsmt.drawio-7.svg" /></p>
+<p><img alt="LSMT" src="../../drawings/lsmt.drawio-7.svg" /></p>
 <p>A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por <em>flushs</em>, são unidas gerando sstables de nível 1 e assim sucessivamente.
 Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome <em>merge tree</em>.</p>
 <p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="./images/lsm_compac.png" /></p>
@@ -2472,7 +2472,7 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 </ul>
 </div>
 <h2 id="cap">CAP</h2>
-<p><img alt="CAP" src="drawings/cap.drawio-0.svg" /></p>
+<p><img alt="CAP" src="../../drawings/cap.drawio-0.svg" /></p>
 <ul>
 <li><a href="https://www.ibm.com/cloud/learn/cap-theorem#toc-cap-theore-ovhB7WL3">CAP theorem NoSQL database types</a></li>
 <li><a href="https://www.igvita.com/2010/06/24/weak-consistency-and-cap-implications/">Weak Consistency and CAP Implications</a></li>
