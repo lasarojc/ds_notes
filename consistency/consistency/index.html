@@ -18,7 +18,7 @@
     
     
       
-        <title>Consistency - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Consistência - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Consistency
+              Consistência
             
           </span>
         </div>
@@ -802,11 +802,230 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../consistency.md" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Consistência
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Consistência
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modelos-de-consistencia" class="md-nav__link">
+    Modelos de Consistência
+  </a>
+  
+    <nav class="md-nav" aria-label="Modelos de Consistência">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelos-centrados-nos-dados" class="md-nav__link">
+    Modelos Centrados nos Dados
+  </a>
+  
+    <nav class="md-nav" aria-label="Modelos Centrados nos Dados">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#linearabilidade" class="md-nav__link">
+    Linearabilidade
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistencia-sequencial" class="md-nav__link">
+    Consistência Sequencial
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistencia-causal" class="md-nav__link">
+    Consistência Causal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistencia-fifo" class="md-nav__link">
+    Consistência FIFO
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consistencia-de-entrada" class="md-nav__link">
+    Consistência de Entrada
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelos-centrados-nos-clientes" class="md-nav__link">
+    Modelos Centrados nos Clientes
+  </a>
+  
+    <nav class="md-nav" aria-label="Modelos Centrados nos Clientes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelo-de-sistema" class="md-nav__link">
+    Modelo de Sistema
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leituras-monotonicas" class="md-nav__link">
+    Leituras Monotônicas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escritas-monotonicas" class="md-nav__link">
+    Escritas Monotônicas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leia-suas-escritas" class="md-nav__link">
+    Leia suas Escritas
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escritas-seguem-leituras" class="md-nav__link">
+    Escritas seguem Leituras
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gerenciamento-de-replicas" class="md-nav__link">
+    Gerenciamento de Réplicas
+  </a>
+  
+    <nav class="md-nav" aria-label="Gerenciamento de Réplicas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#posicionamento" class="md-nav__link">
+    Posicionamento
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propagacao-de-atualizacoes" class="md-nav__link">
+    Propagação de Atualizações
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperacao-checkpoint" class="md-nav__link">
+    Recuperação &amp; Checkpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Recuperação &amp; Checkpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-recuperavel" class="md-nav__link">
+    Log Recuperável
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estado-global-consistente" class="md-nav__link">
+    Estado global consistente
+  </a>
+  
+    <nav class="md-nav" aria-label="Estado global consistente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-independente" class="md-nav__link">
+    Checkpointing independente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-coordenado" class="md-nav__link">
+    Checkpointing coordenado
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1327,7 +1546,7 @@
        as the main headline.
     -->
 
-  <h1>Consistency</h1>
+  <h1>Consistência</h1>
 
 
   <!-- Content -->
@@ -1773,6 +1992,41 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Rodapé">
+      
+        
+        <a href="../../fault/dependability/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Dependabilidade" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              Dependabilidade
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../cases/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Introdução" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              Introdução
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
