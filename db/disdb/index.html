@@ -2410,7 +2410,7 @@ Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feit
 <p><img alt="LSMT" src="../../drawings/lsmt.drawio-7.svg" /></p>
 <p>A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por <em>flushs</em>, são unidas gerando sstables de nível 1 e assim sucessivamente.
 Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome <em>merge tree</em>.</p>
-<p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="./images/lsm_compac.png" /></p>
+<p><img alt="https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters" src="../../images/lsm_compac.png" /></p>
 <p>No caso de uma leitura, somente as tabelas mais à direita e de nível mais alto precisam ser consultadas e portanto as sstables já usadas como entrada podem ser eliminadas como lixo do sistema.
 <strong>Ainda assim</strong>, no caso de uma leitura, diversas sstables potencialmente contém o dado a ser retornado.
 O problema se agrava em sistemas em que partes do dado possam ser gravadas independentemente, como no CassandraDB, em que cada coluna é independente das outras.
@@ -2426,12 +2426,12 @@ Entram em cena os filtros de <strong>Bloom</strong>.</p>
 <p>A Bloom filter is a <strong><em>space-efficient probabilistic</em></strong> data structure, conceived by Burton Howard <em>Bloom</em> in 1970, that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not, thus a Bloom filter has a 100% recall rate. In other words, a query returns either <strong>"possibly in set"</strong> or <strong>"definitely not in set"</strong>.</p>
 </div>
 <p>Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.</p>
-<p><img alt="LSMT+Bloom Filter" src="./images/bf_lsm.jpg" /></p>
+<p><img alt="LSMT+Bloom Filter" src="../../images/bf_lsm.jpg" /></p>
 <p>Mas como exatamente construímos um filtro de Bloom?
 Iniciamos com um <strong>vetor de bits inicialmente zerados</strong> e um conjunto finito de <strong>funções de hash</strong> cujo resultado seja uniformemente distribuído no tamanho do vetor de bits.
 Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos cada uma das funções hash e colocamos o <strong>bit 1 na posição do vetor igual ao resultado da função</strong>.
 No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções hash.</p>
-<p><img alt="By David Eppstein" src="./images/bf.png" /></p>
+<p><img alt="By David Eppstein" src="../../images/bf.png" /></p>
 <p>Na <strong>consulta</strong>, cada elemento passa por pelas mesmas funções hash para identificar quais bits do vetor ler.
 Se algum dos índices apontados não estiver com um 1, como no caso do c, no exemplo, o elemento não pertence ao conjunto.
 Caso contrário, o filtro responderá que é possível que pertença.</p>
