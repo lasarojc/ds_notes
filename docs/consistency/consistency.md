@@ -490,6 +490,6 @@ Isto é, forçamos $Q$ a ser recuperado mesmo que não tenha falhado.
 * https://jepsen.io/consistency
 * https://fauna.com/blog/demystifying-database-systems-part-4-isolation-levels-vs-consistency-levels
 * https://aphyr.com/posts/313-strong-consistency-models
-* refs/encyclopedia18.pdf
+* [Database Consistency Models](../refs/encyclopedia18.pdf)
 * [Chandy e Lamport](http://composition.al/blog/2019/04/26/an-example-run-of-the-chandy-lamport-snapshot-algorithm/)
 
