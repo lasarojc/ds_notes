@@ -2,272 +2,272 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://lasarojc.github.io/ds_notes/</loc>
-         <lastmod>2021-09-21</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://lasarojc.github.io/ds_notes/consistency/</loc>
-         <lastmod>2021-09-21</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://lasarojc.github.io/ds_notes/disdb/</loc>
-         <lastmod>2021-09-21</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://lasarojc.github.io/ds_notes/disfs/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/intro/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/preface/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/projeto/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/snippets/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/tech/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/arch/arch/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/arch/microservices/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/arch/p2p/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/bftsmart/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/cassandra/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/chord/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/copycat/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/dynamo/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/etcd/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/grpc/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/kafka/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/mosquito/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/ratis/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/refs/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/rmi/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/swim/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/thrift/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/cases/zookeeper/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/datarep/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/epidemics/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/internet/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/middleware/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/mom/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/redes/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/refs/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/rpc/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/comm/sockets/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lasarojc.github.io/ds_notes/consistency/consistency/</loc>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/coord/concurrency/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/coord/coord/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lasarojc.github.io/ds_notes/db/disdb/</loc>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/agreement/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/bizantine/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/dependability/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/failuredetector/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/failures/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/reconfiguration/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/fault/replication/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://lasarojc.github.io/ds_notes/filesystem/disfs/</loc>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/models/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/models/models/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/models/processor/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/time/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/time/logical/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://lasarojc.github.io/ds_notes/time/physical/</loc>
-         <lastmod>2021-09-21</lastmod>
+         <lastmod>2021-09-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
