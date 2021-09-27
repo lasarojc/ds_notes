@@ -1137,15 +1137,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etapa-2-banco-de-dados" class="md-nav__link">
-    Etapa 2 - Banco de dados.
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-3-replicacao" class="md-nav__link">
-    Etapa 3 - Replicação
+  <a href="#etapa-2-banco-de-dados-replicado" class="md-nav__link">
+    Etapa 2 - Banco de dados Replicado
   </a>
   
 </li>
@@ -1209,15 +1202,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#etapa-2-banco-de-dados" class="md-nav__link">
-    Etapa 2 - Banco de dados.
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#etapa-3-replicacao" class="md-nav__link">
-    Etapa 3 - Replicação
+  <a href="#etapa-2-banco-de-dados-replicado" class="md-nav__link">
+    Etapa 2 - Banco de dados Replicado
   </a>
   
 </li>
@@ -1450,13 +1436,66 @@ Este formato também permite que múltiplos clientes tenham tarefas com o mesmo 
 <p><img alt="Projeto" src="../drawings/projeto.drawio-1.svg" /></p>
 <p>Uma possível instância desta etapa do projeto seria a seguinte</p>
 <p><img alt="Projeto" src="../drawings/instancia_projeto.drawio-0.svg" /></p>
-<h3 id="etapa-2-banco-de-dados">Etapa 2 - Banco de dados.</h3>
-<p>Nesta etapa você modificará o sistema para que modificações dos dados sejam refletidas no banco de dados particionado implementado usando <em>consistent hashing</em>.</p>
-<p><img alt="Projeto" src="../drawings/projeto.drawio-2.svg" /></p>
-<h3 id="etapa-3-replicacao">Etapa 3 - Replicação</h3>
-<p>Nesta etapa você modificará o sistema para que todas as modificações nas partições do banco de dados sejam replicadas em outras partições.</p>
-<p><img alt="Projeto" src="../drawings/projeto.drawio-0.svg" /></p>
+<h3 id="etapa-2-banco-de-dados-replicado">Etapa 2 - Banco de dados Replicado</h3>
+<p>Nesta etapa você modificará o sistema para que atualizações dos dados sejam feitas consistentemente entre todas as réplicas usando um protocolo de difusão atômica.</p>
+<p><img alt="Projeto" src="../drawings/projeto.drawio-3.svg" /></p>
+<ul>
+<li>
+<p>Objetivos</p>
+<ul>
+<li>Replicar a base de dados para obter tolerância a falhas.</li>
+</ul>
+</li>
+<li>
+<p>Desafios</p>
+<ul>
+<li>Certificar-se de que o portais são máquinas de estados determinística</li>
+<li>Compreender o uso de Difusão Atômica em nível teórico</li>
+<li>Compreender o uso de Difusão Atômica em nível prático <ul>
+<li>Use <a href="https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis">Ratis</a> para java</li>
+<li>Para Python, OpenReplica é uma boa opção.</li>
+<li>Aplicar difusão atômica na replicação do servidor</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Portal<ul>
+<li>A API para clientes continua a mesma.</li>
+<li>Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).  </li>
+<li>Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.</li>
+</ul>
+</li>
+<li>Cliente<ul>
+<li>Sem alteração.</li>
+</ul>
+</li>
+<li>Testes<ul>
+<li>O mesmo <em>framework</em> de testes deve continuar funcional</li>
+</ul>
+</li>
+<li>Comunicação<ul>
+<li>Entre cliente e portais, não é alterado.</li>
+<li>Entre servidores, usar Ratis</li>
+</ul>
+</li>
+<li>Apresentação<ul>
+<li>Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.</li>
+</ul>
+</li>
+</ul>
 <!--
+
+### Etapa 2 - Banco de dados.
+Nesta etapa você modificará o sistema para que modificações dos dados sejam refletidas no banco de dados particionado implementado usando *consistent hashing*.
+
+![Projeto](drawings/projeto.drawio#2)
+
+### Etapa 3 - Replicação
+Nesta etapa você modificará o sistema para que todas as modificações nas partições do banco de dados sejam replicadas em outras partições.
+
+![Projeto](drawings/projeto.drawio#0)
+
+
 
 
 ### Etapa 2 - Cache
