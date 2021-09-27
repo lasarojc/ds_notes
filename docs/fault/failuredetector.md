@@ -1,5 +1,6 @@
 # Detectores não Confiáveis de Falhas
-
+Em sistemas distribuídos é necessário perceber quando problemas acontecem para que se possa lidar com estes problemas.
+Por exemplo, se um componente não está funcional, pode ser necessário fazer alguma manutenção, indo de uma simples reinicialização a uma troca de um disco ou uma fonte, a uma aposentadoria do componente e substituição por um novo.
 Chandra e Toueg[^CT96] introduziram o conceito de **Detectores de Falhas** como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de falhas pode ser visto como **oráculo distribuído**, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.
 

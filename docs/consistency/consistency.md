@@ -8,7 +8,7 @@ Considere por um momento, uma ***Content Delivery Network*** (CDN).
 
 As *Content Delivery Networks* são sistemas que replicam os dados do contratante para, dinamicamente, colocar o conteúdo próximo ao usuário.
 
-![https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/](images/cdn.jpeg)
+![https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/](../images/cdn.jpeg)
 
 
 Se o conteúdo é majoritariamente estático, entregar esta funcionalidade é "simples", implicando apenas em um pequeno atraso entre a publicação de novo conteúdo e sua disponibilização para os usuários.
@@ -26,16 +26,16 @@ Um banco de dados pode ser pensado, em sua forma mais simplista, como um conjunt
 Assim, clientes do banco de dados essencialmente executam comandos como **$X$ recebe 'João'** e **$Y$ recebe 'joao arroba hmail.com'**.
 Obviamente que $X$ e $Y$ não precisam ser declarados antes da primeira escrita, assim como chaves primárias não são declaradas até que sejam usadas, e que o valor associado a uma variável pode ter várias partes, como **"{'Endereço':'Av 1, número 2', 'Profissão':'Computeiro'}** e cada parte um tipo. Veja bem, eu disse uma simplificação, mas não quer dizer que nao seja uma simplificação poderosa.
 
-![Single DB](drawings/disdb.drawio#0)
+![Single DB](../drawings/disdb.drawio#0)
 
 Quando um processo se comunica com um banco de dados, ele o faz com certas expectativas quanto ao funcionamento deste banco.
 Por exemplo, ao escrever um dados no banco, independentemente de como o banco é implementado, o cliente geralmente espera que as escritas aconteçam na ordem em que as disparou e que, ao ler uma variável, lhe seja retornado o "último" valor escrito na mesma.
 
-![Single DB](drawings/disdb.drawio#2)
+![Single DB](../drawings/disdb.drawio#2)
 
 Esta expectativa é independente do banco de dados ser implementado de forma distribuída ou não. Isto é, mesmo que os dados armazenados no banco sejam particionados ou replicados entre vários nós, o cliente espera que o banco tenha comportamento consistente com o de um banco não distribuído e retorne ou aquilo que escreveu ou algo mas recente.
 
-![Single DB](drawings/disdb.drawio#1)
+![Single DB](../drawings/disdb.drawio#1)
 
 ???sidesline "Níveis de Consistência"
       * Consistência forte: leituras sempre retornam a versão mais recente do dado sendo lido.
@@ -51,18 +51,18 @@ Com o advento do NOSQL, mais e mais desenvolvedores buscam modelos alternativos,
 
 [^eventual]: Enquanto no Português *Eventual* quer dizer **possivelmente**, no inglês quer dizer **em algum momento** não determinado, mas vindouro.
 
-![eventual meme](images/eventual-meme0.png)
+![eventual meme](../images/eventual-meme0.png)
 
 Enquanto consistência eventual traz melhoras de desempenho, trabalhar com este modelo implica em muito mais complexidade no desenvolvimento dos sistemas que usam o banco.
 
-![eventual meme](images/eventual-meme.png)
+![eventual meme](../images/eventual-meme.png)
 
 
 Um terceiro modelo geral de consistência seria a consistência **fraca**, em que a única garantia é de que o valor retornado nas leituras foi escrito em algum momento.
 Na verdade, podemos pensar nos modelos de consistência como um espectro com **forte** e **fraca** nos extremos e diversos modelos, incluindo ***eventual***, no meio.
 Diferentes bancos de dados oferecem diferentes modelos, com nomes parecidos ou até iguais e é preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.
 
-[![](images/consistency-models.png)](https://arxiv.org/abs/1512.00168)
+[![](../images/consistency-models.png)](https://arxiv.org/abs/1512.00168)
 
 
 
@@ -84,7 +84,7 @@ Além disso, os modelos podem ser divididos em **Centrados nos Dados**  e **Cent
 
 
 ###### Notação
-![](images/07-04.png)
+![](../images/07-04.png)
 
 * A leitura de x em (a) retorna a
 * A primeira leitura de x em (b) retorna Nil
@@ -99,40 +99,40 @@ Qualquer leitura de um objeto $X$ retorna o valor gravado em $X$ pela operação
 * Comportamento observado em um sistema sem conflitos ou centralizado
 
 Em qual(is) cenário(s) temos consistência estrita?
-![](images/07-04.png)
+![](../images/07-04.png)
 
 
 #### Consistência Sequencial
 O resultado de qualquer execução é equivalente a alguma execução sequencial das operações dos processos e as operações da cada processo aparecem nesta execução sequencial na ordem especificada por seu programa.
 
- ![](images/07-05a.png)
+ ![](../images/07-05a.png)
 
  P2, P3, P4, P1, P4, P3
 
- ![](images/07-05b.png)
+ ![](../images/07-05b.png)
 
  P1 ou P2, qual veio primeiro?
 
 #### Consistência Causal
 Escritas com potencial relação causal são vistas por todos os processos na mesma ordem. Escritas concorrentes (não causalmente relacionadas) podem se vistas em ordens diferentes por processos diferentes.
 
-![](images/07-08.png)
+![](../images/07-08.png)
 
  W(x)b depende de R(x)a que depende de W(x)a<br/>
  W(x)c e W(x)b são concorrentes.
 
 
-![](images/07-09a.png)
+![](../images/07-09a.png)
 
  W(x)b depende de R(x)a que depende de W(x)a. W(x)a deve ser ordenado com W(x)b. P3 não pode ter lido b e depois a.
 
- ![](images/07-09b.png)
+ ![](../images/07-09b.png)
 
 
 #### Consistência FIFO
 Escritas de um processo são vistas por todos os outros processos na ordem em que foram feitas. Escritas de diferentes processos podem ser vistas em ordens diferentes.
 
-![](images/07-08b.png)
+![](../images/07-08b.png)
 
 
 
@@ -149,9 +149,9 @@ Escritas de um processo são vistas por todos os outros processos na ordem em qu
      * Transações tornam o trancamento/destrancamento de variáveis transparente.
 
 ###### Variáveis de sincronização
-![](images/weaka.png)
+![](../images/weaka.png)
 
-![](images/weakb.png)
+![](../images/weakb.png)
 
 ###### Locks
  Materializando variáveis de sincronização na forma de *locks*
@@ -160,7 +160,7 @@ Escritas de um processo são vistas por todos os outros processos na ordem em qu
 * Lock de escrita só retorna quando nenhum outro processo tiver um lock, de leitura ou escrita.
 * Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.
 
-![](images/07-10.png)
+![](../images/07-10.png)
 
 
 ### Modelos Centrados nos Clientes
@@ -180,7 +180,7 @@ Evitar sincronização global focando-se no que os clientes vêem do sistema. Se
     * Escritas seguem leituras.
 
 ##### Modelo de Sistema
-![](images/07-11.png)
+![](../images/07-11.png)
 
 Cliente pode se mover antes de sua última operação ter replicado do servidor onde estava para o novo servidor.
 
@@ -194,7 +194,7 @@ Se um processo lê o valor de um item $x$, qualquer leitura sucessiva de $x$ ret
 * WS($x_i$) -- operações de escrita (*write set*) que levaram a variável $x$ a ter o valor $x_i$.
 * WS($x_i;x_j$) -- operações de escrita relativas a $x_j$ incluem operações de escrita relativas a $x_i$
 
-![](images/07-12.png)
+![](../images/07-12.png)
 
 ##### Escritas Monotônicas
 **Garantia:**
@@ -203,7 +203,7 @@ Se um processo escreve em item $x$, então esta operação deve terminar antes q
 
 * Em um sistema de arquivos na rede, a escrita do conteúdo de um arquivo, em certa posição, só pode ser feita se escritas anteriores já estão registradas no arquivo, independentemente de o cliente contactar novo servidor de arquivos.
 
-![](images/07-13.png)
+![](../images/07-13.png)
 
 
 ##### Leia suas Escritas
@@ -213,7 +213,7 @@ Se um processo escreve em item $x$, então leituras sucessivas no mesmo item pel
 
 * Atualizar código fonte de uma página e exigir que o navegador carrega a nova versão.
 
-![](images/07-14.png)
+![](../images/07-14.png)
 
 ##### Escritas seguem Leituras
 **Garantia:**
@@ -223,7 +223,7 @@ Se um processo lê um item $x$, então escritas sucessivas no mesmo item só pod
 * Só é permitido enviar uma resposta a uma mensagem se a mensagem em si é vista, independentemente do cliente ter se movimentado.
 
 
-![](images/07-15.png)
+![](../images/07-15.png)
 
 
 
@@ -240,7 +240,7 @@ Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor cu
 * Sob demanda do servidor -- por exemplo em uma CDN
 * Sob demanda do cliente -- por exemplo um cache.
 
-![](images/07-17.png)
+![](../images/07-17.png)
 
 ###### Sob demanda do Servidor
 
@@ -251,7 +251,7 @@ Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor cu
 * $D < R$
 * Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre $D$ e $R$), considera migrar.
 
-![](images/07-18.png)
+![](../images/07-18.png)
 
 ### Propagação de Atualizações
 Réplicas precisam ser atualizadas.
@@ -311,7 +311,7 @@ Voltar a um estado correto parece ser a solução mais fácil, mas pare isto é 
 
 Como garantir que o log poderá ser lido para recuperar o processo?
 
-![](images/08-23.png)
+![](../images/08-23.png)
 
 * Dois discos iguais?
 * Dados diferentes, mas ambos bons?
@@ -325,16 +325,16 @@ Como garantir que o log poderá ser lido para recuperar o processo?
 
 Blocos de paridade
 
-![https://support.huawei.com/enterprise/br/doc/EDOC1100067966/c131d3be/erasure-code-nm-protection](images/erasure-coding-diagram0.png)
+![https://support.huawei.com/enterprise/br/doc/EDOC1100067966/c131d3be/erasure-code-nm-protection](../images/erasure-coding-diagram0.png)
 
 Cálculo da paridade
 
-![https://community.mellanox.com/s/article/understanding-erasure-coding-offload](images/erasure-coding-diagram1.png)
+![https://community.mellanox.com/s/article/understanding-erasure-coding-offload](../images/erasure-coding-diagram1.png)
 
 
 Recuperação de blocos perdidos
 
-![https://www.rubrik.com/en/blog/architecture/17/2/erasure-coding-rubrik-doubled-capacity-cluster](images/erasure-coding-diagram.jpeg)
+![https://www.rubrik.com/en/blog/architecture/17/2/erasure-coding-rubrik-doubled-capacity-cluster](../images/erasure-coding-diagram.jpeg)
 
 
 [Reed Solomon](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction)
@@ -344,15 +344,15 @@ Recuperação de blocos perdidos
 
 Um estado global, o conjunto com um estado local de cada processo no sistema e também são conhecidos como ou ***snapshots***.
 
-![](images/08-24.png)
+![](../images/08-24.png)
 
 Para serem úteis, *snapshots* precisam formar **Estado Globais Consistentes**, que são estados globais tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.
 
-![](images/08-24.png)
+![](../images/08-24.png)
 
 O mais recente estado global consistente forma uma **linha de recuperação**.
 
-![](images/08-24.png)
+![](../images/08-24.png)
 
 **Linhas de Recuperação** podem ser usados para, não surpreendentemente, recuperação do sistema, mas também para **coleta de lixo** (remover objetos não referenciados em nenhum outro processo), **detecção de deadlocks** e **depuração** (pausar o sistema).
 
@@ -395,7 +395,7 @@ ou
 
 Se estados locais são capturados na "hora errada", a linha de recuperação pode ser o estado inicial, fazendo um **rollback em cascata***
 
-![](images/08-25.png)
+![](../images/08-25.png)
 
 #### Checkpointing coordenado
 
@@ -455,7 +455,7 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
 Realista este modelo? Há outros eventos não determinísticos no sistema?
 
 
-![](images/08-26.png)
+![](../images/08-26.png)
 	
 * $Hdr(m)$
 	* Cabeçalho da mensagem $m$ contendo fonte, destino, número de sequência e número de entrega.

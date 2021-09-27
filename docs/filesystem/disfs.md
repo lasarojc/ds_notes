@@ -3,7 +3,7 @@
 ## Leitura
 
 * [Sistemas Distribuídos: princípios e paradigmas, 2a edição. Capítulo 11: Sistemas de Arquivos Distribuídos. ](http://csis.pace.edu/~marchese/CS865/Lectures/Chap11/Chapter11.htm)
-* [Distributed Systems: Concepts and Designs. Capítulo 12: Distributed File Systems.](refs/dsdc-coulouris-ch12.pdf)
+* [Distributed Systems: Concepts and Designs. Capítulo 12: Distributed File Systems.](../refs/dsdc-coulouris-ch12.pdf)
 
 ## Google File System
 
@@ -18,9 +18,9 @@
 * Servidores/discos/memórias estão sempre falhando
 * Centenas de clientes concorrentes no mesmo arquivo
 
-![](images/gfs3.png)
+![](../images/gfs3.png)
 
-![](images/gfs2.png)
+![](../images/gfs2.png)
 
 * Clusters de nós ``comuns''
 * Master node: metadata
@@ -29,7 +29,7 @@
 
 [Fonte](https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html)
 
-![](images/gfs3.png)
+![](../images/gfs3.png)
 
 *  Apps recebem \emph{leases} de acesso direto aos dados
 *  Atomic commitment garante consistência entre réplicas
@@ -37,7 +37,7 @@
 [Fonte](http://google-file-system.wikispaces.asu.edu/)
 
 * Consistência 
-![](images/gfs6.png)
+![](../images/gfs6.png)
 
 * Application sends the file name and data to the GFS client.
 * GFS Client send the file name and chunk index to master

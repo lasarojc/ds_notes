@@ -149,10 +149,10 @@ nav:
                 - Falhas bizantinas: fault/bizantine.md
                 - Dependabilidade: fault/dependability.md
 
-        - Consistência: consistency.md
-        - Bancos de Dados: disdb.md
+        - Consistência: consistency/consistency.md
+        - Bancos de Dados: db/disdb.md
         
-        - Sistemas de Arquivos: disfs.md
+        - Sistemas de Arquivos: filesystem/disfs.md
 
         - Estudos de Caso: 
                 - Introdução: cases/index.md

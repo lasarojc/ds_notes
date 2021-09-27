@@ -1,9 +1,14 @@
 
-## Sistema P2P: Cassandra
-Outra alternativa é fazer com que cada nó do sistema conheça todos os outros. Assim, cada requisição pode ser diretamente encaminhada ao nó responsável por tratá-la. 
+## Sistema P2P/Híbrido: Cassandra
+O banco de dados Cassandra é um banco de dados em que os dados são mantidos por pares de servidores.
+
+![CassandraDB](../drawings/cassandra_hibrido.drawio)
+
+Uma característica fundamental do Cassandra, que o distingue o Chord e outros sistemas P2P é que cada nó do sistema conheça todos os outros. 
+Assim, cada requisição é diretamente encaminhada ao nó responsável por tratá-la.
 O custo do roteamento, neste caso, é $O(1)$, muito mais rápido que na abordagem anterior. O custo de armazenamento da *tabela de rotas* é, contudo, $O(n)$, o que pode ser proibitivo em uma rede com milhares de nós, apesar de ser uma solução viável em redes menores. Este é o caso do CassandraDB, uma banco de dados distribuído baseado no Chord, que estudaremos melhor mais adiante, considerado uma DHT de salto único (*single-hop* DHT).
 
-O CassandraDB foi, sem sombra de dúvida, influenciado pelo projeto do DynamoDB, o que é facilmente explicável já que um dos criadores do Dynamo foi o arquiteto do Cassandra.
+O CassandraDB foi, sem sombra de dúvida, influenciado pelo projeto do [DynamoDB](https://lasarojc.github.io/ds_notes/cases/dynamo/), o que é facilmente explicável já que um dos criadores do Dynamo foi o arquiteto do Cassandra.
 Mas em vez de uma cópia, o Cassandra largamente expande a funcionalidade do Dynamo ao se inspirar no banco de dados [BigTable](https://en.wikipedia.org/wiki/Bigtable), do Google.
 Com isso, o Cassandra se aproxima do modelo relacional, facilitando o desenvolvimento de certas aplicações, sem perder as características desejáveis das DHT.  
 A principal característica neste sentido é o modelo híbrido chave-valor/relacional, em que os valores associados a uma chave são divididos em colunas.

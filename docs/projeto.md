@@ -146,6 +146,42 @@ Uma possível instância desta etapa do projeto seria a seguinte
 
 ![Projeto](drawings/instancia_projeto.drawio#0)
 
+
+
+### Etapa 2 - Banco de dados Replicado
+Nesta etapa você modificará o sistema para que atualizações dos dados sejam feitas consistentemente entre todas as réplicas usando um protocolo de difusão atômica.
+
+![Projeto](drawings/projeto.drawio#3)
+
+* Objetivos
+    * Replicar a base de dados para obter tolerância a falhas.
+
+* Desafios
+    * Certificar-se de que o portais são máquinas de estados determinística
+    * Compreender o uso de Difusão Atômica em nível teórico
+    * Compreender o uso de Difusão Atômica em nível prático 
+        * Use [Ratis](https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis) para java
+        * Para Python, OpenReplica é uma boa opção.
+        * Aplicar difusão atômica na replicação do servidor
+* Portal
+    * A API para clientes continua a mesma.
+    * Requisições para o servidor (linha contínua) são encaminhadas via Ratis (linha tracejada) para ordená-las e entregar a todas as réplicas (linha pontilhada) para só então serem executadas e respondidas (pontilhado fino).  
+    * Dados não são mais armazenados em disco pela sua aplicação mas somente via Ratis.
+* Cliente
+    * Sem alteração.
+* Testes
+    * O mesmo *framework* de testes deve continuar funcional
+* Comunicação
+    * Entre cliente e portais, não é alterado.
+    * Entre servidores, usar Ratis
+* Apresentação
+    * Sem alteração, isto é, gravar um vídeo demonstrando que os requisitos foram atendidos.
+
+
+
+
+<!--
+
 ### Etapa 2 - Banco de dados.
 Nesta etapa você modificará o sistema para que modificações dos dados sejam refletidas no banco de dados particionado implementado usando *consistent hashing*.
 
@@ -157,7 +193,6 @@ Nesta etapa você modificará o sistema para que todas as modificações nas par
 ![Projeto](drawings/projeto.drawio#0)
 
 
-<!--
 
 
 ### Etapa 2 - Cache

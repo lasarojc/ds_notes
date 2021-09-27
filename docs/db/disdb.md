@@ -15,11 +15,11 @@ $a = R(C); W(C)a+1$
 Imagine duas instâncias desta transação executando serialmente. 
 Ao final da execução o saldo foi acrescido de 2, como esperado.
 
-![transações](drawings/transactions.drawio#0)
+![transações](../drawings/transactions.drawio#0)
 
 Se em vez disso as duas instâncias executassem concorrentemente, teríamos um resultado diverso, mesmo que o esperado fosse o mesmo resultado.
 
-![transações](drawings/transactions.drawio#1)
+![transações](../drawings/transactions.drawio#1)
 
 Ao final da execução, apesar do valor ter sido modificado duas vezes, o saldo teria sido acrescido de 1.
 Esta diferença entre o esperado e o real está enraizada nas garantias dadas por bancos de dados tradicionais, conhecidas como ACID, acrônimo para **Atomicidade, Consistência, Isolamento e Durabilidade**.
@@ -229,13 +229,13 @@ Esta estratégia pode ser implementada da seguinte forma:
 
 Graficamente, podemos ver o exemplo acima assim, tanto no caso de commit quando de abort da segunda transação.
 
-![suspended execution](drawings/transactions.drawio#2)
+![suspended execution](../drawings/transactions.drawio#2)
 
 
 Apesar de correta, esta abordagem tem um caso patológico que leva a **abortos em Cascata**: 
 se T1 lê algo que T2 escreveu, e T2 lê algo que T3 escreveu, e assim por diante, se a última transação nesta cadeia de dependências for abortada, todas deverão ser abortadas.
 
-![suspended execution](drawings/transactions.drawio#3)
+![suspended execution](../drawings/transactions.drawio#3)
 
 
 Mas, e se evitarmos dirty reads em vez de tratarmos? Podemos fazê-lo com a seguinte estratégia:
@@ -243,7 +243,7 @@ Mas, e se evitarmos dirty reads em vez de tratarmos? Podemos fazê-lo com a segu
 * quando um transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.
 * quando transação T2 for terminada, continue a execução de T1.
 
-![suspended execution](drawings/transactions.drawio#3)
+![suspended execution](../drawings/transactions.drawio#3)
 
 O que estamos tentando obter aqui é uma **execução estrita**, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garante Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
 Fica então a pergunta: **como implementar execuções estritas eficientes**?
@@ -263,15 +263,15 @@ Consideremos três abordagens de controle de concorrência usadas por bancos de 
 Nesta abordagem, todos os objetos usados por uma transação são trancados, impedindo que sejam acessados por outras transações, até que sejam destrancados.
 Contudo, se os objetos são destrancados tão logo não sejam mais usados na transação, continuamos a ter *dirty reads*, como a operação em vermelho na figura a seguir.
 
-![suspended execution](drawings/transactions.drawio#4)
+![suspended execution](../drawings/transactions.drawio#4)
 
 Mesmo que se tentasse abortar a transação que executou a *dirty read*, poderia ser tarde demais, como no exemplo a seguir que demonstra uma **escrita prematura**.
 
-![suspended execution](drawings/transactions.drawio#5)
+![suspended execution](../drawings/transactions.drawio#5)
 
 Estes problemas podem ser evitados com o uso de ***strict two phase locking***, em que as transações **trancam o objeto quando primeiro acessado** e só **destrancam ao final da transação**, atomicamente com a terminação.
 
-![suspended execution](drawings/transactions.drawio#6)
+![suspended execution](../drawings/transactions.drawio#6)
 
 Já para aumentar a concorrência, é possível usar locks para leitura, compartilhados, e para escrita, exclusivos.
 
@@ -313,7 +313,7 @@ A validação consiste em verificar se os *read* e *write sets* de quaisquer tra
 
 Na imagem a seguir, a transação **preta** precisa ser validada ou frente às transações **concorrentes** vermelhas, já comitadas, ou às azuis, ainda por comitar.
 
-![](images/trans_validation.png)
+![](../images/trans_validation.png)
 
 No caso da validação com transações já comitadas (***backward validation***) a validação pode ser simplificada assim:
 
@@ -356,7 +356,7 @@ Como implementar?
 * em que foram comitados
 * e em que foram lidos
 
-![](images/timestamp1.png)
+![](../images/timestamp1.png)
 
 * consistência é testado na execução da operação
 
@@ -365,7 +365,7 @@ Como implementar?
 * escritas tem sucesso somente se versão sendo escrita é maior que versões lidas
 * se versão sendo escrita é menor que versão já escrita, ignore e continue
 
-![](images/timestamp1.png)
+![](../images/timestamp1.png)
 
 
 ### como implementar -- leitura
@@ -373,10 +373,10 @@ Como implementar?
 * leitura com versão v tem sucesso se maior versão é comitada e menor que v ou alguma não comitada
 * leitura com versão v é suspensa se maior versão é não comitada e menor que v
 
-![](images/timestamp2.png)
+![](../images/timestamp2.png)
 
 * leitura com versão v é abortada se maior versão comitada é maior que v
-![](images/timestamp3.png)
+![](../images/timestamp3.png)
 
 
 
@@ -413,7 +413,7 @@ Temos vários papéis sendo desempenhados aqui:
 * servidor: *resource managers*
 * servidor: *transaction monitor/manager*
 
-![](images/01-10.png)
+![](../images/01-10.png)
 
 
 Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.
@@ -480,7 +480,7 @@ Problema de acordo, mas não igual ao consenso.
 
 | **Coordenador**        | **Participante**       |
 | ---------------------- | ---------------------- |
-| ![](images/08-18a.png) | ![](images/08-18b.png) |
+| ![](../images/08-18a.png) | ![](../images/08-18b.png) |
 
 
 ###### Falha no Participante
@@ -578,7 +578,7 @@ Estende o protocolo para permitir contornar  falha do coordenador.
 
 | Coordenador            | Participante           |
 | ---------------------- | ---------------------- |
-| ![](images/08-22a.png) | ![](images/08-22b.png) |
+| ![](../images/08-22a.png) | ![](../images/08-22b.png) |
 
 
 ###### Falha no Participante
@@ -641,11 +641,11 @@ Usando LSMT, os dados são mantidos em memória principal em estruturas de dados
 Operações de escrita são "logadas" e um ***commit log***, em disco, antes de serem aplicadas às memtables e confirmadas para o cliente.
 Neste cenário o acesso ao disco na escrita é sequencial, o melhor que se pode ter em um disco, e a recuperação dos dados é feita diretamente da memória, rapidamente.
 
-![LSMT](drawings/lsmt.drawio#0)
+![LSMT](../drawings/lsmt.drawio#0)
 
 No caso de uma reinicialização do processo, a reexecução do *commit log* restaurará o estado da memtable.
 
-![LSMT](drawings/lsmt.drawio#1)
+![LSMT](../drawings/lsmt.drawio#1)
 
 Observe que a leitura do *commit log* é sequencial, o que acelera a reexecução.
 Ainda assim, se o *commit log* for extenso, reexecutá-lo demandará um tempo significativo.
@@ -654,15 +654,15 @@ Isto é, digamos que todas as operações de escrita, até a décima, estão sal
 Digamos também que todas as operações são modificações da mesma linha do banco de dados em memória.
 Se um *snapshot*  é tomado, ele será correspondente ao commit log, isto é, conterá o efeito de exatamente as mesmas 10 operações, mas de forma mais compacta que o log, uma vez que o log conterá dez operações e o snapshot somente uma linha de dados.
 
-![LSMT](drawings/lsmt.drawio#2)
+![LSMT](../drawings/lsmt.drawio#2)
 
 Após o snapshot ser concluído, o log correspondente pode ser apagado, assim como snapshots anteriores.
 
-![LSMT](drawings/lsmt.drawio#3)
+![LSMT](../drawings/lsmt.drawio#3)
 
 Novas operações de escrita devem ser armazenadas em um novo log e, no caso de uma reinicialização, primeiro se deve restaurar o *snapshot* e então o novo log.
 
-![LSMT](drawings/lsmt.drawio#4)
+![LSMT](../drawings/lsmt.drawio#4)
 
 Para lidar com corrupções de arquivo no sistema, pode ser uma boa ideia manter mais do que o último log e *snapshot*, já que a recuperação do estado exigiria voltar mais atrás na reexecução de operações.
 
@@ -672,7 +672,7 @@ Isto é, se os dados não cabem em memória, *snapshots*  serão importantes nã
 
 Consideremos então um cenário em que a memtable cabe apenas *n* entradas; quando a operação para adicionar $n+1$-ésima entrada à memtable é recebida, um ***flushs*** dos dados para um novo *snapshot* é feito e a memtable é *resetada*, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do *caminho crítico* da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.
 
-![LSMT](drawings/lsmt.drawio#5)
+![LSMT](../drawings/lsmt.drawio#5)
 
 Neste novo fluxo, os arquivos em disco não correspondem mais a *snapshots* do banco de dados mas a porções dos dados, então nos referiremos a eles como *stable storage tables*, ou **sstables**, em oposição às *memtables*, pelo menos por enquanto.
 
@@ -682,18 +682,18 @@ Apesar deste novo fluxo de escrita aumentar a capacidade de armazenamento do nos
 Digamos que a chave $k$ teve um valor atribuído e descarregado em uma sstable em diversas ocasiões.
 O primeiro problema aqui é que há vários valores antigos associados a $k$, inutilmente e ocupando espaço, isto é, lixo.
 
-![LSMT](drawings/lsmt.drawio#6)
+![LSMT](../drawings/lsmt.drawio#6)
 
 O segundo é que caso o valor associado a $k$ seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
 Para lidar com ambos os problemas, podemos **compactar** as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
 Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no *merge sort*, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
 
-![LSMT](drawings/lsmt.drawio#7)
+![LSMT](../drawings/lsmt.drawio#7)
 
 A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por *flushs*, são unidas gerando sstables de nível 1 e assim sucessivamente.
 Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome *merge tree*.
 
-![https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters](./images/lsm_compac.png)
+![https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters](../images/lsm_compac.png)
 
 
 No caso de uma leitura, somente as tabelas mais à direita e de nível mais alto precisam ser consultadas e portanto as sstables já usadas como entrada podem ser eliminadas como lixo do sistema.
@@ -716,14 +716,14 @@ De acordo com nossa fonte mais que confiável, a [Wikipedia](https://en.wikipedi
 
 Se associarmos a cada sstable um filtro de Bloom, então só será preciso lê-la se o filtro correspondente disser que a chave possivelmente está contida, como no seguinte exemplo.
 
-![LSMT+Bloom Filter](./images/bf_lsm.jpg)
+![LSMT+Bloom Filter](../images/bf_lsm.jpg)
 
 Mas como exatamente construímos um filtro de Bloom?
 Iniciamos com um **vetor de bits inicialmente zerados** e um conjunto finito de **funções de hash** cujo resultado seja uniformemente distribuído no tamanho do vetor de bits.
 Para cada elemento colocado no conjunto a ser refletido pelo filtro, aplicamos cada uma das funções hash e colocamos o **bit 1 na posição do vetor igual ao resultado da função**.
 No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções hash.
 
-![By [David Eppstein](https://commons.wikimedia.org/w/index.php?curid=2609777)](./images/bf.png)
+![By [David Eppstein](https://commons.wikimedia.org/w/index.php?curid=2609777)](../images/bf.png)
 
 
 Na **consulta**, cada elemento passa por pelas mesmas funções hash para identificar quais bits do vetor ler.
@@ -782,7 +782,7 @@ Por exemplo, com um filtro com $m = 2^{24}b = 2MB$, após 1 milhão de inserçõ
 
 ## CAP
 
-![CAP](drawings/cap.drawio#0)
+![CAP](../drawings/cap.drawio#0)
 
 * [CAP theorem NoSQL database types](https://www.ibm.com/cloud/learn/cap-theorem#toc-cap-theore-ovhB7WL3)
 * [Weak Consistency and CAP Implications](https://www.igvita.com/2010/06/24/weak-consistency-and-cap-implications/)

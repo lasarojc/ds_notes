@@ -178,11 +178,15 @@ Para que isso seja possível, estes sistemas precisam se tornar **auto-gerenciá
 Devido a importância desta arquitetura, a estudaremos separadamente.
 
 ## Híbridos
-Embora haja uma distinção clara entre cliente/servidor e P2P, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos destas duas arquiteturas.
+Embora haja uma distinção clara entre cliente/servidor e P2P, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos destas duas arquiteturas pois, na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função. 
+Este é o caso dos bancos de dados NOSQL, como o [Dynamo](https://lasarojc.github.io/ds_notes/cases/dynamo/) e [Cassandra](https://lasarojc.github.io/ds_notes/cases/cassandra/)
+
+
 Considere um sistema de email, por exemplo. 
 Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. 
 
 Outros exemplos abundam.
+
 
 * Bancos de dados, e.g., DynamoDB, [CassandraDB](https://www.atlassian.com/blog/archives/do-you-know-cassandra), Redis,...
 * Jogos multiplayer (pense no [particionamento dos mapas](http://pages.cs.wisc.edu/~vshree/cs740/Voronoi.pdf))
