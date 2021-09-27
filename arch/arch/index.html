@@ -1465,8 +1465,9 @@ Os sistemas P2P tendem portanto a ter alta disponibilidade.</p>
 Para que isso seja possível, estes sistemas precisam se tornar <strong>auto-gerenciáveis</strong>, pois sistemas globais devem tolerar <strong>entrada e saída frequente de nós</strong> (por falhas ou ação de seus usuários), <strong>diferentes domínios administrativos</strong>, e heterogeneidade na comunicação.</p>
 <p>Devido a importância desta arquitetura, a estudaremos separadamente.</p>
 <h2 id="hibridos">Híbridos</h2>
-<p>Embora haja uma distinção clara entre cliente/servidor e P2P, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos destas duas arquiteturas.
-Considere um sistema de email, por exemplo. 
+<p>Embora haja uma distinção clara entre cliente/servidor e P2P, boa parte dos sistemas que distribuídos podem ser na verdade considerados híbridos destas duas arquiteturas pois, na prática, muitos sistemas mantém os papéis de clientes, que requisitam a execução de serviços, e servidores, que executam as requisições, mas distribuem as tarefas dos servidores entre pares para aquela função. 
+Este é o caso dos bancos de dados NOSQL, como o <a href="https://lasarojc.github.io/ds_notes/cases/dynamo/">Dynamo</a> e <a href="https://lasarojc.github.io/ds_notes/cases/cassandra/">Cassandra</a></p>
+<p>Considere um sistema de email, por exemplo. 
 Embora clientes usem as funcionalidades dos servidores de email para enviar e receber mensagens, os servidores conversam uns com os outros para implementar a tarefa de encaminhar as mensagens. </p>
 <p>Outros exemplos abundam.</p>
 <ul>

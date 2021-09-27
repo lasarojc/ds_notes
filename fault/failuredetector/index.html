@@ -1146,7 +1146,9 @@
 
   <!-- Content -->
   <h1 id="detectores-nao-confiaveis-de-falhas">Detectores não Confiáveis de Falhas</h1>
-<p>Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">1</a></sup> introduziram o conceito de <strong>Detectores de Falhas</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
+<p>Em sistemas distribuídos é necessário perceber quando problemas acontecem para que se possa lidar com estes problemas.
+Por exemplo, se um componente não está funcional, pode ser necessário fazer alguma manutenção, indo de uma simples reinicialização a uma troca de um disco ou uma fonte, a uma aposentadoria do componente e substituição por um novo.
+Chandra e Toueg<sup id="fnref:CT96"><a class="footnote-ref" href="#fn:CT96">1</a></sup> introduziram o conceito de <strong>Detectores de Falhas</strong> como forma de encapsular a percepção do estado funcional dos outros processos.
 Assim, um detector de falhas pode ser visto como <strong>oráculo distribuído</strong>, com módulos acoplados aos processos do sistema e que trabalha monitorando os outros processos.</p>
 <p><img alt="Failure Detector" src="../../drawings/failure_detector.drawio-0.svg" /></p>
 <p>Chandra e Toueg classificaram os detectores de falhas segundo suas características de completude (<em>completeness</em>) e acurácia (<em>accuracy</em>), ou seja, a capacidade de suspeitar de um processo defeituoso e a capacidade de não suspeitar de um processo correto, respectivamente. 
