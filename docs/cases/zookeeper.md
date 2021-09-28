@@ -34,7 +34,7 @@ Znodes são manipulados, essencialmente, por 4 operações, implementando CRUD, 
 * R: get
 * U: set
 * D: delete
-* ls *: get children
+* ls \*: get children
 
 Znodes são lidos e escritos sempre integralmente. Isto é, não se pode escrever apenas parte do conteúdo do "arquivo". Por isso, recomenda-se que os arquivos sejam sempre pequenos, onde pequeno é relativo.
 
@@ -69,7 +69,7 @@ Mas observe como as curvas se invertem, se focando primeiro na curva para 3 serv
 
 Instale o Zookeeper em sua máquina seguindo estas instruções.
 
-* Baixe: `wget www-eu.apache.org/dist/zookeeper/zookeeper-3.6.2`
+* Baixe: `wget https://downloads.apache.org/zookeeper/zookeeper-3.7.0/apache-zookeeper-3.7.0-bin.tar.gz` 
 * Descomprima: `tar xvzf zookeeper*.tgz`
 * Entre na pasta criada.
 * Configure: copie o arquivo `conf/zoo_sample.cfg` para `conf/zoo.cfg`
