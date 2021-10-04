@@ -11,14 +11,14 @@
       
       
       
-        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/comm/rpc/">
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/consistency/checkpointing/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
     
     
       
-        <title>RPC - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Checkpointing - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#invocacao-remota-de-procedimentos-rpc" class="md-skip">
+        <a href="#recuperacao-checkpoint" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              RPC
+              Checkpointing
             
           </span>
         </div>
@@ -274,14 +274,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
         Comunicação
@@ -299,7 +297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../comm/" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -311,7 +309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../redes/" class="md-nav__link">
+      <a href="../../comm/redes/" class="md-nav__link">
         Redes
       </a>
     </li>
@@ -323,7 +321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../internet/" class="md-nav__link">
+      <a href="../../comm/internet/" class="md-nav__link">
         Internet
       </a>
     </li>
@@ -335,7 +333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sockets/" class="md-nav__link">
+      <a href="../../comm/sockets/" class="md-nav__link">
         Sockets
       </a>
     </li>
@@ -347,7 +345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../datarep/" class="md-nav__link">
+      <a href="../../comm/datarep/" class="md-nav__link">
         Representação
       </a>
     </li>
@@ -359,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../middleware/" class="md-nav__link">
+      <a href="../../comm/middleware/" class="md-nav__link">
         Middlewares
       </a>
     </li>
@@ -369,72 +367,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          RPC
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../comm/rpc/" class="md-nav__link">
         RPC
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#stubs" class="md-nav__link">
-    Stubs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transparencia" class="md-nav__link">
-    Transparência
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#interface-definition-language" class="md-nav__link">
-    Interface Definition Language
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#variacoes-de-processamento" class="md-nav__link">
-    Variações de processamento
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -444,7 +381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mom/" class="md-nav__link">
+      <a href="../../comm/mom/" class="md-nav__link">
         MOM
       </a>
     </li>
@@ -456,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../epidemics/" class="md-nav__link">
+      <a href="../../comm/epidemics/" class="md-nav__link">
         Epidêmicos
       </a>
     </li>
@@ -468,7 +405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../refs/" class="md-nav__link">
+      <a href="../../comm/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -865,12 +802,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
       
       <label class="md-nav__link" for="__nav_9">
         Consistência
@@ -888,7 +827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/consistency_models/" class="md-nav__link">
+      <a href="../consistency_models/" class="md-nav__link">
         Modelos
       </a>
     </li>
@@ -900,7 +839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/data_centric/" class="md-nav__link">
+      <a href="../data_centric/" class="md-nav__link">
         Centrado nos Dados
       </a>
     </li>
@@ -912,7 +851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/client_centric/" class="md-nav__link">
+      <a href="../client_centric/" class="md-nav__link">
         Centrado no Cliente
       </a>
     </li>
@@ -924,7 +863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/replica_management/" class="md-nav__link">
+      <a href="../replica_management/" class="md-nav__link">
         Gerenciamento de Réplicas
       </a>
     </li>
@@ -934,11 +873,87 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../consistency/checkpointing/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Checkpointing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Checkpointing
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#recuperacao-checkpoint" class="md-nav__link">
+    Recuperação &amp; Checkpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Recuperação &amp; Checkpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-recuperavel" class="md-nav__link">
+    Log Recuperável
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estado-global-consistente" class="md-nav__link">
+    Estado global consistente
+  </a>
+  
+    <nav class="md-nav" aria-label="Estado global consistente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-independente" class="md-nav__link">
+    Checkpointing independente
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-coordenado" class="md-nav__link">
+    Checkpointing coordenado
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -948,7 +963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/references/" class="md-nav__link">
+      <a href="../references/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -1259,8 +1274,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1269,30 +1282,49 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stubs" class="md-nav__link">
-    Stubs
+  <a href="#recuperacao-checkpoint" class="md-nav__link">
+    Recuperação &amp; Checkpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Recuperação &amp; Checkpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#log-recuperavel" class="md-nav__link">
+    Log Recuperável
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#transparencia" class="md-nav__link">
-    Transparência
+        
+          <li class="md-nav__item">
+  <a href="#estado-global-consistente" class="md-nav__link">
+    Estado global consistente
+  </a>
+  
+    <nav class="md-nav" aria-label="Estado global consistente">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-independente" class="md-nav__link">
+    Checkpointing independente
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#interface-definition-language" class="md-nav__link">
-    Interface Definition Language
+        
+          <li class="md-nav__item">
+  <a href="#checkpointing-coordenado" class="md-nav__link">
+    Checkpointing coordenado
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#variacoes-de-processamento" class="md-nav__link">
-    Variações de processamento
-  </a>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1317,259 +1349,164 @@
        as the main headline.
     -->
 
+  <h1>Checkpointing</h1>
+
 
   <!-- Content -->
-  <h1 id="invocacao-remota-de-procedimentos-rpc">Invocação Remota de Procedimentos - RPC</h1>
-<!-- Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos. [^asynch]
-Apesar destas melhorias, **sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo**. 
-Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem um alternativa.
-
-[^asynch]: Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e *Futures/Promisses*, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido. -->
-
-<p>Em 1984, Birrel e Nelson<sup id="fnref:birrel"><a class="footnote-ref" href="#fn:birrel">1</a></sup> introduziram o mecanismo de Invocação Remota de Procedimentos (<em>Remote Procedure Calls</em>), que permite que processos façam, pasmem, invocações de procedimentos remotos!
-Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
-Por exemplo, RPC permite que se procure a <em>substring</em> apontada por <code>c</code> dentro da string apontada por <code>a</code>, a partir da posição 3, usando <code>x = substring(a,3,c);</code> mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.</p>
-<h3 id="stubs">Stubs</h3>
-<p>Se o que queremos é colocar o código da função <code>substring</code> em um outro processo e executá-lo como se estivéssemos no mesmo processo que faz a invocação, precisamos pensar em várias questões, sendo a principal o fato de que, embora seja simulada a invocação local, "por debaixo do capô" há o uso sockets para a comunicação com o processo remoto.
-Esta simulação usará código extra, que finge implementar <code>substring</code> para o invocador mas delega ao código remoto o trabalho real da busca.
-Este código extra é conhecido como <strong>stub</strong>, ou para ser mais preciso, <strong><em>stub</em></strong> <strong>cliente</strong>, que faz parte do processo invocando a operação, e <strong><em>stub</em></strong> <strong>servidor</strong>, que faz parte do processo executando a operação invocada<sup id="fnref:skeleton"><a class="footnote-ref" href="#fn:skeleton">2</a></sup>.</p>
-<p>Assim, o cliente invoca a função no <em>stub</em> cliente, achando que é a função que quer executar.
-O <em>stub</em> cliente faz o <strong><em>marshaling</em></strong> <sup id="fnref:marshal"><a class="footnote-ref" href="#fn:marshal">3</a></sup>  dos parâmetros e usa o SO para transferir os dados via rede para o stub servidor.
-Quando recebe a resposta do servidor, o <em>stub</em> cliente retorna a mesma resposta, como se tivesse sido calculada localmente.
-Já o stub servidor fica esperando o contato do cliente.
-Quando acontece, faz o <strong><em>unmarshalling</em></strong> dos dados, invoca a função localmente na aplicação servidor e pega o resultado, que retorna ao cliente.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-0.svg" /></p>
-<table>
-<thead>
-<tr>
-<th>Stub cliente</th>
-<th>Stub servidor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. invoca <code>substring</code> no <em>stub</em></td>
-<td>1. retorna o resultado para o <em>stub</em></td>
-</tr>
-<tr>
-<td>2. conecta-se ao servidor, envia parâmetros e especifica a função</td>
-<td>2. envia resulta serializado para cliente</td>
-</tr>
-<tr>
-<td>3. transmite os dados serializados</td>
-<td>transmite resposta serializada</td>
-</tr>
-<tr>
-<td>4. desserializa parâmetros</td>
-<td>4. desserializa os parâmetro</td>
-</tr>
-<tr>
-<td>5. invoca a função <code>substring</code> localmente</td>
-<td>5. retorna o resultado para o invocador</td>
-</tr>
-</tbody>
-</table>
-<h3 id="transparencia">Transparência</h3>
-<p>É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao não-distribuído, certo? 
-Isto é, <strong>interface baseada em procedimentos</strong> e sem a necessidade de detalhar <strong>portas, sockets, e representação de dados</strong>.  Ou seja, tudo é transparente!
-Como já discutimos, vários fatores trabalham contra a <a href="../intro/#transparencia">transparência em sistemas distribuídos</a>.
-Em específico quanto à transparência dada pelo RPC, também temos limitações.
-Antes de nos aprofundarmos, lembremos como uma invocação de funções acontece normalmente dentro de um único processo.<sup id="fnref:omissao"><a class="footnote-ref" href="#fn:omissao">4</a></sup>
-O código <code>x = substring(a,3,c);</code>, que procura <code>*c</code> em <code>*a</code>, é traduzido nos seguintes passos em linguagem de máquina:</p>
+  <h2 id="recuperacao-checkpoint">Recuperação &amp; Checkpoint</h2>
+<p>Assumindo que o modelo de consistência implementado é satisfatório, temos que garantir que este modelo não será quebrado na presença de falhas.
+Isto é, suponha que uma série de erros aconteceram no sistema, e que não é possível continuar o processamento em algum ou todos os módulos do sistema.
+Neste cenário, o sistema precisa agir para ou avançar para um novo estado, livre de erros, ou retroceder a um estado anterior, correto.</p>
+<p>Voltar a um estado correto parece ser a solução mais fácil, mas pare isto é preciso garantir a informação sobre estados anteriores seja recuperável. </p>
+<h3 id="log-recuperavel">Log Recuperável</h3>
+<h6>Replicação</h6>
+<p>Como garantir que o log poderá ser lido para recuperar o processo?</p>
+<p><img alt="" src="../../images/08-23.png" /></p>
 <ul>
-<li>coloque o valor de <code>c</code> na pilha</li>
-<li>coloque <code>3</code> na pilha</li>
-<li>coloque o valor de <code>a</code> na pilha</li>
-<li>coloque o endereço de retorno na pilha (junto com outros dados de controle)</li>
-<li>salte para <code>substring</code> ajustando o <em>instruction pointer</em></li>
-<li>... procure substring ...</li>
-<li>coloque o resultado no acumulador</li>
-<li>limpe a pilha</li>
-<li>salte de volta recuperando o endereço de retorno da pilha e ajustando o IP</li>
-<li>coloque resultado em <code>x</code></li>
+<li>Dois discos iguais?</li>
+<li>Dados diferentes, mas ambos bons?</li>
+<li>Um bom outro estragado?</li>
+<li>Ambos estragados?</li>
 </ul>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-4.svg" /></p>
-<p>O problema é que há uma distinção clara em pelo menos dois processos e se pensarmos no código descrito acima, temos que entender que </p>
+<h6>Blocos de paridade</h6>
+<h6>Erasure Coding</h6>
+<p>Blocos de paridade</p>
+<p><img alt="https://support.huawei.com/enterprise/br/doc/EDOC1100067966/c131d3be/erasure-code-nm-protection" src="../../images/erasure-coding-diagram0.png" /></p>
+<p>Cálculo da paridade</p>
+<p><img alt="https://community.mellanox.com/s/article/understanding-erasure-coding-offload" src="../../images/erasure-coding-diagram1.png" /></p>
+<p>Recuperação de blocos perdidos</p>
+<p><img alt="https://www.rubrik.com/en/blog/architecture/17/2/erasure-coding-rubrik-doubled-capacity-cluster" src="../../images/erasure-coding-diagram.jpeg" /></p>
+<p><a href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction">Reed Solomon</a></p>
+<h3 id="estado-global-consistente">Estado global consistente</h3>
+<p>Um estado global, o conjunto com um estado local de cada processo no sistema e também são conhecidos como ou <strong><em>snapshots</em></strong>.</p>
+<p><img alt="" src="../../images/08-24.png" /></p>
+<p>Para serem úteis, <em>snapshots</em> precisam formar <strong>Estado Globais Consistentes</strong>, que são estados globais tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.</p>
+<p><img alt="" src="../../images/08-24.png" /></p>
+<p>O mais recente estado global consistente forma uma <strong>linha de recuperação</strong>.</p>
+<p><img alt="" src="../../images/08-24.png" /></p>
+<p><strong>Linhas de Recuperação</strong> podem ser usados para, não surpreendentemente, recuperação do sistema, mas também para <strong>coleta de lixo</strong> (remover objetos não referenciados em nenhum outro processo), <strong>detecção de deadlocks</strong> e <strong>depuração</strong> (pausar o sistema).</p>
+<p>Se o sistema provê comunicação confiável, então toda mensagem enviada no estado local de um processo também precisa fazer parte do estado local do destinatário, ou o estado global precisa capturar o estado dos canais de comunicação.</p>
+<h4 id="checkpointing-independente">Checkpointing independente</h4>
+<p>Cada processo faz o checkpoint local independentemente, incorrendo no risco de um <em>rollback</em> em cascata.</p>
 <ul>
-<li>processos independentes não compartilham um espaço de endereçamento, e</li>
-<li>processos independentes não compartilham uma pilha.</li>
+<li>Seja <span class="arithmatex">\(C_i^m\)</span> o <span class="arithmatex">\(m\)</span>-ésimo checkpoint do processo <span class="arithmatex">\(p_i\)</span>.</li>
+<li>Seja <span class="arithmatex">\(I_i^m\)</span> o intervalo entre <span class="arithmatex">\(C_i^{m-1}\)</span> e <span class="arithmatex">\(C_i^m\)</span>.</li>
+<li>Quando o processo <span class="arithmatex">\(p_i\)</span> envia a mensagem no intervalo <span class="arithmatex">\(I_i^m\)</span>, envia <span class="arithmatex">\((i,m)\)</span> em piggyback</li>
+<li>Quando o processo <span class="arithmatex">\(p_j\)</span> recebe a mensagem no intervalo <span class="arithmatex">\(I_j^n\)</span>, grava a dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span></li>
+<li>
+<p>A dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span> é salva junto com o checkpoint <span class="arithmatex">\(C_j^n\)</span></p>
+</li>
+<li>
+<p>Se o processo <span class="arithmatex">\(p_j\)</span> é revertido para o estado <span class="arithmatex">\(C_j^n\)</span>, então o <span class="arithmatex">\(p_i\)</span> não pode reverter para nenhum estado anterior a <span class="arithmatex">\(C_i^m\)</span>, ou não teria enviado as mensagens recebidas por <span class="arithmatex">\(p_j\)</span> 4 inclusas em <span class="arithmatex">\(C_j^n\)</span>.</p>
+</li>
 </ul>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-1.svg" /></p>
-<p>Assim, como fica a <strong>passagem de parâmetro por referência</strong>, uma vez que o stub servidor não pode usar endereços do espaço de endereçamento do cliente?
-Algumas abordagens para simular a passagem por referência são possíveis. Por exemplo, <strong>o valor apontado pelo ponteiro é passado para o servidor</strong>, que armazena o valor e alguma posição de memória e passa o endereço de tal posição para a função invocada.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-2.svg" /></p>
-<p>Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
-Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
-Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista? Como ensinar para o <em>framework</em> RPC o que é "toda" a lista?</p>
-<p>Java "resolve" o problema da passagem de parâmetro por referência passando todo o grafo do objeto passado como parâmetro para o servidor. Isto é, além de serializar o objeto apontado no parâmetro, se o mesmo aponta para outros objetos, estes também serão serializados e transferidos; o servidor irá então reconstruir todo o grafo e passar para o método sendo invocado.
-É muito fácil ver que esta abordagem pode se tornar inviável rapidamente. Quando for o caso, Java permite marcar objetos como <strong>remotos</strong> e, em vez de serializar este objeto e enviar para o servidor, envia informação suficiente para que o servidor possa invocar métodos em tal objeto no cliente, tornando nebulosa a definição de quem é quem.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-8.svg" /></p>
-<p>Outros fatores também trabalham contra a transparência para o desenvolvedor.</p>
-<h6>Descoberta de Serviços</h6>
-<p>Por exemplo, mesmo que o socket seja ocultado, ele ainda existe e precisa de informações sobre <strong>onde se conectar</strong> (endereço e porta), que de alguma forma deve ser passada para o framework de RPC.
-Esta informação pode ser configurada <em>a priori</em> por um administrador de sistemas, mas requer atualizações sempre que a localização do serviço for alterada ou novos servidores adicionados.
-Mais interessante seria um mecanismo que permitisse uma indireção para o serviço; o próprio DNS pode ser uma opção inicial, mas um serviço dedicado pode ser mais apropriado, pois permite descobrir serviços e não apenas servidores.</p>
-<p>Birrel e Nelson propuseram um serviço de <strong>Páginas Amarelas</strong>, no qual clientes podem questionar quem oferece um certo serviço e serem redirecionados automaticamente.
-Esta abordagem tem seus próprios problemas, como por exemplo determinar <strong>quem administra</strong> o serviço para incluir novos servidores.
-E como determinar qual serviço acessar, caso hajam <strong>múltiplas opções de servidores</strong>.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-3.svg" /></p>
-<p>Apesar dos problemas, <strong>páginas amarelas</strong> foram usadas em abordagens muito mais recentes para descobertas de serviços, por exemplo <a href="https://en.wikipedia.org/wiki/Web_Services_Discovery">Web Services Discovery</a>, que permite a descoberta de Web Services em escala global, e <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/rmiregistry.html">Java Remote Object Registry</a> que permite a descoberta de objetos remotos Java.</p>
-<h6>Tratamento de Exceções</h6>
-<p>Uma vez que a invocação é remota, há sempre o risco de problemas de comunicação entre cliente e servidor.
-Logo, é necessária a introdução de código para tratamento de erros deste tipo, o que absolutamente não era necessário no caso do código centralizado.
-Assim, o que era um simples <code>x = substring(a,3,c);</code> passa para algo assim (em uma linguagem fictícia):</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">-2</span><span class="p">;</span>
-<span class="n">try</span> <span class="p">{</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">substring</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
-<span class="p">}</span> <span class="n">catch</span><span class="p">(</span><span class="n">CommunicationFailureException</span> <span class="n">cfe</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">log_error</span><span class="p">(</span><span class="s">&quot;Como pode substring falhar? Desespero!!!&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">-2</span><span class="p">)</span>
-    <span class="n">system_exit</span><span class="p">(</span><span class="mi">-2</span><span class="p">)</span>
-<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span>
-    <span class="c1">//não achou</span>
-<span class="k">else</span>
-    <span class="c1">//achou na posição x</span>
-</code></pre></div>
-</td></tr></table>
-<p>O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.</p>
-<p>Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
-Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
-No caso de falhas, se o processo quebra como um todo, no seu reinício, pode-se identificar se a operação foi ou não executada e aplicar ações corretivas.
-Mas e no caso remoto?</p>
-<h6>Reexecuções</h6>
-<p>No caso da operação distribuída, se o servidor quebra, isso levará a um erro ser percebido do lado do cliente como uma <strong>falha na conexão</strong>.
-Se o cliente havia invocado uma operação mas percebeu o erro antes de receber uma confirmação de sua execução, isto pode indicar que:</p>
+<p>ou</p>
 <ul>
-<li>(i) ou a requisição nunca foi recebida pelo servidor e, portanto, não foi executada,</li>
-<li>(ii) ou a execução foi recebida e executada, mas a resposta não foi enviada.</li>
+<li>Se o processo <span class="arithmatex">\(p_i\)</span> é revertido para o estado <span class="arithmatex">\(C_i^{m-1}\)</span>, então o <span class="arithmatex">\(p_j\)</span> tem que ser revertido pelo menos até <span class="arithmatex">\(C_j^{n-1}\)</span>, ou incluiria mensagens ainda não enviadas por <span class="arithmatex">\(p_i\)</span>.</li>
 </ul>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-5.svg" /></p>
-<p>O cliente tem que tratar o erro, mas como?
-Se a operação <strong>precisa</strong> ser executada <strong>a qualquer custo</strong>, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
-Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
-Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
-Esta abordagem é o que garantirá que a execução acontece <strong>pelo menos 1 vez</strong>.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-6.svg" /></p>
-<p>Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
-Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a <strong>no máximo uma</strong> execução.
-Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um <em>stream</em> de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-7.svg" /></p>
-<div class="admonition info inline end">
-<p class="admonition-title">Quantidade de execuções</p>
+<p>Como implementar a recuperação?</p>
+<h6># Caso patológico</h6>
 <ul>
-<li>No máximo uma - não retentar</li>
-<li>Exatamente uma - impedir que falhas aconteçam <img alt="☹" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2639.svg" title=":white_frowning_face:" /></li>
-<li>Pelo menos uma - retentar até ter confirmação</li>
+<li><span class="arithmatex">\(p_i\)</span> e <span class="arithmatex">\(p_j\)</span> no estado inicial (<span class="arithmatex">\(C_i^0, C_j^0\)</span>)</li>
+<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> (<span class="arithmatex">\(C_i^1 \rightarrow C_j^1\)</span>)</li>
+<li><span class="arithmatex">\(C_j^1\)</span></li>
+<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^2 \rightarrow C_i^1\)</span></li>
+<li><span class="arithmatex">\(C_i^1\)</span></li>
+<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> <span class="arithmatex">\(C_i^2 \rightarrow C_j^2\)</span></li>
+<li><span class="arithmatex">\(C_j^2\)</span></li>
+<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^3 \rightarrow C_i^2\)</span></li>
+<li><span class="arithmatex">\(C_i^2\)</span></li>
+<li>...</li>
 </ul>
-</div>
-<p>Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e que é provavelmente o que todo desenvolvedor desejaria para suas invocações de métodos, que fossem executados <strong>exatamente uma</strong> vez.
-Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
-De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.</p>
-<p>Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
-Mas ela não pode ser repetida, então a alternativa é tornar as operações <a href="https://en.wikipedia.org/wiki/Idempotence"><strong>idempotentes</strong></a>, o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.</p>
-<div class="admonition note">
-<p class="admonition-title">Operações idempotentes</p>
-<p>Múltiplas execuções tem o mesmo efeito uma execução.</p>
+<p>Se estados locais são capturados na "hora errada", a linha de recuperação pode ser o estado inicial, fazendo um <strong>rollback em cascata*</strong></p>
+<p><img alt="" src="../../images/08-25.png" /></p>
+<h4 id="checkpointing-coordenado">Checkpointing coordenado</h4>
+<p>Processos se coordenam por troca de mensagem para executar checkpointing "simultaneamente".</p>
+<h6>Bloqueio em duas fases</h6>
 <ul>
-<li>Exemplo: <code>x = 10</code></li>
-<li>Anti-exemplo:  <code>x = x+1</code>.</li>
+<li>Um coordenador faz multicast da mensagem "checkpoint-request"</li>
+<li>Quando um participante recebe "checkpoint-request"<ul>
+<li>faz um checkpoint local</li>
+<li>para de mandar mensagens da aplicação</li>
+<li>responde com "checkpoint-taken"</li>
 </ul>
-</div>
-<p>Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.</p>
-<h6>Concorrência no servidor</h6>
-<p>É importante notar que um servidor não está obrigado a atender requisições de somente um cliente.
-Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.</p>
-<p>Pense por exemplo em um servidor que conta o número de acessos feitos por clientes.
-O incremento do contador deve ser considerado uma região crítica, caso múltiplos threads tratem as requisições dos clientes, o que já vimos ser uma boa idia.
-Claro que dificilmente seu servidor seria algo tão simples assim.
-Em vez disso, ele provavelmente executará lógicas complicadas, como por exemplo, armazenar o estado de contas bancárias e, neste caso, as funções expostas por RPC incluiríam a operação <strong>transferir saldo de A para B</strong>, o que nos leva a mais um problema interessante, o do risco de reexecuções.</p>
-<p>Além disso, o servidor provavelmente suportará diversas operações e por isso deverá identificar qual a operação sendo requisitada.
-Isto é feito por um <em>dispatcher</em>, que demultiplexa as operações requisitadas; o dispatcher pode, em algumas arquiteturas, ser independente do skeleton em si.</p>
-<h3 id="interface-definition-language">Interface Definition Language</h3>
-<p>Há diversas opções de <em>frameworks</em> para RPC, com diferentes características, focos, e garantias.
-Alguns são parte da linguagem e outros são implementados como bibliotecas.
-Alguns suportam múltiplas linguagens e alguns apenas uma.</p>
-<div class="admonition note">
-<p class="admonition-title">Suporte a RPC na linguagem</p>
+</li>
+<li>Quando "checkpoint-taken" recebido de todos os participantes, multicast "checkpoint-done"</li>
+<li>Quando receber "checkpoint-done", retoma computação normal</li>
+<li>Por quê funciona?  Impede formação de dependências circulares.</li>
+<li>Todos os processos precisam participar?  Somente os que dependem da recuperação do coordenador.</li>
+</ul>
+<p>Pontos negativos? </p>
 <ul>
-<li>Sem RPC: C, C++, Java &lt; 5.0 (1.5), Python</li>
-<li>Com RPC: Java, Go, Erlang, Scala, Haskell</li>
-<li>Ambientes heterogêneos: Thrift, gRPC, Akka, SOAP</li>
+<li>Se o coordenador falha, outros processos ficam bloqueados?  <ul>
+<li>Timeout!</li>
 </ul>
-</div>
-<p>Frameworks mais modernos permitem escolher a forma de serialização dos dados, se legível para humanos ou binário, se o transporte é via HTTP ou protocolo mais baixo nível, se os dados trafegam abertamente ou se faz uso de comunicação criptografada (SSL).
-Outros permitem escolher semântica de execução entre <strong>no máximo uma</strong> e <strong>pelo menos uma</strong>, e há até quem prometa <strong>exatamente uma</strong>.
-Mas todos os <strong>frameworks</strong> tem algumas características em comum e uma delas é o uso de uma <strong>Linguagem de Definição de Interface</strong> (IDL).</p>
-<p>Uma <a href="https://en.wikipedia.org/wiki/Interface_description_language">IDL</a> é a linguagem pela qual desenvolvedor define quais as operações (funções, procedimentos, métodos) serão acessíveis via RPC e quais os seus operandos.
-Há várias IDL definidas, para os diversos <em>frameworks</em> disponíveis.</p>
-<p>A imagem a seguir mostra um exemplo genérico da criação cliente e servidor usando um framework RPC genérico, inclusive o processamento da definição feita em IDL do serviço e a junção deste código gerado ao código escrito pelo desenvolvedor.</p>
-<p><img alt="../IDL" src="../../images/idl.png" /></p>
-<p>O fluxo de processamento é o seguinte:</p>
+</li>
+<li>Como eleger outro coordenador? <ul>
+<li>E se dois aparecerem juntos? </li>
+<li>Pode ser resolvido com um protocolo de eleição como o do RAFT. </li>
+<li>Não é garantido, mas aumenta as chances de sucesso.</li>
+</ul>
+</li>
+</ul>
+<h6>Chandy-Lamport</h6>
 <ul>
-<li>Arquivo em IDL é compilado por um compilador IDL e gera diversos arquivos:<ul>
-<li><em>stub</em> cliente - código que implementa a interface, com código para repassar invocações para o servidor.</li>
-<li><em>stub</em> servidor (<em>skeleton</em>) - código que atende a conexões do <em>stub</em> cliente e repassa para a implementação própria da função.</li>
-<li>conversão de dados - código que serializa e deserializa dados para serem trafegados de e para o servidor</li>
-<li>cabeçalhos - definições da interface na linguagem de desenvolvimento da aplicação; se linguagem C, por exemplo, estes serão arquivos <code>.h</code>, se em Java, então estes serão arquivos<code>.java</code>, com definição de <code>interface</code>.</li>
+<li>Não interfere na aplicação</li>
+<li>
+<p>Cada processo grava snapshot independentemente</p>
+</li>
+<li>
+<p>Observador (iniciador do snapshot)</p>
+<ul>
+<li>Salva o próprio estado</li>
+<li>Envia uma mensagem "snapshot" aos outros processos em cada canal de saída</li>
+<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal.</li>
 </ul>
 </li>
-<li>O código cliente é compilado e gera o cliente, que deve <ul>
-<li>inicializar a infraestrutura RPC<ul>
-<li>Tipo de transporte</li>
-<li>SSL?</li>
-<li>Localizar servidor</li>
+<li>
+<p>Um processo <span class="arithmatex">\(p\)</span> que receba "snapshot" de um processo <span class="arithmatex">\(q\)</span></p>
+<ul>
+<li>grava estado local <span class="arithmatex">\(S_p\)</span></li>
+<li>grava estado do canal <span class="arithmatex">\(C_{q,p} =\emptyset\)</span></li>
+<li>Envia uma mensagem "snapshot" aos outros processos em cada canal de saída</li>
+<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal (excluindo <span class="arithmatex">\(C_{q,p}\)</span>)</li>
 </ul>
 </li>
-<li>Lidar com falhas</li>
+<li>
+<p>Protocolo termina para o processo <span class="arithmatex">\(p\)</span> quando tiver recebido marcador "snapshot" em cada um de seus canais.</p>
+</li>
+<li>O estado global consiste dos snapshots + estado em cada um dos canais.</li>
+<li>Exige canais FIFO</li>
+</ul>
+<h6>Message Logging</h6>
+<p>Em vez de checkpoints frequentes, crie um log da comunicação e o re-execute a partir do último checkpoint.</p>
+<p><strong>Ideia básica:</strong>   </p>
+<p>A computação é determinada pela troca de mensagens (eventos não determinísticos). 
+Ao se enviar a mesma mensagem a partir de um certo estado, a computação desencadeada é sempre a mesma.</p>
+<p>Realista este modelo? Há outros eventos não determinísticos no sistema?</p>
+<p><img alt="" src="../../images/08-26.png" /></p>
+<ul>
+<li>
+<p><span class="arithmatex">\(Hdr(m)\)</span></p>
+<ul>
+<li>Cabeçalho da mensagem <span class="arithmatex">\(m\)</span> contendo fonte, destino, número de sequência e número de entrega.</li>
+<li>O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).</li>
+<li>A mensagem <span class="arithmatex">\(m\)</span> é estável se <span class="arithmatex">\(Hdr(m)\)</span> estiver em memória estável.</li>
 </ul>
 </li>
-<li>O código servidor é compilado e gera o servidor, que deve<ul>
-<li>exportar e localizar serviços (serviço de nomeação)</li>
-<li>Gerenciamento de portas</li>
-<li>Conexões</li>
+<li>
+<p><span class="arithmatex">\(Dep(m)\)</span>: o conjunto de processos a quem <span class="arithmatex">\(m\)</span> ou mensagens que dependem de <span class="arithmatex">\(m\)</span> foram entregues.</p>
+</li>
+<li><span class="arithmatex">\(Copy(m)\)</span>: o conjunto de processos que tem uma cópia de <span class="arithmatex">\(Hdr(m)\)</span> em memória volátil.</li>
 </ul>
-</li>
-</ul>
-<h2 id="variacoes-de-processamento">Variações de processamento</h2>
-<p>Invocações de procedimentos e métodos são geralmente síncronas, o que quer dizer que o chamador do procedimento normalmente espera a conclusão do procedimento para continuar a executar.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-9.svg" /></p>
-<p>Essa abordagem é necessária quando o chamador precisa do resultado do procedimento para continuar, mas deixa de fazer sentido quando ou o procedimento não tem um resultado ... </p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-10.svg" /></p>
-<p>... ou quando o resultado só será necessário mais tarde, podendo ser recebido via um <em>callback</em>.</p>
-<p><img alt="RPC" src="../../drawings/rpc.drawio-11.svg" /></p>
-<p>Independentemente de qual abordagem for utilizada, ambos os processos, chamador e chamado, precisam estar ativos ao mesmo tempo para que a comunicação aconteça, isto é, os processos estão <strong>acoplados no tempo</strong>.
-Nas seções seguintes veremos como este requisito pode ser relaxado, permitindo que os processos sejam desacoplados no tempo.</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:birrel">
-<p><a href="http://www.birrell.org/andrew/papers/ImplementingRPC.pdf">Implementing RPC</a>&#160;<a class="footnote-backref" href="#fnref:birrel" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:skeleton">
-<p>O <em>stub</em> do servidor também é conhecido como <em>skeleton</em>.&#160;<a class="footnote-backref" href="#fnref:skeleton" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:marshal">
-<p>Marshalling: representar parâmetros de forma própria para transmissão "no fio".&#160;<a class="footnote-backref" href="#fnref:marshal" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-<li id="fn:omissao">
-<p>Omitirei alguns detalhes aqui, em nome da generalidade, mas vocês podem recuperá-los em seus livros de Arquitetura de Computadores.&#160;<a class="footnote-backref" href="#fnref:omissao" title="Jump back to footnote 4 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<p>Se <span class="arithmatex">\(C\)</span> é um conjunto de processos falhos, então <span class="arithmatex">\(Q\not\in C\)</span> é um órfão se existe uma mensagem <span class="arithmatex">\(m\)</span> tal que <span class="arithmatex">\(Q \in Dep(m)\)</span> e <span class="arithmatex">\(Copy(m)\subseteq C\)</span>    </p>
+<p>Se os processos em <span class="arithmatex">\(C\)</span> forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou <span class="arithmatex">\(Q\)</span> a receber <span class="arithmatex">\(m\)</span> ou um mensagem causalmente dependente de <span class="arithmatex">\(m\)</span>.</p>
+<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, há no máximo um processo dependente em <span class="arithmatex">\(m\)</span> (<span class="arithmatex">\(Dep(m) \leq 1\)</span>)</p>
+<p>Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.</p>
+<p>Toda mensagem é precedida por uma escrita em disco.</p>
+<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, então devemos garantir que se <span class="arithmatex">\(Copy(m) \subseteq C\)</span>, então <em>eventually</em> <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, onde <span class="arithmatex">\(C\)</span> é o conjunto de processos que falharam.</p>
+<p>Para garantir que <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, fazemos um rollback de cada órfão <span class="arithmatex">\(Q\)</span> até que <span class="arithmatex">\(Q \not\in Dep(m)\)</span></p>
+<p>Isto é, forçamos <span class="arithmatex">\(Q\)</span> a ser recuperado mesmo que não tenha falhado.</p>
 
   <!-- Last update of source file -->
 
@@ -1591,7 +1528,7 @@ Nas seções seguintes veremos como este requisito pode ser relaxado, permitindo
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../middleware/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Middlewares" rel="prev">
+        <a href="../replica_management/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Gerenciamento de Réplicas" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1600,20 +1537,20 @@ Nas seções seguintes veremos como este requisito pode ser relaxado, permitindo
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Middlewares
+              Gerenciamento de Réplicas
             </div>
           </div>
         </a>
       
       
         
-        <a href="../mom/" class="md-footer__link md-footer__link--next" aria-label="Próximo: MOM" rel="next">
+        <a href="../references/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Referências" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              MOM
+              Referências
             </div>
           </div>
           <div class="md-footer__button md-icon">

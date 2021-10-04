@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#detector-de-falhas-swim" class="md-skip">
+        <a href="#gerenciamento-de-gruposdeteccao-de-falhas-swim" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -803,10 +803,97 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../consistency/consistency/" class="md-nav__link">
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
         Consistência
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Consistência" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Consistência
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/consistency_models/" class="md-nav__link">
+        Modelos
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/data_centric/" class="md-nav__link">
+        Centrado nos Dados
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/client_centric/" class="md-nav__link">
+        Centrado no Cliente
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/replica_management/" class="md-nav__link">
+        Gerenciamento de Réplicas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/checkpointing/" class="md-nav__link">
+        Checkpointing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/references/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1145,9 +1232,10 @@
 
 
   <!-- Content -->
-  <h1 id="detector-de-falhas-swim">Detector de Falhas: SWIM</h1>
-<details class="todo"><summary>SWIM</summary><p>Descrição</p>
-</details>
+  <h1 id="gerenciamento-de-gruposdeteccao-de-falhas-swim">Gerenciamento de Grupos/Detecção de Falhas: SWIM</h1>
+<p>SWIM, ou <em>**S**calable **W**eakly-Consistent **I**nfection-Style Group-**M**embership</em>, é um sistema para gerenciamento de pertinência de nós a um grupo de nós que usa protocolos epidêmicos como fundação para comunicação.</p>
+<p>O sistema tem duas partes fundamentais, detecção de falhas e propagação de informação por <em>gossip</em>.
+Embora haja a divisão, as partes se integram, pois o detector de falhas propaga suas suspeitas usando o protocolo de <em>gossiping</em>  e o protocolo de •gossiping* coloca suas mensagens em <em>piggyback</em>  nos pings.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0bAJ4iNnf5M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
   <!-- Last update of source file -->

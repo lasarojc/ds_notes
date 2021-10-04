@@ -11,14 +11,14 @@
       
       
       
-        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/consistency/consistency/">
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/consistency/data_centric/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
     
     
       
-        <title>Consistência - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Centrado nos Dados - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#modelos-de-consistencia" class="md-skip">
+        <a href="#modelos-centrados-nos-dados" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Consistência
+              Centrado nos Dados
             
           </span>
         </div>
@@ -805,25 +805,64 @@
     
   
   
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
+      
+      <label class="md-nav__link" for="__nav_9">
+        Consistência
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Consistência" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Consistência
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../consistency_models/" class="md-nav__link">
+        Modelos
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Consistência
+          Centrado nos Dados
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Consistência
+        Centrado nos Dados
       </a>
       
         
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -833,191 +872,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#modelos-de-consistencia" class="md-nav__link">
-    Modelos de Consistência
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos de Consistência">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelos-centrados-nos-dados" class="md-nav__link">
-    Modelos Centrados nos Dados
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos Centrados nos Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#linearabilidade" class="md-nav__link">
     Linearabilidade
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-sequencial" class="md-nav__link">
     Consistência Sequencial
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-causal" class="md-nav__link">
     Consistência Causal
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-fifo" class="md-nav__link">
     Consistência FIFO
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-de-entrada" class="md-nav__link">
     Consistência de Entrada
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modelos-centrados-nos-clientes" class="md-nav__link">
-    Modelos Centrados nos Clientes
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos Centrados nos Clientes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-sistema" class="md-nav__link">
-    Modelo de Sistema
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leituras-monotonicas" class="md-nav__link">
-    Leituras Monotônicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escritas-monotonicas" class="md-nav__link">
-    Escritas Monotônicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leia-suas-escritas" class="md-nav__link">
-    Leia suas Escritas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escritas-seguem-leituras" class="md-nav__link">
-    Escritas seguem Leituras
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gerenciamento-de-replicas" class="md-nav__link">
-    Gerenciamento de Réplicas
-  </a>
-  
-    <nav class="md-nav" aria-label="Gerenciamento de Réplicas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#posicionamento" class="md-nav__link">
-    Posicionamento
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#propagacao-de-atualizacoes" class="md-nav__link">
-    Propagação de Atualizações
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recuperacao-checkpoint" class="md-nav__link">
-    Recuperação &amp; Checkpoint
-  </a>
-  
-    <nav class="md-nav" aria-label="Recuperação &amp; Checkpoint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#log-recuperavel" class="md-nav__link">
-    Log Recuperável
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#estado-global-consistente" class="md-nav__link">
-    Estado global consistente
-  </a>
-  
-    <nav class="md-nav" aria-label="Estado global consistente">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#checkpointing-independente" class="md-nav__link">
-    Checkpointing independente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#checkpointing-coordenado" class="md-nav__link">
-    Checkpointing coordenado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
   </a>
   
 </li>
@@ -1026,6 +910,60 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../client_centric/" class="md-nav__link">
+        Centrado no Cliente
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../replica_management/" class="md-nav__link">
+        Gerenciamento de Réplicas
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checkpointing/" class="md-nav__link">
+        Checkpointing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        Referências
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1328,6 +1266,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1336,191 +1276,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#modelos-de-consistencia" class="md-nav__link">
-    Modelos de Consistência
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos de Consistência">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelos-centrados-nos-dados" class="md-nav__link">
-    Modelos Centrados nos Dados
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos Centrados nos Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#linearabilidade" class="md-nav__link">
     Linearabilidade
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-sequencial" class="md-nav__link">
     Consistência Sequencial
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-causal" class="md-nav__link">
     Consistência Causal
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-fifo" class="md-nav__link">
     Consistência FIFO
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#consistencia-de-entrada" class="md-nav__link">
     Consistência de Entrada
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modelos-centrados-nos-clientes" class="md-nav__link">
-    Modelos Centrados nos Clientes
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelos Centrados nos Clientes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-sistema" class="md-nav__link">
-    Modelo de Sistema
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leituras-monotonicas" class="md-nav__link">
-    Leituras Monotônicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escritas-monotonicas" class="md-nav__link">
-    Escritas Monotônicas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#leia-suas-escritas" class="md-nav__link">
-    Leia suas Escritas
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escritas-seguem-leituras" class="md-nav__link">
-    Escritas seguem Leituras
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gerenciamento-de-replicas" class="md-nav__link">
-    Gerenciamento de Réplicas
-  </a>
-  
-    <nav class="md-nav" aria-label="Gerenciamento de Réplicas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#posicionamento" class="md-nav__link">
-    Posicionamento
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#propagacao-de-atualizacoes" class="md-nav__link">
-    Propagação de Atualizações
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#recuperacao-checkpoint" class="md-nav__link">
-    Recuperação &amp; Checkpoint
-  </a>
-  
-    <nav class="md-nav" aria-label="Recuperação &amp; Checkpoint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#log-recuperavel" class="md-nav__link">
-    Log Recuperável
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#estado-global-consistente" class="md-nav__link">
-    Estado global consistente
-  </a>
-  
-    <nav class="md-nav" aria-label="Estado global consistente">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#checkpointing-independente" class="md-nav__link">
-    Checkpointing independente
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#checkpointing-coordenado" class="md-nav__link">
-    Checkpointing coordenado
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
   </a>
   
 </li>
@@ -1546,64 +1331,9 @@
        as the main headline.
     -->
 
-  <h1>Consistência</h1>
-
 
   <!-- Content -->
-  <p>Considere por um momento, uma <strong><em>Content Delivery Network</em></strong> (CDN).</p>
-<details class="sideslide"><summary>CDN</summary><ul>
-<li>Conteúdo é colocado próximo aos clientes. </li>
-<li>Conteúdo estático ou majoritariamente determinístico. </li>
-<li>Um pequeno atraso na replicação é tolerado.</li>
-<li>Atualização acontece infrequentemente.</li>
-</ul>
-</details>
-<p>As <em>Content Delivery Networks</em> são sistemas que replicam os dados do contratante para, dinamicamente, colocar o conteúdo próximo ao usuário.</p>
-<p><img alt="https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/" src="../../images/cdn.jpeg" /></p>
-<p>Se o conteúdo é majoritariamente estático, entregar esta funcionalidade é "simples", implicando apenas em um pequeno atraso entre a publicação de novo conteúdo e sua disponibilização para os usuários.
-Neste caso, um protocolo de difusão totalmente ordenada, como o RAFT, pode ser usado na replicação, isto é, para garantir que todos os servidores vejam as mesmas mudanças, na mesma ordem, e que alcancem o mesmo estado final em algum momento.
-Contudo, os protocolos de difusão totalmente ordenada tem um alto custo para atualizar as réplicas e este custo pode ser demais para a aplicação.
-Neste caso, podemos tentar relaxar os requisitos da aplicação, por exemplo permitindo que atualizações sejam vistas em ordens diferentes por diferentes "réplicas", agora com aspas.
-Por exemplo, se em vez de difusão atômica usássemos IP-Multicast, teríamos uma atualização mais barata dos dados, mas alguns valores escritos poderiam nunca ser vistos.</p>
-<p>O que quero mostrar aqui é <strong>há custos inerentes</strong> na coordenação das partes do sistema distribuído, mas que é possível pensar em níveis diferentes de coordenação, com diferentes custos e é aí que entram os diversos modelos ou níveis de consistência.</p>
-<h2 id="modelos-de-consistencia">Modelos de Consistência</h2>
-<p>Embora não seja necessário, para falarmos sobre modelos de consistência, falaremos sobre bancos de dados pois é algo próximo da realidade da maioria dos estudantes e torna mais fácil o entendimento do tópico.
-Um banco de dados pode ser pensado, em sua forma mais simplista, como um conjunto de variáveis nas quais valores são armazenados.
-Assim, clientes do banco de dados essencialmente executam comandos como <strong><span class="arithmatex">\(X\)</span> recebe 'João'</strong> e <strong><span class="arithmatex">\(Y\)</span> recebe 'joao arroba hmail.com'</strong>.
-Obviamente que <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span> não precisam ser declarados antes da primeira escrita, assim como chaves primárias não são declaradas até que sejam usadas, e que o valor associado a uma variável pode ter várias partes, como <strong>"{'Endereço':'Av 1, número 2', 'Profissão':'Computeiro'}</strong> e cada parte um tipo. Veja bem, eu disse uma simplificação, mas não quer dizer que nao seja uma simplificação poderosa.</p>
-<p><img alt="Single DB" src="../../drawings/disdb.drawio-0.svg" /></p>
-<p>Quando um processo se comunica com um banco de dados, ele o faz com certas expectativas quanto ao funcionamento deste banco.
-Por exemplo, ao escrever um dados no banco, independentemente de como o banco é implementado, o cliente geralmente espera que as escritas aconteçam na ordem em que as disparou e que, ao ler uma variável, lhe seja retornado o "último" valor escrito na mesma.</p>
-<p><img alt="Single DB" src="../../drawings/disdb.drawio-2.svg" /></p>
-<p>Esta expectativa é independente do banco de dados ser implementado de forma distribuída ou não. Isto é, mesmo que os dados armazenados no banco sejam particionados ou replicados entre vários nós, o cliente espera que o banco tenha comportamento consistente com o de um banco não distribuído e retorne ou aquilo que escreveu ou algo mas recente.</p>
-<p><img alt="Single DB" src="../../drawings/disdb.drawio-1.svg" /></p>
-<details class="sidesline"><summary>Níveis de Consistência</summary><ul>
-<li>Consistência forte: leituras sempre retornam a versão mais recente do dado sendo lido.<ul>
-<li>Propagação instantânea ou <em>locks</em> dos dados sendo manipulados enquanto a propagação acontece.</li>
-</ul>
-</li>
-<li>Consistência fraca: leituras retornam algum dado escrito anteriormente.<ul>
-<li>Qualquer coisa vale</li>
-</ul>
-</li>
-<li>Consistência eventual: se não houver novas escritas, a partir de algum momento as leituras retornam a versão mais recente do dado sendo lido.<ul>
-<li>Propagação acontece no segundo plano</li>
-</ul>
-</li>
-</ul>
-</details>
-<p>A expectativa, ou melhor, a forma como o banco de dados age dada uma interação com o cliente, ou clientes, é o que denominamos um <strong>modelo de consistência</strong>.
-Em particular, a expectativa descrita acima é denominada <strong>linearabilidade</strong>, também conhecida como <strong>consistência forte</strong>.
-Com o advento do NOSQL, mais e mais desenvolvedores buscam modelos alternativos, por exemplo, consistência <strong><em>eventual</em></strong>, em que há a garantia de que atualizações estarão disponíveis a partir de algum momento para a leitura, mas não há uma definição clara de quando isso ocorrerá.<sup id="fnref:eventual"><a class="footnote-ref" href="#fn:eventual">1</a></sup></p>
-<p><img alt="eventual meme" src="../../images/eventual-meme0.png" /></p>
-<p>Enquanto consistência eventual traz melhoras de desempenho, trabalhar com este modelo implica em muito mais complexidade no desenvolvimento dos sistemas que usam o banco.</p>
-<p><img alt="eventual meme" src="../../images/eventual-meme.png" /></p>
-<p>Um terceiro modelo geral de consistência seria a consistência <strong>fraca</strong>, em que a única garantia é de que o valor retornado nas leituras foi escrito em algum momento.
-Na verdade, podemos pensar nos modelos de consistência como um espectro com <strong>forte</strong> e <strong>fraca</strong> nos extremos e diversos modelos, incluindo <strong><em>eventual</em></strong>, no meio.
-Diferentes bancos de dados oferecem diferentes modelos, com nomes parecidos ou até iguais e é preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.</p>
-<p><a href="https://arxiv.org/abs/1512.00168"><img alt="" src="../../images/consistency-models.png" /></a></p>
-<p>Além disso, os modelos podem ser divididos em <strong>Centrados nos Dados</strong>  e <strong>Centrados nos Clientes</strong>, sendo que no primeiro o modelo é definido em termos das garantias de consistência dos dados e, no segundo, em termos das garantias sobre o que os clientes vêem.<sup id="fnref:util"><a class="footnote-ref" href="#fn:util">2</a></sup></p>
-<h3 id="modelos-centrados-nos-dados">Modelos Centrados nos Dados</h3>
+  <h1 id="modelos-centrados-nos-dados">Modelos Centrados nos Dados</h1>
 <details class="sideslide"><summary>Modelos de consistência</summary><ul>
 <li>Propagação por ordenação de operações<ul>
 <li>Linearabilidade: ordenação total que segue a linha do tempo.</li>
@@ -1675,306 +1405,6 @@ Diferentes bancos de dados oferecem diferentes modelos, com nomes parecidos ou a
 <li>Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.</li>
 </ul>
 <p><img alt="" src="../../images/07-10.png" /></p>
-<h3 id="modelos-centrados-nos-clientes">Modelos Centrados nos Clientes</h3>
-<p><strong>Ideia básica</strong></p>
-<p>Evitar sincronização global focando-se no que os clientes vêem do sistema. Se para os clientes parecer consistente, tudo bem.</p>
-<ul>
-<li>
-<p>Consistência Eventual</p>
-<ul>
-<li>Se nenhuma escrita ocorrer em período considerável de tempo, os clientes gradualmente se sincronizarão e ficarão consistentes.</li>
-<li>Se clientes sempre acessarem as mesmas réplicas, terão impressão de consistência.</li>
-</ul>
-</li>
-<li>
-<p>Garantias são do ponto de vista de <em>um</em> cliente.</p>
-<ul>
-<li>Leituras monotônicas</li>
-<li>Escrita monotônicas</li>
-<li>Leia suas escritas</li>
-<li>Escritas seguem leituras.</li>
-</ul>
-</li>
-</ul>
-<h5 id="modelo-de-sistema">Modelo de Sistema</h5>
-<p><img alt="" src="../../images/07-11.png" /></p>
-<p>Cliente pode se mover antes de sua última operação ter replicado do servidor onde estava para o novo servidor.</p>
-<h5 id="leituras-monotonicas">Leituras Monotônicas</h5>
-<p><strong>Garantia</strong></p>
-<p>Se um processo lê o valor de um item <span class="arithmatex">\(x\)</span>, qualquer leitura sucessiva de <span class="arithmatex">\(x\)</span> retornará o mesmo valor ou um mais recente.</p>
-<ul>
-<li>Toda vez que se conecta a um servidor de email, seu cliente lê novas mensagens, caso haja.</li>
-<li>O cliente nunca esquece uma mensagem, mesmo que ainda não esteja no servidor conectado por último.</li>
-<li>WS(<span class="arithmatex">\(x_i\)</span>) -- operações de escrita (<em>write set</em>) que levaram a variável <span class="arithmatex">\(x\)</span> a ter o valor <span class="arithmatex">\(x_i\)</span>.</li>
-<li>WS(<span class="arithmatex">\(x_i;x_j\)</span>) -- operações de escrita relativas a <span class="arithmatex">\(x_j\)</span> incluem operações de escrita relativas a <span class="arithmatex">\(x_i\)</span></li>
-</ul>
-<p><img alt="" src="../../images/07-12.png" /></p>
-<h5 id="escritas-monotonicas">Escritas Monotônicas</h5>
-<p><strong>Garantia:</strong></p>
-<p>Se um processo escreve em item <span class="arithmatex">\(x\)</span>, então esta operação deve terminar antes que qualquer escrita sucessiva em <span class="arithmatex">\(x\)</span> possa ser executada pelo mesmo processo.</p>
-<ul>
-<li>Em um sistema de arquivos na rede, a escrita do conteúdo de um arquivo, em certa posição, só pode ser feita se escritas anteriores já estão registradas no arquivo, independentemente de o cliente contactar novo servidor de arquivos.</li>
-</ul>
-<p><img alt="" src="../../images/07-13.png" /></p>
-<h5 id="leia-suas-escritas">Leia suas Escritas</h5>
-<p><strong>Garantia:</strong></p>
-<p>Se um processo escreve em item <span class="arithmatex">\(x\)</span>, então leituras sucessivas no mesmo item pelo mesmo processo devem refletir tal escrita.</p>
-<ul>
-<li>Atualizar código fonte de uma página e exigir que o navegador carrega a nova versão.</li>
-</ul>
-<p><img alt="" src="../../images/07-14.png" /></p>
-<h5 id="escritas-seguem-leituras">Escritas seguem Leituras</h5>
-<p><strong>Garantia:</strong></p>
-<p>Se um processo lê um item <span class="arithmatex">\(x\)</span>, então escritas sucessivas no mesmo item só podem ser completadas se o mesmo reflete o valor lido anteriormente.</p>
-<ul>
-<li>Só é permitido enviar uma resposta a uma mensagem se a mensagem em si é vista, independentemente do cliente ter se movimentado.</li>
-</ul>
-<p><img alt="" src="../../images/07-15.png" /></p>
-<h2 id="gerenciamento-de-replicas">Gerenciamento de Réplicas</h2>
-<h3 id="posicionamento">Posicionamento</h3>
-<p>Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor custo de comunicação?</p>
-<ul>
-<li>Objetos (código/dados)</li>
-<li>Permanente</li>
-<li>Sob demanda do servidor -- por exemplo em uma CDN</li>
-<li>Sob demanda do cliente -- por exemplo um cache.</li>
-</ul>
-<p><img alt="" src="../../images/07-17.png" /></p>
-<h6>Sob demanda do Servidor</h6>
-<ul>
-<li><span class="arithmatex">\(Q\)</span> conta acessos ao arquivo <span class="arithmatex">\(F\)</span></li>
-<li>Agrega acessos por possível réplica mais próxima (<span class="arithmatex">\(P\)</span>)</li>
-<li>Número de acessos acima de limiar <span class="arithmatex">\(R\)</span>, replica para <span class="arithmatex">\(P\)</span></li>
-<li>Número de acessos abaixo de <span class="arithmatex">\(D\)</span>, apaga de <span class="arithmatex">\(P\)</span></li>
-<li><span class="arithmatex">\(D &lt; R\)</span></li>
-<li>Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre <span class="arithmatex">\(D\)</span> e <span class="arithmatex">\(R\)</span>), considera migrar.</li>
-</ul>
-<p><img alt="" src="../../images/07-18.png" /></p>
-<h3 id="propagacao-de-atualizacoes">Propagação de Atualizações</h3>
-<p>Réplicas precisam ser atualizadas.</p>
-<ul>
-<li>Propagar dados -- não reexecuta operações.</li>
-<li>Propagar operações -- não copia todos os dados modificados.</li>
-<li>Propagar notificações -- réplica precisa solicitar atualização.<br/> Usado em caches.</li>
-</ul>
-<p>Melhor opção depende do custo das operações, dados manipulados, e taxa de leitura/escrita dos dados.</p>
-<ul>
-<li>Propagar dados<ul>
-<li>razão leitura/escrita é grande</li>
-<li>operações são caras</li>
-</ul>
-</li>
-<li>Propagar operações<ul>
-<li>razão leitura/escrita é grande</li>
-<li>operações são baratas</li>
-</ul>
-</li>
-<li>Propagar notificações<ul>
-<li>razão leitura/escrita é pequena</li>
-<li>pouco uso da rede</li>
-</ul>
-</li>
-</ul>
-<h6>Proativo/Push ou Reativo/Pull</h6>
-<ul>
-<li>
-<p>Proativo</p>
-<ul>
-<li>Mantém réplicas consistentes</li>
-<li>Desnecessário se leitura <span class="arithmatex">\(&lt;&lt;\)</span> escrita.</li>
-</ul>
-</li>
-<li>
-<p>Reativo</p>
-<ul>
-<li>Réplicas só se tornam consistentes quando necessário.</li>
-<li>Lento se leitura <span class="arithmatex">\(&gt;&gt;\)</span> escrita</li>
-</ul>
-</li>
-</ul>
-<p><em>Qual é melhor?</em></p>
-<h6>Híbrido: Lease</h6>
-<ul>
-<li>Réplica se registra para receber atualizações/notificações por um período.</li>
-<li>Estado sobre réplicas é mantido enquanto possível, pelo período contratado.</li>
-<li>Em caso de sobrecarga, deixa de mandar atualizações/notificações.</li>
-<li>Em caso de lease antigo não renovado, deixa de mandar atualizações/notificações.</li>
-<li>Em caso de renovações frequentes, aumenta o período do lease.</li>
-</ul>
-<h2 id="recuperacao-checkpoint">Recuperação &amp; Checkpoint</h2>
-<p>Assumindo que o modelo de consistência implementado é satisfatório, temos que garantir que este modelo não será quebrado na presença de falhas.
-Isto é, suponha que uma série de erros aconteceram no sistema, e que não é possível continuar o processamento em algum ou todos os módulos do sistema.
-Neste cenário, o sistema precisa agir para ou avançar para um novo estado, livre de erros, ou retroceder a um estado anterior, correto.</p>
-<p>Voltar a um estado correto parece ser a solução mais fácil, mas pare isto é preciso garantir a informação sobre estados anteriores seja recuperável. </p>
-<h3 id="log-recuperavel">Log Recuperável</h3>
-<h6>Replicação</h6>
-<p>Como garantir que o log poderá ser lido para recuperar o processo?</p>
-<p><img alt="" src="../../images/08-23.png" /></p>
-<ul>
-<li>Dois discos iguais?</li>
-<li>Dados diferentes, mas ambos bons?</li>
-<li>Um bom outro estragado?</li>
-<li>Ambos estragados?</li>
-</ul>
-<h6>Blocos de paridade</h6>
-<h6>Erasure Coding</h6>
-<p>Blocos de paridade</p>
-<p><img alt="https://support.huawei.com/enterprise/br/doc/EDOC1100067966/c131d3be/erasure-code-nm-protection" src="../../images/erasure-coding-diagram0.png" /></p>
-<p>Cálculo da paridade</p>
-<p><img alt="https://community.mellanox.com/s/article/understanding-erasure-coding-offload" src="../../images/erasure-coding-diagram1.png" /></p>
-<p>Recuperação de blocos perdidos</p>
-<p><img alt="https://www.rubrik.com/en/blog/architecture/17/2/erasure-coding-rubrik-doubled-capacity-cluster" src="../../images/erasure-coding-diagram.jpeg" /></p>
-<p><a href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction">Reed Solomon</a></p>
-<h3 id="estado-global-consistente">Estado global consistente</h3>
-<p>Um estado global, o conjunto com um estado local de cada processo no sistema e também são conhecidos como ou <strong><em>snapshots</em></strong>.</p>
-<p><img alt="" src="../../images/08-24.png" /></p>
-<p>Para serem úteis, <em>snapshots</em> precisam formar <strong>Estado Globais Consistentes</strong>, que são estados globais tal que toda mensagem recebida no estado local de um processo também precisa fazer parte do estado local do processo remetente.</p>
-<p><img alt="" src="../../images/08-24.png" /></p>
-<p>O mais recente estado global consistente forma uma <strong>linha de recuperação</strong>.</p>
-<p><img alt="" src="../../images/08-24.png" /></p>
-<p><strong>Linhas de Recuperação</strong> podem ser usados para, não surpreendentemente, recuperação do sistema, mas também para <strong>coleta de lixo</strong> (remover objetos não referenciados em nenhum outro processo), <strong>detecção de deadlocks</strong> e <strong>depuração</strong> (pausar o sistema).</p>
-<p>Se o sistema provê comunicação confiável, então toda mensagem enviada no estado local de um processo também precisa fazer parte do estado local do destinatário, ou o estado global precisa capturar o estado dos canais de comunicação.</p>
-<h4 id="checkpointing-independente">Checkpointing independente</h4>
-<p>Cada processo faz o checkpoint local independentemente, incorrendo no risco de um <em>rollback</em> em cascata.</p>
-<ul>
-<li>Seja <span class="arithmatex">\(C_i^m\)</span> o <span class="arithmatex">\(m\)</span>-ésimo checkpoint do processo <span class="arithmatex">\(p_i\)</span>.</li>
-<li>Seja <span class="arithmatex">\(I_i^m\)</span> o intervalo entre <span class="arithmatex">\(C_i^{m-1}\)</span> e <span class="arithmatex">\(C_i^m\)</span>.</li>
-<li>Quando o processo <span class="arithmatex">\(p_i\)</span> envia a mensagem no intervalo <span class="arithmatex">\(I_i^m\)</span>, envia <span class="arithmatex">\((i,m)\)</span> em piggyback</li>
-<li>Quando o processo <span class="arithmatex">\(p_j\)</span> recebe a mensagem no intervalo <span class="arithmatex">\(I_j^n\)</span>, grava a dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span></li>
-<li>
-<p>A dependência <span class="arithmatex">\(I_i^m \rightarrow I_j^n\)</span> é salva junto com o checkpoint <span class="arithmatex">\(C_j^n\)</span></p>
-</li>
-<li>
-<p>Se o processo <span class="arithmatex">\(p_j\)</span> é revertido para o estado <span class="arithmatex">\(C_j^n\)</span>, então o <span class="arithmatex">\(p_i\)</span> não pode reverter para nenhum estado anterior a <span class="arithmatex">\(C_i^m\)</span>, ou não teria enviado as mensagens recebidas por <span class="arithmatex">\(p_j\)</span> 4 inclusas em <span class="arithmatex">\(C_j^n\)</span>.</p>
-</li>
-</ul>
-<p>ou</p>
-<ul>
-<li>Se o processo <span class="arithmatex">\(p_i\)</span> é revertido para o estado <span class="arithmatex">\(C_i^{m-1}\)</span>, então o <span class="arithmatex">\(p_j\)</span> tem que ser revertido pelo menos até <span class="arithmatex">\(C_j^{n-1}\)</span>, ou incluiria mensagens ainda não enviadas por <span class="arithmatex">\(p_i\)</span>.</li>
-</ul>
-<p>Como implementar a recuperação?</p>
-<h6># Caso patológico</h6>
-<ul>
-<li><span class="arithmatex">\(p_i\)</span> e <span class="arithmatex">\(p_j\)</span> no estado inicial (<span class="arithmatex">\(C_i^0, C_j^0\)</span>)</li>
-<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> (<span class="arithmatex">\(C_i^1 \rightarrow C_j^1\)</span>)</li>
-<li><span class="arithmatex">\(C_j^1\)</span></li>
-<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^2 \rightarrow C_i^1\)</span></li>
-<li><span class="arithmatex">\(C_i^1\)</span></li>
-<li><span class="arithmatex">\(p_i\)</span> manda mensagens para <span class="arithmatex">\(p_j\)</span> <span class="arithmatex">\(C_i^2 \rightarrow C_j^2\)</span></li>
-<li><span class="arithmatex">\(C_j^2\)</span></li>
-<li><span class="arithmatex">\(p_j\)</span> manda mensagens para <span class="arithmatex">\(p_i\)</span> <span class="arithmatex">\(C_j^3 \rightarrow C_i^2\)</span></li>
-<li><span class="arithmatex">\(C_i^2\)</span></li>
-<li>...</li>
-</ul>
-<p>Se estados locais são capturados na "hora errada", a linha de recuperação pode ser o estado inicial, fazendo um <strong>rollback em cascata*</strong></p>
-<p><img alt="" src="../../images/08-25.png" /></p>
-<h4 id="checkpointing-coordenado">Checkpointing coordenado</h4>
-<p>Processos se coordenam por troca de mensagem para executar checkpointing "simultaneamente".</p>
-<h6>Bloqueio em duas fases</h6>
-<ul>
-<li>Um coordenador faz multicast da mensagem "checkpoint-request"</li>
-<li>Quando um participante recebe "checkpoint-request"<ul>
-<li>faz um checkpoint local</li>
-<li>para de mandar mensagens da aplicação</li>
-<li>responde com "checkpoint-taken"</li>
-</ul>
-</li>
-<li>Quando "checkpoint-taken" recebido de todos os participantes, multicast "checkpoint-done"</li>
-<li>Quando receber "checkpoint-done", retoma computação normal</li>
-<li>Por quê funciona?  Impede formação de dependências circulares.</li>
-<li>Todos os processos precisam participar?  Somente os que dependem da recuperação do coordenador.</li>
-</ul>
-<p>Pontos negativos? </p>
-<ul>
-<li>Se o coordenador falha, outros processos ficam bloqueados?  <ul>
-<li>Timeout!</li>
-</ul>
-</li>
-<li>Como eleger outro coordenador? <ul>
-<li>E se dois aparecerem juntos? </li>
-<li>Pode ser resolvido com um protocolo de eleição como o do RAFT. </li>
-<li>Não é garantido, mas aumenta as chances de sucesso.</li>
-</ul>
-</li>
-</ul>
-<h6>Chandy-Lamport</h6>
-<ul>
-<li>Não interfere na aplicação</li>
-<li>
-<p>Cada processo grava snapshot independentemente</p>
-</li>
-<li>
-<p>Observador (iniciador do snapshot)</p>
-<ul>
-<li>Salva o próprio estado</li>
-<li>Envia uma mensagem "snapshot" aos outros processos em cada canal de saída</li>
-<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal.</li>
-</ul>
-</li>
-<li>
-<p>Um processo <span class="arithmatex">\(p\)</span> que receba "snapshot" de um processo <span class="arithmatex">\(q\)</span></p>
-<ul>
-<li>grava estado local <span class="arithmatex">\(S_p\)</span></li>
-<li>grava estado do canal <span class="arithmatex">\(C_{q,p} =\emptyset\)</span></li>
-<li>Envia uma mensagem "snapshot" aos outros processos em cada canal de saída</li>
-<li>Grava as mensagens chegando em cada canal até que receba uma mensagem "snapshot" naquele canal (excluindo <span class="arithmatex">\(C_{q,p}\)</span>)</li>
-</ul>
-</li>
-<li>
-<p>Protocolo termina para o processo <span class="arithmatex">\(p\)</span> quando tiver recebido marcador "snapshot" em cada um de seus canais.</p>
-</li>
-<li>O estado global consiste dos snapshots + estado em cada um dos canais.</li>
-<li>Exige canais FIFO</li>
-</ul>
-<h6>Message Logging</h6>
-<p>Em vez de checkpoints frequentes, crie um log da comunicação e o re-execute a partir do último checkpoint.</p>
-<p><strong>Ideia básica:</strong>   </p>
-<p>A computação é determinada pela troca de mensagens (eventos não determinísticos). 
-Ao se enviar a mesma mensagem a partir de um certo estado, a computação desencadeada é sempre a mesma.</p>
-<p>Realista este modelo? Há outros eventos não determinísticos no sistema?</p>
-<p><img alt="" src="../../images/08-26.png" /></p>
-<ul>
-<li>
-<p><span class="arithmatex">\(Hdr(m)\)</span></p>
-<ul>
-<li>Cabeçalho da mensagem <span class="arithmatex">\(m\)</span> contendo fonte, destino, número de sequência e número de entrega.</li>
-<li>O cabeçalho contém a informação necessária para reenviar e re-receber a mensagem na ordem certa (dados devem ser reproduzidos para aplicação).</li>
-<li>A mensagem <span class="arithmatex">\(m\)</span> é estável se <span class="arithmatex">\(Hdr(m)\)</span> estiver em memória estável.</li>
-</ul>
-</li>
-<li>
-<p><span class="arithmatex">\(Dep(m)\)</span>: o conjunto de processos a quem <span class="arithmatex">\(m\)</span> ou mensagens que dependem de <span class="arithmatex">\(m\)</span> foram entregues.</p>
-</li>
-<li><span class="arithmatex">\(Copy(m)\)</span>: o conjunto de processos que tem uma cópia de <span class="arithmatex">\(Hdr(m)\)</span> em memória volátil.</li>
-</ul>
-<p>Se <span class="arithmatex">\(C\)</span> é um conjunto de processos falhos, então <span class="arithmatex">\(Q\not\in C\)</span> é um órfão se existe uma mensagem <span class="arithmatex">\(m\)</span> tal que <span class="arithmatex">\(Q \in Dep(m)\)</span> e <span class="arithmatex">\(Copy(m)\subseteq C\)</span>    </p>
-<p>Se os processos em <span class="arithmatex">\(C\)</span> forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou <span class="arithmatex">\(Q\)</span> a receber <span class="arithmatex">\(m\)</span> ou um mensagem causalmente dependente de <span class="arithmatex">\(m\)</span>.</p>
-<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, há no máximo um processo dependente em <span class="arithmatex">\(m\)</span> (<span class="arithmatex">\(Dep(m) \leq 1\)</span>)</p>
-<p>Uma mensagem não estável, no protocolo pessimista, deve ser estabilizada antes do envio da próxima mensagem.</p>
-<p>Toda mensagem é precedida por uma escrita em disco.</p>
-<p>Para cada mensagem <span class="arithmatex">\(m\)</span> não estável, então devemos garantir que se <span class="arithmatex">\(Copy(m) \subseteq C\)</span>, então <em>eventually</em> <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, onde <span class="arithmatex">\(C\)</span> é o conjunto de processos que falharam.</p>
-<p>Para garantir que <span class="arithmatex">\(Dep(m) \subseteq C\)</span>, fazemos um rollback de cada órfão <span class="arithmatex">\(Q\)</span> até que <span class="arithmatex">\(Q \not\in Dep(m)\)</span></p>
-<p>Isto é, forçamos <span class="arithmatex">\(Q\)</span> a ser recuperado mesmo que não tenha falhado.</p>
-<h2 id="referencias">Referências</h2>
-<ul>
-<li><a href="https://blog.yugabyte.com/a-primer-on-acid-transactions/">https://blog.yugabyte.com/a-primer-on-acid-transactions/</a></li>
-<li><a href="https://jepsen.io/consistency">https://jepsen.io/consistency</a></li>
-<li><a href="https://fauna.com/blog/demystifying-database-systems-part-4-isolation-levels-vs-consistency-levels">https://fauna.com/blog/demystifying-database-systems-part-4-isolation-levels-vs-consistency-levels</a></li>
-<li><a href="https://aphyr.com/posts/313-strong-consistency-models">https://aphyr.com/posts/313-strong-consistency-models</a></li>
-<li><a href="../../refs/encyclopedia18.pdf">Database Consistency Models</a></li>
-<li><a href="http://composition.al/blog/2019/04/26/an-example-run-of-the-chandy-lamport-snapshot-algorithm/">Chandy e Lamport</a></li>
-</ul>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:eventual">
-<p>Enquanto no Português <em>Eventual</em> quer dizer <strong>possivelmente</strong>, no inglês quer dizer <strong>em algum momento</strong> não determinado, mas vindouro.&#160;<a class="footnote-backref" href="#fnref:eventual" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:util">
-<p>Caso esteja se perguntando se este modelo e estudo tem alguma serventia para você, afinal nos bancos de dados com que trabalhou ou trabalha as operações são agrupadas em <strong>transações</strong> e não executadas individualmente e as transações garantem ACID, lhe asseguro que sim e que falaremos em transações mais adiante.&#160;<a class="footnote-backref" href="#fnref:util" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
 
   <!-- Last update of source file -->
 
@@ -1996,7 +1426,7 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../../fault/dependability/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Dependabilidade" rel="prev">
+        <a href="../consistency_models/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Modelos" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2005,20 +1435,20 @@ Ao se enviar a mesma mensagem a partir de um certo estado, a computação desenc
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Dependabilidade
+              Modelos
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../db/disdb/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Bancos de Dados" rel="next">
+        <a href="../client_centric/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Centrado no Cliente" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Bancos de Dados
+              Centrado no Cliente
             </div>
           </div>
           <div class="md-footer__button md-icon">
