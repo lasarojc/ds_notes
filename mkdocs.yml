@@ -149,7 +149,14 @@ nav:
                 - Falhas bizantinas: fault/bizantine.md
                 - Dependabilidade: fault/dependability.md
 
-        - Consistência: consistency/consistency.md
+        - Consistência: 
+                - Modelos: consistency/consistency_models.md
+                - Centrado nos Dados: consistency/data_centric.md
+                - Centrado no Cliente: consistency/client_centric.md
+                - Gerenciamento de Réplicas: consistency/replica_management.md
+                - Checkpointing: consistency/checkpointing.md
+                - Referências: consistency/references.md
+
         - Bancos de Dados: db/disdb.md
         
         - Sistemas de Arquivos: filesystem/disfs.md
