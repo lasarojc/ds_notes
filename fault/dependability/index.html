@@ -794,9 +794,39 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Dependabilidade
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Dependabilidade
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#calculo-da-dependabilidade" class="md-nav__link">
+    Cálculo da Dependabilidade
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1211,6 +1241,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#calculo-da-dependabilidade" class="md-nav__link">
+    Cálculo da Dependabilidade
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1234,7 +1279,7 @@
   <!-- Content -->
   <h1 id="dependabilidade">Dependabilidade</h1>
 <p>Da necessidade de se poder depender de um sistema, surge a ideia de <strong>dependabilidade</strong>, isto é, de um sistema ter a propriedade de se poder depender do mesmo.</p>
-<p>Um pouco mais formalmente, dizemos que um componente <span class="arithmatex">\(C\)</span> <strong>depende de um componente</strong> <span class="arithmatex">\(C'\)</span> se a corretude do comportamento de <span class="arithmatex">\(C\)</span> depende da corretude do componente <span class="arithmatex">\(C'\)</span> e dizemos também que um componente é "dependável" (<em>dependable</em>) na medida em que outros podem depender dele.
+<p>Um pouco mais formalmente, dizemos que um componente <span class="arithmatex">\(C\)</span> <strong>depende de um componente</strong> <span class="arithmatex">\(C'\)</span> se a corretude do comportamento de <span class="arithmatex">\(C\)</span> depende da corretude do componente <span class="arithmatex">\(C'\)</span> e dizemos também que um componente é "<strong>dependável</strong>" (<em>dependable</em>) na medida em que outros podem depender dele.
 A dependabilidade é essencial aos componentes de sistemas distribuídos, pois como diz o ditado, uma corrente é tão forte quanto seu elo mais fraco.</p>
 <p>Esta propriedade por ser dividida em outras propriedades mais "simples":<sup id="fnref:avizienis"><a class="footnote-ref" href="#fn:avizienis">1</a></sup></p>
 <ul>
@@ -1321,7 +1366,7 @@ A seguinte tabela resume o que significa na práticas os valores mais comuns de 
 </tbody>
 </table>
 <p>Apesar da precisão dos valores, o que exatamente esta disponibilidade significa é variável.
-Se você contratar algum serviço na nuvem, por exemplo, o fornecedor pode garantir 99,99% de disponibilidade, mas especificar que o serviço considerado disponível desde que 80% das requisições sejam atendidas em menos de 1s.
+Se você contratar algum serviço na nuvem, por exemplo, o fornecedor pode garantir 99,99% de disponibilidade, mas especificar que o serviço é considerado disponível desde que 80% das requisições sejam atendidas em menos de 1s.
 Os detalhes do que exatamente é considerado são especificados em um acordo de nível de serviço, ou SLA (do inglês, <em>service level agreement</em>).<sup id="fnref:sla"><a class="footnote-ref" href="#fn:sla">3</a></sup>
 O valor final da disponibilidade é dado pela seguinte fórmula, onde</p>
 <ul>
@@ -1332,19 +1377,23 @@ O valor final da disponibilidade é dado pela seguinte fórmula, onde</p>
 \text{Disponbilidade} = \frac{\text{Tempo de disponibilidade acordado}-{\text{Tempo de indisponibilidade}}}{\text{Tempo de disponibilidade acordado}}
 \]</div>
 <h6>Confiabilidade</h6>
-<p>A <strong>confiabilidade</strong> é uma métrica frequentemente confundida com a disponibilidade, mas enquanto esta última mede a prontidão para uso em algum instante, a primeira mede a prontidão para uso por um período, tal que durante tal período o sistema não precise cesse o funcionamento e mantenha um nível de desempenho previamente acordado.</p>
-<p>Para se falar em confiabilidade é necessário pensar em termos <strong>defeitos</strong>, da frequência com que acontecem e dos atrasos que causam.
-Mais adiante discutiremos defeitos no contexto de sistemas distribuídos, mas por enquanto podemos pensar em defeitos simplesmente como <strong>manifestações de problemas do sistema que o impede de executar as operações para as quais foi construído</strong>; se seu sistema é uma lâmpada, então um defeito pode ser a lâmpada queimar ou emitir menos luz do que o necessário.
-Com esta visão de defeitos, podemos definir quatro métricas</p>
+<p>A <strong>confiabilidade</strong> é uma métrica frequentemente confundida com a disponibilidade, mas enquanto esta última mede a prontidão para uso em algum instante, a primeira mede a prontidão para uso por um período, tal que durante tal período o sistema não precise cessar o funcionamento e mantenha um nível de desempenho previamente acordado.</p>
+<p>Para se falar em confiabilidade é necessário pensar em termos de <strong>falhas</strong>, da frequência com que acontecem e dos atrasos que causam.
+Mais adiante discutiremos falhas no contexto de sistemas distribuídos, mas por enquanto podemos pensar em falhas simplesmente como <strong>manifestações de problemas do sistema que o impede de executar as operações para as quais foi construído</strong>; se seu sistema é uma lâmpada, então um defeito pode ser a lâmpada queimar ou emitir menos luz do que o necessário.
+Com esta visão de falhas, podemos definir quatro métricas</p>
 <ul>
 <li>Tempo médio para falha, MTTF (do inglês, <em>mean time to failure</em>) é a expectativa de quanto tempo resta até que o sistema apresente o próximo defeito (relevante);</li>
 <li>Tempo médio para diagnóstico, MTTD (do inglês, <em>mean time to diagnose</em>), é a expectativa de quanto tempo leva perceber que o sistema apresentou um defeito e iniciar sua correção;</li>
 <li>Tempo médio para reparo, MTTR (do inglês, <em>mean time to repair</em>) é a expectativa de quanto tempo leva para corrigir o sistema e retorná-lo ao estado funcional, uma vez que o defeito foi percebido</li>
-<li>Tempo médio entre defeitos, MTBF (do inglês, <em>mean time between failures</em>) é a expectativa de quanto tempo transcorre entre falhas.</li>
+<li>Tempo médio entre falhas, MTBF (do inglês, <em>mean time between failures</em>) é a expectativa de quanto tempo transcorre entre falhas.</li>
 </ul>
 <p><a href="https://www.bmc.com/blogs/system-reliability-availability-calculations/"><img alt="System Reliability &amp; Availability Calculations" src="../../drawings/mtbf.drawio-0.svg" /></a></p>
 <p>A frequência de falhas de um único componente é dada por <span class="arithmatex">\(\lambda = \frac{1}{MTBF}\)</span> e, dada a taxa de falhas de um componente, é possível calcular sua confiabilidade em um certo instante <span class="arithmatex">\(t\)</span> como <span class="arithmatex">\(R(t) = e^{-\lambda t}\)</span>.
 Calcular estas métricas para sistemas com múltiplos componentes, como um sistema distribuído, é possível mas requer uma imersão em probabilidade condicional.</p>
+<h6>Manutenabilidde</h6>
+<p>Manutenabilidade é uma medida da expectativa do quão rápido um sistema é reparado uma vez identificado sua falha.
+Uma manutenabilidade de 95% para 1 hora implica que com 95% de probabilidade chance o sistema voltará a estar funcional dentro de 1 hora.
+A manutenabilidade está intimamente ligada ao tempo médio de reparo (MTTR), mencionado acima.</p>
 <h6>Segurança (<em>Safety</em>)</h6>
 <div class="admonition todo">
 <p class="admonition-title">TODO</p>
@@ -1353,15 +1402,30 @@ Calcular estas métricas para sistemas com múltiplos componentes, como um siste
 <div class="admonition todo">
 <p class="admonition-title">TODO</p>
 </div>
-<h6>Manutenabilidde</h6>
-<div class="admonition todo">
-<p class="admonition-title">TODO</p>
-</div>
 <h6>Segurança (<em>Security</em>)</h6>
 <p>Além da dependabilidade, outra propriedade importante e desejável para os sistemas é a <strong>Confidencialidade</strong>, que quando combinada à <strong>Integridade</strong> é também chamada de <strong>Segurança</strong> (<em>Security</em>). </p>
 <ul>
-<li>Confidencialidade (<em>Confidentiality</em>) -- informação somente é acessível a quem é devido.</li>
+<li>Confidencialidade (<em>Confidentiality</em>) - informação somente é acessível a quem é devido.</li>
+<li>Integridade (<em>Integrity</em>) - Ausência de corrupções.</li>
 </ul>
+<h2 id="calculo-da-dependabilidade">Cálculo da Dependabilidade</h2>
+<p>A dependabilidade é facilmente definida mas não facilmente calculada.
+Simplifiquemos o problema e consideremos um único computador, muito mais simples que um sistema distribuído. 
+O quanto você pode confiar neste computador para desempenhar suas tarefas? Este computador tem memórias, CPU, barramentos, discos, etc. Cada um falha independentemente e por isso a dependabilidade do computador é uma combinação da dependabilidade de todos os componentes do mesmo.</p>
+<p>Simplifiquemos mais ainda e consideremos apenas um tipo de componente, por exemplo um chip de memória.
+Consideremos também apenas a confiabilidade, uma das componentes da dependabilidade.
+Digamos que experimentos foram feitos em chips individuais e que assim se determinou que cada chip tem uma confiabilidade de 99%. Wow!
+Agora suponha que os chips foram organizados em série, isto é, que para que os dados de um chip sejam acessíveis e manipuláveis, os dados de todos os outros também devem estar acessíveis e manipuláveis.
+A probabilidade do sistema estar funcionando é a probabilidade de o primeiro da série estar funcionando, e o segundo da série estar funcionando, e o terceiro da série..., bem, você entendeu a ideia.
+Assim, se a sua configuração tem 10 chips, então a confiabilidade do conjunto é de <span class="arithmatex">\(0,99^10 = 0,9034\)</span>. Se fossem 20 chips, a confiabilidade seria de <span class="arithmatex">\(0,99^10 = 0,81\)</span>.</p>
+<p><img alt="" src="../../drawings/reliability.drawio-0.svg" /></p>
+<p>Se os componentes estivessem ligados em paralelo, ou seja, propiciando formas redundantes de uso, o cálculo seria diferente.
+Neste caso, a probabilidade do sistema não estar funcional seria a probabilidade de nenhum deles estar funcional; dado que um componente não está funcional com probabilidade <span class="arithmatex">\(1-0,99 = 0,01\)</span>, todos não estariam funcionais com probabilidade <span class="arithmatex">\(0,01* 0,01 * 0,01 \ldots\)</span>. Já a probabilidade do sistema estar funcional, sua confiabilidade, é de 1 menos a probabilidade de não estar funcional, isto é, <span class="arithmatex">\(1 - (0,01*0,01*0,01\ldots)\)</span>.
+Se forem 4 componentes, temos <span class="arithmatex">\(1 - 0,01^4 = 0,9999999\)</span>.</p>
+<p><img alt="" src="../../drawings/reliability.drawio-1.svg" /></p>
+<p>Por isso, não basta ter dispositivos individualmente confiáveis; a forma como os mesmos são combinados tem um grande impacto no resultado final.</p>
+<p><img alt="" src="../../drawings/reliability.drawio-1.svg" /></p>
+<p>Embora seja óbvio que quanto mais redundância (caminhos paralelos) tivermos no sistema, maior será a confiabilidade, o que pode lhe induzir a querer aumentar a redundância, lembre-se de que redundância tem um custo, e este custo pode chegar a ser maior que o benefício que esta redundância lhe trará.</p>
 <div class="footnote">
 <hr />
 <ol>
