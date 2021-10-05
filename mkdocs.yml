@@ -145,7 +145,7 @@ nav:
                 - Replicação: fault/replication.md
                 - Detectores de Falhas: fault/failuredetector.md
                 - Acordo: fault/agreement.md
-                - Reconfiguração: fault/reconfiguration.md
+                - Grupos: fault/reconfiguration.md
                 - Falhas bizantinas: fault/bizantine.md
                 - Dependabilidade: fault/dependability.md
 
