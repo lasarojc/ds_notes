@@ -88,4 +88,4 @@ Escritas de um processo são vistas por todos os outros processos na ordem em qu
 * Lock de escrita só retorna quando nenhum outro processo tiver um lock, de leitura ou escrita.
 * Para ler uma variável, processo deve primeiro contactar o dono atual do lock cercando a variável, para pegar as mais recentes atualizações.
 
-![](../images/07-10.png){: style="width:800px"}
+![](../images/07-10.png){: style="width:600px"}

@@ -109,7 +109,7 @@ Consideremos também apenas a confiabilidade, uma das componentes da dependabili
 Digamos que experimentos foram feitos em chips individuais e que assim se determinou que cada chip tem uma confiabilidade de 99%. Wow!
 Agora suponha que os chips foram organizados em série, isto é, que para que os dados de um chip sejam acessíveis e manipuláveis, os dados de todos os outros também devem estar acessíveis e manipuláveis.
 A probabilidade do sistema estar funcionando é a probabilidade de o primeiro da série estar funcionando, e o segundo da série estar funcionando, e o terceiro da série..., bem, você entendeu a ideia.
-Assim, se a sua configuração tem 10 chips, então a confiabilidade do conjunto é de $0,99^10 = 0,9034$. Se fossem 20 chips, a confiabilidade seria de $0,99^10 = 0,81$.
+Assim, se a sua configuração tem 10 chips, então a confiabilidade do conjunto é de $0,99^{10} = 0,9034$. Se fossem 20 chips, a confiabilidade seria de $0,99^{10} = 0,81$.
 
 ![](../drawings/reliability.drawio#0)
 
