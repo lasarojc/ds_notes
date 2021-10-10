@@ -11,21 +11,21 @@
       
       
       
-        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/arch/arch/">
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/arch/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Introdução - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Arquiteturas - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -40,7 +40,7 @@
     
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
     
       
@@ -72,7 +72,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introducao" class="md-skip">
+        <a href="#arquiteturas" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -91,9 +91,11 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
-    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+    <a href=".." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -112,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introdução
+              Arquiteturas
             
           </span>
         </div>
@@ -126,7 +128,7 @@
           <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
             </label>
           
         
@@ -194,11 +196,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -214,7 +219,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+    <a href=".." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -246,7 +251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preface/" class="md-nav__link">
+      <a href="../preface/" class="md-nav__link">
         Prefácio
       </a>
     </li>
@@ -261,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../intro/" class="md-nav__link">
+      <a href="../intro/" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -281,10 +286,44 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
-      <label class="md-nav__link" for="__nav_3">
-        Comunicação
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../comm/">Comunicação</a>
+          
+            <label for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Comunicação" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -293,124 +332,133 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../comm/" class="md-nav__link">
-        Introdução
-      </a>
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/redes/" class="md-nav__link">
+      <a href="../comm/redes/" class="md-nav__link">
         Redes
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/internet/" class="md-nav__link">
+      <a href="../comm/internet/" class="md-nav__link">
         Internet
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/sockets/" class="md-nav__link">
+      <a href="../comm/sockets/" class="md-nav__link">
         Sockets
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/datarep/" class="md-nav__link">
+      <a href="../comm/datarep/" class="md-nav__link">
         Representação
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/middleware/" class="md-nav__link">
+      <a href="../comm/middleware/" class="md-nav__link">
         Middlewares
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/rpc/" class="md-nav__link">
+      <a href="../comm/rpc/" class="md-nav__link">
         RPC
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/mom/" class="md-nav__link">
+      <a href="../comm/mom/" class="md-nav__link">
         MOM
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/epidemics/" class="md-nav__link">
+      <a href="../comm/epidemics/" class="md-nav__link">
         Epidêmicos
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../comm/refs/" class="md-nav__link">
+      <a href="../comm/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -433,10 +481,30 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
-      <label class="md-nav__link" for="__nav_4">
-        Arquiteturas
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">Arquiteturas</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Arquiteturas" data-md-level="1">
         <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
@@ -445,156 +513,35 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Introdução
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        Introdução
-      </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#componentes-e-conectores" class="md-nav__link">
-    Componentes e Conectores
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#clienteservidor" class="md-nav__link">
-    Cliente/Servidor
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sistemas-multi-camadas" class="md-nav__link">
-    Sistemas multi-camadas
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#par-a-par-peer-to-peer-p2p" class="md-nav__link">
-    Par-a-Par (Peer-to-Peer, P2P)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hibridos" class="md-nav__link">
-    Híbridos
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#outras-arquiteturas" class="md-nav__link">
-    Outras arquiteturas
-  </a>
-  
-    <nav class="md-nav" aria-label="Outras arquiteturas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#soa" class="md-nav__link">
-    SOA
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mom" class="md-nav__link">
-    MOM
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#microsservicos" class="md-nav__link">
-    Microsserviços
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#referencias" class="md-nav__link">
-    Referências
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../p2p/" class="md-nav__link">
+      <a href="p2p/" class="md-nav__link">
         P2P
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../microservices/" class="md-nav__link">
+      <a href="microservices/" class="md-nav__link">
         Microsserviços
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -615,10 +562,30 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
-      <label class="md-nav__link" for="__nav_5">
-        Modelos
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../models/">Modelos</a>
+          
+            <label for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Modelos" data-md-level="1">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
@@ -627,40 +594,35 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../models/" class="md-nav__link">
-        Introdução
-      </a>
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../models/models/" class="md-nav__link">
+      <a href="../models/models/" class="md-nav__link">
         Tipos
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../models/processor/" class="md-nav__link">
+      <a href="../models/processor/" class="md-nav__link">
         Processador
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -681,10 +643,20 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
-      <label class="md-nav__link" for="__nav_6">
-        Coordenação
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Coordenação
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Coordenação" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
@@ -693,28 +665,32 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../coord/concurrency/" class="md-nav__link">
+      <a href="../coord/concurrency/" class="md-nav__link">
         Concorrência
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../coord/coord/" class="md-nav__link">
+      <a href="../coord/coord/" class="md-nav__link">
         Coordenação
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -735,10 +711,30 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
       
-      <label class="md-nav__link" for="__nav_7">
-        Tempo
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../time/">Tempo</a>
+          
+            <label for="__nav_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Tempo" data-md-level="1">
         <label class="md-nav__title" for="__nav_7">
           <span class="md-nav__icon md-icon"></span>
@@ -747,40 +743,35 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../time/" class="md-nav__link">
-        Introdução
-      </a>
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../time/physical/" class="md-nav__link">
+      <a href="../time/physical/" class="md-nav__link">
         Tempo Físico
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../time/logical/" class="md-nav__link">
+      <a href="../time/logical/" class="md-nav__link">
         Tempo Lógico
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -801,10 +792,40 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
       
-      <label class="md-nav__link" for="__nav_8">
-        Tolerância a Faltas
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../fault/">Tolerância a Faltas</a>
+          
+            <label for="__nav_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Tolerância a Faltas" data-md-level="1">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
@@ -813,100 +834,105 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../fault/" class="md-nav__link">
-        Introdução
-      </a>
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/failures/" class="md-nav__link">
+      <a href="../fault/failures/" class="md-nav__link">
         Falta/Erros/Falhas
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/replication/" class="md-nav__link">
+      <a href="../fault/replication/" class="md-nav__link">
         Replicação
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/failuredetector/" class="md-nav__link">
+      <a href="../fault/failuredetector/" class="md-nav__link">
         Detectores de Falhas
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/agreement/" class="md-nav__link">
+      <a href="../fault/agreement/" class="md-nav__link">
         Acordo
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/reconfiguration/" class="md-nav__link">
+      <a href="../fault/reconfiguration/" class="md-nav__link">
         Grupos
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/bizantine/" class="md-nav__link">
+      <a href="../fault/bizantine/" class="md-nav__link">
         Falhas bizantinas
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../fault/dependability/" class="md-nav__link">
+      <a href="../fault/dependability/" class="md-nav__link">
         Dependabilidade
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -927,10 +953,38 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
       
-      <label class="md-nav__link" for="__nav_9">
-        Consistência
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../consistency/">Consistência</a>
+          
+            <label for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Consistência" data-md-level="1">
         <label class="md-nav__title" for="__nav_9">
           <span class="md-nav__icon md-icon"></span>
@@ -939,76 +993,91 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+            
+          
+            
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/consistency_models/" class="md-nav__link">
+      <a href="../consistency/consistency_models/" class="md-nav__link">
         Modelos
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/data_centric/" class="md-nav__link">
+      <a href="../consistency/data_centric/" class="md-nav__link">
         Centrado nos Dados
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/client_centric/" class="md-nav__link">
+      <a href="../consistency/client_centric/" class="md-nav__link">
         Centrado no Cliente
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/replica_management/" class="md-nav__link">
+      <a href="../consistency/replica_management/" class="md-nav__link">
         Gerenciamento de Réplicas
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/checkpointing/" class="md-nav__link">
+      <a href="../consistency/checkpointing/" class="md-nav__link">
         Checkpointing
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/references/" class="md-nav__link">
+      <a href="../consistency/references/" class="md-nav__link">
         Referências
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -1024,7 +1093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../db/disdb/" class="md-nav__link">
+      <a href="../db/disdb/" class="md-nav__link">
         Bancos de Dados
       </a>
     </li>
@@ -1039,7 +1108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../filesystem/disfs/" class="md-nav__link">
+      <a href="../filesystem/disfs/" class="md-nav__link">
         Sistemas de Arquivos
       </a>
     </li>
@@ -1059,10 +1128,56 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_12" type="checkbox" id="__nav_12" >
       
-      <label class="md-nav__link" for="__nav_12">
-        Estudos de Caso
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../cases/">Estudos de Caso</a>
+          
+            <label for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
       <nav class="md-nav" aria-label="Estudos de Caso" data-md-level="1">
         <label class="md-nav__title" for="__nav_12">
           <span class="md-nav__icon md-icon"></span>
@@ -1071,196 +1186,217 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../cases/" class="md-nav__link">
-        Introdução
-      </a>
-    </li>
-  
-
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/cassandra/" class="md-nav__link">
+      <a href="../cases/cassandra/" class="md-nav__link">
         Cassandra
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/chord/" class="md-nav__link">
+      <a href="../cases/chord/" class="md-nav__link">
         Chord
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/dynamo/" class="md-nav__link">
+      <a href="../cases/dynamo/" class="md-nav__link">
         Dynamo
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/grpc/" class="md-nav__link">
+      <a href="../cases/grpc/" class="md-nav__link">
         gRPC
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/mosquito/" class="md-nav__link">
+      <a href="../cases/mosquito/" class="md-nav__link">
         Mosquito
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/rmi/" class="md-nav__link">
+      <a href="../cases/rmi/" class="md-nav__link">
         RMI
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/thrift/" class="md-nav__link">
+      <a href="../cases/thrift/" class="md-nav__link">
         Thrift
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/kafka/" class="md-nav__link">
+      <a href="../cases/kafka/" class="md-nav__link">
         Kafka
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/swim/" class="md-nav__link">
+      <a href="../cases/swim/" class="md-nav__link">
         Swim
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/copycat/" class="md-nav__link">
+      <a href="../cases/copycat/" class="md-nav__link">
         Copycat
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/ratis/" class="md-nav__link">
+      <a href="../cases/ratis/" class="md-nav__link">
         Ratis
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/bftsmart/" class="md-nav__link">
+      <a href="../cases/bftsmart/" class="md-nav__link">
         BFT-Smart
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/etcd/" class="md-nav__link">
+      <a href="../cases/etcd/" class="md-nav__link">
         Etcd
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/zookeeper/" class="md-nav__link">
+      <a href="../cases/zookeeper/" class="md-nav__link">
         Zookeeper
       </a>
     </li>
   
 
+            
           
             
+              
   
   
   
     <li class="md-nav__item">
-      <a href="../../cases/refs/" class="md-nav__link">
+      <a href="../cases/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -1276,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tech/" class="md-nav__link">
+      <a href="../tech/" class="md-nav__link">
         Tecnologias
       </a>
     </li>
@@ -1291,7 +1427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../projeto/" class="md-nav__link">
+      <a href="../projeto/" class="md-nav__link">
         Projeto
       </a>
     </li>
@@ -1429,7 +1565,7 @@
 
 
   <!-- Content -->
-  <h1 id="introducao">Introdução</h1>
+  <h1 id="arquiteturas">Arquiteturas</h1>
 <p>De acordo com David Garlan and Mary Shaw, January 1994, CMU-CS-94-166, em <a href="http://www.cs.cmu.edu/afs/cs/project/able/ftp/intro_softarch/intro_softarch.pdf"><em>An Introduction to Software Architecture</em></a></p>
 <blockquote>
 <p>... an architectural style determines the vocabulary of components and connectors that can be used in instances of that style, together with a set of constraints on how they can be combined. These can include topological constraints on architectural descriptions (e.g., no cycles). Other constraints—say, having to do with execution semantics—might also be part of the style definition.</p>
@@ -1460,11 +1596,11 @@ Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>l
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de algum problema.</p>
 <p>Considere por exemplo o sistema na figura a seguir.
 Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o <em>backend</em>, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cda uma das API e uma troca em um dos serviços do <em>backend</em> exige ajustes em todas as aplicações.</p>
-<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="../../images/loosetight.png" /></p>
+<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="../images/loosetight.png" /></p>
 <p>Já no lado direito, um conector foi colocado entre as aplicações e o <em>backend</em>, oferecendo uma interface única para todos os clientes.
 A responsabilidade de conhecer as API específicas dos componentes do <em>backend</em> passa a ser então do conector, e quais quer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.</p>
 <p>Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento, como os sistemas pubsub discutidos anteriormente.</p>
-<p><img alt="Desacoplamento" src="../../images/component2.png" /></p>
+<p><img alt="Desacoplamento" src="../images/component2.png" /></p>
 <p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
 <h2 id="clienteservidor">Cliente/Servidor</h2>
 <p>A forma como os componentes se comunicam, isto é, como os conectores são usados é importante no estudo arquitetural.
@@ -1479,7 +1615,7 @@ Com a redução dos computadores, surgiram as primeiras redes de computadores e 
 Isto é, processos podem ser implementado em diferentes linguagens, sistemas operacionais e arquiteturas, desde observadas os cuidados necessários para se obter <a href="../intro/#transparencia">transparência de acesso</a>.
 Esta flexibilidade é a outra razão do sucesso do modelo cliente/servidor, permitindo que clientes se conectem a servidores para usar seus recursos, que podem ser acessados concorrentemente por diversos clientes.</p>
 <p>Exemplos desta arquitetura são abundantes, incluindo um navegador que se comunica com um servidor Apache para recuperar uma página Web ou em um aplicativo móvel que solicita ao servidor de aplicações que dispare uma transferência de fundos.</p>
-<p><img alt="Cliente/Servidor" src="../../drawings/cliente_servidor.drawio-0.svg" /></p>
+<p><img alt="Cliente/Servidor" src="../drawings/cliente_servidor.drawio-0.svg" /></p>
 <p>Embora seja possível usar sockets de forma assíncrona, a API mais comum é síncrona, isto é, quando um processo espera receber uma mensagem de outro, ele fica bloqueado esperando algum dado estar disponível para leitura no referido socket.
 De forma genérica, estas interações acontecem como na figura a seguir.</p>
 <div class="mermaid">sequenceDiagram
@@ -1527,7 +1663,7 @@ Neste caso, contudo, é necessário tomar muito cuidado para garantir que a conc
 Veja por exemplo o caso de um banco de dados, que precisa garantir que a requisição por um cliente não afete a resposta sendo enviada para outro.</p>
 <p>Embora tenhamos colocado aqui apenas um servidor atendendo aos clientes, em muitas aplicações modernas, múltiplos servidores atenderão ao conjunto de clientes.
 Pense por exemplo no serviço de email do Google, o Gmail; com os milhões de usuários que tem, certamente há mais de um servidor implementando o serviço e certamente estes diversos servidores ficam atrás do que chamamos de um <strong>balanceador de carga</strong>, que roteia as requisições seguindo diferentes políticas, por exemplo, <em>round robin</em>.</p>
-<p><img alt="http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/" src="../../images/lb.jpg" /></p>
+<p><img alt="http://blogs.softchoice.com/itgrok/client/one-egg-many-baskets/" src="../images/lb.jpg" /></p>
 <p>Mesmo que comum, em certas situações, esta divisão entre clientes e servidores pode se tornar confusa.
 Primeiro, por quê uma vez estabelecida a conexão, não há uma diferenciação entre quem iniciou e quem aceitou a mesma; são apenas duas pontas do mesmo socket.
 Segundo, pode ser que o serviço relevante sendo prestado, seja prestado por quem estabelece a conexão. De fato ambos podem estar prestando serviços um para o outro, no que é conhecido como P2P.
@@ -1537,12 +1673,12 @@ A seguir, exploraremos algumas destas arquiteturas.</p>
 <h2 id="sistemas-multi-camadas">Sistemas multi-camadas</h2>
 <p>Se organizarmos clientes e servidores em camadas em vez de <em>hub-n-spoke</em> como na imagem anterior, podemos dizer que temos uma arquitetura com duas camadas.
 Se os na camada de servidores agirem como clientes para outra camada, uma arquitetura com 3 camadas e assim por diante.</p>
-<p><a href="https://managementmania.com/en/three-tier-architecture"><img alt="3 Tiers" src="../../images/3tierb.gif" /></a></p>
+<p><a href="https://managementmania.com/en/three-tier-architecture"><img alt="3 Tiers" src="../images/3tierb.gif" /></a></p>
 <p>Observe que as camadas lógicas do sistema não necessariamente tem que casar com as camadas "físicas". 
 É possível até que camadas lógicas sejam particionadas entre os <em>hosts</em> do sistema, como nestas possíveis configurações de duas camadas.</p>
-<p><img alt="2 Tiers" src="../../images/02-05.png" /></p>
+<p><img alt="2 Tiers" src="../images/02-05.png" /></p>
 <p>Por outro lado, cada camada lógica pode ser subdividida em mais componentes, resultando em múltiplos <em>tiers</em>, como neste exemplo de um sistema de busca na Web.</p>
-<p><img alt="Multi-tier" src="../../images/02-04.png" /></p>
+<p><img alt="Multi-tier" src="../images/02-04.png" /></p>
 <h2 id="par-a-par-peer-to-peer-p2p">Par-a-Par (Peer-to-Peer, P2P)</h2>
 <p>Diferentemente de sistemas cliente/servidor, em que um nó serve o outro, em sistemas par-a-par, os nós são parceiros e tem igual responsabilidade (e daí o nome) na execução das tarefas.</p>
 <p>Como todo sistema distribuído, a arquitetura P2P visa <strong>agregar poder computacional de múltiplos nós</strong>.
@@ -1567,7 +1703,7 @@ O que há de mais interessante neste exemplo o fato de haverem diversas implemen
 Isso é um atestado do que uma <a href="http://bittorrent.org/beps/bep_0003.html">especificação</a> bem feita e aberta pode alcançar.
 Observe na figura adiante os diversos passos necessários à recuperação do arquivo de interesse neste sistema.
 Diversos passos seguem a arquitetura cliente/servidor enquanto "somente" o passo de compartilhamento de arquivos é P2P.</p>
-<p><img alt="Bittorrent" src="../../images/bittorrent.png" /></p>
+<p><img alt="Bittorrent" src="../images/bittorrent.png" /></p>
 <p>Voltando ao exemplo do sistema de informação, observe que o cliente acessa um serviço, implementado por pares de nós. 
 Podemos dizer que também este é híbrido.</p>
 <div class="mermaid">graph LR
@@ -1604,7 +1740,7 @@ No capítulo seguinte, usaremos um estudo de caso para no aprofundarmos em arqui
 <h3 id="microsservicos">Microsserviços</h3>
 <p>A moda da vez é a chamada arquitetura de <strong>microsserviços</strong>, na qual a divisão de tarefas entre componentes visa levar aos componentes mais simples para tal tarefa. Assim, os mesmos podem ser replicados, escalonados, desenvolvidos e mantidos independentemente.
 Cada tarefa conta então com diversos componentes, organizados em camadas resolvendo um problema em específico, mas todos contribuindo para a realização de uma tarefa maior comum.</p>
-<p><img alt="Microserviços" src="../../images/microservice_sample.png" /></p>
+<p><img alt="Microserviços" src="../images/microservice_sample.png" /></p>
 <h3 id="_1"></h3>
 <details class="bug"><summary>TODO</summary><ul>
 <li>Event Sourcing    <ul>
@@ -1656,7 +1792,7 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../../comm/refs/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Referências" rel="prev">
+        <a href="../comm/refs/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Referências" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1672,7 +1808,7 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
       
       
         
-        <a href="../p2p/" class="md-footer__link md-footer__link--next" aria-label="Próximo: P2P" rel="next">
+        <a href="p2p/" class="md-footer__link md-footer__link--next" aria-label="Próximo: P2P" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -1696,10 +1832,12 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
             Copyright © 2021 Lásaro Camargos
           </div>
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1721,16 +1859,16 @@ Cada tarefa conta então com diversos componentes, organizados em camadas resolv
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../assets/javascripts/bundle.bc35569b.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../javascripts/mathjaxhelper.js"></script>
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>

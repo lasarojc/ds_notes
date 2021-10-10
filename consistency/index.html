@@ -11,21 +11,21 @@
       
       
       
-        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/models/models/">
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/consistency/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Tipos - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Consistência - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.24c991ad.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -40,7 +40,7 @@
     
     
     
-      <link rel="stylesheet" href="../../css/extra.css">
+      <link rel="stylesheet" href="../css/extra.css">
     
     
       
@@ -72,7 +72,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#modelos" class="md-skip">
+        <a href="#consistencia" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -95,7 +95,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
-    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+    <a href=".." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Tipos
+              Consistência
             
           </span>
         </div>
@@ -219,7 +219,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+    <a href=".." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -251,7 +251,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preface/" class="md-nav__link">
+      <a href="../preface/" class="md-nav__link">
         Prefácio
       </a>
     </li>
@@ -266,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../intro/" class="md-nav__link">
+      <a href="../intro/" class="md-nav__link">
         Introdução
       </a>
     </li>
@@ -316,7 +316,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../comm/">Comunicação</a>
+          <a href="../comm/">Comunicação</a>
           
             <label for="__nav_3">
               <span class="md-nav__icon md-icon"></span>
@@ -340,7 +340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/redes/" class="md-nav__link">
+      <a href="../comm/redes/" class="md-nav__link">
         Redes
       </a>
     </li>
@@ -354,7 +354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/internet/" class="md-nav__link">
+      <a href="../comm/internet/" class="md-nav__link">
         Internet
       </a>
     </li>
@@ -368,7 +368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/sockets/" class="md-nav__link">
+      <a href="../comm/sockets/" class="md-nav__link">
         Sockets
       </a>
     </li>
@@ -382,7 +382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/datarep/" class="md-nav__link">
+      <a href="../comm/datarep/" class="md-nav__link">
         Representação
       </a>
     </li>
@@ -396,7 +396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/middleware/" class="md-nav__link">
+      <a href="../comm/middleware/" class="md-nav__link">
         Middlewares
       </a>
     </li>
@@ -410,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/rpc/" class="md-nav__link">
+      <a href="../comm/rpc/" class="md-nav__link">
         RPC
       </a>
     </li>
@@ -424,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/mom/" class="md-nav__link">
+      <a href="../comm/mom/" class="md-nav__link">
         MOM
       </a>
     </li>
@@ -438,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/epidemics/" class="md-nav__link">
+      <a href="../comm/epidemics/" class="md-nav__link">
         Epidêmicos
       </a>
     </li>
@@ -452,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../comm/refs/" class="md-nav__link">
+      <a href="../comm/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -495,7 +495,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../arch/">Arquiteturas</a>
+          <a href="../arch/">Arquiteturas</a>
           
             <label for="__nav_4">
               <span class="md-nav__icon md-icon"></span>
@@ -519,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../arch/p2p/" class="md-nav__link">
+      <a href="../arch/p2p/" class="md-nav__link">
         P2P
       </a>
     </li>
@@ -533,7 +533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../arch/microservices/" class="md-nav__link">
+      <a href="../arch/microservices/" class="md-nav__link">
         Microsserviços
       </a>
     </li>
@@ -553,14 +553,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
@@ -578,7 +576,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../">Modelos</a>
+          <a href="../models/">Modelos</a>
           
             <label for="__nav_5">
               <span class="md-nav__icon md-icon"></span>
@@ -600,79 +598,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Tipos
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../models/models/" class="md-nav__link">
         Tipos
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#comunicacao" class="md-nav__link">
-    Comunicação
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sincronismo" class="md-nav__link">
-    Sincronismo
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#falhas" class="md-nav__link">
-    Falhas
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#modelo-assumido" class="md-nav__link">
-    Modelo Assumido
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sd-sao-como-cebolas" class="md-nav__link">
-    SD são como cebolas!
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -684,7 +614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../processor/" class="md-nav__link">
+      <a href="../models/processor/" class="md-nav__link">
         Processador
       </a>
     </li>
@@ -738,7 +668,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../coord/concurrency/" class="md-nav__link">
+      <a href="../coord/concurrency/" class="md-nav__link">
         Concorrência
       </a>
     </li>
@@ -752,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../coord/coord/" class="md-nav__link">
+      <a href="../coord/coord/" class="md-nav__link">
         Coordenação
       </a>
     </li>
@@ -795,7 +725,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../time/">Tempo</a>
+          <a href="../time/">Tempo</a>
           
             <label for="__nav_7">
               <span class="md-nav__icon md-icon"></span>
@@ -819,7 +749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../time/physical/" class="md-nav__link">
+      <a href="../time/physical/" class="md-nav__link">
         Tempo Físico
       </a>
     </li>
@@ -833,7 +763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../time/logical/" class="md-nav__link">
+      <a href="../time/logical/" class="md-nav__link">
         Tempo Lógico
       </a>
     </li>
@@ -886,7 +816,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../fault/">Tolerância a Faltas</a>
+          <a href="../fault/">Tolerância a Faltas</a>
           
             <label for="__nav_8">
               <span class="md-nav__icon md-icon"></span>
@@ -910,7 +840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/failures/" class="md-nav__link">
+      <a href="../fault/failures/" class="md-nav__link">
         Falta/Erros/Falhas
       </a>
     </li>
@@ -924,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/replication/" class="md-nav__link">
+      <a href="../fault/replication/" class="md-nav__link">
         Replicação
       </a>
     </li>
@@ -938,7 +868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/failuredetector/" class="md-nav__link">
+      <a href="../fault/failuredetector/" class="md-nav__link">
         Detectores de Falhas
       </a>
     </li>
@@ -952,7 +882,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/agreement/" class="md-nav__link">
+      <a href="../fault/agreement/" class="md-nav__link">
         Acordo
       </a>
     </li>
@@ -966,7 +896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/reconfiguration/" class="md-nav__link">
+      <a href="../fault/reconfiguration/" class="md-nav__link">
         Grupos
       </a>
     </li>
@@ -980,7 +910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/bizantine/" class="md-nav__link">
+      <a href="../fault/bizantine/" class="md-nav__link">
         Falhas bizantinas
       </a>
     </li>
@@ -994,7 +924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fault/dependability/" class="md-nav__link">
+      <a href="../fault/dependability/" class="md-nav__link">
         Dependabilidade
       </a>
     </li>
@@ -1014,12 +944,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" checked>
       
       
       
@@ -1044,8 +976,8 @@
       
         
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../consistency/">Consistência</a>
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">Consistência</a>
           
             <label for="__nav_9">
               <span class="md-nav__icon md-icon"></span>
@@ -1069,7 +1001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/consistency_models/" class="md-nav__link">
+      <a href="consistency_models/" class="md-nav__link">
         Modelos
       </a>
     </li>
@@ -1083,7 +1015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/data_centric/" class="md-nav__link">
+      <a href="data_centric/" class="md-nav__link">
         Centrado nos Dados
       </a>
     </li>
@@ -1097,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/client_centric/" class="md-nav__link">
+      <a href="client_centric/" class="md-nav__link">
         Centrado no Cliente
       </a>
     </li>
@@ -1111,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/replica_management/" class="md-nav__link">
+      <a href="replica_management/" class="md-nav__link">
         Gerenciamento de Réplicas
       </a>
     </li>
@@ -1125,7 +1057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/checkpointing/" class="md-nav__link">
+      <a href="checkpointing/" class="md-nav__link">
         Checkpointing
       </a>
     </li>
@@ -1139,7 +1071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../consistency/references/" class="md-nav__link">
+      <a href="references/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -1161,7 +1093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../db/disdb/" class="md-nav__link">
+      <a href="../db/disdb/" class="md-nav__link">
         Bancos de Dados
       </a>
     </li>
@@ -1176,7 +1108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../filesystem/disfs/" class="md-nav__link">
+      <a href="../filesystem/disfs/" class="md-nav__link">
         Sistemas de Arquivos
       </a>
     </li>
@@ -1238,7 +1170,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../cases/">Estudos de Caso</a>
+          <a href="../cases/">Estudos de Caso</a>
           
             <label for="__nav_12">
               <span class="md-nav__icon md-icon"></span>
@@ -1262,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/cassandra/" class="md-nav__link">
+      <a href="../cases/cassandra/" class="md-nav__link">
         Cassandra
       </a>
     </li>
@@ -1276,7 +1208,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/chord/" class="md-nav__link">
+      <a href="../cases/chord/" class="md-nav__link">
         Chord
       </a>
     </li>
@@ -1290,7 +1222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/dynamo/" class="md-nav__link">
+      <a href="../cases/dynamo/" class="md-nav__link">
         Dynamo
       </a>
     </li>
@@ -1304,7 +1236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/grpc/" class="md-nav__link">
+      <a href="../cases/grpc/" class="md-nav__link">
         gRPC
       </a>
     </li>
@@ -1318,7 +1250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/mosquito/" class="md-nav__link">
+      <a href="../cases/mosquito/" class="md-nav__link">
         Mosquito
       </a>
     </li>
@@ -1332,7 +1264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/rmi/" class="md-nav__link">
+      <a href="../cases/rmi/" class="md-nav__link">
         RMI
       </a>
     </li>
@@ -1346,7 +1278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/thrift/" class="md-nav__link">
+      <a href="../cases/thrift/" class="md-nav__link">
         Thrift
       </a>
     </li>
@@ -1360,7 +1292,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/kafka/" class="md-nav__link">
+      <a href="../cases/kafka/" class="md-nav__link">
         Kafka
       </a>
     </li>
@@ -1374,7 +1306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/swim/" class="md-nav__link">
+      <a href="../cases/swim/" class="md-nav__link">
         Swim
       </a>
     </li>
@@ -1388,7 +1320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/copycat/" class="md-nav__link">
+      <a href="../cases/copycat/" class="md-nav__link">
         Copycat
       </a>
     </li>
@@ -1402,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/ratis/" class="md-nav__link">
+      <a href="../cases/ratis/" class="md-nav__link">
         Ratis
       </a>
     </li>
@@ -1416,7 +1348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/bftsmart/" class="md-nav__link">
+      <a href="../cases/bftsmart/" class="md-nav__link">
         BFT-Smart
       </a>
     </li>
@@ -1430,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/etcd/" class="md-nav__link">
+      <a href="../cases/etcd/" class="md-nav__link">
         Etcd
       </a>
     </li>
@@ -1444,7 +1376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/zookeeper/" class="md-nav__link">
+      <a href="../cases/zookeeper/" class="md-nav__link">
         Zookeeper
       </a>
     </li>
@@ -1458,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cases/refs/" class="md-nav__link">
+      <a href="../cases/refs/" class="md-nav__link">
         Referências
       </a>
     </li>
@@ -1480,7 +1412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tech/" class="md-nav__link">
+      <a href="../tech/" class="md-nav__link">
         Tecnologias
       </a>
     </li>
@@ -1495,7 +1427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../projeto/" class="md-nav__link">
+      <a href="../projeto/" class="md-nav__link">
         Projeto
       </a>
     </li>
@@ -1521,49 +1453,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#comunicacao" class="md-nav__link">
-    Comunicação
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sincronismo" class="md-nav__link">
-    Sincronismo
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#falhas" class="md-nav__link">
-    Falhas
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#modelo-assumido" class="md-nav__link">
-    Modelo Assumido
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sd-sao-como-cebolas" class="md-nav__link">
-    SD são como cebolas!
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1585,118 +1474,25 @@
 
 
   <!-- Content -->
-  <h1 id="modelos">Modelos</h1>
-<p>Dado a quantidade de ambientes reais em que as soluções dos nossos problemas abstratos precisam executar, com sua diversidade de sistemas operacionais, latências de rede, tamanhos de mensagens, etc, seria praticamente impossível provar alguma coisa geral e interessante sobre os algoritmos, como por exemplo se ele <strong>funciona</strong>.
-Por isso, em vez de considerar cada ambiente específico, abstraímos os ambientes por meio de <strong>modelos computacionais</strong>, que capturam as premissas gerais dos ambientes, e só então escrevemos os algoritmos para tais modelos.</p>
-<p>Isso que dizer que, na prática, antes de distribuir a computação/armazenamento em diversas máquinas e de forma a coordenar ações das diversas partes de forma a entregar o serviço de acordo com expectativas dos usuários, precisamos responder a algumas perguntas, como por exemplo:</p>
-<ul>
-<li>Qual a probabilidade de um nó parar de funcionar?</li>
-<li>Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?</li>
-<li>A quais atrasos a comunicação está sujeita? Pode haver atrasos infinitos?</li>
-<li>A comunicação pode ser corrompida?</li>
-<li>Os relógios dos hospedeiros marcam o mesmo valor no mesmo instante, ou melhor, são sincronizados?</li>
-<li>Há agentes que possam querer perturbar o sistema, por exemplo para ganhar acesso a mais recursos do que seria justo?</li>
-</ul>
-<details class="info inline end"><summary>Modelos</summary><ul>
-<li>Comunicação</li>
-<li>Sincronismo</li>
-<li>Falhas</li>
+  <h1 id="consistencia">Consistência</h1>
+<p>Quando implementamos um sistema distribuído, precisamos estar cientes de que <strong>há custos inerentes</strong> desta distribuição, introduzidos pela coordenação das partes que formam o todo.
+E também precisamos estar cientes de é possível pensar em <strong>diferentes níveis de coordenação</strong>, com diferentes custos.</p>
+<details class="sideslide"><summary>CDN</summary><ul>
+<li>Conteúdo é colocado próximo aos clientes. </li>
+<li>Conteúdo estático ou majoritariamente determinístico. </li>
+<li>Um pequeno atraso na replicação é tolerado.</li>
+<li>Atualização acontece infrequentemente.</li>
 </ul>
 </details>
-<p>Estas perguntas são normalmente divididas em três eixos, <strong>Comunicação</strong>, <strong>Sincronismo</strong> e <strong>Falhas</strong>, e a combinação das respostas define o modelo computacional adotado.</p>
-<h2 id="comunicacao">Comunicação</h2>
-<p>De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou <strong>paralelamente</strong>.
-Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão <strong>próximos</strong> e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como <a href="https://en.wikipedia.org/wiki/InfiniBand">Infiniband</a> que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
-Seja como for, estes sistemas com <strong>memória compartilhada</strong> são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais <strong>fortemente acoplados</strong> e melhor estudados em um curso de computação paralela.</p>
-<p><img alt="Memória Compartilhada" src="../../drawings/shared_memory.drawio-0.svg" /></p>
-<details class="info inline end"><summary>Comunicação</summary><ul>
-<li>memória compartilhada</li>
-<li>troca de mensagens</li>
-</ul>
-</details>
-<p>Por outro lado, estamos mais interessados aqui em sistemas de maior escala geográfica, o que se adequa melhor ao modelo de troca de mensagens, isto é, onde cada nó mantem controle total do seu espaço de endereçamento e só expõe seu estado via mensagens enviadas para os outros nós.
-Este modelo é mais adequado ao desenvolvimento de aplicações com componentes <strong>fracamente acoplados</strong>, em que atrasos de comunicação e ocorrência de falhas independentes são intrínsecas.</p>
-<p><img alt="Passagem de Mensagens" src="../../drawings/shared_memory.drawio-2.svg" /></p>
-<p>Memória Compartilhada Distribuída (DSM, do inglês, <em>Distributed Shared Memory</em>) é uma abordagem híbrida que tenta integrar a facilidade de se programar usando um único espaço de endereçamento mas com o nível de distribuição necessária a aplicações de larga escala, inclusive geográfica.</p>
-<p><img alt="Memória Compartilhada" src="../../drawings/memory.drawio-0.svg" /></p>
-<p>Considere uma possível implementação em software da DSM, apresentada na próxima figura. 
-Nesta abordagem, cada <em>host</em> contribui uma porção de sua memória para um <em>pool</em> global. Processos acessam o <em>pool</em> via <strong>gerentes de memória</strong>, que traduzem os endereços de um espaço de endereçamento virtual para um host e um endereço local a tal host, e usam <em>message passing</em>  para implementar o acesso. 
-Esta abordagem resulta em uma arquitetura NUMA, isto é, <em>Non-Uniform Memory Access</em>, já que os acessos a endereços locais são mais rápidos que aos remotos.</p>
-<p><img alt="Memória Compartilhada Distribuída em Software" src="../../drawings/shared_memory.drawio-1.svg" /></p>
-<p>O modelo de comunicação usado no problema dos 3 exércitos é claramente de passagem de mensagens.</p>
-<h2 id="sincronismo">Sincronismo</h2>
-<details class="info inline end"><summary>Sincronismo</summary><ul>
-<li>operações</li>
-<li>comunicação</li>
-<li>relógio</li>
-<li>sincronização</li>
-</ul>
-</details>
-<p>Quanto ao sincronismo, considera-se se os processos tem a <strong>capacidade de medir a passagem de tempo</strong>, isto é, se tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.</p>
-<p>No problema dos três exércitos, podemos considerar que amos os atacantes tinha acesso a um relógio perfeitamente sincronizado, bastando olhar para o céu para ver o horário.
-Claramente enquanto variações na ordem de vários minutos ou até mesmo uma hora na leitura de um relógio solar não teriam grande impacto na vida dos exércitos, alguns sistemas computacionais podem exigir que os relógios de seus componentes não distem mais que alguns milissegundos.
-Revisitaremos este tópico em uma seção específica sobre <a href="../../time/">Tempo</a>.</p>
-<p>Além do acesso a relógios, considera-se no modelo de sincronismo a existência ou não de limites de tempo para execução de operações, por exemplo, quanto tempo um processador leva para executar uma operação de soma de dois inteiros, ou quanto tempo é necessário para a entrega de uma mensagem enviada na rede.</p>
-<h2 id="falhas">Falhas</h2>
-<p>Quanto às falhas, primeiro é preciso aceitar o fato de que componentes independentes podem falhar independentemente e que quanto mais <em>hosts</em>, maior é a probabilidade de que pelo menos um deles tenha uma CPU, disco, fonte, ou que quer que seja, apresentando problemas; e estejam certos, problemas acontecem o tempo todo.<sup id="fnref:falham"><a class="footnote-ref" href="#fn:falham">1</a></sup> 
-Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fazer com que o sistema todo pare e, portanto, não tente progredir na ausência de um componente essencial, em um sistema distribuído queremos exatamente o contrário, isto é, que apesar da falha de um componente, os outros continuem prestando o serviço, mesmo de forma deteriorada, mas sem comprometer a corretude do sistema.</p>
-<details class="info inline end"><summary>Falhas</summary><ul>
-<li>detectável</li>
-<li>temporização</li>
-<li>quebras</li>
-<li>maliciosas</li>
-<li>perda e corrupção de mensagens</li>
-</ul>
-</details>
-<p>Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
-Revisitaremos este tópico na sessão <a href="../../fault/">Tolerância a Faltas</a>.</p>
-<h2 id="modelo-assumido">Modelo Assumido</h2>
-<details class="info inline end"><summary>Outros</summary><ul>
-<li>carga de trabalho</li>
-</ul>
-</details>
-<p>Embora modelos clássicos sejam normalmente definidos em termos dos fatores acima, outras questões são também importantes, como o padrão da carga de trabalho do sistema (maior carga à noite? Na hora do almoço? <em>Black friday</em>?). Além de ignorarmos estes outros fatores, por enquanto assumiremos um modelo computacional amigável, com comunicação por troca de mensagens, relógios e limites de tempo para operações, mesmo que desconhecidos. Também assumiremos ausência de falhas, a não ser quando quisermos provocar a análise de situações mais interessantes. Este modelo será ajustado na medida em que avançarmos, para tornar nossas análises mais realistas.</p>
-<h2 id="sd-sao-como-cebolas">SD são como cebolas!</h2>
-<p>Uma vez definido o <strong>modelo computacional</strong> e identificado os <strong>algoritmos adequados</strong> aos problemas que queremos resolver, passamos à implementação.
-Distribuir é <strong>dividir</strong> a computação/armazenamento em diversos componentes, <strong>possivelmente geograficamente distantes</strong>, e <strong>coordenar</strong> suas ações para que resolvam a tarefa em questão de forma correta.
-Com a distribuição objetiva-se <strong>usar recursos</strong> disponíveis nos hosts onde os componentes são executados<sup id="fnref:recursos"><a class="footnote-ref" href="#fn:recursos">2</a></sup> e usar de <strong>redundância</strong> para garantir que o serviço sofra <strong>degradação graciosa</strong> em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com <strong>vazão reduzida</strong>, <strong>latência aumentada</strong>, menor capacidade de tratamento de requisições concorrentes, ou com <strong>funcionalidades desabilitadas</strong>.</p>
-<details class="info inline end"><summary>Abstrações</summary><ul>
-<li>Comunicação<ul>
-<li>Ordenação</li>
-<li>Confiabilidade</li>
-<li>Invocação de procedimentos remotos</li>
-</ul>
-</li>
-<li>Heterogeneidade<ul>
-<li>Linguagens</li>
-<li>Arquiteturas</li>
-<li>Sistemas Operacionais</li>
-<li>Times</li>
-</ul>
-</li>
-</ul>
-</details>
-<p>Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por <strong>troca de mensagens</strong> ordenadas, <strong>fluxos de dados</strong>, ou <strong>invocação remota de procedimentos</strong>.
-Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído <strong>falham independentemente</strong>, executam em <em>hosts</em>  com <strong>relógios dessincronizados</strong>, são desenvolvidos usando-se <strong>linguagens diversas</strong>, <strong>sistemas operacionais distintos</strong>, com <strong>arquiteturas diferentes</strong> e por <strong>times independentes</strong>.</p>
-<p>Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 
-Dado que a complexidade de se implementar estas abstrações já é grande por si só, se formos reinventar a roda a cada novo sistema, não faremos muitos avanços.
-Mas, como vocês bem sabem, camadas de abstração são a chave para se lidar com complexidade.
-Assim, sistemas distribuídos são como cebolas, cheias de camadas e que nos fazem chorar quando precisamos descascá-las.<sup id="fnref:ogros"><a class="footnote-ref" href="#fn:ogros">3</a></sup>
-Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade de que alguém já o tenha atacado e disponibilizado uma solução, de forma comercial ou não.</p>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:falham">
-<p><a href="https://www.statista.com/statistics/430769/annual-failure-rates-of-servers/">Annual failure rates - servers</a>&#160;<a class="footnote-backref" href="#fnref:falham" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-<li id="fn:recursos">
-<p>Os recursos compartilhados vão desde alguns óbvios, como <strong>capacidade de armazenamento</strong> e de <strong>processamento</strong>, a própria <strong>localização</strong> de um nó, que pode ser geograficamente mais próxima e de menor latência até  um ponto de interesse, ou até mesmo a disponibilidade de uma conexão física com um recurso especial, como uma impressora.&#160;<a class="footnote-backref" href="#fnref:recursos" title="Jump back to footnote 2 in the text">&#8617;</a></p>
-</li>
-<li id="fn:ogros">
-<p>Lembrem-se que também <img alt="ogros são como cebolas" src="https://media.giphy.com/media/4RsEUfHym7tuw/200.gif" /> e você não quer que seu sistema seja como ogros, temperamentais e mal-cheirosos. Logo, planeje bem suas camadas de abstração.&#160;<a class="footnote-backref" href="#fnref:ogros" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<p>Considere, por exemplo, uma <strong><em>Content Delivery Network</em></strong> (CDN), um sistema que replica os dados de um "provedor de conteúdo" para colocar tal conteúdo próximo aos clientes.
+A replicação acontece de forma adaptativa, dependendo de onde os clientes estiverem e dos custos envolvidos no processo.</p>
+<p><a href="https://www.creative-artworks.eu/why-use-a-content-delivery-network-cdn/"><img alt="" src="../images/cdn.jpeg" /></a></p>
+<p>Se o conteúdo é majoritariamente estático, entregar esta funcionalidade é "simples", implicando apenas em um pequeno atraso entre a publicação de novo conteúdo e sua disponibilização para os usuários.
+Neste caso, um protocolo de difusão totalmente ordenada, como o RAFT, pode ser usado para garantir que todos os servidores vejam as mesmas mudanças, na mesma ordem, e que alcancem o mesmo estado final em algum momento.</p>
+<p>Entretanto, os protocolos de difusão totalmente ordenada tem um alto custo para atualizar as réplicas e este custo pode ser demasiado para a aplicação.
+Neste caso, podemos tentar relaxar os requisitos da aplicação, permitindo que atualizações sejam vistas em ordens diferentes por diferentes "réplicas", agora com aspas.
+Por exemplo, se em vez de difusão atômica usássemos IP-Multicast, teríamos uma atualização mais barata dos dados, mas alguns valores escritos poderiam nunca ser vistos.
+Dependendo de como estes relaxamentos sejam feitos, serão implementados diferentes <strong>modelos de consistência</strong>.</p>
 
   <!-- Last update of source file -->
 
@@ -1718,7 +1514,7 @@ Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Modelos" rel="prev">
+        <a href="../fault/dependability/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Dependabilidade" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1727,20 +1523,20 @@ Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Modelos
+              Dependabilidade
             </div>
           </div>
         </a>
       
       
         
-        <a href="../processor/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Processador" rel="next">
+        <a href="consistency_models/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Modelos" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Processador
+              Modelos
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1785,16 +1581,16 @@ Felizmente, para cada problema que tenha que resolver, há uma boa probabilidade
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../assets/javascripts/bundle.bc35569b.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../javascripts/mathjaxhelper.js"></script>
+        <script src="../javascripts/mathjaxhelper.js"></script>
       
     
   </body>
