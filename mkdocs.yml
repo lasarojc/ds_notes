@@ -108,7 +108,7 @@ nav:
         - Prefácio: preface.md
         - Introdução: intro.md
         - Comunicação:
-                - Introdução: comm/index.md
+                - comm/index.md
                 - Redes: comm/redes.md
                 - Internet: comm/internet.md
                 - Sockets: comm/sockets.md
@@ -121,12 +121,12 @@ nav:
                 - Referências: comm/refs.md
 
         - Arquiteturas: 
-                - Introdução: arch/arch.md
+                - arch/index.md
                 - P2P: arch/p2p.md
                 - Microsserviços: arch/microservices.md
 
         - Modelos: 
-                - Introdução: models/index.md
+                - models/index.md
                 - Tipos: models/models.md
                 - Processador: models/processor.md
 
@@ -135,12 +135,12 @@ nav:
                 - Coordenação: coord/coord.md
         
         - Tempo: 
-                - Introdução: time/index.md
+                - time/index.md
                 - Tempo Físico: time/physical.md
                 - Tempo Lógico: time/logical.md
         
         - Tolerância a Faltas: 
-                - Introdução: fault/index.md
+                - fault/index.md
                 - Falta/Erros/Falhas: fault/failures.md
                 - Replicação: fault/replication.md
                 - Detectores de Falhas: fault/failuredetector.md
@@ -149,7 +149,8 @@ nav:
                 - Falhas bizantinas: fault/bizantine.md
                 - Dependabilidade: fault/dependability.md
 
-        - Consistência: 
+        - Consistência:
+                - consistency/index.md
                 - Modelos: consistency/consistency_models.md
                 - Centrado nos Dados: consistency/data_centric.md
                 - Centrado no Cliente: consistency/client_centric.md

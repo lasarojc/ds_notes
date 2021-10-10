@@ -1,4 +1,4 @@
-# Introdução
+# Modelos
 Agora que já estão convencidos de que não temos alternativas à distribuição, conhecem algumas das arquiteturas algumas das tecnologias usadas, vamos dar um passo para trás e para entendermos os fundamentos necessários à criação de sistemas escaláveis e tolerantes a falhas.
 Comecemos por consider um problema abstrato, que pode ser mapeado para um problema de computação distribuída.
 

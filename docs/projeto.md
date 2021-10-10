@@ -160,7 +160,7 @@ Nesta etapa você modificará o sistema para que atualizações dos dados sejam 
     * Certificar-se de que o portais são máquinas de estados determinística
     * Compreender o uso de Difusão Atômica em nível teórico
     * Compreender o uso de Difusão Atômica em nível prático 
-        * Use [Ratis](https://lasarojc.github.io/ds_notes/fault/#estudo-de-caso-ratis) para java
+        * Use [Ratis](https://lasarojc.github.io/ds_notes/cases/ratis) para java
         * Para Python, OpenReplica é uma boa opção.
         * Aplicar difusão atômica na replicação do servidor
 * Portal
