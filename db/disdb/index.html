@@ -1894,18 +1894,21 @@ Ao final da execução o saldo foi acrescido de 2, como esperado.</p>
 <p><img alt="transações" src="../../drawings/transactions.drawio-1.svg" /></p>
 <p>Ao final da execução, apesar do valor ter sido modificado duas vezes, o saldo teria sido acrescido de 1.
 Esta diferença entre o esperado e o real está enraizada nas garantias dadas por bancos de dados tradicionais, conhecidas como ACID, acrônimo para <strong>Atomicidade, Consistência, Isolamento e Durabilidade</strong>.</p>
+<h6>ACID</h6>
 <details class="sideslide"><summary>ACID</summary><ul>
 <li>Atomicidade</li>
-<li>Consistência</li>
-<li>Isolamento</li>
+<li>Consistência (Corretude)</li>
+<li>Isolamento (Consistência)</li>
 <li>Durabilidade</li>
 </ul>
 </details>
 <p>A atomicidade diz respeito ao tratamento das operações como um conjunto indivisível, isto é, <strong>ou todas as operações no conjunto são executadas ou nenhuma é.</strong></p>
-<p>A propriedade de consistência dita que todas as transições do banco de dados devem <strong>respeitar restrições nos seus dados</strong>, por exemplo, os tipos de cada entrada no banco e integridade referencial.</p>
-<p>Já a propriedade de isolamento se refere a como e quando os efeitos de uma transação passam a ser visíveis para outras transações, possivelmente concorrentes.
-Há diversos níveis de isolamento, sendo menos restritivos, como <strong>consistência eventual</strong><sup id="fnref:cons"><a class="footnote-ref" href="#fn:cons">1</a></sup>, ou mais restritivo, como <strong>seriabilidade estrita</strong>.</p>
+<p>A propriedade de consistência dita que todas as transições do banco de dados devem <strong>respeitar restrições nos seus dados</strong>, por exemplo, os tipos de cada entrada no banco e integridade referencial. Para não confundir com a consistência estudada anteriormente, podemos, sem prejuízo, renomear esta propriedade para corretude.</p>
+<p>Já a propriedade de isolamento se refere a como e quando os efeitos de uma transação passam a ser visíveis para outras transações, possivelmente concorrentes, isto é, sobre como o <em>interleaving</em> das operações das transações afeta o resultado final.
+O isolamento sim corresponde à consistência estudada anteriormente, o que pode causar certa confusão.
+Há diversos níveis de isolamento, sendo uns menos restritivos, como <strong>consistência eventual</strong>, ou mais restritivo, como <strong>seriabilidade estrita</strong>.</p>
 <p>Finalmente, durabilidade é a garantia de que os resultados de uma transação são permanentemente gravados no sistema, a despeito de falhas.</p>
+<h6>Dirty reads</h6>
 <p>Caso estas propriedades não sejam garantidas na execução de transações, problemas podem acontecer, como no exemplo anterior.
 Por exemplo, seja uma transação que move 10% do saldo da segunda conta da primeira para a segunda, isto é, se <span class="arithmatex">\(a\)</span> tem saldo inicial 50 e <span class="arithmatex">\(b\)</span> tem saldo inicial 100, a transação transfere 10 de <span class="arithmatex">\(a\)</span> para <span class="arithmatex">\(b\)</span>.</p>
 <table>
@@ -2030,6 +2033,7 @@ Por exemplo, seja uma transação que move 10% do saldo da segunda conta da prim
 </details>
 <p>O problema aqui é que dados sendo modificados, isto é, não finais, "vazaram" de T1 para T2, um fenômeno conhecido como <strong><em>dirty read</em></strong>.
 Isso ocorreu porquê o nível de isolamento provido foi nenhum.</p>
+<h6>Lost update</h6>
 <p>Supondo uma execução de duas instâncias de T1, podemos observar outro problema, que pode deixar o BD em estado inválido.</p>
 <table>
 <thead>
@@ -2118,6 +2122,7 @@ Isso ocorreu porquê o nível de isolamento provido foi nenhum.</p>
 </table>
 </details>
 <p>Observe que <span class="arithmatex">\(sB*0.1\)</span> foi perdido, o que é conhecido como <strong><em>lost update</em></strong>, agora porquê faltou isolamento.</p>
+<h6>Execução serial</h6>
 <p>Qual a solução? No primeiro exemplo deste capítulo, uma execução serial das operações não causou problema, enquanto a concorrente sim.
 Testemos novamente uma <strong>execução</strong> em que as transações não se sobrepõem.</p>
 <table>
@@ -2166,12 +2171,12 @@ Testemos novamente uma <strong>execução</strong> em que as transações não s
 O que queremos então é uma execução das transações semelhante à serial, para garantir a corretude dos resultados, mas com o desempenho garantido pela execução concorrente.
 Isto é, <strong>não queremos uma execução serial</strong>, queremos uma execução <strong>equivalente a uma execução serial</strong>.</p>
 <h2 id="equivalencia-serial">Equivalência Serial</h2>
-<p>De forma geral, dizemos que duas execuções de transações são equivalentes se</p>
+<p>De forma geral, dizemos que duas execuções de transações são <strong>equivalentes</strong> se</p>
 <ul>
 <li>são execuções das mesmas transações (mesmas operações)</li>
 <li>quaisquer duas operações conflitantes são executadas na mesma ordem nas duas execuções.</li>
 </ul>
-<p>Duas operações são conflitantes se </p>
+<p>Duas operações são <strong>conflitantes</strong> se </p>
 <ul>
 <li>pertencem a transações diferentes,</li>
 <li>operam no mesmo dado, e</li>
@@ -2184,7 +2189,9 @@ Assim, para obter tanto desempenho advindo da concorrência quanto corretude adv
 Em vez disso, precisamos garantir por construção a equivalência serial, o que é bem mas simples, principalmente se considerarmos a seguinte restrição</p>
 <ul>
 <li>a execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.</li>
+<li>uma execução qualquer tem equivalência serial se todos os pares de transações tem equivalência serial.</li>
 </ul>
+<h6>Lost update</h6>
 <p>Revisitemos o exemplo do <em>lost update</em>. Quais operações conflitam nesta execução?</p>
 <details class="sideslide"><summary>Conflitos</summary><p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
 </details>
@@ -2295,6 +2302,7 @@ Mas e se modificarmos a execução como a seguir?</p>
 </tr>
 </tbody>
 </table>
+<h6>Aborts</h6>
 <p>Neste exemplo modificado teremos as operações nos pares de conflitos sendo executadas da direita para a esquerda, o que garante a equivalência serial da execução.
 Contudo, o modelo de transações usado até agora, em que o conjunto de operações é sempre executado até o fim, não corresponde à realidade.
 Precisamos adicionar a este modelo a possibilidade da transação ser <strong>abortada</strong>, isto é, ter seus efeitos revertidos.
@@ -2348,6 +2356,7 @@ Sob este novo modelo, considere o seguinte exemplo, onde a transação da direit
 <p>Apesar das operações serem ordenadas da direita para a esquerda, houve um <em>dirty read</em> na execução da transação da esquerda.
 Uma forma de pensar em como isso aconteceu, é considerar que o <strong>aborte!</strong> é uma operação que toca todos os dados usados pela transação abortada.
 Assim, o <strong>aborte!</strong> conflita com as leituras de <span class="arithmatex">\(b\)</span> e de <span class="arithmatex">\(a\)</span> feitas pela transação da esquerda e, portanto, houve uma violação na ordem de execução das operações.</p>
+<h6>Abort em cascata</h6>
 <p>Para que este dirty read não leve a inconsistências, a transação da esquerda deve também abortar.
 Esta estratégia pode ser implementada da seguinte forma: </p>
 <ul>
@@ -2365,8 +2374,8 @@ se T1 lê algo que T2 escreveu, e T2 lê algo que T3 escreveu, e assim por diant
 <li>quando um transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.</li>
 <li>quando transação T2 for terminada, continue a execução de T1.</li>
 </ul>
-<p><img alt="suspended execution" src="../../drawings/transactions.drawio-3.svg" /></p>
-<p>O que estamos tentando obter aqui é uma <strong>execução estrita</strong>, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garante Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-4.svg" /></p>
+<p>O que estamos tentando obter aqui é uma <strong>execução estrita</strong>, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garantem Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
 Fica então a pergunta: <strong>como implementar execuções estritas eficientes</strong>?
 A resposta está no controle de concorrência das transações.</p>
 <h2 id="controle-de-concorrencia">Controle de Concorrência</h2>
@@ -2379,11 +2388,11 @@ A resposta está no controle de concorrência das transações.</p>
 <h3 id="locking">Locking</h3>
 <p>Nesta abordagem, todos os objetos usados por uma transação são trancados, impedindo que sejam acessados por outras transações, até que sejam destrancados.
 Contudo, se os objetos são destrancados tão logo não sejam mais usados na transação, continuamos a ter <em>dirty reads</em>, como a operação em vermelho na figura a seguir.</p>
-<p><img alt="suspended execution" src="../../drawings/transactions.drawio-4.svg" /></p>
-<p>Mesmo que se tentasse abortar a transação que executou a <em>dirty read</em>, poderia ser tarde demais, como no exemplo a seguir que demonstra uma <strong>escrita prematura</strong>.</p>
 <p><img alt="suspended execution" src="../../drawings/transactions.drawio-5.svg" /></p>
-<p>Estes problemas podem ser evitados com o uso de <strong><em>strict two phase locking</em></strong>, em que as transações <strong>trancam o objeto quando primeiro acessado</strong> e só <strong>destrancam ao final da transação</strong>, atomicamente com a terminação.</p>
+<p>Mesmo que se tentasse abortar a transação que executou a <em>dirty read</em>, poderia ser tarde demais, como no exemplo a seguir que demonstra uma <strong>escrita prematura</strong>.</p>
 <p><img alt="suspended execution" src="../../drawings/transactions.drawio-6.svg" /></p>
+<p>Estes problemas podem ser evitados com o uso de <strong><em>strict two phase locking</em></strong>, em que as transações <strong>trancam o objeto quando primeiro acessado</strong> e só <strong>destrancam ao final da transação</strong>, atomicamente com a terminação.</p>
+<p><img alt="suspended execution" src="../../drawings/transactions.drawio-7.svg" /></p>
 <p>Já para aumentar a concorrência, é possível usar locks para leitura, compartilhados, e para escrita, exclusivos.</p>
 <details class="sideslide"><summary>Read/Write locks</summary><ul>
 <li>dois níveis de acesso</li>
@@ -2394,7 +2403,7 @@ Contudo, se os objetos são destrancados tão logo não sejam mais usados na tra
 </ul>
 </details>
 <p>Ou, ainda, locks com diferentes granularidades; em um banco de dados relacional, por exemplo, pode ser possível obter um lock em uma coluna de uma linha do banco, de toda a linha, de toda a relação, ou mesmo de todo o banco de dados.</p>
-<p>Mas mesmo com estes ajustes, locks deveriam, via de regra, serem evitados sempre que a probabilidade de conflitos for baixa. 
+<p>Mas mesmo com estes ajustes, locks deveriam, via de regra, ser evitados sempre que a probabilidade de conflitos for baixa. 
 Isso porquê os locks são uma abordagem <strong>pessimista</strong>, que incorrem em <strong><em>overhead</em></strong> mesmo quando transações não acessam os mesmos dados, lembrando que os locks só podem ser liberados no final das transações.</p>
 <details class="sideslide"><summary>Evitar locks</summary><ul>
 <li>pessimista</li>
@@ -2406,8 +2415,8 @@ Isso porquê os locks são uma abordagem <strong>pessimista</strong>, que incorr
 <h3 id="multi-versao">Multi-versão</h3>
 <p>Uma alternativa otimista aos locks é assumir que não há conflitos nas transações enquanto elas executam e, somente ao final da execução, testar a validade desta premissa e, caso falhe, abortar a transação.
 O controle de concorrência multi-versão (MVCC, do termo em inglês) faz isso mantendo uma cópia privada dos dados acessados pela transação.
-Ao final da execução, na fase de <strong>validação</strong>, se a cópia pública de onde a privada foi copiada não tiver sido modificada, a transação é bem sucedida e atualizações são feitas nas cópias públicas.<sup id="fnref:atu"><a class="footnote-ref" href="#fn:atu">2</a></sup></p>
-<p>Esta técnica, conhecida como <em>deferred update</em> pois atrasa a atualização da cópia pública até o final da transação, tem como vantagens o <strong>baixo</strong> <strong><em>overhead</em></strong>, se não houver conflitos.
+Ao final da execução, na fase de <strong>validação</strong>, se a cópia pública de onde a privada foi copiada não tiver sido modificada, a transação é bem sucedida e atualizações são feitas nas cópias públicas.<sup id="fnref:atu"><a class="footnote-ref" href="#fn:atu">1</a></sup></p>
+<p>Esta técnica, conhecida como <strong><em>deferred update</em></strong> pois atrasa a atualização da cópia pública até o final da transação, tem como vantagens o <strong>baixo</strong> <strong><em>overhead</em></strong>, se não houver conflitos.
 Entretanto, se houver muitos conflitos, o trabalho da transação é todo desperdiçado já que a transação será abortada na <strong>validação</strong>.</p>
 <p>A validação consiste em verificar se os <em>read</em> e <em>write sets</em> de quaisquer transações concorrentes são disjuntos, isto é, se dados transações <span class="arithmatex">\(t1\)</span> e <span class="arithmatex">\(t2\)</span>:</p>
 <ul>
@@ -2432,7 +2441,7 @@ Entretanto, se houver muitos conflitos, o trabalho da transação é todo desper
 <p>É preciso destacar que a <strong><em>forward validation</em></strong> pode levar a um cenário em que nenhuma transação é jamais comitada, pois uma cascata de aborts pode ocorrer.</p>
 <h3 id="timestamping">Timestamping</h3>
 <p>Uma terceira forma de controlar a concorrência associando uma ordem lógica para a execução das transações, de acordo com o início das transações.
-Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que a execução das transações seja é equivalente à execução serial de acordo com os timestamps.<sup id="fnref:kth"><a class="footnote-ref" href="#fn:kth">3</a></sup></p>
+Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que a execução das transações seja é equivalente à execução serial de acordo com os timestamps.<sup id="fnref:kth"><a class="footnote-ref" href="#fn:kth">2</a></sup></p>
 <ul>
 <li>transação recebe um <em>timestamp</em> no início</li>
 <li>operações são validadas na execução<ul>
@@ -2835,14 +2844,11 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 <div class="footnote">
 <hr />
 <ol>
-<li id="fn:cons">
-<p>Consistência no sentido visto no capítulo anterior, não no sentido ACID.&#160;<a class="footnote-backref" href="#fnref:cons" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
 <li id="fn:atu">
-<p>Na prática, a atualização consiste apenas em mudar um ponteiro para apontar para a cópia privada.&#160;<a class="footnote-backref" href="#fnref:atu" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Na prática, a atualização consiste apenas em mudar um ponteiro para apontar para a cópia privada.&#160;<a class="footnote-backref" href="#fnref:atu" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:kth">
-<p>Baseado no material disponível em <a href="https://www.kth.se/social/course/ID2201/">Distributed Systems, Basic Course</a>.&#160;<a class="footnote-backref" href="#fnref:kth" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p>Baseado no material disponível em <a href="https://www.kth.se/social/course/ID2201/">Distributed Systems, Basic Course</a>.&#160;<a class="footnote-backref" href="#fnref:kth" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>

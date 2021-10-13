@@ -1010,9 +1010,46 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Modelos
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Modelos
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linearabilidade-linearizability" class="md-nav__link">
+    Linearabilidade (linearizability)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consistencia-sequencial" class="md-nav__link">
+    Consistência sequencial
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1463,6 +1500,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linearabilidade-linearizability" class="md-nav__link">
+    Linearabilidade (linearizability)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consistencia-sequencial" class="md-nav__link">
+    Consistência sequencial
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1485,17 +1544,33 @@
 
   <!-- Content -->
   <h1 id="modelos">Modelos</h1>
-<p>Embora não seja necessário, para falarmos sobre modelos de consistência falaremos sobre bancos de dados pois é algo próximo da realidade da maioria dos estudantes e torna mais fácil o entendimento do tópico.
-Um banco de dados pode ser pensado, em sua forma mais simplista, como um conjunto de variáveis nas quais valores são armazenados.
-Assim, clientes do banco de dados essencialmente executam comandos como <strong><span class="arithmatex">\(X\)</span> recebe 'João'</strong> e <strong><span class="arithmatex">\(Y\)</span> recebe 'joao arroba hmail.com'</strong>.
-Obviamente que <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span> não precisam ser declarados antes da primeira escrita, assim como chaves primárias não são declaradas até que sejam usadas, e que o valor associado a uma variável pode ter várias partes, como <strong>"{'Endereço':'Av 1, número 2', 'Profissão':'Computeiro'}</strong> e cada parte um tipo. Essa á uma simplificação dos bancos de dados, mas uma simplificação poderosa.</p>
+<p>Modelos de consistência surgiram em dois mundos diferentes, o dos sistemas concorrentes (dos quais sistemas distribuídos fazem parte) e o dos bancos de dados.
+Nos sistemas distribuídos, consistência diz respeito à execução conjuntos de operações individuais sobre objetos simples, como uma variável.
+Nos bancos de dados, consistência se refere às garantias de dadas por transações, conjuntos de operações que leem e modificam diversos objetos em conjunto.
+Apesar do ponto de partida disjunto, os dois pontos de vista podem ser unificados, apesar das nomenclaturas diferentes.
+O universo de modelos, contudo, é vasto, conforme mostram as figuras adiante, com as classificações de
+Bailis et. al<sup id="fnref:highlyavailabletransactions"><a class="footnote-ref" href="#fn:highlyavailabletransactions">1</a></sup> e Viotti &amp; Vukolic<sup id="fnref:consistency"><a class="footnote-ref" href="#fn:consistency">2</a></sup>.</p>
+<details class="todo"><summary>TODO</summary><p>Juntar as duas imagens.</p>
+</details>
+<p><a href="http://www.vldb.org/pvldb/vol7/p181-bailis.pdf"><img alt="" src="../../images/consistency-models2.png" /></a></p>
+<p><a href="https://arxiv.org/abs/1512.00168"><img alt="" src="../../images/consistency-models.png" /></a></p>
+<h6>Um banco de dados <em>to rule them all</em></h6>
+<p>Para simplificar a discussão sobre modelos de consistência, usaremos um banco de dados para falar tanto sobre modelos para operações simples quanto para grupos de operações (transações), uma vez que bancos de dados são algo com o qual você já tem alguma familiaridade.</p>
+<p>Neste contexto, um banco de dados pode ser pensado, de uma forma bem simplista, como uma tabela do tipo chave/valor.
+As entradas desta tabela podem ser ser pensadas linhas de uma relação de um banco de dados ou como posições na memória de um computador (variáveis), e são manipuladas por comandos como <strong><span class="arithmatex">\(X\)</span> recebe 'João'</strong> e <strong>qual o valor de <span class="arithmatex">\(Y\)</span></strong>.
+Obviamente que <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span> não precisam ser declarados antes da primeira escrita, assim como chaves primárias não são declaradas até que sejam usadas, e que o valor associado a uma variável pode ter várias partes, como <strong>"{'Endereço':'Av 1, número 2', 'Profissão':'Computeiro'}</strong> e cada parte um tipo. 
+Essa á uma simplificação dos bancos de dados, mas uma simplificação poderosa.</p>
 <p><img alt="Single DB" src="../../drawings/disdb.drawio-0.svg" /></p>
+<h6>Expectativa x Realidade</h6>
 <p>Quando um processo se comunica com um banco de dados, ele o faz com certas expectativas quanto ao funcionamento deste banco.
 Por exemplo, ao escrever um dados no banco, independentemente de como o banco é implementado, o cliente geralmente espera que as escritas aconteçam na ordem em que as disparou e que, ao ler uma variável, lhe seja retornado o "último" valor escrito na mesma.</p>
-<p><img alt="Single DB" src="../../drawings/disdb.drawio-2.svg" /></p>
-<p>Esta expectativa é independente do banco de dados ser implementado de forma distribuída ou não. Isto é, mesmo que os dados armazenados no banco sejam particionados ou replicados entre vários nós, o cliente espera que o banco tenha comportamento consistente com o de um banco não distribuído e retorne ou aquilo que escreveu ou algo mas recente.</p>
+<p><img alt="Single DB" src="../../drawings/disdb.drawio-7.svg" /></p>
+<p>Esta expectativa é independente do banco de dados ser implementado de forma distribuída ou não. 
+Isto é, mesmo que os dados armazenados no banco sejam particionados ou replicados entre vários nós, o cliente espera que o banco tenha comportamento consistente com o de um banco não distribuído e retorne ou aquilo que escreveu ou algo mais recente.</p>
 <p><img alt="Single DB" src="../../drawings/disdb.drawio-1.svg" /></p>
-<details class="sidesline"><summary>Níveis de Consistência</summary><ul>
+<div class="admonition note inline end">
+<p class="admonition-title">Níveis de Consistência</p>
+<ul>
 <li>Consistência forte: leituras sempre retornam a versão mais recente do dado sendo lido.<ul>
 <li>Propagação instantânea ou <em>locks</em> dos dados sendo manipulados enquanto a propagação acontece.</li>
 </ul>
@@ -1509,26 +1584,72 @@ Por exemplo, ao escrever um dados no banco, independentemente de como o banco é
 </ul>
 </li>
 </ul>
-</details>
-<p>A expectativa, ou melhor, a forma como o banco de dados age dada uma interação com o cliente, ou clientes, é o que denominamos um <strong>modelo de consistência</strong>.
-Em particular, a expectativa descrita acima é denominada <strong>linearabilidade</strong>, também conhecida como <strong>consistência forte</strong>.
-Com o advento do NOSQL, mais e mais desenvolvedores buscam modelos alternativos, por exemplo, consistência <strong><em>eventual</em></strong>, em que há a garantia de que atualizações estarão disponíveis a partir de algum momento para a leitura, mas não há uma definição clara de quando isso ocorrerá.<sup id="fnref:eventual"><a class="footnote-ref" href="#fn:eventual">1</a></sup></p>
+</div>
+<p>A expectativa, ou melhor, a forma como o banco de dados age dada uma interação com o cliente, ou clientes, é o que denominamos um <strong>modelo de consistência</strong>.</p>
+<p>A grande dificuldade na implementação de qualquer modelo de consistência em um banco de dados distribuído vem do fato das operações não serem atômicas, como mostrado acima.
+Se os processos estão em máquinas distintas, há uma naturalmente um tempo de propagação para os comandos e respostas, e a execução se parece mais com o seguinte, onde as operações são espalhadas no tempo.</p>
+<p><img alt="Single DB" src="../../drawings/disdb.drawio-2.svg" /></p>
+<p>O problema se agrava quando o próprio banco de dados é distribuído, replicado ou particionando seus dados. 
+Para entender como isso afeta a implementação, considere a execução seguinte, em que cada cliente se comunica com uma réplica.
+Neste caso, a operação de atualização de <span class="arithmatex">\(Y\)</span> para 20, que já havia terminado do ponto de vista do cliente de baixo, ainda não havia sido propagada para a réplica de cima, o que fez com que a leitura iniciada depois não visse o valor 20.</p>
+<p><img alt="Não linearabilidade" src="../../drawings/disdb.drawio-5.svg" /></p>
+<p>Para impedir execuções como esta, os processos devem coordenar suas ações, o que tem um custo em termos do desempenho do sistema, forçando a comunidade a buscar por modelos em que o custo seja menor mas que as garantias dadas ainda sejam úteis.</p>
+<h6>Consistência Forte e Fraca</h6>
+<p>O modelo de consistência descrito acima é denominado <strong>linearabilidade</strong>, também conhecida como <strong>consistência forte</strong>, e se implementar este modelo é difícil, a comunidade procura por modelos mais fáceis mas também úteis.
+Em particular, recentemente os bancos de dados NOSQL se difundiram com a promessa de que podem ser úteis sem incorrer nos custos de coordenação, garantindo a chamada consistência <strong><em>eventual</em></strong>, em que há a garantia de que atualizações estarão disponíveis a partir de algum momento para a leitura em todas as réplicas/partições, mas não há uma definição clara de quando isso ocorrerá.<sup id="fnref:eventual"><a class="footnote-ref" href="#fn:eventual">3</a></sup></p>
 <p><img alt="eventual meme" src="../../images/eventual-meme0.png" /></p>
-<p>Enquanto consistência eventual traz melhoras de desempenho, trabalhar com este modelo implica em muito mais complexidade no desenvolvimento dos sistemas que usam o banco.</p>
+<p>Enquanto consistência eventual traz melhoras de desempenho, trabalhar com este modelo implica em muito mais complexidade no desenvolvimento dos sistemas, pois o banco dá poucas garantias para o desenvolvedor.</p>
 <p><img alt="eventual meme" src="../../images/eventual-meme.png" /></p>
-<p>Um terceiro modelo geral de consistência seria a consistência <strong>fraca</strong>, em que a única garantia é de que o valor retornado nas leituras foi escrito em algum momento.
+<p>Um terceiro modelo geral de consistência seria a consistência <strong>fraca</strong>, em que a única garantia é de que o valor retornado nas leituras foi escrito em algum momento (ou nenhum dado é retornado).
 Na verdade, podemos pensar nos modelos de consistência como um espectro com <strong>forte</strong> e <strong>fraca</strong> nos extremos e diversos modelos, incluindo <strong><em>eventual</em></strong>, no meio.
-Diferentes bancos de dados oferecem diferentes modelos, com nomes parecidos ou até iguais e é preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.</p>
-<p><a href="https://arxiv.org/abs/1512.00168"><img alt="" src="../../images/consistency-models.png" /></a></p>
-<p>Além disso, os modelos podem ser divididos em <strong>Centrados nos Dados</strong>  e <strong>Centrados nos Clientes</strong>, sendo que no primeiro o modelo é definido em termos das garantias de consistência dos dados e, no segundo, em termos das garantias sobre o que os clientes vêem.<sup id="fnref:util"><a class="footnote-ref" href="#fn:util">2</a></sup></p>
+Diferentes bancos de dados oferecem diferentes modelos, com nomes parecidos ou até iguais e é preciso conhecer o que cada sistema está entregando para poder utilizá-lo da forma correta.
+Nas seções seguintes, discutiremos alguns dos modelos, focando-nos em operações simples.</p>
+<details class="todo"><summary>TODO</summary><p>Versão simplificada da figura anterior, mostrando quais modelos serão discutidos.</p>
+</details>
+<!--Além disso, os modelos podem ser divididos em **Centrados nos Dados**  e **Centrados nos Clientes**, sendo que no primeiro o modelo é definido em termos das garantias de consistência dos dados e, no segundo, em termos das garantias sobre o que os clientes veem.[^util]-->
+
+<h2 id="linearabilidade-linearizability">Linearabilidade (<em>linearizability</em>)</h2>
+<div class="admonition example inline end">
+<p class="admonition-title">Linearabilidade</p>
+<ul>
+<li>Operação individual</li>
+<li>Objeto individual</li>
+<li>Execução atômica (pontual)</li>
+</ul>
+</div>
+<p>O modelo mais forte de consistência, para operações simples sobre objetos individuais é a <strong>linearabilidade</strong>,
+que implica que operações aparentam executar atomicamente (acontece em um ponto indivisível da execução), respeitando a ordem temporal das operações, isto é, se uma operação <span class="arithmatex">\(b\)</span> foi iniciada depois que uma outra operação <span class="arithmatex">\(a\)</span> foi terminada, então, os efeitos de <span class="arithmatex">\(a\)</span> devem ser vistos antes dos efeitos de <span class="arithmatex">\(b\)</span>.
+A execução mostrada anteriormente, é um exemplo de execução linearizável.</p>
+<p><img alt="Linearabilidade" src="../../drawings/disdb.drawio-2.svg" /></p>
+<p>Observe que a execução é equivalente à seguinte, onde não há concorrência entre operações (caixas com bordas arredondadas).<sup id="fnref:multiplas"><a class="footnote-ref" href="#fn:multiplas">5</a></sup></p>
+<p><img alt="Linearabilidade" src="../../drawings/disdb.drawio-3.svg" /></p>
+<p>De fato, cada operação poderia ser substituída por um único ponto e mesmo a distribuição poderia ser ignorada; tudo o que importa para que a execução seja linearizável são os efeitos das operações, não o fato do banco ser distribuído, replicado ou particionado.</p>
+<p><img alt="Linearabilidade" src="../../drawings/disdb.drawio-4.svg" /></p>
+<p>Como já mencionamos, implementar este modelo mesmo em um sistema distribuído assíncrono demanda muita coordenação entre os processos, estendendo o tempo de execução de cada operação para "cobrir" esta coordenação. 
+Reveja o exemplo seguinte, em que a operação de atualização de <span class="arithmatex">\(Y\)</span> para 20 não foi refletida na última leitura.</p>
+<p><img alt="Não linearabilidade" src="../../drawings/disdb.drawio-5.svg" /></p>
+<p>Para corrigir o problema, as réplicas precisam se "sincronizar" antes de executarem leituras.</p>
+<p><img alt="Não linearabilidade" src="../../drawings/disdb.drawio-6.svg" /></p>
+<h2 id="consistencia-sequencial">Consistência sequencial</h2>
+<p>A grande dificuldade em se garantir a linearabilidade vem da exigência das operações respeitarem uma ordem baseada no tempo de execução. Isso exige que haja uma sincronização entre os nós onde o dado é armazenado, a cada operação, o que pode se muito custoso.</p>
+<p><img alt="Consistência sequencial" src="../../drawings/disdb.drawio-5.svg" /></p>
 <div class="footnote">
 <hr />
 <ol>
+<li id="fn:highlyavailabletransactions">
+<p><a href="http://www.vldb.org/pvldb/vol7/p181-bailis.pdf">Highly Available Transactions: Virtues and Limitations</a>&#160;<a class="footnote-backref" href="#fnref:highlyavailabletransactions" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:consistency">
+<p><a href="https://arxiv.org/pdf/1512.00168.pdf">Consistency in Non-Transactional Distributed Storage Systems</a>&#160;<a class="footnote-backref" href="#fnref:consistency" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
 <li id="fn:eventual">
-<p>Enquanto no Português <em>Eventual</em> quer dizer <strong>possivelmente</strong>, no inglês quer dizer <strong>em algum momento</strong> não determinado, mas vindouro.&#160;<a class="footnote-backref" href="#fnref:eventual" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Enquanto no Português <em>Eventual</em> quer dizer <strong>possivelmente</strong>, no inglês quer dizer <strong>em algum momento</strong> não determinado, mas vindouro.&#160;<a class="footnote-backref" href="#fnref:eventual" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:util">
-<p>Caso esteja se perguntando se este modelo e estudo tem alguma serventia para você, afinal nos bancos de dados com que trabalhou ou trabalha as operações são agrupadas em <strong>transações</strong> e não executadas individualmente e as transações garantem ACID, lhe asseguro que sim e que falaremos em transações mais adiante.&#160;<a class="footnote-backref" href="#fnref:util" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Caso esteja se perguntando se este modelo e estudo tem alguma serventia para você, afinal nos bancos de dados com que trabalhou ou trabalha as operações são agrupadas em <strong>transações</strong> e não executadas individualmente e as transações garantem ACID, lhe asseguro que sim e que falaremos em transações mais adiante.&#160;<a class="footnote-backref" href="#fnref:util" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:multiplas">
+<p>Observe também que se <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span> forem considerados objetos diferentes, então estamos falando em duas execuções distintas, uma verde e outra vermelha, ambas linearizáveis.&#160;<a class="footnote-backref" href="#fnref:multiplas" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
