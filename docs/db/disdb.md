@@ -24,24 +24,24 @@ Se em vez disso as duas instâncias executassem concorrentemente, teríamos um r
 Ao final da execução, apesar do valor ter sido modificado duas vezes, o saldo teria sido acrescido de 1.
 Esta diferença entre o esperado e o real está enraizada nas garantias dadas por bancos de dados tradicionais, conhecidas como ACID, acrônimo para **Atomicidade, Consistência, Isolamento e Durabilidade**.
 
+###### ACID
 ???sideslide "ACID"
     * Atomicidade
-    * Consistência
-    * Isolamento
+    * Consistência (Corretude)
+    * Isolamento (Consistência)
     * Durabilidade
 
 A atomicidade diz respeito ao tratamento das operações como um conjunto indivisível, isto é, **ou todas as operações no conjunto são executadas ou nenhuma é.**
 
-A propriedade de consistência dita que todas as transições do banco de dados devem **respeitar restrições nos seus dados**, por exemplo, os tipos de cada entrada no banco e integridade referencial.
+A propriedade de consistência dita que todas as transições do banco de dados devem **respeitar restrições nos seus dados**, por exemplo, os tipos de cada entrada no banco e integridade referencial. Para não confundir com a consistência estudada anteriormente, podemos, sem prejuízo, renomear esta propriedade para corretude.
 
-Já a propriedade de isolamento se refere a como e quando os efeitos de uma transação passam a ser visíveis para outras transações, possivelmente concorrentes.
-Há diversos níveis de isolamento, sendo menos restritivos, como **consistência eventual**[^cons], ou mais restritivo, como **seriabilidade estrita**.
-
-[^cons]: Consistência no sentido visto no capítulo anterior, não no sentido ACID.
+Já a propriedade de isolamento se refere a como e quando os efeitos de uma transação passam a ser visíveis para outras transações, possivelmente concorrentes, isto é, sobre como o *interleaving* das operações das transações afeta o resultado final.
+O isolamento sim corresponde à consistência estudada anteriormente, o que pode causar certa confusão.
+Há diversos níveis de isolamento, sendo uns menos restritivos, como **consistência eventual**, ou mais restritivo, como **seriabilidade estrita**.
 
 Finalmente, durabilidade é a garantia de que os resultados de uma transação são permanentemente gravados no sistema, a despeito de falhas.
 
-
+###### Dirty reads
 Caso estas propriedades não sejam garantidas na execução de transações, problemas podem acontecer, como no exemplo anterior.
 Por exemplo, seja uma transação que move 10% do saldo da segunda conta da primeira para a segunda, isto é, se $a$ tem saldo inicial 50 e $b$ tem saldo inicial 100, a transação transfere 10 de $a$ para $b$.
 
@@ -91,6 +91,7 @@ Qual o valor final calculado?
 O problema aqui é que dados sendo modificados, isto é, não finais, "vazaram" de T1 para T2, um fenômeno conhecido como ***dirty read***.
 Isso ocorreu porquê o nível de isolamento provido foi nenhum.
 
+###### Lost update
 Supondo uma execução de duas instâncias de T1, podemos observar outro problema, que pode deixar o BD em estado inválido.
 
 |T1(a,b) |  T1(a,b)|
@@ -122,6 +123,7 @@ Supondo uma execução de duas instâncias de T1, podemos observar outro problem
 
 Observe que $sB*0.1$ foi perdido, o que é conhecido como ***lost update***, agora porquê faltou isolamento.
 
+###### Execução serial
 Qual a solução? No primeiro exemplo deste capítulo, uma execução serial das operações não causou problema, enquanto a concorrente sim.
 Testemos novamente uma **execução** em que as transações não se sobrepõem.
 
@@ -143,12 +145,12 @@ Isto é, **não queremos uma execução serial**, queremos uma execução **equi
 
 ## Equivalência Serial
 
-De forma geral, dizemos que duas execuções de transações são equivalentes se
+De forma geral, dizemos que duas execuções de transações são **equivalentes** se
 
 * são execuções das mesmas transações (mesmas operações)
 * quaisquer duas operações conflitantes são executadas na mesma ordem nas duas execuções.
 
-Duas operações são conflitantes se 
+Duas operações são **conflitantes** se 
 
 * pertencem a transações diferentes,
 * operam no mesmo dado, e
@@ -163,7 +165,9 @@ Mas como obter equivalência serial? Não seria viável executar as operações 
 Em vez disso, precisamos garantir por construção a equivalência serial, o que é bem mas simples, principalmente se considerarmos a seguinte restrição
 
 * a execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.
+* uma execução qualquer tem equivalência serial se todos os pares de transações tem equivalência serial.
 
+###### Lost update
 Revisitemos o exemplo do *lost update*. Quais operações conflitam nesta execução?
 
 ???sideslide "Conflitos"
@@ -199,6 +203,7 @@ Mas e se modificarmos a execução como a seguir?
 ||$sA = R(a)$     |
 ||  $W(a)sA-sB*0.1$|
 
+###### Aborts
 Neste exemplo modificado teremos as operações nos pares de conflitos sendo executadas da direita para a esquerda, o que garante a equivalência serial da execução.
 Contudo, o modelo de transações usado até agora, em que o conjunto de operações é sempre executado até o fim, não corresponde à realidade.
 Precisamos adicionar a este modelo a possibilidade da transação ser **abortada**, isto é, ter seus efeitos revertidos.
@@ -220,6 +225,7 @@ Apesar das operações serem ordenadas da direita para a esquerda, houve um *dir
 Uma forma de pensar em como isso aconteceu, é considerar que o **aborte!** é uma operação que toca todos os dados usados pela transação abortada.
 Assim, o **aborte!** conflita com as leituras de $b$ e de $a$ feitas pela transação da esquerda e, portanto, houve uma violação na ordem de execução das operações.
 
+###### Abort em cascata
 Para que este dirty read não leve a inconsistências, a transação da esquerda deve também abortar.
 Esta estratégia pode ser implementada da seguinte forma: 
 
@@ -243,9 +249,9 @@ Mas, e se evitarmos dirty reads em vez de tratarmos? Podemos fazê-lo com a segu
 * quando um transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.
 * quando transação T2 for terminada, continue a execução de T1.
 
-![suspended execution](../drawings/transactions.drawio#3)
+![suspended execution](../drawings/transactions.drawio#4)
 
-O que estamos tentando obter aqui é uma **execução estrita**, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garante Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
+O que estamos tentando obter aqui é uma **execução estrita**, ou seja, uma execução em que Leituras e Escritas devem ser atrasadas até que todas as transações anteriores que contenham escritas nos mesmos dados sejam "comitadas" ou abortadas. Execuções estritas garantem Isolamento, contudo, levam a menor concorrência, já que transações ficam suspensas.
 Fica então a pergunta: **como implementar execuções estritas eficientes**?
 A resposta está no controle de concorrência das transações.
 
@@ -263,15 +269,15 @@ Consideremos três abordagens de controle de concorrência usadas por bancos de 
 Nesta abordagem, todos os objetos usados por uma transação são trancados, impedindo que sejam acessados por outras transações, até que sejam destrancados.
 Contudo, se os objetos são destrancados tão logo não sejam mais usados na transação, continuamos a ter *dirty reads*, como a operação em vermelho na figura a seguir.
 
-![suspended execution](../drawings/transactions.drawio#4)
+![suspended execution](../drawings/transactions.drawio#5)
 
 Mesmo que se tentasse abortar a transação que executou a *dirty read*, poderia ser tarde demais, como no exemplo a seguir que demonstra uma **escrita prematura**.
 
-![suspended execution](../drawings/transactions.drawio#5)
+![suspended execution](../drawings/transactions.drawio#6)
 
 Estes problemas podem ser evitados com o uso de ***strict two phase locking***, em que as transações **trancam o objeto quando primeiro acessado** e só **destrancam ao final da transação**, atomicamente com a terminação.
 
-![suspended execution](../drawings/transactions.drawio#6)
+![suspended execution](../drawings/transactions.drawio#7)
 
 Já para aumentar a concorrência, é possível usar locks para leitura, compartilhados, e para escrita, exclusivos.
 
@@ -285,7 +291,7 @@ Já para aumentar a concorrência, é possível usar locks para leitura, compart
 Ou, ainda, locks com diferentes granularidades; em um banco de dados relacional, por exemplo, pode ser possível obter um lock em uma coluna de uma linha do banco, de toda a linha, de toda a relação, ou mesmo de todo o banco de dados.
 
 
-Mas mesmo com estes ajustes, locks deveriam, via de regra, serem evitados sempre que a probabilidade de conflitos for baixa. 
+Mas mesmo com estes ajustes, locks deveriam, via de regra, ser evitados sempre que a probabilidade de conflitos for baixa. 
 Isso porquê os locks são uma abordagem **pessimista**, que incorrem em ***overhead*** mesmo quando transações não acessam os mesmos dados, lembrando que os locks só podem ser liberados no final das transações.
 
 ???sideslide "Evitar locks"
@@ -302,7 +308,7 @@ Ao final da execução, na fase de **validação**, se a cópia pública de onde
 
 [^atu]: Na prática, a atualização consiste apenas em mudar um ponteiro para apontar para a cópia privada.
 
-Esta técnica, conhecida como *deferred update* pois atrasa a atualização da cópia pública até o final da transação, tem como vantagens o **baixo** ***overhead***, se não houver conflitos.
+Esta técnica, conhecida como ***deferred update*** pois atrasa a atualização da cópia pública até o final da transação, tem como vantagens o **baixo** ***overhead***, se não houver conflitos.
 Entretanto, se houver muitos conflitos, o trabalho da transação é todo desperdiçado já que a transação será abortada na **validação**.
 
 A validação consiste em verificar se os *read* e *write sets* de quaisquer transações concorrentes são disjuntos, isto é, se dados transações $t1$ e $t2$:
