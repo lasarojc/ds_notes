@@ -166,6 +166,7 @@ nav:
                 - Introdução: cases/index.md
                 - Cassandra: cases/cassandra.md
                 - Chord: cases/chord.md
+                - Pastry: cases/pastry.md
                 - Dynamo: cases/dynamo.md
                 - gRPC: cases/grpc.md
                 - Mosquito: cases/mosquito.md
