@@ -1,0 +1,6 @@
+ git+https://github.com/Python-Markdown/markdown.git
+ mkdocs-material
+ mkdocs-drawio-exporter
+ python-markdown-math
+ pymdown-extensions
+ mkdocs-drawio-exporter
