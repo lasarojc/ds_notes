@@ -39,7 +39,7 @@ roteamento que a estrutura chave para o algoritmo de roteamento.
 
 
 
-![um estado hipotetico de um nó de id 10233102](../drawings/pastryNode.drawio#0)  
+![um estado hipotetico de um nó de id 10233102](../drawings/pastry_node.drawio#0)  
 
 
 
