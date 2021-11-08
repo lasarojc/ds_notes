@@ -122,6 +122,8 @@ atualiza a sua tabela com esse novo nó.
 
 ## Referências
 
+Caso de Estudo feito por um Ex estudante _[Samuel Cavalcanti](https://github.com/samuel-cavalcanti)_
+
 Artigo do Pastry Network, [Pastry: Scalable, decentralized object location and
 routing for large-scale peer-to-peer systems](https://rdcu.be/cABRL)
 
