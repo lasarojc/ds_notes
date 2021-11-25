@@ -379,7 +379,7 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get k1
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2 testek2
 ```
 
-Todo o código está disponível no [Github](https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor)
+Todo o código está disponível no [Github](https://github.com/lasarojc/ds_notes/tree/main/docs/fault/code/ChaveValor)
 
 ???todo "Exercício"
     * Adicionar operações 
