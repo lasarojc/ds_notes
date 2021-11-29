@@ -11,14 +11,14 @@
       
       
       
-        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/cases/kafka/">
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/cases/pastry/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
     
     
       
-        <title>Kafka - Notas de Aula em Sistemas Distribuídos</title>
+        <title>Pastry - Notas de Aula em Sistemas Distribuídos</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#fila-de-mensagenspubsub-kafka" class="md-skip">
+        <a href="#p2p-pastry" class="md-skip">
           Ir para o conteúdo
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Kafka
+              Pastry
             
           </span>
         </div>
@@ -1222,11 +1222,118 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../pastry/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Pastry
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Pastry
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+    <nav class="md-nav" aria-label="Roteamento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estrutura-interna-de-um-no-pastry" class="md-nav__link">
+    Estrutura Interna de um Nó Pastry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-organizacao-e-adaptacao" class="md-nav__link">
+    Auto organização e adaptação
+  </a>
+  
+    <nav class="md-nav" aria-label="Auto organização e adaptação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insercao-de-um-no" class="md-nav__link">
+    Inserção de um nó
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saida-de-um-no" class="md-nav__link">
+    Saída de um nó
+  </a>
+  
+    <nav class="md-nav" aria-label="Saída de um nó">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atualizacao-da-tabela-de-rotas-de-um-no-a" class="md-nav__link">
+    Atualização da tabela de rotas de um nó a
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localidade" class="md-nav__link">
+    localidade
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1306,21 +1413,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../kafka/" class="md-nav__link">
         Kafka
       </a>
-      
     </li>
   
 
@@ -1479,6 +1576,88 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#roteamento" class="md-nav__link">
+    Roteamento
+  </a>
+  
+    <nav class="md-nav" aria-label="Roteamento">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estrutura-interna-de-um-no-pastry" class="md-nav__link">
+    Estrutura Interna de um Nó Pastry
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-organizacao-e-adaptacao" class="md-nav__link">
+    Auto organização e adaptação
+  </a>
+  
+    <nav class="md-nav" aria-label="Auto organização e adaptação">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insercao-de-um-no" class="md-nav__link">
+    Inserção de um nó
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saida-de-um-no" class="md-nav__link">
+    Saída de um nó
+  </a>
+  
+    <nav class="md-nav" aria-label="Saída de um nó">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#atualizacao-da-tabela-de-rotas-de-um-no-a" class="md-nav__link">
+    Atualização da tabela de rotas de um nó a
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#localidade" class="md-nav__link">
+    localidade
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referencias" class="md-nav__link">
+    Referências
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1500,361 +1679,140 @@
 
 
   <!-- Content -->
-  <h1 id="fila-de-mensagenspubsub-kafka">Fila de Mensagens/PubSub: Kafka</h1>
-<p><img alt="" src="../../images/kafka0.png" /></p>
-<div class="admonition quote">
-<p class="admonition-title">Quote</p>
-<p>Kafka is a distributed streaming platform.</p>
+  <h1 id="p2p-pastry">P2P: Pastry</h1>
+<p>Pastry é uma rede <em>peer to peer</em> (P2P) pensado por Antony Rowstron e Peter Druschel com a ideia de ser um sistema escalável
+com localização de objetos eficiente em redes potencialmente grandes. Suas aplicações incluem compartilhamento e armazenamento global de dados e comunicações
+em grupo. Como todo sistema P2P o número de clientes cresce linearmente com o número de servidores, ou seja, cada novo cliente é um novo servidor. Pastry network possui a topologia rede de Overlay <strong>estruturada</strong>, apesar de possuir uma adição de dados e de nós mais lenta do que uma rede não estruturada, veremos
+que o seu algoritmo de inserção é eficiente.  </p>
+<table>
+<thead>
+<tr>
+<th>Estruturada</th>
+<th>Não-Estruturada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estrutura bem definida</td>
+<td>Estrutura aleatória</td>
+</tr>
+<tr>
+<td>Adição de dados é lenta</td>
+<td>Adição de dados é rápida</td>
+</tr>
+<tr>
+<td>Adição de nós é lenta</td>
+<td>Adição de nós é rápida</td>
+</tr>
+<tr>
+<td>Busca por dados é rápida</td>
+<td>Busca por dados lenta</td>
+</tr>
+</tbody>
+</table>
+<!-- steal this film.mov -->
+
+<h2 id="roteamento">Roteamento</h2>
+<p>Na Pastry Network, tanto a adição de dados quando de nós utilizam o mesmo
+algoritmo para navegar na rede, esse algoritmo busca ser um trade-of entre
+tempo-espaço, uma vez se compararmos com uma topologia em formato de anel um
+nó só precisaria armazenar dois nós, mas  no pior caso, o roteamento teria que passar pelos <span class="arithmatex">\(N\)</span> nós, ou seja , é <span class="arithmatex">\(O(N)\)</span>, já comparado com um grafo totalmente conectado e seus nós armazenados em uma tabela, o tempo no pior caso, para rotear uma mensagem seria <span class="arithmatex">\(O(1)\)</span>, mas cada nó teria que ter uma tabela armazenando os outros <span class="arithmatex">\(N-1\)</span> nós,
+o que é impraticável em uma rede larga, já no Pastry o seu algoritmo de roteamento
+demora <span class="arithmatex">\(Log_{2^{b}}N\)</span> passos para encontrar um nó e quantidade de nós varia com o
+parametro <span class="arithmatex">\(b\)</span>, o tamanho do leaf set  e o tamanho do neighborhood set, tipicamente
+os valores são <span class="arithmatex">\(4\)</span>, <span class="arithmatex">\(2^{b}\)</span> e <span class="arithmatex">\(2^{b+1}\)</span>, respectivamente.</p>
+<h3 id="estrutura-interna-de-um-no-pastry">Estrutura Interna de um Nó Pastry</h3>
+<p>Um nó Pastry é uma estrutura que possui 2 conjuntos e uma tabela.
+O conjunto leaf set <span class="arithmatex">\(L\)</span> que é uma estrutura necessária e utilizada
+durante a remoção de um nó, garantido que a estrutura da rede não se desfaça.
+O conjunto de vizinhos (neighborhood set) que existe basicamente por causa da
+internet e seus problemas, como a necessidade de monitorar os outros nós para
+saber se eles ainda estão vivos e qual é a distância entre os nós. A tabela de
+roteamento que a estrutura chave para o algoritmo de roteamento.</p>
+<p><img alt="um estado hipotetico de um nó de id 10233102" src="../../drawings/pastry_node.drawio-0.svg" />  </p>
+<p><img alt="Pastry vs Dense graph vs ring graph" src="../../drawings/dense_vs_pastry.drawio-0.svg" /></p>
+<div class="admonition example">
+<p class="admonition-title">Algoritmo de roteamento</p>
+<ul>
+<li>Seja um no de <span class="arithmatex">\(id\)</span> com valor <span class="arithmatex">\(A\)</span></li>
+<li>uma mensagem com uma chave de valor <span class="arithmatex">\(D\)</span></li>
+<li><span class="arithmatex">\(R^{i}_{l}\)</span> o valor de uma tabela <span class="arithmatex">\(R\)</span> onde <span class="arithmatex">\(i\)</span> é sua coluna e <span class="arithmatex">\(l\)</span> a sua linha</li>
+<li><span class="arithmatex">\(L_i\)</span> o i-ésimo <span class="arithmatex">\(id\)</span> do conjunto de folhas <span class="arithmatex">\(L\)</span>, <span class="arithmatex">\(-[\frac{|L|}{2}] \leq i \leq [\frac{|L|}{2} ]\)</span>, onde indices positivos e negativos indica <span class="arithmatex">\(id\)</span>s menores ou maiores que o <span class="arithmatex">\(id\)</span> <span class="arithmatex">\(A\)</span>, respectivamente.</li>
+<li><span class="arithmatex">\(D_{l}\)</span> o valor do l-ésimo digito da chave <span class="arithmatex">\(D\)</span></li>
+<li><span class="arithmatex">\(plength(A,B)\)</span> uma função que calcula o tamanho do prefixo compartilhado entre os ids <span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(B\)</span></li>
+<li><span class="arithmatex">\(M\)</span> o conjunto de nós vizinhos  </li>
+<li><strong>se</strong> <span class="arithmatex">\(L_{-[\frac{|L|}{2}]}\)</span> <span class="arithmatex">\(\leq D  \leq\)</span> <span class="arithmatex">\(L_{[\frac{|L|}{2}]}\)</span>, ou seja, se o <span class="arithmatex">\(id\)</span> da mensagem pertence ao conjunto de <span class="arithmatex">\(ids\)</span> dos nós folha, <strong>então:</strong> <ul>
+<li>repasse a mensagem para o nó de <span class="arithmatex">\(id\)</span> <span class="arithmatex">\(L_i\)</span> onde <span class="arithmatex">\(| D - L_i|\)</span> é minimo</li>
+</ul>
+</li>
+<li><strong>Caso contrário</strong> use  a tabela de rotas:   <ul>
+<li><span class="arithmatex">\(l = plength(D,A)\)</span></li>
+<li><strong>se</strong> <span class="arithmatex">\(R^{D_l}_{l} \neq null\)</span><ul>
+<li>repasse a mensagem para o nó  <span class="arithmatex">\(R^{D_l}_{l}\)</span></li>
+</ul>
+</li>
+<li><strong>caso contrário</strong>, ou seja, caso não for possível encaminhar a mensagem para <span class="arithmatex">\(R^{D_l}_{l}\)</span> ou essa celula da tabela esteja vazia:<ul>
+<li>repasse a mensagem para o nó <span class="arithmatex">\(T\)</span> tal que <span class="arithmatex">\(T \in L \cup R \cup M\)</span> e que  <span class="arithmatex">\(plength(T,D) \geq l\)</span>, <span class="arithmatex">\(|T- D| &lt; |A -D|\)</span>, ou seja <span class="arithmatex">\(T\)</span> é o nó que está em um dos conjuntos: Vizinhança, folha, tabela, que possui um prefixo compartilhado maior ou igual ao prefixo compartilhado do nó de id <span class="arithmatex">\(A\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
+<h2 id="auto-organizacao-e-adaptacao">Auto organização e adaptação</h2>
+<p>Para uma rede como Pastry todas as suas vantagens estão estritamente ligadas a sua estrutura, então é imprescindível que em momentos de inserção ou saída de um nó a rede consiga se organizar de tal forma que garanta as suas propriedades</p>
+<h3 id="insercao-de-um-no">Inserção de um nó</h3>
+<div class="admonition example">
+<p class="admonition-title">Procedimento para inserir um novo nó</p>
 <ul>
-<li>LinkedIn</li>
-<li>OpenSource em 2011</li>
-<li>Projeto Apache em ????</li>
+<li>
+<p>assumimos que o novo nó, o nó <span class="arithmatex">\(X\)</span> conhece o seu nó mais próximo considerando alguma métrica de distância, o nó <span class="arithmatex">\(A\)</span> </p>
+</li>
+<li>
+<p>gera-se o <span class="arithmatex">\(id\)</span> atraves do calculo do hash SHA-1 sobre o seu endereço ip ou com a sua chave publica</p>
+</li>
+<li>
+<p>Pastry Network passar a rotear uma mensagem especial <em>join</em>, onde assim como qualquer mensagem, Pastry busca encontrar o nó mais próximo numericamente do <span class="arithmatex">\(id\)</span>, que no caso é o <span class="arithmatex">\(id\)</span> do novo nó</p>
+</li>
+<li>
+<p>cada nó encontrado durante o roteamento envia para o novo nó sua tabela estado (Leaf set, Routing table, Neighborhood set) adicionado na tabela estado do novo nó</p>
+</li>
+<li>assumindo que nó <span class="arithmatex">\(A\)</span> é o mais próximo de <span class="arithmatex">\(X\)</span>, então inicializamos o conjuntos de vizinhos de <span class="arithmatex">\(X\)</span> com os vizinhos de <span class="arithmatex">\(A\)</span></li>
+<li>considerando que o nó <span class="arithmatex">\(Z\)</span> é o nó com o <span class="arithmatex">\(id\)</span> mais proximo de <span class="arithmatex">\(X\)</span>, então o conjunto de nós folhas (leaf set) de <span class="arithmatex">\(Z\)</span> inicializa o leaf set de <span class="arithmatex">\(X\)</span></li>
+<li>Considerando que <span class="arithmatex">\(A_i\)</span> significa a i-ésima linha da tabela de rotas de A e sabendo que a linha 0 de uma tabela de rotas independe do seu respectivo node <span class="arithmatex">\(id\)</span> então, podemos atribuir <span class="arithmatex">\(X_0 = A_0\)</span>, sabendo que o nó <span class="arithmatex">\(B\)</span> foi o nó depois de <span class="arithmatex">\(A\)</span>, logo <span class="arithmatex">\(B\)</span> já possui um prefixo em comum então podemos atribuir <span class="arithmatex">\(X_1 = B_1\)</span>, sabendo que <span class="arithmatex">\(C\)</span> foi o nó depois de <span class="arithmatex">\(B\)</span> então podemos atribuir <span class="arithmatex">\(X_2 = C_2\)</span>, e assim sucessivamente até achegar em <span class="arithmatex">\(Z\)</span>   </li>
 </ul>
-<p><img alt="" src="../../images/kafka1.png" /></p>
-<p><img alt="" src="../../images/kafka2.png" /></p>
-<p>Producers x Message Broker x Consumers</p>
-<p><img alt="" src="../../images/kafka3.png" /></p>
-<ul>
-<li>Produtores: enviam dados/mensagens/records (array de bytes)</li>
-<li>Consumidores: recebem dados</li>
-<li>Cluster/Broker: distribuído e tolerantes a falhas.</li>
-<li>Conectores: integração simplificada com outras aplicações </li>
-<li>Stream processors: spark ou outros frameworks; transformam dados</li>
-</ul>
-<p>Brokers</p>
-<ul>
-<li>Cluster de brokers</li>
-<li>Distribuído</li>
-<li>Tolerante a falhas</li>
-<li>Desacoplamento espacial</li>
-<li>Desacoplamento temporal</li>
-<li>Tópicos, não endereços</li>
-</ul>
-<p>Tópicos</p>
-<ul>
-<li>Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT</li>
-<li>Quantidade pode ser imensa.</li>
-</ul>
-<p>Partição</p>
-<ul>
-<li>Subdivisões de tópicos</li>
-<li>Número de partições é definido por usuário</li>
-<li>Cada partição está associada a um único servidor</li>
-</ul>
-<p>Offset</p>
-<ul>
-<li>Índice de uma mensagem em uma partição</li>
-<li>Índices atribuídos na ordem de chegada</li>
-<li>Offsets são locais às partições</li>
-<li>Mensagens são unicamente identificadas por (tópico, partição, índice)</li>
-</ul>
-<p><img alt="" src="../../images/kafka4.png" /></p>
-<p>Consumer group</p>
-<ul>
-<li>Carga pode ser muito grande para um consumidor</li>
-<li>Compartilham o processamento de um tópico</li>
-<li>Cada mensagem é processada por um membro do grupo</li>
-<li>A mesma mensagem pode ser processada por múltiplos grupos</li>
-<li>Número de consumidores <span class="arithmatex">\(\leq\)</span> partições no tópico</li>
-<li>Máximo de dois consumidores por partição (mantem pos. de cada um)</li>
-</ul>
-<p><img alt="" src="../../images/kafka5.png" /></p>
-<p>Siga o <a href="http://kafka.apache.org/quickstart">tutorial</a>, até o passo 5.</p>
-<ul>
-<li>Baixe e descompacte</li>
-<li>Rode o zookeeper (Terminal 1)</li>
-<li>Rode o Kafka (Terminal 2)</li>
-<li>Crie um tópico (Terminal 3) - 
-        Mais de uma partição em um servidor</li>
-<li>Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?</li>
-<li>Liste os tópicos criados</li>
-<li>Envie algumas mensagens</li>
-<li>Inicie um consumidor (Terminal 4)</li>
-</ul>
-<details class="todo"><summary>TODO</summary><p><a href="https://kafka.apache.org/">https://kafka.apache.org/</a></p>
-</details>
-<!--
-O quê?
-* Manter dados/serviços disponíveis a despeito de falhas.
-
-Replicação
-* No Kafka, o \alert{Replication Factor} determina quantas cópias de cada tópico (todas as partições no tópico).
-
-Líder e Seguidor
-*  Produtor conversa com líder. Líder grava localmente e envia ack ao produtor.
-*  Consumidor conversa com líder. Líder envia dados ao consumidor.
-*  Líder replica dados para seguidores.
-
-Replicar
-* Passo 6  ensina a criar um sistema com múltiplos brokers.
-
-*  Identificador
-*  Porta (mesmo servidor)
-*  \alert{Log directory}
-
-Replicar
-*  Crie um novo tópico, com RF = 3 e duas partições
-*  \lstinline|bin/kafka-topics.sh --list --zookeeper localhost:2181 --describe --topic <topico>|
-*  Lista de réplicas
-*  Lista de réplicas sincronizadas: \emph{list of \alert{i}n \alert{s}ync \alert{r}eplicas}
-
-
-Zookeeper
-*  Permite que nós do cluster se descubram
-*  Elege líder
-
-Armazenamento
-*  Dado deve ser removido depois de um tempo de ``retenção''
-*  Pode definir retenção por tamanho (por partição, não tópico)
-
-
-Produtor
-
-*  Produtor envia mensagens para os brokers
-*  Producer API
-*  [Learning Journal](https://github.com/LearningJournal/ApacheKafkaTutorials)
-
-SimpleProducer.java
-
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.KafkaProducer</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.Producer</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.producer.ProducerRecord</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="p">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleProducer</span> <span class="p">{</span>
- <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">String</span> <span class="n">topicName</span> <span class="o">=</span> <span class="s">&quot;SimpleProducerTopic&quot;</span><span class="p">;</span>
-  <span class="n">String</span> <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Chave&quot;</span><span class="p">;</span>
-  <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Valor&quot;</span><span class="p">;</span>
-  <span class="n">Properties</span> <span class="n">props</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="p">();</span>
-  <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;bootstrap.servers&quot;</span><span class="p">,</span> <span class="s">&quot;localhost:9092, localhost:9093&quot;</span><span class="p">);</span>
-  <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;key.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
-  <span class="n">props</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;value.serializer&quot;</span><span class="p">,</span> <span class="s">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span><span class="p">);</span>
-
-  <span class="n">Producer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">KafkaProducer</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="p">(</span><span class="n">props</span><span class="p">);</span>
-
-  <span class="n">ProducerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProducerRecord</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="p">(</span><span class="n">topicName</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-
-  <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">record</span><span class="p">);</span>
-  <span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-
-  <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;SimpleProducer Completed.&quot;</span><span class="p">);</span>
- <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-
-Workflow
-![]()images/kafka6.png)
-
-*  Particionador default
-    *  Partition
-    *  Hash da ``chave''
-    *  Round robin
-*  Retry automático
-
-
-Fire and Forget
-* Envia a mensagem e não se importa com o resultado.
-
-Synchronous Call
-* Envia a mensagem e espera para saber se foi entregue ou não.
-
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">{</span>
- <span class="n">RecordMetadata</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">producer</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">record</span><span class="p">).</span><span class="na">get</span><span class="p">();</span>
- <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Message is sent to Partition no &quot;</span> <span class="o">+</span> <span class="n">metadata</span><span class="p">.</span><span class="na">partition</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; and offset &quot;</span> <span class="o">+</span> <span class="n">metadata</span><span class="p">.</span><span class="na">offset</span><span class="p">());</span>
- <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;SynchronousProducer Completed with success.&quot;</span><span class="p">);</span>
-<span class="p">}</span><span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
- <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
- <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;SynchronousProducer failed with an exception&quot;</span><span class="p">);</span>
-<span class="p">}</span><span class="k">finally</span><span class="p">{</span>
- <span class="n">producer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-</td></tr></table>
-
-*  Future
-
-Callback
-Envia a mensagem e é invocado depois de receber um ACK
-
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>producer.send(record, new MyProducerCallback());
-
-...
-
-class MyProducerCallback implements Callback{
- @Override
- public  void onCompletion(RecordMetadata recordMetadata, Exception e) {
-  if (e != null)
-   System.out.println(&quot;AsynchronousProducer failed with an exception&quot;);
-  else
-   System.out.println(&quot;AsynchronousProducer call Success:&quot;);
- }
-}
-</code></pre></div>
-</td></tr></table>
-
-*  max.in.flight.requests.per.connection
-
-
-Default Partitioner
-![](../images/kafka6.png)
-
-*  Partition
-*  Hash da ``chave'' \% \#partition
-*  Round robin
-
-\href{https://github.com/LearningJournal/ApacheKafkaTutorials/blob/master/ProducerExamples/SensorPartitioner.java}{Exemplo de Custom Partitioner}
-\end{frame}
-
-\subsection{Consumidor}
-
-\begin{frame}{Consumer Groups}
-\begin{itemize}
-*  Múltiplos consumidores processam dados em paralelo
-*  Grupo de consumidores de tópicos
-*  Grupo pertence à mesma aplicação
-    \includegraphics[width=.6\textwidth]{images/kafka7}
-*  Duplicate reads? Consumidores não compartilham partições
-*  Group coordinator (broker eleito): lista de consumidores
-*  Group líder: rebalanceamento
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile, allowframebreaks]{Consumer}
-\begin{lstlisting}[language=Java]
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Properties;
-
-public class SimpleConsumer {
- public static void main(String[] args) throws IOException {
-  String topicName = "SimpleProducerTopic";
-  String groupName = "SupplierTopicGroup";
-
-  Properties props = new Properties();
-  props.put("bootstrap.servers", "localhost:9092,localhost:9093");
-  props.put("group.id", groupName);
-  props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-  props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-
-  KafkaConsumer<String, String> consumer = null;
-
-  try {
-   consumer = new KafkaConsumer<String, String>(props);
-   consumer.subscribe(Arrays.asList(topicName));
-
-   while (true) {
-    ConsumerRecords<String,String> records = consumer.poll(100);
-
-    for (ConsumerRecord<String, String> record: records)
-     System.out.println("Key = " + record.key() + " Value = " + record.value());
-   }
-  } catch (Exception ex) {
-   ex.printStackTrace();
-  } finally {
-   consumer.close();
-  }
- }
-}
-\end{lstlisting}
-
-\begin{itemize}
-*  Se não definir grupo, será novo grupo, e lerá todas as mensagens disponíveis
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Poll}
-\begin{itemize}
-*  poll também envia hearbeat
-*  executar a cada 3s, no mínimo    
-*  Current offset: a cada poll, broker incrementa current offset
-*  Commited offset: o consumidor informa quais índices foram processados
-    \begin{itemize}
-    *  Auto Commit
-        \begin{itemize}
-        *  enable.auto.commit
-        *  auto.commit.interval.ms
-        *  Pode causar reprocessamento de mensagens
-        \end{itemize}
-    *  Manual Commit
-        \begin{itemize}
-        *  CommitSync
-        *  CommitAsync
-        \end{itemize}
-    \end{itemize}
-\end{itemize}
-\end{frame}
-
-
-\subsection{Arquitetura}
-%\begin{frame}{Líder}
-
-%\end{frame}
-
-%mensagens são ack depois de copiadas para todas as réplicas
-%replicas lentas são removidas se lentas ou falhas
-%at least once, at most once, exactly one (nao suportado)
-%rolling upgrade
-%tls security
-%rest
-%CRUD
-
-
-
-
--->
+</div>
+<p>Perceba que a inserção utiliza do algoritmo de roteamento, e apesar do final ele enviar uma copia dos seu estado para todos os nós, são todos os nós que ele tem alguma proximidade e não todos os nós da rede e essa quantidade de nós é um parâmetro
+constante da rede, logo  a complexidade da inserção é <span class="arithmatex">\(O(logN)\)</span>, onde <span class="arithmatex">\(N\)</span> é o número
+de nós em uma rede pastry. </p>
+<h2 id="saida-de-um-no">Saída de um nó</h2>
+<p>Em um dado momento nós podem pedir para sair ou falharem sem nenhum tipo de aviso. A rede Pastry considera que um nó falhou no momento que os nós vizinhos não conseguem mais se comunicar com esse nó. Dado um nó <span class="arithmatex">\(A\)</span> que possui um leaf set <span class="arithmatex">\(L\)</span>, caso esse nó precise repor um nó do leaf set que falhou. então o nó <span class="arithmatex">\(A\)</span> contacta o nó de <span class="arithmatex">\(L\)</span> com o maior index possível, seja ele positivo ou negativo, por exemplo se o nos <span class="arithmatex">\(L_i\)</span>, dado que <span class="arithmatex">\([\frac{|L|}{2}] &lt; i &lt; 0\)</span>. então o nó <span class="arithmatex">\(A\)</span> irá enviar uma mensagem para o nó <span class="arithmatex">\(L_{-[\frac{|L|}{2}]}\)</span>, pedindo o seu conjunto leaf set <span class="arithmatex">\(L^{'}\)</span>, depois o nó <span class="arithmatex">\(A\)</span> escolhe um nó que não pertence ao seu conjunto <span class="arithmatex">\(L\)</span> e o adiciona, lembrando que <span class="arithmatex">\(A\)</span> remove o nó falho do conjunto <span class="arithmatex">\(L\)</span>. Perceba que o conjunto de vizinhos (neighborhood set) de um nó exerce um papel importante de de ficar em constante troca de mensagens, para verificar se um dado nó ainda está vivo.</p>
+<h3 id="atualizacao-da-tabela-de-rotas-de-um-no-a">Atualização da tabela de rotas de um nó a</h3>
+<p>Perceba que durante a saída de um nó a tabela de roteamento não é modificada, isso se
+dá porque Pastry adota uma uma solução em que essa atualização ocorre durante o roteamento. Durante o roteamento um dado no <span class="arithmatex">\(A\)</span> pode conter uma celula vazia, ou seja,
+<span class="arithmatex">\(R^{d}_{l} = null\)</span>, ou esse não é possível de ser contactado, o nó <span class="arithmatex">\(A\)</span> pede para um
+outro nó de mesma linha, como por exemplo: <span class="arithmatex">\(R^{i}_{l}, i\neq d\)</span> o seu nó <span class="arithmatex">\(R^{d}_{l}\)</span>, e se <span class="arithmatex">\(R^{i}_{l}\)</span> também for nulo, então <span class="arithmatex">\(A\)</span> contacta <span class="arithmatex">\(R^{i}_{l+1}\)</span> e assim sucessivamente. </p>
+<h2 id="localidade">localidade</h2>
+<p>Um ponto importante no algoritmo de inserção é assumir que conhecemo o nó mais
+próximo a partir de alguma metrica de distância, então se analisarmos o fato que
+<span class="arithmatex">\(X\)</span> copiou a linha 0 de <span class="arithmatex">\(A\)</span> e <span class="arithmatex">\(A\)</span> em algum ponto copiou a linha 0 do seu nó mais próximo, podemos perceber que todos os nós da linha 0 são relativamente próximos
+de <span class="arithmatex">\(X\)</span>, mas se a linha 1 ? bom se olharmos o pior caso que é sendo <span class="arithmatex">\(A\)</span> não tendo
+nenhum prefixo compartilhado com <span class="arithmatex">\(X\)</span>, logo <span class="arithmatex">\(B\)</span> é um dos nós da linha 0 de <span class="arithmatex">\(A\)</span>, então
+<span class="arithmatex">\(B\)</span> está próximo de <span class="arithmatex">\(A\)</span> que está próximo de <span class="arithmatex">\(X\)</span> , então quando <span class="arithmatex">\(X_1\)</span> recebe <span class="arithmatex">\(B_1\)</span>,
+ele recebeu os nós que estão a um nó mais próximo dele, da mesma forma que quando <span class="arithmatex">\(B\)</span> foi criado, ele recebeu os nós questão ao <strong>1 nível</strong> de distância dele, o mesmo se
+a aplica a <span class="arithmatex">\(X_3\)</span> e <span class="arithmatex">\(C_3\)</span> e assim por diante até <span class="arithmatex">\(X\)</span> receber o leaf set <span class="arithmatex">\(Z\)</span>, podemos
+dizer que durante a inserção de um nó, estamos sempre escolhendo a menor distância
+<strong>local</strong> e que ela não garante o mínimo global. Com o passar do tempo novos nós podem
+ser inseridos e removidos, ou até mesmo a métrica de distância pode variar com o
+tempo, logo periodicamente o nó <span class="arithmatex">\(A\)</span> envia mensagens para todos os nós da tabela
+enviarem sua tabela estado, onde ele compara os nós e caso encontre um nó que tenha o mesmo tamanho de prefixo e um valor da métrica de distância inferior, então o nó <span class="arithmatex">\(A\)</span>
+atualiza a sua tabela com esse novo nó. </p>
+<h2 id="referencias">Referências</h2>
+<p>Caso de Estudo feito por um Ex estudante <em><a href="https://github.com/samuel-cavalcanti">Samuel Cavalcanti</a></em></p>
+<p>Artigo do Pastry Network, <a href="https://rdcu.be/cABRL">Pastry: Scalable, decentralized object location and
+routing for large-scale peer-to-peer systems</a></p>
+<p>Vídeo do youtube explicando o algoritmo de roteamento, <a href="https://www.youtube.com/watch?v=WqQRQz_XYg4&amp;ab_channel=Wandida%2CEPFL">Routing in Distributed Hash Tables | Anne-Marie Kermarrec</a></p>
+<p>Vídeo do youtube explicado a auto organização da rede, <a href="https://www.youtube.com/watch?v=p8iugvHeGcg&amp;ab_channel=Wandida%2CEPFL">Dynamic Distributed Hash Tables | Anne-Marie Kermarrec</a></p>
 
   <!-- Last update of source file -->
 
@@ -1876,7 +1834,7 @@ public class SimpleConsumer {
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
         
-        <a href="../thrift/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Thrift" rel="prev">
+        <a href="../chord/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Chord" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1885,20 +1843,20 @@ public class SimpleConsumer {
               <span class="md-footer__direction">
                 Anterior
               </span>
-              Thrift
+              Chord
             </div>
           </div>
         </a>
       
       
         
-        <a href="../swim/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Swim" rel="next">
+        <a href="../dynamo/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Dynamo" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Próximo
               </span>
-              Swim
+              Dynamo
             </div>
           </div>
           <div class="md-footer__button md-icon">
