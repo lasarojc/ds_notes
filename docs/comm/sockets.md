@@ -166,7 +166,7 @@ Socket s = new Socket(hostname,port);
 
     Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
 
-    Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
+    Modifiquemos o cliente agora, para que tenha três `recv`, assim.
     ```Python
     ...
     from time import sleep
