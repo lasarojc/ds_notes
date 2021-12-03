@@ -155,13 +155,13 @@ Socket s = new Socket(hostname,port);
 ```
 
 !!! question "Exercício: Múltiplos Pacotes"
-    Façamos agora uma modificação no código do servidor para que envie não uma, mas duas mensagens para o cliente. Isto é, modifique seu servidor assim
+    Façamos agora uma modificação no código do servidor para que envie não uma, mas três mensagens para o cliente, e que o cliente durma um pouco após receber a primeira mensagem. Isto é, modifique seu servidor assim
 
     ```Python
     ...
     c.send('Thank you for connecting'.encode())
     c.send('Come back often'.encode())
-    ...
+    c.send('Bye!'.encode())
     ```
 
     Agora execute novamente o cliente e veja o que acontece.  Consegue explicar o fenômeno?
@@ -169,10 +169,18 @@ Socket s = new Socket(hostname,port);
     Modifiquemos o cliente agora, para que tenha dois `recv`, assim.
     ```Python
     ...
+    from time import sleep
+    ...
     print("1")
     data = s.recv(1024)
     print(data.decode())
+
+    sleep(1)
+
     print("2")
+    data = s.recv(1024)
+    print(data.decode())
+    print("3")
     data = s.recv(1024)
     print(data.decode())
     ...
