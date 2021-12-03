@@ -1592,18 +1592,15 @@
 De fato, o desenvolvimento de novos sistemas deveria ser pautado pela criação de componentes simples e coesos, que possam ser operados independentemente e que por meio de interfaces bem especificadas completas, possam ser então conectados para resolver um problema maior.</p>
 <p>Uma vez selecionados, os componentes são conectados por meio de conectores, que podem assumir múltiplas formas para esconder as complexas iterações entres os componentes, por exemplo, por meio de fluxos de mensagens ou invocações remotas de procedimentos.</p>
 <div class="mermaid">graph LR
-    A[Componente 1] --&gt; C{Conector} --&gt; B(Componente 2)</div>
-<details class="todo"><summary>TODO</summary><p>Desenhar o conector usando símbolo padrão.</p>
-</details>
+    A[Componente 1] --&gt; C{{Conector}} --&gt; B(Componente 2)</div>
 <p>Componentes bem projetados, deveriam ser facilmente substituídos por outros que respeitem a conexão. 
 Isto aumenta a manutenabilidade do sistemas e pode simplificar passos como a replicação de componentes.</p>
 <div class="mermaid">graph LR
-    A[Componente 1] --&gt; C{Conector 1} --&gt; B(Componente 2)
+    A[Componente 1] --&gt; C{{Conector 1}} --&gt; B(Componente 2)
 
-    D{Conector 2}
+    D[Componente 1] --&gt; E{{Conector 2}} --&gt; F(Componente 2)
 
-    E{Conector 3}
-</div>
+    style E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5</div>
 <p>Alguns conectores são complexos o suficiente para serem considerados eles próprios componentes, mas no contexto desta discussão, a bem da abstração, os consideraremos apenas como conectores. 
 Por exemplo, um <em>broker</em> MQTT usado para a comunicação entre dois processos é considerado um conector, e não um componente.</p>
 <p>Dependendo de como são conectados, haverá maior ou menor dependência entre os componentes.
@@ -1611,13 +1608,31 @@ Quando houver forte dependência, diremos que os componentes estão <strong>fort
 Caso contrário, diremos que estão <strong>fracamente acoplados</strong> (<em>loosely coupled</em>).
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de algum problema.</p>
 <p>Considere por exemplo o sistema na figura a seguir.
-Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o <em>backend</em>, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cda uma das API e uma troca em um dos serviços do <em>backend</em> exige ajustes em todas as aplicações.</p>
-<p><img alt="https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig" src="../images/loosetight.png" /></p>
+Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o <em>backend</em>, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cada uma das API e uma troca em um dos serviços do <em>backend</em> exige ajustes em todas as aplicações.</p>
+<div class="admonition note">
+<p class="admonition-title">Sem API gateway</p>
+<p><img alt="" src="../drawings/coupling.drawio-0.svg" /></p>
+<p>Todo cliente precisa conhecer todas as API. Todos devem ser modificados com cada novo serviço.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Com API gateway</p>
+<p><img alt="" src="../drawings/coupling.drawio-1.svg" /></p>
+<p>Todo cliente conhece apenas uma API. Apenas o gateway precisa ser modificado com cada novo serviço.</p>
+</div>
 <p>Já no lado direito, um conector foi colocado entre as aplicações e o <em>backend</em>, oferecendo uma interface única para todos os clientes.
-A responsabilidade de conhecer as API específicas dos componentes do <em>backend</em> passa a ser então do conector, e quais quer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.</p>
-<p>Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento, como os sistemas pubsub discutidos anteriormente.</p>
-<p><img alt="Desacoplamento" src="../images/component2.png" /></p>
-<p>Também a questão da simplificação de API, uma vez que o <em>middleware</em> pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.</p>
+A responsabilidade de conhecer as API específicas dos componentes do <em>backend</em> passa a ser então do conector, e quaisquer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.</p>
+<p>Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.</p>
+<div class="admonition note">
+<p class="admonition-title">Barramento de eventos</p>
+<p><img alt="" src="../drawings/coupling.drawio-2.svg" /></p>
+<p>Mensagens são enviadas entre processos, via o barramento.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Espaço de tuplas</p>
+<p><img alt="" src="../drawings/coupling.drawio-3.svg" /></p>
+<p>Dados são armazenados no e recuperados do espaço de tuplas.</p>
+</div>
+<p>Também há a questão da simplificação de API, uma vez que conector pode impor um padrão a ser seguido por todos os componentes e minimizar as API usadas. Por exemplo, um espaço de tuplas poderia impor uma API CRUD para manipulação de entradas do tipo chave/valor.</p>
 <h2 id="clienteservidor">Cliente/Servidor</h2>
 <p>A forma como os componentes se comunicam, isto é, como os conectores são usados é importante no estudo arquitetural.
 Mas também são importantes os papéis assumidos pelos componentes na realização de tarefas.
