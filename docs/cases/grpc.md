@@ -23,14 +23,14 @@ Observe que o repositório base apontado no tutorial serve de exemplo para diver
 Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.
 
 ```bash
-git clone -b v1.33.0 https://github.com/grpc/grpc-java
+git clone -b v1.42.1 https://github.com/grpc/grpc-java
 ```
 
-Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.
+Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.42.1, usada neste tutorial.
 
 ```bash
 cd grpc-java/examples
-git checkout v1.36.0
+git checkout v1.42.1
 ```
 
 ##### Compilando e executando
@@ -43,11 +43,13 @@ cd grpc-java/examples
 ./gradlew installDist -PskipAndroid=true
 ```
 
-Caso esteja na UFU, coloque também informação sobre o proxy no comando.
 
-```bash
-./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
-```
+!!!note "Proxy"
+    Caso esteja na UFU, coloque também informação sobre o proxy no comando.
+
+    ```bash
+    ./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
+    ```
 
 Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.
 
