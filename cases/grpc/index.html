@@ -1654,13 +1654,13 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 <p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
 <h5 id="pegando-o-codigo">Pegando o código</h5>
 <p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.33.0 https://github.com/grpc/grpc-java
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.42.1 https://github.com/grpc/grpc-java
 </code></pre></div>
 </td></tr></table>
-<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.33, usada neste tutorial.</p>
+<p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.42.1, usada neste tutorial.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
-git checkout v1.36.0
+git checkout v1.42.1
 </code></pre></div>
 </td></tr></table>
 <h5 id="compilando-e-executando">Compilando e executando</h5>
@@ -1670,10 +1670,13 @@ git checkout v1.36.0
 ./gradlew installDist -PskipAndroid<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 </td></tr></table>
+<div class="admonition note">
+<p class="admonition-title">Proxy</p>
 <p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
 </code></pre></div>
 </td></tr></table>
+</div>
 <p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-server
 </code></pre></div>
