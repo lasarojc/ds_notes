@@ -10,11 +10,10 @@
       
       
       
-      
         <link rel="canonical" href="https://lasarojc.github.io/ds_notes/db/disdb/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
@@ -22,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d6be258b.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -35,25 +34,23 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../../css/extra.css">
     
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
   
 
 
   
-
   
 
 
-  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-65TK61CS8M",{page_path:t.pathname})})})</script>
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-65TK61CS8M",{page_path:e.pathname})})})</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65TK61CS8M"></script>
 
 
@@ -72,9 +69,8 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
-      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -90,6 +86,13 @@
     <div data-md-component="announce">
       
     </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
     
       
 
@@ -148,8 +151,7 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -183,8 +185,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+        <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -229,8 +230,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+      <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -331,7 +331,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -511,7 +510,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -591,7 +589,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -741,7 +738,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -831,7 +827,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -991,7 +986,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -1108,6 +1102,7 @@
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
@@ -1399,7 +1394,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -1673,6 +1667,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
@@ -1910,8 +1905,10 @@ Ao final da execução o saldo foi acrescido de 2, como esperado.</p>
 <p><img alt="transações" src="../../drawings/transactions.drawio-1.svg" /></p>
 <p>Ao final da execução, apesar do valor ter sido modificado duas vezes, o saldo teria sido acrescido de 1.
 Esta diferença entre o esperado e o real está enraizada nas garantias dadas por bancos de dados tradicionais, conhecidas como ACID, acrônimo para <strong>Atomicidade, Consistência, Isolamento e Durabilidade</strong>.</p>
-<h6>ACID</h6>
-<details class="sideslide"><summary>ACID</summary><ul>
+<h6 id="acid">ACID</h6>
+<details class="sideslide">
+<summary>ACID</summary>
+<ul>
 <li>Atomicidade</li>
 <li>Consistência (Corretude)</li>
 <li>Isolamento (Consistência)</li>
@@ -1924,7 +1921,7 @@ Esta diferença entre o esperado e o real está enraizada nas garantias dadas po
 O isolamento sim corresponde à consistência estudada anteriormente, o que pode causar certa confusão.
 Há diversos níveis de isolamento, sendo uns menos restritivos, como <strong>consistência eventual</strong>, ou mais restritivo, como <strong>seriabilidade estrita</strong>.</p>
 <p>Finalmente, durabilidade é a garantia de que os resultados de uma transação são permanentemente gravados no sistema, a despeito de falhas.</p>
-<h6>Dirty reads</h6>
+<h6 id="dirty-reads">Dirty reads</h6>
 <p>Caso estas propriedades não sejam garantidas na execução de transações, problemas podem acontecer, como no exemplo anterior.
 Por exemplo, seja uma transação que move 10% do saldo da segunda conta da primeira para a segunda, isto é, se <span class="arithmatex">\(a\)</span> tem saldo inicial 50 e <span class="arithmatex">\(b\)</span> tem saldo inicial 100, a transação transfere 10 de <span class="arithmatex">\(a\)</span> para <span class="arithmatex">\(b\)</span>.</p>
 <table>
@@ -2007,7 +2004,9 @@ Por exemplo, seja uma transação que move 10% do saldo da segunda conta da prim
 </tbody>
 </table>
 <p>Qual o valor final calculado?</p>
-<details class="example"><summary>Execução</summary><p>Se <span class="arithmatex">\(a\)</span> inicialmente tem 50 e <span class="arithmatex">\(b\)</span> 100, então a seguinte execução ocorre:</p>
+<details class="example">
+<summary>Execução</summary>
+<p>Se <span class="arithmatex">\(a\)</span> inicialmente tem 50 e <span class="arithmatex">\(b\)</span> 100, então a seguinte execução ocorre:</p>
 <table>
 <thead>
 <tr>
@@ -2049,7 +2048,7 @@ Por exemplo, seja uma transação que move 10% do saldo da segunda conta da prim
 </details>
 <p>O problema aqui é que dados sendo modificados, isto é, não finais, "vazaram" de T1 para T2, um fenômeno conhecido como <strong><em>dirty read</em></strong>.
 Isso ocorreu porquê o nível de isolamento provido foi nenhum.</p>
-<h6>Lost update</h6>
+<h6 id="lost-update">Lost update</h6>
 <p>Supondo uma execução de duas instâncias de T1, podemos observar outro problema, que pode deixar o BD em estado inválido.</p>
 <table>
 <thead>
@@ -2093,7 +2092,9 @@ Isso ocorreu porquê o nível de isolamento provido foi nenhum.</p>
 </tr>
 </tbody>
 </table>
-<details class="example"><summary>Execução</summary><p>Se <span class="arithmatex">\(a\)</span> inicialmente tem 50 e <span class="arithmatex">\(b\)</span> 100, então a seguinte execução ocorre:</p>
+<details class="example">
+<summary>Execução</summary>
+<p>Se <span class="arithmatex">\(a\)</span> inicialmente tem 50 e <span class="arithmatex">\(b\)</span> 100, então a seguinte execução ocorre:</p>
 <table>
 <thead>
 <tr>
@@ -2138,7 +2139,7 @@ Isso ocorreu porquê o nível de isolamento provido foi nenhum.</p>
 </table>
 </details>
 <p>Observe que <span class="arithmatex">\(sB*0.1\)</span> foi perdido, o que é conhecido como <strong><em>lost update</em></strong>, agora porquê faltou isolamento.</p>
-<h6>Execução serial</h6>
+<h6 id="execucao-serial">Execução serial</h6>
 <p>Qual a solução? No primeiro exemplo deste capítulo, uma execução serial das operações não causou problema, enquanto a concorrente sim.
 Testemos novamente uma <strong>execução</strong> em que as transações não se sobrepõem.</p>
 <table>
@@ -2207,9 +2208,11 @@ Em vez disso, precisamos garantir por construção a equivalência serial, o que
 <li>a execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.</li>
 <li>uma execução qualquer tem equivalência serial se todos os pares de transações tem equivalência serial.</li>
 </ul>
-<h6>Lost update</h6>
+<h6 id="lost-update_1">Lost update</h6>
 <p>Revisitemos o exemplo do <em>lost update</em>. Quais operações conflitam nesta execução?</p>
-<details class="sideslide"><summary>Conflitos</summary><p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
+<details class="sideslide">
+<summary>Conflitos</summary>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\rightarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
 </details>
 <table>
 <thead>
@@ -2265,7 +2268,9 @@ Em vez disso, precisamos garantir por construção a equivalência serial, o que
 <p>Claramente, os pares (1,3), (2,4) e (3,4) são conflitantes. Para se obter equivalência serial então é necessário garantir que em todos os pares se executem as operações na mesma ordem, isto é, ou da esquerda para a direita ou da direita para a esquerda.
 Observe que este não é o caso neste exemplo.
 Mas e se modificarmos a execução como a seguir?</p>
-<details class="sideslide"><summary>Conflitos</summary><p>Conflitos: 1x3:<span class="arithmatex">\(\leftarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
+<details class="sideslide">
+<summary>Conflitos</summary>
+<p>Conflitos: 1x3:<span class="arithmatex">\(\leftarrow\)</span>, 2x4:<span class="arithmatex">\(\leftarrow\)</span>, 3x4:<span class="arithmatex">\(\leftarrow\)</span></p>
 </details>
 <table>
 <thead>
@@ -2318,7 +2323,7 @@ Mas e se modificarmos a execução como a seguir?</p>
 </tr>
 </tbody>
 </table>
-<h6>Aborts</h6>
+<h6 id="aborts">Aborts</h6>
 <p>Neste exemplo modificado teremos as operações nos pares de conflitos sendo executadas da direita para a esquerda, o que garante a equivalência serial da execução.
 Contudo, o modelo de transações usado até agora, em que o conjunto de operações é sempre executado até o fim, não corresponde à realidade.
 Precisamos adicionar a este modelo a possibilidade da transação ser <strong>abortada</strong>, isto é, ter seus efeitos revertidos.
@@ -2372,7 +2377,7 @@ Sob este novo modelo, considere o seguinte exemplo, onde a transação da direit
 <p>Apesar das operações serem ordenadas da direita para a esquerda, houve um <em>dirty read</em> na execução da transação da esquerda.
 Uma forma de pensar em como isso aconteceu, é considerar que o <strong>aborte!</strong> é uma operação que toca todos os dados usados pela transação abortada.
 Assim, o <strong>aborte!</strong> conflita com as leituras de <span class="arithmatex">\(b\)</span> e de <span class="arithmatex">\(a\)</span> feitas pela transação da esquerda e, portanto, houve uma violação na ordem de execução das operações.</p>
-<h6>Abort em cascata</h6>
+<h6 id="abort-em-cascata">Abort em cascata</h6>
 <p>Para que este dirty read não leve a inconsistências, a transação da esquerda deve também abortar.
 Esta estratégia pode ser implementada da seguinte forma: </p>
 <ul>
@@ -2410,7 +2415,9 @@ Contudo, se os objetos são destrancados tão logo não sejam mais usados na tra
 <p>Estes problemas podem ser evitados com o uso de <strong><em>strict two phase locking</em></strong>, em que as transações <strong>trancam o objeto quando primeiro acessado</strong> e só <strong>destrancam ao final da transação</strong>, atomicamente com a terminação.</p>
 <p><img alt="suspended execution" src="../../drawings/transactions.drawio-7.svg" /></p>
 <p>Já para aumentar a concorrência, é possível usar locks para leitura, compartilhados, e para escrita, exclusivos.</p>
-<details class="sideslide"><summary>Read/Write locks</summary><ul>
+<details class="sideslide">
+<summary>Read/Write locks</summary>
+<ul>
 <li>dois níveis de acesso</li>
 <li>múltiplos leitores</li>
 <li>único escritor</li>
@@ -2421,7 +2428,9 @@ Contudo, se os objetos são destrancados tão logo não sejam mais usados na tra
 <p>Ou, ainda, locks com diferentes granularidades; em um banco de dados relacional, por exemplo, pode ser possível obter um lock em uma coluna de uma linha do banco, de toda a linha, de toda a relação, ou mesmo de todo o banco de dados.</p>
 <p>Mas mesmo com estes ajustes, locks deveriam, via de regra, ser evitados sempre que a probabilidade de conflitos for baixa. 
 Isso porquê os locks são uma abordagem <strong>pessimista</strong>, que incorrem em <strong><em>overhead</em></strong> mesmo quando transações não acessam os mesmos dados, lembrando que os locks só podem ser liberados no final das transações.</p>
-<details class="sideslide"><summary>Evitar locks</summary><ul>
+<details class="sideslide">
+<summary>Evitar locks</summary>
+<ul>
 <li>pessimista</li>
 <li>overhead mesmo se não há conflitos</li>
 <li>ou restritivo ou risco de deadlock</li>
@@ -2559,14 +2568,14 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>coordenador espera que todos se preparem ou digam se não podem</li>
 <li>coordenador envia <em>ordem</em> de terminação</li>
 </ul>
-<h6>Comprometimento</h6>
+<h6 id="comprometimento">Comprometimento</h6>
 <ul>
 <li>um participante <span class="arithmatex">\(p\)</span> está pronto para commit se tiver todos os valores modificados por <span class="arithmatex">\(t\)</span> em memória estável e nenhuma razão para abortar a transação (outras transações conflituosas fizeram commit?)</li>
 <li>o coordenador não pode começar a terminação até que todos os participantes estejam prontos.</li>
 <li>se algum participante aborta, o coordenador deve abortar. </li>
 </ul>
 <p>Problema de acordo, mas não igual ao consenso.</p>
-<h6>2PC - o protocolo</h6>
+<h6 id="2pc-o-protocolo">2PC - o protocolo</h6>
 <ul>
 <li>
 <p>fase 1</p>
@@ -2597,7 +2606,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </tr>
 </tbody>
 </table>
-<h6>Falha no Participante</h6>
+<h6 id="falha-no-participante">Falha no Participante</h6>
 <p>Participante falha no estado <span class="arithmatex">\(S\)</span> e, ao se recuperar, identifica tal fato ao reprocessar o log de operações em memória durável.</p>
 <p>Se está no estado</p>
 <ul>
@@ -2606,7 +2615,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>COMMIT: estava pronto para terminar a transação com sucesso -- continua protocolo.</li>
 <li>READY:  estava esperando por commit ou abort.  Precisa saber se coordenador enviou global-commit ou global-abort -- consulta coordenador.</li>
 </ul>
-<h6>2PC</h6>
+<h6 id="2pc_1">2PC</h6>
 <p>Por que é difícil?</p>
 <ul>
 <li>E se <span class="arithmatex">\(R_i\)</span> falhar depois de ter se preparado?</li>
@@ -2614,7 +2623,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>E se todos estiverem desligados quando <span class="arithmatex">\(R_i\)</span> se recuperar?</li>
 <li>E se <span class="arithmatex">\(R_i\)</span> estiver lento e parecer que a transação falhou?</li>
 </ul>
-<h6>Falha no Participante</h6>
+<h6 id="falha-no-participante_1">Falha no Participante</h6>
 <ul>
 <li>READY: esperando por commit ou abort. Precisa saber se coordenador enviou global-commit our global-abort -- consulta coordenador.</li>
 </ul>
@@ -2628,10 +2637,10 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </ul>
 <p><em>Se todos os participantes em READY?</em>  Possivelmente o coordenador já respondeu ao cliente.</p>
 <p><em>Precisa</em> esperar pelo coordenador.</p>
-<h6>Falha no Coordenador</h6>
+<h6 id="falha-no-coordenador">Falha no Coordenador</h6>
 <p>O problema principal é: e se ninguém ouviu a decisão final do coordenador?</p>
 <p>Neste caso, o protocolo não pode continuar, enquanto o coordenador não retornar, pois se os RM abortarem, podem estar contradizendo algo dito ao cliente, por exemplo, "Sim, ATM, pode entregar o dinheiro", ou executando um comando que o cliente vê como anulado, como "Reenvie o pedido de mais 27 carros à fábrica."</p>
-<h6>Recuperação do Coordenador</h6>
+<h6 id="recuperacao-do-coordenador">Recuperação do Coordenador</h6>
 <p>Ao se recuperar, o coordenador:</p>
 <ul>
 <li>sabe se começou a terminação de alguma transação</li>
@@ -2639,7 +2648,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>sabe se já recebeu a confirmação de todos os participantes (se transação não estiver em aberto)</li>
 <li>reenvia a última mensagem das transações em aberto.</li>
 </ul>
-<h6>Otimizações</h6>
+<h6 id="otimizacoes">Otimizações</h6>
 <ul>
 <li>
 <p>Participantes "somente-leitura"</p>
@@ -2664,14 +2673,14 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </ul>
 </li>
 </ul>
-<h6>Coleta de Lixo</h6>
+<h6 id="coleta-de-lixo">Coleta de Lixo</h6>
 <p>Mesmo quando somente um participante falha...</p>
 <p>Após receber decisão, o participante pode concluir e esquecer a transação. </p>
 <p>Mas e se o participante falho precisar se recuperar e todos os outros envolvidos tiverem esquecido a transação?</p>
 <p>Coleta de lixo só pode ser feita quando todos tiverem confirmado a execução da transação e, por isso, Fase 2b é necessária.</p>
 <h4 id="3-pc">3-PC</h4>
 <p>Estende o protocolo para permitir contornar  falha do coordenador.</p>
-<h6>O Protocolo</h6>
+<h6 id="o-protocolo">O Protocolo</h6>
 <ul>
 <li>Fase 1a -- Coordenador envia vote-request para participantes.</li>
 <li>Fase 1b -- Participante responde com vote-commit ou vote-abort para o coordenador; se vote-abort, aborta localmente.</li>
@@ -2694,7 +2703,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </tr>
 </tbody>
 </table>
-<h6>Falha no Participante</h6>
+<h6 id="falha-no-participante_2">Falha no Participante</h6>
 <p><span class="arithmatex">\(P\)</span> consegue saber o que fazer após se recuperar da falha no estado READY ou PRE-COMMIT</p>
 <ul>
 <li>Participantes e coordenador não distam mais que um estado.</li>
@@ -2703,7 +2712,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <li>A execução dos passos anteriores tem que anular o poder do coordenador.</li>
 </ul>
 <p><em>Se todos os participantes em READY?</em></p>
-<h6>3PC x 2PC</h6>
+<h6 id="3pc-x-2pc">3PC x 2PC</h6>
 <ul>
 <li>3PC -- Aumenta disponibilidade</li>
 <li>2PC -- Falha do coordenador é "corner case"</li>
@@ -2712,7 +2721,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 </ul>
 <h4 id="paxos-commit">Paxos-Commit</h4>
 <p>Usa instâncias de Consenso Distribuído para votar. Se o consenso é tolerante a falhas e consistente, todos vêem o mesmo resultado na transação.</p>
-<h6>O protocolo</h6>
+<h6 id="o-protocolo_1">O protocolo</h6>
 <ul>
 <li>Para terminar a transação <span class="arithmatex">\(T\)</span>, o coordenador envia request-commit a todos os participantes.</li>
 <li>Um participante <span class="arithmatex">\(P\)</span> propõe seu voto na instância <span class="arithmatex">\(T_P\)</span> de consenso.</li>
@@ -2723,7 +2732,7 @@ Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que 
 <p>Se cansar de esperar por <span class="arithmatex">\(T_Q\)</span>, o participante propõe abort em <span class="arithmatex">\(T_Q\)</span>.</p>
 </li>
 </ul>
-<h6>Falha no Participante</h6>
+<h6 id="falha-no-participante_3">Falha no Participante</h6>
 <ul>
 <li>Se o participante falha antes de votar, então alguém votará abort por ele.</li>
 <li>Se o participante <span class="arithmatex">\(P\)</span> falha, ou é suspeito de, então é possível que dois votos diferentes tenham sido propostos em <span class="arithmatex">\(T_P\)</span>; isso não é um problema pois a decisão é a mesma para todos observando a instância.</li>
@@ -2842,7 +2851,9 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
 <li><a href="https://www.igvita.com/2010/06/24/weak-consistency-and-cap-implications/">Weak Consistency and CAP Implications</a></li>
 </ul>
 <h2 id="base">BASE</h2>
-<details class="todo"><summary>TODO</summary><p>Incluir explicação</p>
+<details class="todo">
+<summary>TODO</summary>
+<p>Incluir explicação</p>
 </details>
 <h2 id="referencias">Referências</h2>
 <ul>
@@ -2872,19 +2883,13 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
   <!-- Last update of source file -->
 
 
-              
-                
-
-
-              
             </article>
           </div>
         </div>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
@@ -2923,31 +2928,30 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright © 2021 Lásaro Camargos
-          </div>
-        
-        
-          Made with
-          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-            Material for MkDocs
-          </a>
-        
-        
-      </div>
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Lásaro Camargos
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
-  <div class="md-footer-social">
+        <div class="md-social">
+  
     
-      
-      
-      <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-footer-social__link">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-      </a>
     
-  </div>
-
+    <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
     </div>
   </div>
 </footer>
@@ -2956,10 +2960,10 @@ Por exemplo, com um filtro com <span class="arithmatex">\(m = 2^{24}b = 2MB\)</s
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       

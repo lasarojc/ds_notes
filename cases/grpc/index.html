@@ -10,11 +10,10 @@
       
       
       
-      
         <link rel="canonical" href="https://lasarojc.github.io/ds_notes/cases/grpc/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.3.2">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.10">
     
     
       
@@ -22,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.24c991ad.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.d6be258b.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -35,25 +34,23 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../../css/extra.css">
     
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
   
 
 
   
-
   
 
 
-  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-65TK61CS8M",{page_path:t.pathname})})})</script>
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-65TK61CS8M",{page_path:e.pathname})})})</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65TK61CS8M"></script>
 
 
@@ -72,9 +69,8 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
-      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -90,6 +86,13 @@
     <div data-md-component="announce">
       
     </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
     
       
 
@@ -148,8 +151,7 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -183,8 +185,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+        <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -229,8 +230,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+      <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -331,7 +331,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -511,7 +510,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -591,7 +589,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -741,7 +738,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -831,7 +827,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -990,7 +985,6 @@
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
-            
             
           
             
@@ -1188,7 +1182,6 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
-            
           
             
               
@@ -1271,6 +1264,7 @@
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
@@ -1550,6 +1544,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Índice">
   
   
@@ -1654,64 +1649,64 @@ No caso do <strong>Java</strong>, <strong>não há instalação propriamente dit
 <p>Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.</p>
 <h5 id="pegando-o-codigo">Pegando o código</h5>
 <p>Para usar os exemplos, você precisa clonar o repositório com o tutorial, usando o comando a seguir.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.42.1 https://github.com/grpc/grpc-java
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>git clone -b v1.42.1 https://github.com/grpc/grpc-java
 </code></pre></div>
 </td></tr></table>
 <p>Uma vez clonado, entre na pasta de exemplo do Java e certifique-se que está na versão 1.42.1, usada neste tutorial.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
 git checkout v1.42.1
 </code></pre></div>
 </td></tr></table>
 <h5 id="compilando-e-executando">Compilando e executando</h5>
 <p>O projeto usa <a href="https://gradle.org/">gradle</a> para gerenciar as dependências. Para, use o <em>wrapper</em> do gradle como se segue.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="nb">cd</span> grpc-java/examples
 ./gradlew installDist -PskipAndroid<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
 </td></tr></table>
 <div class="admonition note">
 <p class="admonition-title">Proxy</p>
 <p>Caso esteja na UFU, coloque também informação sobre o proxy no comando.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew -Dhttp.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttp.proxyPort<span class="o">=</span><span class="m">3128</span> -Dhttps.proxyHost<span class="o">=</span>proxy.ufu.br -Dhttps.proxyPort<span class="o">=</span><span class="m">3128</span> installDist
 </code></pre></div>
 </td></tr></table>
 </div>
 <p>Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-server
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-server
 </code></pre></div>
 </td></tr></table>
 <p>Agora, em <strong>um terminal distinto</strong> e a partir da mesma localização, execute o cliente, quantas vezes quiser.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-client
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./build/install/examples/bin/hello-world-client
 </code></pre></div>
 </td></tr></table>
 <h5 id="o-servico">O serviço</h5>
 <p>O exemplo não é muito excitante, pois tudo o que o serviço faz é enviar uma saudação aos clientes.
 O serviço é definido no seguinte arquivo <code>.proto</code>, localizado em <code>./src/main/proto/helloworld.proto</code>.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">HelloRequest</span> <span class="p">{</span>
-  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span><span class="w"> </span><span class="nc">HelloRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">message</span> <span class="nc">HelloReply</span> <span class="p">{</span>
-  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">HelloReply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="kd">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
 
 <span class="c1">// The greeting service definition.</span>
-<span class="kd">service</span> <span class="n">Greeter</span> <span class="p">{</span>
-  <span class="k">rpc</span> <span class="n">SayHello</span> <span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span> <span class="p">{}</span>
+<span class="kd">service</span><span class="w"> </span><span class="n">Greeter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">SayHello</span><span class="w"> </span><span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div>
 </td></tr></table>
@@ -1727,45 +1722,45 @@ Assim, caso não haja a necessidade de se passar qualquer informação para a op
 O mesmo se aplica ao resultado da operação.</p>
 <p>Observe também que embora o serviço de exemplo tenha apenas uma operação, poderia ter múltiplas.
 Por exemplo, para definir uma versão em português da operação <code>SayHello</code>, podemos fazer da seguinte forma.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span> <span class="nc">HelloRequest</span> <span class="p">{</span>
-  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">message</span><span class="w"> </span><span class="nc">HelloRequest</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">message</span> <span class="nc">HelloReply</span> <span class="p">{</span>
-  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">HelloReply</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="kd">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">message</span> <span class="nc">OlaRequest</span> <span class="p">{</span>     <span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
-  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">OlaRequest</span><span class="w"> </span><span class="p">{</span><span class="w">     </span><span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">message</span> <span class="nc">OlaReply</span> <span class="p">{</span>       <span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
-  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">message</span><span class="w"> </span><span class="nc">OlaReply</span><span class="w"> </span><span class="p">{</span><span class="w">       </span><span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+<span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="kd">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kd">service</span> <span class="n">Greeter</span> <span class="p">{</span>
-  <span class="k">rpc</span> <span class="n">SayHello</span> <span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span> <span class="p">{}</span>
-  <span class="k">rpc</span> <span class="n">DigaOla</span> <span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">OlaReply</span><span class="p">)</span> <span class="p">{}</span><span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
+<span class="kd">service</span><span class="w"> </span><span class="n">Greeter</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">SayHello</span><span class="w"> </span><span class="p">(</span><span class="n">HelloRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">HelloReply</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="k">rpc</span><span class="w"> </span><span class="n">DigaOla</span><span class="w"> </span><span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">OlaReply</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span><span class="c1">// &lt;&lt;&lt;&lt;&lt;====</span>
 <span class="p">}</span>
 <span class="o">...</span>
 </code></pre></div>
@@ -1781,23 +1776,23 @@ Este arquivo define a classe que <strong>implementa</strong> o serviço <code>Gr
 Para confirmar, procure por <code>sayHello</code>para encontrar a implementação de <code>SayHello</code>; observe que a diferença do <code>casing</code> vem das boas práticas de Java, de definir métodos e variáveis em <em>Camel casing</em>.</p>
 <p>Para que sua versão estendida do serviço <code>Greeter</code> funcione, defina um método correspondendo à <code>DigaOla</code>, sem consultar o código exemplo abaixo, mas usando o código de <code>sayHello</code> como base; não se importe por enquanto com os métodos sendo invocados.
 Note que os <code>...</code> indicam que parte do código, que não sofreu modificações, foi omitido.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="p">...</span>
 <span class="kd">private</span> <span class="kd">class</span> <span class="nc">GreeterImpl</span> <span class="kd">extends</span> <span class="n">GreeterGrpc</span><span class="p">.</span><span class="na">GreeterImplBase</span> <span class="p">{</span>
 <span class="p">...</span>
 
@@ -1817,19 +1812,19 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 </code></pre></div>
 </td></tr></table>
 <p>Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em <code>src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java</code>, novamente se baseando no código existente e não se preocupando com "detalhes".</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">greet</span><span class="p">(</span><span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;Will try to greet &quot;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ...&quot;</span><span class="p">);</span>
 <span class="p">...</span>
   <span class="n">OlaRequest</span> <span class="n">request2</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
@@ -1845,24 +1840,24 @@ Note que os <code>...</code> indicam que parte do código, que não sofreu modif
 </code></pre></div>
 </td></tr></table>
 <p>Agora sim, você pode reexecutar cliente e servidor.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>./gradlew installDist
 ./build/install/examples/bin/hello-world-server <span class="p">&amp;</span>
 ./build/install/examples/bin/hello-world-client
 </code></pre></div>
 </td></tr></table>
 <p>Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes, começando sobre como um servidor gRPC é criado.
 Observe que um objeto <code>Server</code> é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo <code>.proto</code>. O <code>start()</code> também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratada.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Server</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Server</span><span class="p">;</span>
 <span class="p">...</span>
 <span class="kd">private</span> <span class="n">Server</span> <span class="n">server</span><span class="p">;</span>
 <span class="p">...</span>
@@ -1875,27 +1870,27 @@ Observe que um objeto <code>Server</code> é criado por uma fábrica que recebe 
 </td></tr></table>
 <p>Do lado do cliente, é criado um <code>ManagedChannel</code> e com este um <code>GreeterBlockingStub</code>, um <em>stub</em> em cujas chamadas são bloqueantes.
 Finalmente, no <em>stub</em> são invocados os serviços definidos na IDL.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Channel</span><span class="p">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">io.grpc.Channel</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">io.grpc.ManagedChannel</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">io.grpc.ManagedChannelBuilder</span><span class="p">;</span>
 <span class="p">...</span>
@@ -1921,29 +1916,33 @@ Finalmente, no <em>stub</em> são invocados os serviços definidos na IDL.</p>
 <div class="admonition exercise">
 <p class="admonition-title">Diga Olás!</p>
 <p>Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação <code>DigaOlas</code> em que uma <strong>lista</strong> de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string**cumprimentando todos os nomes, um após o outro.</p>
-<details class="tip"><summary>Só abra depois de pensar em como resolver o problema</summary><p>Você pode usar <code>repeated</code> no campo <code>message</code> do tipo <code>HelloRequest</code>.</p>
+<details class="tip">
+<summary>Só abra depois de pensar em como resolver o problema</summary>
+<p>Você pode usar <code>repeated</code> no campo <code>message</code> do tipo <code>HelloRequest</code>.</p>
 </details>
 </div>
 <div class="admonition exercise">
 <p class="admonition-title">Stream</p>
 <p>Para terminar este estudo de caso, modifique a função definida no exercício anterior para gerar múltiplas respostas, uma para cada nome passado, em vez de uma única, longa, resposta.</p>
-<details class="tip"><summary>Só abra depois de pensar em como resolver o problema</summary><p>Você deverá usar <em>streams</em>.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">rpc</span> <span class="n">DigaOlas</span> <span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">stream</span> <span class="n">OlaReply</span><span class="p">)</span> <span class="p">{}</span>
+<details class="tip">
+<summary>Só abra depois de pensar em como resolver o problema</summary>
+<p>Você deverá usar <em>streams</em>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">rpc</span><span class="w"> </span><span class="n">DigaOlas</span><span class="w"> </span><span class="p">(</span><span class="n">OlaRequest</span><span class="p">)</span><span class="w"> </span><span class="k">returns</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="w"> </span><span class="n">OlaReply</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
 </code></pre></div>
 </td></tr></table>
 <ul>
 <li>Do lado do servidor <br />
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">listOfHi</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;e aih&quot;</span><span class="p">,</span> <span class="s">&quot;ola&quot;</span><span class="p">,</span> <span class="s">&quot;ciao&quot;</span><span class="p">,</span> <span class="s">&quot;bao&quot;</span><span class="p">,</span> <span class="s">&quot;howdy&quot;</span><span class="p">,</span> <span class="s">&quot;s&#39;up&quot;</span><span class="p">);</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">listOfHi</span> <span class="o">=</span> <span class="n">Arrays</span><span class="p">.</span><span class="na">asList</span><span class="p">(</span><span class="s">&quot;e aih&quot;</span><span class="p">,</span> <span class="s">&quot;ola&quot;</span><span class="p">,</span> <span class="s">&quot;ciao&quot;</span><span class="p">,</span> <span class="s">&quot;bao&quot;</span><span class="p">,</span> <span class="s">&quot;howdy&quot;</span><span class="p">,</span> <span class="s">&quot;s&#39;up&quot;</span><span class="p">);</span>
 
 <span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">digaOlas</span><span class="p">(</span><span class="n">OlaRequest</span> <span class="n">req</span><span class="p">,</span> <span class="n">StreamObserver</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">responseObserver</span><span class="p">)</span> <span class="p">{</span>
@@ -1957,17 +1956,17 @@ Finalmente, no <em>stub</em> são invocados os serviços definidos na IDL.</p>
 </code></pre></div>
 </td></tr></table></li>
 <li>Do lado do cliente <br />
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">OlaRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="n">OlaRequest</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">().</span><span class="na">setName</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
 <span class="k">try</span> <span class="p">{</span>
     <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">OlaReply</span><span class="o">&gt;</span> <span class="n">it</span> <span class="o">=</span> <span class="n">blockingStub</span><span class="p">.</span><span class="na">digaOlas</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
     <span class="k">while</span> <span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()){</span>
@@ -1986,16 +1985,16 @@ Finalmente, no <em>stub</em> são invocados os serviços definidos na IDL.</p>
 <div class="admonition exercise">
 <p class="admonition-title">Desafio de Interoperabilidade</p>
 <p>Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em java.</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-get install python3
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>apt-get install python3
 apt-get install python3-pip
 python3 -m pip install --upgrade pip
 python3 -m pip install grpcio
@@ -2008,18 +2007,18 @@ python3 greeter<span class="se">\_</span>client.py
 </code></pre></div>
 </td></tr></table>
 <p>Para recompilar os <em>stubs</em>, faça</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 -m grpc_tools.protoc -I../../protos --python_out<span class="o">=</span>. --grpc_python_out<span class="o">=</span>. ../../protos/helloworld.proto
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code>python3 -m grpc_tools.protoc -I../../protos --python_out<span class="o">=</span>. --grpc_python_out<span class="o">=</span>. ../../protos/helloworld.proto
 </code></pre></div>
 </td></tr></table>
 <p>Modifique o servidor</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">DigaOla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">DigaOla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaReply</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Ola, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">+</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
 <p>Modifique o cliente</p>
-<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="n">DigaOla</span><span class="p">(</span><span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zelelele&#39;</span><span class="p">))</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="n">DigaOla</span><span class="p">(</span><span class="n">helloworld_pb2</span><span class="o">.</span><span class="n">OlaRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;zelelele&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Greeter client received: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 </code></pre></div>
 </td></tr></table>
@@ -2030,19 +2029,13 @@ python3 greeter<span class="se">\_</span>client.py
   <!-- Last update of source file -->
 
 
-              
-                
-
-
-              
             </article>
           </div>
         </div>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
     <nav class="md-footer__inner md-grid" aria-label="Rodapé">
       
@@ -2081,31 +2074,30 @@ python3 greeter<span class="se">\_</span>client.py
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright © 2021 Lásaro Camargos
-          </div>
-        
-        
-          Made with
-          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-            Material for MkDocs
-          </a>
-        
-        
-      </div>
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Lásaro Camargos
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
-  <div class="md-footer-social">
+        <div class="md-social">
+  
     
-      
-      
-      <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-footer-social__link">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-      </a>
     
-  </div>
-
+    <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
     </div>
   </div>
 </footer>
@@ -2114,10 +2106,10 @@ python3 greeter<span class="se">\_</span>client.py
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.e99e714c.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "translations": {"clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "search.config.lang": "pt", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Buscar", "search.result.placeholder": "Digite para iniciar a busca", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.term.missing": "Ausente", "select.version.title": "Selecione a vers\u00e3o"}, "search": "../../assets/javascripts/workers/search.092fa1f6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.bc35569b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e3b2bf44.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js"></script>
       
