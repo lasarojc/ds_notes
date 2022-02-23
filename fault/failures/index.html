@@ -871,8 +871,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes-de-falhas" class="md-nav__link">
-    Classes de Falhas
+  <a href="#classes-de-faltas" class="md-nav__link">
+    Classes de Faltas
   </a>
   
 </li>
@@ -885,8 +885,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#correlacao-entre-falhas" class="md-nav__link">
-    Correlação entre falhas
+  <a href="#correlacao-entre-faltas" class="md-nav__link">
+    Correlação entre faltas
   </a>
   
 </li>
@@ -1525,8 +1525,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes-de-falhas" class="md-nav__link">
-    Classes de Falhas
+  <a href="#classes-de-faltas" class="md-nav__link">
+    Classes de Faltas
   </a>
   
 </li>
@@ -1539,8 +1539,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#correlacao-entre-falhas" class="md-nav__link">
-    Correlação entre falhas
+  <a href="#correlacao-entre-faltas" class="md-nav__link">
+    Correlação entre faltas
   </a>
   
 </li>
@@ -1650,10 +1650,10 @@ O erro era irreparável, levando a grandes prejuízos.</p>
 </div>
 <p>Quando falhas aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que os levaram a acontecer.
 Algumas empresas até publicam as <strong><em>root cause analysis</em></strong> ou a análise <em>post-mortem</em> para a comunidade como forma de compartilhar conhecimento e também por questões de transparência, mas mais importante, conhecer a causa pode ajudar a evitar que novas instâncias da mesma falha ou similares. <sup id="fnref:rca"><a class="footnote-ref" href="#fn:rca">4</a></sup></p>
-<h2 id="classes-de-falhas">Classes de Falhas</h2>
+<h2 id="classes-de-faltas">Classes de Faltas</h2>
 <p>Faltas são um fato da vida, uma constante no desenvolvimento de sistemas, mas se precisamos lidar com elas, prevenindo e tolerando sua presença, precisamos entender como se manifestam e, para isso, uma classificação é essencial.</p>
 <h6 id="quebra">Quebra</h6>
-<p>Falha de <strong>quebra</strong> (<strong><em>crash</em></strong>) são falhas em que o componente para de funcionar, irreversivelmente.
+<p>Falta de <strong>quebra</strong> (<strong><em>crash</em></strong>) são faltas em que o componente para de funcionar, irreversivelmente.
 Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos do defeito aos outros componentes.</p>
 <p>Alguns sistemas, denominados <strong><em>fail-stop</em></strong>, forçam-se a parar de funcionar quando percebem um falha, imitando uma quebra, e implementando um comportamento <strong><em>fail-fast</em></strong>.<sup id="fnref:failfastfast"><a class="footnote-ref" href="#fn:failfastfast">5</a></sup>
 Estes sistemas podem emitir um "canto do cisne" para permitir que outros componentes detectem a falha.</p>
@@ -1670,14 +1670,14 @@ Novamente considerando problemas de transmissão de mensagens, se o meio de comu
 Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a mesma é entregue com 5ms, então o defeito é mascarado como uma falha de temporização.
 Falhas de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto <a href="time/#usos-de-relogios-sincronizados">anteriormente.</a></p>
 <h6 id="arbitrarios">Arbitrários</h6>
-<p>Uma falha <strong>arbitrária</strong> ou <strong>bizantina</strong> é uma na qual qualquer comportamento pode acontecer. 
+<p>Uma falta <strong>arbitrária</strong> ou <strong>bizantina</strong> é uma na qual qualquer comportamento pode acontecer. 
 Por exemplo, uma mensagem pode ser modificada, um servidor pode reiniciar-se constantemente, todos os dados podem ser apagados, ou acesso pode ser dado a quem não é devido.
-Estas falhas podem ser causadas por faltas no software, no hardware, ou até mesmo por agentes mal intencionados, como hackers e vírus.</p>
+Estas faltas podem ser causadas por faltas no software, no hardware, ou até mesmo por agentes mal intencionados, como hackers e vírus.</p>
 <h6 id="hierarquia">Hierarquia</h6>
-<p>Os tipos de falhas apontadas acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:</p>
+<p>Os tipos de faltas apontadas acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:</p>
 <p>Fail-stop <span class="arithmatex">\(\subset\)</span> Quebra <span class="arithmatex">\(\subset\)</span> Omissão <span class="arithmatex">\(\subset\)</span> Temporização <span class="arithmatex">\(\subset\)</span> Arbitrária</p>
 <h6 id="falhas-intermitentes">Falhas intermitentes</h6>
-<p>Algumas falhas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra <a href="http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf">classificação</a>, bem informal.</p>
+<p>Algumas faltas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra <a href="http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf">classificação</a>, bem informal.</p>
 <div class="admonition example">
 <p class="admonition-title">Tipos de bugs</p>
 <div class="tabbed-set" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Bohrbug</label><div class="tabbed-content">
@@ -1729,12 +1729,12 @@ Replicação permite remover os <strong>pontos únicos de falha</strong> (SPOF, 
 Seja como for, redundância implica em mais custos, então o grau de redundância a ser utilizado depende de uma análise custo x benefício.
 No caso de um sistema distribuído, quando falamos em redundância, normalmente falamos em processos redundantes, cópias ou réplicas.
 Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro podem continuar executando o serviço.</p>
-<h2 id="correlacao-entre-falhas">Correlação entre falhas</h2>
+<h2 id="correlacao-entre-faltas">Correlação entre faltas</h2>
 <details class="todo">
 <summary>TODO</summary>
 <p>Mover este texto para cima, para antes do gancho para replicação.</p>
 </details>
-<p>Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
+<p>Algumas faltas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. 
 Para tentar evitá-lo, podemos usar técnicas como o <strong><em>n-version programming</em></strong>, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:</p>
 <ul>
