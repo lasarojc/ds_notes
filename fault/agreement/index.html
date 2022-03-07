@@ -1663,14 +1663,13 @@
 
   <!-- Content -->
   <h1 id="problemas-de-acordo">Problemas de Acordo</h1>
-<p>Implementar a replicação de processos consiste basicamente em fazer com que múltiplos processos entrem em <strong>acordo</strong> quanto a uma sequência de comandos a serem processados por todos, na mesma ordem.
-Como vimos, esta sequência pode ser construída por primitivas de comunicação em grupo, dentre as quais se destaca a <strong>difusão atômica</strong>, primitiva que garante a entrega confiável e ordenada de mensagens.</p>
-<p>A difusão atômica é um problema de acordo, mas não é o único.
-Esta primitiva é equivalente ao problema do <strong>consenso distribuído</strong>, que é um problema com especificação mais simples e que está no cerne da classe de problemas de acordo.
-Problemas de acordo são aqueles em que processos devem <strong>concordar</strong> em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
+<p>Implementar a replicação de processos consiste basicamente em fazer com que múltiplos processos entrem em <strong>acordo</strong> quanto a uma sequência de comandos a serem processados por todos.
+De forma geral, problemas de acordo são aqueles em que processos devem <strong>concordar</strong> em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
 Dependendo do modelo computacional em que o problema deve ser resolvido, soluções vão de triviais a impossíveis.</p>
+<p>Como já visto, a construção da sequência de mensagens é feita por primitivas de comunicação em grupo, dentre as quais se destaca a <strong>difusão atômica</strong>, primitiva que garante a entrega confiável e ordenada de mensagens.  A difusão atômica é um problema de acordo, mas não é o único.
+Esta primitiva é equivalente ao problema do <strong>consenso distribuído</strong>, que é um problema com especificação mais simples e que está no cerne da classe de problemas de acordo.</p>
 <h2 id="consenso">Consenso</h2>
-<p>No problema do Consenso Distribuído, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong> e, ao final do protocolo, um dentre os valores propostos é elevado ao status de <strong>decisão</strong>, reconhecido por todos os processos que a uma decisão.
+<p>No problema do Consenso Distribuído, cada um de um conjunto de processos propõe um único valor, sua <strong>proposta</strong> e, pela execução do protocolo, um dentre os valores propostos é elevado ao status de <strong>decisão</strong>, reconhecido por todos os processos que a uma decisão.
 Formalmente, algoritmos para este problema devem garantir as seguintes propriedades.</p>
 <ul>
 <li>Validade: Somente um valor proposto pode ser decidido.</li>
