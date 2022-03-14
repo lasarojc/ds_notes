@@ -1553,24 +1553,24 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>ratis-server<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.2.0<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
 
     <span class="cm">&lt;!-- https://mvnrepository.com/artifact/org.apache.ratis/ratis-netty --&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>ratis-netty<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.2.0<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.ratis<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>ratis-grpc<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.2.0<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>com.beust<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>jcommander<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>1.78<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.83<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.slf4j<span class="nt">&lt;/groupId&gt;</span>
@@ -1581,24 +1581,24 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.logging.log4j<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>log4j-slf4j-impl<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.14.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.17.1<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;scope&gt;</span>compile<span class="nt">&lt;/scope&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.logging.log4j<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>log4j-api<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.14.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.17.1<span class="nt">&lt;/version&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;dependency&gt;</span>
         <span class="nt">&lt;groupId&gt;</span>org.apache.logging.log4j<span class="nt">&lt;/groupId&gt;</span>
         <span class="nt">&lt;artifactId&gt;</span>log4j-core<span class="nt">&lt;/artifactId&gt;</span>
-        <span class="nt">&lt;version&gt;</span>2.14.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.17.1<span class="nt">&lt;/version&gt;</span>
         <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
     <span class="nt">&lt;/dependency&gt;</span>
 <span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></div>
 </td></tr></table>
-<p>Adicione também o plugin Maven e o plugin para gerar um <code>.jar</code> com todas as dependências. Observe que estou usando Java 14, mas você pode mudar para a sua versão.</p>
+<p>Adicione também o plugin Maven e o plugin para gerar um <code>.jar</code> com todas as dependências. Observe que estou usando Java 17, mas você pode mudar para a sua versão.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
@@ -1634,8 +1634,8 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
             <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
             <span class="nt">&lt;version&gt;</span>${maven.compiler.version}<span class="nt">&lt;/version&gt;</span>
             <span class="nt">&lt;configuration&gt;</span>
-                <span class="nt">&lt;source&gt;</span>14<span class="nt">&lt;/source&gt;</span>
-                <span class="nt">&lt;target&gt;</span>14<span class="nt">&lt;/target&gt;</span>
+                <span class="nt">&lt;source&gt;</span>17<span class="nt">&lt;/source&gt;</span>
+                <span class="nt">&lt;target&gt;</span>17<span class="nt">&lt;/target&gt;</span>
             <span class="nt">&lt;/configuration&gt;</span>
         <span class="nt">&lt;/plugin&gt;</span>
         <span class="nt">&lt;plugin&gt;</span>
@@ -1662,7 +1662,7 @@ A seguir veremos um passo-a-passo, baseado nestes exemplos, de como usar o Ratis
 Nesta classe, iremos criar um objeto <code>RaftClient</code> que será usado para enviar operações para os servidores. 
 Esta classe é importada juntamente com outras várias dependências, adicionadas no <code>pom.xml</code>, que devemos instanciar antes do <code>RaftClient</code>.</p>
 <p>Neste exemplo eu coloco praticamente todos os parâmetros de configuração do Ratis <em>hardcoded</em> para simplificar o código.
-Obviamente que voce deveria ser estes parâmetros como argumentos para o programa ou de um arquivo de configuração.</p>
+Obviamente que voce deveria ler estes parâmetros como argumentos para o programa ou de um arquivo de configuração.</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
 <span class="normal"> 3</span>
