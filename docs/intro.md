@@ -1,34 +1,21 @@
 # Introdução
 
-Escrever bons sistemas distribuídos é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.
+Escrever **bons sistemas distribuídos** é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.
 
 ## O quê são Sistemas Distribuídos?
 
-    
-??? info inline end "Sistemas simples"
-     ![Lego Rainbow](images/lego0.jpg){: style="width:300px"}
-
-Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que não é um sistema não-distribuído.
-Estes são os sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.
+Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que **não é um sistema não-distribuído**.
+Estes são os **sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário**, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.
 Sejam estes sistemas construído com blocos que se encaixam perfeitamente, disponibilizados basicamente pela biblioteca da linguagem que está utilizando;
-
-
-??? info inline end "Sistemas não tão simples"
-     ![Lego Hell](images/lego3.jpg){: style="width:300px"}
-
 ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
 o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolítico**.[^centr]
 
-[^centr]: Neste ponto, devo estressar que muitos se referem a sistemas não-distribuídos como **centralizados** mas prefiro reservar este termo para sistemas distribuídos que usam um processo centralizador. 
+
+[^centr]: Muitos se referem a sistemas não-distribuídos como **centralizados** mas prefiro reservar este termo para sistemas distribuídos que usam um processo centralizador. 
 O termo monolítico também é muito usado em contraposição à arquitetura de micro-serviços, mas sinto que este uso está de acordo com o uso que fazemos aqui.
 
-Programar sistemas distribuídos é dar outro salto em complexidade, pois frequentemente temos que usar peças que não foram pensadas para trabalhar juntas, forçando-nos a usar um pouco de super-cola e arame. 
+Sistemas distribuídos são então aqueles separados e dispersos em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
 
-??? info inline end "Cable hell!"
-     ![Lego SD](images/cablemess.jpg){: style="max-width:300px; max-height:150px;"}
-
-Bem, na verdade, em vez de cola usamos *middleware*, como logo discutiremos, e, em vez de arame, usamos cabos de rede, o que é, 
-de fato, a principal característica de um sistema distribuído em relação a um não-distribuído: separação e dispersão de suas partes em vários componentes independentes (processos, sensores, atuadores, etc), mas que se coordenam para execução de alguma tarefa.
 Vejamos alguns exemplos de tarefas executadas por sistemas distribuídos, que você usa hoje.
 
 * Entregue este email para fulano@knowhere.uni.
@@ -39,7 +26,7 @@ Vejamos alguns exemplos de tarefas executadas por sistemas distribuídos, que vo
 * Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
 * Leia o valor do sensor de temperatura T e, caso seu valor supere V, emita alarme luminoso vermelho intermitente e alarme sonoro
 
-Fica claro por estes exemplos que há comunicação entre diversos componentes, por exemplo o console de videogame e um serviço que mantem uma "sala" aberta para um jogo.
+Fica claro por estes exemplos que há **comunicação entre diversos componentes**, por exemplo o console de videogame e um serviço que mantem uma "sala" aberta para um jogo.
 Assim, uma possível definição de Sistema Distribuído, que me agrada, é a seguinte:
 
 !!! note "Sistema Distribuído"
@@ -59,8 +46,7 @@ Contudo, nada impede que possivelmente múltiplos nós possam ser executados em 
     * memória compartilhada
     * mensagens
 
-Quanto à comunicação, os nós podem compartilhar um espaço de endereçamento comum, seja porquê estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante.
-Eles também podem se comunicar por mensagens trocadas via uma rede de comunicação, como a Internet.
+Quanto à comunicação, **ou** os nós podem **compartilhar um espaço de endereçamento** comum, seja porquê estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante **ou**  também podem se comunicar por **mensagens** trocadas via uma rede de comunicação, como a Internet.
 
 Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não tem ciência. 
 
@@ -83,9 +69,9 @@ Algumas aplicações, contudo, aparentemente conseguem superar estes obstáculos
 Pensemos em algumas aplicações distribuídas com as quais interagimos todos os dias e que, por seu sucesso, devem ser bons sistemas distribuídos.
 Alguns exemplos óbvios são [Amazon.com](https://www.amazon.com), [Facebook](https://www.facebook.com), e [GMail](https://www.gmail.com).
 
-Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc[^failures]. 
+Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc.[^failures]  
 Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
-Assim, digamos que um sistema computacional é **bom** se está sempre funcional, com bom desempenho e é de baixo custo.
+Assim, digamos que um sistema computacional é **bom** se está funcional a **maior parte do tempo**, com **bom desempenho** e é de **baixo custo**.
 Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas, que ter bom desempenho implica que  respostas "rápidas" são dadas para o usuário, e que baixo custo implica em não gastar mais que o necessário para realizar a tarefa para a qual foi construído.
 
 [^failures]: [What Can We Learn from Four Years of Data Center Hardware Failures?](http://people.iiis.tsinghua.edu.cn/~weixu/Krvdro9c/dsn17-wang.pdf)
@@ -101,8 +87,8 @@ Observe que estar sempre funcional implica em continuar provendo o serviço mesm
      * Baixo custo
          * Tamanho apropriado à tarefa
 
-Enquanto subjetiva, nossa definição de **bom** nos permite estabelecer um pano de fundo para delinear as dificuldades de se implementar sistemas distribuídos.
-Como veremos adiante, os requisitos para um bom sistema distribuído são conflitantes e difíceis, às vezes impossíveis de serem alcançados. 
+Enquanto subjetiva, nossa definição de **bom** nos permite estabelecer um pano de fundo para delinear as **dificuldades** de se implementar sistemas distribuídos.
+Como veremos adiante, os **requisitos** para um bom sistema distribuído são **conflitantes** e difíceis, às vezes impossíveis, de se alcançar. 
 Mas se esta é a realidade da programação distribuída, por quê fazê-lo? A resposta tem a ver com a **colaboração**, na definição.
 
 ## Por quê desenvolvemos sistemas distribuídos?
@@ -122,17 +108,16 @@ O que nos resta então é agregar o poder computacional de diversos computadores
 
 ![Custo de melhoria](images/scaleupout.jpg){: style="width:600px"}
 
-Mesmo se pensarmos que a escala com que estes sistemas trabalham deve ser muito diferente daquela dos sistemas que nós desenvolvemos, e portanto as técnicas usadas em sua construção devem ser muito distintas do que fazemos, a verdade não poderia ser mais longe disto.
+Mesmo se pensarmos que a escala com que estes sistemas trabalham deve ser muito diferente daquela dos sistemas que nós desenvolvemos, e portanto as **técnicas** usadas em sua construção devem ser muito distintas do que fazemos, a verdade não poderia ser mais longe disto.
 Com a quantidade de informação armazenada a cada acesso a um sítio, a cada produto vendido, ou a cada consulta feita, praticamente qualquer sistema de informação de sucesso necessitará aplicar as técnicas de computação distribuída e superar as mesmas barreiras para conseguir atender ao número crescente de clientes (computacionais ou humanos) e aumentar sua área de cobertura, mesmo que não chegue a escala dos exemplos acima, e melhorar ou manter a qualidade do serviço que presta.
 
 ??? info inline end "PQ?"
      * escalabilidade
      * tolerância a falhas
 
-Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a falhas.
-Tolerância a falhas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em Sistemas Distribuídos.
-Assim, podemos concluir que as principais razões para se desenvolver sistemas distribuídos são alcançar **escalabilidade** e **tolerância a falhas**, ambas resultantes da **agregação** (correta) do poder computacional de múltiplos componentes.
-
+Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a faltas.
+Tolerância a faltas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em Sistemas Distribuídos.
+Assim, podemos concluir que as principais razões para se desenvolver sistemas distribuídos são alcançar **escalabilidade** e **tolerância a faltas**, ambas resultantes da **agregação** (correta) do poder computacional de múltiplos componentes.
 
 Uma vez que tenhamos entendido o porquê de desenvolver sistemas distribuídos, vejamos que tipos de sistemas resultam desta abordagem.
 

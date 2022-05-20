@@ -16,24 +16,24 @@ Abra o arquivo `pom.xml` do seu projeto e adicione o seguinte trecho, com as dep
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-server</artifactId>
-        <version>2.0.0</version>
+        <version>2.2.0</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.apache.ratis/ratis-netty -->
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-netty</artifactId>
-        <version>2.0.0</version>
+        <version>2.2.0</version>
     </dependency>
     <dependency>
         <groupId>org.apache.ratis</groupId>
         <artifactId>ratis-grpc</artifactId>
-        <version>2.0.0</version>
+        <version>2.2.0</version>
     </dependency>
     <dependency>
         <groupId>com.beust</groupId>
         <artifactId>jcommander</artifactId>
-        <version>1.78</version>
+        <version>1.83</version>
     </dependency>
     <dependency>
         <groupId>org.slf4j</groupId>
@@ -44,24 +44,24 @@ Abra o arquivo `pom.xml` do seu projeto e adicione o seguinte trecho, com as dep
     <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-slf4j-impl</artifactId>
-        <version>2.14.1</version>
+        <version>2.17.1</version>
         <scope>compile</scope>
     </dependency>
     <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
-        <version>2.14.1</version>
+        <version>2.17.1</version>
     </dependency>
     <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
-        <version>2.14.1</version>
+        <version>2.17.1</version>
         <scope>provided</scope>
     </dependency>
 </dependencies>
 ```
 
-Adicione também o plugin Maven e o plugin para gerar um `.jar` com todas as dependências. Observe que estou usando Java 14, mas você pode mudar para a sua versão.
+Adicione também o plugin Maven e o plugin para gerar um `.jar` com todas as dependências. Observe que estou usando Java 17, mas você pode mudar para a sua versão.
 
 ```xml
 <build>
@@ -71,8 +71,8 @@ Adicione também o plugin Maven e o plugin para gerar um `.jar` com todas as dep
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven.compiler.version}</version>
             <configuration>
-                <source>14</source>
-                <target>14</target>
+                <source>17</source>
+                <target>17</target>
             </configuration>
         </plugin>
         <plugin>
@@ -100,7 +100,7 @@ Nesta classe, iremos criar um objeto `RaftClient` que será usado para enviar op
 Esta classe é importada juntamente com outras várias dependências, adicionadas no `pom.xml`, que devemos instanciar antes do `RaftClient`.
 
 Neste exemplo eu coloco praticamente todos os parâmetros de configuração do Ratis *hardcoded* para simplificar o código.
-Obviamente que voce deveria ser estes parâmetros como argumentos para o programa ou de um arquivo de configuração.
+Obviamente que voce deveria ler estes parâmetros como argumentos para o programa ou de um arquivo de configuração.
 
 ```java
 import org.apache.ratis.client.RaftClient;
@@ -379,7 +379,7 @@ java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente get k1
 java -cp target/ChaveValor-1.0-SNAPSHOT-jar-with-dependencies.jar Cliente add k2 testek2
 ```
 
-Todo o código está disponível no [Github](https://github.com/lasarojc/ds_notes/tree/master/docs/fault/code/ChaveValor)
+Todo o código está disponível no [Github](https://github.com/lasarojc/ds_notes/tree/main/docs/fault/code/ChaveValor)
 
 ???todo "Exercício"
     * Adicionar operações 

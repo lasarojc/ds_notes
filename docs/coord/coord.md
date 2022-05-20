@@ -440,70 +440,10 @@ Para entendermos melhor o problema, tentemos desenvolver um protocolo simples pa
 
 Em termos computacionais, estas questões são relevantes pois todos os processos **não** nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
 Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
-
-Ainda que assumamos um conjunto de processos indiferenciáveis entre si, com acesso equivalente a recursos e que estejam sempre disponíveis, ou exatamente por isso, temos  um problem mais fundamental para resolver: **para eleger um líder, precisamos diferenciar processos**.
-Dentro de uma única máquina, identificamos processos facilmente usando seu **PID**, ou *process id*, um inteiro associado a cada processo instanciado pelo sistema operacional; o PID é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, se o *host* é reiniciado, os PID também são, e portanto esta identificação não é duradoura. Mais importante, o PID só faz sentido dentro de uma única máquina e não em um sistema distribuído.
-
-Se apenas uma instância do processo executa em um mesmo *host*, então o identificador do *host* (e.g., endereço IP) em si é suficiente e, de fato, comumente utilizado. 
-Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um **parâmetro** passado na inicialização do processo ou a combinação **IP/porta**.
-
-Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
-Uma abordagem que pode funcionar é colocar todos os candidatos para brigar e quem sobrar em pé no final, é o novo líder.
-
-[![](../images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
-
-A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.
+Mas ignoremos estas diferenças por enquanto e vejamos um algoritmo que use a topologia lógica em anel, como usado para a resolução do problemas de exclusão mútua.
 
 
-### Algoritmo do Brigão (*Bully*)
-No algoritmo do brigão, alguma **característica comparável** dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
-Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
-
-Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
-O algoritmo é apresentado a seguir, onde $p$ e $q$ são usados para representar tanto identificadores de processos quando os processos em si.
-
-!!!example "Algoritmo do Brigão"
-    * Quando $p$ suspeita que o líder não está presente (muito tempo se receber mensagens do mesmo)
-        * $p$ envia mensagem (ELEICAO,$p$) para todos os processos com identificador maior que $p$
-        * Inicia temporizador de respostas
-    * Quando temporizador de respostas expira
-        * Envia (COORD,$p$) para todos os processos
-    * Quando recebe (Ok,$p$)
-        * Para temporizador de resposta
-	* Quando $p$ recebe (ELEICAO,$q$), $q < p$
-        * Envia (OK,$q$)
-	* Quando um processo falho se recupera
-        * Inicia uma eleição
-
-Observe como o algoritmo foi descrito em termos de **eventos** e não de forma sequencial. Este tipo de especificação é comum para algoritmos paralelos e distribuídos, pois não há uma sequência pré-estabelecida de passos a serem executados por todos os processos, apenas alguns pontos de coordenação.
-No exemplo a seguir, temos 5 processos, com identificadores de 1 a 5, passando por 7 passos até que a eleição se complete.
-Observe que os processos não sabem a priori como os eventos aconteceram e apenas reagem aos **eventos** de **recepção de mensagens** e **expiração de temporizadores**.
-
-1. o líder já é o processo 5 (em rosa).
-2. os processos 2 e 3 (amarelo) se "cansaram" de esperar por 5, que falhou (em cinza, e se candidataram a líder, enviando (ELEICAO,2) e (ELEICAO,3), respectivamente, (verde).
-3. 4 responde a 2 a 3 com (OK,2) e (OK,3) como resposta a 2 e 3, respectivamente, e 3 envia (OK,2) para 2.
-4. 1 se candidata com enviando (ELEICAO,1).
-5. 2, 3 e 4 respondem com (OK,1).
-6. 4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.
-7. 4 se declara líder e envia (COORD,4) a todos os processos. 
-
-![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](../images/bully.png)
-
-
-Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
-Se o temporizador usado pelos processos para esperar pelo líder for ajustado de forma agressiva, frequentemente serão iniciadas eleições mesmo que o líder não tenha falhado.
-Já se o valor do temporizador for muito grande, o sistema **demorará a eleger um novo líder**.
-Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder for muito curto, **mais de um processo pode se declarar líder**, uma situação conhecida como *split-brain*.
-
-Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
-Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.
-
-![Why you bully?](../images/why-you-bully-meme.jpg)  
-
-Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.
-
-
-### Algoritmos em Anéis
+### Algoritmo do Anel
 
 Consideremos processos organizados em um anel lógico em que processos troquem mensagens apenas com processos à "esquerda" e à "direita".
 Considere também que todos os processos são exatamente idênticos, inclusive não possuindo identificadores próprios.
@@ -565,7 +505,20 @@ Como não há nada que diferencie os processos entre si, este cenário é perfei
 Mas o processo 2 também vê a mesma sequência, então também deve ser eleito.
 Assim, violamos a propriedade da Unicidade.
 
-Para quebrar essa simetria entre os processo, podemos permitir que saibam seus identificadores.
+Para resolver estes problema, precisamos permitir que os **processos se diferenciem uns dos outros**.
+
+
+### Identificadores de Processo
+Dentro de uma única máquina, identificamos processos facilmente usando seu **PID**, ou *process id*, um inteiro associado a cada processo instanciado pelo sistema operacional; o PID é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, se o *host* é reiniciado, os PID também são, e portanto esta identificação não é duradoura. Mais importante, o PID só faz sentido dentro de uma única máquina e não em um sistema distribuído.
+
+Se apenas uma instância do processo executa em um mesmo *host*, então o identificador do *host* (e.g., endereço IP) em si é suficiente e, de fato, comumente utilizado. 
+Se mais de um processo executa no mesmo *host*, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um **parâmetro** passado na inicialização do processo ou a combinação **IP/porta**.
+
+Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.
+
+
+
+### Mais Algoritmos do Anel
 No algoritmo seguinte, permitimos que os processos conheçam seus identificadores e um processo que suspeite do líder atual, envia uma mensagem no anel para coletar os identificadores de todos os processos.
 
 !!!example "Algoritmo do Anel 2"
@@ -631,8 +584,63 @@ Observe o seguinte:
 
 * Em cada fase, para qualquer par de vizinhos ativos, pelos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo $O(log n)$ fases.
 * Na primeira fase, cada processo ativo leva a $4$ mensagens serem enviadas na rede (sem nenhuma otimização). Dado que são $n$ processos, temos $4n$ mensagens, $O(n)$
-* Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos $8n \times n/2, O(n)$
-* Assim, no máximo $O(n log n)$ mensagens são enviadas em uma execução do algoritmo.
+* Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos $8 \times n/2, O(n)$
+* Assim, no máximo $O(n~log~n)$ mensagens são enviadas em uma execução do algoritmo.
+
+
+### Algoritmo do Brigão (*Bully*)
+Uma outra abordagem é colocar todos os candidatos para brigar mais diretamente e quem sobrar em pé no final, é o novo líder.
+
+[![](../images/octogono.jpg)](https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html)
+
+A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.
+
+No algoritmo do brigão, alguma **característica comparável** dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
+
+Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
+O algoritmo é apresentado a seguir, onde $p$ e $q$ são usados para representar tanto identificadores de processos quando os processos em si.
+
+!!!example "Algoritmo do Brigão"
+    * Quando $p$ suspeita que o líder não está presente (muito tempo se receber mensagens do mesmo)
+        * $p$ envia mensagem (ELEICAO,$p$) para todos os processos com identificador maior que $p$
+        * Inicia temporizador de respostas
+    * Quando temporizador de respostas expira
+        * Envia (COORD,$p$) para todos os processos
+    * Quando recebe (Ok,$p$)
+        * Para temporizador de resposta
+	* Quando $p$ recebe (ELEICAO,$q$), $q < p$
+        * Envia (OK,$q$)
+	* Quando um processo falho se recupera
+        * Inicia uma eleição
+
+Observe como o algoritmo foi descrito em termos de **eventos** e não de forma sequencial. Este tipo de especificação é comum para algoritmos paralelos e distribuídos, pois não há uma sequência pré-estabelecida de passos a serem executados por todos os processos, apenas alguns pontos de coordenação.
+No exemplo a seguir, temos 5 processos, com identificadores de 1 a 5, passando por 7 passos até que a eleição se complete.
+Observe que os processos não sabem a priori como os eventos aconteceram e apenas reagem aos **eventos** de **recepção de mensagens** e **expiração de temporizadores**.
+
+1. o líder já é o processo 5 (em rosa).
+2. os processos 2 e 3 (amarelo) se "cansaram" de esperar por 5, que falhou (em cinza, e se candidataram a líder, enviando (ELEICAO,2) e (ELEICAO,3), respectivamente, (verde).
+3. 4 responde a 2 a 3 com (OK,2) e (OK,3) como resposta a 2 e 3, respectivamente, e 3 envia (OK,2) para 2.
+4. 1 se candidata com enviando (ELEICAO,1).
+5. 2, 3 e 4 respondem com (OK,1).
+6. 4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.
+7. 4 se declara líder e envia (COORD,4) a todos os processos. 
+
+![[Bully algorithm](https://my.oschina.net/juliashine/blog/88173)](../images/bully.png)
+
+
+Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
+Se o temporizador usado pelos processos para esperar pelo líder for ajustado de forma agressiva, frequentemente serão iniciadas eleições mesmo que o líder não tenha falhado.
+Já se o valor do temporizador for muito grande, o sistema **demorará a eleger um novo líder**.
+Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder for muito curto, **mais de um processo pode se declarar líder**, uma situação conhecida como *split-brain*.
+
+Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
+Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.
+
+![Why you bully?](../images/why-you-bully-meme.jpg)  
+
+Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.
+
 
 
 ### Algoritmo do YoYo 
@@ -757,5 +765,3 @@ Aprofundemo-nos nos próximos capítulo nos conceitos de tempo e tolerância a f
     * em sistemas distribuídos assíncronos (Internet)
     * sujeitos à partições (Internet)
     * com requisitos de disponibilidade total.
-
-

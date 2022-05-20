@@ -94,11 +94,11 @@ Algumas empresas até publicam as ***root cause analysis*** ou a análise *post-
 
 [^rca]: [Post-mortems](https://github.com/danluu/post-mortems) para uma extensa lista de análises.
 
-## Classes de Falhas
+## Classes de Faltas
 Faltas são um fato da vida, uma constante no desenvolvimento de sistemas, mas se precisamos lidar com elas, prevenindo e tolerando sua presença, precisamos entender como se manifestam e, para isso, uma classificação é essencial.
 
 ###### Quebra
-Falha de **quebra** (***crash***) são falhas em que o componente para de funcionar, irreversivelmente.
+Falta de **quebra** (***crash***) são faltas em que o componente para de funcionar, irreversivelmente.
 Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos do defeito aos outros componentes.
 
 Alguns sistemas, denominados ***fail-stop***, forçam-se a parar de funcionar quando percebem um falha, imitando uma quebra, e implementando um comportamento ***fail-fast***.[^failfastfast]
@@ -124,19 +124,19 @@ Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, mas a 
 Falhas de temporização podem acontecer devido a problemas de sincronização de relógios, como no algoritmo de difusão totalmente ordenada visto [anteriormente.](time/#usos-de-relogios-sincronizados)
 
 ###### Arbitrários
-Uma falha **arbitrária** ou **bizantina** é uma na qual qualquer comportamento pode acontecer. 
+Uma falta **arbitrária** ou **bizantina** é uma na qual qualquer comportamento pode acontecer. 
 Por exemplo, uma mensagem pode ser modificada, um servidor pode reiniciar-se constantemente, todos os dados podem ser apagados, ou acesso pode ser dado a quem não é devido.
-Estas falhas podem ser causadas por faltas no software, no hardware, ou até mesmo por agentes mal intencionados, como hackers e vírus.
+Estas faltas podem ser causadas por faltas no software, no hardware, ou até mesmo por agentes mal intencionados, como hackers e vírus.
 
 
 ###### Hierarquia
-Os tipos de falhas apontadas acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:
+Os tipos de faltas apontadas acima podem ser hierarquizados como a seguir, o que quer dizer que uma quebra é apenas uma omissão por tempo infinito:
 
 Fail-stop $\subset$ Quebra $\subset$ Omissão $\subset$ Temporização $\subset$ Arbitrária
 
 
 ###### Falhas intermitentes
-Algumas falhas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra [classificação](http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf), bem informal.
+Algumas faltas fogem à classificação acima por terem um comportamento especial, se manifestando de forma intermitente, por causa de eventos esparsos como picos de energia, ou pelo comportamento emergente da interação com outros sistemas. Para capturar estas idiossincrasias, recorremos a uma outra [classificação](http://www.idc-online.com/technical_references/pdfs/information_technology/Classification_Of_Software_Bugs.pdf), bem informal.
 
 !!!example "Tipos de bugs"
 
@@ -213,11 +213,11 @@ Assim, com múltiplas cópias, quando um processo apresenta um defeito, outro po
 
 
 
-## Correlação entre falhas
+## Correlação entre faltas
 ???todo "TODO"
     Mover este texto para cima, para antes do gancho para replicação.
 
-Algumas falhas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
+Algumas faltas são ativadas por entradas e, neste caso, mesmo que se tenha várias cópias do mesmo sistema, todas apresentarão erros uma vez que a entrada problemática acontecer.
 Este é um cenário em que as falhas não são independentes, mas correlatas. 
 Para tentar evitá-lo, podemos usar técnicas como o ***n-version programming***, que consiste basicamente em ter múltiplas implementações do mesmo sistema desenvolvidas de forma independente, isto é, fazendo uso de um ou mais da seguintes opções:
 

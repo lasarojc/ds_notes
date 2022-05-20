@@ -1,15 +1,14 @@
 # Problemas de Acordo
-Implementar a replicação de processos consiste basicamente em fazer com que múltiplos processos entrem em **acordo** quanto a uma sequência de comandos a serem processados por todos, na mesma ordem.
-Como vimos, esta sequência pode ser construída por primitivas de comunicação em grupo, dentre as quais se destaca a **difusão atômica**, primitiva que garante a entrega confiável e ordenada de mensagens.
-
-A difusão atômica é um problema de acordo, mas não é o único.
-Esta primitiva é equivalente ao problema do **consenso distribuído**, que é um problema com especificação mais simples e que está no cerne da classe de problemas de acordo.
-Problemas de acordo são aqueles em que processos devem **concordar** em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
+Implementar a replicação de processos consiste basicamente em fazer com que múltiplos processos entrem em **acordo** quanto a uma sequência de comandos a serem processados por todos.
+De forma geral, problemas de acordo são aqueles em que processos devem **concordar** em alguma coisa, por exemplo, quais ações executar, quais processos considerar parte do sistema, quais transações honrar.
 Dependendo do modelo computacional em que o problema deve ser resolvido, soluções vão de triviais a impossíveis.
+
+Como já visto, a construção da sequência de mensagens é feita por primitivas de comunicação em grupo, dentre as quais se destaca a **difusão atômica**, primitiva que garante a entrega confiável e ordenada de mensagens.  A difusão atômica é um problema de acordo, mas não é o único.
+Esta primitiva é equivalente ao problema do **consenso distribuído**, que é um problema com especificação mais simples e que está no cerne da classe de problemas de acordo.
 
 
 ## Consenso
-No problema do Consenso Distribuído, cada um de um conjunto de processos propõe um único valor, sua **proposta** e, ao final do protocolo, um dentre os valores propostos é elevado ao status de **decisão**, reconhecido por todos os processos que a uma decisão.
+No problema do Consenso Distribuído, processos propõe valores, **propostas**,  e, pela execução do protocolo, um dentre os valores propostos é elevado ao status de **decisão**, reconhecido por todos os processos que participaram do protocolo. 
 Formalmente, algoritmos para este problema devem garantir as seguintes propriedades.
 
 * Validade: Somente um valor proposto pode ser decidido.

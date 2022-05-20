@@ -1,25 +1,25 @@
 # Modelos
-Agora que já estão convencidos de que não temos alternativas à distribuição, conhecem algumas das arquiteturas algumas das tecnologias usadas, vamos dar um passo para trás e para entendermos os fundamentos necessários à criação de sistemas escaláveis e tolerantes a falhas.
+Agora que já estão convencidos de que não temos alternativas à distribuição, que conhecem algumas das arquiteturas e tecnologias usadas, vamos dar um passo para trás para entendermos os fundamentos necessários à criação de sistemas escaláveis e tolerantes a falhas.
 Comecemos por consider um problema abstrato, que pode ser mapeado para um problema de computação distribuída.
 
 ## Uma história de três exércitos
-**Era uma vez** uma cidade estado no alto de uma montanha. 
-A despeito de sofrer de falta de água, afinal, estava no alto de uma montanha, a cidade era invejada pelos vizinhos.
-Como a cidade era muito bem fortificada, ela poderia se defender de qualquer **ataque em uma única frente**. 
-Se atacada em **duas frentes**, contudo, cairia.
-Sabendo disso, o rei de uma das cidades vizinhas resolveu tomar a cidade e repartiu suas forças em **dois exércitos** sob o comando de Alice (a sociedade era feminista) e Bastião (sim, Bastião, não Bob).[^2generalsparadox]
+**Era uma vez** uma cidade estado no alto de uma montanha, que era invejada pelos habitantes das cidades vizinhas pelo seu magnífico pôr-do-sol, perfeito para se "instagramar".
+A cidade era muito bem fortificada, contudo, e dizia-se que ela poderia se defender de qualquer **ataque em uma única frente**, mas que se atacada em **duas frentes**, cairia.
+Sabendo disso, os reis de duas as cidades vizinhas juntaram forças, seus **dois exércitos**,  para tentar tomar a cidade. No comando dos dois exércitos, Alice e Bastião.[^2generalsparadox]
 
 [^2generalsparadox]: Esta é uma variação do problema de coordenação de *gangsters* apresentado no em [Some constraints and trade-offs in the design of network communications](https://doi.org/10.1145%2F800213.806523)
 
 ![Paradoxo dos 2 Generais](../drawings/2generals.drawio#0)
 
-Um complicador no ataque é que a **comunicação entre os dois exércitos é feita por mensageiros** que devem contornar a montanha para alcançar o outro exército. 
-O trajeto é complexo e cheio de armadilhas e por isso **mensageiros podem se perder** e demorar um longo tempo para chegar ou até mesmo **serem mortos** e nunca entregarem suas mensagens.
-
 Alice, a comandante mais sênior, deve decidir quando atacar e informar a Bastião, por exemplo, simplesmente ordenando "**Atacar no dia 3, ao nascer do sol.**"
-Bastião **obedecerá** a ordem de atacar contanto que esteja certo de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
-Se mensagens podem ser perdidas, **Alice não tem garantias de que Bastião recebeu o comando** e por isso não pode simplesmente considerar como certo o ataque de Bastião.
+Bastião **obedecerá** a ordem de atacar contanto que **esteja certo** de que Alice também atacará, e é justamente daí que vem a dificuldade do problema.
+Um complicador no ataque é que a **comunicação entre os dois exércitos é feita por mensageiros** que devem contornar a montanha para alcançar o outro exército. 
+O trajeto é complexo e cheio de armadilhas e por isso **mensageiros podem se perder** e demorar um longo tempo para chegar ou até mesmo "se perderem" e nunca entregarem suas mensagens.
+
+Se mensagens podem ser perdidas, **Alice não tem garantias de que Bastião recebeu o comando** e, por isso, não pode simplesmente considerar como certo o ataque de Bastião.
 Como o problema pode ser resolvido?
+
+###### Confirmações
 
 Uma resposta natural é usar **mensagens de confirmação**. Isto é, quando Bastião recebe uma ordem, envia um mensageiro de volta para Alice com uma confirmação da recepção.
 Alice ao receber tal mensagem, sabe que Bastião executará a ordem, correto? Mas não é tão simples assim no caso da ordem de atacar.

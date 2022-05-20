@@ -15,23 +15,19 @@ Uma vez selecionados, os componentes são conectados por meio de conectores, que
 
 ```mermaid
 graph LR
-    A[Componente 1] --> C{Conector} --> B(Componente 2)
+    A[Componente 1] --> C{{Conector}} --> B(Componente 2)
 ```
-
-???todo "TODO"
-    Desenhar o conector usando símbolo padrão.
 
 Componentes bem projetados, deveriam ser facilmente substituídos por outros que respeitem a conexão. 
 Isto aumenta a manutenabilidade do sistemas e pode simplificar passos como a replicação de componentes.
 
 ```mermaid
 graph LR
-    A[Componente 1] --> C{Conector 1} --> B(Componente 2)
+    A[Componente 1] --> C{{Conector 1}} --> B(Componente 2)
 
-    D{Conector 2}
+    D[Componente 1] --> E{{Conector 2}} --> F(Componente 2)
 
-    E{Conector 3}
-
+    style E fill:#bbf,stroke:#f66,stroke-width:2px,color:#fff,stroke-dasharray: 5 5
 ```
 
 Alguns conectores são complexos o suficiente para serem considerados eles próprios componentes, mas no contexto desta discussão, a bem da abstração, os consideraremos apenas como conectores. 
@@ -43,18 +39,35 @@ Caso contrário, diremos que estão **fracamente acoplados** (*loosely coupled*)
 A razão óbvia para preferir sistemas fracamente conectados é sua capacidade de tolerar disrupções; se um componente depende pouco de outro, então não se incomodará com sua ausência por causa de algum problema.
 
 Considere por exemplo o sistema na figura a seguir.
-Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o *backend*, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cda uma das API e uma troca em um dos serviços do *backend* exige ajustes em todas as aplicações.
+Cada aplicação cliente (App X) conversa com cada SGBD, sistema de arquivos e outros serviços, i.e., com o *backend*, usando uma API diferente no cenário do lado esquerdo; ou seja, cada aplicação precisa conhecer cada uma das API e uma troca em um dos serviços do *backend* exige ajustes em todas as aplicações.
 
-![https://dzone.com/articles/the-importance-of-loose-coupling-in-rest-api-desig](../images/loosetight.png)
+!!!note "Sem API gateway"
+    ![](../drawings/coupling.drawio#0)
+
+    Todo cliente precisa conhecer todas as API. Todos devem ser modificados com cada novo serviço.
+    
+!!!note "Com API gateway"
+    ![](../drawings/coupling.drawio#1)
+
+    Todo cliente conhece apenas uma API. Apenas o gateway precisa ser modificado com cada novo serviço.
 
 Já no lado direito, um conector foi colocado entre as aplicações e o *backend*, oferecendo uma interface única para todos os clientes.
-A responsabilidade de conhecer as API específicas dos componentes do *backend* passa a ser então do conector, e quais quer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.
+A responsabilidade de conhecer as API específicas dos componentes do *backend* passa a ser então do conector, e quaisquer mudanças nos serviços implicam mudanças apenas no conector, não no clientes.
 
-Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento, como os sistemas pubsub discutidos anteriormente.
+Certos conectores permitem um acoplamento tão fraco entre componentes, que estes não precisam se conhecer ou sequer estar ativos no mesmo momento.
 
-![Desacoplamento](../images/component2.png)
 
-Também a questão da simplificação de API, uma vez que o *middleware* pode impor um padrão a ser seguido por todos os componentes e minimizar a necessidade os componentes conhecerem as interfaces uns dos outros.
+!!!note "Barramento de eventos"
+     ![](../drawings/coupling.drawio#2)
+
+     Mensagens são enviadas entre processos, via o barramento.
+
+!!!note "Espaço de tuplas"
+    ![](../drawings/coupling.drawio#3)
+
+    Dados são armazenados no e recuperados do espaço de tuplas.
+
+Também há a questão da simplificação de API, uma vez que conector pode impor um padrão a ser seguido por todos os componentes e minimizar as API usadas. Por exemplo, um espaço de tuplas poderia impor uma API CRUD para manipulação de entradas do tipo chave/valor.
 
 
 ## Cliente/Servidor
