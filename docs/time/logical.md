@@ -8,6 +8,9 @@ Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante a
 Para chegarmos aos relógios lógicos, precisamos primeiro entender a relação ***Happened-Before***, proposta por Leslie Lamport[^tcoeds] e que lhe rendeu um [Prêmio Turing](https://amturing.acm.org/) em [2014](https://www.microsoft.com/en-us/research/blog/leslie-lamport-receives-turing-award/).
 Hoje é comum usar a relação *happened-before* e o vocabulário associado para falar sobre ordem de eventos em um sistema computacional, em especial um distribuído.
 
+???note "Lamport"
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/rkZzg7Vowao" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 [^tcoeds]: [Time, Clocks and the Ordering of Events in a Distributed System. July 5, 1978](http://amturing.acm.org/p558-lamport.pdf).
 
 ### Happened-Before
