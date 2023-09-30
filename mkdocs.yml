@@ -124,6 +124,7 @@ nav:
                 - arch/index.md
                 - P2P: arch/p2p.md
                 - Microsserviços: arch/microservices.md
+                - Rest: arch/rest.md
 
         - Modelos: 
                 - models/index.md
