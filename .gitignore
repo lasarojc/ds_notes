@@ -4,3 +4,4 @@
 docs/drawio-exporter
 _site
 site
+.env

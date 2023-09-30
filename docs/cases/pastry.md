@@ -39,7 +39,7 @@ roteamento que a estrutura chave para o algoritmo de roteamento.
 
 
 
-![um estado hipotetico de um nó de id 10233102](../drawings/pastry_node.drawio#0)  
+![um estado hipotetico de um nó de id 10233102](../drawings/pastryNode.drawio#0)  
 
 
 
@@ -91,7 +91,7 @@ de nós em uma rede pastry.
 
 ## Saída de um nó
 
-Em um dado momento nós podem pedir para sair ou falharem sem nenhum tipo de aviso. A rede Pastry considera que um nó falhou no momento que os nós vizinhos não conseguem mais se comunicar com esse nó. Dado um nó $A$ que possui um leaf set $L$, caso esse nó precise repor um nó do leaf set que falhou. então o nó $A$ contacta o nó de $L$ com o maior index possível, seja ele positivo ou negativo, por exemplo se o nos $L_i$, dado que $[\frac{|L|}{2}] < i < 0$. então o nó $A$ irá enviar uma mensagem para o nó $L_{-[\frac{|L|}{2}]}$, pedindo o seu conjunto leaf set $L^{'}$, depois o nó $A$ escolhe um nó que não pertence ao seu conjunto $L$ e o adiciona, lembrando que $A$ remove o nó falho do conjunto $L$. Perceba que o conjunto de vizinhos (neighborhood set) de um nó exerce um papel importante de de ficar em constante troca de mensagens, para verificar se um dado nó ainda está vivo.
+Em um dado momento nós podem pedir para sair ou falharem sem nenhum tipo de aviso. A rede Pastry considera que um nó falhou no momento que os nós vizinhos não conseguem mais se comunicar com esse nó. Dado um nó $A$ que possui um leaf set $L$, caso esse nó precise repor um nó do leaf set que falhou. então o nó $A contacta o nó de $L$ com o maior index possível, seja ele positivo ou negativo, por exemplo se o nos $L_i$, dado que $[\frac{|L|}{2}] < i < 0$. então o nó $A$ irá enviar uma mensagem para o nó $L_{-[\frac{|L|}{2}]}$, pedindo o seu conjunto leaf set $L^{'}$, depois o nó $A$ escolhe um nó que não pertence ao seu conjunto $L$ e o adiciona, lembrando que $A$ remove o nó falho do conjunto $L$. Perceba que o conjunto de vizinhos (neighborhood set) de um nó exerce um papel importante de de ficar em constante troca de mensagens, para verificar se um dado nó ainda está vivo.
 
 ### Atualização da tabela de rotas de um nó a 
 
@@ -121,8 +121,6 @@ enviarem sua tabela estado, onde ele compara os nós e caso encontre um nó que 
 atualiza a sua tabela com esse novo nó. 
 
 ## Referências
-
-Caso de Estudo feito por um Ex estudante _[Samuel Cavalcanti](https://github.com/samuel-cavalcanti)_
 
 Artigo do Pastry Network, [Pastry: Scalable, decentralized object location and
 routing for large-scale peer-to-peer systems](https://rdcu.be/cABRL)
