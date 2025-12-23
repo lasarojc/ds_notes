@@ -1,5 +1,7 @@
 # Representational State Transfer (REST)
 
+Contribuição de [Samuel Cavalcanti](https://github.com/samuel-cavalcanti)
+
 Esta nota visa introduzir e explicar o que é a transferência de estado representacional. REST um estilo arquitetural para um sistema distribuído de hypermedia. Em um sistema distribuído um processo pode ser visto como **componente** que se comunica com outro componente através de um conector. Um sistema distribuído de hypermedia é por exemplo: o sistema que permite você ler esta nota. Um navegador que funciona como um cliente que recebe como resposta o Hypertext Markup Language (HTML) da sua solicitação feita através do hyper text transfer protocol (HTTP). um estilo arquitetural é o conjunto de restrições aplicadas em uma arquitetura com o objetivo de replicar os bons resultados obtidos a partir das restrições.  
 
 ## Compreendendo REST através das suas restrições
