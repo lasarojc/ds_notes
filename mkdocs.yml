@@ -6,7 +6,7 @@ repo_url: https://github.com/lasarojc/ds_notes
 edit_uri: ""
 
 extra_javascript:
-        - https://unpkg.com/mermaid@8.5.1/dist/mermaid.min.js
+        - https://unpkg.com/mermaid@10/dist/mermaid.min.js
         - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
         - javascripts/mathjaxhelper.js
 
@@ -37,7 +37,6 @@ markdown_extensions:
         - toc:
             toc_depth: 5
         - attr_list
-        - mdx_math
         - admonition
         - footnotes
         - pymdownx.arithmatex:
@@ -48,8 +47,8 @@ markdown_extensions:
         - pymdownx.critic
         - pymdownx.details
         - pymdownx.emoji:
-            emoji_index: !!python/name:materialx.emoji.twemoji
-            emoji_generator: !!python/name:materialx.emoji.to_svg
+            emoji_index: !!python/name:material.extensions.emoji.twemoji
+            emoji_generator: !!python/name:material.extensions.emoji.to_svg
         - pymdownx.highlight:
              linenums: true
         - pymdownx.inlinehilite
@@ -63,7 +62,8 @@ markdown_extensions:
                      format: !!python/name:pymdownx.superfences.fence_div_format
         - pymdownx.tasklist:
             custom_checkbox: true
-        - pymdownx.tabbed
+        - pymdownx.tabbed:
+            alternate_style: true
         - pymdownx.tilde
 
 copyright: "Copyright © 2021 Lásaro Camargos"
