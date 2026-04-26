@@ -26,9 +26,8 @@ jobs:
             mkdocs-material-
       - name: Install drawio
         run: |
-          DRAWIO_VERSION=$(curl -sL https://api.github.com/repos/jgraph/drawio-desktop/releases/latest | python3 -c "import sys,json; print(json.load(sys.stdin)['tag_name'].lstrip('v'))")
-          wget --quiet "https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-amd64-${DRAWIO_VERSION}.deb"
+          wget --quiet https://github.com/jgraph/drawio-desktop/releases/download/v29.7.9/drawio-amd64-29.7.9.deb
           sudo apt update -qq
-          sudo apt install -y "./drawio-amd64-${DRAWIO_VERSION}.deb"
+          sudo apt install -y ./drawio-amd64-29.7.9.deb
       - run: pip install mkdocs-material mkdocs-drawio-exporter
       - run: xvfb-run -a mkdocs gh-deploy --force
