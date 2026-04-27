@@ -274,8 +274,8 @@ Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada 
 ### Exclusão Mútua Revisitada
 
 ???todo 
-    * [Algoritmos de Excluão mútua baeados em LC](http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf)
-    * Algoritmo de Lamport, Ricart e agrawalla
+    * [Algoritmos de Exclusão mútua baseados em LC](http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf)
+    * Algoritmo de Lamport, Ricart e Agrawal
     * [Algoritmo de Maekawa](https://www.coursera.org/learn/cloud-computing-2/lecture/GMHYN/2-4-maekawas-algorithm-and-wrap-up)
 
 

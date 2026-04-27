@@ -8,7 +8,7 @@
 
 *  LinkedIn
 *  OpenSource em 2011
-*  Projeto Apache em ????
+*  Projeto Apache em 2011
 
 
 ![](../images/kafka1.png)
@@ -168,7 +168,7 @@ public class SimpleProducer {
 ```
 
 Workflow
-![]()images/kafka6.png)
+![](../images/kafka6.png)
 
 *  Particionador default
 	*  Partition

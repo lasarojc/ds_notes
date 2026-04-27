@@ -20,7 +20,7 @@ Vejamos alguns exemplos de tarefas executadas por sistemas distribuídos, que vo
 
 * Entregue este email para fulano@knowhere.uni.
 * Envie o item I para o endereço E, após cobrança de D dinheiros da conta C.
-* Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil na direção em que o o avatar está olhando, com velocidade V, enquanto movimenta o avatar A para a esquerda com velocidade W.
+* Em um ambiente de simulação de batalhas em 3D, simule o disparo de um projétil na direção em que o avatar está olhando, com velocidade V, enquanto movimenta o avatar A para a esquerda com velocidade W.
 * Autorize a transferência de D dinheiros da conta C para a conta C'.
 * Movimente o braço mecânico que está segurando um bisturi, 3cm à direita, então abaixe-o 3mm, e movimente-o 4cm para a esquerda
 * Inclua o comentário ``LOL!!!'' na lista de comentários do item XYZ, com marca de tempo T
@@ -262,7 +262,7 @@ Para que seja realizada, a computação pervasiva requer que dispositivos **dete
 ###### Redes de Sensores e Internet das Coisas
 
 Eu vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subsessão de Sistemas Pervasivos.
-Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "leêm" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
+Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "lêem" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
 A Internet das Coisas (IoT, do inglês *Internet of Things*) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT[^iot] não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.

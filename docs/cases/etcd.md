@@ -1,2 +1,4 @@
-???todo
-    [etcd](https://etcd.io/)
+# etcd
+
+!!! warning "Conteúdo Incompleto"
+    Esta seção ainda não foi escrita.

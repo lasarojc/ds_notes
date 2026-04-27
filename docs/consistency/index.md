@@ -1,8 +1,8 @@
 # Consistência
 Quando implementamos um sistema distribuído, precisamos estar cientes de que **há custos inerentes** desta distribuição, introduzidos pela coordenação das partes que formam o todo.
-E também precisamos estar cientes de é possível pensar em **diferentes níveis de coordenação**, com diferentes custos.
+E também precisamos estar cientes de que é possível pensar em **diferentes níveis de coordenação**, com diferentes custos.
 
-???sideslide "CDN"
+??? note "CDN"
     * Conteúdo é colocado próximo aos clientes. 
     * Conteúdo estático ou majoritariamente determinístico. 
     * Um pequeno atraso na replicação é tolerado.

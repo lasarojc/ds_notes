@@ -1,9 +1,4 @@
 # BFT-Smart
 
-???todo
-    [BFT-Smart](https://github.com/bft-smart/library)
-
-
-
-
-
+!!! warning "Conteúdo Incompleto"
+    Esta seção ainda não foi escrita.

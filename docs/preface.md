@@ -16,13 +16,13 @@ Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é
 
 Se estiver se perguntando do que estou falando, sobre como posso dizer que é quente uma área sobre a qual talvez você nunca tenha ouvido falar, ao contrário de áreas como [**aprendizado de máquina**]() e [**ciência de dados**](), então deixe-me explicar o que quero dizer. Sem o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais.
 Veja, por exemplo, a seguinte descrição dos *skills* necessários para se atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro de software no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
-É fato que aplicações distribuídos já são parte inexpurgável da infraestrutura computacional que usamos para resolver os mais diversos problemas.
+É fato que aplicações distribuídas já são parte inexpurgável da infraestrutura computacional que usamos para resolver os mais diversos problemas.
 
 ???- info inline end "Este curso"
     * A teoria por baixo dos *frameworks* que **já** usam
 
 Assim, respondendo à pergunta acima, entendo que ler estas notas lhe permitirá mergulhar rapidamente no coração da computação distribuída, para entender os fundamentos de como as grandes infra-estruturas computacionais que usamos hoje funcionam, muito além das anotações do [Springboot]() e dos clientes de bancos de dados.
-Isso, de uma forma muito direta e mais simples de digerir quer as fontes onde me baseei para escrevê-las, além de usar diversos materiais disponíveis mais recentes que a bibliografia básica.
+Isso, de uma forma muito direta e mais simples de digerir que as fontes onde me baseei para escrevê-las, além de usar diversos materiais disponíveis mais recentes que a bibliografia básica.
 
 
 ## Estrutura
@@ -34,7 +34,7 @@ Isso, de uma forma muito direta e mais simples de digerir quer as fontes onde me
     * Cenário atual
 
 
-Neste curso apesentaremos uma visão geral do que são sistemas distribuídos, porquês técnicos para os desenvolvermos e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
+Neste curso apresentaremos uma visão geral do que são sistemas distribuídos, porquês técnicos para os desenvolvermos e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
 Faremos isso começando por uma revisão de conceitos de redes de computadores e sistemas operacionais enquanto falamos sobre a arquitetura mais fundamental de computação distribuída, Cliente/Servidor, e de como é usada para implementar um proto banco de dados distribuído, uma Tabela de Espalhamento Distribuída em memória.
 À medida em que apresentamos problemas com o modelo assumido inicialmente e com nossa implementação inicial, buscaremos por soluções enquanto introduzimos novas abstrações, mais poderosas e mais complexas.
 Ao final desta jornada, teremos fundamentado a construção de uma Tabela de Espalhamento Distribuído com particionamento de dados entre nós, usando protocolos par-a-par e replicação de máquinas de estados.
@@ -50,7 +50,7 @@ Em resumo, durante este curso você irá:
 * entender as implicações da dessincronização de relógios na coordenação, replicação e tolerância a falhas;
 * projetar sistemas com componentes geograficamente distantes, fracamente acoplados;
 * entender onde os diversos *middleware* podem ser usados para acoplar tais componentes;
-* conhecer várias técnicas que controle de concorrência controlar o acesso a um recurso compartilhado;
+* conhecer várias técnicas de controle de concorrência para controlar o acesso a um recurso compartilhado;
 
 ???todo "TODO"
       Estruturar melhor esta seção uma vez que a estrutura do documento tenha estabilizado mais.
@@ -60,9 +60,9 @@ Um aviso aos incautos: é impossível falar sobre sistemas distribuídos sem alg
 Quando iniciarmos nosso estudo, falaremos sobre *sockets* como forma de comunicação entre processos para que possamos rapidamente começar a experimentar e praticar a construção de sistemas distribuídos.
 Ao falarmos de *sockets*, seremos naturalmente obrigados a discutir a arquitetura **cliente/servidor**, antes mesmo de falarmos de arquiteturas.
 Quando falarmos em arquiteturas, falaremos sobre sistemas P2P e de como, nestes sistemas, processos são organizados de forma plana em vez de hierárquica.
-Ao falarmos sobre P2P, seremos foçados a mencionar seus representantes mais relevantes atualmente, os bancos de dados NOSQL, isto antes mesmo de falarmos sobre sistemas de bancos de dados distribuídos.
+Ao falarmos sobre P2P, seremos forçados a mencionar seus representantes mais relevantes atualmente, os bancos de dados NOSQL, isto antes mesmo de falarmos sobre sistemas de bancos de dados distribuídos.
 Mais tarde, quando voltar a falar sobre bancos de dados distribuídos, nos focaremos não na arquitetura dos bancos de dados, mas como bancos de dados são vistos pelos outros componentes do sistema distribuído. Isto é, nos focaremos nos contratos que levam os bancos de dados a se comportem da maneira que esperamos que se comportem, ou não.
-Finalmente, quando discutirmos como o banco implementa os contratos, seremos conduzidos a falar sobre *locks* distribuídos e problemas de acordo, abstrações que terão sido discutidas discutidas anteriormente.
+Finalmente, quando discutirmos como o banco implementa os contratos, seremos conduzidos a falar sobre *locks* distribuídos e problemas de acordo, abstrações que terão sido discutidas anteriormente.
 O ponto aqui é todos os tópicos acabam sendo fortemente relacionados uns com os outros e mesclar o que estudamos de forma consistente é um processo iterativo.
 
 
