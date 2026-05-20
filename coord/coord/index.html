@@ -1,0 +1,3834 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notas de aula do curso de Sistemas Distribuídos da FACOM/UFU">
+      
+      
+      
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/coord/coord/">
+      
+      
+        <link rel="prev" href="../concurrency/">
+      
+      
+        <link rel="next" href="../../time/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Coordenação - Notas de Aula em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-65TK61CS8M",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-65TK61CS8M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#coordenacao" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas de Aula em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Coordenação
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Notas de Aula em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prefácio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introdução
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../comm/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comunicação
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Comunicação
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/redes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/internet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/sockets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sockets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/datarep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Middlewares
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/rpc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/mom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/epidemics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Epidêmicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../arch/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquiteturas
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquiteturas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/p2p/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P2P
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsserviços
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/rest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tipos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordenação
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coordenação
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concorrência
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordenação
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordenação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exclusao-mutua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusão Mútua
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exclusão Mútua">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coordenador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordenador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lidando-com-falhas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lidando com Falhas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quorum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quórum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eleicao-de-lideres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eleição de Líderes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Eleição de Líderes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identificadores-de-processo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificadores de Processo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mais-algoritmos-do-anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mais Algoritmos do Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-brigao-bully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do Brigão (Bully)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-yoyo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do YoYo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questoes-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questões importantes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questões importantes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#split-brain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Split-brain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estabilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deteccao-de-falhas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecção de falhas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../time/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tempo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/physical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo Físico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../time/logical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo Lógico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../fault/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tolerância a Faltas
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tolerância a Faltas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Falta/Erros/Falhas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replicação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/failuredetector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Detectores de Falhas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/agreement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acordo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/reconfiguration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/bizantine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Falhas bizantinas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/dependability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependabilidade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../consistency/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consistência
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consistência
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/consistency_models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/data_centric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Centrado nos Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/client_centric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Centrado no Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/replica_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gerenciamento de Réplicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/checkpointing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checkpointing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db/disdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bancos de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filesystem/disfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sistemas de Arquivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../cases/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estudos de Caso
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estudos de Caso
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/cassandra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cassandra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/pastry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pastry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/dynamo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/grpc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gRPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/mosquito/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mosquito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/rmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/thrift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thrift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kafka
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/swim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/copycat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copycat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/ratis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ratis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/bftsmart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BFT-Smart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/etcd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Etcd
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/zookeeper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zookeeper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tecnologias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exclusao-mutua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusão Mútua
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exclusão Mútua">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coordenador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coordenador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lidando-com-falhas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lidando com Falhas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quorum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quórum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eleicao-de-lideres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eleição de Líderes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Eleição de Líderes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identificadores-de-processo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificadores de Processo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mais-algoritmos-do-anel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mais Algoritmos do Anel
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-brigao-bully" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do Brigão (Bully)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algoritmo-do-yoyo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algoritmo do YoYo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#questoes-importantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Questões importantes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Questões importantes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#split-brain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Split-brain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estabilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deteccao-de-falhas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detecção de falhas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="coordenacao">Coordenação</h1>
+<p>Como visto na seção sobre <a href="../fundamentals/#concorrencia">concorrência</a>, diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. </p>
+<p>Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos <em>threads</em>, além disso, espalhados geograficamente. 
+Outras soluções e abstrações são portanto necessárias.</p>
+<h2 id="exclusao-mutua">Exclusão Mútua</h2>
+<p>Um dos problemas enfrentados em sistemas que fazem uso de concorrência, distribuídos ou não, é a exclusão mútua.
+Em um sistema monolítico, uma variável global, um lock, ou outra primitiva de sincronização podem ser usadas na sincronização, mas em um sistema distribuído, primitivas simples como estas provavelmente não estarão disponíveis ou o sistema será muito restrito.
+Como, então, controlar o acesso de múltiplos processos a um recurso compartilhado, garantindo que cada processo controla <strong>exclusivamente</strong> aquele recurso durante seu acesso?
+Qualquer solução que se proponha a este problema de exclusão mútua, precisa ter as propriedades 1, 2, 3, e, idealmente, a 4, a seguir:</p>
+<div class="admonition info">
+<p class="admonition-title">Exclusão Mútua</p>
+<ol>
+<li><strong>exclusão mútua</strong> - somente um processo pode estar na <strong>região crítica</strong> em qualquer instante de tempo;</li>
+<li><strong>ausência de deadlocks</strong> - se processos estão tentando acessar o recurso, então <strong>algum processo deve conseguir acesso</strong> em algum instante, dado que nenhum processo fique na região crítica indefinidamente;</li>
+<li><strong>não-inanição</strong> - todos os processos interessados conseguem, em algum momento, acessar o recurso;</li>
+<li><strong>espera limitada</strong> - o tempo de espera pelo recurso é limitado.</li>
+</ol>
+</div>
+<p>Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
+Três das mais simples, que ilustram o universo de soluções, são: via um processo centralizador, em um anel em que "a vez" é circulada, e baseada em quóruns.</p>
+<h3 id="coordenador">Coordenador</h3>
+<p>Enquanto em um sistema monolítico há um sistema operacional que  provê abstrações simples para os processos a serem coordenados, em um sistema distribuído, não há naturalmente tal entidade.
+Uma possível solução para o problema de exclusão mútua em um ambiente distribuído é justamente dar um passo para trás e introduzir um coordenador.</p>
+<p>Nesta abordagem, os processos que precisam acessar a região crítica são denominados <strong>participantes</strong> e um dos processos assume o papel de <strong>coordenador</strong>. É possível que um mesmo processo atue nos dois papéis sem nenhum prejuízo. Os processos executam o seguinte protocolo:</p>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
+<li>Envia requisição de acesso ao coordenador</li>
+<li>Espera por resposta do coordenador</li>
+<li>Acessa o recurso</li>
+<li>Envia liberação do recurso para o coordenador</li>
+</ol>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Coordenador</p>
+<ol>
+<li>Inicializa recurso como livre</li>
+<li>Ao receber uma requisição, a enfileira</li>
+<li>Ao receber uma liberação, marca o recurso como livre</li>
+<li>Sempre que recurso estiver marcado como livre <strong>E</strong> a fila não estiver vazia<ol>
+<li>remove primeiro processo da fila</li>
+<li>envia liberação para processo removido</li>
+<li>marca o recurso como ocupado</li>
+</ol>
+</li>
+</ol>
+</div>
+<p>O diagrama a seguir apresenta uma execução deste protocolo em um cenário com três participantes.
+O estado do coordenador mostra se o recurso está livre ou ocupado e quais processos esperam por permissão de acesso.</p>
+<div class="mermaid">sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+        Coordenador-&gt;&gt;+Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Part2-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador-&gt;&gt;Part1: ResponseFree
+        Part3-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+        Coordenador-&gt;&gt;+Part2: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+        Part2-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+        Coordenador-&gt;&gt;Part2: ResponseFree
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+        Part3-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = []
+        Coordenador-&gt;&gt;Part3: ResponseFree</div>
+<p>Este algoritmo satisfaz as características elencadas acima.   </p>
+<ul>
+<li>Exclusão mútua - se o coordenador autoriza um participante X, somente após o participante X liberar o recurso é que outro participante poderá obter nova autorização.</li>
+<li>Ausência de deadlocks - Todo processo que requisitar o recurso, entrará em uma fila, em apenas uma posição; assim, a fila proverá uma ordem total para os acessos, sem a possibilidade de circularidade nesta ordem.</li>
+<li>Não-inanição - Dado que ninguém fura a fila e que a cada vez que o recurso é liberado a fila anda, em algum momento a vez do processo chegará.</li>
+<li>Espera limitada - Dado que a posição na fila pode apenas decrementar, seria possível estimar quanto tempo o participante precisa esperar para acessar o recurso.</li>
+</ul>
+<p>Outra vantagem deste algoritmo é sua simplicidade e, consequentemente, facilidade de implementação.
+Contudo, este algoritmo tem também desvantagens, por exemplo, se muitas requisições de acesso forem feitas, o coordenador pode ser sobrecarregado e se tornar um <strong>gargalo</strong> no acesso à região crítica.</p>
+<p>Mais sério ainda é a questão de como lidar com falhas, por exemplo, se ou o coordenador ou o participante que detem o direito de acesso ao recurso para de funcionar,  então nenhum outro processo conseguirá acesso.
+Estes aspectos nos permitem mergulhar na área de tolerância a falhas, e o faremos, mas mais tarde. 
+Por enquanto, consideraremos tolerância a falhas de forma superficial, após discutirmos outra abordagem.</p>
+<h3 id="anel">Anel</h3>
+<p>Nesta abordagem, os processos se organizam em um anel lógico, com um processo antes e outro depois. 
+Um dos processos é iniciado com um <em>token</em> que dá acesso ao recurso e o <em>token</em> é passado adiante no anel; sempre que estiver de posse do token, o processo pode acessar o recurso. Ou seja, todos os participantes executam o seguinte protocolo:</p>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
+<li>Ao receber o <em>token</em> de acesso, se quiser acessar o recurso, acessa.</li>
+<li>Envia o <em>token</em> para o próximo nó do anel.</li>
+</ol>
+</div>
+<p>O diagrama adiante mostra uma execução do algoritmo em que apenas os participantes 1 e 3 acessam o recurso.</p>
+<div class="mermaid">sequenceDiagram
+    Part1-&gt;&gt;Part2: Permissão de Acesso
+    Part2-&gt;&gt;Part3: Permissão de Acesso
+        note over Part3: Acessa o recurso
+    Part3-&gt;&gt;Part4: Permissão de Acesso
+    Part4-&gt;&gt;Part1: Permissão de Acesso
+        note over Part1: Acessa o recurso
+        Part1-&gt;&gt;Part2: Permissão de Acesso
+    Part2-&gt;&gt;Part3: Permissão de Acesso
+        note over Part3: Acessa o recurso
+    Part3-&gt;&gt;Part4: Permissão de Acesso
+    Part4-&gt;&gt;Part1: Permissão de Acesso</div>
+<p>Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar, testar e entender.
+Diferente do algoritmo centralizado, o algoritmo do anel não sofre com problemas de gargalo, pois nenhum processo precisa participar em todos os acessos, como o coordenador.
+Contudo, o algoritmo do anel desperdiça tempo passando o <em>token</em> para quem não necessariamente quer acessar a região crítica.
+Também importante é que este algoritmo sofre com falhas: se um participante falha enquanto está com o <em>token</em>, o <em>token</em> é perdido e o algoritmo trava.</p>
+<h3 id="lidando-com-falhas">Lidando com Falhas</h3>
+<p>Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algoritmo pode ficar "travado". 
+Vejamos alguns casos específicos:</p>
+<ul>
+<li>No algoritmo centralizado, se o coordenador falha antes de liberar o acesso para algum processo, ele leva consigo a permissão.</li>
+<li>Em ambos os algoritmos, se o processo acessando o recurso falha, a permissão é perdida e os demais processos sofrerão inanição.</li>
+<li>No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido e o <em>token</em> não conseguirá circular.</li>
+</ul>
+<p>Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais a solução mais imediata que costuma ser proposta é baseada em <em>timeouts</em>.
+Por exemplo, se o processo não devolver a permissão de acesso antes de que uma certa quantidade de tempo tenha passado, um <em>timeout</em>, então assuma que o mesmo parou de funcionar e não voltará mais, e gere uma nova permissão a ser passada a outros requisitantes.  Aplicada esta ideia do <em>timeout</em>  no algoritmo com coordenador, teremos o efeito ilustrado a seguir.</p>
+<div class="mermaid">sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+        Coordenador-&gt;&gt;+Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Part2-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador-&gt;&gt;Part1: ResponseFree
+        Part3-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+        Coordenador-&gt;&gt;Part2: ResponseOK
+    activate Part2
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+
+    note over Part2: 💀☠️💀☠️💀☠️💀
+    deactivate Part2
+        Coordenador-&gt;&gt;Coordenador: Timeout
+
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+        Part3-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = []
+        Coordenador-&gt;&gt;Part3: ResponseFree</div>
+<p>O problema desta e outras "soluções" baseadas em <em>timeouts</em> está no <strong>assumir que o processo parou de funcionar</strong>, pois caso isso não seja verdade, teremos agora duas autorizações ao mesmo tempo no sistema, podendo levar à violação da propriedade de exclusão mútua. </p>
+<div class="mermaid">sequenceDiagram
+    participant Coordenador
+    note over Coordenador: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part1]
+        Coordenador-&gt;&gt;+Part1: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = []
+        Part2-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=ocupado/Fila = [Part2]
+        Part1-&gt;&gt;-Coordenador: RequestFree
+    note over Coordenador: Recurso=livre/Fila = [Part2]
+        Coordenador-&gt;&gt;Part1: ResponseFree
+        Part3-&gt;&gt;Coordenador: RequestAccess
+    note over Coordenador: Recurso=livre/Fila = [Part2,Part3]
+        Coordenador-&gt;&gt;+Part2: ResponseOK
+    note over Coordenador: Recurso=ocupado/Fila = [Part3]
+
+        Coordenador-&gt;&gt;Coordenador: Timeout
+
+    note over Coordenador: Recurso=livre/Fila = [Part3]
+    note over Coordenador: Recurso=ocupado/Fila = []
+    rect rgb(200, 0, 0)
+        Coordenador-&gt;&gt;+Part3: ResponseOK
+
+        Part2-&gt;&gt;-Coordenador: RequestFree
+        Part3-&gt;&gt;-Coordenador: RequestFree
+    end
+    note over Coordenador: Recurso=livre/Fila = []
+        Coordenador-&gt;&gt;Part3: ResponseFree</div>
+<p>Por mais que se ajuste o valor do temporizador, em um sistema distribuído assíncrono, mesmo que aumentado com um relógio para medir a passagem do tempo local, o mesmo pode <strong>sempre</strong> estar errado. </p>
+<div class="admonition warning">
+<p class="admonition-title">Impossibilidade de detecção de falhas</p>
+<p>Em um sistema distribuído assíncrono, é impossível distinguir um processo falho de um processo lento.</p>
+</div>
+<p>Mais tarde discutiremos as implicações desta impossibilidade. Por agora, tentemos responder à seguinte questão.</p>
+<div class="admonition question">
+<p class="admonition-title">Pergunta!</p>
+<p>Qual deve ser um <em>timeout</em>  <strong>razoável</strong> para o meu sistema?</p>
+</div>
+<p>A resposta depende de mais perguntas, como:</p>
+<ul>
+<li>Qual o custo <span class="arithmatex">\(E\)</span> de esperar por mais tempo?</li>
+<li>Qual o custo <span class="arithmatex">\(C\)</span> de cometer um engano?</li>
+<li>Qual a probabilidade <span class="arithmatex">\(p\)</span> de cometer um engano?</li>
+</ul>
+<p>O custo esperado pelos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo? Ou seja, <span class="arithmatex">\(C * p &lt; E\)</span>?</p>
+<p>Embora esta análise possa ser feita para estes algoritmos, a verdade é que são algoritmos realmente limitados e outras abordagens seriam um destino melhor para os seus esforços.
+Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Vogels, CTO da Amazon</p>
+<blockquote>
+<p>Se o mundo é probabilístico, por que meus algoritmos devem ser determinísticos?"</p>
+</blockquote>
+<p>Uma abordagem probabilística interessante é baseada em quóruns.</p>
+<h3 id="quorum">Quórum</h3>
+<p>De acordo com o <a href="https://dicionario.priberam.org/quorum">Dicionário Priberam da Língua Portuguesa, consultado em 17-04-2019</a>, "quórum" é o  </p>
+<blockquote>
+<p>Número de pessoas imprescindível para a realização de algo.</p>
+</blockquote>
+<p>Aqui, este <em>algo</em> será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.</p>
+<p>Esta abordagem é semelhante em vários aspectos à coordenada.
+De fato, um dos papéis na abordagem é o de coordenador, que executa o mesmo protocolo que antes.
+Entretanto, em vez de apenas um coordenador no sistema, temos <span class="arithmatex">\(n\)</span>, dos quais o participante precisa obter <span class="arithmatex">\(m &gt; n/2\)</span> autorizações antes de acessar o recurso; <span class="arithmatex">\(m\)</span> é o quórum do sistema.</p>
+<div class="admonition note">
+<p class="admonition-title">Quórum</p>
+<ul>
+<li><span class="arithmatex">\(n\)</span> coordenadores.</li>
+<li><span class="arithmatex">\(m &gt; n/2\)</span> coordenadores</li>
+</ul>
+</div>
+<p>Já os demais participantes devem agora considerar todo o conjunto de coordenadores antes de assumir que tem acesso a um recurso. O algoritmo completo é o seguinte:   </p>
+<div class="admonition example">
+<p class="admonition-title">Coordenador</p>
+<ol>
+<li>Inicializa recurso como livre</li>
+<li>Ao receber uma requisição, a enfileira</li>
+<li>Ao receber uma liberação<ol>
+<li>se do processo a quem autorizou, marca o recurso como livre</li>
+<li>senão e se de um processo na fila, remove o processo da fila<sup id="fnref:id"><a class="footnote-ref" href="#fn:id">1</a></sup></li>
+<li>senão, ignore mensagem.</li>
+</ol>
+</li>
+<li>Sempre que recurso estiver marcado como livre <strong>E</strong> a fila não estiver vazia<ol>
+<li>remove primeiro processo da fila</li>
+<li>envia liberação para processo removido</li>
+<li>marca o recurso como ocupado</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Participante</p>
+<ol>
+<li>Envia requisição de acesso aos <span class="arithmatex">\(n\)</span> coordenadores</li>
+<li>Espera por resposta de <span class="arithmatex">\(m\)</span> coordenadores</li>
+<li>Acessa o recurso</li>
+<li>Envia liberação do recurso para os <span class="arithmatex">\(n\)</span> coordenadores</li>
+</ol>
+</div>
+<p>Vejamos uma execução bem-sucedida deste algoritmo, com <span class="arithmatex">\(n=3\)</span> e <span class="arithmatex">\(m=2\)</span>.</p>
+<div class="mermaid">sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord1: RequestAccess
+        Part2-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord3: RequestAccess
+
+        Part1-&gt;&gt;Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+        Coord1-&gt;&gt;Part1: ResponseOK
+        Coord2-&gt;&gt;+Part1: ResponseOK
+
+
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+        Coord3-&gt;&gt;Part2: ResponseOK
+
+    Part1-&gt;&gt;-Coord1: RequestFree
+    Part1-&gt;&gt;Coord2: RequestFree
+    Part1-&gt;&gt;Coord3: RequestFree
+
+    note over Coord3: Recurso=ocupado/Fila = []
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = []
+        Coord1-&gt;&gt;+Part2: ResponseOK
+        Coord2-&gt;&gt;Part2: ResponseOK
+
+    Part2-&gt;&gt;-Coord1: RequestFree
+    Part2-&gt;&gt;Coord2: RequestFree
+    Part2-&gt;&gt;Coord3: RequestFree
+
+    note over Coord1,Coord3: Recurso=livre/Fila = []</div>
+<p>Para tornar o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então retomar suas atividades, esquecem as autorizações já atribuídas.</p>
+<div class="admonition warning">
+<p class="admonition-title">Perda de memória</p>
+<p>Quando um coordenador falha, esquece que deu ok e reinicia seu estado.</p>
+</div>
+<p>Este algoritmo é bom? Suponhamos o seguinte cenário:</p>
+<ul>
+<li>Coordenadores = {Coord1,Coord2,Coord3}</li>
+<li><span class="arithmatex">\(n = 3\)</span></li>
+<li><span class="arithmatex">\(m = 2\)</span></li>
+<li>Participante Part1 consegue autorização de {Coord1,Coord2} e entra na região crítica.</li>
+<li>Coordenador Coord2 falha e se recupera</li>
+<li>Participante Part2 consegue autorização de {Coord2,Coord3} e entra na região crítica.</li>
+</ul>
+<div class="mermaid">sequenceDiagram
+    participant Coord1
+    participant Coord2
+    participant Coord3
+    note over Coord1,Coord3: Recurso=livre/Fila = []
+        Part1-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord2: RequestAccess
+
+        Part2-&gt;&gt;Coord1: RequestAccess
+        Part1-&gt;&gt;Coord3: RequestAccess
+        Part2-&gt;&gt;Coord3: RequestAccess
+
+    note over Coord1,Coord2: Recurso=livre/Fila = [Part1,Part2]
+    note over Coord3: Recurso=livre/Fila = [Part2,Part1]
+
+
+    note over Coord1,Coord2: Recurso=ocupado/Fila = [Part2]
+    note over Coord3: Recurso=ocupado/Fila = [Part1]
+
+        Coord1-&gt;&gt;Part1: ResponseOK
+        Coord2-&gt;&gt;+Part1: ResponseOK
+        Coord3-&gt;&gt;Part2: ResponseOK
+
+    note over Coord2: 💀☠️💀☠️💀☠️💀
+    note over Coord2: Recurso=livre/Fila = []
+
+        Part2-&gt;&gt;Coord2: RequestAccess
+    note over Coord2: Recurso=livre/Fila = [Part2]
+    note over Coord2: Recurso=livre/Fila = []
+rect rgb(200, 0, 0)
+        Coord2-&gt;&gt;+Part2: ResponseOk
+
+
+        Part1-&gt;&gt;-Coord1: RequestFree
+end
+        Part1-&gt;&gt;Coord2: RequestFree
+        Part1-&gt;&gt;Coord3: RequestFree
+
+        Part2-&gt;&gt;-Coord1: RequestFree
+        Part2-&gt;&gt;Coord2: RequestFree
+        Part2-&gt;&gt;Coord3: RequestFree</div>
+<p>Neste cenário, a propriedade de <strong>Exclusão Mútua</strong> é violada. 
+Isso porque, dados os dois quóruns, todos os processos na interseção foram reiniciados.
+Mas de forma geral, qual a probabilidade de isso acontecer? 
+Ou seja, dados dois quóruns, de tamanho <span class="arithmatex">\(m\)</span>, que se sobrepõem em <span class="arithmatex">\(k\)</span> processos, qual a probabilidade <span class="arithmatex">\(P_v\)</span> de que os <span class="arithmatex">\(k\)</span> processos na interseção sejam reiniciados e levem à violação?</p>
+<p><img alt="Quoruns" src="../../drawings/quorum_k.drawio-0.svg"></p>
+<p>Seja a <span class="arithmatex">\(P\)</span> a probabilidade de <strong>um coordenador em específico falhar</strong> e se recuperar dentro de uma janela de tempo <span class="arithmatex">\(\delta t\)</span>. Temos</p>
+<ul>
+<li>Probabilidade de falha de <strong>exatamente 1</strong> coordenador: <span class="arithmatex">\(P^1(1-P)^{n-1}\)</span></li>
+<li>Probabilidade de <strong><span class="arithmatex">\(k\)</span> coordenadores</strong> falharem: <span class="arithmatex">\(P^k(1-P)^{n-k}\)</span></li>
+<li>Probabilidade de quaisquer <span class="arithmatex">\(k\)</span> em <span class="arithmatex">\(m\)</span> coordenadores falharem: <span class="arithmatex">\(\binom{m}{k} P^k(1-P)^{m-k}\)</span>       </li>
+</ul>
+<p>Mas qual é o tamanho <span class="arithmatex">\(k\)</span> da interseção?</p>
+<ul>
+<li><span class="arithmatex">\(\left| A \cup B\right| = \left| A \right| + \left|B\right| - \left| A \cap B \right| \Rightarrow n = m + m - k\)</span></li>
+<li><span class="arithmatex">\(\left| A \cap B \right| = \left| A \right| + \left|B\right| - \left| A \cup B\right| \Rightarrow k = m + m - n = 2m - n\)</span></li>
+</ul>
+<p>Até agora consideramos que a <span class="arithmatex">\(k\)</span> corresponde à cardinalidade da interseção dos dois quóruns, mas se mais do que a interseção forem reiniciados, também teremos problemas. Assim, se <span class="arithmatex">\(k\)</span> assume qualquer valor entre o tamanho da interseção e o número total de coordenadores, teremos problemas. </p>
+<ul>
+<li>Probabilidade de quaisquer <span class="arithmatex">\(k\)</span> em <span class="arithmatex">\(m\)</span> coordenadores falharem, para qualquer <span class="arithmatex">\(k\)</span> variando de <span class="arithmatex">\(2m-n\)</span> a <span class="arithmatex">\(n\)</span>: <span class="arithmatex">\(P_v = \sum_{k=2m-n}^n \binom{m}{k} P^k(1-P)^{m-k}\)</span></li>
+</ul>
+<p>Para facilitar o entendimento desta grandeza, considere o exemplo:</p>
+<ul>
+<li><span class="arithmatex">\(P=0.0001\)</span> (1 minuto a cada 10 dias)</li>
+<li><span class="arithmatex">\(n = 32\)</span></li>
+<li><span class="arithmatex">\(m = 0.75n\)</span></li>
+<li><span class="arithmatex">\(P_v &lt; 10^{-40}\)</span> (<a href="https://cosmosmagazine.com/mathematics/the-big-baffling-number-at-the-heart-of-a-cosmic-coincidence">Curiosidade sobre <span class="arithmatex">\(10^{40}\)</span></a>)</li>
+</ul>
+<p>A probabilidade de violação da exclusão mútua, neste caso, é muito pequena, a despeito de suportar falhas dos coordenadores. </p>
+<div class="admonition note">
+<p class="admonition-title">Pró</p>
+<ul>
+<li>Tolera falhas de coordenadores, com probabilidade controlada de violação de exclusão mútua.</li>
+</ul>
+</div>
+<p>Mas e as outras propriedades desejáveis do algoritmo de exclusão mútua, são alcançadas? Relembrando:</p>
+<div class="admonition note">
+<p class="admonition-title">Contras</p>
+<ul>
+<li>Exclusão Mútua probabilística: <span class="arithmatex">\(1 - P_v\)</span></li>
+<li>Não-inanição<ul>
+<li>E se cada participante obtiver o ok de um coordenador?</li>
+<li>Temporizador para quebrar o <em>deadlock</em>?</li>
+</ul>
+</li>
+<li>Espera limitada<ul>
+<li>Aborts podem levar a espera infinita.</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Assim, este algoritmo também pode não ser adequado para certas situações. Vamos tentar revisitar os problemas da primeira abordagem.
+Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
+Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.</p>
+<details class="bug">
+<summary>TODO</summary>
+<ul>
+<li>Maekawa - Diminui número de votos necessários (<a href="https://www.geeksforgeeks.org/maekawas-algorithm-for-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
+<li>Lamport - Usa relógios lógicos, mas é possível entender sem este background (<a href="https://www.geeksforgeeks.org/lamports-algorithm-for-mutual-exclusion-in-distributed-system/">descrição</a>)</li>
+<li>Ricart-Agrawala - Melhora algoritmo de Lamport (<a href="https://www.geeksforgeeks.org/ricart-agrawala-algorithm-in-mutual-exclusion-in-distributed-system/?ref=rp">descrição</a>)</li>
+<li><a href="https://www.cs.cmu.edu/~dga/15-440/F09/lectures/Distributed-Mutual-Exclusion-slides.pdf">Distributed-Mutual-Exclusion-slides</a></li>
+</ul>
+</details>
+<h2 id="eleicao-de-lideres">Eleição de Líderes</h2>
+<p>O problema da escolha de um processo centralizador, ou líder, pode ser posto informalmente como o procedimento pelo qual <strong>um processo é escolhido</strong> dentre os demais processos, sendo que o <strong>processo escolhido é ciente da escolha</strong> e <strong>todos os demais processos o identificam como eleito</strong>. Uma <strong>nova eleição</strong> deve acontecer sempre que o líder se tornar <strong>indisponível</strong>.
+Formalmente, um algoritmo de eleição de líderes deve satisfazer as seguintes condições.</p>
+<div class="admonition note">
+<p class="admonition-title">Eleição de Líderes<sup id="fnref:guptaetal"><a class="footnote-ref" href="#fn:guptaetal">2</a></sup></p>
+<ul>
+<li>Terminação: algum processo deve se considerar líder em algum momento.</li>
+<li>Unicidade: somente um processo se considera líder.</li>
+<li>Acordo: todos os outros processos sabem quem foi eleito líder.</li>
+</ul>
+</div>
+<p>Para entendermos melhor o problema, tentemos desenvolver um protocolo simples para escolhermos um líder, por exemplo, em sua turma da disciplina de Sistemas Distribuídos. Vejamos algumas questões importantes.</p>
+<ul>
+<li>Candidatos: todos os membros são elegíveis ou apenas um subconjunto dos mesmos?</li>
+<li>Comunicação: todos se conhecem e se falam diretamente ou há grupos incomunicáveis dentro da turma?</li>
+<li>Estabilidade: de que adianta eleger um dos colegas se frequentemente não está presente quando necessário?</li>
+</ul>
+<p>Em termos computacionais, estas questões são relevantes pois todos os processos <strong>não</strong> nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
+Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
+Mas ignoremos estas diferenças por enquanto e vejamos um algoritmo que use a topologia lógica em anel, como usado para a resolução do problema de exclusão mútua.</p>
+<h3 id="algoritmo-do-anel">Algoritmo do Anel</h3>
+<p>Consideremos processos organizados em um anel lógico em que processos troquem mensagens apenas com processos à "esquerda" e à "direita".
+Considere também que todos os processos são exatamente idênticos, inclusive não possuindo identificadores próprios.
+Suponha o seguinte algoritmo de eleição neste anel, em que um processo inicialmente Seguidor se torna Candidato, então se declara Eleito, avisa a seus pares e, finalmente, se declara Empossado.</p>
+<div class="admonition example">
+<p class="admonition-title">Algoritmo do Anel 1</p>
+<ul>
+<li>Na iniciação<ul>
+<li>Organize os nós em um anel lógico</li>
+<li><span class="arithmatex">\(C \gets\)</span> Seguidor</li>
+</ul>
+</li>
+<li>Quando um processo acha que o líder está morto<ul>
+<li><span class="arithmatex">\(C \gets\)</span> Candidato</li>
+<li>Envia (VoteEmMim) para "a direita" no anel.</li>
+</ul>
+</li>
+<li>Quando um processo recebe (VoteEmMim)<ul>
+<li>Se <span class="arithmatex">\(C =\)</span> Seguidor <ul>
+<li>envia (VoteEmMim) para a direita</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(C =\)</span> Candidato <ul>
+<li><span class="arithmatex">\(C \gets\)</span> Eleito</li>
+<li>envia (HabemosLeader) para a direita</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Quando um processo recebe (HabemosLeader)<ul>
+<li>Se <span class="arithmatex">\(C =\)</span> Seguidor<ul>
+<li>envia (HabemosLeader) para a direita</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(C =\)</span> Eleito <ul>
+<li><span class="arithmatex">\(C \gets\)</span> Empossado</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Imagine um cenário com dois processos, como na imagem a seguir. 
+Os nomes dos processos são apenas para facilitar o entendimento do fluxo de mensagens e não estão acessíveis aos processos. <br />
+<img alt="" src="../../drawings/anel1.drawio-0.svg"> <br />
+Executando o algoritmo Anel 1, os processos enviam (<span class="arithmatex">\(\rightarrow\)</span>) e recebem (<span class="arithmatex">\(\leftarrow\)</span>) as seguintes mensagens e ajustam <span class="arithmatex">\(C\)</span> da seguinte forma.</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Seguidor</td>
+<td><span class="arithmatex">\(C \gets\)</span> Seguidor</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Candidato</td>
+<td></td>
+</tr>
+<tr>
+<td>(VoteEmMim) <span class="arithmatex">\(\rightarrow\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>(VoteEmMim) <span class="arithmatex">\(\leftarrow\)</span></td>
+</tr>
+<tr>
+<td></td>
+<td>(VoteEmMim) <span class="arithmatex">\(\rightarrow\)</span></td>
+</tr>
+<tr>
+<td>(VoteEmMim) <span class="arithmatex">\(\leftarrow\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Eleito</td>
+<td></td>
+</tr>
+<tr>
+<td>(HabemosLider) <span class="arithmatex">\(\rightarrow\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>(HabemosLider) <span class="arithmatex">\(\leftarrow\)</span></td>
+</tr>
+<tr>
+<td></td>
+<td>(HabemosLider) <span class="arithmatex">\(\rightarrow\)</span></td>
+</tr>
+<tr>
+<td>(HabemosLider) <span class="arithmatex">\(\leftarrow\)</span></td>
+<td></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Empossado</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Agora imagine que por um acaso, tanto processo 1 quanto o 2 se candidatassem ao mesmo tempo.</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Seguidor</td>
+<td><span class="arithmatex">\(C \gets\)</span> Seguidor</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Candidato</td>
+<td><span class="arithmatex">\(C \gets\)</span> Candidato</td>
+</tr>
+<tr>
+<td>(VoteEmMim) <span class="arithmatex">\(\rightarrow\)</span></td>
+<td>(VoteEmMim) <span class="arithmatex">\(\rightarrow\)</span></td>
+</tr>
+<tr>
+<td>(VoteEmMim) <span class="arithmatex">\(\leftarrow\)</span></td>
+<td>(VoteEmMim) <span class="arithmatex">\(\leftarrow\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Eleito</td>
+<td><span class="arithmatex">\(C \gets\)</span> Eleito</td>
+</tr>
+<tr>
+<td>(HabemosLider) <span class="arithmatex">\(\rightarrow\)</span></td>
+<td>(HabemosLider) <span class="arithmatex">\(\rightarrow\)</span></td>
+</tr>
+<tr>
+<td>(HabemosLider) <span class="arithmatex">\(\leftarrow\)</span></td>
+<td>(HabemosLider) <span class="arithmatex">\(\leftarrow\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(C \gets\)</span> Empossado</td>
+<td><span class="arithmatex">\(C \gets\)</span> Empossado</td>
+</tr>
+</tbody>
+</table>
+<p>Como não há nada que diferencie os processos entre si, este cenário é perfeitamente válido, e se no primeiro cenário o algoritmo estava correto ao eleger o processo 1, então no segundo cenário o 1 também deve ser eleito, já que a sequência de evento observadas é exatamente a mesma.
+Mas o processo 2 também vê a mesma sequência, então também deve ser eleito.
+Assim, violamos a propriedade da Unicidade.</p>
+<p>Para resolver este problema, precisamos permitir que os <strong>processos se diferenciem uns dos outros</strong>.</p>
+<h3 id="identificadores-de-processo">Identificadores de Processo</h3>
+<p>Dentro de uma única máquina, identificamos processos facilmente usando seu <strong>PID</strong>, ou <em>process id</em>, um inteiro associado a cada processo instanciado pelo sistema operacional; o PID é válido enquanto o processo estiver executando e pode ser reciclado uma vez que o processo para de executar, o que pode ser um problema. Além disso, se o <em>host</em> é reiniciado, os PID também são, e portanto esta identificação não é duradoura. Mais importante, o PID só faz sentido dentro de uma única máquina e não em um sistema distribuído.</p>
+<p>Se apenas uma instância do processo executa em um mesmo <em>host</em>, então o identificador do <em>host</em> (e.g., endereço IP) em si é suficiente e, de fato, comumente utilizado. 
+Se mais de um processo executa no mesmo <em>host</em>, então cabe ao desenvolvedor criar um esquema que permita diferenciar os processos, e não precisa ser nada complicado; pode ser apenas um <strong>parâmetro</strong> passado na inicialização do processo ou a combinação <strong>IP/porta</strong>.</p>
+<p>Assumindo que um esquema de nomeação está disponível e que todos os processos se conhecem, voltemos ao problema de eleger um líder para sua turma.</p>
+<h3 id="mais-algoritmos-do-anel">Mais Algoritmos do Anel</h3>
+<p>No algoritmo seguinte, permitimos que os processos conheçam seus identificadores e um processo que suspeite do líder atual, envia uma mensagem no anel para coletar os identificadores de todos os processos.</p>
+<div class="admonition example">
+<p class="admonition-title">Algoritmo do Anel 2</p>
+<ul>
+<li>Organize os nós em um anel lógico</li>
+<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto:<ul>
+<li>Envia mensagem [<span class="arithmatex">\(p\)</span>] "à direita".</li>
+</ul>
+</li>
+<li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(l\)</span><ul>
+<li>Se <span class="arithmatex">\(p \not \in l\)</span><ul>
+<li>Envia  <span class="arithmatex">\([p:l]\)</span> para a direita.</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(p \in l\)</span><ul>
+<li>Escolhe menor id em <span class="arithmatex">\(l\)</span> como líder.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Este algoritmo envia até <span class="arithmatex">\(n^2\)</span> mensagens, se todos iniciarem a eleição ao mesmo tempo, e as mensagens crescem até o tamanho <span class="arithmatex">\(n\)</span>.
+O algoritmo de Chang e Robert<sup id="fnref:changrobert"><a class="footnote-ref" href="#fn:changrobert">3</a></sup> limita o tamanho das mensagens ao pré-selecionar candidatos viáveis.</p>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo de Chang e Robert</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>* Organize os nós em um anel lógico
+* Quando $p$ acha que o líder está morto:
+    * Envia mensagem $(p)$ à direita
+* Quando $p$ recebe $(q)$
+    * Se $p = q$
+        * $p$ se declara líder
+    * Senão e se $q &gt; p$
+        * Envia $(q)$ para a direita.
+</code></pre></div></td></tr></table></div>
+</div>
+<p>Neste algoritmo, todas as mensagens tem tamanho <span class="arithmatex">\(O(1)\)</span> e somente uma mensagem dá uma volta completa do anel; todas as outras são descartadas no meio do caminho.
+Apesar disso, pode-se demonstrar que o pior caso em termos de número de mensagens do algoritmo até que alguém se declare líder é <span class="arithmatex">\(O(n^2)\)</span>.</p>
+<div class="admonition exercise">
+<p class="admonition-title">Exercício: Quantidade de mensagens</p>
+<ul>
+<li>O pior caso em termos de número de mensagens até que alguém seja eleito é <span class="arithmatex">\(O(n^2)\)</span>. Descreva como os nós devem estar organizados para que esta situação ocorra.</li>
+<li>Observe que no algoritmo um processo apenas se "declara líder", mas os outros não necessariamente ficam sabendo disso. Como você o corrigiria para que terminasse?</li>
+</ul>
+</div>
+<p>Diversos outros algoritmos existem para a topologia em anel. O algoritmo de Franklin é um dos que propõe melhorias para reduzir quantidade de mensagens usadas na eleição.
+Ele faz isso em rodadas, comparando identificadores com outros processos ativos tanto à esquerda quanto à direita e desativando os processos não viáveis.</p>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo de Franklin</p>
+<ul>
+<li>Organize os nós em um anel lógico</li>
+<li>Ativo <span class="arithmatex">\(\gets 1\)</span></li>
+<li>Quando <span class="arithmatex">\(p\)</span> acha que o líder está morto e se Ativo $ = 1$ :<ul>
+<li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
+</ul>
+</li>
+<li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(d\)</span>, da esquerda e da direita, respectivamente:<ul>
+<li>Se Ativo <span class="arithmatex">\(=1\)</span><ul>
+<li>Se <span class="arithmatex">\(max(e,d) &lt; p\)</span><ul>
+<li>Envia mensagem <span class="arithmatex">\((p)\)</span> à direita e à esquerda</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(max(e,d) &gt; p\)</span><ul>
+<li>Ativo <span class="arithmatex">\(\gets 0\)</span></li>
+<li>Envia mensagem <span class="arithmatex">\(-p\)</span> à direita e à esquerda</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(max(e,d) = p\)</span><ul>
+<li><span class="arithmatex">\(p\)</span> se declara líder.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Se Ativo <span class="arithmatex">\(=0\)</span><ul>
+<li>Repassa cada mensagem para o outro lado.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>No exemplo na figura, os nós brancos são ativos e os amarelos inativos. 
+Observe o papel do nó no centro, supondo que tem o maior identificador entre todos os processos. 
+Inicialmente ele envia as mensagens em verde para os lados, que levam seus vizinhos imediatos a se inativarem.
+Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, que também se inativam.</p>
+<p><img alt="Algoritmo de Franklin" src="../../drawings/leaderelection.drawio-0.svg"></p>
+<p>Observe o seguinte:</p>
+<ul>
+<li>Em cada fase, para qualquer par de vizinhos ativos, pelo menos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo <span class="arithmatex">\(O(log n)\)</span> fases.</li>
+<li>Na primeira fase, cada processo ativo leva a <span class="arithmatex">\(4\)</span> mensagens serem enviadas na rede (sem nenhuma otimização). Dado que são <span class="arithmatex">\(n\)</span> processos, temos <span class="arithmatex">\(4n\)</span> mensagens, <span class="arithmatex">\(O(n)\)</span></li>
+<li>Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos <span class="arithmatex">\(8 \times n/2, O(n)\)</span></li>
+<li>Assim, no máximo <span class="arithmatex">\(O(n~log~n)\)</span> mensagens são enviadas em uma execução do algoritmo.</li>
+</ul>
+<h3 id="algoritmo-do-brigao-bully">Algoritmo do Brigão (<em>Bully</em>)</h3>
+<p>Uma outra abordagem é colocar todos os candidatos para brigar mais diretamente e quem sobrar em pé no final, é o novo líder.</p>
+<p><a href="https://esportes.umcomo.com.br/artigo/como-construir-um-octogono-de-mma-21408.html"><img alt="" src="../../images/octogono.jpg" /></a></p>
+<p>A despeito desta opção gerar um líder não muito popular, o algoritmo do brigão é um clássico.</p>
+<p>No algoritmo do brigão, alguma <strong>característica comparável</strong> dos processos é escolhida e aquele processo funcional com o valor de tal característica mais vantajoso para um líder é escolhido como tal.
+Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.</p>
+<p>Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
+O algoritmo é apresentado a seguir, onde <span class="arithmatex">\(p\)</span> e <span class="arithmatex">\(q\)</span> são usados para representar tanto identificadores de processos quanto os processos em si.</p>
+<div class="admonition example">
+<p class="admonition-title">Algoritmo do Brigão</p>
+<ul>
+<li>Quando <span class="arithmatex">\(p\)</span> suspeita que o líder não está presente (muito tempo sem receber mensagens do mesmo)<ul>
+<li><span class="arithmatex">\(p\)</span> envia mensagem (ELEICAO,<span class="arithmatex">\(p\)</span>) para todos os processos com identificador maior que <span class="arithmatex">\(p\)</span></li>
+<li>Inicia temporizador de respostas</li>
+</ul>
+</li>
+<li>Quando temporizador de respostas expira<ul>
+<li>Envia (COORD,<span class="arithmatex">\(p\)</span>) para todos os processos</li>
+</ul>
+</li>
+<li>Quando recebe (Ok,<span class="arithmatex">\(p\)</span>)<ul>
+<li>Para temporizador de resposta</li>
+</ul>
+</li>
+<li>Quando <span class="arithmatex">\(p\)</span> recebe (ELEICAO,<span class="arithmatex">\(q\)</span>), <span class="arithmatex">\(q &lt; p\)</span><ul>
+<li>Envia (OK,<span class="arithmatex">\(q\)</span>)</li>
+</ul>
+</li>
+<li>Quando um processo falho se recupera<ul>
+<li>Inicia uma eleição</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Observe como o algoritmo foi descrito em termos de <strong>eventos</strong> e não de forma sequencial. Este tipo de especificação é comum para algoritmos paralelos e distribuídos, pois não há uma sequência pré-estabelecida de passos a serem executados por todos os processos, apenas alguns pontos de coordenação.
+No exemplo a seguir, temos 5 processos, com identificadores de 1 a 5, passando por 7 passos até que a eleição se complete.
+Observe que os processos não sabem a priori como os eventos aconteceram e apenas reagem aos <strong>eventos</strong> de <strong>recepção de mensagens</strong> e <strong>expiração de temporizadores</strong>.</p>
+<ol>
+<li>o líder já é o processo 5 (em rosa).</li>
+<li>os processos 2 e 3 (amarelo) se "cansaram" de esperar por 5, que falhou (em cinza, e se candidataram a líder, enviando (ELEICAO,2) e (ELEICAO,3), respectivamente, (verde).</li>
+<li>4 responde a 2 a 3 com (OK,2) e (OK,3) como resposta a 2 e 3, respectivamente, e 3 envia (OK,2) para 2.</li>
+<li>1 se candidata com enviando (ELEICAO,1).</li>
+<li>2, 3 e 4 respondem com (OK,1).</li>
+<li>4 se candidata enviando (ELEICAO,4) para 5, que não responde, já que está falho.</li>
+<li>4 se declara líder e envia (COORD,4) a todos os processos. </li>
+</ol>
+<p><img alt="Bully algorithm" src="../../images/bully.png" /></p>
+<p>Como já discutido antes, a escolha do valor temporizador é fundamental para o bom funcionamento do algoritmo.
+Se o temporizador usado pelos processos para esperar pelo líder for ajustado de forma agressiva, frequentemente serão iniciadas eleições mesmo que o líder não tenha falhado.
+Já se o valor do temporizador for muito grande, o sistema <strong>demorará a eleger um novo líder</strong>.
+Da mesma forma, se o tempo esperado por um candidato antes de se declarar líder for muito curto, <strong>mais de um processo pode se declarar líder</strong>, uma situação conhecida como <em>split-brain</em>.</p>
+<p>Idealmente, um processo deveria esperar por outro enquanto o outro estiver apto a responder, mas isso requer saber quando o outro processo não está mais apto, isto é, falhou.
+Como identificar exatamente quando isso aconteceu é impossível em sistemas distribuídos assíncronos, o algoritmo do brigão não resolve o problema neste ambiente.</p>
+<p><img alt="Why you bully?" src="../../images/why-you-bully-meme.jpg" />  </p>
+<p>Mas se delimitarmos melhor o ambiente, podemos chegar a soluções melhores.</p>
+<h3 id="algoritmo-do-yoyo">Algoritmo do YoYo</h3>
+<p>Saindo da topologia em anel, vejamos o algoritmo do Yoyo, que funciona em qualquer topologia conexa, mesmo se processos não puderem se falar diretamente.
+Inicialmente as arestas do formado pelos processos e seus canais de comunicação são não direcionadas, mas na medida em que o protocolo é executado,  as arestas são marcadas como tendo um ou outro sentido.
+Esta marcação é apenas lógica e mensagens fluem em ambos os sentidos.
+De acordo com o tipo de arestas que um processo tem, ele é classificado como um de três tipos: </p>
+<ul>
+<li>Fonte (source) - processo que só tem arestas de saída</li>
+<li>Vertedouro (sink) - processo que só tem arestas de chegada</li>
+<li>Interno - processo que tem arestas de chegada e de saída</li>
+</ul>
+<p>O algoritmo executa em duas fases. Na primeira, cada processo marca sua arestas como apontando para o maior dentre si próprio e seus vizinhos.
+Na segunda fase, mensagens "vão e voltam", o que dá o nome ao algoritmo.
+Na "ida", as mensagens vão das fontes para os vertedouros, que identificam quais fontes tem os menores identificadores e sinalizam para que continuem fontes na próxima etapa com mensagens de volta.
+As mensagens de volta reordenam as arestas para garantir este comportamento.
+Vejamos o algoritmo em mais detalhes.</p>
+<div class="admonition note">
+<p class="admonition-title">Algoritmo do YoYo</p>
+<ul>
+<li>
+<p>Fase 1</p>
+<ul>
+<li><span class="arithmatex">\(p\)</span> envia seu identificador para seus vizinhos.<ul>
+<li>Quando <span class="arithmatex">\(p\)</span> recebe <span class="arithmatex">\(q\)</span><ul>
+<li>Se <span class="arithmatex">\(p&gt;q\)</span><ul>
+<li>Marca a aresta em que recebeu <span class="arithmatex">\(q\)</span> como sendo de chegada (<span class="arithmatex">\(p\leftarrow q\)</span>)</li>
+</ul>
+</li>
+<li>Senão<ul>
+<li>Marca a aresta em que recebeu <span class="arithmatex">\(q\)</span> como sendo de saída (<span class="arithmatex">\(q\leftarrow p\)</span>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Fase 2</p>
+<ul>
+<li>
+<p>Se <span class="arithmatex">\(p\)</span> é uma <strong>fonte</strong></p>
+<ul>
+<li><span class="arithmatex">\(p\)</span> envia seu identificador em todas as suas arestas de saída.</li>
+<li>Quando <span class="arithmatex">\(p\)</span> receber <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída<ul>
+<li>Se recebeu apenas <span class="arithmatex">\(S\)</span><ul>
+<li>Executa fase 2 novamente </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Se <span class="arithmatex">\(p\)</span> é um <strong>nó interno</strong></p>
+<ul>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada</p>
+<ul>
+<li>
+<p>escolhe o menor id recebido <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(m\)</span> em todas as suas arestas de saída</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> recebeu <span class="arithmatex">\(S\)</span> ou <span class="arithmatex">\(N\)</span> em todas as suas arestas de saída</p>
+<ul>
+<li>
+<p>Se recebeu algum <span class="arithmatex">\(S\)</span></p>
+<ul>
+<li>
+<p>envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Se não recebeu <span class="arithmatex">\(S\)</span></p>
+<ul>
+<li>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu algum id.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Se <span class="arithmatex">\(p\)</span> é um <strong>vertedouro</strong></p>
+<ul>
+<li>
+<p>Quando <span class="arithmatex">\(p\)</span> receber identificadores em todas as suas arestas de entrada</p>
+<ul>
+<li>
+<p>escolhe o menor id recebido <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(S\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m\)</span></p>
+</li>
+<li>
+<p>envia <span class="arithmatex">\(N\)</span> para vizinhos de onde recebeu <span class="arithmatex">\(m' \neq m\)</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>N inverte a direção das arestas em que trafega.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p><a href="https://en.wikipedia.org/wiki/Leader_election">Fonte</a></p>
+<p>Veja um exemplo com 3 processos em destaque, uma fonte, um interno e um vertedouro.</p>
+<p><img alt="Algoritmo do YoYo" src="../../drawings/leaderelection.drawio-1.svg"></p>
+<p>Veja o seguinte exemplo, em que cada figura mostra um estágio da resolução do problema de eleição de líderes.</p>
+<ul>
+<li>a) A rede em seu estado inicial.</li>
+<li>b) Rede orientada pela primera fase</li>
+<li>c) Propagação de Fontes</li>
+<li>d) Propagação de Vertedouros</li>
+<li>e) Inativação dos vertedouros</li>
+</ul>
+<p>Exemplo: 
+<img alt="Fonte: Hemis62 - Own work, CC BY-SA 4.0" src="../../images/yoyo.png" /></p>
+<p>Embora interessante, este algoritmo também tem problemas, sendo um dos mais críticos a forma de lidar com falhas, mesmo sem considerar falhas de processos.
+Suponha que o canal de comunicação entre os processos 2 e 10 pare de funcionar. O que acontecerá?
+Esta é uma situação que denominamos <strong>particionamento</strong> da rede e que neste caso levará a duas eleições concorrentes acontecerem e, consequentemente, a dois líderes sendo eleitos, o que é conhecido na área como <strong><em>split-brain</em></strong>.
+Vejamos esta e outras situações problemáticas em eleição de líderes.</p>
+<h3 id="questoes-importantes">Questões importantes</h3>
+<h4 id="split-brain"><em>Split-brain</em></h4>
+<p>Se o algoritmo viola a propriedade de unicidade, então fica com <em>split-brain</em>, em que parte da rede vê um processo como líder e parte vê outro.
+Se o líder é o responsável por coordenar o acesso a uma região crítica, como visto no algoritmo coordenado de exclusão mútua, então ter dois líderes poderá levar a dois processos na região crítica e portanto violação da exclusão mútua. </p>
+<p>Uma das formas de evitar <em>split-brain</em> é atribuir um <strong>"peso"</strong> para cada processo e só aceitar que um líder seja declarado se seus votos carregarem mais da metade do peso do sistema.
+Ainda assim, temos problemas, pois é necessário que rodadas sucessivas do algoritmo invalidem as eleições anteriores.
+O algoritmo Raft de difusão atômica, que estudaremos adiante, define mandatos e garante, com pesos, que somente um líder existe em cada mandato. Devido à natureza assíncrona do sistema, processos podem se achar em mandatos distintos e, por isso, o mandato é associado a todas as comunicações; mensagens recebidas de mandatos anteriores são sumariamente descartadas.</p>
+<p>Mas por quê precisamos de mandatos sucessivos? Para substituir um líder que tenha falhado. O que nos leva a outros dois problemas, o da detecção de falhas e o da estabilidade do líder.</p>
+<h4 id="estabilidade">Estabilidade</h4>
+<p>Dizemos que um algoritmo de eleição de líderes é estável se uma vez que um líder é eleito, uma nova eleição só acontece se o líder falha.
+Considere o algoritmo do brigão. Imagine, no exemplo apresentado, que o processo 5 teve problemas de comunicação e foi percebido como falho pelos demais.  Neste caso, o 4 seria eleito líder.
+Mas se o problema que aflige 5 é temporário, 5 voltará e executará nova eleição, tornando-se líder novamente. Se este cenário se repetir indefinidamente, o sistema poderá ser seriamente comprometido em seu desempenho.</p>
+<p>Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de execução ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
+Se o mesmo falhar, então seu peso será drasticamente reduzido e suas chances de ser eleito líder reduzidas temporariamente.</p>
+<p>Observe que os problemas enfrentados são ligados à detecção e contorno de falhas.</p>
+<h4 id="deteccao-de-falhas">Detecção de falhas</h4>
+<p>Como já mencionado antes, detecção de falhas é o mecanismo pelo qual um processo monitora e percebe se outro falhou.
+Pensemos em como um processo monitora o outro em um sistema distribuído. Claramente, por meio de troca de mensagens e temporizadores.
+Mas se estamos falando de sistemas distribuídos assíncronos, então mensagens podem ser atrasadas indefinidamente ou relógios podem ser atrasados, então não se pode confiar na falta de recepção de uma mensagem como garantia de que um processo parou de funcionar.
+Aprofundemo-nos nos próximos capítulo nos conceitos de tempo e tolerância a falhas, mas enquanto isso, fiquemos com o seguinte resultado.</p>
+<div class="admonition note">
+<p class="admonition-title">Detecção de falhas</p>
+<ul>
+<li>Detecção de falhas perfeita é impossível...</li>
+<li>em sistemas distribuídos assíncronos (Internet)</li>
+<li>sujeitos à partições (Internet)</li>
+<li>com requisitos de disponibilidade total.</li>
+</ul>
+</div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:id">
+<p>para evitar que mensagens de requisições distintas do mesmo processo se confundam, é útil identificar cada requisição, por exemplo, com um contador de requisições.&#160;<a class="footnote-backref" href="#fnref:id" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:guptaetal">
+<p><a href="https://www.cs.cornell.edu/home/rvr/papers/ProbLeaderElection.pdf">A Probabilistically Correct Leader Election Protocol for Large Groups</a>&#160;<a class="footnote-backref" href="#fnref:guptaetal" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:changrobert">
+<p><a href="https://dl.acm.org/doi/10.1145/359104.359108">An improved algorithm for decentralized extrema-finding in circular configurations of processes</a>.&#160;<a class="footnote-backref" href="#fnref:changrobert" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Lásaro Camargos
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>

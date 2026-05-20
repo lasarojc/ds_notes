@@ -1,0 +1,33 @@
+.sideslide {
+    float: right;
+    width: 30%;
+    position: sticky;
+    z-index: 1;
+}
+
+/*.sideslide {
+    width: 25%;
+    position: absolute;
+    left: 62%;
+    z-index: 1;
+}*/
+
+
+details[open] summary ~ * {
+    animation: sweep .5s ease-in-out;
+}
+
+@keyframes sweep {
+    0%    {opacity: 0; margin-left: -10px}
+    100%  {opacity: 1; margin-left: 0px}
+}
+
+.md-grid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: fit-content;
+}
+
+article > * {
+    max-width: 80%;
+}

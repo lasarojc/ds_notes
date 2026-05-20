@@ -1,0 +1,3025 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Notas de aula do curso de Sistemas Distribuídos da FACOM/UFU">
+      
+      
+      
+        <link rel="canonical" href="https://lasarojc.github.io/ds_notes/time/logical/">
+      
+      
+        <link rel="prev" href="../physical/">
+      
+      
+        <link rel="next" href="../../fault/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Tempo Lógico - Notas de Aula em Sistemas Distribuídos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-65TK61CS8M"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-65TK61CS8M",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-65TK61CS8M",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tempo-logico" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-header__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Notas de Aula em Sistemas Distribuídos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tempo Lógico
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Notas de Aula em Sistemas Distribuídos" class="md-nav__button md-logo" aria-label="Notas de Aula em Sistemas Distribuídos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Notas de Aula em Sistemas Distribuídos
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lasarojc/ds_notes" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prefácio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introdução
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../comm/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comunicação
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Comunicação
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/redes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Redes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/internet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/sockets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sockets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/datarep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Middlewares
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/rpc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/mom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MOM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/epidemics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Epidêmicos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../comm/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../arch/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquiteturas
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquiteturas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/p2p/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    P2P
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/microservices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsserviços
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../arch/rest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../models/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modelos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tipos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordenação
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coordenação
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concorrência
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../coord/coord/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coordenação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tempo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../physical/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo Físico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo Lógico
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tempo Lógico
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#happened-before" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Happened-Before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relogios-logicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógios lógicos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relógios lógicos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relogio-de-lamport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógio de Lamport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relogio-vetorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógio Vetorial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relogios-hibridos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógios Híbridos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comunicacao-em-grupo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comunicação em Grupo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusão Mútua Revisitada
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../fault/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tolerância a Faltas
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tolerância a Faltas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Falta/Erros/Falhas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replicação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/failuredetector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Detectores de Falhas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/agreement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acordo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/reconfiguration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Grupos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/bizantine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Falhas bizantinas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fault/dependability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependabilidade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../consistency/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consistência
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Consistência
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/consistency_models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/data_centric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Centrado nos Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/client_centric/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Centrado no Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/replica_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gerenciamento de Réplicas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/checkpointing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checkpointing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../consistency/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db/disdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bancos de Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../filesystem/disfs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sistemas de Arquivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../cases/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estudos de Caso
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estudos de Caso
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/cassandra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cassandra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/chord/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/pastry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pastry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/dynamo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/grpc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gRPC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/mosquito/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mosquito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/rmi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/thrift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thrift
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kafka
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/swim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Swim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/copycat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copycat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/ratis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ratis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/bftsmart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BFT-Smart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/etcd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Etcd
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/zookeeper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zookeeper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referências
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tecnologias
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../projeto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projeto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#happened-before" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Happened-Before
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relogios-logicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógios lógicos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Relógios lógicos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#relogio-de-lamport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógio de Lamport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relogio-vetorial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógio Vetorial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relogios-hibridos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relógios Híbridos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comunicacao-em-grupo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comunicação em Grupo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exclusao-mutua-revisitada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusão Mútua Revisitada
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+
+<!-- Edit button -->
+
+
+  <!--
+       Hack: check whether the content contains a h1 headline. If it
+       doesn't, the page title (or respectively site name) is used
+       as the main headline.
+    -->
+
+
+  <!-- Content -->
+  <h1 id="tempo-logico">Tempo Lógico</h1>
+<p>A ideia por trás do "tempo lógico" é que o que importa são eventos e não a passagem do tempo, uma vez que tempo é relativo aos processos <sup id="fnref:tempologico"><a class="footnote-ref" href="#fn:tempologico">1</a></sup>.
+Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante acontece.</p>
+<p>Para chegarmos aos relógios lógicos, precisamos primeiro entender a relação <strong><em>Happened-Before</em></strong>, proposta por Leslie Lamport<sup id="fnref:tcoeds"><a class="footnote-ref" href="#fn:tcoeds">2</a></sup> e que lhe rendeu um <a href="https://amturing.acm.org/">Prêmio Turing</a> em <a href="https://www.microsoft.com/en-us/research/blog/leslie-lamport-receives-turing-award/">2014</a>.
+Hoje é comum usar a relação <em>happened-before</em> e o vocabulário associado para falar sobre ordem de eventos em um sistema computacional, em especial um distribuído.</p>
+<details class="note">
+<summary>Lamport</summary>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/rkZzg7Vowao" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+</details>
+<h3 id="happened-before">Happened-Before</h3>
+<p>A relação <em>happened-before</em> captura a <strong>causalidade</strong> entre eventos.
+Isto é, se um evento <span class="arithmatex">\(e\)</span> <strong>aconteceu-antes</strong> de um evento <span class="arithmatex">\(e'\)</span>, então <span class="arithmatex">\(e\)</span> potencialmente causou <span class="arithmatex">\(e'\)</span>.
+Também podemos dizer que <span class="arithmatex">\(e\)</span> precede <span class="arithmatex">\(e'\)</span> em uma ordem causal.</p>
+<p>O evento <span class="arithmatex">\(a\)</span> aconteceu-antes <span class="arithmatex">\(b\)</span>, notado como <span class="arithmatex">\(a \rightarrow b\)</span>, se uma das três condições seguintes é válida:</p>
+<div class="admonition note">
+<p class="admonition-title">Happened-Before</p>
+<ul>
+<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos em um mesmo processo (ou <em>thread</em>) e <span class="arithmatex">\(e\)</span> foi executado antes de <span class="arithmatex">\(e'\)</span>.</li>
+<li>Se <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são eventos de processos distintos e <span class="arithmatex">\(e\)</span> é o envio de uma mensagem e <span class="arithmatex">\(e'\)</span> a sua recepção.</li>
+<li>Se há transitividade, isto é, se existe um evento <span class="arithmatex">\(e''\)</span> tal que <span class="arithmatex">\(e \rightarrow e''\)</span> e <span class="arithmatex">\(e'' \rightarrow e'\)</span>.</li>
+</ul>
+</div>
+<p>Na figura abaixo, as três regras são exemplificadas pelos eventos de cor vermelha, amarela e verde, respectivamente.</p>
+<p><img alt="LC - Primeira tentativa" src="../../drawings/clock.drawio-1.svg"></p>
+<p>Note que se <span class="arithmatex">\(e \rightarrow e'\)</span> é falso e <span class="arithmatex">\(e' \rightarrow e\)</span> é falso, então <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são <strong>concorrentes</strong>, e que ser concorrente não quer dizer que aconteceram exatamente no mesmo instante, do ponto de vista de um observador externo, como exemplificado na figura anterior pelos eventos de cor roxa.
+Ser concorrente quer dizer que um evento <span class="arithmatex">\(e\)</span> não pode ter influenciado o evento <span class="arithmatex">\(e'\)</span>, dado que os efeitos de <span class="arithmatex">\(e\)</span> não poderiam ser conhecidos pelo processo onde <span class="arithmatex">\(e'\)</span> ocorreu, quando <span class="arithmatex">\(e'\)</span> ocorreu.
+O cone de luz na figura seguinte mostra esta relação entre eventos. Somente os efeitos dos eventos uma distância no espaço/tempo menor ou igual às dos pontos mais distantes ao evento em questão, podem ter influenciado tal evento. No caso dos eventos <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span> na figura, os mesmos não figuram no mesmo cone de luz.</p>
+<p><img alt="Light-cone" src="../../drawings/clock.drawio-2.svg"></p>
+<p>Mas para que nos serve capturar a causalidade entre os eventos? Bem, se capturarmos a causalidade, podemos usar esta informação para ordenar o seu processamento, de forma a fazer sentido.
+Por exemplo, considere um sistema em que o primeiro usuário de um serviço de emails recebe primeiro a resposta da mensagem A, R:A, para somente depois receber A.
+Para que a troca de mensagens faça sentido, o usuário posterga a leitura de R:A até depois de ter lido A.</p>
+<p><img alt="Inversão causal" src="../../drawings/group_com.drawio-0.svg"></p>
+<p>Observe que em nenhum momento a informação sobre <strong>quando</strong> as mensagens foram enviadas foi necessária, apenas a <strong>ordem</strong> das mesmas.
+Relógios lógicos permitem que sistemas capturem a relação de causalidade entre eventos e implementem esquemas como o apenas descrito, para coordenar as ações dos processos em sistemas distribuídos.</p>
+<h3 id="relogios-logicos">Relógios lógicos</h3>
+<p>Para que computadores possam usar a causalidade, precisamos capturar a relação de acontecer antes em um sistema.
+Lamport propôs uma tal forma, que denominou <strong>relógio lógico</strong>, mas que hoje é conhecido universalmente como <strong>relógio de Lamport</strong>.
+Estes relógios permitem associar um <em>timestamp</em> a eventos de forma a se garantir a seguinte propriedade:</p>
+<ul>
+<li>seja <span class="arithmatex">\(e\)</span> um evento</li>
+<li>seja <span class="arithmatex">\(C(e)\)</span> o valor do relógio lógico quando associado a <span class="arithmatex">\(e\)</span></li>
+<li>se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span></li>
+</ul>
+<p>Mas como definir a função <span class="arithmatex">\(C\)</span>?
+Experimentemos a seguinte definição:</p>
+<div class="admonition example">
+<p class="admonition-title">Quase Relógio de Lamport</p>
+<ul>
+<li>Seja <span class="arithmatex">\(c_p\)</span> um contador em <span class="arithmatex">\(p\)</span> com valor inicialmente igual a 0.</li>
+<li><span class="arithmatex">\(C(e) = ++c_p\)</span> no momento em que <span class="arithmatex">\(e\)</span> ocorreu.</li>
+<li>Usamos como <span class="arithmatex">\(&lt;\)</span> a relação normal de inteiros.</li>
+</ul>
+</div>
+<p>Observe que não há <strong>fonte da verdade</strong> em termos de tempo lógico, já que <strong>cada processo mantém seu próprio relógio</strong> que pode ser relacionado com relógios de outros processos.
+Veja um exemplo desta definição em ação.</p>
+<p><img alt="LC - Primeira tentativa" src="../../drawings/clock.drawio-3.svg"></p>
+<p>É verdade neste cenário que se <span class="arithmatex">\(a \rightarrow b\)</span> então <span class="arithmatex">\(C(a) &lt; C(b)\)</span>?<br />
+Observe com atenção os eventos <span class="arithmatex">\(j\)</span> e <span class="arithmatex">\(q\)</span>, pois para estes, a regra não é respeitada.</p>
+<h4 id="relogio-de-lamport">Relógio de Lamport</h4>
+<p>Para que a regra <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span> seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto quanto os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.</p>
+<div class="admonition example">
+<p class="admonition-title">Relógio de Lamport</p>
+<ul>
+<li>Seja <span class="arithmatex">\(c_p\)</span> um contador em <span class="arithmatex">\(p\)</span> com valor inicialmente igual a 0.</li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p \gets c_p + 1\)</span></li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
+</ul>
+</li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p \gets c_p + 1\)</span></li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
+<li><span class="arithmatex">\(C(e)\)</span> é enviado com a mensagem como seu <em>timestamp</em>.</li>
+</ul>
+</li>
+<li>Se o evento <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com <em>timestamp</em> <span class="arithmatex">\(ts\)</span><ul>
+<li><span class="arithmatex">\(c_p \gets max(c_p,ts)+1\)</span>.</li>
+<li><span class="arithmatex">\(C(e) \gets c_p\)</span></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Com este ajuste, temos os <strong>Relógios de Lamport</strong>.</p>
+<p><img alt="LC - Primeira tentativa" src="../../drawings/clock.drawio-4.svg"></p>
+<p>Neste caso, temos que para quaisquer eventos <span class="arithmatex">\(e,e'\)</span>,  se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span>.</p>
+<details class="todo">
+<summary>Todo</summary>
+<p>Exemplo em que não é bom o suficiente.</p>
+</details>
+<p>Se <span class="arithmatex">\(e \rightarrow e'\)</span> então <span class="arithmatex">\(C(e) &lt; C(e')\)</span>. Contudo, o inverso não é verdade, isto é, se <span class="arithmatex">\(C(e) &lt; C(e')\)</span> então <span class="arithmatex">\(e \rightarrow e'\)</span>.
+Esta propriedade é interessante na ordenação de eventos, pois evita que eventos concorrentes sejam ordenados.
+Entram os relógios vetoriais.</p>
+<h4 id="relogio-vetorial">Relógio Vetorial</h4>
+<p><strong>Relógios vetoriais</strong> são relógios lógicos em que cada processo mantém não apenas um contador dos seus eventos locais, mas também sua visão dos contadores dos outros processos.
+Estas visões são atualizadas a cada recepção de mensagem, de acordo com a seguinte especificação, onde assume-se que <span class="arithmatex">\(n\)</span> processos fazem parte do sistema.</p>
+<div class="admonition example">
+<p class="admonition-title">Relógio Vetorial</p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
+<ul>
+<li>Seja <span class="arithmatex">\(c_p[i], 1 \leq i \leq n\)</span> inicialmente igual a 0</li>
+<li>Seja um evento <span class="arithmatex">\(e\)</span><ul>
+<li>Se <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
+<li><span class="arithmatex">\(V(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span> de <span class="arithmatex">\(q\)</span>, então<ul>
+<li><span class="arithmatex">\(c_p[p] \gets c_p[p] + 1\)</span></li>
+<li><span class="arithmatex">\(c_p[i] \gets max(c_p[i], ts[i]), \forall i \neq p\)</span></li>
+<li><span class="arithmatex">\(V(e) \gets c_p\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Uma observação interessante a ser feita aqui é que embora o algoritmo pareça indicar que cada processo precisa saber quantos mais processos existem no sistema, isto não é verdade, pois pode-se assumir que para todo processo desconhecido <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(c_p[q] = 0\)</span>.</p>
+<p>Como dito, este relógio lógico tem a propriedade <span class="arithmatex">\(e \rightarrow e' \iff V(e) &lt; V(e')\)</span>, considerando-se a seguinte definição de <span class="arithmatex">\(&lt;\)</span> para vetores:</p>
+<div class="admonition note">
+<p class="admonition-title">Comparação entre vetores</p>
+<ul>
+<li><span class="arithmatex">\(v = v' \iff v[i] = v'[i], 1 \leq i \leq n\)</span></li>
+<li><span class="arithmatex">\(v \leq v' \iff v[i] \leq v'[i], 1 \leq i \leq n\)</span></li>
+<li><span class="arithmatex">\(v &lt; v' \iff v \leq v' \land v \neq v'\)</span></li>
+</ul>
+</div>
+<p>Assim, sejam dois eventos <span class="arithmatex">\(e \neq e'\)</span>:</p>
+<ul>
+<li><span class="arithmatex">\(e \rightarrow e' \iff V(e) &lt; V(e')\)</span></li>
+<li>Se <span class="arithmatex">\(V(e) \not &lt; V(e')\)</span> e <span class="arithmatex">\(V(e') \not &lt; V(e)\)</span>, então <span class="arithmatex">\(e\)</span> e <span class="arithmatex">\(e'\)</span> são concorrentes.</li>
+</ul>
+<p>Para entender melhor como esta definição funciona, considere a seguinte execução.
+O que quer dizer <span class="arithmatex">\(c_p[q] = k\)</span>, ou tomando o evento <span class="arithmatex">\(d\)</span> como exemplo, o que quer dizer <span class="arithmatex">\(V(d) = (4,1,0)\)</span>?</p>
+<p><img alt="Relógio Vetorial" src="../../drawings/clock.drawio-5.svg"></p>
+<p>Quer dizer que <span class="arithmatex">\(p1\)</span> está ciente de 1 evento local a <span class="arithmatex">\(p2\)</span>, assim como está ciente de 0 eventos em <span class="arithmatex">\(p3\)</span> e de que <span class="arithmatex">\(d\)</span> é o quarto evento em <span class="arithmatex">\(p1\)</span>.
+Agora compare os eventos <span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span>.
+<span class="arithmatex">\(o\)</span> e <span class="arithmatex">\(v\)</span> são concorrentes pois embora as posições 1 e 2 de <span class="arithmatex">\(V(o)\)</span> sejam maiores que em <span class="arithmatex">\(V(v)\)</span>, a posição 3 é menor.
+Isso quer dizer que nem <span class="arithmatex">\(o\)</span> está ciente do evento <span class="arithmatex">\(v\)</span> e nem <span class="arithmatex">\(v\)</span> está ciente do evento <span class="arithmatex">\(o\)</span>, ou melhor, que um não pode ter causado o outro.</p>
+<p>Esta abstração simples já é muito poderosa e, embora possa ser melhorada,<sup id="fnref:matrix_clock"><a class="footnote-ref" href="#fn:matrix_clock">3</a></sup> já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
+Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.</p>
+<h4 id="relogios-hibridos">Relógios Híbridos</h4>
+<p>A grande vantagem dos relógios lógicos sobre os físicos é ignorar a passagem do tempo, só se importando com a ordem de eventos.
+Esta vantagem também é uma desvantagem quando eventos precisam ser associados a eventos externos ao sistema, por exemplo, durante uma sessão de depuração.
+Suponha que após uma atualização de um sistema, você note um problema nos dados e, em depurando o problema, identifique o evento problemático nos <em>logs</em> do sistema, associado ao seu relógio lógico.
+Como identificar se este evento problemático aconteceu antes ou depois da atualização?
+<a href="http://muratbuffalo.blogspot.com.br/2014/07/hybrid-logical-clocks.html">Relógios híbridos</a> tentam resolver este problema combinando relógios físicos e lógicos em um.</p>
+<p>No seguinte algoritmo, cada processo mantem um relógio físico e um lógico e sempre que um evento acontece, usa como novo valor do relógio lógico o máximo entre o valor anterior + 1, o valor do <em>timestamp</em> na mensagem sendo recebida + 1, se for o recebimento de uma mensagem, e o valor do relógio físico.
+Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará o valor do físico.</p>
+<div class="admonition example">
+<p class="admonition-title">Relógio Híbrido Simples</p>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
+<ul>
+<li><span class="arithmatex">\(c_p.f\)</span> é o relógio físico de <span class="arithmatex">\(p\)</span>, incrementado automaticamente</li>
+<li><span class="arithmatex">\(c_p.l\)</span> é o relógio lógico de <span class="arithmatex">\(p\)</span>, inicialmente 0</li>
+<li>Seja um evento <span class="arithmatex">\(e\)</span><ul>
+<li>Se <span class="arithmatex">\(e\)</span> é uma operação local<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(H(e) \gets c_p.l\)</span></li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(e\)</span> é o envio de uma mensagem<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(H(e) \gets c_p.l\)</span></li>
+<li><span class="arithmatex">\(H(e)\)</span> é enviado com a mensagem como seu timestamp.</li>
+</ul>
+</li>
+<li>Se <span class="arithmatex">\(e\)</span> é a recepção de uma mensagem com timestamp <span class="arithmatex">\(ts\)</span> de <span class="arithmatex">\(q\)</span>, então<ul>
+<li><span class="arithmatex">\(c_p.l \gets max(c_p.l + 1, ts + 1, c_p.f)\)</span></li>
+<li><span class="arithmatex">\(V(e) = c_p.l\)</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p><img alt="Relógio Híbrido Simples" src="../../drawings/clock.drawio-0.svg"></p>
+<p>Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementado muito rapidamente, perdendo a relação com o relógio físico.
+Em uma versão melhorada do algoritmo,<sup id="fnref:hlc"><a class="footnote-ref" href="#fn:hlc">4</a></sup> a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.<sup id="fnref:hlcerror"><a class="footnote-ref" href="#fn:hlcerror">5</a></sup></p>
+<!--![Hibrid Logical Clock](../images/lc_hybrid.png) - Onde se lê 3,13, leia-se 3,10,3.-->
+
+<h3 id="comunicacao-em-grupo">Comunicação em Grupo</h3>
+<p>Relógios lógicos podem e são usados diretamente em sistemas, por exemplo, para controlar versões no sistema de identidade da Microsoft, <a href="https://cdn.ttgtmedia.com/searchwin2000/downloads/pdfs/ImplementingtheAD202014.pdf">Active Directory</a>.
+Outra forma de uso é como bloco de construção de outras abstrações, por exemplo, primitivas de comunicação em grupo, pelas quais um processo envia mensagens para um conjunto de processos.</p>
+<ul>
+<li>Difusão Totalmente Ordenada (<em>Total Order Multicast</em>):<ul>
+<li>Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)</li>
+<li>Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem</li>
+</ul>
+</li>
+<li>Difusão Causalmente Ordenada:<ul>
+<li>Causalmente Ordenada: uma mensagem só é entregue se todas as que causalmente a precedem já foram entregues.</li>
+</ul>
+</li>
+</ul>
+<p>Com estas abstrações, podemos resolver o problema apresentado no início deste capítulo, relembrando, <em>cloud-drive</em>, da seguinte forma.
+Considere um programa qualquer, que se comporte de forma determinística (isto é, dada uma mesma entrada, gera sempre uma mesma saída). 
+Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
+Logo, se tivermos <strong>várias cópias</strong> deste programa, executando em locais distintos, mas garantirmos que cada cópia veja exatamente a <strong>mesma entrada de dados</strong>, então garantiremos que todas as cópias <strong>transitarão pelos mesmos estados</strong> e chegarão ao mesmo estado final.
+Como difusão totalmente ordenada pode ser usada para garantir que todas as cópias receberão a mesma entrada, ela pode ser usada para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, <a href="https://en.wikipedia.org/wiki/State_machine_replication"><em>State Machine Replication</em></a>), ou pelo menos o seu princípio.</p>
+<p><img alt="State Machine Replication" src="../../drawings/group_com.drawio-1.svg"></p>
+<p>Mas como podemos implementar estas primitivas de difusão usando relógios lógicos? 
+Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a todos os processos, inclusive o próprio remetente.</p>
+<div class="admonition example">
+<p class="admonition-title">Difusão Totalmente Ordenado</p>
+<ul>
+<li>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(f_p\)</span> é uma fila de mensagens ordenadas pelo seus <em>timestamps</em>, mantida em <span class="arithmatex">\(p\)</span></p>
+</li>
+<li>Para difundir uma mensagem <span class="arithmatex">\(m\)</span><ul>
+<li>colocar <span class="arithmatex">\(m\)</span> na fila</li>
+<li>enviar <span class="arithmatex">\(m\)</span> para todos os demais processos</li>
+</ul>
+</li>
+<li>Quando uma mensagem <span class="arithmatex">\(m\)</span> é recebida<ul>
+<li>colocar <span class="arithmatex">\(m\)</span> na fila</li>
+<li>se <span class="arithmatex">\(m\)</span> não é um ack<ul>
+<li>enviar <span class="arithmatex">\(m ack\)</span> de volta ao remetente de <span class="arithmatex">\(m\)</span> (com <em>timestamp</em> maior que de <span class="arithmatex">\(m\)</span>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Seja <span class="arithmatex">\(m\)</span> a mensagem com <em>timestamp</em> ts na cabeça da fila<ul>
+<li>Se para cada processo <span class="arithmatex">\(q\)</span>, há uma mensagem <span class="arithmatex">\(m'\)</span> de <span class="arithmatex">\(q\)</span> com <em>timestamp</em> ts' na fila de <span class="arithmatex">\(p\)</span> tal que <span class="arithmatex">\(ts &lt; ts'\)</span><ul>
+<li>entregar <span class="arithmatex">\(m\)</span> para a aplicação</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>O objetivo deste algoritmo é entregar mensagens na ordem de seus <em>timestamps</em>. Para isso, antes de entregar a mensagem <span class="arithmatex">\(m\)</span> de menor <em>timestamp</em> ts conhecido atualmente por <span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(p\)</span> espera por mensagens com <span class="arithmatex">\(timestamps\)</span> maiores que ts de todos os processos. Uma vez que isso aconteça, <span class="arithmatex">\(p\)</span> sabe que nenhuma outra mensagem que chegue depois poderia ter <span class="arithmatex">\(timestamp\)</span> menor que ts.
+Para que isto funcione, é necessário que os canais de comunicação usados sejam confiáveis (todas as mensagens enviadas são entregues) e FIFO (a primeira a ser enviada é primeira a ser recebida).</p>
+<div class="admonition exercise">
+<p class="admonition-title">Exercício - FIFO e Confiáveis</p>
+<p>É necessário que canais de comunicação sejam FIFO e confiáveis para que mensagens com <em>timestamp</em> maiores não sejam perdidas e para que mensagens com <em>timestamps</em> maiores não sejam reordenadas e entregues primeiro. </p>
+<p>Explique porquê isto seria um problema; descreva execuções problemáticas.</p>
+</div>
+<p>Vejamos um outro algoritmo, de difusão <strong>causalmente</strong> ordenada.</p>
+<div class="admonition example">
+<p class="admonition-title">Difusão Causalmente Ordenada</p>
+<ul>
+<li>
+<p>Considerando o ponto de vista do processo <span class="arithmatex">\(p\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(p\)</span> incrementa <span class="arithmatex">\(c_p[p]\)</span> somente no envio de mensagens.</p>
+</li>
+<li><span class="arithmatex">\(p\)</span> só entrega uma mensagem recebida de <span class="arithmatex">\(q\)</span>, com timestamp <span class="arithmatex">\(ts\)</span> quando<ul>
+<li><span class="arithmatex">\(ts[q] = c_p[q]+1\)</span></li>
+<li><span class="arithmatex">\(ts[k] \leq c_p[k], k \neq q\)</span></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><img alt="Causal Ordering" src="../../drawings/group_com.drawio-2.svg"></p>
+<div class="admonition exercise">
+<p class="admonition-title">Difusão Causalmente Ordenada</p>
+<p>Considere <span class="arithmatex">\(c_{p3}[0,2,2]\)</span> e <span class="arithmatex">\(ts=[1,3,0]\)</span>, de <span class="arithmatex">\(p1\)</span>. O que <span class="arithmatex">\(p3\)</span> está esperando? Como age ao receber mensagem com <span class="arithmatex">\(ts\)</span>?</p>
+</div>
+<h6 id="interceptadores">Interceptadores</h6>
+<p>Um aspecto interessante da implementação de primitivas de comunicação em grupo que usa relógios para ordenação de mensagens é que elas podem ser feitas de forma transparente para a aplicação que as usa. 
+Isto é, no exemplo descrito anteriormente em que processos mandam mensagens para réplicas usando difusão totalmente ordenada, os clientes não precisam estar cientes disto, e podem simplesmente mandar suas requisições como faziam antes do serviço ser replicado. Mas como então as mensagens tem seus relógios lógicos atualizados e usados para a geração de <em>timestamps</em>?
+Isto pode ser feito por meio de <strong>interceptadores</strong> em uma camada de <strong><em>middleware</em></strong>.</p>
+<p><img alt="Interceptadores" src="../../drawings/group_com.drawio-3.svg"></p>
+<p>Quando a aplicação envia uma mensagem, o relógio lógico mantido no <em>middleware</em> é atualizado e seu valor usado como <em>timestamp</em> em uma versão estendida da mensagem, efetivamente enviada na rede.
+Quando a mensagem estendida é entregue ao destinatário, a mensagem é passada para o interceptador que extrai o <em>timestamp</em> e atualiza seu relógio. A mensagem sem o <em>timestamp</em> é entregue para a aplicação quando apropriado, e aplicação não percebe a manipulação.</p>
+<h3 id="exclusao-mutua-revisitada">Exclusão Mútua Revisitada</h3>
+<details class="todo">
+<summary>Todo</summary>
+<ul>
+<li><a href="http://www.cs.cmu.edu/~dga/15-440/F10/lectures/Distributed-Mutual-Exclusion-slides.pdf">Algoritmos de Exclusão mútua baseados em LC</a></li>
+<li>Algoritmo de Lamport, Ricart e Agrawal</li>
+<li><a href="https://www.coursera.org/learn/cloud-computing-2/lecture/GMHYN/2-4-maekawas-algorithm-and-wrap-up">Algoritmo de Maekawa</a></li>
+</ul>
+</details>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:tempologico">
+<p>Reza a lenda que Leslie Lamport desenvolveu o conceito de relógios lógicos pensando na teoria da relatividade geral.&#160;<a class="footnote-backref" href="#fnref:tempologico" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:tcoeds">
+<p><a href="http://amturing.acm.org/p558-lamport.pdf">Time, Clocks and the Ordering of Events in a Distributed System. July 5, 1978</a>.&#160;<a class="footnote-backref" href="#fnref:tcoeds" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:matrix_clock">
+<p><a href="https://en.wikipedia.org/wiki/Matrix_clock">Matrix Clock</a>&#160;<a class="footnote-backref" href="#fnref:matrix_clock" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hlc">
+<p>O <a href="http://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html">blog</a> de um dos autores descreve ambas as versões de forma resumida. Para a versão completa dos algoritmos, consulte o <a href="http://www.cse.buffalo.edu/tech-reports/2014-04.pdf">artigo</a>.&#160;<a class="footnote-backref" href="#fnref:hlc" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:hlcerror">
+<p>Tanto no artigo quanto no blog, a imagem que descreve um exemplo do HLC parece ter um erro e onde se lê (3,13) deve-se ler (3,10,3).&#160;<a class="footnote-backref" href="#fnref:hlcerror" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+  <!-- Last update of source file -->
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Lásaro Camargos
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/lasarojc/ds_notes" target="_blank" rel="noopener" title="These notes on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../javascripts/mathjaxhelper.js"></script>
+      
+    
+  </body>
+</html>

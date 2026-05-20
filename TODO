@@ -1,0 +1,69 @@
+
+## Arquiteturas
+
+### Microsserviços
+#* [Visão Geral](./notes/microservices/0_intro.md)
+
+## Event-sourcing
+
+# Coordenação
+TODO: usar consistência entre réplicas da DHT para motivar a sincronização.
+
+
+
+# Tolerância a Falhas
+
+Indistinquishability - https://youtu.be/cRQQL7r2L1w
+
+
+* [Dependabilidade](./ft/dependabilidade.md)
+* [Modelos](./ft/modelos.md)
+* [Comunicação em Grupo](./ft/comunicacao_grupo.md)
+  * [Replicação de Máquinas de Estados](./ft/smr.md)
+  * [Estudo de Caso: Raft](./fr/raft.md)
+  * [Estudo de Caso: Zookeeper](./ft/zookeeper.md)
+  * [Estudo de Caso: Atomix](./ft/atomix.md)
+* [Uma DHT tolerante a falhas ](./projeto/replicated.md)
+
+
+# Bancos de dados distribuídos
+
+# Sistemas de arquivos distribuídos
+
+* GFS
+
+
+# Tecnologias
+
+* Netty
+
+
+Gossiping 
+
+* http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.148.101
+* http://disi.unitn.it/~montreso/ds/papers/montresor17.pdf
+* https://www.kth.se/social/upload/51647982f276546170461c46/4-gossip.pdf
+* https://www.youtube.com/watch?v=-36j_DGXEwE
+* https://www.youtube.com/watch?v=0bAJ4iNnf5M
+
+
+# Introdução
+
+* Relacionar com outros cursos do currículo
+   * programação paralela
+   * SGBD
+   * sistemas operacionais
+   * redes de computadores
+   * segurança da informação
+* Deficiências do curso
+   * Cloud
+
+
+# Modelos
+Trazer para primeira semana?
+
+
+
+
+
+http://muratbuffalo.blogspot.com/2021/02/foundational-distributed-systems-papers.html
