@@ -1,6 +1,6 @@
 # Tempo Lógico
 
-A ideia por trás do "tempo lógico" é de o que importa são eventos e não a passagem do tempo, uma vez que tempo é relativo aos processos [^tempologico].
+A ideia por trás do "tempo lógico" é que o que importa são eventos e não a passagem do tempo, uma vez que tempo é relativo aos processos [^tempologico].
 Assim, surgem os relógios lógicos, que ``ticam'' quando um evento importante acontece.
 
 [^tempologico]: Reza a lenda que Leslie Lamport desenvolveu o conceito de relógios lógicos pensando na teoria da relatividade geral.
@@ -36,7 +36,7 @@ O cone de luz na figura seguinte mostra esta relação entre eventos. Somente os
 
 ![Light-cone](../drawings/clock.drawio#2)
 
-Mas para que nos serve capturar a causalidade entre os eventos? Bem, se capturarmos a causalidade, podemos usar esta informação para ordenar os seu processamento, de forma a fazer sentido.
+Mas para que nos serve capturar a causalidade entre os eventos? Bem, se capturarmos a causalidade, podemos usar esta informação para ordenar o seu processamento, de forma a fazer sentido.
 Por exemplo, considere um sistema em que o primeiro usuário de um serviço de emails recebe primeiro a resposta da mensagem A, R:A, para somente depois receber A.
 Para que a troca de mensagens faça sentido, o usuário posterga a leitura de R:A até depois de ter lido A.
 
@@ -73,7 +73,7 @@ Veja um exemplo desta definição em ação.
 Observe com atenção os eventos $j$ e $q$, pois para estes, a regra não é respeitada.
 
 #### Relógio de Lamport
-Para que a regra $e \rightarrow e'$ então $C(e) < C(e')$ seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto que os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.
+Para que a regra $e \rightarrow e'$ então $C(e) < C(e')$ seja válida, precisamos modificar a tentativa anterior para que, na recepção de uma mensagem, os contadores sejam atualizados para que sejam maiores tanto quanto os relógios dos eventos locais quanto dos eventos que antecederam o envio da mensagem sendo recebida.
 
 !!!example "Relógio de Lamport"
     * Seja $c_p$ um contador em $p$ com valor inicialmente igual a 0.
@@ -99,7 +99,7 @@ Neste caso, temos que para quaisquer eventos $e,e'$,  se $e \rightarrow e'$ ent�
     Exemplo em que não é bom o suficiente.
 
 
-Se $e \rightarrow e'$ então $C(e) < C(e')$. Contudo, a volta não é verdade, isto é, se $C(e) < C(e')$ então $e \rightarrow e'$.
+Se $e \rightarrow e'$ então $C(e) < C(e')$. Contudo, o inverso não é verdade, isto é, se $C(e) < C(e')$ então $e \rightarrow e'$.
 Esta propriedade é interessante na ordenação de eventos, pois evita que eventos concorrentes sejam ordenados.
 Entram os relógios vetoriais.
 
@@ -146,10 +146,10 @@ O que quer dizer $c_p[q] = k$, ou tomando o evento $d$ como exemplo, o que quer 
 
 ![Relógio Vetorial](../drawings/clock.drawio#5)
 
-Quer dizer que $p1$ está ciente de 1 eventos locais a $p2$, assim com está ciente de 0 eventos em $p3$ e de que $d$ é o quarto evento em $p1$.
+Quer dizer que $p1$ está ciente de 1 evento local a $p2$, assim como está ciente de 0 eventos em $p3$ e de que $d$ é o quarto evento em $p1$.
 Agora compare os eventos $o$ e $v$.
 $o$ e $v$ são concorrentes pois embora as posições 1 e 2 de $V(o)$ sejam maiores que em $V(v)$, a posição 3 é menor.
-Isso quer dizer que o nem $o$ está ciente do evento $v$ e nem $v$ está ciente do evento $o$, ou melhor, que um não pode ter causado o outro.
+Isso quer dizer que nem $o$ está ciente do evento $v$ e nem $v$ está ciente do evento $o$, ou melhor, que um não pode ter causado o outro.
 
 Esta abstração simples já é muito poderosa e, embora possa ser melhorada,[^matrix_clock] já é suficiente para se implementar outras abstrações interessantes, como será visto adiante.
 Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.
@@ -159,7 +159,7 @@ Antes, é necessário mencionar mais um tipo de relógio lógico, os híbridos.
 
 #### Relógios Híbridos
 
-A grande vantagem dos relógios lógicos sobre os físicos é de ignorar a passagem do tempo, só se importanto com a ordem de eventos.
+A grande vantagem dos relógios lógicos sobre os físicos é ignorar a passagem do tempo, só se importando com a ordem de eventos.
 Esta vantagem também é uma desvantagem quando eventos precisam ser associados a eventos externos ao sistema, por exemplo, durante uma sessão de depuração.
 Suponha que após uma atualização de um sistema, você note um problema nos dados e, em depurando o problema, identifique o evento problemático nos *logs* do sistema, associado ao seu relógio lógico.
 Como identificar se este evento problemático aconteceu antes ou depois da atualização?
@@ -188,7 +188,7 @@ Isto é, se poucos eventos acontecerem, o valor do relógio lógico acompanhará
 ![Relógio Híbrido Simples](../drawings/clock.drawio#0)
 
 
-Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementadado muito rapidamente, perdendo a relação com o relógio físico.
+Nesta versão do algoritmo, contudo, se muitos eventos acontecerem, o valor do relógio lógico pode ser incrementado muito rapidamente, perdendo a relação com o relógio físico.
 Em uma versão melhorada do algoritmo,[^hlc] a distância entre os dois relógios é limitada, mantendo a propriedade que faz o relógios híbridos interessantes.[^hlcerror]
 
 [^hlc]: O [blog](http://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) de um dos autores descreve ambas as versões de forma resumida. Para a versão completa dos algoritmos, consulte o [artigo](http://www.cse.buffalo.edu/tech-reports/2014-04.pdf).
@@ -213,7 +213,7 @@ Com estas abstrações, podemos resolver o problema apresentado no início deste
 Considere um programa qualquer, que se comporte de forma determinística (isto é, dada uma mesma entrada, gera sempre uma mesma saída). 
 Como todo programa, este é uma máquina de estados, com a peculiaridade de ser determinística.
 Logo, se tivermos **várias cópias** deste programa, executando em locais distintos, mas garantirmos que cada cópia veja exatamente a **mesma entrada de dados**, então garantiremos que todas as cópias **transitarão pelos mesmos estados** e chegarão ao mesmo estado final.
-Como difusão totalmente ordenada pode ser usado para garantir que todas as cópias receberão a mesma entrada, pode ser usado para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, [*State Machine Replication*](https://en.wikipedia.org/wiki/State_machine_replication), ou pelo menos o seu princípio.
+Como difusão totalmente ordenada pode ser usada para garantir que todas as cópias receberão a mesma entrada, ela pode ser usada para implementar esta técnica, conhecida como Replicação de Máquinas de Estados (em inglês, [*State Machine Replication*](https://en.wikipedia.org/wiki/State_machine_replication)), ou pelo menos o seu princípio.
 
 ![State Machine Replication](../drawings/group_com.drawio#1)
 
@@ -235,7 +235,7 @@ Vejamos um algoritmo, onde consideramos que todas as mensagens são enviadas a t
         * Se para cada processo $q$, há uma mensagem $m'$ de $q$ com *timestamp* ts' na fila de $p$ tal que $ts < ts'$
             * entregar $m$ para a aplicação
 
-O objetivo deste algoritmo é de entregar mensagens na ordem de seus *timestamps*. Para isso, antes de entregar a mensagem $m$ de menor *tmestamp* ts conhecido atualmente por $p$, $p$ espera por mensagens com $timestamps$ maiores que ts de todos os processos. Uma vez que isso aconteça, $p$ sabe que nenhuma outra mensagem que chegue depois poderia ter $timestamp$ menor que ts.
+O objetivo deste algoritmo é entregar mensagens na ordem de seus *timestamps*. Para isso, antes de entregar a mensagem $m$ de menor *timestamp* ts conhecido atualmente por $p$, $p$ espera por mensagens com $timestamps$ maiores que ts de todos os processos. Uma vez que isso aconteça, $p$ sabe que nenhuma outra mensagem que chegue depois poderia ter $timestamp$ menor que ts.
 Para que isto funcione, é necessário que os canais de comunicação usados sejam confiáveis (todas as mensagens enviadas são entregues) e FIFO (a primeira a ser enviada é primeira a ser recebida).
 
 !!!exercise "Exercício - FIFO e Confiáveis"

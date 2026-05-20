@@ -1,8 +1,8 @@
 # Modelos
-Dado a quantidade de ambientes reais em que as soluções dos nossos problemas abstratos precisam executar, com sua diversidade de sistemas operacionais, latências de rede, tamanhos de mensagens, etc, seria praticamente impossível provar alguma coisa geral e interessante sobre os algoritmos, como por exemplo se ele **funciona**.
+Dada a quantidade de ambientes reais em que as soluções dos nossos problemas abstratos precisam executar, com sua diversidade de sistemas operacionais, latências de rede, tamanhos de mensagens, etc, seria praticamente impossível provar alguma coisa geral e interessante sobre os algoritmos, como por exemplo se ele **funciona**.
 Por isso, em vez de considerar cada ambiente específico, abstraímos os ambientes por meio de **modelos computacionais**, que capturam as premissas gerais dos ambientes, e só então escrevemos os algoritmos para tais modelos.
 
-Isso que dizer que, na prática, antes de distribuir a computação/armazenamento em diversas máquinas e de forma a coordenar ações das diversas partes de forma a entregar o serviço de acordo com expectativas dos usuários, precisamos responder a algumas perguntas, como por exemplo:
+Isso quer dizer que, na prática, antes de distribuir a computação/armazenamento em diversas máquinas e de forma a coordenar ações das diversas partes de forma a entregar o serviço de acordo com expectativas dos usuários, precisamos responder a algumas perguntas, como por exemplo:
 
 * Qual a probabilidade de um nó parar de funcionar?
 * Como os nós se comunicam? Eles compartilham um espaço de endereçamento ou enviam mensagens uns para os outros?
@@ -21,7 +21,7 @@ Estas perguntas são normalmente divididas em três eixos, **Comunicação**, **
 ## Comunicação
 De uma forma ou de outra, sistemas distribuídos tem à sua disposição múltiplos processadores e permitem o desenvolvimento de aplicações paralelas, isto é, onde múltiplas tarefas são executadas ao mesmo tempo ou **paralelamente**.
 Contudo, por um lado, quando falamos em sistemas multiprocessados, normalmente estamos falando de sistemas em que os processadores estão **próximos** e compartilham um mesmo espaço de endereçamento, sejam computadores com múltiplos processadores ou sejam clusters de computadores conectados por um barramento de comunicação de altíssima largura de banda, como [Infiniband](https://en.wikipedia.org/wiki/InfiniBand) que abstraiam múltiplos segmentos de memória como um único espaço de endereçamento.
-Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em cujo os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
+Seja como for, estes sistemas com **memória compartilhada** são normalmente usados para aplicações de computação intensiva e em que os componentes são mais **fortemente acoplados** e melhor estudados em um curso de computação paralela.
 
 ![Memória Compartilhada](../drawings/shared_memory.drawio#0)
 
@@ -54,9 +54,9 @@ O modelo de comunicação usado no problema dos 3 exércitos é claramente de pa
     * relógio
     * sincronização
 
-Quanto ao sincronismo, considera-se se os processos tem a **capacidade de medir a passagem de tempo**, isto é, se tem a acesso a relógios, o quão acurazes este são e o quão sincronizados são estes relógios uns com os outros.
+Quanto ao sincronismo, considera-se se os processos tem a **capacidade de medir a passagem de tempo**, isto é, se têm acesso a relógios, o quão acurados estes são e o quão sincronizados são estes relógios uns com os outros.
 
-No problema dos três exércitos, podemos considerar que amos os atacantes tinha acesso a um relógio perfeitamente sincronizado, bastando olhar para o céu para ver o horário.
+No problema dos três exércitos, podemos considerar que ambos os atacantes tinham acesso a um relógio perfeitamente sincronizado, bastando olhar para o céu para ver o horário.
 Claramente enquanto variações na ordem de vários minutos ou até mesmo uma hora na leitura de um relógio solar não teriam grande impacto na vida dos exércitos, alguns sistemas computacionais podem exigir que os relógios de seus componentes não distem mais que alguns milissegundos.
 Revisitaremos este tópico em uma seção específica sobre [Tempo](../time/index.md).
 
@@ -78,7 +78,7 @@ Isto é importante pois se em sistemas monolíticos uma falha pode facilmente fa
     * perda e corrupção de mensagens
 
 Para lidar com falhas, precisamos entender quais são suas possíveis formas, isto é, se o levam componentes falhos a parar de funcionar totalmente e de forma identificável por outros ou não, se há falhas "maliciosas", se os limites de tempo estabelecidos acima podem ser violados, se mensagens podem ser perdidas ou corrompidas.
-Revisitaremos este tópico na sessão [Tolerância a Faltas](../fault/index.md).
+Revisitaremos este tópico na seção [Tolerância a Faltas](../fault/index.md).
 
 ## Modelo Assumido
 
@@ -90,7 +90,7 @@ Embora modelos clássicos sejam normalmente definidos em termos dos fatores acim
 
 ## SD são como cebolas!
 
-Uma vez definido o **modelo computacional** e identificado os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
+Uma vez definido o **modelo computacional** e identificados os **algoritmos adequados** aos problemas que queremos resolver, passamos à implementação.
 Distribuir é **dividir** a computação/armazenamento em diversos componentes, **possivelmente geograficamente distantes**, e **coordenar** suas ações para que resolvam a tarefa em questão de forma correta.
 Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde os componentes são executados[^recursos] e usar de **redundância** para garantir que o serviço sofra **degradação graciosa** em caso de falhas, ou seja, fazer com que o serviço continue funcionando, mesmo que com **vazão reduzida**, **latência aumentada**, menor capacidade de tratamento de requisições concorrentes, ou com **funcionalidades desabilitadas**.
 
@@ -107,7 +107,7 @@ Com a distribuição objetiva-se **usar recursos** disponíveis nos hosts onde o
         * Sistemas Operacionais
         * Times
 
-Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
+Para colaborar, as diversas partes do sistema distribuído devem se comunicar, o que pode ser feito de diversas formas e em diversos níveis de abstração. Por exemplo, no caso de troca de mensagens, estas podem ser desde pacotes de bytes entregues pelo IP/UDP como por **troca de mensagens** ordenadas, **fluxos de dados**, ou **invocação remota de procedimentos**.
 Implementar estas abstrações em si já é uma tarefa complicada, pois é preciso levar em consideração que os componentes de um sistema distribuído **falham independentemente**, executam em *hosts*  com **relógios dessincronizados**, são desenvolvidos usando-se **linguagens diversas**, **sistemas operacionais distintos**, com **arquiteturas diferentes** e por **times independentes**.
 
 Apesar de tantas variáveis, as abstrações precisam permitir que as aplicações que as usem possam se coordenar nos mínimos detalhes. 

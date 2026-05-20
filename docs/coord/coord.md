@@ -1,7 +1,7 @@
 # Coordenação
 Como visto na seção sobre [concorrência](../fundamentals/#concorrencia), diversas tarefas exigem coordenação entre threads em uma aplicação monolítica em que se faz uso de concorrência para melhor uso de recursos computacionais, obtenção de melhor desempenho, e modularização do código. 
 
-Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, ainda por cima, espalhados geograficamente. 
+Sistemas distribuídos levam concorrência a um novo patamar de complexidade, fazendo uso de múltiplos processos, cada um com possivelmente múltiplos *threads*, além disso, espalhados geograficamente. 
 Outras soluções e abstrações são portanto necessárias.
 
 
@@ -19,7 +19,7 @@ Qualquer solução que se proponha a este problema de exclusão mútua, precisa 
     4. **espera limitada** - o tempo de espera pelo recurso é limitado.
 
 Há diversas soluções para exclusão mútua em sistemas distribuídos, em diversos cenários, com seus prós e contras.
-Três das mais simples, e que ilustram o universo de soluções são via um processo centralizador, em um anel em que "a vez" é circulada, e baseada em quóruns.
+Três das mais simples, que ilustram o universo de soluções, são: via um processo centralizador, em um anel em que "a vez" é circulada, e baseada em quóruns.
 
 ### Coordenador 
 
@@ -116,7 +116,7 @@ sequenceDiagram
 Como o algoritmo centralizado, o algoritmo do anel também garante as propriedades 1, 2, 3 e 4, além de ser fácil de implementar, testar e entender.
 Diferente do algoritmo centralizado, o algoritmo do anel não sofre com problemas de gargalo, pois nenhum processo precisa participar em todos os acessos, como o coordenador.
 Contudo, o algoritmo do anel desperdiça tempo passando o *token* para quem não necessariamente quer acessar a região crítica.
-Também importante é que este algoritmo também sofre com falhas: se um participante falha enquanto com o *token*, levando-o para além.
+Também importante é que este algoritmo sofre com falhas: se um participante falha enquanto está com o *token*, o *token* é perdido e o algoritmo trava.
 
 ### Lidando com Falhas 
 Em ambos os algoritmos, centralizado e do anel, se um processo falhar, o algoritmo pode ficar "travado". 
@@ -124,9 +124,9 @@ Vejamos alguns casos específicos:
 
 * No algoritmo centralizado, se o coordenador falha antes de liberar o acesso para algum processo, ele leva consigo a permissão.
 * Em ambos os algoritmos, se o processo acessando o recurso falha, a permissão é perdida e os demais processos sofrerão inanição.
-* No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido o anel não conseguirá circular.
+* No algoritmo do anel, se qualquer outro processo falha, o anel é interrompido e o *token* não conseguirá circular.
 
-Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais se lhes pedir uma solução, tenho certeza absoluta de que me oferecerão alguma baseada em *timeouts*.
+Observe que nem falamos de falhas dos canais e já temos diversos cenários a serem resolvidos, para os quais a solução mais imediata que costuma ser proposta é baseada em *timeouts*.
 Por exemplo, se o processo não devolver a permissão de acesso antes de que uma certa quantidade de tempo tenha passado, um *timeout*, então assuma que o mesmo parou de funcionar e não voltará mais, e gere uma nova permissão a ser passada a outros requisitantes.  Aplicada esta ideia do *timeout*  no algoritmo com coordenador, teremos o efeito ilustrado a seguir.
 
 ```mermaid
@@ -210,12 +210,12 @@ A resposta depende de mais perguntas, como:
 * Qual o custo $C$ de cometer um engano?
 * Qual a probabilidade $p$ de cometer um engano?
 
-O custo esperado por causa dos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo, isto é, $C * p < E$?
+O custo esperado pelos erros, isto é, a esperança matemática da variável aleatória custo, é menor que o custo de se esperar por mais tempo? Ou seja, $C * p < E$?
 
-Embora esta análise possa ser feita para estes algoritmos, a verdade é que são realmente limitados e outras abordagens seriam melhor destino dos seus esforços.
+Embora esta análise possa ser feita para estes algoritmos, a verdade é que são algoritmos realmente limitados e outras abordagens seriam um destino melhor para os seus esforços.
 Por exemplo, podemos partir para a análise de algoritmos probabilísticos, pois afinal, como disse certa vez Werner Vogels, CTO da Amazon
 
-> Se o mundo é probabilístico, porquê meus algoritmos devem ser determinísticos?"
+> Se o mundo é probabilístico, por que meus algoritmos devem ser determinísticos?"
 
 Uma abordagem probabilística interessante é baseada em quóruns.
 
@@ -224,7 +224,7 @@ Uma abordagem probabilística interessante é baseada em quóruns.
 De acordo com o [Dicionário Priberam da Língua Portuguesa, consultado em 17-04-2019](https://dicionario.priberam.org/quorum), "quórum" é o  
 > Número de pessoas imprescindível para a realização de algo.
 
-Aqui, este este *algo* será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.
+Aqui, este *algo* será a liberação de acesso ao recurso almejado pelos processos no sistema distribuído.
 
 Esta abordagem é semelhante em vários aspectos à coordenada.
 De fato, um dos papéis na abordagem é o de coordenador, que executa o mesmo protocolo que antes.
@@ -257,7 +257,7 @@ Já os demais participantes devem agora considerar todo o conjunto de coordenado
     4. Envia liberação do recurso para os $n$ coordenadores
 
 
-Vejamos uma execução bem sucedida destes algoritmo, com $n=3$ e $m=2$.
+Vejamos uma execução bem-sucedida deste algoritmo, com $n=3$ e $m=2$.
 
 ```mermaid
 sequenceDiagram
@@ -301,7 +301,7 @@ sequenceDiagram
 ```
 
 
-Para tornamos o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então resumir suas atividades, esquecem das autorizações já atribuídas.
+Para tornar o problema mais interessante e demonstrar o potencial deste algoritmo, consideremos que as autorizações são armazenadas somente em memória, e que coordenadores, ao falhar e então retomar suas atividades, esquecem as autorizações já atribuídas.
 
 !!!warning "Perda de memória"
     Quando um coordenador falha, esquece que deu ok e reinicia seu estado.
@@ -362,7 +362,7 @@ end
 ```
 
 Neste cenário, a propriedade de **Exclusão Mútua** é violada. 
-Isto porquê, dados os dois quóruns, todos os processos na interseção foram reiniciados.
+Isso porque, dados os dois quóruns, todos os processos na interseção foram reiniciados.
 Mas de forma geral, qual a probabilidade de isso acontecer? 
 Ou seja, dados dois quóruns, de tamanho $m$, que se sobrepõem em $k$ processos, qual a probabilidade $P_v$ de que os $k$ processos na interseção sejam reiniciados e levem à violação?
 
@@ -406,7 +406,7 @@ Mas e as outras propriedades desejáveis do algoritmo de exclusão mútua, são 
     * Espera limitada
         * Aborts podem levar a espera infinita.
 
-Assim, este algoritmo também pode não ser adequado para certas situações. Vamos tentar re-acessar os problemas da primeira abordagem.
+Assim, este algoritmo também pode não ser adequado para certas situações. Vamos tentar revisitar os problemas da primeira abordagem.
 Por um lado, o uso de um líder para coordenar ações em um SD simplifica o projeto, mas, por outro, o coordenador pode se tornar um ponto único de falha, como no algoritmo de exclusão mútua centralizado.
 Mas e se substituíssemos o coordenador no caso de falhas? Este é o problema conhecido como eleição de líderes.
 
@@ -440,7 +440,7 @@ Para entendermos melhor o problema, tentemos desenvolver um protocolo simples pa
 
 Em termos computacionais, estas questões são relevantes pois todos os processos **não** nascem iguais; alguns residem em máquinas com mais memória, mais poder de processamento, melhor conexão com o resto do mundo ou maior grau de conectividade. Talvez este processo seja um líder mais útil que os demais.
 Além disso, se o processo está frequentemente desconectado, mesmo que bem servido de recursos, não será um bom líder.
-Mas ignoremos estas diferenças por enquanto e vejamos um algoritmo que use a topologia lógica em anel, como usado para a resolução do problemas de exclusão mútua.
+Mas ignoremos estas diferenças por enquanto e vejamos um algoritmo que use a topologia lógica em anel, como usado para a resolução do problema de exclusão mútua.
 
 
 ### Algoritmo do Anel
@@ -505,7 +505,7 @@ Como não há nada que diferencie os processos entre si, este cenário é perfei
 Mas o processo 2 também vê a mesma sequência, então também deve ser eleito.
 Assim, violamos a propriedade da Unicidade.
 
-Para resolver estes problema, precisamos permitir que os **processos se diferenciem uns dos outros**.
+Para resolver este problema, precisamos permitir que os **processos se diferenciem uns dos outros**.
 
 
 ### Identificadores de Processo
@@ -582,7 +582,7 @@ Na segunda rodada, as mensagens são repassadas para os vizinhos dos vizinhos, q
 
 Observe o seguinte:
 
-* Em cada fase, para qualquer par de vizinhos ativos, pelos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo $O(log n)$ fases.
+* Em cada fase, para qualquer par de vizinhos ativos, pelo menos um dos dois é inativado e, portanto, o número de ativos cai pela metade; logo há no máximo $O(log n)$ fases.
 * Na primeira fase, cada processo ativo leva a $4$ mensagens serem enviadas na rede (sem nenhuma otimização). Dado que são $n$ processos, temos $4n$ mensagens, $O(n)$
 * Na segunda fase, cada processo ativo leva a 8 mensagens. Contudo, metade dos processos, pelo menos, foram inativados na primeira fase. Logo, temos $8 \times n/2, O(n)$
 * Assim, no máximo $O(n~log~n)$ mensagens são enviadas em uma execução do algoritmo.
@@ -599,10 +599,10 @@ No algoritmo do brigão, alguma **característica comparável** dos processos é
 Por exemplo, pode ser vantajoso ter um líder com maior quantidade de memória, frequência da CPU ou largura de banda da conexão com a Internet; no caso de empate, o identificador do processo pode ser usado para gerar uma ordem total entre os processos.
 
 Para simplificar, vamos assumir que o identificador do processo reflete as qualidades do mesmo para a liderança, tal que o processo com maior identificador seja o melhor candidato. Os maiores processos, os "brigões", eliminam os processos menores da competição, sempre que uma eleição acontecer. 
-O algoritmo é apresentado a seguir, onde $p$ e $q$ são usados para representar tanto identificadores de processos quando os processos em si.
+O algoritmo é apresentado a seguir, onde $p$ e $q$ são usados para representar tanto identificadores de processos quanto os processos em si.
 
 !!!example "Algoritmo do Brigão"
-    * Quando $p$ suspeita que o líder não está presente (muito tempo se receber mensagens do mesmo)
+    * Quando $p$ suspeita que o líder não está presente (muito tempo sem receber mensagens do mesmo)
         * $p$ envia mensagem (ELEICAO,$p$) para todos os processos com identificador maior que $p$
         * Inicia temporizador de respostas
     * Quando temporizador de respostas expira
@@ -738,7 +738,7 @@ Vejamos esta e outras situações problemáticas em eleição de líderes.
 Se o algoritmo viola a propriedade de unicidade, então fica com *split-brain*, em que parte da rede vê um processo como líder e parte vê outro.
 Se o líder é o responsável por coordenar o acesso a uma região crítica, como visto no algoritmo coordenado de exclusão mútua, então ter dois líderes poderá levar a dois processos na região crítica e portanto violação da exclusão mútua. 
 
-Uma das formas de evitar *split-brain* é atribuir um **"peso"** para cada processo e só aceitar que um líder seja declarado se o mesmo seus votos carregarem mais da metade do peso do sistema.
+Uma das formas de evitar *split-brain* é atribuir um **"peso"** para cada processo e só aceitar que um líder seja declarado se seus votos carregarem mais da metade do peso do sistema.
 Ainda assim, temos problemas, pois é necessário que rodadas sucessivas do algoritmo invalidem as eleições anteriores.
 O algoritmo Raft de difusão atômica, que estudaremos adiante, define mandatos e garante, com pesos, que somente um líder existe em cada mandato. Devido à natureza assíncrona do sistema, processos podem se achar em mandatos distintos e, por isso, o mandato é associado a todas as comunicações; mensagens recebidas de mandatos anteriores são sumariamente descartadas.
 
@@ -747,7 +747,7 @@ Mas por quê precisamos de mandatos sucessivos? Para substituir um líder que te
 #### Estabilidade
 Dizemos que um algoritmo de eleição de líderes é estável se uma vez que um líder é eleito, uma nova eleição só acontece se o líder falha.
 Considere o algoritmo do brigão. Imagine, no exemplo apresentado, que o processo 5 teve problemas de comunicação e foi percebido como falho pelos demais.  Neste caso, o 4 seria eleito líder.
-Mas se o problema que aflige 5 é temporário, 5 voltará e executará nova eleição, tornando-se líder novamente. Se este cenário se repente indefinidamente, o sistema poderá ser seriamente comprometido em seu desempenho.
+Mas se o problema que aflige 5 é temporário, 5 voltará e executará nova eleição, tornando-se líder novamente. Se este cenário se repetir indefinidamente, o sistema poderá ser seriamente comprometido em seu desempenho.
 
 Uma versão estável do algoritmo tentaria, por exemplo, associar ao peso do processo o tempo de execução ininterrupta do mesmo. Assim, quanto mais tempo um processo execute, maior será seu peso e sua capacidade de manter a liderança. 
 Se o mesmo falhar, então seu peso será drasticamente reduzido e suas chances de ser eleito líder reduzidas temporariamente.

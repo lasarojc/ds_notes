@@ -1,9 +1,9 @@
-A área de computação distribuída é rica em aplicações e desenvolvê-los é topar de frente com vários problemas e decidir como resolvê-los ou contorná-los e, por isto, nada melhor que um projeto para experimentar em primeira mão as angústias e prazeres da área. 
+A área de computação distribuída é rica em aplicações, e desenvolvê-las é deparar-se com inúmeros problemas e decidir como resolvê-los ou contorná-los. Por isso, nada melhor do que um projeto para experimentar em primeira mão as angústias e os prazeres da área.
 Assim, proponho visitarmos o material destas notas à luz de uma aplicação genérica mas real, desenvolvida por vocês enquanto vemos a teoria.
 
 O projeto consiste em uma aplicação com dois tipos de usuários, os **clientes** e os **administradores**, que você pode pensar em termos de compradores e lojistas, pacientes e médicos, ou consumidores e produtores de conteúdo, dependendo da aplicação que **você** resolver implementar.
 
-As funcionalidades são expostas para estes usuários via **dois tipos** de  aplicações distintas, o **portal do cliente**  e o **portal administrativo**, mas ambos manipulam a **mesma base de dados**.
+As funcionalidades são expostas a esses usuários por meio de **dois tipos** de aplicações distintas: o **portal do cliente** e o **portal administrativo**, mas ambos manipulam a **mesma base de dados**.
 Múltiplas instâncias de cada portal podem existir e cada instância mantém um **cache** da base de dados em memória, com as entradas mais recentemente acessadas.
 
 A totalidade da base é particionada usando ***consistent hashing***.
@@ -14,26 +14,26 @@ Cada partição é replicada em outros nós usando um protocolo de **difusão at
 A arquitetura do sistema será **híbrida**, contendo um pouco de Cliente/Servidor e Peer-2-Peer, além de ser multicamadas.
 Apesar de introduzir complexidade extra, também usaremos **múltiplos mecanismos para a comunicação** entre as partes, para que possam experimentar com diversas abordagens.
 
-O sistemas tem duas **aplicações**, CLI ou GUI, para os dois tipos de usuários do sistema, clientes, e administradores.
+O sistema possui duas **aplicações**, CLI ou GUI, para os dois tipos de usuários do sistema: clientes e administradores.
 Estas aplicações se comunicarão com os portais para manipular os dados dos clientes e associados a cada cliente.
 A aplicação do administrador manipula clientes, isto é, permite o CRUD de clientes.
 A aplicação do cliente permite manipular os dados associados aos clientes.
 
 O cadastro do cliente inclui a provisão de um identificador único do cliente CID (*client id*).
 Os dados dos clientes são mantidos em uma tabela CID -> Dados do Cliente, em memória (use uma tabela hash). 
-O CID tem tipo BigInteger ou equivalente[^int64]; **você** deve decidir o que compõe os dados do cliente, mass eles **devem** ser armazenados como uma string JSON.
+O CID é do tipo BigInteger ou equivalente[^int64]; **você** deve decidir o que compõe os dados do cliente, mas eles **devem** ser armazenados como uma string JSON.
 A comunicação entre administradores e portal Administrativo se dá por uso direto de *sockets* e TCP, ou middleware pub/sub Mosquitto, ou gRPC.
 
 [^int64]: Inteiro de 64 bits não é BigInteger.
 
 Somente clientes devidamente cadastrados no sistema podem ter suas operações executadas.
-A comunicação entre cliente e portal Cliente se dá por de *sockets* e TCP, ou middleware pub/sub Mosquitto, ou gRPC.
-O CID do cliente executando operações no porta cliente deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
-O cliente tem um "saco" de dados com diversas entradas armazenados no sistema, que podem ser manipuladas individualmente ou em conjunto; cada entrada corresponde a uma entrada no banco de dados, mantido em memória (use uma **tabela hash**).
+A comunicação entre cliente e portal Cliente se dá por meio de *sockets* e TCP, middleware pub/sub Mosquitto, ou gRPC.
+O CID do cliente que executa operações no portal cliente deve ser informado em cada operação para "autenticar" o cliente e autorizar a execução da operação.
+O cliente possui um "saco" de dados com diversas entradas armazenadas no sistema, que podem ser manipuladas individualmente ou em conjunto; cada entrada corresponde a uma entrada no banco de dados, mantido em memória (use uma **tabela hash**).
 
 Aqui chamarei cada entrada no saco de "tarefa", mas dependendo da aplicação que **você** escolher, tarefas podem ser, por exemplo, eventos em um calendário ou entradas em uma lista compras.
 Cada tarefa tem um título, que serve de identificador da tarefa, e um corpo; ambos são do tipo `String`, JSON ou não.
-Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa, isto é, algumas entradas podem ser de metadados, por exemplo, índice Por exemplo, para representar duas tarefas, `t1` e `t2`, com corpos `c1` e `c2`, associadas ao cliente `cliente1`, podemos ter as seguintes entradas.
+Os dados são mantidos em uma tabela hash e múltiplas entradas podem ser necessárias para armazenar e manter uma tarefa, isto é, algumas entradas podem ser de metadados — por exemplo, um índice. Para representar duas tarefas, `t1` e `t2`, com corpos `c1` e `c2`, associadas ao cliente `cliente1`, podemos ter as seguintes entradas.
 
 * `cliente1 -> [t1,t2]`
 * `cliente1:t1 -> c1`
@@ -138,7 +138,7 @@ Nesta descrição, a interação com a cache foi omitida, mas deverá ser implem
 * Documentar o esquema de dados usados nas tabelas.
 * Usar dois tipos de comunicação distintos entre clientes e portais.
 * O sistema deve permitir a execução de múltiplos cliente, administradores, portais cliente e portais administrador.
-* Implementar a propagação de informação entre as diversas caches do sistema. Sugiro usar pubsub, já que a comunicação é de 1 para muitos.
+* Implementar a propagação de informação entre as diversas caches do sistema. Sugiro usar pub/sub, pois a comunicação é de 1 para muitos.
 
 ![Projeto](drawings/projeto.drawio#1)
 
@@ -157,7 +157,7 @@ Nesta etapa você modificará o sistema para que atualizações dos dados sejam 
     * Replicar a base de dados para obter tolerância a falhas.
 
 * Desafios
-    * Certificar-se de que o portais são máquinas de estados determinística
+    * Certificar-se de que os portais são máquinas de estados determinísticas
     * Compreender o uso de Difusão Atômica em nível teórico
     * Compreender o uso de Difusão Atômica em nível prático 
         * Use [Ratis](https://lasarojc.github.io/ds_notes/cases/ratis) para java
@@ -223,7 +223,7 @@ To do move the session to an introductory part with either the preface or introd
 
 O objetivo deste projeto é praticar o projeto de sistemas distribuídos, usando várias arquiteturas e tecnologias.
 A ideia é implementar um banco de dados NoSQL (Not only SQL) rudimentar.
-Mesmo uma versão simples de um banco de dados distribuído é um sistema complexo e por isso você deverá trabalhar em fases. Infelizmnte enquanto esta abordagem facilita a jornada, ela poderá levar a um pouco de retrabalho no final.
+Mesmo uma versão simples de um banco de dados distribuído é um sistema complexo e por isso você deverá trabalhar em fases. Infelizmente, embora essa abordagem facilite a jornada, ela poderá levar a um certo retrabalho ao final.
 
 Para garantir que todo o seu esforço será concentrado no lugar certo e que sua avaliação seja justa, atente-se aos detalhes e aos passos na especificação abaixo.
 

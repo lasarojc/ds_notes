@@ -13,26 +13,26 @@
 * File System
 * Dados recuperados da Internet usados em consultas
 * Milhões de arquivos de múltiplos GB
-* Chunks de 64MB (``blocos do disco'')
-* Operações comuns são appends ou reads
-* Servidores/discos/memórias estão sempre falhando
-* Centenas de clientes concorrentes no mesmo arquivo
+* Chunks de 64MB ("blocos do disco")
+* Operações comuns são leituras e anexações de dados (appends/reads)
+* Servidores, discos e memórias falham constantemente
+* Centenas de clientes acessam o mesmo arquivo de forma concorrente
 
 ![](../images/gfs3.png)
 
 ![](../images/gfs2.png)
 
-* Clusters de nós ``comuns''
+* Clusters de nós "comuns"
 * Master node: metadata
 * Chunk servers: data
-* Permite usar um cluster como um único HD elástico na rede.
+* Permite usar um cluster como um único disco virtual elástico na rede.
 
 [Fonte](https://www.cs.rutgers.edu/~pxk/417/lectures/l-dfs.html)
 
 ![](../images/gfs3.png)
 
-*  Apps recebem \emph{leases} de acesso direto aos dados
-*  Atomic commitment garante consistência entre réplicas
+*  Aplicações recebem _leases_ de acesso direto aos dados
+*  O comprometimento atômico (_atomic commitment_) garante consistência entre as réplicas
 
 [Fonte](http://google-file-system.wikispaces.asu.edu/)
 

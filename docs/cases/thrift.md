@@ -7,7 +7,7 @@
 * [Baixe](http://www.apache.org/dyn/closer.cgi?path=/thrift/0.13.0/thrift-0.13.0.tar.gz) e compile o thrift
 * ou instale-o usando apt-get, por exemplo. `apt-get install thrift-compiler`
 * execute "thrift" na linha de comando.
-* Para thrift com Java, também precisarão dos seguintes arquivos
+* Para thrift com Java, também será necessário incluir os seguintes arquivos
   * [slf4j](http://mvnrepository.com/artifact/org.slf4j/slf4j-api/1.7.21)
   * [libthrift0.13.0.jar](https://mvnrepository.com/artifact/org.apache.thrift/libthrift/0.13.0)
   * coloque-os na pasta `jars`
@@ -106,20 +106,20 @@ public class ChaveValorHandler implements ChaveValor.Iface {
 #### Arquitetura 
 
 * Runtime library -- componentes podem ser selecionados em tempo de execução e implementações podem ser trocadas
-* Protocol -- responsável pela serializaçãoo dos dados
+* Protocol -- responsável pela serialização dos dados
     * TBinaryProtocol
 	* TJSONProtocol
 	* TDebugProtocol
 	* ...
-* Transport -- I/O no ``fio''
+* Transport -- I/O no "fio"
     * TSocket
 	* TFramedTransport (non-blocking server)
 	* TFileTransport
 	* TMemoryTransport
-* Processor -- Conecta protocolos de entrada e saída com o \emph{handler}
+* Processor -- Conecta protocolos de entrada e saída com o handler
 		
 * Handler -- Implementação das operações oferecidas
-* Server -- Escuta portas e repassa dados (protocolo) para o processors
+* Server -- Escuta portas e repassa dados (protocolo) para o processor
     * TSimpleServer
 	* TThreadPool
 	* TNonBlockingChannel

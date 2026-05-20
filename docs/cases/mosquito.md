@@ -2,7 +2,7 @@
 
 MQTT é um protocolo de transporte para publish/subscribe do tipo cliente-servidor, definido pela OASIS, uma organização aberta responsável por padrões como SAML e DocBook. 
 A especificação atual é a de número 5, lançada em março de 2019.
-O protocolo é leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - I0T*).
+O protocolo é leve, aberto e fácil de implementar, ideal para comunicação *Machine to Machine* (M2M) e uso no contexto de Internet das Coisas (*Internet of Things - IoT*).
 
 >MQTT is a very light weight and binary protocol, and due to its minimal packet overhead, MQTT excels when transferring data over the wire in comparison to protocols like HTTP. Another important aspect of the protocol is that MQTT is extremely easy to implement on the client side. Ease of use was a key concern in the development of MQTT and makes it a perfect fit for constrained devices with limited resources today.
 
@@ -21,8 +21,8 @@ Por ser mínimo, o Mosquitto é ideal para uso em dispositivos pequenos e com po
 
 ###### Inicializando o serviço
 
-O arquivo `mosquito.conf` contém as configurações para o *broker*. 
-As configurações funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
+O arquivo `mosquitto.conf` contém as configurações para o *broker*. 
+As configurações padrão funcionam bem para o nosso caso. O *broker* aceita requisições na porta 1883 e *publishers* e *subscribers* também utilizam essa porta por padrão.
 Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que ocorre internamente.
 
 * Ubuntu: `mosquitto -v`
@@ -32,7 +32,7 @@ Basta iniciar o *broker* com a opção `-v` para ter mais detalhes sobre o que o
 ###### Publicando
 
 Para publicar uma mensagem, o *publisher* deve indicar um host, porta, tópico e mensagem. Caso o host e porta sejam omitidos, assume-se `localhost:1883`.
-No MacOS, adicione `/usr/local/opt/mosquitto/bin/mosquitto_sub` ao *path*.
+No MacOS, adicione `/usr/local/opt/mosquitto/bin` ao *path*.
 
 ```bash
 # publicando valor de 40 para tópicos 'sensor/temperature/1' e 'sensor/temperature/2'
@@ -53,7 +53,7 @@ mosquitto_sub -t sensor/temperature/+
 
 ###### Programando
 
-Existem também APIs em diversas linguagem para desenvolvimento de aplicações que utilizem o Mosquitto.
+Existem também APIs em diversas linguagens para desenvolvimento de aplicações que utilizem o Mosquitto.
 A biblioteca pode ser baixada [aqui](https://repo.eclipse.org/content/repositories/paho-snapshots/org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.2.6-SNAPSHOT/org.eclipse.paho.client.mqttv3-1.2.6-20200715.040602-1.jar).
 
 

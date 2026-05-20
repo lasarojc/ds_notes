@@ -66,12 +66,12 @@ The document has moved
 
 Representações textuais são usadas em diversos protocolos como SMTP, POP, e telnet.
 Algumas destas representações seguem padrões formalizados, o que facilita a geração e interpretação dos dados. 
-Dois padrões bem conhecidas são XML e JSON.
+Dois padrões bem conhecidos são XML e JSON.
 
-[XML](https://xml.org) é o acrônimo para *Extensible Markup Language*, ou seja, uma linguagem marcação que pode ser estendida para representar diferentes tipos de informação.
+[XML](https://xml.org) é o acrônimo para *Extensible Markup Language*, ou seja, uma linguagem de marcação que pode ser estendida para representar diferentes tipos de informação.
 A HTML, por exemplo, é uma instância de XML destinada à representação de hipertexto (A bem da verdade, XML foi uma generalização de HTML).
 
-Por exemplo, para representarmos os dados relativos à uma pessoa, podemos ter uma instância XML assim:
+Por exemplo, para representarmos os dados relativos a uma pessoa, podemos ter uma instância XML assim:
 
 ```xml
 <person>
@@ -126,7 +126,7 @@ Nos foquemos nas outras alternativas listadas, protobuf e Thrift, que podem leva
 Nas palavras dos [criadores](https://developers.google.com/protocol-buffers/),
 > Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
 
-Por meio de protobuf, é possível estruturar dados e gerar o código correspondente em diversas linguagens, for forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
+Por meio de protobuf, é possível estruturar dados e gerar o código correspondente em diversas linguagens, de forma compartilhável entre as mesmas. Veja o exemplo a seguir, que especifica os dados referentes a uma pessoa. 
 Observe a presença de campos de preenchimento opcional (**optional**), de enumerações (**enum**), e de coleções (**repeated**).
 
 ```protobuf
@@ -182,13 +182,13 @@ cout << "Name: " << person.name() << endl;
 cout << "E-mail: " << person.email() << endl;
 ```
 
-De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria mais ordens de grandeza mais lenta e ocuparia mais espaço.
+De acordo com *benchmarks* do próprio [projeto](https://developers.google.com/protocol-buffers/docs/overview), a operação em XML seria ordens de grandeza mais lenta e ocuparia mais espaço.
 
 > When this message is encoded to the protocol buffer binary format, it would probably be 28 bytes long and take around 100-200 nanoseconds to parse. The XML version is at least 69 bytes if you remove whitespace, and would take around 5,000-10,000 nanoseconds to parse.
 
 ###### Thrift
 
-Originalmente desenvolvido pela Facebook, [Apache Thrift](https://thrift.apache.org/) é um arcabouço desenvolvimento de serviços multi-linguagens. Isto, mesmo que por enquanto nos foquemos no aspecto da representação de dados desta tecnologia, veremos depois que pode ser usado para executar a troca de dados entre processos.[^fbthrift]
+Originalmente desenvolvido pela Facebook, [Apache Thrift](https://thrift.apache.org/) é um arcabouço de desenvolvimento de serviços multi-linguagem. Embora por enquanto nos foquemos no aspecto da representação de dados desta tecnologia, veremos depois que ele pode ser usado para executar a troca de dados entre processos.[^fbthrift]
 Comparado ao protobuf, ele possui praticamente as mesmas funcionalidades, i.e., a definição de estruturas de dados complexos e geração de código para serialização e desserialização de instâncias destas estruturas.
 O mesmo exemplo acima, que define uma estrutura para representar pessoas e seus contatos, ficaria assim em thrift.
 

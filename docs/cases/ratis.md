@@ -100,7 +100,7 @@ Nesta classe, iremos criar um objeto `RaftClient` que será usado para enviar op
 Esta classe é importada juntamente com outras várias dependências, adicionadas no `pom.xml`, que devemos instanciar antes do `RaftClient`.
 
 Neste exemplo eu coloco praticamente todos os parâmetros de configuração do Ratis *hardcoded* para simplificar o código.
-Obviamente que voce deveria ler estes parâmetros como argumentos para o programa ou de um arquivo de configuração.
+Obviamente que você deveria ler estes parâmetros como argumentos para o programa ou de um arquivo de configuração.
 
 ```java
 import org.apache.ratis.client.RaftClient;
@@ -120,12 +120,12 @@ public class Cliente
 {
 ```
 
-O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um mesmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
+O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um mesmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente 16 caracteres, o que soma 32 bytes em java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
 
 `id2addr` é um mapa do identificador de cada processo no cluster para seu endereço IP + Porta.
-Aqui usei várias portas distintas porquê todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IP distintos, poderia usar a mesma porta em todos.
+Aqui usei várias portas distintas porque todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IPs distintos, poderia usar a mesma porta em todos.
 
-`addresses` é uma lista de `RaftPeer` construída a parti de `id2addr`.
+`addresses` é uma lista de `RaftPeer` construída a partir de `id2addr`.
 
 O campo `raftGroup` é uma referência a todos os servidores, associados ao identificador do grupo, `raftGroupId`.
 
@@ -171,7 +171,7 @@ Já a operação `get:k` recupera o valor `v` associado à chave `k`, se present
 O método `RaftClient.io().send` é usado para enviar modificações para as réplicas e deve, necessariamente, passar pelo protocolo Raft.
 Já o método `RaftClient.io().sendReadOnly` é usado para enviar consultas a qualquer das réplicas.
 Ambos os métodos codificam o comando sendo enviado (`add:k:v` ou `get:k`) no formato interno do Ratis para as réplicas e retorna um objeto `RaftClientReply`, que pode ser usado para pegar a resposta da operação. 
-O código é auto explicativo.
+O código é autoexplicativo.
 
 ```java
         RaftClientReply getValue;
@@ -208,7 +208,7 @@ O código é auto explicativo.
 }
 ```
 
-Um vez criado o cliente, crie a classe `Servidor`, no arquivo `Servidor.java`; a parte inicial do código é semelhante à do cliente.
+Uma vez criado o cliente, crie a classe `Servidor`, no arquivo `Servidor.java`; a parte inicial do código é semelhante à do cliente.
 
 ```java
 import org.apache.ratis.conf.RaftProperties;
@@ -309,8 +309,8 @@ public class MaquinaDeEstados extends BaseStateMachine
 
 Por enquanto, ignoraremos o armazenamento do estado em disco, mantendo-o simplesmente em memória no campo `key2values`, e simplesmente implementaremos o processamento de comandos, começando pela implementação do método `query`.
 
-Este método é reponsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método `RaftClient::sendReadOnly`. A única `query` no nosso sistema é o `get`.
-No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado em quebrado em operação (`get`) e chave , usando `:` como delimitador.
+Este método é responsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método `RaftClient::sendReadOnly`. A única `query` do nosso sistema é o `get`.
+No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado e quebrado em operação (`get`) e chave, usando `:` como delimitador.
 Recuperado o valor associado à chave, o mesmo é colocado em um `CompletableFuture` e retornado.
 
 ```java
@@ -327,7 +327,7 @@ Recuperado o valor associado à chave, o mesmo é colocado em um `CompletableFut
 ```
 
 O método `applyTransaction` implementa operações que alteram o estado, como `add`, enviadas com o método `RaftClient::send`. 
-Da mesma forma que em `get`, a operação deve ser recuperada em quebrada em operação (`add`), chave e valor, usando `:` como delimitador.
+Da mesma forma que em `get`, a operação deve ser recuperada e quebrada em operação (`add`), chave e valor, usando `:` como delimitador.
 
 ```java
 
@@ -348,7 +348,7 @@ Da mesma forma que em `get`, a operação deve ser recuperada em quebrada em ope
 ```
 
 Pronto, você já tem uma máquina de estados replicada, bastando agora apenas compilá-la e executá-la.
-Para compilar, de raiz do projeto execute o comando `mvn package`. 
+Para compilar, da raiz do projeto execute o comando `mvn package`. 
 A primeira vez que faz isso pode demorar um pouco pois várias dependências são baixadas da Internet.
 Ao final da execução do comando você deveria ver algo semelhante ao seguinte
 

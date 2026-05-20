@@ -1,14 +1,14 @@
 # Introdução
 
-Escrever **bons sistemas distribuídos** é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto sendo nossos primeiros obstáculos.
+Escrever **bons sistemas distribuídos** é uma tarefa que esbarra em diversos obstáculos, sendo a definição do que é um sistema distribuído e do que é ser "bom" neste contexto os nossos primeiros desafios.
 
-## O quê são Sistemas Distribuídos?
+## O que são Sistemas Distribuídos?
 
-Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que **não é um sistema não-distribuído**.
+Para atacarmos a primeira questão e entendermos o que é um Sistema Distribuído, talvez seja mais fácil começar pelo que **é um sistema não-distribuído**.
 Estes são os **sistemas que contém em um único processo toda a lógica de negócio, armazenamento e interface com usuário**, mesmo que sejam divididos em vários módulos e usem diferentes bibliotecas e *frameworks*.
-Sejam estes sistemas construído com blocos que se encaixam perfeitamente, disponibilizados basicamente pela biblioteca da linguagem que está utilizando;
-ou desenvolvido por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
-o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolítico**.[^centr]
+Sejam estes sistemas construídos com blocos que se encaixam perfeitamente, disponibilizados basicamente pela biblioteca da linguagem que está sendo utilizada;
+ou desenvolvidos por times com diversas pessoas e usando bibliotecas de muitos fornecedores diferentes, aumentando consideravelmente a complexidade do desenvolvimento;
+o resultado, contudo, continua sendo um artefato só, executado como um único processo, e por isso os denominaremos sistemas **monolíticos**.[^centr]
 
 
 [^centr]: Muitos se referem a sistemas não-distribuídos como **centralizados** mas prefiro reservar este termo para sistemas distribuídos que usam um processo centralizador. 
@@ -46,7 +46,7 @@ Contudo, nada impede que possivelmente múltiplos nós possam ser executados em 
     * memória compartilhada
     * mensagens
 
-Quanto à comunicação, **ou** os nós podem **compartilhar um espaço de endereçamento** comum, seja porquê estão co-locados no mesmo hospedeiro ou seja porquê tem acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante **ou**  também podem se comunicar por **mensagens** trocadas via uma rede de comunicação, como a Internet.
+Quanto à comunicação, **ou** os nós podem **compartilhar um espaço de endereçamento** comum, seja porque estão co-locados no mesmo hospedeiro ou seja porque têm acesso a alguma forma de memória compartilhada distribuída, que veremos mais adiante, **ou** também podem se comunicar por **mensagens** trocadas via uma rede de comunicação, como a Internet.
 
 Quanto à tarefa em comum, veja o seguinte exemplo, em que vários clientes trocam emails por meio de uma máquina com a qual se comunicam para entregar mensagens a serem enviadas e receber mensagens a eles destinadas; enquanto aguardam a entrega, mensagens são armazenadas em um Sistema Gerenciador de Banco de Dados (SGBD) em uma outra máquina, da qual os usuários não tem ciência. 
 
@@ -70,7 +70,7 @@ Pensemos em algumas aplicações distribuídas com as quais interagimos todos os
 Alguns exemplos óbvios são [Amazon.com](https://www.amazon.com), [Facebook](https://www.facebook.com), e [GMail](https://www.gmail.com).
 
 Estes sistemas rodam em grandes *data centers* com [milhares de máquinas](https://youtu.be/D77WDo881Pc), estando constantemente sujeitos a fontes queimadas, discos corruptos, memórias defeituosas, etc.[^failures]  
-Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsíveis e, goste ou não do que fazem, são bem sucedidos porquê cumprem bem suas tarefas.
+Apesar disto, dificilmente estes serviços são reportados como fora do ar, são altamente responsivos e, goste ou não do que fazem, são bem-sucedidos porque cumprem bem suas tarefas.
 Assim, digamos que um sistema computacional é **bom** se está funcional a **maior parte do tempo**, com **bom desempenho** e é de **baixo custo**.
 Observe que estar sempre funcional implica em continuar provendo o serviço mesmo que partes do sistema estejam com problemas, que ter bom desempenho implica que  respostas "rápidas" são dadas para o usuário, e que baixo custo implica em não gastar mais que o necessário para realizar a tarefa para a qual foi construído.
 
@@ -89,11 +89,11 @@ Observe que estar sempre funcional implica em continuar provendo o serviço mesm
 
 Enquanto subjetiva, nossa definição de **bom** nos permite estabelecer um pano de fundo para delinear as **dificuldades** de se implementar sistemas distribuídos.
 Como veremos adiante, os **requisitos** para um bom sistema distribuído são **conflitantes** e difíceis, às vezes impossíveis, de se alcançar. 
-Mas se esta é a realidade da programação distribuída, por quê fazê-lo? A resposta tem a ver com a **colaboração**, na definição.
+Mas se esta é a realidade da programação distribuída, por que fazê-lo? A resposta tem a ver com a **colaboração**, na definição.
 
-## Por quê desenvolvemos sistemas distribuídos?
+## Por que desenvolvemos sistemas distribuídos?
 
-A primeira razão é o fato é que computadores individuais tem capacidade reduzida de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.
+A primeira razão é que computadores individuais têm capacidade reduzida de processamento e armazenamento, mas nossa necessidade de poder computacional cresce exponencialmente.
 
 ![Data Growth](images/datagrowth.jpg){: style="max-width:500px"}
 
@@ -116,7 +116,7 @@ Com a quantidade de informação armazenada a cada acesso a um sítio, a cada pr
      * tolerância a falhas
 
 Este último ponto, sobre qualidade do serviço, tem a ver com a capacidade de um sistema se manter no ar a despeito de problemas, isto é, de ser tolerante a faltas.
-Tolerância a faltas implica em redundância, em cópias, o que fatidicamente implica em **distribuição** e em Sistemas Distribuídos.
+Tolerância a faltas implica em redundância, em cópias, o que inevitavelmente implica em **distribuição** e em Sistemas Distribuídos.
 Assim, podemos concluir que as principais razões para se desenvolver sistemas distribuídos são alcançar **escalabilidade** e **tolerância a faltas**, ambas resultantes da **agregação** (correta) do poder computacional de múltiplos componentes.
 
 Uma vez que tenhamos entendido o porquê de desenvolver sistemas distribuídos, vejamos que tipos de sistemas resultam desta abordagem.
@@ -175,7 +175,7 @@ As grades computacionais podem ser vistas como precursoras da **computação uti
 ![tap](images/faucet.png){: style="max-width:500px"}
 
 A materialização recente da computação utilitária são as nuvens computacionais.
-Este tipo de sistema, embora possa ser pensando como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.
+Este tipo de sistema, embora possa ser pensado como infraestrutura para outros sistemas distribuídos, são, na verdade, complexas peças de engenharia, com diversos subsistemas responsáveis por sincronização de relógios, monitoração de falhas, coleta de logs, roteamento eficiente tolerante a falhas, movimentação de recursos virtualizados para consolidação de recursos físicos, armazenamento redundante de dados, etc.
 
 O seguinte vídeo mostra, em 360 graus, um dos *datacenters* do Google, para que você tenha ideia da escala em que estes sistemas são construídos.
 Já este outro [sítio](https://www.google.com/about/datacenters/gallery/#/all) apresenta uma viagem fotográfica por alguns *datacenters*.
@@ -211,7 +211,7 @@ graph LR
 ```
 
 Como implementar as famosas propriedades **ACID** neste banco de dados? 
-Embora veremos isso um pouco mais para frente neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
+Embora vejamos isso um pouco mais adiante neste material, por enquanto, apenas assuma que não é exatamente fácil ou barato. 
 Esta dificuldade foi a razão do surgimento dos bancos de dados NOSQL (née NoSQL), dos quais uma pequena amostra é dada pela seguinte figura.
 Também discutiremos como estes bancos de dados funcionam, quando falarmos sobre sistemas P2P.
 
@@ -261,8 +261,8 @@ Para que seja realizada, a computação pervasiva requer que dispositivos **dete
 
 ###### Redes de Sensores e Internet das Coisas
 
-Eu vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subsessão de Sistemas Pervasivos.
-Isto porquê, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "lêem" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
+Vou me arriscar colocando Redes de Sensores e Internet das Coisas como uma subseção de Sistemas Pervasivos.
+Isso porque, a meu ver, as redes de sensores são parte da infraestrutura para se obter sistemas pervasivos; são os sensores que percebem mudanças contexto e "lêem" o estado do contexto atual e alimentam outros sistemas que reagem a tal estado.
 A Internet das Coisas (IoT, do inglês *Internet of Things*) vai também na mesma linha, levando à integração entre sensores, atuadores, e outros dispositivos que nos servem, em um ambiente de computação pervasiva.
 "Mas se é assim, qual o risco?", você pergunta. Bem, a Internet das Coisas pode ser vista como algo além dos sistemas pervasivos, pois se estes últimos são focados nos humanos em um certo contexto, a IoT[^iot] não necessariamente foca-se nos humanos, mas na realização de alguma tarefa. 
 Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, analisa previsões de chuva e decide em quanto irrigar uma plantação de laranjas provavelmente não se importará com a presença ou não de um humano na plantação.
@@ -283,7 +283,7 @@ Por exemplo, um sistema de irrigação que percebe o nível de umidade do ar, an
 
 ###### Uma nota sobre privacidade nos sistemas pervasivos
 
-À medida em que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes nos mesmos, com sérios riscos à nossa privacidade.
+À medida que aumentamos o ambiente ao nosso redor ou a nós mesmos com dispositivos computacionais, por um lado facilitamos nossa vida pois somos assistidos por tais dispositivos, mas por outro, nos tornamos cada vez mais dependentes deles, com sérios riscos à nossa privacidade.
 Isto ocorre por que para que realizem suas tarefas, os sistemas pervasivos precisam de cada vez mais informações sobre nós, e há sempre o risco de que estas informações sejam usadas de forma que não nos apetece.
 
 !!!example "Exemplos de *hacking* em IOT"

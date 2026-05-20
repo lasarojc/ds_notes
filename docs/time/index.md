@@ -7,16 +7,16 @@ Para nós, como colocado por Einstein,
 
 Neste capítulo discutiremos como o **tempo** e os **relógios** são importantes no desenvolvimento de sistemas distribuídos.
 Comecemos por analisar o funcionamento de uma aplicação distribuída muito comum, o **armazenamento de arquivos na nuvem**, sincronizado com o sistema de arquivos local. 
-Alguns exemplos do mundo real são Dropbox, Box, Google Drive and OneDrive; chamemos este serviço genericamente de **cloud-drive**.
+Alguns exemplos do mundo real são Dropbox, Box, Google Drive e OneDrive; chamemos este serviço genericamente de **cloud-drive**.
 No exemplo a seguir, um arquivo é sincronizado com uma nova cópia, Cliente 1, que altera o arquivo e sincroniza de volta com o servidor.
 Na sequência, um novo cliente se registra, Cliente 2, recebe o arquivo, o altera e sincroniza com o servidor, que propaga a nova versão para Cliente 1.
-Ao final da execução, todos os envolvidos tem cópias idênticas do arquivo. :thumbsup:
+Ao final da execução, todos os envolvidos têm cópias idênticas do arquivo. :thumbsup:
 
 [^tempo]: [The New Thermodynamic Understanding of Clocks](https://www.quantamagazine.org/the-new-science-of-clocks-prompts-questions-about-the-nature-of-time-20210831/)
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#0)
 
-Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o quê acontece quando elas se reconectam à Internet?
+Se um mesmo arquivo no cloud-drive é modificado em duas máquinas diferentes, enquanto as mesmas estão desconectadas, o que acontece quando elas se reconectam à Internet?
 Mais especificamente, quando as duas máquinas se conectam e enviam suas versões do arquivo modificado para o servidor, sendo que ambas foram geradas a partir de um ancestral comum, qual versão deve ser armazenada e qual deve ser descartada?
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#1)
@@ -31,7 +31,7 @@ No exemplo seguinte, o resultado deveria ser A, seguindo esta abordagem.
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#3)
 
-Contudo, vemos alguns problemas pois, pelo gráfico, vemos que a "Versão B" foi criada **depois** da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
+Contudo, há alguns problemas pois, pelo gráfico, vemos que a "Versão B" foi criada **depois** da "Versão A", mas que a versão final vista pelo servidor é exatamente a "A". 
 Além disso, se encolhermos um pouco a desconexão do nó na parte de cima, o resultado final se inverte.
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#4)
@@ -39,15 +39,15 @@ Além disso, se encolhermos um pouco a desconexão do nó na parte de cima, o re
 Isso quer dizer que a decisão de qual a versão deve ser mantida depende mais da rede que das edições do arquivo em si.
 Mas isso não parece fazer sentido, certo? Afinal, a ordem de chegada dos arquivos ao servidor não reflete necessariamente a ordem em que os arquivos foram modificados.
 
-Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de  **criação** e **modificação** do arquivo. 
-Contudo, o **horários são relativos** a onde a operação aconteceu e não aos componentes do sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um **observador externo**, a ter um horário de criação oficial anterior.
+Assim, podemos pensar em outras alternativas de aproveitamento e descarte de arquivos baseadas no horário de **criação** e **modificação** do arquivo. 
+Contudo, os **horários são relativos** a onde a operação aconteceu e não aos componentes do sistema, o que pode levar uma modificação que tenha acontecido mais tarde, do ponto de vista de um **observador externo**, a ter um horário de criação oficial anterior.
 
 ![Cloud Drive](../drawings/cloud_drive.drawio#5)
 
 <!--Uma terceira abordagem é gerar uma terceira versão, com a "soma" das duas conflitantes. Para gerar esta terceira versão, faz mais sentido quebrar os arquivos em *operações de modificação*, e executar as operações de forma a chegar ao resultado final. O problema permanece, pois as operações agora devem ser ordenadas. , a menos que façamos com que os processo concordem na passagem do tempo.-->
 
 Se for possível identificar a causalidade entre as modificações, isto é, qual versão originou qual outra, então é claro que se deve manter versões de acordo com a ordem causal.
-Contudo, edições concorrentes, como a criação das versões A e B no exemplo anterior, não tem relação de causalidade entre si.
+Contudo, edições concorrentes, como a criação das versões A e B no exemplo anterior, não têm relação de causalidade entre si.
 
 Assim, **em qualquer destas linhas de atuação, você tem em mãos um conflito para resolver**, e automatizar a resolução do mesmo é muito complicado. É por isso que o Dropbox, por exemplo, deixa os dois arquivos para que o usuário analise e decida o que fazer, que servidores git exigem que o usuário pegue a versão salva mais recentemente e compatibilize suas mudanças com ela antes de submeter novas mudanças, e o Perforce trabalha com *locks*  de arquivos.
 
@@ -59,7 +59,7 @@ Se pensarmos em termos não de arquivos sendo enviados para um servidor, mas de 
 
 Embora, como já vimos, usar a ordem temporal da criação das operações também seja problemático, já que relógios são dessincronizados em sistemas distribuídos típicos, alguns sistemas tentam resolver automaticamente os conflitos usando exatamente estes relógios. 
 O CassandraDB, por exemplo, usa ***last write wins*** ou ***latest version wins***, onde ***last*** é definido em termos do relógio do cliente.
-Neste cenário, temos novo problema:
+Neste cenário, temos um novo problema:
 
 !!!question "Pergunta"
       Como determinar qual foi enviada primeiro, em um sistema assíncrono?

@@ -1,5 +1,5 @@
 # Do processador à nuvem em 42 passos
-O primeiro desafio é entender o ambiente no qual estão inseridos, suas limitações e fragilidades e, para isso, precisamos entender como a computação é executada em cada uma das partes do sistema.
+O primeiro desafio é entender o ambiente no qual esses sistemas estão inseridos, suas limitações e fragilidades e, para isso, precisamos entender como a computação é executada em cada uma das partes do sistema.
 
 
 === "1"

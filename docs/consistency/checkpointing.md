@@ -4,7 +4,7 @@ Assumindo que o modelo de consistência implementado é satisfatório, temos que
 Isto é, suponha que uma série de erros aconteceram no sistema, e que não é possível continuar o processamento em algum ou todos os módulos do sistema.
 Neste cenário, o sistema precisa agir para ou avançar para um novo estado, livre de erros, ou retroceder a um estado anterior, correto.
 
-Voltar a um estado correto parece ser a solução mais fácil, mas pare isto é preciso garantir a informação sobre estados anteriores seja recuperável. 
+Voltar a um estado correto parece ser a solução mais fácil, mas para isso é preciso garantir que a informação sobre estados anteriores seja recuperável.
 
 
 ### Log Recuperável
@@ -44,7 +44,7 @@ Recuperação de blocos perdidos
 
 ### Estado global consistente
 
-Um estado global, o conjunto com um estado local de cada processo no sistema e também são conhecidos como ou ***snapshots***.
+Um estado global é o conjunto formado pelo estado local de cada processo no sistema, também conhecido como ***snapshot***.
 
 ![](../images/08-24.png)
 
@@ -56,7 +56,7 @@ O mais recente estado global consistente forma uma **linha de recuperação**.
 
 ![](../images/08-24.png)
 
-**Linhas de Recuperação** podem ser usados para, não surpreendentemente, recuperação do sistema, mas também para **coleta de lixo** (remover objetos não referenciados em nenhum outro processo), **detecção de deadlocks** e **depuração** (pausar o sistema).
+**Linhas de Recuperação** podem ser usadas para, não surpreendentemente, recuperação do sistema, mas também para **coleta de lixo** (remover objetos não referenciados em nenhum outro processo), **detecção de deadlocks** e **depuração** (pausar o sistema).
 
 
 Se o sistema provê comunicação confiável, então toda mensagem enviada no estado local de um processo também precisa fazer parte do estado local do destinatário, ou o estado global precisa capturar o estado dos canais de comunicação.
@@ -74,7 +74,7 @@ Cada processo faz o checkpoint local independentemente, incorrendo no risco de u
 * A dependência $I_i^m \rightarrow I_j^n$ é salva junto com o checkpoint $C_j^n$
 
 
-* Se o processo $p_j$ é revertido para o estado $C_j^n$, então o $p_i$ não pode reverter para nenhum estado anterior a $C_i^m$, ou não teria enviado as mensagens recebidas por $p_j$ 4 inclusas em $C_j^n$.
+* Se o processo $p_j$ é revertido para o estado $C_j^n$, então o $p_i$ não pode reverter para nenhum estado anterior a $C_i^m$, ou não teria enviado as mensagens recebidas por $p_j$ inclusas em $C_j^n$.
 
 ou
 
@@ -95,7 +95,7 @@ ou
 * $C_i^2$
 * ...
 
-Se estados locais são capturados na "hora errada", a linha de recuperação pode ser o estado inicial, fazendo um **rollback em cascata***
+Se estados locais são capturados na "hora errada", a linha de recuperação pode ser o estado inicial, fazendo um **rollback em cascata**
 
 ![](../images/08-25.png)
 
@@ -147,7 +147,7 @@ Pontos negativos?
 	
 
 ###### Message Logging
-Em vez de checkpoints frequentes, crie um log da comunicação e o re-execute a partir do último checkpoint.
+Em vez de checkpoints frequentes, crie um log da comunicação e re-execute-o a partir do último checkpoint.
 
 **Ideia básica:**	
 
@@ -169,7 +169,7 @@ Realista este modelo? Há outros eventos não determinísticos no sistema?
 
 Se $C$ é um conjunto de processos falhos, então $Q\not\in C$ é um órfão se existe uma mensagem $m$ tal que $Q \in Dep(m)$ e $Copy(m)\subseteq C$	
 
-Se os processos em $C$ forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou $Q$ a receber $m$ ou um mensagem causalmente dependente de $m$.
+Se os processos em $C$ forem reiniciados, então a computação seguirá um caminho possivelmente distinto do que levou $Q$ a receber $m$ ou uma mensagem causalmente dependente de $m$.
 
 
 Para cada mensagem $m$ não estável, há no máximo um processo dependente em $m$ ($Dep(m) \leq 1$)

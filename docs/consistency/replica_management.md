@@ -2,7 +2,7 @@
 
 ### Posicionamento
 
-Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor custo de comunicação?
+Onde colocar réplicas para obter melhor escalabilidade do sistema? Menor custo de comunicação?
 
 * Objetos (código/dados)
 * Permanente
@@ -18,7 +18,7 @@ Onde colocar réplicas para conseguir melhor escalabilidade do sistema? Menor cu
 * Número de acessos acima de limiar $R$, replica para $P$
 * Número de acessos abaixo de $D$, apaga de $P$
 * $D < R$
-* Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre $D$ e $R$), considera migrar.
+* Se não é alto o suficiente para replicar nem baixo o suficiente para ignorar (entre $D$ e $R$), considera-se migrar o objeto.
 
 ![](../images/07-18.png)
 
@@ -29,34 +29,34 @@ Réplicas precisam ser atualizadas.
 * Propagar operações -- não copia todos os dados modificados.
 * Propagar notificações -- réplica precisa solicitar atualização.<br/> Usado em caches.
 
-Melhor opção depende do custo das operações, dados manipulados, e taxa de leitura/escrita dos dados.
+A melhor opção depende do custo das operações, dos dados manipulados e da taxa de leitura/escrita dos dados.
 
 * Propagar dados
-    * razão leitura/escrita é grande
+    * razão leitura/escrita é alta
     * operações são caras
 * Propagar operações
-    * razão leitura/escrita é grande
+    * razão leitura/escrita é alta
     * operações são baratas
 * Propagar notificações
-    * razão leitura/escrita é pequena
+    * razão leitura/escrita é baixa
     * pouco uso da rede
 	
 ###### Proativo/Push ou Reativo/Pull
 
 * Proativo
     * Mantém réplicas consistentes
-    * Desnecessário se leitura $<<$ escrita.
+    * Desnecessário se a leitura $<<$ a escrita.
 
 * Reativo
     * Réplicas só se tornam consistentes quando necessário.
-    * Lento se leitura $>>$ escrita
+    * Lento se a leitura $>>$ a escrita
 
 *Qual é melhor?*
 
 ###### Híbrido: Lease
 
 * Réplica se registra para receber atualizações/notificações por um período.
-* Estado sobre réplicas é mantido enquanto possível, pelo período contratado.
+* Estado das réplicas é mantido enquanto possível, pelo período contratado.
 * Em caso de sobrecarga, deixa de mandar atualizações/notificações.
-* Em caso de lease antigo não renovado, deixa de mandar atualizações/notificações.
+* Em caso de lease expirado (não renovado), deixa de mandar atualizações/notificações.
 * Em caso de renovações frequentes, aumenta o período do lease.

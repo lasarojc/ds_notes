@@ -2,11 +2,11 @@ Voltemo-nos agora aos bancos de dados mais tradicionais, isto é, bancos de dado
 Destaco que quando falamos em bancos de dados relacionais, geralmente pensamos em bancos de dados transacionais, mas o que são transações?
 
 ## Transações
-No banco de dados vistos no capítulo anterior, **operações** são enviadas **individualmente** para as réplicas do banco.
+Nos bancos de dados vistos no capítulo anterior, **operações** são enviadas **individualmente** para as réplicas do banco.
 Já no modelo transacional, normalmente pensamos em **conjunto de operações** em vez de operações individuais; estes conjuntos de operações são as **transações**.
 
 Considere um sistema bancário que mantém contas com saldos inteiros.
-Seguindo a notação apresentada anteriormente, $R(C)10$ é um operação de leitura da conta $C$ que retorna o valor 10 e $W(C)20$ é a operação de atualização do saldo de $C$ para 20.
+Seguindo a notação apresentada anteriormente, $R(C)10$ é uma operação de leitura da conta $C$ que retorna o valor 10 e $W(C)20$ é a operação de atualização do saldo de $C$ para 20.
 Vamos estender a notação para que $a = R(C)$  armazene o valor lido de $C$ em $a$.
 Seja $T$ uma transação que incrementa o valor de uma conta em $1$; ela pode ser especificada como 
 
@@ -89,7 +89,7 @@ Qual o valor final calculado?
 
 
 O problema aqui é que dados sendo modificados, isto é, não finais, "vazaram" de T1 para T2, um fenômeno conhecido como ***dirty read***.
-Isso ocorreu porquê o nível de isolamento provido foi nenhum.
+Isso ocorreu porque o nível de isolamento provido foi nenhum.
 
 ###### Lost update
 Supondo uma execução de duas instâncias de T1, podemos observar outro problema, que pode deixar o BD em estado inválido.
@@ -121,7 +121,7 @@ Supondo uma execução de duas instâncias de T1, podemos observar outro problem
     |  $W(a)sA-sB*0.1 = 30$|
 
 
-Observe que $sB*0.1$ foi perdido, o que é conhecido como ***lost update***, agora porquê faltou isolamento.
+Observe que $sB*0.1$ foi perdido, o que é conhecido como ***lost update***, agora porque faltou isolamento.
 
 ###### Execução serial
 Qual a solução? No primeiro exemplo deste capítulo, uma execução serial das operações não causou problema, enquanto a concorrente sim.
@@ -162,7 +162,7 @@ Assim, para obter tanto desempenho advindo da concorrência quanto corretude adv
 
 
 Mas como obter equivalência serial? Não seria viável executar as operações e demonstrar *post facto* que a execução é correta.
-Em vez disso, precisamos garantir por construção a equivalência serial, o que é bem mas simples, principalmente se considerarmos a seguinte restrição
+Em vez disso, precisamos garantir por construção a equivalência serial, o que é bem mais simples, principalmente se considerarmos a seguinte restrição
 
 * a execução de duas transações tem Equivalência Serial se todos os pares de operações conflitantes entre as transações são executados na mesma ordem.
 * uma execução qualquer tem equivalência serial se todos os pares de transações tem equivalência serial.
@@ -230,7 +230,7 @@ Para que este dirty read não leve a inconsistências, a transação da esquerda
 Esta estratégia pode ser implementada da seguinte forma: 
 
 * se uma transação lê um dado atualizado por uma transação não comitada, suspenda a transação executando a leitura.
-* se transação que atualizou o dado foi abortada, todas as suspensas que leram dela devem ser abortadas.
+* se a transação que atualizou o dado foi abortada, todas as suspensas que leram dela devem ser abortadas.
 * repita passo anterior.
 
 Graficamente, podemos ver o exemplo acima assim, tanto no caso de commit quando de abort da segunda transação.
@@ -238,7 +238,7 @@ Graficamente, podemos ver o exemplo acima assim, tanto no caso de commit quando 
 ![suspended execution](../drawings/transactions.drawio#2)
 
 
-Apesar de correta, esta abordagem tem um caso patológico que leva a **abortos em Cascata**: 
+Apesar de correta, esta abordagem tem um caso patológico que leva a **abortos em cascata**: 
 se T1 lê algo que T2 escreveu, e T2 lê algo que T3 escreveu, e assim por diante, se a última transação nesta cadeia de dependências for abortada, todas deverão ser abortadas.
 
 ![suspended execution](../drawings/transactions.drawio#3)
@@ -246,7 +246,7 @@ se T1 lê algo que T2 escreveu, e T2 lê algo que T3 escreveu, e assim por diant
 
 Mas, e se evitarmos dirty reads em vez de tratarmos? Podemos fazê-lo com a seguinte estratégia:
 
-* quando um transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.
+* quando uma transação T1 tenta ler um dado "sujo" escrito por T2, suspenda a execução da transação T1, antes da leitura acontecer.
 * quando transação T2 for terminada, continue a execução de T1.
 
 ![suspended execution](../drawings/transactions.drawio#4)
@@ -261,7 +261,7 @@ A resposta está no controle de concorrência das transações.
 Consideremos três abordagens de controle de concorrência usadas por bancos de dados:
 
 * locking: abordagem pessimista que paga um alto preço de sincronização mesmo quando as transações não interferem umas nas outras.
-* multi-versão: abordagem otimista, que tem algo custo quando há muitos conflitos entre as transações.
+* multi-versão: abordagem otimista, que tem alto custo quando há muitos conflitos entre as transações.
 * timestamp: abordagem mais complexa de se implementar.
 
 ### Locking
@@ -292,7 +292,7 @@ Ou, ainda, locks com diferentes granularidades; em um banco de dados relacional,
 
 
 Mas mesmo com estes ajustes, locks deveriam, via de regra, ser evitados sempre que a probabilidade de conflitos for baixa. 
-Isso porquê os locks são uma abordagem **pessimista**, que incorrem em ***overhead*** mesmo quando transações não acessam os mesmos dados, lembrando que os locks só podem ser liberados no final das transações.
+Isso porque os locks são uma abordagem **pessimista**, que incorrem em ***overhead*** mesmo quando transações não acessam os mesmos dados, lembrando que os locks só podem ser liberados no final das transações.
 
 ???sideslide "Evitar locks"
     * pessimista
@@ -340,7 +340,7 @@ Se a validação for com as transações ainda em execução (***forward validat
 
 
 Uma terceira forma de controlar a concorrência associando uma ordem lógica para a execução das transações, de acordo com o início das transações.
-Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que a execução das transações seja é equivalente à execução serial de acordo com os timestamps.[^kth]
+Isto é feito atribuindo-se um timestamp a cada transação e garantindo-se que a execução das transações seja equivalente à execução serial de acordo com os timestamps.[^kth]
 
 
 [^kth]: Baseado no material disponível em [Distributed Systems, Basic Course](https://www.kth.se/social/course/ID2201/).
@@ -364,7 +364,7 @@ Como implementar?
 
 ![](../images/timestamp1.png)
 
-* consistência é testado na execução da operação
+* consistência é testada na execução da operação
 
 #### Como implementar -- escrita
 
@@ -422,7 +422,7 @@ Temos vários papéis sendo desempenhados aqui:
 ![](../images/01-10.png)
 
 
-Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimista para garantir consistência.
+Localmente, cada bd funciona como um sistema centralizado normal, usando abordagens otimistas ou pessimistas para garantir consistência.
 
 O grande problema no bd distribuído é garantir o *acordo* na terminação.
 
@@ -432,7 +432,7 @@ O grande problema no bd distribuído é garantir o *acordo* na terminação.
 O problema...
 
 * transação $t$ acessa recursos nos resource managers (rm)
-* terminar com sucessos $t$ em todos os rm - commit - ou
+* terminar com sucesso $t$ em todos os rm - commit - ou
 * abortar $t$ em todos os rm
 * ainda que enlaces de comunicação, nós e rm falhem, antes ou durante a terminação da transação.
 
@@ -638,7 +638,7 @@ Bancos de dados relacionais tradicionalmente armazenam seus dados em disco usand
 Bancos de dados NoSQL, muito usados em cenários de *Big Data*, em  que quantidades muito grandes de dados são geradas e acessadas com grande velocidade, capitanearam um esforço para otimizar operações de escrita enquanto também tentando não aumentar significativamente os tempos de leitura.
 
 É notório que operações em disco são muito mais lentas que em memória principal, mas o que exatamente é lento no acesso ao disco?
-Essencialmente, o posicionamento da cabeca de leitura/escrita na trilha correta do disco, pois esta operação é mecânica.
+Essencialmente, o posicionamento da cabeça de leitura/escrita na trilha correta do disco, pois esta operação é mecânica.
 Por esta razão, acessos aleatórios são mais custosos que acessos sequenciais, pois neste o custo de posicionamento é pago apenas uma vez.
 Alguns bancos de dados, como o Cassandra, armazenam os dados na forma de uma ***Log Structured Merge Tree***, ou LSMT, que acessa o disco quase que exclusivamente de forma sequencial, minimizando assim o impacto da durabilidade no desempenho do sistema.
 
@@ -676,7 +676,7 @@ Observe que, além da escrita dos logs, todos os outros acessos ao disco também
 Contudo, há outro limitante de desempenho importante, relacionado à premissa pouco realista de que os dados cabem todos em memória. 
 Isto é, se os dados não cabem em memória, *snapshots*  serão importantes não somente para permitir coletar lixo dos logs, isto é, dados obsoletos, mas também, para usar a capacidade de armazenamento dos discos.
 
-Consideremos então um cenário em que a memtable cabe apenas *n* entradas; quando a operação para adicionar $n+1$-ésima entrada à memtable é recebida, um ***flushs*** dos dados para um novo *snapshot* é feito e a memtable é *resetada*, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do *caminho crítico* da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.
+Consideremos então um cenário em que a memtable cabe apenas *n* entradas; quando a operação para adicionar $n+1$-ésima entrada à memtable é recebida, um ***flush*** dos dados para um novo *snapshot* é feito e a memtable é *resetada*, liberando espaço em memória. Para melhorar o desempenho, estas descargas podem ser feitas proativamente antes da chegada de novas entradas e fora do *caminho crítico* da operação de escrita, mas isto é apenas uma otimização e portanto não a consideraremos aqui.
 
 ![LSMT](../drawings/lsmt.drawio#5)
 
@@ -691,12 +691,12 @@ O primeiro problema aqui é que há vários valores antigos associados a $k$, in
 ![LSMT](../drawings/lsmt.drawio#6)
 
 O segundo é que caso o valor associado a $k$ seja requisitado, o sistema deverá retornar a última versão, que pode estar em diversos arquivos.
-Para lidar com ambos os problemas, podemos **compactar** as sstables juntas, eliminados dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
+Para lidar com ambos os problemas, podemos **compactar** as sstables juntas, eliminando dados obsoletos e minimizando o número de arquivos a serem pesquisados no caso de leitura.
 Caso a sstables estejam ordenadas, o procedimento de compactação pode ser feito como a união de dois segmentos de dados no *merge sort*, isto é, iterando-se paralelamente nos dois arquivos e escolhendo sempre a menor chave da vez e movendo-a para um novo segmento que conterá a união dos dados.
 
 ![LSMT](../drawings/lsmt.drawio#7)
 
-A figura a seguir mostra um exemplo que várias sstables de nível 0, aquelas geradas por *flushs*, são unidas gerando sstables de nível 1 e assim sucessivamente.
+A figura a seguir mostra um exemplo em que várias sstables de nível 0, aquelas geradas por *flushs*, são unidas gerando sstables de nível 1 e assim sucessivamente.
 Observe como as compactações geram uma árvore (na verdade, uma floresta), razão do nome *merge tree*.
 
 ![https://www.hedvig.io/blog/hedvig-internals-log-structured-merge-trees-and-folding-of-bloom-filters](../images/lsm_compac.png)
@@ -732,11 +732,11 @@ No exemplo a seguir, inserimos os elementos x, y e z e usamos três funções ha
 ![By [David Eppstein](https://commons.wikimedia.org/w/index.php?curid=2609777)](../images/bf.png)
 
 
-Na **consulta**, cada elemento passa por pelas mesmas funções hash para identificar quais bits do vetor ler.
+Na **consulta**, cada elemento passa pelas mesmas funções hash para identificar quais bits do vetor ler.
 Se algum dos índices apontados não estiver com um 1, como no caso do c, no exemplo, o elemento não pertence ao conjunto.
 Caso contrário, o filtro responderá que é possível que pertença.
 
-Mas quão bom é um filtro de Bloom na identificação do das sstables?
+Mas quão bom é um filtro de Bloom na identificação das sstables?
 O filtro será melhor se os bits 1 forem devidos a menos elementos mapeando para tal posição, pois se muitos elementos mapearem para a mesma posição, falsos positivos podem ocorrer.
 Assim, de outra forma, quais fatores influenciam na taxa de falsos positivos do filtro?
 

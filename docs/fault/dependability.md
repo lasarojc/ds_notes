@@ -5,7 +5,7 @@ Da necessidade de se poder depender de um sistema, surge a ideia de **dependabil
 Um pouco mais formalmente, dizemos que um componente $C$ **depende de um componente** $C'$ se a corretude do comportamento de $C$ depende da corretude do componente $C'$ e dizemos também que um componente é "**dependável**" (*dependable*) na medida em que outros podem depender dele.
 A dependabilidade é essencial aos componentes de sistemas distribuídos, pois como diz o ditado, uma corrente é tão forte quanto seu elo mais fraco.
 
-Esta propriedade por ser dividida em outras propriedades mais "simples":[^avizienis]
+Esta propriedade pode ser dividida em outras propriedades mais "simples":[^avizienis]
 
 * Disponibilidade (*Availability*) - Prontidão para uso.
 * Confiabilidade/Fiabilidade (*Reliability*) - Continuidade do serviço.
@@ -24,8 +24,8 @@ A **disponibilidade** (em inglês, ***availability***) especifica o quão pronto
     [NIST SP 800-59](https://doi.org/10.6028/NIST.SP.800-59), no termo Availability [44 U.S.C., Sec. 3542 (b)(1)(C))](https://www.gpo.gov/fdsys/granule/USCODE-2011-title44/USCODE-2011-title44-chap35-subchapIII-sec3542)
 
 Na prática, esta medida é dada como a percentagem de tempo que o sistema está disponível para uso e, embora qualquer percentagem seja válida, normalmente se usa valores muito próximos a 100% e descritos em termos de "noves".
-Por exemplo, três 9 quer disponibilidade de 99,9% e cinco 9 quer dizer 99,999%.
-A seguinte tabela resume o que significa na práticas os valores mais comuns de disponibilidade:[^daniels]
+Por exemplo, três 9 quer dizer disponibilidade de 99,9% e cinco 9 quer dizer 99,999%.
+A seguinte tabela resume o que significa na prática os valores mais comuns de disponibilidade:[^daniels]
 
 [^daniels]: [Availability Service Level 9’s And What they Equate To](https://web.archive.org/web/20180728204314/https://www.digitaldaniels.com/availability-service-level-9s-equate/)
 
@@ -47,14 +47,14 @@ Se você contratar algum serviço na nuvem, por exemplo, o fornecedor pode garan
 Os detalhes do que exatamente é considerado são especificados em um acordo de nível de serviço, ou SLA (do inglês, *service level agreement*).[^sla]
 O valor final da disponibilidade é dado pela seguinte fórmula, onde
 
-[^sla]: A SLA especifica, por exemplo, como a qualidade do serviço é medida, qual o nível de serviço almejado  (SLO, do inglês, *service level objetive*), e penalidades caso o SLO não seja alcançado.
+[^sla]: A SLA especifica, por exemplo, como a qualidade do serviço é medida, qual o nível de serviço almejado  (SLO, do inglês, *service level objective*), e penalidades caso o SLO não seja alcançado.
 
 * **Tempo de disponibilidade acordado** é o tempo que o serviço deve ficar no ar, de acordo com a SLA; e,
 * **Tempo de indisponibilidade** é o tempo que o serviço ficou fora do ar.
 
 
 $$
-\text{Disponbilidade} = \frac{\text{Tempo de disponibilidade acordado}-{\text{Tempo de indisponibilidade}}}{\text{Tempo de disponibilidade acordado}}
+\text{Disponibilidade} = \frac{\text{Tempo de disponibilidade acordado}-{\text{Tempo de indisponibilidade}}}{\text{Tempo de disponibilidade acordado}}
 $$
 
 
@@ -76,10 +76,10 @@ A frequência de falhas de um único componente é dada por $\lambda = \frac{1}{
 Calcular estas métricas para sistemas com múltiplos componentes, como um sistema distribuído, é possível mas requer uma imersão em probabilidade condicional.
 
 
-###### Manutenabilidde
+###### Manutenabilidade
 
 Manutenabilidade é uma medida da expectativa do quão rápido um sistema é reparado uma vez identificado sua falha.
-Uma manutenabilidade de 95% para 1 hora implica que com 95% de probabilidade chance o sistema voltará a estar funcional dentro de 1 hora.
+Uma manutenabilidade de 95% para 1 hora implica que com 95% de probabilidade o sistema voltará a estar funcional dentro de 1 hora.
 A manutenabilidade está intimamente ligada ao tempo médio de reparo (MTTR), mencionado acima.
 
 
@@ -109,12 +109,12 @@ Consideremos também apenas a confiabilidade, uma das componentes da dependabili
 Digamos que experimentos foram feitos em chips individuais e que assim se determinou que cada chip tem uma confiabilidade de 99%. Wow!
 Agora suponha que os chips foram organizados em série, isto é, que para que os dados de um chip sejam acessíveis e manipuláveis, os dados de todos os outros também devem estar acessíveis e manipuláveis.
 A probabilidade do sistema estar funcionando é a probabilidade de o primeiro da série estar funcionando, e o segundo da série estar funcionando, e o terceiro da série..., bem, você entendeu a ideia.
-Assim, se a sua configuração tem 10 chips, então a confiabilidade do conjunto é de $0,99^{10} = 0,9034$. Se fossem 20 chips, a confiabilidade seria de $0,99^{10} = 0,81$.
+Assim, se a sua configuração tem 10 chips, então a confiabilidade do conjunto é de $0,99^{10} = 0,9034$. Se fossem 20 chips, a confiabilidade seria de $0,99^{20} = 0,81$.
 
 ![](../drawings/reliability.drawio#0)
 
 Se os componentes estivessem ligados em paralelo, ou seja, propiciando formas redundantes de uso, o cálculo seria diferente.
-Neste caso, a probabilidade do sistema não estar funcional seria a probabilidade de nenhum deles estar funcional; dado que um componente não está funcional com probabilidade $1-0,99 = 0,01$, todos não estariam funcionais com probabilidade $0,01* 0,01 * 0,01 \ldots$. Já a probabilidade do sistema estar funcional, sua confiabilidade, é de 1 menos a probabilidade de não estar funcional, isto é, $1 - (0,01*0,01*0,01\ldots)$.
+Neste caso, a probabilidade do sistema não estar funcional seria a probabilidade de nenhum deles estar funcional; dado que um componente não está funcional com probabilidade $1-0,99 = 0,01$, todos não estariam funcionais com probabilidade $0,01 * 0,01 * 0,01 \ldots$. Já a probabilidade do sistema estar funcional, sua confiabilidade, é de 1 menos a probabilidade de não estar funcional, isto é, $1 - (0,01*0,01*0,01\ldots)$.
 Se forem 4 componentes, temos $1 - 0,01^4 = 0,9999999$.
 
 ![](../drawings/reliability.drawio#1)

@@ -1,6 +1,6 @@
 # Coordenação: Copycat 
 
-[Copycat](http://atomix.io/copycat/) é um arcabouço de replicação de máquinas de estados implementada pela [Atomix](http://atomix.io/).
+[Copycat](http://atomix.io/copycat/) é um arcabouço de replicação de máquinas de estados implementado pela [Atomix](http://atomix.io/).
 Na base do Copycat está uma implementação do Raft.
 Sobre o Raft, uma API simples mas moderna permite a criação de máquinas de estados usando **lambdas**, **futures**, e o estilo **fluent** de encadeamento de invocações.
 
@@ -117,14 +117,14 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ---------------------------------------
 ```
 
-Antes de começar a escrever suas prórpia máquinas de estado, familiarize-se com a estrutura do projeto em https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine
+Antes de começar a escrever suas próprias máquinas de estados, familiarize-se com a estrutura do projeto em https://github.com/pluxos/atomix_labs/tree/master/replication/src/main/java/atomix_lab/state_machine
 
 Observe que há três pastas: 
 
 * `type` - tipos dos dados mantidos pela replica (Edge e Vertex)  
-   Os tipos são serializable para que o Java saiba como transformá-los em bytes.
+   Os tipos são serializáveis para que o Java saiba como transformá-los em bytes.
 * `command` - estruturas que contêm informações para modificar os tipos  
-	Os comandos serão enviadas do cliente para o cluster e são naturalmente serializable.
+	Os comandos serão enviados do cliente para o cluster e são naturalmente serializáveis.
 * `client` - cria comandos e os envia para serem executados no cluster  
 	Respostas podem ser esperadas síncrona ou assincronamente.
 * `server` - recebe os comandos na ordem definida pelo Raft e os executa
@@ -134,7 +134,7 @@ O projeto foi construído seguindo as instruções no tutorial mencionado antes,
 * crie um projeto maven  
 	eclipse tem template para isso
 * adicione dependências no `pom.xml`  
-	como so criei um projeto, coloquei as dependências tanto do cliente quando do servidor
+	como só criei um projeto, coloquei as dependências tanto do cliente quanto do servidor
 * defina `Command` que modifiquem o estado das réplicas
 * defina `Queries` que consultem o estado das réplicas
 * implemente a réplica para lidar com os comandos
@@ -145,9 +145,9 @@ Para executar um servidor, você precisa passar diversos parâmetros
 
 * identificador do processo (inteiro)
 * IP do processo com identificador 0
-* porta do processo com identificar 0
+* porta do processo com identificador 0
 * IP do processo com identificador 1
-* porta do processo com identificar 1
+* porta do processo com identificador 1
 * ...
 
 Sabendo seu identificador, o servidor sabe em qual porta escutar e em quais IP/porta se conectar para se comunicar com os outros servidores.
@@ -289,7 +289,7 @@ Nesta classe, iremos criar um objeto `RaftClient` que será usado para enviar op
 Esta classe é importada juntamente com outras várias dependências, adicionadas no `pom.xml`, que devemos instanciar antes do `RaftClient`.
 
 Neste exemplo eu coloco praticamente todos os parâmetros de configuração do Ratis *hardcoded* para simplificar o código.
-Obviamente que voce deveria ser estes parâmetros como argumentos para o programa ou de um arquivo de configuração.
+Obviamente, você deveria passar estes parâmetros como argumentos para o programa ou lê-los de um arquivo de configuração.
 
 ```java
 import org.apache.ratis.client.RaftClient;
@@ -309,12 +309,12 @@ public class Cliente
 {
 ```
 
-O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um mesmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente caracteres, o que soma 32 bytes em java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
+O campo `raftGroupId` identifica um cluster Ratis; isso quer dizer que um mesmo processo pode participar de vários *clusters*, mas aqui nos focaremos em apenas um. O valor do campo deve ter exatamente 16 caracteres, o que soma 32 bytes em Java, e será interpretado como um [UUID](https://pt.wikipedia.org/wiki/Identificador_%C3%BAnico_universal).
 
 `id2addr` é um mapa do identificador de cada processo no cluster para seu endereço IP + Porta.
-Aqui usei várias portas distintas porquê todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IP distintos, poderia usar a mesma porta em todos.
+Aqui usei várias portas distintas porque todos os processos estão rodando na mesma máquina, mas se estivesse executando em máquinas distintas, com IPs distintos, poderia usar a mesma porta em todos.
 
-`addresses` é uma lista de `RaftPeer` construída a parti de `id2addr`.
+`addresses` é uma lista de `RaftPeer` construída a partir de `id2addr`.
 
 O campo `raftGroup` é uma referência a todos os servidores, associados ao identificador do grupo, `raftGroupId`.
 
@@ -360,7 +360,7 @@ Já a operação `get:k` recupera o valor `v` associado à chave `k`, se present
 O método `RaftClient.io().send` é usado para enviar modificações para as réplicas e deve, necessariamente, passar pelo protocolo Raft.
 Já o método `RaftClient.io().sendReadOnly` é usado para enviar consultas a qualquer das réplicas.
 Ambos os métodos codificam o comando sendo enviado (`add:k:v` ou `get:k`) no formato interno do Ratis para as réplicas e retorna um objeto `RaftClientReply`, que pode ser usado para pegar a resposta da operação. 
-O código é auto explicativo.
+O código é autoexplicativo.
 
 ```java
         RaftClientReply getValue;
@@ -397,7 +397,7 @@ O código é auto explicativo.
 }
 ```
 
-Um vez criado o cliente, crie a classe `Servidor`, no arquivo `Servidor.java`; a parte inicial do código é semelhante à do cliente.
+Uma vez criado o cliente, crie a classe `Servidor`, no arquivo `Servidor.java`; a parte inicial do código é semelhante à do cliente.
 
 ```java
 import org.apache.ratis.conf.RaftProperties;
@@ -498,8 +498,8 @@ public class MaquinaDeEstados extends BaseStateMachine
 
 Por enquanto, ignoraremos o armazenamento do estado em disco, mantendo-o simplesmente em memória no campo `key2values`, e simplesmente implementaremos o processamento de comandos, começando pela implementação do método `query`.
 
-Este método é reponsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método `RaftClient::sendReadOnly`. A única `query` no nosso sistema é o `get`.
-No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado em quebrado em operação (`get`) e chave , usando `:` como delimitador.
+Este método é responsável por implementar operações que não alteram o estado da máquina de estados, enviadas com o método `RaftClient::sendReadOnly`. A única `query` no nosso sistema é o `get`.
+No código, o conteúdo da requisição enviada pelo cliente deve ser recuperado e quebrado em operação (`get`) e chave, usando `:` como delimitador.
 Recuperado o valor associado à chave, o mesmo é colocado em um `CompletableFuture` e retornado.
 
 ```java
@@ -516,7 +516,7 @@ Recuperado o valor associado à chave, o mesmo é colocado em um `CompletableFut
 ```
 
 O método `applyTransaction` implementa operações que alteram o estado, como `add`, enviadas com o método `RaftClient::send`. 
-Da mesma forma que em `get`, a operação deve ser recuperada em quebrada em operação (`add`), chave e valor, usando `:` como delimitador.
+Da mesma forma que em `get`, a operação deve ser recuperada e quebrada em operação (`add`), chave e valor, usando `:` como delimitador.
 
 ```java
 
@@ -537,7 +537,7 @@ Da mesma forma que em `get`, a operação deve ser recuperada em quebrada em ope
 ```
 
 Pronto, você já tem uma máquina de estados replicada, bastando agora apenas compilá-la e executá-la.
-Para compilar, de raiz do projeto execute o comando `mvn package`. 
+Para compilar, da raiz do projeto execute o comando `mvn package`. 
 A primeira vez que faz isso pode demorar um pouco pois várias dependências são baixadas da Internet.
 Ao final da execução do comando você deveria ver algo semelhante ao seguinte
 

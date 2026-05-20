@@ -8,15 +8,15 @@ Redes de computadores podem ter diversas topologias e características, por exem
 | **Roteamento**          | Trivial        | Complexo                 | Simples    |
 | **# Conexões**      | Exponencial    | Linear                   | Linear     |
 
-Nas redes atuais, pode se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**, mesmo que este esteja por vezes escondido.
+Nas redes atuais, pode-se dizer que o meio mais utilizado é provido pela arquitetura **Ethernet**, que trata da comunicação entre nós usando um **barramento compartilhado**, mesmo que este esteja, por vezes, escondido.
 Sobre este meio, são usados protocolos para, por exemplo,
 
 * Controle de acesso ao meio 
 * Transmissão de mensagens
 * Evitar e tratar colisões
 
-As redes Ethernet, contudo, cobrem pequenas áreas e, para se ter conversas mais "abrangentes", é necessário que se conecte diversas destas redes.
-A conversa então é feita por meio de intermediários, ***gateways*** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro.
+As redes Ethernet, contudo, cobrem pequenas áreas e, para que se tenham conversas mais abrangentes, é necessário que se conectem diversas dessas redes.
+A conversa, então, é feita por meio de intermediários, ***gateways*** que conectam duas ou mais redes, permitindo que mensagens de um interlocutor sejam **roteadas** para o outro.
 
 ???todo "Gateway"
     Drawing.
@@ -32,13 +32,13 @@ Um exemplo interessante das questões ligadas à manutenção da conversa entre 
 
 Outro fator importante é a **unidade máxima de transmissão** (*maximum transmission unit*, MTU), o tamanho máximo de um pacote em determinada rede. 
 É necessário entender que qualquer quantidade de dados maior que o MTU precisará ser dividida em múltiplos pacotes. 
-Também é importante perceber que redes são heterogêneas, e que o vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
+Também é importante perceber que redes são heterogêneas, e que vários segmentos no caminho entre origem e destino podem ter MTU diferentes, levando à fragmentação de pacotes em trânsito e, possivelmente, entrega desordenada dos mesmos.
 
 ???todo "Fragmentação"
     Drawing.
 
 
-Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve garantir ou não que algo "dito" por um interlocutor deve garantidamente ser "ouvido" pelo outro, ou se a **mensagem pode ser perdida** no meio.
+Finalmente, há uma questão importante relativa à confiabilidade na transmissão dos elementos da conversa, isto é, se a rede deve ou não assegurar que algo "dito" por um interlocutor seja efetivamente "ouvido" pelo outro, ou se a **mensagem pode ser perdida** no meio.
 
-Felizmente boa parte da **complexidade da resolução destas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, cabendo-lhe apenas a decisão de qual protocolo utilizar.
+Felizmente, boa parte da **complexidade da resolução dessas questões é abstraída do desenvolvedor dos sistemas distribuídos**, isto é, você, cabendo-lhe apenas a decisão de qual protocolo utilizar.
 Nas redes atuais, a conversa entre componentes será feita, em algum nível, por meio dos protocolos da arquitetura **Internet**.

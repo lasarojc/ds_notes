@@ -41,13 +41,13 @@ Brokers
 Tópicos
 
 *  Nome de uma stream de dados: ordem de serviço, exame de sangue, MSFT
-*  Quantidade pode ser imensa.
+*  A quantidade pode ser imensa.
 
 
 Partição
 
 *  Subdivisões de tópicos
-*  Número de partições é definido por usuário
+*  Número de partições é definido pelo usuário
 *  Cada partição está associada a um único servidor
 
 
@@ -62,12 +62,12 @@ Offset
 
 Consumer group
 
-*  Carga pode ser muito grande para um consumidor
+*  A carga pode ser muito grande para um consumidor
 *  Compartilham o processamento de um tópico
 *  Cada mensagem é processada por um membro do grupo
 *  A mesma mensagem pode ser processada por múltiplos grupos
 *  Número de consumidores $\leq$ partições no tópico
-*  Máximo de dois consumidores por partição (mantem pos. de cada um)
+*  Máximo de dois consumidores por partição (mantém a posição de cada um)
 
 
 ![](../images/kafka5.png)
@@ -80,7 +80,7 @@ Siga o [tutorial](http://kafka.apache.org/quickstart), até o passo 5.
 *  Rode o Kafka (Terminal 2)
 *  Crie um tópico (Terminal 3) - 
 		Mais de uma partição em um servidor
-* Conecte-se ao Zookeeper e dê uma olhada. O que está vendo?
+* Conecte-se ao Zookeeper e dê uma olhada. O que você está vendo?
 *  Liste os tópicos criados
 *  Envie algumas mensagens
 *  Inicie um consumidor (Terminal 4)
@@ -109,7 +109,7 @@ Líder e Seguidor
 *  Líder replica dados para seguidores.
 
 Replicar
-* Passo 6  ensina a criar um sistema com múltiplos brokers.
+* Passo 6 ensina a criar um sistema com múltiplos brokers.
 
 *  Identificador
 *  Porta (mesmo servidor)

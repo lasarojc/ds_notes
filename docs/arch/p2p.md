@@ -1,6 +1,6 @@
 # Sistemas Peer-2-Peer
 
-Nesta seção, nos aprofundaremos no estudo de sistemas P2P, começando pelo fato de que seus componentes se organizam em redes lógica, sobrepostas à rede física.
+Nesta seção, nos aprofundaremos no estudo de sistemas P2P, começando pelo fato de que seus componentes se organizam em redes lógicas, sobrepostas à rede física.
 
 
 ## Rede Sobreposta (*Overlay*)
@@ -9,7 +9,7 @@ Nesta rede lógica, os processos estabelecem canais de comunicação tipicamente
 Por serem ignorantes à topologia física da rede e usarem a pilha de comunicação IP, as redes sobrepostas são mais simples e ao mesmo tempo mais poderosas. 
 Nestas redes são executados diversos algoritmos, como de descoberta de nós, roteamento de pacotes e de otimização de rotas pelo descarte e criação de conexões.
 
-Uma vez que as **conexões na rede sobreposta não correspondem a conexões físicas**, como se pode ver na seguinte figura, vizinhos em um rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
+Uma vez que as **conexões na rede sobreposta não correspondem a conexões físicas**, como se pode ver na seguinte figura, vizinhos em uma rede sobreposta não necessariamente correspondem a vizinhos na rede física e vice-versa.
 Isto também implica que a **otimização da rota lógica não necessariamente leva à otimização da rota física**.
 
 [![Por Gustavo Lacerda - UFRJ, Domínio público](../images/overlay.jpg)](https://pt.wikipedia.org/wiki/Peer-to-peer#/media/Ficheiro:Overlay_p2p.jpg)
@@ -20,7 +20,7 @@ Dependendo em como esta rede é organizada (ou não), a mesma é classificada co
 ###### Rede Não-Estruturada
 
 Se a rede sobreposta é construída de forma aleatória, por exemplo deixando os nós se conectarem apenas aos vizinhos na rede no ponto em que se conectaram inicialmente, então esta é denominada uma rede **não-estruturada**. 
-A figura a seguir é um exemplo que se percebe que nós tem graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
+A figura a seguir é um exemplo que se percebe que nós têm graus diferentes de conectividade e que não estão particularmente organizados em nenhuma topologia.
 
 [![Não-estruturada](../images/unstructured.png)](http://gossple2.irisa.fr/~akermarr/LSDS-EPFL-unstructured.pdf)
 
@@ -76,7 +76,7 @@ Distâncias entre nós são medidas como a soma das distâncias em $x$ mais a di
 
 ![Grade NxN](../drawings/estruturada.drawio#0)
 
-Suponha que cada divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
+Suponha que cada nó divida a organização da topologia em dois módulos, um de descoberta de novos nós e outro de seleção.
 
 ![](../images/02-10.png)
 
@@ -84,7 +84,7 @@ O módulo de descoberta leva inicialmente ao estabelecimento de conexões aleat�
 
 ![Grade NxN](../drawings/estruturada.drawio#1)
 
-Após as conexões inicias, cada um dos nós executa o seguinte protocolo iteradamente.
+Após as conexões iniciais, cada um dos nós executa o seguinte protocolo iteradamente.
 
 * O módulo de descoberta, repetidamente, pergunta aos seus vizinhos quem são os seus vizinhos e se conecta aos mesmos.
 * O módulo de seleção computa a distância entre o nó e todos os seus vizinhos e descarta as conexões com maior distância.
@@ -94,13 +94,13 @@ Se a rede não for completa ou se menos conexões forem mantidas, uma aproximaç
 
 ![Grade NxN](../drawings/estruturada.drawio#2)
 
-A seguinte figura apresenta uma outra rede resultada da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.
+A seguinte figura apresenta uma outra rede resultante da aplicação do mesmo princípio, mas em uma "grade" com três dimensões.
 
 [![Fujitsu and RIKEN, 2009](../images/3d-torus.jpg)](https://clusterdesign.org/torus/)
 
 Se em vez da distância cartesiana fosse usada a distância de Hamming entre os identificadores dos nós, ao final das iterações, a topologia alcançada seria um hyper-cubo, como os da seguinte figura,[^hyper] no qual diversos [esquemas de roteamento eficientes podem ser usados](https://en.wikipedia.org/wiki/Hypercube_internetwork_topology).[^icpc_hyper]
 
-[^hyper]: No caso da grade 4x4, a o hipercubo é topologicamente igual à rede obtida pela distância cartesiana como mostrado no exemplo acima.
+[^hyper]: No caso da grade 4x4, o hipercubo é topologicamente igual à rede obtida pela distância cartesiana como mostrado no exemplo acima.
 
 [^icpc_hyper]: Neste [problema](https://icpcarchive.ecs.baylor.edu/external/22/2271.pdf) do ICPC, um esquema de nomeação dos nós de um hypercube é apresentado; usando este esquema, derive um algoritmo de roteamento em que a distância percorrida por qualquer mensagem seja sempre igual ao número de dimensões do cubo.
 
@@ -109,7 +109,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 !!! info inline end "Sistemas P2P"
     * Arquitetura decentralizada;
-    * Não há distinção de papéis entre nós ou conjuntos de nós desempenham os mesmos papéis, em parceria;
+    * Não há distinção de papéis entre nós, ou conjuntos de nós desempenham os mesmos papéis, em parceria;
     * Escalabilidade geográfica global, isto é, com nós espalhados por todo o globo;
     * Pode haver entrada e saída de nós do sistema com alta frequência; 
     * Nós se organizam em redes sobrepostas (em inglês, *overlay*), redes lógicas sobre as redes físicas;
@@ -122,7 +122,7 @@ Se em vez da distância cartesiana fosse usada a distância de Hamming entre os 
 
 A versatilidade dos sistemas P2P os levaram a ser amplamente estudados e aplicados, sendo que entre as aplicações mais bem sucedidas estão as Tabelas de Espalhamento Distribuídas (DHT, do inglês, *Distributed Hash Tables*).
 
-As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) tem características que a tornam adequadas ao armazenamento de dados a vários cenários.
+As tabelas de espalhamento (também conhecidas como mapas, dicionários, arrays associativos) têm características que as tornam adequadas ao armazenamento de dados em vários cenários.
 Em essência, estas tabelas são funções que **mapeiam** uma chave para um valor, uma função $f$ tal que
 
 * $f(K): V \cup \{null\}$
@@ -150,14 +150,14 @@ Tanto $K$ quanto $V$ são **blobs** de dados, isto é, sem nenhuma forma distint
          * else return $null$
     * execução $O(1)$
 
-Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porquê ela poderia ser **tolerante a falhas** e ter **escalabilidade linear**.
-É justamente desta idea que surgem as DHT, literalmente tabelas de espalhamento distribuídas, estruturas de dados que mantém **a mesma API** e funcionalidades de tabelas de espalhamento, mas que **agrega capacidades de diversos hosts**.
+Se as tabelas de espalhamento são estruturas de dados úteis, uma versão distribuída seria ainda mais útil, principalmente porque ela poderia ser **tolerante a falhas** e ter **escalabilidade linear**.
+É justamente desta ideia que surgem as DHT, literalmente tabelas de espalhamento distribuídas, estruturas de dados que mantêm **a mesma API** e funcionalidades de tabelas de espalhamento, mas que **agregam capacidades de diversos hosts**.
 
 Dentre os desafios na implementação de uma DHT estão
 
 * O que usar como chave? Uma DHT deve ser versátil para ser utilizada para vários fins, então a chave precisa ser independente da aplicação.
 * Como dividir a carga entre hosts? É preciso balancear a carga para que um lado da rede não se torne mais importante que o outro e para não levar a uma hierarquização entre os nós.
-* Como rotear requisições para o host correto? Uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade, como encontrar o nó onde determinado dado está or deveria estar?
+* Como rotear requisições para o host correto? Uma vez que os dados devem ser particionados entre hosts para garantir escalabilidade, como encontrar o nó onde determinado dado está ou deveria estar?
 
 ###### Identificação
 

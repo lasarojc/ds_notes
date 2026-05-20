@@ -1,13 +1,13 @@
 # Modelos
 Agora que já estão convencidos de que não temos alternativas à distribuição, que conhecem algumas das arquiteturas e tecnologias usadas, vamos dar um passo para trás para entendermos os fundamentos necessários à criação de sistemas escaláveis e tolerantes a falhas.
-Comecemos por consider um problema abstrato, que pode ser mapeado para um problema de computação distribuída.
+Comecemos por considerar um problema abstrato, que pode ser mapeado para um problema de computação distribuída.
 
 ## Uma história de três exércitos
 **Era uma vez** uma cidade estado no alto de uma montanha, que era invejada pelos habitantes das cidades vizinhas pelo seu magnífico pôr-do-sol, perfeito para se "instagramar".
 A cidade era muito bem fortificada, contudo, e dizia-se que ela poderia se defender de qualquer **ataque em uma única frente**, mas que se atacada em **duas frentes**, cairia.
-Sabendo disso, os reis de duas as cidades vizinhas juntaram forças, seus **dois exércitos**,  para tentar tomar a cidade. No comando dos dois exércitos, Alice e Bastião.[^2generalsparadox]
+Sabendo disso, os reis das duas cidades vizinhas juntaram forças, seus **dois exércitos**,  para tentar tomar a cidade. No comando dos dois exércitos, Alice e Bastião.[^2generalsparadox]
 
-[^2generalsparadox]: Esta é uma variação do problema de coordenação de *gangsters* apresentado no em [Some constraints and trade-offs in the design of network communications](https://doi.org/10.1145%2F800213.806523)
+[^2generalsparadox]: Esta é uma variação do problema de coordenação de *gangsters* apresentado em [Some constraints and trade-offs in the design of network communications](https://doi.org/10.1145%2F800213.806523)
 
 ![Paradoxo dos 2 Generais](../drawings/2generals.drawio#0)
 
@@ -33,7 +33,7 @@ E o problema se repete indefinidamente.
     * $A$ e $B$ devem concordar na hora do ataque.
 	* $A$ ataca se estiver certo que $B$ atacará.
 	* $B$ ataca se estiver certo que $A$ atacará.
-	* A comunicação por troca de mensagens.
+	* A comunicação é feita por troca de mensagens.
        * Mensagens podem ser arbitrariamente atrasadas.
 	   * Mensagens podem ser perdidas.
 	
@@ -44,7 +44,7 @@ Em uma execução em que todas as $n$ mensagens possíveis são usadas, suponha 
 
 ![Paradoxo dos 2 Generais](../drawings/2generals.drawio#1)
 
-Observe que, do ponto de vista de Alice, uma execução do algoritmo em que a nenhuma mensagem é perdida, é indistinguível de uma execução em que a $n$-ésima mensagem é perdida.
+Observe que, do ponto de vista de Alice, uma execução do algoritmo em que nenhuma mensagem é perdida, é indistinguível de uma execução em que a $n$-ésima mensagem é perdida.
 
 ![Paradoxo dos 2 Generais](../drawings/2generals.drawio#2)
 
@@ -61,14 +61,14 @@ A resposta está no que consideramos como premissas válidas no ambiente em que 
 
 
 ## Impossibilidades
-Quando dizemos que é impossível resolver um problema não queremos dizer que é impossível resolver o problem em quaisquer circunstâncias, mas apenas nas circunstâncias nas quais a prova foi feita.
+Quando dizemos que é impossível resolver um problema não queremos dizer que é impossível resolver o problema em quaisquer circunstâncias, mas apenas nas circunstâncias nas quais a prova foi feita.
 
 No caso do exemplo anterior, a impossibilidade implica que é impossível produzir um algoritmo que **sempre levará a uma resposta correta** com um número finito de mensagens, como havia sido assumido.
 Isto quer dizer, excluindo-se algoritmos que sempre levarão a respostas incorretas, ainda podemos produzir algoritmos que ou às vezes **levarão a respostas incorretas** ou que, mesmo que nunca levem a respostas incorretas, às vezes **não levarão a respostas** alguma; ambos podem ser úteis na prática.
 
 Por exemplo, ainda no problema dos três exércitos tentando tomar a cidade, suponha que em vez de mandar um único mensageiro com a ordem de ataque, Alice envie 100, ou 200, ou 1000.
 A **confiança** de Alice de que Bastião também atacaria, seria muito maior e não precisaria receber uma confirmação de entrega de mensagens.
-Esta abordagem faria com com que o ataque funcionasse com uma **alta probabilidade** $P$, mas com uma pequena probabilidade $P-1$ de levar a um ataque fracassado, onde $P$ pode ser feita **tão grande quanto se "queira"**.
+Esta abordagem faria com que o ataque funcionasse com uma **alta probabilidade** $P$, mas com uma pequena probabilidade $1-P$ de levar a um ataque fracassado, onde $P$ pode ser feita **tão grande quanto se "queira"**.
 
 Resultados de impossibilidade abundam na área de computação distribuída[^impossibilidades] e não podem nos desencorajar de continuar a buscar soluções práticas.
 Frequentemente a solução está em identificar premissas mais "amigáveis" que possam ser assumidas e, com isso, enfraquecer o problema.

@@ -27,12 +27,12 @@ graph LR
 
 
 transacionais.
-Isto é, eles provêem as garantias na execução de transações conhecidas como propriedades ACID.
+Isto é, eles proveem as garantias na execução de transações conhecidas como propriedades ACID.
 
 !!!note "ACID"
     * Atomicidade: transações são tratadas de forma indivisível, isto é, ou tudo ou nada.
     * Consistência: transações levam banco de um estado consistente a outro. E.g., `x == 2*y`
-    * Isolamento: transações não vêem dados não comitados umas das outras.
+    * Isolamento: transações não veem dados não comitados umas das outras.
     * Durabilidade: os efeitos de uma transação comitada devem persistir no sistema a despeito de falhas.
 
 
@@ -45,7 +45,7 @@ Para relembrar no que implica ACID, considere a seguinte sequência de operaçõ
 4: SET X=c
 5: SET Y=b
 ```
-Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações escalonadas da seguinte forma.
+Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que as operações são escalonadas da seguinte forma.
 
 ```
    T1                T2
@@ -62,7 +62,7 @@ Suponha duas instâncias desta sequência, $T_1$ e $T_2$, concorrentes, em que a
 ```
 
 Ao final da execução, X terá o valor atribuído por $T_2$, mas $Y$ terá o valor de $T_1$. 
-Este escalonamento violou a **consistência** do banco de dados por quê as operações não foram executadas **isoladamente**.
+Este escalonamento violou a **consistência** do banco de dados porque as operações não foram executadas **isoladamente**.
 
 
 

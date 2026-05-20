@@ -6,7 +6,7 @@
     * Área extremamente ativa
     * Diferencial
 
-As áreas ligadas ao desenvolvimentos de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e tem atraído mais e mais profissionais, mais ou menos qualificados, tornando este **mercado cada vez mais competitivo**.
+As áreas ligadas ao desenvolvimento de sistemas computacionais, como Ciência e Engenharia de Computação e Sistemas de Informação, estão extremamente em voga e têm atraído mais e mais profissionais, mais ou menos qualificados, tornando este **mercado cada vez mais competitivo**.
 Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é um dos tópicos mais "quentes" e ter conhecimentos específicos desta subárea pode ser uma excelente vantagem e forma de se destacar de seus colegas e competidores.
 
 ???- info inline end "Fundamental a outras áreas"
@@ -14,7 +14,7 @@ Dentro destas grandes áreas, o desenvolvimento de **sistemas distribuídos** é
     * Ciência de dados
     * Computação gráfica
 
-Se estiver se perguntando do que estou falando, sobre como posso dizer que é quente uma área sobre a qual talvez você nunca tenha ouvido falar, ao contrário de áreas como [**aprendizado de máquina**]() e [**ciência de dados**](), então deixe-me explicar o que quero dizer. Sem o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais.
+Se estiver se perguntando do que estou falando, de como posso dizer que é quente uma área sobre a qual talvez você nunca tenha ouvido falar, ao contrário de áreas como [**aprendizado de máquina**]() e [**ciência de dados**](), então deixe-me explicar o que quero dizer. Sem o desenvolvimento da teoria da **computação distribuída**, na forma do estudo de algoritmos e técnicas de implementação, e sua colocação em prática, na forma do desenvolvimento de sistemas distribuídos, nenhum desenvolvimento sério destas outras áreas, sedentas por desempenho, escalaria para problemas reais.
 Veja, por exemplo, a seguinte descrição dos *skills* necessários para se atuar como [cientista de dados](https://www.quora.com/What-skills-are-expected-from-a-data-engineer-not-a-data-scientist) ou como engenheiro de software no [Facebook](https://www.facebook.com/facebookcareers/videos/1747855735501113/).
 É fato que aplicações distribuídas já são parte inexpurgável da infraestrutura computacional que usamos para resolver os mais diversos problemas.
 
@@ -34,10 +34,10 @@ Isso, de uma forma muito direta e mais simples de digerir que as fontes onde me 
     * Cenário atual
 
 
-Neste curso apresentaremos uma visão geral do que são sistemas distribuídos, porquês técnicos para os desenvolvermos e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
+Neste curso apresentaremos uma visão geral do que são sistemas distribuídos, as razões técnicas para desenvolvê-los e como fazê-lo, com uma forte componente prática, por meio do desenvolvimento de um projeto com (um dos) pés na realidade.
 Faremos isso começando por uma revisão de conceitos de redes de computadores e sistemas operacionais enquanto falamos sobre a arquitetura mais fundamental de computação distribuída, Cliente/Servidor, e de como é usada para implementar um proto banco de dados distribuído, uma Tabela de Espalhamento Distribuída em memória.
-À medida em que apresentamos problemas com o modelo assumido inicialmente e com nossa implementação inicial, buscaremos por soluções enquanto introduzimos novas abstrações, mais poderosas e mais complexas.
-Ao final desta jornada, teremos fundamentado a construção de uma Tabela de Espalhamento Distribuído com particionamento de dados entre nós, usando protocolos par-a-par e replicação de máquinas de estados.
+À medida que apresentamos problemas com o modelo assumido inicialmente e com nossa implementação inicial, buscaremos por soluções enquanto introduzimos novas abstrações, mais poderosas e mais complexas.
+Ao final desta jornada, teremos fundamentado a construção de uma Tabela de Espalhamento Distribuída com particionamento de dados entre nós, usando protocolos par-a-par e replicação de máquinas de estados.
 Em paralelo, teremos estudado diversos *frameworks* de computação distribuída atuais, como modelo ou bloco de construção para a resolução de nossos problemas.
 Em resumo, durante este curso você irá:
 
@@ -61,9 +61,9 @@ Quando iniciarmos nosso estudo, falaremos sobre *sockets* como forma de comunica
 Ao falarmos de *sockets*, seremos naturalmente obrigados a discutir a arquitetura **cliente/servidor**, antes mesmo de falarmos de arquiteturas.
 Quando falarmos em arquiteturas, falaremos sobre sistemas P2P e de como, nestes sistemas, processos são organizados de forma plana em vez de hierárquica.
 Ao falarmos sobre P2P, seremos forçados a mencionar seus representantes mais relevantes atualmente, os bancos de dados NOSQL, isto antes mesmo de falarmos sobre sistemas de bancos de dados distribuídos.
-Mais tarde, quando voltar a falar sobre bancos de dados distribuídos, nos focaremos não na arquitetura dos bancos de dados, mas como bancos de dados são vistos pelos outros componentes do sistema distribuído. Isto é, nos focaremos nos contratos que levam os bancos de dados a se comportem da maneira que esperamos que se comportem, ou não.
+Mais tarde, quando voltar a falar sobre bancos de dados distribuídos, nos focaremos não na arquitetura dos bancos de dados, mas como bancos de dados são vistos pelos outros componentes do sistema distribuído. Isto é, nos focaremos nos contratos que levam os bancos de dados a se comportar da maneira que esperamos que se comportem, ou não.
 Finalmente, quando discutirmos como o banco implementa os contratos, seremos conduzidos a falar sobre *locks* distribuídos e problemas de acordo, abstrações que terão sido discutidas anteriormente.
-O ponto aqui é todos os tópicos acabam sendo fortemente relacionados uns com os outros e mesclar o que estudamos de forma consistente é um processo iterativo.
+O ponto aqui é que todos os tópicos acabam sendo fortemente relacionados uns com os outros e mesclar o que estudamos de forma consistente é um processo iterativo.
 
 
 ## Convenções
@@ -74,8 +74,8 @@ Neste documento, usamos diversos recursos visuais com diferentes propósitos.
 * **negrito** indica a introdução de termos e conceitos importantes, como **escalabilidade** e **falha**.
 * Apontadores indicam um sítio relacionado ao termo, por exemplo, como criar um repositório no [Github](http://github.com), e cuja leitura é sugerida ao final da aula.
 * Notas de rodapé, indicam uma observação importante sobre o que está sendo apresentado, cuja leitura é sugerida ao final do parágrafo.[^foot] Estas notas incluem referenciais teóricos importantes, com detalhes da publicação e apontadores para onde a publicação pode ser lida, por exemplo, para o livro Distributed Systems: Principles and Paradigms[^dspp] no qual estas notas são fortemente baseadas; este uso deverá ser migrado para uma forma mais canônica de referências.
-* Imagens não autorais são também apontadores para onde são encontradas e tem como texto alternativo as informações da autoria.
-* Caixas alinhadas à esquerda são usadas para várias finalidades. Por exemplo, para apresentar exercícios, destacar especificações, apontar tarefas a serem executas por mim... Os diversos usos são indicados nos ícones e cores das caixas.
+* Imagens não autorais são também apontadores para onde são encontradas e têm como texto alternativo as informações da autoria.
+* Caixas alinhadas à esquerda são usadas para várias finalidades. Por exemplo, para apresentar exercícios, destacar especificações, apontar tarefas a serem executadas por mim... Os diversos usos são indicados nos ícones e cores das caixas.
     
     !!!exercise "Exercício"
         Isso é um exercício!
@@ -97,7 +97,7 @@ Neste documento, usamos diversos recursos visuais com diferentes propósitos.
 ## Agradecimentos
 
 Agradeço ao Prof. Paulo R. S. L. Coelho pelas diversas contribuições feitas a este texto.
-Agradeço também aos diversos alunos estão sempre, gentilmente, apresentando oportunidades de melhorias. Caso queira sugerir correções, faça um *pull request* apontando a correção no *branch* main, a partir do qual eu atualizarei o HTML.
+Agradeço também aos diversos alunos que estão sempre, gentilmente, apresentando oportunidades de melhorias. Caso queira sugerir correções, faça um *pull request* apontando a correção no *branch* main, a partir do qual eu atualizarei o HTML.
 
 ???todo "TODO"
     * Adicionar guia de sugestões.

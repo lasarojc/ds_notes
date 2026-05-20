@@ -1,8 +1,8 @@
 
 # RPC: gRPC
 
-gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usando internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
-Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre encubado pela Cloud Native Computing Foundation.
+gRPC é um framework para invocação remota de procedimentos multi-linguagem e sistema operacional, usado internamente pelo Google há vários anos para implementar sua arquitetura de micro-serviços.
+Inicialmente desenvolvido pelo Google, o gRPC é hoje de código livre incubado pela Cloud Native Computing Foundation.
 
 O sítio [gRPC.io](https://grpc.io) documenta muito bem o gRPC, inclusive os [princípios](https://grpc.io/blog/principles/) que nortearam seu projeto.
 
@@ -16,7 +16,7 @@ No caso do **Java**, **não há instalação propriamente dita**.
 
 #### Exemplo Java
 
-Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello word" do RPC.
+Observe que o repositório base apontado no tutorial serve de exemplo para diversas linguagens e diversos serviços, então sua estrutura é meio complicada. Nós nos focaremos aqui no exemplo mais simples, uma espécie de "hello world" do RPC.
 
 ##### Pegando o código
 
@@ -35,7 +35,7 @@ git checkout v1.42.1
 
 ##### Compilando e executando
 
-O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para, use o *wrapper* do gradle como se segue.
+O projeto usa [gradle](https://gradle.org/) para gerenciar as dependências. Para compilar, use o *wrapper* do gradle como se segue.
 
 
 ```bash
@@ -51,7 +51,7 @@ cd grpc-java/examples
     ./gradlew -Dhttp.proxyHost=proxy.ufu.br -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.ufu.br -Dhttps.proxyPort=3128 installDist
     ```
 
-Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiros temos que executar o servidor.
+Como quando usamos sockets diretamente, para usar o serviço definido neste exemplo, primeiro temos que executar o servidor.
 
 ```bash
 ./build/install/examples/bin/hello-world-server
@@ -90,12 +90,12 @@ A mensagem `HelloRequest` tem apenas um campo denominado `name`, do tipo `string
 
 A mensagem `HelloReply` também tem um campo do tipo `string`, denominado `message`, que conterá a resposta do servidor.
 
-O serviço disponível é definido pela palavra chave `service`e de nome `Greeter`; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.
+O serviço disponível é definido pela palavra-chave `service` e de nome `Greeter`; é importante entender que este nome será usado em todo o código gerado pelo compilador gRPC e que se for mudado, todas as referências ao código gerado devem ser atualizadas.
 
 O serviço possui apenas uma operação, `SayHello`, que recebe como entrada uma mensagem `HelloRequest` e gera como resposta uma mensagem `HelloReply`.
-Caso a operação precisasse de mais do que o conteúdo de `name` para executar, a mensagem `HelloRequest` deveria ser estendida, pois não há passar mais de uma mensagem para a operação.
+Caso a operação precisasse de mais do que o conteúdo de `name` para executar, a mensagem `HelloRequest` deveria ser estendida, pois não é possível passar mais de uma mensagem para a operação.
 Por outro lado, embora seja possível passar zero mensagens, esta não é uma prática recomendada.
-Isto porquê caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
+Isto porque caso o serviço precisasse ser modificado no futuro, embora seja possível estender uma mensagem, não é possível modificar a assinatura do serviço. 
 Assim, caso não haja a necessidade de se passar qualquer informação para a operação, recomenda-se que seja usada uma mensagem de entrada vazia, que poderia ser estendida no futuro.
 O mesmo se aplica ao resultado da operação.
 
@@ -126,15 +126,15 @@ service Greeter {
 ...
 ```
 
-Observe que a nova operação recebe como entrada  mensagens `OlaRequest` e `OlaReply`, que tem definições exatamente iguais a `HellorRequest` e `HelloReply`.
-Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não será necessário tocar o restante do serviço.
+Observe que a nova operação recebe como entrada mensagens `OlaRequest` e `OlaReply`, que têm definições exatamente iguais a `HelloRequest` e `HelloReply`.
+Logo, em vez de definir novas mensagens, poderíamos ter usado as já definidas. Novamente, esta não é uma boa prática, pois caso fosse necessário evoluir uma das operações para atender a novos requisitos e estender suas mensagens, não seria necessário tocar o restante do serviço.
 Apenas reforçando, é boa prática definir *requests* e *responses* para cada método, a não ser que não haja dúvida de que serão para sempre iguais.
 
 
 ##### Implementando um serviço
 
 Agora modifique o arquivo `.proto` como acima, para incluir a operação `DigaOla`, recompile e reexecute o serviço.
-Não dá certo, não é mesmo? Isto porquê você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
+Não dá certo, não é mesmo? Isto porque você adicionou a definição de uma nova operação, mas não incluiu o código para implementá-la.
 Façamos então a modificação do código, começando por `./src/main/java/io/grpc/examples/helloworld/HelloWorldServer.java`.
 Este arquivo define a classe que **implementa** o serviço `Greeter`, `GreeterImpl`, com um método para cada uma das operações definidas. 
 Para confirmar, procure por `sayHello`para encontrar a implementação de `SayHello`; observe que a diferença do `casing` vem das boas práticas de Java, de definir métodos e variáveis em *Camel casing*.
@@ -162,7 +162,7 @@ private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
 }
 ```
 
-Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porquê embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em `src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java`, novamente se baseando no código existente e não se preocupando com "detalhes".
+Se você recompilar e reexecutar o código, não perceberá qualquer mudança na saída do programa. Isto porque embora tenha definido um novo serviço, você não o utilizou. Para tanto, agora modifique o cliente, em `src/main/java/io/grpc/examples/helloworld/HelloWorldClient.java`, novamente se baseando no código existente e não se preocupando com "detalhes".
 
 ```java
 public void greet(String name) {
@@ -189,7 +189,7 @@ Agora sim, você pode reexecutar cliente e servidor.
 ```
 
 Percebeu como foi fácil adicionar uma operação ao serviço? Agora nos foquemos nos detalhes, começando sobre como um servidor gRPC é criado.
-Observe que um objeto `Server` é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo `.proto`. O `start()` também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratada.
+Observe que um objeto `Server` é criado por uma fábrica que recebe como parâmetros a porta em que o serviço deverá escutar e o objeto que efetivamente implementa as operações definidas no arquivo `.proto`. O `start()` também é invocado na sequência e, estudando o código, você entenderá como o fim da execução é tratado.
 
 ```java
 import io.grpc.Server;
@@ -231,7 +231,7 @@ logger.info("Greeting: " + response.getMessage());
 ```
 
 !!!exercise "Diga Olás!"
-    Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação `DigaOlas` em que uma **lista** de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string**cumprimentando todos os nomes, um após o outro.
+    Para fixar o conteúdo é preciso colocar a mão na massa. Estenda a definição do serviço com uma operação `DigaOlas` em que uma **lista** de nomes é enviada ao servidor e tal que o servidor responda com **uma longa string** cumprimentando todos os nomes, um após o outro.
 
     ???tip "Só abra depois de pensar em como resolver o problema"
         Você pode usar `repeated` no campo `message` do tipo `HelloRequest`.
@@ -278,7 +278,7 @@ logger.info("Greeting: " + response.getMessage());
 
 
 !!!exercise "Desafio de Interoperabilidade"
-    Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em java.
+    Siga o tutorial abaixo e execute use o gRPC em Python. Uma vez executados cliente e servidor, tente fazer com que interaja com a implementação em Java.
 
     ```bash
     apt-get install python3

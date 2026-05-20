@@ -1,14 +1,14 @@
 # Falhas Bizantinas
 
 <!--
-Uma história de três exércitos -- Versão 2}
+Uma história de três exércitos -- Versão 2
 Exércitos estão às portas de Bizâncio, aka Constantinopla, aka Istambul.
 
-Todos os exércitos tem que atacar em conjunto ou se retirar em conjunto.
+Todos os exércitos têm que atacar em conjunto ou se retirar em conjunto.
 
 Cada exército é comandado por um General. Alguns destes preferem atacar, enquanto outros preferem se retirar.
 
-Alguns generais podem ter sido comprados, e mandar mensagens discrepantes para os outros, ou simplesmente não mandar mensagens.
+Alguns generais podem ter sido comprados, mandando mensagens discrepantes para os outros, ou simplesmente não mandando mensagens.
 
 Fonte: \href{http://research.microsoft.com/en-us/um/people/lamport/pubs/byz.pdf}{Lamport, L.; Shostak, R.; Pease, M. (1982). "The Byzantine Generals Problem" (PDF). ACM Transactions on Programming Languages and Systems. 4 (3): 382–401. doi:10.1145/357172.357176.}
 
@@ -25,7 +25,7 @@ Problema pode ser mudado para:
 
 Generais e Tenentes
 Suponha 3 exércitos. \\
-Comandante (traidor) diz "Ataque!" Tenente A e "Retirada!" tenente B.\\
+Comandante (traidor) diz "Ataque!" ao Tenente A e "Retirada!" ao Tenente B.\\
 Ou \\
 Comandante diz "Ataque!" a ambos. Tenente A segue a ordem mas B se retira.
 
@@ -43,7 +43,7 @@ Só há solução se mais de $\frac{2}{3}$ dos Generais/Tenentes são leais.
 
 %http://www.drdobbs.com/cpp/the-byzantine-generals-problem/206904396?pgno=5
 
-Comunicação}
+Comunicação
 
 	* Toda mensagem enviada é entregue corretamente.
 	* A ausência de mensagem pode ser detectada (mensagem Null é entregue no lugar) (Sistema síncrono)
@@ -51,29 +51,29 @@ Comunicação}
 
 
 
-4/0}
+4/0
 General manda ordens.
 
 Ausência de ordem = Retirada
 
 Tenente repassa ordens
 
-Maioria de comandos é comando a ser seguido
+A maioria dos comandos é o comando a ser seguido
 
 
 
-4/0}
+4/0
 General manda ordens.
 
 Ausência de ordem = Retirada
 
 Tenente repassa ordens
 
-Maioria de comandos é comando a ser seguido
+A maioria dos comandos é o comando a ser seguido
 
 
 
-Comunicação}
+Comunicação
 
 	* Toda mensagem enviada é entregue corretamente.
 	* Toda mensagem é assinada.

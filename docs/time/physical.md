@@ -3,7 +3,7 @@
 Para falarmos sobre sincronização de relógios em um cenário distribuído, primeiro devemos entender como funcionam os relógios em nível de uma única máquina, isto é, seus relógios físicos e como são usados pelo sistema operacional.
 
 ### Relógios de Quartzo e Atômicos
-Quando falamos em relógios, provavelmente falamos sobre relógios a base de quartzo.
+Quando falamos em relógios, provavelmente falamos sobre relógios à base de quartzo.
 Para uma introdução rápida, assista ao seguinte vídeo.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3jfgQF3jX7A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -39,7 +39,7 @@ Assim, um $\rho$ de 0.1 implica em um erro de mais ou menos 10%; a figura a segu
 ![Clock drift](../drawings/clock_skew.drawio)
 
 Embora adequado para humanos, o erro dos relógios de quartzo é inaceitável em algumas operações computacionais. 
-Felizmente, os erros do destes relógios podem ser minimizados ao ponto de termos um erros menores que 1s em milhões de anos, nos dispositivos conhecidos como **relógios atômicos**.
+Felizmente, os erros destes relógios podem ser minimizados ao ponto de termos erros menores que 1s em milhões de anos, nos dispositivos conhecidos como **relógios atômicos**.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/p2BxAu6WZI8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -47,8 +47,8 @@ Embora muito bons, os relógios atômicos também não são perfeitos e, devido 
 Mas o quê mais se pode fazer no sentido de **melhorar a precisão dos relógios**? A resposta está no UTC.
 
 ### Tempo Universal Coordenado 
-O UTC, de uma mistura dos nomes em Inglês e Francês do **Tempo Universal Coordenado**, um padrão global para coordenação da medição da passagem do tempo.
-Segundo o UTC, o sol está a pino às 12:00 na latitude 0, ou a no máximo 1s deste instante; ao redor da latitude 0 grau estabelece-se uma faixa em que todos os pontos tem o mesmo horário, e outras 23 faixas como esta com deslocamentos consecutivos de +-1 hora.
+O UTC é uma sigla derivada de uma mistura dos nomes em inglês e francês de **Tempo Universal Coordenado**, um padrão global para coordenação da medição da passagem do tempo.
+Segundo o UTC, o sol está a pino às 12:00 na latitude 0, ou a no máximo 1s deste instante; ao redor da latitude 0 grau estabelece-se uma faixa em que todos os pontos têm o mesmo horário, e outras 23 faixas como esta com deslocamentos consecutivos de +-1 hora.
 Estas faixas, conhecidas coloquialmente como fusos, sofrem ajustes por fatores políticos; a China, por exemplo, apesar de seu tamanho, está toda dentro de um mesmo horário, "correto" para Beijing.
 
 ![[Fuso-horários](https://commons.wikimedia.org/w/index.php?curid=42165217)](../images/TimeZones.png)
@@ -67,7 +67,7 @@ Não exatamente, pois os relógios precisam ser sincronizados com o UTC e, como 
 
 
 ### Sincronização de Relógios
-Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais, colocamos nova pergunta:
+Dado o UTC, temos então uma referência de tempo adequada para uso em sistemas computacionais, o que nos leva a uma nova pergunta:
 
 * Se o relógio se distância da medida correta da passagem do tempo, é possível corrigir este distanciamento, sincronizando-o com uma fonte correta, da qual UTC é nossa melhor aproximação, para que todos percebam a mesma passagem do tempo?
 
@@ -158,7 +158,7 @@ Neste caso, podemos estimar o erro que a aproximação introduz na sincronizaç�
 ![Erro do algoritmo de Christian](../drawings/algo_cristian.drawio#2)
 
 No caso vermelho, a aproximação $\frac{t_3-t_0}{2}$ é muito menor que o tempo de propagação da resposta, $t3 - t1$, e no caso verde a aproximação é maior que o tempo $t_3 - t_2$.
-Em ambos os casos, o erro é está limitado a $\frac{t_2 - t1}{2}$, ou seja, $+- \frac{t_3 - t_0}{2} - T_{min}$.
+Em ambos os casos, o erro está limitado a $\frac{t_2 - t_1}{2}$, ou seja, $+- \frac{t_3 - t_0}{2} - T_{min}$.
 
 [^erro]: Adaptado das notas de aula disponíveis [aqui](https://www.cs.rutgers.edu/~pxk/417/notes/content/05-clock-synchronization-slides.pdf).
 
@@ -175,9 +175,9 @@ O erro então varia de mais ou menos metade deste valor. -->
 Enquanto o algoritmo de Cristian permite sincronizar um nó com uma fonte, outro algoritmo, de Berkeley, permite sincronizar múltiplos nós uns com os outros. Este algoritmo assume o que não há uma "fonte da verdade" do tempo, mas sim a necessidade de que todos os processos convirjam para um mesmo valor do relógio. É como nos filmes de espião em que os relógios são sincronizados; pouco importa se a bomba explodirá 10:57 ou 10:59, desde que todos concordem quando isso vai acontecer. Isso é o que chamamos de **sincronização interna** em vez de externa, como provido pelo algoritmo de Cristian.
 
 O algoritmo de Berkeley requer que todo nó execute um processo de sincronização, um "daemon", e separa seus papéis em dois tipos, **primário** e **secundário**.
-O papel do primário pode ser rotacionado entre os vários processos, sem perdas para sua execução. O algoritmo então é executa como se segue:
+O papel do primário pode ser rotacionado entre os vários processos, sem perdas para sua execução. O algoritmo então é executado como se segue:
 
-* Primário pergunta "que horas são" para cada secundário (mensages 1,2,3 e 4)
+* Primário pergunta "que horas são" para cada secundário (mensagens 1,2,3 e 4)
 * Secundário responde com valor atual do relógio (mensagens 5,6,7 e 8)
 * Primário ajusta as respostas de acordo com o algoritmo de Cristian, para minimizar erros.
 * Primário computa média dos valores recebidos, ignorando *outliers* (como o da mensagem 8).
@@ -269,7 +269,7 @@ O SNTP é essencialmente o algoritmo de Cristian:
 Por exemplo,
 
 * $t_1 = 1100, t_2 = 800, t_3=850, t_4=1200$
-* $t = ((800-1100)+(850-1200))/2 = (-300 -350)/ = -325$
+* $t = ((800-1100)+(850-1200))/2 = (-300 -350)/2 = -325$
 * $t_c = 1200-325 = 875$
 
 
@@ -282,13 +282,13 @@ Mesmo com melhoria do protocolo e baratemento de dispositivos GPS, há ainda a n
 
 [^ieee1588]: [IEEE 1588TM Standard for A Precision Clock Synchronization Protocol for Networked Measurement and Control Systems](https://www.nist.gov/el/intelligent-systems-division-73500/ieee-1588).
 
-Se escrutinarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especilizadas para fazer o *timestamping* dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub $\mu$ (versus ordem de $ms$ no NTP).
+Se escrutinarmos o PTP, veremos que o protocolo em si não difere muito do NTP. Contudo, o PTP usa interfaces de rede especializadas para fazer o *timestamping* dos eventos do protocolo, conseguindo remover a latência nos dispositivos processando as mensagens e reduzindo o erro do protocolo até sub $\mu$ (versus ordem de $ms$ no NTP).
 Mais detalhes sobre o protocolo estão fora do escopo deste documento, mas podem ser facilmente encontrados nos links dados.
 
 
 #### Nunca volte no tempo
 Qualquer que seja o algoritmo utilizado, é provavelmente uma boa ideia **nunca voltar no tempo**. 
-Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos de **ajustes graduais** nos relógios, que acelerem ou desacelerem o relógio $C$ em relação a $t$ (ou sua melhor aproximação, pelo **ajuste frequência de interrupção para atrasar/adiantar relógio** ou **ajustes dos incrementos com cada interrupção**. Isso fará com que as curvas no seguinte gráfico convirjam.
+Mesmo que o universo não seja destruído no processo, voltar no tempo poderia levar a situações estranhas como um dado ter data de edição anterior a data de criação. Para evitar estas situações, devem ser feitos **ajustes graduais** nos relógios, que acelerem ou desacelerem o relógio $C$ em relação a $t$ (ou sua melhor aproximação), pelo **ajuste da frequência de interrupção para atrasar/adiantar o relógio** ou pelos **ajustes dos incrementos com cada interrupção**. Isso fará com que as curvas no seguinte gráfico convirjam.
 A exceção a esta regra deve ser restrita a correções após longos períodos em que o relógio dorme.
 
 ![Clock drift](../drawings/clock_skew.drawio#1)
@@ -362,7 +362,7 @@ Recurso fica ocioso por $\Delta$, em média, a cada lease.
 Devido ao alto custo de se manter o recurso não utilizado, $\Delta$ deve ser feito tão pequeno quanto possível, como feito, por exemplo, o [Google True Time](https://cloud.google.com/spanner/docs/true-time-external-consistency) que consegue manter a diferença em sub-milisegundos usando relógios atômicos dentro de seus datacenters e um API para geração de timestamps.
 
 Nas soluções anteriores, **um nó precisa esperar por muito tempo antes de usar um recurso**. 
-E se ele aprendesse antes que os outros nós não farão requisições, que não haverão sobreposições de requisições? 
+E se ele aprendesse antes que os outros nós não farão requisições, que não haverá sobreposições de requisições? 
 E se houvesse um relógio que avançasse não com o tempo, mas com eventos interessantes do sistema?
 Esta é a ideia dos **relógios lógicos**.
 

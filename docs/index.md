@@ -1,4 +1,4 @@
-# Notas em Sistemas Distribuídos
+# Notas sobre Sistemas Distribuídos
 
 
 ![Logo](drawings/logo.drawio)

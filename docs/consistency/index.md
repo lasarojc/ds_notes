@@ -17,7 +17,7 @@ A replicação acontece de forma adaptativa, dependendo de onde os clientes esti
 Se o conteúdo é majoritariamente estático, entregar esta funcionalidade é "simples", implicando apenas em um pequeno atraso entre a publicação de novo conteúdo e sua disponibilização para os usuários.
 Neste caso, um protocolo de difusão totalmente ordenada, como o RAFT, pode ser usado para garantir que todos os servidores vejam as mesmas mudanças, na mesma ordem, e que alcancem o mesmo estado final em algum momento.
 
-Entretanto, os protocolos de difusão totalmente ordenada tem um alto custo para atualizar as réplicas e este custo pode ser demasiado para a aplicação.
-Neste caso, podemos tentar relaxar os requisitos da aplicação, permitindo que atualizações sejam vistas em ordens diferentes por diferentes "réplicas", agora com aspas.
+Entretanto, os protocolos de difusão totalmente ordenada têm um alto custo para atualizar as réplicas e esse custo pode ser demasiado para a aplicação.
+Neste caso, podemos tentar relaxar os requisitos da aplicação, permitindo que atualizações sejam vistas em ordens diferentes por diferentes nós — que deixam de ser réplicas em sentido estrito.
 Por exemplo, se em vez de difusão atômica usássemos IP-Multicast, teríamos uma atualização mais barata dos dados, mas alguns valores escritos poderiam nunca ser vistos.
-Dependendo de como estes relaxamentos sejam feitos, serão implementados diferentes **modelos de consistência**.
+Dependendo de como esses relaxamentos são feitos, serão implementados diferentes **modelos de consistência**.

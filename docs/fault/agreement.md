@@ -8,7 +8,7 @@ Esta primitiva é equivalente ao problema do **consenso distribuído**, que é u
 
 
 ## Consenso
-No problema do Consenso Distribuído, processos propõe valores, **propostas**,  e, pela execução do protocolo, um dentre os valores propostos é elevado ao status de **decisão**, reconhecido por todos os processos que participaram do protocolo. 
+No problema do Consenso Distribuído, processos propõem valores, **propostas**,  e, pela execução do protocolo, um dentre os valores propostos é elevado ao status de **decisão**, reconhecido por todos os processos que participaram do protocolo. 
 Formalmente, algoritmos para este problema devem garantir as seguintes propriedades.
 
 * Validade: Somente um valor proposto pode ser decidido.
@@ -23,17 +23,17 @@ Um processo que não é falho é um processo **correto**.
 
 Dependendo do modelo computacional, é possível resolver este problema. 
 Contudo, **é impossível resolver deterministicamente o problema do consenso em sistema assíncrono sujeito a falhas**,[^flp85] e assíncrono sujeito a faltas é exatamente o que temos, a rigor, na Internet.
-A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos falhos de processos corretos, mas lentos: a mensagem não chegou porquê o processo falhou ou porquê o processo está lento ou a mensagem ainda está em trânsito?
+A grande razão para que seja impossível chegar a um acordo entre processos neste modelo é a impossibilidade de diferenciar processos falhos de processos corretos, mas lentos: a mensagem não chegou porque o processo falhou ou porque o processo está lento ou a mensagem ainda está em trânsito?
 
 [^flp85]: [Impossibility of Distributed Consensus with One Faulty Process](https://groups.csail.mit.edu/tds/papers/Lynch/jacm85.pdf). Uma explicação da prova está disponível no [Paper Trail](https://www.the-paper-trail.org/post/2008-08-13-a-brief-tour-of-flp-impossibility/)
 
 !!!todo "FLP85"
     * Considere o consenso binário (0 e 1 são as únicas propostas válidas).
-    * Pela validade, se todos as propostas são 1, a decisão deve ser 1.
-    * Pela validade, se todos as propostas são 0, a decisão deve ser 0.
+    * Pela validade, se todas as propostas são 1, a decisão deve ser 1.
+    * Pela validade, se todas as propostas são 0, a decisão deve ser 0.
     * Se começarmos com todos os valores 1 formos trocando um-a-um por 0, em algum momento sairemos de uma entrada que necessariamente leva a 1 para uma que pode levar a 0.
     * Uma execução em que o último valor alterado pertence a um processo correto/falho pode ser construída de forma que leve a uma decisão 1/0.
-    * Como os processos não tem certeza se ele falhou o não, ambas as decisões deve ser possíveis neste cenário, pois são indistinguíveis.
+    * Como os processos não têm certeza se ele falhou ou não, ambas as decisões devem ser possíveis neste cenário, pois são indistinguíveis.
     * Logo, há um estado bivalente, decidido pela troca de mensagens e não pelos valores iniciais.
 
     * Dado um estado bivalente, sempre é possível forçar um próximo estado bivalente.
@@ -60,7 +60,7 @@ Mesmo com este detector, outras limitações existem, sendo uma fundamental o fa
 
 
 O algoritmo de Chandra e Toueg [^CT96] é executado em rodadas assíncronas, sendo cada uma dividida em quatro fases. 
-A comunicação é centralizada em um coordenador, isto é, toda comunicação ou parte de ou é direcionada ao coordenador. 
+A comunicação é centralizada em um coordenador, isto é, toda comunicação parte do coordenador ou é direcionada a ele. 
 O coordenador $c_p$ é pré-determinado, por exemplo, pela função $c_p = r_p~\text{mod}~n$, sendo $r_p$ a rodada atual e $n$ o número de processos que participam do consenso. 
 O algoritmo considera a existência de um detector de falhas da classe $\Diamond S$.
 
@@ -99,7 +99,7 @@ Se um número suficiente de Ack’s foi gerado, mas um único NAck é recebido a
 
 ## Difusão Totalmente Ordenada
 Se pudermos resolver o consenso, podemos então resolver o problema da **difusão totalmente ordenada** (*total order multicast*) e com ela implementar a replicação de máquinas de estados.
-Relembrando, na  temos que:
+Relembrando, temos que:
 
 * Difusão: mensagens são enviadas de 1 para n (comunicação em grupo)
 * Totalmente Ordenada: todos os processos entregam as mensagens na mesma ordem.
@@ -118,7 +118,7 @@ No nível da difusão atômica, mensagens são **difundidas** e **entregues**. S
 
 ![Total order multicast](../drawings/abcast2.drawio)
 
-Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:
+Dadas infinitas instâncias de consenso, pode-se usá-las para resolver difusão atômica usando o seguinte procedimento:
 
 * Ordene as instâncias de consenso.
 * Para difundir mensagem $m$, proponha a mensagem na menor instância $i$ em que não tiver visto uma decisão.
@@ -127,7 +127,7 @@ Dado infinitas instâncias de consenso, pode-se usá-las para resolver difusão 
 
 No exemplo a seguir, duas mensagens, $m$ e $m'$ foram **difundidas** pelas aplicações App1 e App2, respectivamente, por meio do módulo de difusão atômica junto a cada aplicação.
 O módulo de difusão determina qual a menor instância de consenso ainda não decidida, azul, em que propõem as mensagens.
-Ao final da instância de conseno, $m$ é decidida e é entregue pelos módulos de difusão.
+Ao final da instância de consenso, $m$ é decidida e é entregue pelos módulos de difusão.
 O módulo ABCast2 insiste na difusão de $m'$, propondo-a na próxima instância, vermelha, que decide $m'$ e leva esta mensagem a ser entregue.
 
 ```mermaid
@@ -177,7 +177,7 @@ Se forem usadas como entrada para algum processamento, na ordem em que foram ent
 Raft é um protocolo de difusão atômica associado a um protocolo de eleição de líderes.
 Líderes são eleitos para mandatos pelo voto de uma maioria de processos, o que garante que nunca existirão dois líderes para um mesmo mandato.
 Um mandato se estende enquanto o líder mantiver seus seguidores cientes de sua presença, o que faz pelo envio periódico de *heartbeats*.
-Atrasos na comunicação ou a falha do líder atual levam a uma suspeita de que o líder falhou, levando a nova eleição e novo mandado.
+Atrasos na comunicação ou a falha do líder atual levam a uma suspeita de que o líder falhou, levando a nova eleição e novo mandato.
 A comunicação necessária para implementar a difusão atômica acontece em *piggyback* nos *heartbeats*.
 
 No tutorial [The Secret lives of data](http://thesecretlivesofdata.com/raft/), podemos ver com mais detalhes como o protocolo funciona.
@@ -205,8 +205,8 @@ Contudo, estes protocolos são mais complexos de se implementar e por isso raram
 
 ## Arcabouços para coordenação
 Há muitas formas de se usar algoritmos de acordo em uma aplicação, embora se recomente que seu escopo seja minimizado a um núcleo onde a consistência forte é absolutamente necessária e que este núcleo seja usado para suportar outras partes do sistema[^cons_core].
-Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo zero, uma tarefa ingrata[^paxosmade]. Felizmente, também tem a opção de usar arcabouços prontos tanto para para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.
+Seja implementando a replicação de máquinas de estados, seja implementando um core, ou qualquer outra abstração sobre algoritmos de acordo ou comunicação em grupo, você tem a opção de implementar o protocolo do zero, uma tarefa ingrata[^paxosmade]. Felizmente, também tem a opção de usar arcabouços prontos tanto para comunicação em grupo quanto para diversos outros problemas de coordenação comuns em sistemas distribuídos.
 
-[^paxosmade]: Um exemplo de como traduzir um algoritmo complexo para código pode se ingrato é reportado em [Paxos Made Live - An Engineering Perspective](https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf).
+[^paxosmade]: Um exemplo de como traduzir um algoritmo complexo para código pode ser ingrato é reportado em [Paxos Made Live - An Engineering Perspective](https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf).
 
 [^cons_core]: [Consistent Core](https://martinfowler.com/articles/patterns-of-distributed-systems/consistent-core.html)

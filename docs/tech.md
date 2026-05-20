@@ -21,12 +21,12 @@ Além de bananas, há diversos outros **bens** dos quais precisamos rastrear a p
 Esta abordagem **dificilmente permitiria aos participantes ou auditores reconstruir todo o trajeto**, que dirá um consumidor na ponta, além ser **suscetível a modificações**, intencionais ou não.
 
 
-***Blockchains*** são uma alternativa para a construção de um "livro razão" que é **compartilhado**, **incorruptível**, **decentralizado** e "facilmente" auditável.
+***Blockchains*** são uma alternativa para a construção de um "livro razão" que é **compartilhado**, **incorruptível**, **descentralizado** e "facilmente" auditável.
 A primeira blockchain foi introduzida por Satoshi Nakamoto[^nakamoto] no artigo [Bitcoin: A Peer-to-Peer Electronic Cash System](https://bitcoin.org/bitcoin.pdf), destinada a "rastrear" a troca da moeda digital [bitcoin](https://bitcoin.org).
 Desde então, diversas outras *blockchains*, como evidenciado nesta [lista](https://medium.com/wikidlt/a-complete-list-of-blockchain-platforms-2020-49cf01ee6688), foram desenvolvidas com diferentes usos e funcionalidades.
 De forma geral, podemos caracterizar blockchains como tendo as seguintes propriedades:
 
-* Decentralização: os dados são mantidos por centenas ou milhares de nós, usando protocolo P2P, e o sistemas não é facilmente subjugável.
+* Descentralização: os dados são mantidos por centenas ou milhares de nós, usando protocolo P2P, e o sistema não é facilmente subjugável.
 * Consenso: todos os participantes vêem, eventualmente, a mesma sequência de transações.
 * Proveniência: todo o histórico de um bem é mantido na *blockchain* e pode ser lido.
 * Imutabilidade: entradas na blockchain não podem ser alteradas.
@@ -38,8 +38,8 @@ John Oliver, apresentador do *Last Week Tonight*, descreveu bitcoin em março de
 
 > Everything you don't understand about money, combined with everything you don't understand about technology.
 
-A complexidade aumenta com as funcionalidades das demais blockchains, pois nestas, diferentes tipos de bens podem ser registrados, usuários podem ser identificáveis, os registros podem ser auditáveis sobe certas circunstâncias, e o consumo de energia exorbitante pode ser drasticamente reduzido.
-Mas começemos do começo e falemos sobre Bitcoin.
+A complexidade aumenta com as funcionalidades das demais blockchains, pois nestas, diferentes tipos de bens podem ser registrados, usuários podem ser identificáveis, os registros podem ser auditáveis sob certas circunstâncias, e o consumo de energia exorbitante pode ser drasticamente reduzido.
+Mas comecemos do começo e falemos sobre Bitcoin.
 
 ### Bitcoin
 
@@ -60,10 +60,10 @@ Por exemplo,
 https://andersbrownworth.com/blockchain/hash
 
 Tendo funções hash, podemos construir blocos da cadeia.
-A princípio, cada cada bloco na cadeia tem
+A princípio, cada bloco na cadeia tem
 
 * um identificador único
-* um conjunto de transações, no estilo passe 10 moedas do Jaquim para o José
+* um conjunto de transações, no estilo passe 10 moedas do Joaquim para o José
 * um número aleatório conhecido como **nonce**, um tempero para o bloco.
 
 Para cada bloco, precisamos calcular também seu hash. Dada a propriedade vista acima, sabemos que pequenas modificações nos dados de um bloco levam a grandes modificações no hash do bloco em si.
@@ -95,7 +95,7 @@ Assim, embora partes antigas da cadeia sejam estáveis, partes recentes podem se
 
 Os termos do negócio são mantidos na blockchain: "Se na data X a entidade E não tiver transferido D dinheiros para a entidade F, então transfira o asset A de E para F."
 
-Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/) artigos sobre *blockchain*.
+Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/2020/06/recent-papers-on-blockchain-bitcoin/) de artigos sobre *blockchain*.
 
 
 
@@ -151,7 +151,7 @@ Se quiser saber mais, consulte esta pequena [lista](https://www.paperdigest.org/
 
 
 
-A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, , somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor. Mas esta abordagem não é genérica, pois qual o correspondente em uma imagem ou um áudio ou em um arquivo `tgz`?
+A conclusão é que blocos com tamanho pré-definido são problemáticos e que precisamos de blocos definidos pelo conteúdo. Por exemplo, em um texto, uma possibilidade é definir um bloco como um período ou um parágrafo; se uma palavra é inserida no texto, somente o bloco em que foi inserida é modificado e somente o hash do mesmo terá novo valor. Mas esta abordagem não é genérica, pois qual o correspondente em uma imagem ou um áudio ou em um arquivo `tgz`?
 
 
 ## Rabin Fingerprinting
@@ -409,7 +409,7 @@ Quando voce está desenvolvendo uma aplicação distribuída, você provavelment
 Quando se foca nos servidores, você pensa em um processo, escutando em uma porta, em leituras em sockets, *parsing* de requisições, invocações de métodos, cálculo de resultados e envio de uma resposta.
 Mesmo que você use *frameworks* que simplifiquem parte deste fluxo, como o gRPC, você ainda deve pensar na criação do servidor, no transporte utilizado, e outros detalhes que não tem a ver com a operação a ser executada.
 
-A ideia da computação "sem servidor" (*serverless*) e remover todos estes detalhes do seu caminho e deixar que você se preocupe exclusivamente com as operações a serem executadas, as **funções** que tratam suas requisições.
+A ideia da computação "sem servidor" (*serverless*) é remover todos estes detalhes do seu caminho e deixar que você se preocupe exclusivamente com as operações a serem executadas, as **funções** que tratam suas requisições.
 Um dos exemplos desta arquitetura popularizados pela AWS é o seguinte:
 
 * envie uma imagem para armazenamento na nuvem
@@ -449,6 +449,6 @@ Amazon pode até ter dado o pontapé inicial da computação *serverless*, mas a
 
 A grande vantagem do uso destas soluções livres está no uso de *containers* para executar seu código, e como containers são suportados em praticamente todos os provedores hoje, é possível migrar suas funções entre provedores ou mesmo combinar diversos provedores em uma única aplicação.
 
-Para overview rápido de um destes projetos, OpenFaaS, assista ao seguinte video
+Para um overview rápido de um destes projetos, OpenFaaS, assista ao seguinte vídeo
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yOpYYYRuDQ0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

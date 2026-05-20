@@ -1,7 +1,7 @@
 # Modelos
 Modelos de consistência surgiram em dois mundos diferentes, o dos sistemas concorrentes (dos quais sistemas distribuídos fazem parte) e o dos bancos de dados.
-Nos sistemas distribuídos, consistência diz respeito à execução conjuntos de operações individuais sobre objetos simples, como uma variável.
-Nos bancos de dados, consistência se refere às garantias de dadas por transações, conjuntos de operações que leem e modificam diversos objetos em conjunto.
+Nos sistemas distribuídos, consistência diz respeito à execução de conjuntos de operações individuais sobre objetos simples, como uma variável.
+Nos bancos de dados, consistência se refere às garantias dadas por transações, conjuntos de operações que leem e modificam diversos objetos em conjunto.
 Apesar do ponto de partida disjunto, os dois pontos de vista podem ser unificados, apesar das nomenclaturas diferentes.
 O universo de modelos, contudo, é vasto, conforme mostram as figuras adiante, com as classificações de
 Bailis et. al[^highlyavailabletransactions] e Viotti & Vukolic[^consistency].
@@ -22,16 +22,16 @@ Bailis et. al[^highlyavailabletransactions] e Viotti & Vukolic[^consistency].
 Para simplificar a discussão sobre modelos de consistência, usaremos um banco de dados para falar tanto sobre modelos para operações simples quanto para grupos de operações (transações), uma vez que bancos de dados são algo com o qual você já tem alguma familiaridade.
 
 Neste contexto, um banco de dados pode ser pensado, de uma forma bem simplista, como uma tabela do tipo chave/valor.
-As entradas desta tabela podem ser ser pensadas linhas de uma relação de um banco de dados ou como posições na memória de um computador (variáveis), e são manipuladas por comandos como **$X$ recebe 'João'** e **qual o valor de $Y$**.
+As entradas desta tabela podem ser pensadas como linhas de uma relação de um banco de dados ou como posições na memória de um computador (variáveis), e são manipuladas por comandos como **$X$ recebe 'João'** e **qual o valor de $Y$**.
 Obviamente que $X$ e $Y$ não precisam ser declarados antes da primeira escrita, assim como chaves primárias não são declaradas até que sejam usadas, e que o valor associado a uma variável pode ter várias partes, como **"{'Endereço':'Av 1, número 2', 'Profissão':'Computeiro'}** e cada parte um tipo. 
-Essa á uma simplificação dos bancos de dados, mas uma simplificação poderosa.
+Essa é uma simplificação dos bancos de dados, mas uma simplificação poderosa.
 
 ![Single DB](../drawings/disdb.drawio#0)
 
 
 ###### Expectativa x Realidade
 Quando um processo se comunica com um banco de dados, ele o faz com certas expectativas quanto ao funcionamento deste banco.
-Por exemplo, ao escrever um dados no banco, independentemente de como o banco é implementado, o cliente geralmente espera que as escritas aconteçam na ordem em que as disparou e que, ao ler uma variável, lhe seja retornado o "último" valor escrito na mesma.
+Por exemplo, ao escrever um dado no banco, independentemente de como o banco é implementado, o cliente geralmente espera que as escritas aconteçam na ordem em que as disparou e que, ao ler uma variável, lhe seja retornado o "último" valor escrito na mesma.
 
 ![Single DB](../drawings/disdb.drawio#7)
 
@@ -51,11 +51,11 @@ Isto é, mesmo que os dados armazenados no banco sejam particionados ou replicad
 A expectativa, ou melhor, a forma como o banco de dados age dada uma interação com o cliente, ou clientes, é o que denominamos um **modelo de consistência**.
 
 A grande dificuldade na implementação de qualquer modelo de consistência em um banco de dados distribuído vem do fato das operações não serem atômicas, como mostrado acima.
-Se os processos estão em máquinas distintas, há uma naturalmente um tempo de propagação para os comandos e respostas, e a execução se parece mais com o seguinte, onde as operações são espalhadas no tempo.
+Se os processos estão em máquinas distintas, há naturalmente um tempo de propagação para os comandos e respostas, e a execução se parece mais com o seguinte, onde as operações são espalhadas no tempo.
 
 ![Single DB](../drawings/disdb.drawio#2)
 
-O problema se agrava quando o próprio banco de dados é distribuído, replicado ou particionando seus dados. 
+O problema se agrava quando o próprio banco de dados é distribuído, replicado ou particionado seus dados. 
 Para entender como isso afeta a implementação, considere a execução seguinte, em que cada cliente se comunica com uma réplica.
 Neste caso, a operação de atualização de $Y$ para 20, que já havia terminado do ponto de vista do cliente de baixo, ainda não havia sido propagada para a réplica de cima, o que fez com que a leitura iniciada depois não visse o valor 20.
 
@@ -124,7 +124,7 @@ Para corrigir o problema, as réplicas precisam se "sincronizar" antes de execut
 
 
 ## Consistência sequencial
-A grande dificuldade em se garantir a linearabilidade vem da exigência das operações respeitarem uma ordem baseada no tempo de execução. Isso exige que haja uma sincronização entre os nós onde o dado é armazenado, a cada operação, o que pode se muito custoso.
+A grande dificuldade em se garantir a linearabilidade vem da exigência das operações respeitarem uma ordem baseada no tempo de execução. Isso exige que haja uma sincronização entre os nós onde o dado é armazenado, a cada operação, o que pode ser muito custoso.
 
 
 

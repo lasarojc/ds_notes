@@ -1,6 +1,6 @@
 # Faltas, Erros e Falhas
 
-Os problemas enfrentados por sistemas computacionais podem ser classificados baseado no nível em que se apresenta.
+Os problemas enfrentados por sistemas computacionais podem ser classificados com base no nível em que se apresentam.
 
 ###### Faltas
 No nível mais básico dos problemas a serem contornados temos as **faltas** (*defect*, *fault*, falha), que é um erro no desenvolvimento do sistema, como *bugs* ou defeitos de fabricação, que o leva a ficar diferente do que foi especificado, ou mesmo um erro na especificação.
@@ -31,18 +31,18 @@ No exemplo acima, um erro seria quando a iteração passasse do ponto correto po
 O erro pode passar despercebido, mas ainda assim é um erro.
 
 ###### Falha
-Finalmente, no terceiro nível, temos os **falha** (*failure*, defeito),[^failure] um erro percebido pelo usuário. 
+Finalmente, no terceiro nível, temos a **falha** (*failure*, defeito),[^failure] um erro percebido pelo usuário. 
 Continuando o exemplo, um *stack overflow* que leva a uma falta de segmentação, leva a uma falha.
 
 [^failure]: Observe que o termo falha é usado em dois lugares. Isso é basicamente um problema de tradução da nomenclatura em inglês, *fault-error-failure* que levou a uma hierarquia mais comum falha-erro-defeito e outra mais correta falta-erro-falha. Os adeptos da primeira falam em tolerância a falhas, enquanto os da última falam em tolerância a faltas.
 
-Quando um componente manifesta um falha, outros componentes que dele dependem, internalizarão entradas indevidas, uma falta externa, o que levará a seu próprio estado interno a estar errôneo e possivelmente também manifestar uma falha. 
-Esta cadeia pode levar cenários catastróficos.
+Quando um componente manifesta uma falha, outros componentes que dele dependem internalizarão entradas indevidas, uma falta externa, o que levará seu próprio estado interno a estar errôneo e possivelmente também a manifestar uma falha.
+Esta cadeia pode levar a cenários catastróficos.
 
 !!!example "Falhas famosas"
     === "Ariane 5"
 
-        O Ariane 5 foi um foguete desenvolvido pela agencia espacial européia que explodiu durante o lançamento.
+        O Ariane 5 foi um foguete desenvolvido pela agência espacial europeia que explodiu durante o lançamento.
 
         !!!quote "The Explosion of the Ariane 5"
               On June 4, 1996 an unmanned Ariane 5 rocket launched by the European Space Agency exploded just forty seconds after its lift-off [...] after a decade of development costing \$7B. The destroyed rocket and its cargo were valued at \$500M. [...] the failure was a software error [...] a 64 bit floating point number [...] was converted to a 16 bit signed integer. The number was larger than 32,767, the largest integer storeable in a 16 bit signed integer, and thus the conversion failed.
@@ -66,12 +66,12 @@ Esta cadeia pode levar cenários catastróficos.
 
     === "737 Max"
 
-        O Boeing 737 Max é uma modificação do 737 original em que o motores maiores foram usados sem modificar a estrutura do restante do avião e portanto alterando o seu centro de massa. Por causa da diferença, o avião pode subir rápido demais, correndo o risco de perder sustentação. Para auxiliar os pilotos e evitar a necessidade de treinamento específico, um sensor é usado para detectar se o avião está nesta situação e forcar o nariz do avião para baixo para corrigir o problema.
+        O Boeing 737 Max é uma modificação do 737 original em que os motores maiores foram usados sem modificar a estrutura do restante do avião, alterando assim o seu centro de massa. Por causa dessa diferença, o avião pode subir rápido demais, correndo o risco de perder sustentação. Para auxiliar os pilotos e evitar a necessidade de treinamento específico, um sensor é usado para detectar se o avião está nessa situação e forçar o nariz do avião para baixo para corrigir o problema.
         Contudo, no 737 Max apenas um sensor é usado e no caso de falha do mesmo, o avião é forçado para baixo e em direção ao solo, o que levou à morte de centenas de pessoas.[^737max]
 
 
     === "Subaru SUV"
-        Em 2018 a Subaru fez um *recall* gigante, de mais de 1 milhão de unidades de um seus modelos de SUV, porquê uma falha em um software fez com que soldagens fossem feitas incorretamente no chassis dos veículos.
+        Em 2018 a Subaru fez um *recall* gigante, de mais de 1 milhão de unidades de um de seus modelos de SUV, porque uma falha em um software fez com que soldagens fossem feitas incorretamente no chassi dos veículos.
         O erro era irreparável, levando a grandes prejuízos.
 
         ![[Recall Subaru()https://spectrum.ieee.org/riskfactor/computing/it/coding-error-leads-293-subaru-ascents-to-the-car-crusher)]](../images/subaru.png)
@@ -90,7 +90,7 @@ Esta cadeia pode levar cenários catastróficos.
 
 
 Quando falhas aparecem, é importante identificar suas causas, isto é, a cadeia de eventos que os levaram a acontecer.
-Algumas empresas até publicam as ***root cause analysis*** ou a análise *post-mortem* para a comunidade como forma de compartilhar conhecimento e também por questões de transparência, mas mais importante, conhecer a causa pode ajudar a evitar que novas instâncias da mesma falha ou similares. [^rca]
+Algumas empresas até publicam as ***root cause analysis*** ou a análise *post-mortem* para a comunidade como forma de compartilhar conhecimento e também por questões de transparência, mas mais importante, conhecer a causa pode ajudar a evitar que novas instâncias da mesma falha ou de falhas similares ocorram. [^rca]
 
 [^rca]: [Post-mortems](https://github.com/danluu/post-mortems) para uma extensa lista de análises.
 
@@ -101,7 +101,7 @@ Faltas são um fato da vida, uma constante no desenvolvimento de sistemas, mas s
 Falta de **quebra** (***crash***) são faltas em que o componente para de funcionar, irreversivelmente.
 Uma vez que o componente cessa seu funcionamento, qualquer comunicação com o mesmo é interrompida e pode dar bons indicativos do defeito aos outros componentes.
 
-Alguns sistemas, denominados ***fail-stop***, forçam-se a parar de funcionar quando percebem um falha, imitando uma quebra, e implementando um comportamento ***fail-fast***.[^failfastfast]
+Alguns sistemas, denominados ***fail-stop***, forçam-se a parar de funcionar quando percebem uma falha, imitando uma quebra, e implementando um comportamento ***fail-fast***.[^failfastfast]
 Estes sistemas podem emitir um "canto do cisne" para permitir que outros componentes detectem a falha.
 
 [^failfastfast]: [Fail Fast Is Failing… Fast!](https://pathelland.substack.com/p/fail-fast-is-failing-fast)
@@ -111,7 +111,7 @@ Após pararem, alguns sistemas podem aplicar passos de recuperação e voltar a 
 ###### Omissão
 
 Em uma **falha de omissão** (***omission failure***), um componente deixa de executar alguma ação. Por exemplo, uma requisição recebida por um servidor não é processada, um disco não armazena os dados no meio magnético, ou uma mensagem não é transmitida.
-Este tipo de falha é difícil de ser identificado pois outros componentes não necessariamente tem acesso direto ao resultado da operação.
+Este tipo de falha é difícil de ser identificado pois outros componentes não necessariamente têm acesso direto ao resultado da operação.
 Por exemplo, se o meio de comunicação se recusou a entregar uma mensagem, então houve uma falha de omissão.
 Mas se a mensagem é retransmitida até que tenha sua entrega confirmada, então a falha de omissão é mascarada como um simples atraso na comunicação, o que também pode ser uma falha.
 
@@ -158,7 +158,7 @@ Algumas faltas fogem à classificação acima por terem um comportamento especia
 
 
 ## Como lidar com faltas?
-Mas se o objetivo é ter um sistema que esteja funcional a despeito de problemas, precisamos de formas de lidar com faltas, **previnindo**, **removendo** e **tolerando**-as.
+Mas se o objetivo é ter um sistema que esteja funcional a despeito de problemas, precisamos de formas de lidar com faltas, **prevenindo**, **removendo** e **tolerando**-as.
 
 ###### Prevenção
 A **prevenção de faltas** acontece por meio de técnicas bem estabelecidas de engenharia.
@@ -175,7 +175,7 @@ Testes e manutenção do sistema permitem a **remoção de faltas** que passarem
 
 ###### Tolerância
 Testes, contudo, apenas aumentam a confiança no sistema, não sendo capazes de certificar a ausência de problemas.
-Assim, tenta-se desenvolver os sistemas de forma que, mesmo se faltas ainda estiverem presentes, seus efeitos não sejam percebidos como falhas, isto é, sistemas que tenha **tolerância a faltas** (ou **prevenção de falhas**).
+Assim, tenta-se desenvolver os sistemas de forma que, mesmo se faltas ainda estiverem presentes, seus efeitos não sejam percebidos como falhas, isto é, sistemas que tenham **tolerância a faltas** (ou **prevenção de falhas**).
 
 Para se alcançar tolerância a faltas é necessário detectar e se recuperar de erros. 
 Por exemplo, um sistema de arquivos que mantenha um *journal*, como o [Ext v3](https://en.wikipedia.org/wiki/Ext3#Journaling_levels), armazena informação de forma redundante e, quando **detecta** que os dados em sua forma principal estão corrompidos, usa o *journal* para **recuperar** os dados, **mascarando** o erro.
@@ -183,7 +183,7 @@ Por exemplo, um sistema de arquivos que mantenha um *journal*, como o [Ext v3](h
 
 
 
-De acordo como Avizienis *et al.*,[^avizienis] temos as seguintes técnicas para tolerar faltas:
+De acordo com Avizienis *et al.*,[^avizienis] temos as seguintes técnicas para tolerar faltas:
 
 [^avizienis]: [Basic Concepts and Taxonomy of Dependable and Secure Computing](https://www.nasa.gov/pdf/636745main_day_3-algirdas_avizienis.pdf)
 
@@ -196,7 +196,7 @@ Por exemplo, um sistema que sofra falha por uso excessivo de memória a cada dez
 
 
 ###### Degradação Graciosa
-Se remover todas as possibilidades de falhas de um componente é algo difícil, ao tolerar faltas permitimos permitirá que o sistema continue funcional ainda que forma degradada, o que denominamos uma **degradação graciosa** (do inglês *graceful degradation*).
+Se remover todas as possibilidades de falhas de um componente é algo difícil, ao tolerar faltas permitimos que o sistema continue funcional ainda que de forma degradada, o que denominamos uma **degradação graciosa** (do inglês *graceful degradation*).
 
 Quando não for possível tolerar a falha, o sistema será **quebradiço** (do inglês *brittle*). 
 Neste caso, pode ser melhor fazer com o que o sistema pare de funcionar ao primeiro sinal de problema, falhando rapidamente (do inglês *fail-fast*) e evitando que erros se propagem.
@@ -225,4 +225,4 @@ Para tentar evitá-lo, podemos usar técnicas como o ***n-version programming***
 * múltiplos sistemas operacionais
 * múltiplas linguagens de programação.
 
-Esta técnica é interessante mas raramente usada devido ao seu alto custo e não ser garantia de sucesso pois, por exemplo, erros de especificação são reproduzidos em todas as especificações e múltiplas versões serem faltosas.
+Esta técnica é interessante, mas raramente utilizada devido ao seu alto custo e por não ser garantia de sucesso, pois, por exemplo, erros de especificação se reproduzem em todas as implementações e múltiplas versões podem ser igualmente faltosas.

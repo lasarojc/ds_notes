@@ -1,8 +1,8 @@
 # Replicação
-Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema, a implementação pode estar longe de ser trivial, pois para que tenhamos realmente cópias, é preciso que as ações tomada por um componente sejam também tomadas pelas réplicas.
+Embora a ideia de replicação seja simples, isto é, criar cópias de um componente para garantir que algum está sempre disponível para continuar a entregar as funcionalidades do sistema, a implementação pode estar longe de ser trivial, pois para que tenhamos realmente cópias, é preciso que as ações tomadas por um componente sejam também tomadas pelas réplicas.
 Há várias possibilidades de como replicar, em um grau ou em outro de corretude, cada uma com seus prós e contras.
 
-Uma forma de olhar para este problema é considerar em quais réplicas as operações de modificação de dados podem ser inicialmente executadas, levando a distinção entre sistema com múltiplos ou simplesmente um escritor (do inglês, *multi* ou *single*  *writer* ).
+Uma forma de olhar para este problema é considerar em quais réplicas as operações de modificação de dados podem ser inicialmente executadas, levando à distinção entre sistema com múltiplos ou simplesmente um escritor (do inglês, *multi* ou *single*  *writer* ).
 
 
 ## Multi-Escritores
@@ -13,9 +13,9 @@ Nos sistemas multi-escritores, clientes podem disparar operações de modificaç
 
 ### Encaminhamento de mensagens
 A abordagem mais básica para a replicação consiste em permitir que todas as réplicas aceitem operações dos clientes e fazer com que as réplicas **repassem** as operações que receberam para as demais.
-Esta abordagem pode ser implementada com diferentes mecanismo de comunicação, com diferentes resultados.
-Por exemplo, se implementada o uso de UDP, todas as réplicas receberão as mesmas operações, exceto por alguma eventualmente perdida.
-Se em vez disso usarem várias conexões TCP conectado todas as réplicas, desde que as réplicas estejam sempre ativas, todas receberão, em algum momento, todas as operações enviadas pelos clientes.
+Esta abordagem pode ser implementada com diferentes mecanismos de comunicação, com diferentes resultados.
+Por exemplo, se implementada com o uso de UDP, todas as réplicas receberão as mesmas operações, exceto por alguma eventualmente perdida.
+Se em vez disso usarem várias conexões TCP conectando todas as réplicas, desde que as réplicas estejam sempre ativas, todas receberão, em algum momento, todas as operações enviadas pelos clientes.
 
 ![](../drawings/replication.drawio#0)
 
@@ -42,18 +42,18 @@ Por isso, esta técnica não pode ser aplicada em todas as situações.
 
 
 ## Único Escritor
-No caso de único escritor, as operações de escrita são direcionadas para uma única réplica e, dependendo dos requisitos de **consistência** dos clientes, as operações e leitura podem ser direcionadas à mesma réplica ou a quaisquer das réplicas.
+No caso de único escritor, as operações de escrita são direcionadas para uma única réplica e, dependendo dos requisitos de **consistência** dos clientes, as operações de leitura podem ser direcionadas à mesma réplica ou a quaisquer das réplicas.
 
 ![](../drawings/replication.drawio#9)
 
 ### Primário/Secundário
-Nos foquemos na raiz do problema que aparentemente é a ordenação das operações.
+Foquemos na raiz do problema que aparentemente é a ordenação das operações.
 Se cada processo pode receber as mensagens em qualquer ordem, ou seja, cada uma tem uma fila de mensagens independente, então as réplicas podem chegar a estados distintos.
 
 ![Primário/Backup](../drawings/replication.drawio#4)
 
 Mas e se tivéssemos uma fila única?
-No caso da replicação **primário/cópia**,[^mestreescravo] o primário é responsável por lidar com clientes e por informar cópias das modificações de estado, efetivamente mantendo a fila única e impondo uma ordenação de operações que faz sentido, correspondendo a ordem de entrega das mensagens.
+No caso da replicação **primário/cópia**,[^mestreescravo] o primário é responsável por lidar com clientes e por informar cópias das modificações de estado, efetivamente mantendo a fila única e impondo uma ordenação de operações que faz sentido, correspondendo à ordem de entrega das mensagens.
 
 [^mestreescravo]: Esta técnica também é conhecida como **mestre/escravo**, mas esta nomenclatura tem caído em desuso por razões óbvias.
 
@@ -68,13 +68,13 @@ Por outro lado, um pequeno comando SQL poderia gerar uma grande modificação no
 A melhor abordagem depende de cada aplicação.
 
 ###### Cópias desatualizadas
-Operações que levam a atualizações nos dados devem ser feitas sempre no processo primário, ou este não processaria as operações, podendo levar o primário a virar um gargalo do sistema.
+Operações que levam a atualizações nos dados devem ser feitas sempre no processo primário, pois, do contrário, este não processaria as operações, podendo levar o primário a virar um gargalo do sistema.
 Para amenizar esta situação, operações que apenas leiam dados poderiam ser enviadas para as réplicas, em vez de para o primário.
 Contudo, como o primário primeiro executa a operação antes de repassá-la para as réplicas, há um atraso na execução pelas réplicas, o que quer dizer que as leituras poderiam retornar dados antigos.
 
 
 ### Replicação em Cadeia
-A **replicação em cadeia** é uma generalização de primário/cópia em que os processos se organizam em um sequência para executar operações.
+A **replicação em cadeia** é uma generalização de primário/cópia em que os processos se organizam em uma sequência para executar operações.
 
 ![Chain replication](../drawings/replication.drawio#6)
 
@@ -91,22 +91,22 @@ Em abordagens baseadas em um primário, um passo essencial é identificar as fal
 ![ha](../images/ha-diagram-animated.gif)
 
 Nesta situação, o primeiro desafio está em identificar a falha.
-Como já mencionamos e ainda iremos discutir, identificar corretamente a falha de um processo em um ambiente onde a comunicação acontece por troca de mensagens e assíncrono é impossível, pois não se pode diferenciar um processo falho de um lento.
+Como já mencionamos e ainda iremos discutir, identificar corretamente a falha de um processo em um ambiente onde a comunicação acontece por troca de mensagens e é assíncrono é impossível, pois não se pode diferenciar um processo falho de um lento.
 
 Mesmo que a identificação fosse perfeita, ainda temos o problema das operações que já foram entregues para o primário mas que ainda não foram propagadas para as réplicas.
-Quanto o backup assume, ele terá então um estado que está no passado do estado o primário, o que pode levar comportamento inaceitável.
+Quanto o backup assume, ele terá então um estado que está no passado do estado do primário, o que pode levar a comportamento inaceitável.
 Se este for o caso, replicação ativa pode ser usada.
 
 ## Replicação ativa
 
-No caso da replicação ativa, as **várias cópias executam todos os comandos** enviados para o sistema, estando assim todas aptas a continuar a executar o serviço a qualquer instante, pelo menos se as operações de leitura forem enfileiradas também, ou poderiam chegar a uma réplica antes de uma escrita disparada anteriormente.
+No caso da replicação ativa, as **várias cópias executam todos os comandos** enviados para o sistema, estando assim todas aptas a continuar a executar o serviço a qualquer instante, pelo menos se as operações de leitura forem enfileiradas também, pois poderiam chegar a uma réplica antes de uma escrita disparada anteriormente.
 
 ![Replicação ativa](../drawings/replication.drawio#7)
 
 
 A técnica de replicação de [máquinas de estados](../time/logical/#comunicacao-em-grupo), brevemente discutida anteriormente, é uma materialização da replicação ativa.
 Como vimos anteriormente, replicação de máquinas de estados utiliza primitivas de comunicação em grupo, mas as primitivas vistas anteriormente não são funcionais principalmente por não serem tolerantes a falhas. 
-Vejamos a porquê é difícil desenvolver primitivas tolerantes a falhas.
+Vejamos por que é difícil desenvolver primitivas tolerantes a falhas.
 
 
 ## *Event sourcing*

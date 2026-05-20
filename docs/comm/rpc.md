@@ -2,7 +2,7 @@
 
 <!-- Nas seções anteriores nós estudamos arcabouços de RPC que, em geral, provêem funcionalidade para a invocação síncrona de procedimentos e métodos, espelhando a semântica da invocação sequencial em monolitos. [^asynch]
 Apesar destas melhorias, **sistemas de RPC assumem que as duas partes da comunicação estão online ao mesmo tempo**. 
-Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem um alternativa.
+Arcabouços de **comunicação orientada a mensagens** implementada pelos ***middleware*** **orientados a mensagem**, oferecem uma alternativa.
 
 [^asynch]: Embora com o uso cada vez mais frequente de métodos de programação assíncrona nos monolitos, por exemplo usando-se e *Futures/Promisses*, e a introdução de outras abstrações, como funções geradoras, é natural que alguns arcabouços de RPC mais modernos reflitam estas evoluções. gRPC, por exemplo, permite a implementação de um modelo de comunicação em que procedimentos remotos são invocados de forma assíncrona ou até mesmo que um fluxo de dados entre chamador e chamado seja estabelecido. -->
 
@@ -10,7 +10,7 @@ Arcabouços de **comunicação orientada a mensagens** implementada pelos ***mid
 
 
 
-Em 1984, Birrel e Nelson[^birrel] introduziram o mecanismo de Invocação Remota de Procedimentos (*Remote Procedure Calls*), que permite que processos façam, pasmem, invocações de procedimentos remotos!
+Em 1984, Birrel e Nelson[^birrel] introduziram o mecanismo de Invocação Remota de Procedimentos (*Remote Procedure Calls*), que permite que processos façam invocações de procedimentos remotos!
 Óbvio, a inovação não está na capacidade de uma máquina conversar com outra, mas em como esta conversa acontece, do ponto de vista do programador.
 Por exemplo, RPC permite que se procure a *substring* apontada por `c` dentro da string apontada por `a`, a partir da posição 3, usando `x = substring(a,3,c);` mas com o invocador da função em um processo e a implementação da função propriamente dita, em outro, possivelmente em outra máquina.
 
@@ -36,15 +36,15 @@ Quando acontece, faz o ***unmarshalling*** dos dados, invoca a função localmen
 |Stub cliente    | Stub servidor  |
 |----------------|----------------|
 1. invoca `substring` no *stub* | 1. retorna o resultado para o *stub*
-2. conecta-se ao servidor, envia parâmetros e especifica a função | 2. envia resulta serializado para cliente
+2. conecta-se ao servidor, envia parâmetros e especifica a função | 2. envia resultado serializado para cliente
 3. transmite os dados serializados | transmite resposta serializada
-4. desserializa parâmetros | 4. desserializa os parâmetro
+4. desserializa parâmetros | 4. desserializa os parâmetros
 5. invoca a função `substring` localmente | 5. retorna o resultado para o invocador
 
 
 ### Transparência
 
-É para o programador a grande vantagem do uso de RPC, pois se pode escrever código distribuído "igual" ao não-distribuído, certo? 
+A grande vantagem do uso de RPC é para o programador, pois se pode escrever código distribuído "igual" ao não-distribuído, certo? 
 Isto é, **interface baseada em procedimentos** e sem a necessidade de detalhar **portas, sockets, e representação de dados**.  Ou seja, tudo é transparente!
 Como já discutimos, vários fatores trabalham contra a [transparência em sistemas distribuídos](../intro/#transparencia).
 Em específico quanto à transparência dada pelo RPC, também temos limitações.
@@ -80,7 +80,7 @@ Algumas abordagens para simular a passagem por referência são possíveis. Por 
 
 ![RPC](../drawings/rpc.drawio#2)
 
-Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores tem que ser copiados novamente e usados para sobrescrever o valor original no cliente.
+Contudo, a modificação do valor pela função não reflete imediatamente no invocador; tais valores têm que ser copiados novamente e usados para sobrescrever o valor original no cliente.
 Além disso, esta abordagem só é possível se o valor apontado for delimitado, o que nem sempre é fácil de determinar. 
 Por exemplo, se o ponteiro for para o primeiro elemento de uma lista, o que deve ser copiado para o servidor? Só o primeiro elemento? Toda a lista? Como ensinar para o *framework* RPC o que é "toda" a lista?
 
@@ -99,7 +99,7 @@ Mais interessante seria um mecanismo que permitisse uma indireção para o servi
 
 Birrel e Nelson propuseram um serviço de **Páginas Amarelas**, no qual clientes podem questionar quem oferece um certo serviço e serem redirecionados automaticamente.
 Esta abordagem tem seus próprios problemas, como por exemplo determinar **quem administra** o serviço para incluir novos servidores.
-E como determinar qual serviço acessar, caso hajam **múltiplas opções de servidores**.
+E como determinar qual serviço acessar, caso haja **múltiplas opções de servidores**.
 
 ![RPC](../drawings/rpc.drawio#3)
 
@@ -130,7 +130,7 @@ else
 O que nos leva novamente ao ponto sobre não haver transparência total em sistemas distribuídos... e esta falta de transparência pode ser muito mais complicada do que simplesmente adicionar try e catch ao seu código.
 
 Mais que isso, imagine que a operação sendo executada altere algum estado no servidor.
-Se esta fosse uma operacão local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
+Se esta fosse uma operação local, cada invocação da operação corresponderia a exatamente uma execução da operação, na ausência de falhas.
 No caso de falhas, se o processo quebra como um todo, no seu reinício, pode-se identificar se a operação foi ou não executada e aplicar ações corretivas.
 Mas e no caso remoto?
 
@@ -147,13 +147,13 @@ Se o cliente havia invocado uma operação mas percebeu o erro antes de receber 
 O cliente tem que tratar o erro, mas como?
 Se a operação **precisa** ser executada **a qualquer custo**, o cliente pode retentá-la quando conseguir novo contato com o servidor (ou mesmo com outro).
 Neste caso, se o que de fato aconteceu foi a situação (i), então retentar garantirá que a operação seja executada pelo servidor, mesmo que várias tentativas sejam necessárias.
-Contudo, se o que o ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
+Contudo, se o que ocorreu foi a situação (ii), então reenviar a operação levará a mesma a ser executada múltiplas vezes, o que pode ou não ser ok.
 Esta abordagem é o que garantirá que a execução acontece **pelo menos 1 vez**.
 
 ![RPC](../drawings/rpc.drawio#6)
 
-Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
-Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação, ou seja, a **no máximo uma** execução.
+Imagine que a operação se tratasse de uma transferência de saldo, ou a encomenda de um caminhão carregado de algum produto caro. Neste caso, reexecutar não parece ser uma opção.
+Neste caso, talvez a melhor opção seja não retentar a operação, o que levará a zero execuções na situação (ii) e uma execução na situação (i), ou seja, a **no máximo uma** execução.
 Uma situação em que esta abordagem é claramente preferível é a entrega de quadros em um *stream* de vídeo ou áudio, devido à importância da operação ser atrelada ao momento de sua execução.
 
 ![RPC](../drawings/rpc.drawio#7)
@@ -167,16 +167,16 @@ Nenhuma destas abordagens é igual ao que é garantido na versão centralizada e
 Garantir esta semântica na comunicação é muito difícil, pois é impossível ter certeza de que uma mensagem não foi processada pelo servidor ainda.
 De fato, é impossível ter certeza se o servidor falhou; pode ter sido apenas uma falha na comunicação.
 
-Como é impossível evitar falhas, se uma operação deve executada, ela deve ser retentada. 
+Como é impossível evitar falhas, se uma operação deve ser executada, ela deve ser retentada. 
 Mas ela não pode ser repetida, então a alternativa é tornar as operações [**idempotentes**](https://en.wikipedia.org/wiki/Idempotence), o que quer dizer que o efeito desejado é alcançado pela primeira execução e que execuções seguintes não alteram o estado.
 
 !!! note "Operações idempotentes"
-    Múltiplas execuções tem o mesmo efeito uma execução.
+    Múltiplas execuções têm o mesmo efeito que uma execução.
 
     * Exemplo: `x = 10`
     * Anti-exemplo:  `x = x+1`.
 
-Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uam região crítica.
+Infelizmente não é trivial programar para idempotência, principalmente se o servidor for acessado concorrentemente por múltiplos clientes, tornando seu estado uma região crítica.
 
 ###### Concorrência no servidor
 
@@ -184,7 +184,7 @@ Infelizmente não é trivial programar para idempotência, principalmente se o s
 Logo, se múltiplos clientes acessam o mesmo servidor, o estado do servidor será "compartilhado" pelos vários clientes e passos são necessários para que o comportamento no acesso deste estado seja coerente com a especificação.
 
 Pense por exemplo em um servidor que conta o número de acessos feitos por clientes.
-O incremento do contador deve ser considerado uma região crítica, caso múltiplos threads tratem as requisições dos clientes, o que já vimos ser uma boa idia.
+O incremento do contador deve ser considerado uma região crítica, caso múltiplos threads tratem as requisições dos clientes, o que já vimos ser uma boa ideia.
 Claro que dificilmente seu servidor seria algo tão simples assim.
 Em vez disso, ele provavelmente executará lógicas complicadas, como por exemplo, armazenar o estado de contas bancárias e, neste caso, as funções expostas por RPC incluiríam a operação **transferir saldo de A para B**, o que nos leva a mais um problema interessante, o do risco de reexecuções.
 

@@ -9,11 +9,11 @@
 De acordo com [Tanenbaum & Van Steen](https://www.amazon.com/Distributed-Systems-Principles-Paradigms-Tanenbaum-dp-B00DEKA7T2/dp/B00DEKA7T2/ref=mt_hardcover?_encoding=UTF8&me=&qid=), *middleware* é 
 > ... the software layer that lies between the operating system and applications on each side of a distributed computing system in a network.
 
-Isto é, o *middleware* é a camada *ware* que fica no *middle*, entre, o *software* e o *hardware*. 
+Isto é, o *middleware* é a camada *ware* que fica no *middle*, entre o *software* e o *hardware*. 
 Software, no caso, é a aplicação distribuída sendo desenvolvida e hardware é a **abstração** do *host* em que se executam os componentes, provida pelo sistema operacional.
-Uso aqui o termo **abstração** porquê o sistema operacional pode encapsular *hardware* real, mas também pode encapsular outra abstração de *hardware*, por exemplo, uma máquina virtual ou contêiner.
+Uso aqui o termo **abstração** porque o sistema operacional pode encapsular *hardware* real, mas também pode encapsular outra abstração de *hardware*, por exemplo, uma máquina virtual ou contêiner.
 
-A figura seguinte   mostra um exemplo com três aplicações executando sobre um *middleware*, que por sua vez é executado sobre diferentes sistemas operacionais, em *hosts*  conectados por uma rede de comunicação. 
+A figura seguinte mostra um exemplo com três aplicações executando sobre um *middleware*, que por sua vez é executado sobre diferentes sistemas operacionais, em *hosts* conectados por uma rede de comunicação. 
 
 
 ![Middleware](../images/01-01.png){: style="width:500px"}[^0101]
@@ -22,7 +22,7 @@ A figura seguinte   mostra um exemplo com três aplicações executando sobre um
 
 Com este cenário em mente, é importante entender o que diz [Sacha Krakowiak](https://web.archive.org/web/20050507151935/http://middleware.objectweb.org/) quando afirma que as principais funções do *middleware* são:
 
-* esconder a distribuição e o fato de que um aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,
+* esconder a distribuição e o fato de que uma aplicação é geralmente composta por múltiplas partes, executando em localizações geograficamente distintas,
 * esconder a heterogeneidade dos vários componentes de hardware, sistemas operacionais e protocolos de comunicação
 * prover interfaces uniformes, de alto nível e padronizadas para os desenvolvedores de aplicação e integradores, de forma que aplicações possam ser facilmente compostas, reusadas, portadas e feitas interoperáveis.
 
@@ -78,7 +78,7 @@ E se dois componentes de um SD executam em máquinas com arquiteturas diferentes
 É preciso que usem um padrão conhecido por ambos os *hosts*, seja o padrão a arquitetura "nativa" do host ou um padrão intermediário, definido pelo *middleware*.
 
 A mesma questão é válida para representações de strings e classes, e diferenças de sistemas operacionais e linguagens.
-No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com o mesmo.
+No caso específico das strings, pense em um programa escrito em linguagem C e que este programa deva comunicar-se com um outro, escrito em Java, e trocar strings com ele.
 Enquanto em C uma string é uma sequência de bytes imprimíveis terminadas por um `\0`, em Java uma string é uma classe que encapsula uma sequência de chars, sendo que cada [char é um código 16 bits](https://docs.oracle.com/javase/8/docs/technotes/guides/intl/overview.html) representativo de um código Unicode[^stringjava].
 Como transferir strings entre duas plataformas?  Não fazê-lo? Simplificar a string Java?  Estender a string C?  
 Para se tentar obter transparência de acesso, é importante que se use **padrões** implementados em múltiplas arquiteturas, **abertos**  e bem conhecidos, com **interfaces bem definidas**.
@@ -116,7 +116,7 @@ Para se esconder a latência, várias táticas são utilizáveis:
     * [Futures e Promises](https://en.wikipedia.org/wiki/Futures_and_promises)
 
 Outra forma de diminuir latência é trazer para próximo do usuário parte da computação.
-Isto é comumente feito com a interface com usuário,  mas pode ser usado também para outras partes do sistema. 
+Isto é comumente feito com a interface com o usuário, mas pode ser usado também para outras partes do sistema. 
 Como exemplo do primeiro, pense em consoles de video-game que fazem o processamento gráfico pesado de jogos online na casa do usuário[^stadia].
 Como exemplo do segundo, pense em aplicativos que mantém os dados em celulares até que uma boa conexão, por exemplo WiFi, esteja disponível para sincronizar com o servidor.
 
@@ -138,7 +138,7 @@ De forma geral, pense em esconder latência pelos seguintes passos:
     * como se movimenta
     * visto por clientes
 
-As vezes componentes do sistema distribuído precisam ser movimentados de uma localização à outra, por exemplo porquê um novo *host* foi contratado.
+Às vezes componentes do sistema distribuído precisam ser movimentados de uma localização à outra, por exemplo porque um novo *host* foi contratado.
 Se implementadas corretamente, as técnicas que entregam transparência de localização não deixam que o cliente perceba a movimentação, no que chamamos transparência de Relocação.
 
 * Rede de baixa latência
@@ -154,14 +154,14 @@ Se implementadas corretamente, as técnicas que entregam transparência de local
     * como se movimenta
     * visto por si mesmo
 
-Do ponto de vista do próprio serviço, não perceber que se está sendo movimentado é chamado transparência de Migração.
-Um serviço com esta propriedade, não precisa ser parado e reconfigurado quando a mudança acontece.
+Do ponto de vista do próprio serviço, não perceber que está sendo movimentado é chamado transparência de Migração.
+Um serviço com esta propriedade não precisa ser parado e reconfigurado quando a mudança acontece.
 Uma das formas de se implementar esta propriedade é através da migração provida por máquinas virtuais, usado, por exemplo, para consolidar o uso de servidores em nuvens computacionais.
 Veja o exemplo do VMotion da VMware.
 
 ![http://hyaking.com/wp-content/uploads/2017/01/Hyaking_Image_vmware-vmotion.jpg](../images/vmotion.jpg)
 
-Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda comunicação para nova cópia. O máquina original é então descartada.
+Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. Uma vez que a cópia esteja próxima do fim, a imagem original é congelada, a cópia concluída, e há um chaveamento na rede para se direcionar toda a comunicação para a nova cópia. A máquina original é então descartada.
 
 ###### Transparência de Replicação
 
@@ -170,9 +170,9 @@ Na verdade, a movimentação neste cenário, é uma cópia da máquina virtual. 
     * visto por clientes
 
 A capacidade de ter cópias de um serviço e de direcionar trabalho de uma para outra é também útil para se obter transparência no caso de falhas.
-Isto porquê para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.
+Isso porque para se manter um serviço funcional a despeito de falhas, é preciso ter múltiplas cópias, prontas para funcionar a qualquer momento.
 
-Dependendo das garantias desejadas na manutenção da **consistência** entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas tem um **atraso** entre elas de no máximo $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.
+Dependendo das garantias desejadas na manutenção da **consistência** entre as cópias, o custo pode variar muito, de forma que para se ter um custo menor, tem-se garantias mais fracas, por exemplo, que as réplicas têm um **atraso** entre elas de no máximo $X$ minutos. Este é um dilema parecido com o TCP x UDP, em que mais garantias implicam em maior custo de comunicação.
 
 Algumas aplicações toleram inconsistências e podem viver com menores custos. Um exemplo famoso é o dos "carrinhos de compra" da [Amazon.com](https://www.allthingsdistributed.com/2008/12/eventually_consistent.html), que podem fechar pedidos com conteúdo diferente do desejado pelo cliente.
 
@@ -208,8 +208,8 @@ stateDiagram
     Figura com state machine replication
 
 Novamente é preciso chamar à atenção a questão dos custos desta técnica.
-Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema onde inconsistências são absolutamente caras demais para sere permitidas.
-Isto porquê manter múltiplas cópias $\Rightarrow$ sincronização $\Rightarrow$ custos. 
+Replicação de Máquinas de Estados é muito custosa e por isso faz-se um esforço para não utilizá-la ou para utilizá-la em "cantinhos" do sistema onde inconsistências são absolutamente caras demais para serem permitidas.
+Isso porque manter múltiplas cópias $\Rightarrow$ sincronização $\Rightarrow$ custos. 
 Se houver mudanças frequentes nos dados, tal custo precisa ser pago também frequentemente.
 Mitigações incluem uso de réplicas temporárias, protocolos de invalidação de cache, contratação de redes com mais largura de banda  e menor latência, sendo que estes últimos esbarram em limitações financeiras e físicas.
 
@@ -217,11 +217,11 @@ Mitigações incluem uso de réplicas temporárias, protocolos de invalidação 
 ###### Transparência de Concorrência
 
 ??? info inline end "Transparência de concorrência"
-    * obliviedade a outros serviços
+    * imperceptibilidade de outros serviços
     * visto por clientes
 
 Outra transparência almejável é de concorrência, isto é, imperceptibilidade quanto ao fato de que o serviço está executando concorrentemente a outros serviços e sendo acessado por outros clientes.
-Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto tem termos de desempenho.
+Isto é importante tanto em termos de segurança, no sentido de que um cliente não deveria acessar os dados do outro, caso isso seja um requisito do sistema, quanto em termos de desempenho.
 Nuvens computacionais são um exemplo de onde este tipo de transparência é essencial.
 
 Considere um serviço de banco de dados em uma nuvem qualquer. Para prover a mesma interface com a qual usuários estão acostumados a anos, é possível que este serviço seja simplesmente um *wrapper* ao redor do SGBD que se comprava e instalava *in-house* anteriormente.
@@ -230,12 +230,12 @@ Para se tornar viável, contudo, uma mesma instância deve servir múltiplos cli
 * ![https://cdn.jjude.com/mt-models.png](../images/multitenancy_models.png)
 
 
-Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos *pool* de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (*scale up*) e separe as cargas (*sharding*); se menos clientes estão presentes, então desligue algumas máquinas (*scale down*) e consolide recursos.
+Esta transparência está fundamentalmente ligada à escalabilidade, isto é, à adequação dos *pools* de recursos às demandas dos clientes: se mais clientes estão presentes, então aumente a quantidade de servidores (*scale up*) e separe as cargas (*sharding*); se menos clientes estão presentes, então desligue algumas máquinas (*scale down*) e consolide recursos.
 
 ###### Desafios para se obter transparência
 
-Apesar de desejáveis, as transparência discutidas são difíceis de se conseguir, principalmente se em conjunto.
-Isto porquê, do **ponto de vista de usuários** espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.
+Apesar de desejáveis, as transparências discutidas são difíceis de se conseguir, principalmente se em conjunto.
+Isso porque, do **ponto de vista de usuários** espalhados pelo globo, atrás de redes heterogêneas e com possibilidade de erros, acontecerão atrasos e perdas na comunicação, denunciando a distribuição.
 
 Do **ponto de vista do desenvolvedor**, é preciso tomar decisões baseado em premissas ligadas à realidade da rede. Por exemplo, se uma requisição não foi respondida, quanto tempo um cliente deve esperar antes de reenviá-la, possivelmente para outro servidor, sem incorrer em risco significativo da requisição ser processada duas vezes? A resposta para esta pergunta é muito mais complicada do que pode parecer.
 

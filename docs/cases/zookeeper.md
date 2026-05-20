@@ -1,5 +1,5 @@
 # Coordenação: Zookeeper
-O [Zookeeper](http://zookeeper.apache.org/) foi criado para coordenar as ações dos componentes de sistemas distribuídos, porquê sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural.
+O [Zookeeper](http://zookeeper.apache.org/) foi criado para coordenar as ações dos componentes de sistemas distribuídos, porque sistemas distribuídos são como zoológicos, com animais de diversas espécies, sendo obrigados a conviver de forma anti-natural.
 
 ![http://zookeeper.apache.org/](../images/zklogo.jpeg)
 
@@ -39,9 +39,9 @@ Znodes são manipulados, essencialmente, por 4 operações, implementando CRUD, 
 Znodes são lidos e escritos sempre integralmente. Isto é, não se pode escrever apenas parte do conteúdo do "arquivo". Por isso, recomenda-se que os arquivos sejam sempre pequenos, onde pequeno é relativo.
 
 O sistema de arquivos do Zookeeper é replicado em vários nós, usando a técnica de replicação de máquinas de estados estudada. 
-A difusão ordenada de comandos é implementadas O protocolo utilizado é pelo protocolo de difusão atômica próprio do Zookeeper, ZAB ([*Zookeeper Atomic Broadcast*](https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_atomicBroadcast)).
+A difusão ordenada de comandos é implementada pelo protocolo de difusão atômica próprio do Zookeeper, ZAB ([*Zookeeper Atomic Broadcast*](https://zookeeper.apache.org/doc/r3.7.0/zookeeperInternals.html#sc_atomicBroadcast)).
 
-Comandos de modificação do sistema de arquivos, como **create** e **delete**, podem ser enviados para qualquer das réplicas, mas serão internamente encaminhados para um processos líder e de lá replicados.
+Comandos de modificação do sistema de arquivos, como **create** e **delete**, podem ser enviados para qualquer das réplicas, mas serão internamente encaminhados para um processo líder e de lá replicados.
 
 ![](../images/zkservice.jpg)
 
@@ -56,13 +56,13 @@ Por causa do custo em termos de mensagens trocadas entre os processos para mensa
 	  
 O gráfico seguinte mostra como o desempenho do sistema varia com o número de processos.
 No eixo Y, a quantidade de requisições processadas por segundo, ou seja, a vazão.
-No eixo X, a percentagem das requisições do teste que são leituras e, portanto, repondidas na réplica em que são recebidas.
+No eixo X, a percentagem das requisições do teste que são leituras e, portanto, respondidas na réplica em que são recebidas.
 As diferentes curvas mostram diferentes configurações do sistema, indo de 3 a 12 réplicas.
 
 ![](../images/zkperfRW_3_2.jpg)
 
 Em geral, todas as configurações apresentam melhor desempenho quando há uma percentagem maior de leituras.
-Mas observe como as curvas se invertem, se focando primeiro na curva para 3 servidores: quando todas as operações são de escrita, e portanto precisam passar pelo protocolo de difusão atômica, esta curva apresenta os melhores resultados. Isto ocorre porquê o *overhead* de executar o protocolo é mais baixo entre 3 servidores que entre 13. Em compensação, quando temos mais leituras, que não precisam de sincronização, então ter mais servidores é mais vantajoso pois sobre menos carga de trabalho para cada servidor.
+Mas observe como as curvas se invertem, se focando primeiro na curva para 3 servidores: quando todas as operações são de escrita, e portanto precisam passar pelo protocolo de difusão atômica, esta curva apresenta os melhores resultados. Isto ocorre porque o *overhead* de executar o protocolo é mais baixo entre 3 servidores que entre 13. Em compensação, quando temos mais leituras, que não precisam de sincronização, então ter mais servidores é mais vantajoso pois sobra menos carga de trabalho para cada servidor.
 
 
 ###### Laboratório
@@ -88,8 +88,8 @@ Vejamos alguns exemplos básicos.
 
 Outros comandos interessantes são:
 
-* `stat /teste` - mostra medatados do arquivo, por exemplo versão, e *timestamps*
-* `set -v V /teste lili` - faz um update condiciona, isto é, atualiza o conteúdo do arquivo se a versão do mesmo, como mostrada pelo comando `stat`, for igual a `V`
+* `stat /teste` - mostra metadados do arquivo, por exemplo versão, e *timestamps*
+* `set -v V /teste lili` - faz um update condicional, isto é, atualiza o conteúdo do arquivo se a versão do mesmo, como mostrada pelo comando `stat`, for igual a `V`
 
 ###### Nós Efêmeros e Watches
 O Zookeeper tem muitas funcionalidades interessantes, mas chamarei a atenção a duas que são particularmente úteis:
@@ -155,7 +155,7 @@ Ainda que tenha três servidores executando em uma mesma máquina, seu cluster p
 		
 
 Como lidar com saída de processos?
-Faça todos os zNodes são efêmeros.
+Faça todos os zNodes efêmeros.
 Quando um nó é desconectado, o zNode correspondente será destruído.
 
 
@@ -172,7 +172,7 @@ Ordene os zNodes e escolha o primeiro.
 Monitore o zNode. Se ele sumir, eleja outro líder.
 
 
-!!!exaple "Exclusão Mútua"
+!!!example "Exclusão Mútua"
      Construa uma fila usando nós efêmeros e sequenciais. O processo na cabeça da fila tem direito de acesso. Em caso de falhas, o processo é removido da cabeça da fila.
 
 Várias outras receitas podem ser facilmente encontradas no [sítio do projeto](http://zookeeper.apache.org/doc/trunk/recipes.html):

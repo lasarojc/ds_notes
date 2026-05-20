@@ -5,18 +5,18 @@ No caso da pilha IP, usa-se o protocolo AF\_INET ou PF\_INET.
 Escolhido o protocolo, 
 
 * cada interface tem um endereço MAC, na camada 2, que a identifica entre as interfaces na mesma rede local, e 
-* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o indentifica entre todos os hosts na Internet.[^ippub]
+* cada interface tem um endereço IPv4/IPv6 de 32/128 bits, que o identifica entre todos os hosts na Internet.[^ippub]
 
 [^ippub]:Endereços IP não públicos não servem como identificadores únicos na Internet.
 
 Mas dentro de um *host*, podem haver diversas aplicações sendo executadas. Como identificar exatamente com qual se quer conversar?
-Isto é feito pela definição uma porta:
+Isto é feito pela definição de uma porta:
 
 * Porta: inteiro de 16 bits
 * Associadas a serviços pela [Internet Assigned Numbers Authority](http://www.iana.org), IANA.
      * Portas "Bem conhecidas": 0-1023
-     * Portas Proprietárias: 49151
-     * Portas Dinâmicas: 65535
+     * Portas Proprietárias: 1024-49151
+     * Portas Dinâmicas: 49152-65535
 
 Também é necessário definir o protocolo de transporte dos dados, na camada 4.
 Novamente, no caso da pilha IP, pode-se usar TCP (**SOCK\_STREAM**) ou UDP (**SOCK\_DGRAM**).
@@ -109,13 +109,13 @@ No segundo terminal a mensagem
 será impressa, enquanto no primeiro veremos algo como 
  `('Got connection from', ('127.0.0.1', 57801))` 
  
-O que está acontecendo aqui é um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
-Tanto o telnet quando o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
+O que está acontecendo aqui é que um processo criou um socket e ficou aguardando uma conexão, usando o código em Python.
+Tanto o telnet quanto o netcat são programas genéricos para se conversar com outro processo usando TCP/IP.
 Aqui, estes programas simplesmente se conectaram e imprimiram o que quer que o primeiro processo lhes tenha enviado, assumindo que correspondia a uma string, o que neste caso é correto.
 Simples, não é mesmo?
 
 Duas observações importantes a serem feitas aqui. 
-A primeira é que, em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto por quê, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
+A primeira é que, em geral, denominamos o processo que fica aguardando a conexão de **servidor** e o processo que se conecta de **cliente**. Isto porque, em geral, o servidor executa alguma tarefa, serve, o cliente, embora isto não seja necessariamente verdade.
 
 
 Por completude, vamos também escrever o código do cliente, agora que você já sabe que o servidor funciona.
@@ -254,7 +254,7 @@ Multicast, em oposição ao Unicast, é a capacidade de enviar mensagens para um
 
 ![Multicast](../drawings/multicast.drawio#1)
 
-IP-Multicast é uma implementação desta ideia, usando umaa configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
+IP-Multicast é uma implementação desta ideia, usando uma configuração específica do UDP, associada a recursos dos comutadores de rede, para otimizar o envio dos mesmos dados a múltiplos destinatários.
 Grupos são identificados por endereços IP especiais, conhecidos como Classe D (224.0.0.0-239.255.255.255), e propagados pela rede.
 A seguinte tabela descreve os usos das sub-faixas de endereços.[^multicast_use]
 [^multicast_use]:  [Understanding IP Multicast](http://www.dasblinkenlichten.com/understanding-ip-multicast/)
@@ -262,7 +262,7 @@ A seguinte tabela descreve os usos das sub-faixas de endereços.[^multicast_use]
 | Endereço | Uso |
 |----------|-----|
 |224.0.0.0-224.0.0.255| Multicast local - Usado por protocolos L2, como EIGRP e OSPF|
-|224.0.1.0-224.0.1.255| Multicast roteaddo - Usado por protocolos L3| 
+|224.0.1.0-224.0.1.255| Multicast roteado - Usado por protocolos L3| 
 |232.0.0.0-232.255.255.255| *Source Specific Multicast* - Receptores definem fontes confiáveis|
 |233.0.0.0-233.255.255.255| Reservado para detentores *Autonomous Systems* |
 |239.0.0.0-239.255.255.255| Reservado para IANA |
@@ -275,10 +275,10 @@ Melhor dizendo, todos os membros podem receber a mensagem, mas como estamos fala
 Além disso, **não há garantia qualquer sobre a ordem de recepção das mensagens**.
 
 Apenas reforçando, IP-Multicast só funciona com UDP, pois lidar com retransmissões em um grupo grande levaria a um estado imenso sendo mantido na origem dos dados.
-Outro ponto importante é que pelo podencial desestabilizador do IP-Multicast, ele é normalemente limitado à pequenas seções das redes.
+Outro ponto importante é que pelo potencial desestabilizador do IP-Multicast, ele é normalmente limitado a pequenas seções das redes.
 
 Mas experimentemos com esta tecnologia na prática.
-Criemos um programa que **criar Socket UDP**, **associa-o a um grupo**, e **recebe pacotes** destinados ao grupo.
+Criemos um programa que **cria um socket UDP**, **associa-o a um grupo**, e **recebe pacotes** destinados ao grupo.
 
 ```Java
 // MReceiver.java
